@@ -1,0 +1,214 @@
+.contmenubus, footer, .copyseccion, #myBtn, .carritoshop, .menudesinsreg{
+    visibility: collapse;
+    height:-100%;
+    width:-100%;
+}
+.prueba3, #login,#password, .login-box-msg, .entrarenses{
+  font-family: Poppins;
+}
+.header2{
+  display: none;
+  height: 0;
+}
+.ft0{
+  display: none;
+}
+body{
+  font-family: Poppins;
+}
+.container1{
+  max-width: 2000px;
+}
+#alertvali{
+  border: 2px solid #de0007;
+  border-radius: 0.25rem;
+  color: #000;box-shadow: 1px 1px 12px #ddd;
+  display: none; margin-left: 17%;
+  width: 66%;
+}
+.iss a:hover{
+        color: #bf040a;
+        text-decoration: underline;
+      }
+      .iss a{
+        color: #de0007;
+        font-size: 20px;
+      }
+
+.closeinsregform{
+        margin-left:94%;
+        margin-top:2%;
+        font-size: 30px;
+        color: #de0007;
+        align-items: center;
+        visibility: visible;
+    }
+    .closeinsregform:hover{
+      color:#bf040a; 
+    }
+    body{
+        overflow: hidden;
+    }
+    .prueba1{
+        background:#BF040A;
+        text-align: center;
+        height:2000px;
+      }
+      .card{
+        border:#fff;
+      }
+      .card-body{
+        width:150%;
+      }
+      .prueba2{
+        color: #fff;
+        font-size: xx-large;
+        font-weight: bold;
+        margin-top:50%;
+      
+      }
+      .prueba3{
+        font-weight: bold;
+      text-align: center;
+      position: relative;
+      font-size: xx-large;
+      padding-bottom: 25px;
+      }
+      .logomacromlogin{
+        margin-left:33%;
+        margin-top:20%;
+        padding-bottom: 25px;
+      }
+      .logoimgtmn{
+        height: 70px;
+      }
+      .entrarenses{
+        width:100%;
+        height:40px;
+        border-radius: 0.40rem;
+      }
+
+      .lboxmsg{
+        align-items: center;
+        width:100%;
+        text-align: center;
+    }
+    .closeinsregform2{
+      visibility: collapse;
+          margin-left:92%;
+          margin-top:-100px;
+          font-size: -5px;
+          transition: 0s;
+          color: red;
+          align-items: center;
+      }
+
+    /*inicio pagina responsive */
+    @media (max-width:800px){
+
+        #frmReg{
+            border: 1px solid #De0007;
+            -webkit-border-radius: 10px;
+            width: 94%;
+            margin-left: 3%;
+        }
+    .prueba3{
+      padding-bottom: 0px;
+    }
+    #alertvali{
+      margin-left: 2%;
+      width: 95%;
+    }
+    .i-ss{  
+      padding-bottom: 20px;
+    }
+.closeinsregform{
+    visibility: collapse;
+        margin-left:92%;
+        margin-top:-100px;
+        font-size: -5px;
+        color: red;
+        transition: 0s;
+        align-items: center;
+    }
+    .footermob1{
+      visibility: hidden;
+    }
+    .contlogo a{
+      visibility: hidden;
+    }
+    .closeinsregform2{
+      margin-left:90%;
+      margin-top:2%;
+      font-size: 30px;
+      color: red;
+      align-items: center;
+      visibility: visible;
+      }
+    body{
+        background: #De0007;
+        overflow-y: visible;
+    }
+    .prueba1{
+       visibility: collapse;
+       height:10px;
+    }
+    .logomacromlogin img{
+        margin-left: -32%;
+        height: 60px;
+    }
+    .entrarenses{
+        width:100%;
+        height:40px;
+      }
+    .insmob{
+        margin-top:5%;
+    }
+    .row{
+        background:#De0007;
+    }
+    .login-box-msg, #frmReg{
+        background: #fff;
+    }
+    .login-box-msg{
+      visibility: visible;
+    }
+    .lboxmsg{
+        width:100%;
+        background: #fff;
+    }
+    .card-body{
+      width:100%;
+    }
+    .login-box,
+    .register-box {
+  margin-left:5%;
+
+}
+
+}
+/* termina pagina responsive*/
+
+/*Responsive menores a 360 px*/ 
+      @media only screen and (max-width:359px){
+        body{
+          overflow-y: visible;
+        }
+
+      .logomacromlogin img{
+        margin-left: -38%;
+        }
+        #frmReg{
+            border: 1px solid #De0007;
+            -webkit-border-radius: 10px;
+            width: 100%;
+            margin-left: 0;
+        }
+        .iss a{
+        font-size: 18px;
+      }
+      #alertvali{
+        font-size: 14px;
+      }
+
+      }

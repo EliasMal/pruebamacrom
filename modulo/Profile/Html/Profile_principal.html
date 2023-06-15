@@ -1,0 +1,71 @@
+<section ng-controller="ProfileCtrl" ng-init="pag='{opc}'">
+    
+
+    <div class="banner bgwhite p-t-40 p-b-40">
+        <div class="container">
+            <h1 class="p-b-30">Mi cuenta</h1>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-30 ">
+                    <div class="box-profile" ng-click="btnMenulinks('Mispedidos')">
+                        <div class="box-picture">
+                            <img src="images/icons/mispedidos.png" class="img" alt="">
+                        </div>
+                        
+                        <div class="box-contenido">
+                            <h5>Mis pedidos</h5>
+                            <p>Rastrear paquetes, devolver pedidos o compar al nuevo</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-30">
+                    <div class="box-profile" ng-click="btnMenulinks('Session')">
+                        <div class="box-picture">
+                            <img src="images/icons/iniciosession.png" class="img" alt="">
+                        </div>
+                        
+                        <div class="box-contenido">
+                            <h5>Inicio de sessi&oacute;n y serguridad</h5>
+                            <p>Editar inicio de sessi&oacute;n, nombre y numero de tel&eacute;fono m&oacute;vil</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-30 ">
+                    <div class="box-profile" ng-click="btnMenulinks('Direcciones')">
+                        <div class="box-picture">
+                            <img src="images/icons/direcciones.png" class="img" alt="">
+                        </div>
+                        
+                        <div class="box-contenido">
+                            <h5>Direcciones</h5>
+                            <p>Edita tus direcciones para pedidos</p>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6  p-b-30 ">
+                    <div class="box-profile" ng-click="btnMenulinks('Monedero')">
+                        <div class="box-picture" >
+                            <img src="images/icons/mispagos.png" class="img" alt="">
+                        </div>
+                        
+                        <div class="box-contenido">
+                            <h5>Monedero Electronico</h5>
+                            <p>Administrar configuraciones y m&eacute;todos de pago, ver tus saldos y ofertas</p>
+                        </div>
+                    </div>
+                </div>-->
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6  p-b-30 ">
+                    <div class="box-profile" ng-click="btnMenulinks('Facturacion')">
+                        <div class="box-picture" >
+                            <img src="images/icons/mispagos.png" class="img" alt="">
+                        </div>
+                        
+                        <div class="box-contenido">
+                            <h5>Datos de Facturacion</h5>
+                            <p>Administra tus datos de facturacion</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

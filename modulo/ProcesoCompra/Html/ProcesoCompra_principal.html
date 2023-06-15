@@ -1,0 +1,96 @@
+<section>
+
+
+    <section class="contenedor">
+		<img src="images/Banners/Compras.png" alt="Banner compras">
+		<h2 class="l-text2 t-center">
+			Acreditar compra
+		</h2>
+	</section>
+
+	<section class="contenedor-responsive">
+		<img src="images/Banners/Compras-movil.png" alt="Banner compras">
+		<h2 class="l-text2 t-center">
+            Acreditar compra
+		</h2>
+    </section>
+    
+    <section class="p-t-66 p-b-60" ng-controller="CabeceraCtrl" ng-init="mod='{mod}'">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 p-b-30">
+                    <h4 class="m-text26 p-b-36 p-t-15"><i class="fa  fa-map-marker"></i> Direccion de Entrega</h4>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-12 m-text26 p-b-36 p-t-15" ng-show="!Actualizar">
+                            {{Costumer.Domicilio}}, Col. {{Costumer.Colonia}}, {{Costumer.ciudad}}, {{Costumer.estado}}, Codigo postal: {{Costumer.Codigo_postal}}
+                            
+                        </div>
+                        <div class="col-md-12" ng-show="Actualizar">
+                            <div class="bo4 of-hidden size15 m-b-25 ">
+                                <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="txtdomicilio" id="txtnombre" placeholder="Domicilio *" ng-model="Costumer.Domicilio" required>
+                            </div>
+                            <div class="bo4 of-hidden size15 m-b-25 ">
+                                <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="txtcolonia" id="txtcolonia" placeholder="Colonia *" ng-model="Costumer.Colonia" required>
+                            </div>
+                            <div class="bo4 of-hidden size15 m-b-25 ">
+                                <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="txtCiudad" id="txtCiudad" placeholder="Ciudad *" ng-model="Costumer.ciudad" required>
+                            </div>
+                            <div class="bo4 of-hidden size15 m-b-25 ">
+                                <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="txtEstado" id="txtEstado" placeholder="Estado *" ng-model="Costumer.estado" required>
+                            </div>
+                            <div class="bo4 of-hidden size15 m-b-25 ">
+                                <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="txtCp" id="txtCp" placeholder="Codigo postal*" ng-model="Costumer.Codigo_postal" required>
+                            </div>
+                            
+                        </div>
+                        <!-- <div class="w-size25">
+                                
+                                <button class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4" ng-click="!Actualizar? btnActualizarDatos():btnGuardarActualizacion()">
+                                        {{!Actualizar? "Actualizar":"Guardar"}}
+                                </button>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="col-md-4 p-b-30">
+                     <h4 class="m-text26 p-b-36 p-t-15 ">Resumen de pedido</h4>
+                      <hr />
+                     <div class="">
+                         <ul class="header-cart-wrapitem">
+                             <li class="header-cart-item" ng-repeat="product in session.cart">
+                                <div class="header-cart-item-img">
+                                    <img ng-src="{{getImagen(product.id)}}" alt="IMG">
+                                </div>
+                                <div class="header-cart-item-txt">
+                                    <a href="#" class="header-cart-item-name">
+                                        {{product.articulo}}
+                                    </a>
+                                    <span class="header-cart-item-info">
+                                        {{product.cantidad}} x {{product.precio | currency}}
+                                    </span>
+                                </div>
+                             </li>
+                             
+                         </ul>
+                        <div class="header-cart-total">
+                                Sub-total: {{subtotal() | currency}}
+                        </div>
+                        <div class="header-cart-total">
+                                Envio: {{session.Cenvio.costo | currency}}
+                        </div>
+                        <div class="header-cart-total">
+                                Total: {{Ttotal() | currency}}
+                        </div>
+                         <div class="w-size25">
+                                <!-- Button -->
+                                <button class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4" ng-click="btnPaso2()">
+                                        Siguiente >>
+                                </button>
+                        </div>
+                         
+                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

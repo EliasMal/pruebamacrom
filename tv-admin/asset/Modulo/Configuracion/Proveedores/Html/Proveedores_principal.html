@@ -1,0 +1,136 @@
+<div ng-controller="ProveedoresCrtl">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark"><i class="fa fa-truck mr-1"></i> Proveedores</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
+                        <li class="breadcrumb-item active">Proveedores</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <section class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12 connectedSortable">
+                    <div class="card card-danger">
+                        <div class="card-header d-flex p-0">
+                            <h3 class="card-title p-3">
+                                <i class="fa fa-users mr-1"></i>
+                                Registro de Proveedores
+                            </h3>
+                            <div class="card-tools">
+                                <button class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            </div>
+
+                        </div><!-- /.card-header -->
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
+                                    <button class="btn btn-danger" ng-click="btnNuevo()"><i
+                                            class="fa fa-user-plus"> Nuevo Proveedor</i></button>
+                                    <span class="switch switch-sm pull-right">
+
+                                        <input type="checkbox" class="switch" id="switch-id" ng-model="historico"
+                                            ng-click="getProvedores()">
+                                        <label for="switch-id">Historico</label>
+                                    </span>
+                                </div>
+                                <br>
+                                <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <th width="5%">#</th>
+                                            <th width="10%">Logo</th>
+                                            <th width="45%">Proveedor</th>
+                                            <th width="10%">Estatus</th>
+                                            <th width="10%">Acciones</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="modelo in dataProveedor">
+                                                <td>{{$index +1}}</td>
+                                                <td class="text-center"><img ng-src="{{getImagen(modelo.foto, modelo._id)}}"
+                                                        class="img img-responsive img-circle" alt="logoimagen"
+                                                        style="width: 100px;" /></td>
+                                                <td><a ng-click="btnAnios(modelo)"
+                                                        style="cursor: pointer; ">{{modelo.Proveedor}}</a></td>
+
+                                                <td class="text-center"><span
+                                                        class="badge {{modelo.Estatus == 1? 'badge-success':'badge-danger'}}">{{modelo.Estatus == 1? "Activo":"Baja"}}</span>
+                                                </td>
+                                                <td align="center">
+                                                    <div class="btn-group " role="group">
+                                                        <button id="btnGroupDrop1" type="button"
+                                                            class="btn btn-danger dropdown-toggle"
+                                                            data-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false">
+
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                            <a class="dropdown-item" ng-click="btnEditar(modelo)"><i
+                                                                    class="fa fa-edit"> Editar</i></a>
+                                                            <a class="dropdown-item"
+                                                                ng-click="opcDesactivar(modelo._id, modelo.Estatus)"><i
+                                                                    class="fa {{modelo.Estatus == 1? ' fa-times-circle-o':'fa-check-square-o'}}"></i>
+                                                                {{modelo.Estatus == 1? "Desactivar":"Activar"}}</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div><!-- /.card-body -->
+                        <div class="card-footer">
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+    <!-- Modal -->
+    <div class="modal fade" id="mProveedor" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">{{nuevo? "Nuevo":"Editar"}} Proveedor</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-4" aling="center">
+                            <img ng-src="{{img}}" alt="imagen proveedor" class="img-responsive img-thumbnail" />
+                        </div>
+                        <div class="col-lg-8">
+                            <label for="slcMarca">Proveedor</label>
+                            <input type="text" name="txtcategoria" id="txtcategoria" class="form-control" ng-model="Proveedor.Proveedor" />
+                            <label for="slcMarca">Tag Title</label>
+                            <input type="text" name="txttitle" id="txttitle" class="form-control" ng-model="Proveedor.tag_title" />
+                            <label for="slcMarca">Tag alt</label>
+                            <input type="text" name="txtalt" id="txtalt" class="form-control" ng-model="Proveedor.tag_alt" />
+                            <label for="txtfile">Subir logo proveedor</label>
+                            <input type="file" name="txtfile" id="txtfile" class="form-control" uploader-model="Proveedor.file"/>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" ng-click="nuevo? btnCrearProveedor():btnEditarProveedor()" ng-disabled="btnsave">
+                        {{nuevo? "Crear":"Guardar"}} Proveedor</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

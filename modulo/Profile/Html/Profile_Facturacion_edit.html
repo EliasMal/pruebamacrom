@@ -1,0 +1,150 @@
+<section  ng-controller="ProfileCtrl" ng-init="pag='{opc}'">
+    <div class="banner bgwhite p-t-40 p-b-40">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 p-b-30">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Mispedidos')"> <img src="images/icons/icono_mis_pedidos.png" alt="logo-mispedidos" class="img icon-logo-small">Mis pedidos</a>
+                        <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Session')"><img src="images/icons/icono_inicio_de_sesión.png" alt="logo-session-seguridad" class="img icon-logo-small"> Sessi&oacute;n y Seg&uacute;ridad</a>
+                        <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Direcciones')"> <img src="images/icons/icono_direcciones.png" alt="logo-direcciones" class="img icon-logo-small">Direcciones</a>
+                        <!--<a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Monedero')"><img src="images/icons/icono_monedero.png" alt="logo-monederoelectronico" class="img icon-logo-small"> Monedero Electronico</a>-->
+                        <a href="#" class="list-group-item list-group-item-action active" >
+                            <img src="images/icons/icono_facturacion.png" alt="logo-monederoelectronico" class="img icon-logo-small"> Datos de Facturación
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 p-b-30">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb gris">
+                          <li class="breadcrumb-item"><a href="?mod=Profile"><strong>Mi Cuenta</strong> </a></li>
+                          <li class="breadcrumb-item"><a href="#" ng-click="btnMenulinks('Facturacion')">Facturación</a> </li>
+                          <li class="breadcrumb-item active" aria-current="page">Editar datos de facturación</li>
+                        </ol>
+                    </nav>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-b-30">
+                            <div class="title-header">
+                                <img src="images/icons/icono_facturacion_rojo.png" alt="logo-direcciones" class="img icon-logos-grande">
+                                <h2>Editar datos de facturación</h2>
+                            </div>
+                            
+                        </div> 
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 p-b-30">
+                            <form name="Facturacionform" novalidate>
+                                <div class="row gris-light">
+                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 p-b-10 p-t-10">
+                                        <div>
+                                            <label for="example-text-input" >RFC: <span class="text-danger">*</span></label>
+                                            <div class="bo16 of-hidden size15 m-b-20">
+                                                <input name="RFC" class="sizefull s-text7 p-l-22 p-r-22 gris-light" type="text" placeholder="ej. RAFA876541366 " ng-model="Facturacion.dataFacturacion.Rfc" required>
+                                            </div>
+                                            <span class="text-danger" ng-if="Facturacionform.RFC.$error.required && Facturacionform.RFC.$touched">El campo es requerido</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 p-b-10 p-t-10">
+                                        <div>
+                                            <label for="example-text-input" >Razon Social: <span class="text-danger">*</span></label>
+                                            <div class="bo16 of-hidden size15 m-b-20">
+                                                <input name="razon" class="sizefull s-text7 p-l-22 p-r-22 gris-light" type="text" placeholder="ej. PEPE SA DE CV" ng-model="Facturacion.dataFacturacion.Razonsocial" required>
+                                            </div>
+                                            <span class="text-danger" ng-if="Facturacionform.razon.$error.required && Facturacionform.razon.$touched">El campo es requerido</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-b-10">
+                                        <div>
+                                            <label for="example-text-input" >Domicilio: <span class="text-danger">*</span></label>
+                                            <div class="bo16 of-hidden size15 m-b-20">
+                                                <input name="domicilio" class="sizefull s-text7 p-l-22 p-r-22 gris-light" type="text" placeholder="ej. Fco I Madero #44" ng-model="Facturacion.dataFacturacion.Domicilio" required>
+                                            </div>
+                                            <span class="text-danger" ng-if="Facturacionform.domicilio.$error.required && Facturacionform.domicilio.$touched">El campo es requerido</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 p-b-10">
+                                        <div>
+                                            <label for="example-text-input" >Colonia: <span class="text-danger">*</span></label>
+                                            <div class="bo16 of-hidden size15 m-b-20">
+                                                <input name="colonia" class="sizefull s-text7 p-l-22 p-r-22 gris-light" type="text" placeholder="ej. San lozenso" ng-model="Facturacion.dataFacturacion.Colonia" required>
+                                            </div>
+                                            <span class="text-danger" ng-if="Facturacionform.colonia.$error.required && Facturacionform.colonia.$touched">El campo es requerido</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 p-b-10">
+                                        <div>
+                                            <label for="example-text-input" >Codigo Postal: <span class="text-danger">*</span></label>
+                                            <div class="bo16 of-hidden size15 m-b-20">
+                                                <input name="cp" class="sizefull s-text7 p-l-22 p-r-22 numero gris-light" type="text" placeholder="ej. 35400" maxlength="5" ng-model="Facturacion.dataFacturacion.Codigo_postal" required>
+                                            </div>
+                                            <span class="text-danger" ng-if="Facturacionform.cp.$error.required && Facturacionform.cp.$touched">El campo es requerido</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 p-b-10">
+                                        <div>
+                                            <label for="example-text-input" >Ciudad: <span class="text-danger">*</span></label>
+                                            <div class="bo16 of-hidden size15 m-b-20">
+                                                <input name="ciudad" class="sizefull s-text7 p-l-22 p-r-22 gris-light" type="text" placeholder="ej. los cabos" ng-model="Facturacion.dataFacturacion.Ciudad" required>
+                                            </div>
+                                            <span class="text-danger" ng-if="Facturacionform.ciudad.$error.required && Facturacionform.ciudad.$touched">El campo es requerido</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 p-b-10">
+                                        <div>
+                                            <label for="example-text-input" >Estado: <span class="text-danger">*</span></label>
+                                            <div class="bo16 of-hidden size15 m-b-20">
+                                                <input name="estado" class="sizefull s-text7 p-l-22 p-r-22 gris-light" type="text" placeholder="ej. Baja california sur" ng-model="Facturacion.dataFacturacion.Estado" required>
+                                            </div>
+                                            <span class="text-danger" ng-if="Facturacionform.estado.$error.required && Facturacionform.estado.$touched">El campo es requerido</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 p-b-10">
+                                        <div>
+                                            <label for="example-text-input" >Uso de cfdi: <span class="text-danger">*</span></label>
+                                            <div class="bo16 of-hidden size15 m-b-20 select">
+                                                <select name="cfdi" class="sizefull s-text7 p-l-22 p-r-22 gris-light" ng-model="Facturacion.dataFacturacion.cfdi" required>
+                                                    <optgroup label ="Seleccion el tipo de uso de tu cfdi">
+                                                        <option ng-repeat="cfdi in Facturacion.usocfdi" value="{{cfdi._id}}">({{cfdi.UsoCFDI}}) {{cfdi.Descripcion}}</option>
+                                                    </optgroup>
+                                                </select>
+                                                <i></i>
+                                            </div>
+                                            <span class="text-danger" ng-if="Facturacionform.cfdi.$error.required && Facturacionform.cfdi.$touched">El campo es requerido</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 p-b-10">
+                                        <div>
+                                            <label for="example-text-input" >Actividad Empresarial: <span class="text-danger">*</span></label>
+                                            <div class="bo16 of-hidden size15 m-b-20 select">
+                                                <select name="Actividad" class="sizefull s-text7 p-l-22 p-r-22 gris-light" ng-model="Facturacion.dataFacturacion.Actividad" required>
+                                                    <optgroup label ="Seleccion la actividad de la empresa">
+                                                        <option ng-repeat="Acti in Facturacion.Actividad" value="{{Acti.valor}}">{{Acti.valor}}</option>
+                                                    </optgroup>
+                                                </select>
+                                                <i></i>
+                                            </div>
+                                            <span class="text-danger" ng-if="Facturacionform.Actividad.$error.required && Facturacionform.Actividad.$touched">El campo es requerido</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div>
+                                <button class="flex-c-m bg-red btn  bo-rad-10 hov7 m-text3 trans-0-4 float-right" ng-click="btnEditardatosfacturacion('save')"
+                                ng-disabled="Facturacionform.$invalid">Guardar</button>
+                                <button class="flex-c-m bg-dark btn bo-rad-10 hov7 m-text3 trans-0-4 float-right m-r-10" ng-click="btnMenulinks('Facturacion')">Regresar</button>
+                            </div>   
+                            
+                               
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 p-b-30 ">
+                            <div class="icon-center">
+                                <img src="images/icons/icono_facturacion.png" alt="logo-direcciones" class="img icon-logos-grande">
+                            </div>
+
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

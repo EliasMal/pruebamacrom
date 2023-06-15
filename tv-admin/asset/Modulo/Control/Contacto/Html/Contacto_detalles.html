@@ -1,0 +1,73 @@
+<div ng-controller="ContactoCtrl">
+    <section class="content-header" ng-init="data.id='{_id}'">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                <h1>Contacto</h1>
+                </div>
+                <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="?mod=Contacto">Contacto</a></li>
+                    <li class="breadcrumb-item active">Detalles</li>
+                </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Panel</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <ul class="nav nav-pills flex-column">
+                            <li class="nav-item active">
+                            <a href="?mod=Contacto" class="nav-link">
+                                <i class="fa fa-inbox"></i> Inbox
+                                <span class="badge bg-danger float-right">{{datos.msgnuevos}}</span>
+                            </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /. box -->
+            </div>
+            <div class="col-md-9">
+                <div class="card card-danger card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">Leer Inbox</h3>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="mailbox-read-info">
+                            <h5>{{datos.Data.Nombre}}</h5>
+                            <h6>Correo: {{datos.Data.Email}}</h6>
+                            <h6>Telefono: {{datos.Data.Telefono}}
+                                <span class="mailbox-read-time float-right">
+                                    {{datos.Data.Fecha}}
+                                </span>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="mailbox-controls with-border"></div>
+                    <div class="mailbox-read-message">
+                        <p>{{datos.Data.Mensaje}}</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="float-right">
+                            <button class="btn btn-default" type="button" ng-click="btnRegresar()"><i class="fa fa-reply"> Regresar</i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

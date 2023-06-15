@@ -1,0 +1,111 @@
+<div ng-controller="ClientesCtrl" ng-init="data.new='{new}'">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark"><i class="fa fa-user mr-1"></i> Clientes</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
+                        <li class="breadcrumb-item active">Clientes</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <section class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="card card-danger">
+                        <div class="card-header d-flex p-0">
+                            <h3 class="card-title p-3">
+                                <i class="fa fa-users mr-1"></i>
+                                Clientes registrados
+                            </h3>
+                            <div class="card-tools">
+                                <button class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            </div>
+                        </div><!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12 ">
+                                    <span class="switch switch-sm">
+                                        <input type="checkbox" class="switch" id="CliNew" ng-model="data.new" ng-click="getnewClientes()">
+                                        <label for="CliNew">Nuevos</label>
+                                    </span>
+                                    <span class="switch switch-sm pull-right">
+                                        <input type="checkbox" class="switch" id="switch-id" ng-model="data.historico" ng-click="getClientes()">
+                                        <label for="switch-id">Historico</label>
+                                    </span>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                            <table class="table table-bordered" datatable="ng">
+                                                    <thead>
+                                                        <th width="5%">#</th>
+                                                        <th width="20%">Username</th>
+                                                        <th width="35%">Cliente</th>
+                                                        <th width="25%">Correo</th>
+                                                        <th width="15%">Telefono</th>
+                                                        <th width="10%">Acciones</th>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="user in Clientes">
+                                                            <td>{{$index +1}}</td>
+                                                            <td>{{user.username}}</td>
+                                                            <td>{{user.nombre | uppercase}}</td>
+                                                            <td>{{user.correo}}</td>
+                                                            <td>{{user.telefono}}</td>
+                                                            <td>
+                                                                <div class="btn-group" role="group">
+                                                                    <button id="btnGroupDrop1" type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            
+                                                                    </button>
+                                                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                                        <a class="dropdown-item" ng-click="btnPerfil(user._id)"><i class="fa fa-edit"> Perfil</i></a>
+                                                                        <a class="dropdown-item" ng-click="user.estatus == 1? getEstatus(user._id, 0):getEstatus(user._id,1)">
+                                                                          <i class="fa {{user.estatus == 1? ' fa-times-circle-o':'fa-check-square-o'}}"></i> 
+                                                                          {{user.estatus == 1? "Desactivar":"Activar"}}
+                                                                        </a>
+                                                                        <a class="dropdown-item" ng-click="changepass(user._id)"> <i class="fa fa-key"></i> Cambiar pass</a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+<!--                            <button class="btn btn-danger pull-right" ng-click="btnNuevoUsuario()"><i class="fa fa-user-plus"> Nuevo Usuario</i></button>-->
+                        </div>
+                    </div>
+                    
+                </section>
+            </div>
+        </div>
+    </section>
+    <!-- Modal -->
+    <div class="modal fade" id="modalpass" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Cambiar password</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                    <div class="text-center" id="showpass">hola es una </div>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

@@ -1,0 +1,179 @@
+<section  ng-controller="ProfileCtrl" ng-init="pag='{opc}'">
+    <div class="banner bgwhite p-t-40 p-b-40">
+        <div class="container-fluid contreaco">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 p-b-30">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Mispedidos')"> 
+                            <img src="images/icons/icono_mis_pedidos.png" alt="logo-mispedidos" class="img icon-logo-small">Mis pedidos
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Session')">
+                            <img src="images/icons/icono_inicio_de_sesión.png" alt="logo-session-seguridad" class="img icon-logo-small"> Sesión y Seg&uacute;ridad
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Direcciones')"> 
+                            <img src="images/icons/icono_direcciones.png" alt="logo-direcciones" class="img icon-logo-small">Direcciones
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action active" >
+                            <img src="images/icons/icono_facturacion.png" alt="logo-monederoelectronico" class="img icon-logo-small"> Datos de Facturación
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 p-b-30">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb gris">
+                          <li class="breadcrumb-item"><a href="?mod=Profile"><strong>Mi Cuenta</strong> </a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Datos de Facturación</li>
+                        </ol>
+                    </nav>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-30">
+                            <div class="title-header">
+                                <img src="images/icons/icono_facturacion_rojo.png" alt="logo-direcciones" class="img icon-logos-grande">
+                                <h2>Datos de facturación</h2>
+                            </div>
+                        </div> 
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-30">
+                            <div class="bo4 of-hidden size15 m-b-20 input-group">
+                                <input type="text" name="buscar" class="form-control" placeholder="ej. PEPE SA DE CV" ng-model="buscar">
+                                <span class="input-group-btn">
+                                    <button class="btn flex-c-m size2 bg1 bo-rad-5 hov1 m-text3 trans-0-4" type="button"> Buscar</button>
+                                </span>
+                            </div>
+                        </div> 
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 p-b-30">
+                            
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-b-30" ng-click="addFacturacion()">
+                                     <div class="box-direcciones">
+                                        <div class="box-add">
+                                            <h3><i class="fa fa-plus"></i></h3> 
+                                            <p>Agregar datos de facturación</p>
+                                        </div>  
+                                     </div>   
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-b-30" ng-repeat="d in Facturacion.dataFacturacion |filter: buscar | orderBy:'Predeterminado':true">
+                                    <div class="box-facturas gris-light">
+                                       <div class="box-head predeterminado" ng-if="d.Predeterminado === '1'">
+                                            <h5>Predeterminado</h5>
+                                       </div>
+                                       <div class="box-body">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                    <p class="p-t-10" >Rfc: </p>
+                                                    <p class="text-info-user">{{d.Rfc}}</p>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                                                    <p class="p-t-10">Razon social: </p>
+                                                    <p class="text-info-user">{{d.Razonsocial}}</p>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                                                    <p class="p-t-10">Domicilio: </p>
+                                                    <p class="text-info-user">{{d.Domicilio}}</p>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                                    <p class="p-t-10">Colonia: </p>
+                                                    <p class="text-info-user">{{d.Colonia}}</sppan>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                    <p class="p-t-10">Ciudad: </p>
+                                                    <p class="text-info-user">{{d.Ciudad}}</p>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                    <p class="p-t-10">Estado: </p>
+                                                    <p class="text-info-user">{{d.Estado}}</p>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                    <p class="p-t-10">Uso de Cfdi: </p>
+                                                    <p class="text-info-user">{{d.Descripcion}}</p>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                    <p class="p-t-10">Actividad empresarial: </p>
+                                                    <p class="text-info-user">{{d.Actividad}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="box-footer">
+                                            <ul>
+                                                <li><a href="#" ng-click="btnEditadatosFacturacion(d._id)">Editar </a></li>
+                                                <li><a href="#" ng-click="btnEliminardatosfacturacion(d._id, 'del')">Descartar </a></li>
+                                                <li ng-if="d.Predeterminado === '0'"><a href="#" ng-click="btnFacpredetermiando(d._id, 'pre')">Predeterminado</a></li>
+                                            </ul>
+                                       </div>
+                                    </div>   
+                               </div>
+                               <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-b-30">
+                                    <div class="box-direcciones">
+                                    <div class="box-body">
+                                            
+                                                Paseo de los duraznos #88,
+                                                Valle de las huertas,
+                                                Coquimatlan Colima,
+                                                CP. 28450,
+                                                Tel: 4525054145
+                                            
+                                    </div>
+                                    <br>
+                                    
+                                    <div class="box-footer">
+                                        <ul>
+                                            <li><a href="#">Editar </a></li>
+                                            <li><a href="#">Descartar </a></li>
+                                            <li><a href="#">Predeterminado </a></li>
+                                        </ul>
+                                    </div>
+                                    </div>   
+                                </div> -->
+                               
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 p-b-30 ">
+                            <div class="icon-center">
+                                <img src="images/icons/icono_facturacion.png" alt="logo-Facturacion" class="img icon-logos-grande">
+                            </div>
+
+                           
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>    
+        </div>
+    </div>
+    <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      xfbml            : true,
+      version          : 'v3.3'
+    });
+  };
+
+  (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/es_LA/sdk/xfbml.customerchat.js';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+<!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '342958480063107');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=342958480063107&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Facebook Pixel Code -->
+</section>

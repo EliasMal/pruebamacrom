@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<P>
+	<business>
+		<id_company>SNBX</id_company>
+		<id_branch>01SNBXBRNCH</id_branch>
+		<user>SNBXUSR01</user>
+		<pwd>SECRETO</pwd>
+	</business>
+	<url>
+		<reference>3</reference>
+		<amount>2100.00</amount>
+		<moneda>MXN</moneda>
+		<canal>W</canal>
+		<omitir_notif_default>1</omitir_notif_default>
+		<st_correo>1</st_correo>
+		<mail_cliente>gforce3002@gmail.com</mail_cliente>
+	</url>
+</P>

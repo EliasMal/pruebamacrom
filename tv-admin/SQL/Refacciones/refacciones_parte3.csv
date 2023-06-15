@@ -1,0 +1,1000 @@
+_id,Clave,Producto,_idCategoria,_idMarca,Precio1,Precio2,No_parte,Descripcion,Modelo,Anios,RefaccionNueva,RefaccionOferta,color,Estatus,Alto,Largo,Ancho,Peso,id_proveedor
+2000,9921,Sensor Detonacion Gol,5,2,241.99,0,030 905 377 c,Sensor Detonacion Gol Marca Bruck,51,56,0,0,#aa0009,1,0,0,0,0,0
+2001,1809,Bulbo Sensor Temperatura Golf A2,5,2,43.99,0,025 906 041a,Bulbo Sensor Temperatura Golf A2 Original,52,57,0,0,#aa0009,1,4,4,6,0.1,0
+2002,1809,Bulbo Sensor Temperatura Golf A3,5,2,43.99,0,025 906 041a,Bulbo Sensor Temperatura Golf A3 Original,68,65,0,0,#aa0009,1,4,4,6,0.1,0
+2003,9012,Sensor Flujo Aire Golf A3 2.0L,5,2,734.99,0,vw9a3-sf410,Sensor Flujo Aire Golf A3 2.0L Marca Herta,68,65,0,0,#aa0009,1,0,0,0,0,0
+2004,2069,Calavera Golf A4 Ambar Izquierda,4,2,757.24,0,FCNV0332,Calavera Golf A4 Ambar Izquierda Marca Forcetec,69,66,0,0,#aa0009,1,0,0,0,0,39
+2005,2068,Calavera Golf A4 Ambar Derecha,4,2,662.99,0,FCNV0331,Calavera Golf A4 Ambar Derecha Marca Forcetec,69,66,0,0,#aa0009,1,0,0,0,0,39
+2006,10021,Sonda LAMBDA Golf A4,5,2,543.23,0,06a 906 262 f,Sonda LAMBDA Golf A4 2 Litros 99-03 Despues del Catalizador Marca Euro España,69,66,0,0,#aa0009,1,0,0,0,0,0
+2007,9921,Sensor Detonacion Golf A4,5,2,241.99,0,030 905 377 c,Sensor Detonacion Golf A4 Marca Bruck,69,66,0,0,#aa0009,1,0,0,0,0,0
+2008,7433,Sensor Velocimetro Golf A3 Automatico,5,2,97.67,0,357 919 149,Sensor Velocimetro Golf A3 Automatico Marca Bruck,68,65,0,0,#aa0009,1,10,4,4,0.05,0
+2009,7432,Sensor Velocimetro Golf A4 Estandar,5,2,138,0,191 919 149 e,Sensor Velocimetro Golf A4 Estandar Marca Voltmax,69,66,0,0,#aa0009,1,0,0,0,0,0
+2010,7425,Sensor Picado Golf A3 2.0,5,2,169,0,054 905 377 g,Sensor Picado Golf A3 2.0 Marca Bruck,68,57,0,0,#aa0009,1,0,0,0,0,0
+2011,7417,Sensor Flujo Aire Golf A4,5,2,691.99,0,06a 906 461 g,Sensor Flujo Aire Golf A4 Marca Herta,69,66,0,0,#aa0009,1,16,12.5,16,0.3,0
+2012,7425,Sensor Picado Jetta A3 2.0,5,2,169,0,054 905 377 g,Sensor Picado Jetta A3 2.0 Marca Bruck,54,16,0,0,#aa0009,1,0,0,0,0,0
+2013,7433,Sensor Velocimetro Jetta A3 Automatico,5,2,97.67,0,357 919 149,Sensor Velocimetro Jetta A3 Automatico Marca Bruck,54,16,0,0,#aa0009,1,10,4,4,0.05,0
+2014,9012,Sensor Flujo Aire Jetta A3 2.0,5,2,734.99,0,vw9a3-sf410,Sensor Flujo Aire Jetta A3 2.0 Marca Herta,54,16,0,0,#aa0009,1,0,0,0,0,0
+2015,7417,Sensor Flujo Aire Jetta A4,5,2,691.99,0,06a 906 461 g,Sensor Flujo Aire Jetta A4 Marca Herta,55,17,0,0,#aa0009,1,16,12.5,16,0.3,0
+2016,7432,Sensor Velocimetro Jetta A4 Estandar,5,2,138,0,191 919 149 E,Sensor Velocimetro Jetta A4 Estandar Marca Voltmax,55,17,0,0,#aa0009,1,0,0,0,0,0
+2017,9921,Sensor Detonacion Jetta A4,5,2,241.99,0,030 905 377 C,Sensor Detonacion Jetta A4 Marca Bruck,55,17,0,0,#aa0009,1,0,0,0,0,0
+2018,10021,Sonda LAMBDA Jetta A4 2.0,5,2,543.23,0,06a 906 262 F,Sonda LAMBDA Jetta A4 2.0 99-03 Despues del Catalizador Marca Euro España,55,17,0,0,#aa0009,1,0,0,0,0,0
+2019,6831,Relay Bomba Gasolina Jetta A5,5,2,115,0,191 906 383,Relay Bomba Gasolina Jetta A5 Original,56,18,0,0,#aa0009,1,0,0,0,0,0
+2020,9921,Sensor Detonacion Lupo,5,2,241.99,0,030 905 377 c,Sensor Detonacion Lupo Marca Bruck,58,58,0,0,#aa0009,1,0,0,0,0,0
+2021,11063,Bulbo Reversa March,5,1,92.99,0,3200500qae,Bulbo Reversa March Marca Voltmax,27,34,0,0,#aa0009,1,0,0,0,0,26
+2022,8153,Sensor Arbol Levas Matiz,5,3,134,0,96325867,Sensor Arbol Levas Matiz Marca Voltmax,18,73,0,0,#aa0009,1,0,0,0,0,0
+2023,10304,Sonda LAMBDA Chevy C2 4 Cables,5,3,589,0,SO-25360991,Sonda LAMBDA Chevy C2 4 Cables (Sensor Flujo Aire) Marca Voltmax,5,6,0,0,#aa0009,1,0,0,0,0,0
+2024,12448,Inyector Chevy TBI,5,3,830,0,17111979-tj13,Inyector Chevy 1.6 1.4 TBI Original,5,6,0,0,#aa0009,1,0,0,0,0,0
+2025,13549,Sensro Detonacion Corsa,5,3,196,0,93313158,Sensro Detonacion Corsa Marca Voltmax,16,70,0,0,#aa0009,1,0,0,0,0,0
+2026,13557,Sensor Velocimetro Corsa,5,3,217.99,0,9114603,Sensor Velocimetro Corsa Marca Voltmax,5,6,0,0,#aa0009,1,0,0,0,0,0
+2027,13559,Sonda LAMBDA Corsa 06-,5,3,750.84,0,93310435,Sonda LAMBDA Corsa 06- (Sensor Oxigeno) Marca Voltmax,16,70,0,0,#aa0009,1,0,0,0,0,0
+2028,13574,Sensor MAP Corsa 04-11,5,3,212,0,93313154,Sensor MAP Corsa 04-11 Marca Voltmax,16,71,0,0,#aa0009,1,0,0,0,0,0
+2029,13528,Sensor Flujo Aire ick up D21,5,1,675,0,AFH55M-12NK,Sensor Flujo Aire ick up D21 Marca Voltmax,30,40,0,0,#aa0009,1,0,0,0,0,0
+2030,13581,Sensor Flujo Aire Pick up D21,5,1,685,0,AFH55M-10,Sensor Flujo Aire Pick up D21 Marca Voltmax,30,40,0,0,#aa0009,1,0,0,0,0,0
+2031,11131,Sensor TPS Pick up D22,5,1,269,0,SERA483-05,Sensor TPS Pick up D22 (Potenciometro) Marca VOoltmax,31,93,0,0,#aa0009,1,0,0,0,0,0
+2032,12355,Sensor Flujo Aire March,5,1,602.1,0,22680-6n21a,Sensor Flujo Aire March Marca Voltmax,27,34,0,0,#aa0009,1,0,0,0,0,0
+2033,9060,Sensor Map Matiz 04-15,5,3,179.99,0,25184083,Sensor Map Matiz 1.0 04-15 Marca Voltmax,18,73,0,0,#aa0009,1,0,0,0,0,0
+2034,11377,Inyector Matiz 05-15,5,3,339.06,0,96620255,Inyector Matiz 05-15 Marca Bruck,18,73,0,0,#aa0009,1,0,0,0,0,0
+2035,13299,Sensor Cigueñal Matiz,5,3,246,0,96325868,Sensor Cigueñal Matiz Original,18,73,0,0,#aa0009,1,0,0,0,0,0
+2036,9327,Sensor Cigueñal Platina Automatico 05-08,5,1,152.37,0,23731-00qac,Sensor Cigueñal Platina Automatico 05-08 Marca Euro España,33,44,0,0,#aa0009,1,0,0,0,0,0
+2037,10219,Sensor Velocimetro Platina Automatico,5,1,83.99,0,2501000qaa,Sensor Velocimetro Platina Automatico Marca Bruck,33,44,0,0,#aa0009,1,21,15,0.5,0.05,0
+2038,7428,Sensor Tierra Pointer,5,2,112.99,0,026 123 104 5,Sensor Tierra Pointer Marca EGP,61,62,0,0,#aa0009,1,7.5,7,4,0.05,0
+2039,7516,Sonda LAMBDA Pointer,5,2,1349.99,0,0 258 003 813,Sonda LAMBDA Pointer (Sensor Oxigeno) Marca Bosch,61,62,0,0,#aa0009,1,0,0,0,0,0
+2040,10023,Sonda LAMBDA Pointer,5,2,610.63,0,377 906 265 b,Sonda LAMBDA Pointer Marca Euro España,61,62,0,0,#aa0009,1,0,0,0,0,0
+2041,7432,Sensor Velocimetro Polo Estandar,5,2,138,0,191 919 149 e,Sensor Velocimetro Polo Estandar Marca Bruck,75,94,0,0,#aa0009,1,0,0,0,0,0
+2042,9921,Sensor Detonacion Polo,5,2,241.99,0,030 905 377 c,Sensor Detonacion Polo Marca Bruck,75,94,0,0,#aa0009,1,0,0,0,0,0
+2043,12579,Valvula Calefaccion Polo,2,2,39.99,0,6q0121065n,Valvula Calefaccion Polo Marca Bruck,75,94,0,0,#aa0009,1,0,0,0,0,0
+2044,8153,Sensor Arbol Levas Spark,5,3,134,0,96325867,Sensor Arbol Levas Spark Marca Voltmax,20,75,0,0,#aa0009,1,0,0,0,0,0
+2045,11978,Sonda LAMBDA Spark 11-13,5,3,485.47,0,96418965,Sonda LAMBDA Spark 11-13 (Sensor Oxigeno) Marca Voltmax,20,75,0,0,#aa0009,1,0,0,0,0,0
+2046,13299,Sensor Cigueñal Spark,5,3,246,0,96325868,Sensor Cigueñal Spark Original,20,75,0,0,#aa0009,1,0,0,0,0,0
+2047,12355,Sensor Flujo Aire Tiida 1.6,5,1,602.1,0,22680-6n12a,Sensor Flujo Aire Tiida 1.6 Marca Vooltmax,35,49,0,0,#aa0009,1,0,0,0,0,0
+2048,13549,Sensor Detonacion Tornado,5,3,196,0,93313158,Sensor Detonacion Tornado Marca Voltmax,21,76,0,0,#aa0009,1,0,0,0,0,0
+2049,13574,Sensor MAP Tornado -10,5,3,212,0,93313154,Sensor MAP Tornado -10 Marca Voltmax,21,76,0,0,#aa0009,1,0,0,0,0,0
+2050,7487,Sonda LAMBDA Tsuru III 3 Cables 03-04,5,1,624.99,0,ESNN0110,Sonda LAMBDA Tsuru III 3 Cables 03-04,83,105,0,0,#aa0009,1,0,0,0,0,0
+2051,2876,Cople Biela Mando Vocho,2,2,59.99,0,311 798 211 e,Cople Biela Mando Vocho Negro,64,67,0,0,#aa0009,1,6,6,5,0.1,4
+2052,7515,Sonda LAMBDA Vocho 93-98,5,2,625,0,SO-VW972,Sonda LAMBDA Vocho 93-98 Marca EGP,64,68,0,0,#aa0009,1,11,7,5,0.1,0
+2053,7516,Sonda LAMBDA Vocho 99-,5,2,1349.99,0,0 258 003 813,Sonda LAMBDA Vocho 99- Marca Bosch,64,68,0,0,#aa0009,1,0,0,0,0,0
+2054,7517,Sonda LAMBDA Vocho 99-,5,2,634.99,0,SO_VW813,Sonda LAMBDA Vocho 99- Marca EGP,64,68,0,0,#aa0009,1,11,9.5,5,0.15,0
+2055,10023,Sonda LAMBDA Vocho 99-,5,2,610.63,0,377 906 265 b,Sonda LAMBDA Vocho 99- Euro España,64,68,0,0,#aa0009,1,0,0,0,0,0
+2056,12579,Valvula Calefaccion Vento,2,2,39.99,0,6q0121065n,Valvula Calefaccion Vento Marca Bruck,65,69,0,0,#aa0009,1,0,0,0,0,0
+2057,1733,Bulbo Aceite Urvan,5,1,28,0,06a 919 081 b r,Bulbo Aceite Urvan Marca EGP,36,50,0,0,#aa0009,1,0,0,0,0,61
+2058,13581,Sensor Flujo Aire Tsuru III,5,1,685,0,afh55-m10,Sensor Flujo Aire Tsuru III Marca Voltmax,83,105,0,0,#aa0009,1,0,0,0,0,0
+2059,11978,Sonda LAMBDA Aveo 07-12,5,3,485.47,0,96418965,Sonda LAMBDA Aveo 07-12 (Sensor oxigeno) Marca Voltmax,15,38,0,0,#aa0009,1,0,0,0,0,0
+2060,11980,Sensor Cigueñal Aveo,5,3,159,0,25182450,Sensor Cigueñal Aveo Marca Bruck,15,38,0,0,#aa0009,1,0,0,0,0,0
+2061,13299,Sensor Cigueñal Aveo,5,3,246,0,96325868,Sensor Cigueñal Aveo Original,15,38,0,0,#aa0009,1,0,0,0,0,0
+2062,13429,Relay Intermitentes Aveo,5,3,112.99,0,96312545k,Relay Intermitentes Aveo Marca KORESATR,15,38,0,0,#aa0009,1,0,0,0,0,0
+2063,3949,Soporte Motor Vocho Chalupa,2,2,52,0,113 301 263,Soporte Motor Vocho Chalupa Tipo Original,64,67,0,0,#aa0009,1,14,5,5,0.2,0
+2064,7636,Soporte Motor Vocho Chalupa,2,2,47,0,113 301 263,Soporte Motor Vocho Chalupa Safety,64,67,0,0,#aa0009,1,14,5,5,0.2,0
+2065,12355,Sensor Flujo Aire Versa,5,1,602.1,0,22680-6n21a,Sensor Flujo Aire Versa Marca Voltmax,37,51,0,0,#aa0009,1,0,0,0,0,0
+2066,13546,Soporte Motor Versa Trasero,2,1,269,0,1136-9h0bsft,Soporte Motor Versa Trasero (huesito) Marca Safety,37,51,0,0,#aa0009,1,0,0,0,0,0
+2067,7571,Soporte Motor Atos Trasero,2,6,406.99,0,21850-05200,Soporte Motor Atos Trasero Marca Bruck,70,37,0,0,#aa0009,1,0,0,0,0,0
+2068,9574,Soporte Motor Atos Frontal 00-04,2,6,174.99,0,21840-02000,Soporte Motor Atos Frontal 00-04 Marca Safety,70,36,0,0,#aa0009,1,0,0,0,0,0
+2069,10305,Soporte Motor Atos Izquierdo 05-08,2,6,212,0,21830-05200,Soporte Motor Atos Izquierdo 05-08 Marca Bruck,70,37,0,0,#aa0009,1,0,0,0,0,0
+2070,11835,Soporte Motor Aveo Izquierdo,2,3,723.74,0,96535499,Soporte Motor Aveo Izquierdo Marca Bruck,15,38,0,0,#aa0009,1,24,20,12,3.35,0
+2071,12960,Soporte Motor Beetle 2.5,2,2,619.99,0,1K0-199-262SFT,Soporte Motor Beetle 2.5 Marca Safety,45,39,0,0,#aa0009,1,14,16,20,2,0
+2072,1741,Soporte Motor Bora,2,2,938.99,0,1K0 199 262AM,Soporte Motor Bora 2.5 Marca Bruck,4,5,0,0,#aa0009,1,14,16,20,2,0
+2073,12960,Soporte Motor Bora,2,2,619.99,0,1K0-199-262SFT,Soporte Motor Bora Marca Safety,4,5,0,0,#aa0009,1,14,16,20,2,0
+2074,12961,Soporte Transmicion Bora,2,2,275.6,0,1K0-199-855ASFT,Soporte Transmicion Bora Marca Safety,4,5,0,0,#aa0009,1,6,7,35,0.7,0
+2075,7590,Soporte Motor Caribe Grande,2,2,78.99,0,171 199 214G,Soporte Motor Caribe Grande Marca Bruck,47,22,0,0,#aa0009,1,8,8,6,0.3,0
+2076,12794,Soporte Motor Chevy Derecho Sin Aire,2,3,179.33,0,2778016,Soporte Motor Chevy Derecho Sin Aire Marca Grob,5,6,0,0,#aa0009,1,14,101,16,0.65,0
+2077,12795,Soporte Motor Chevy Trasero Con Aire 97-01,2,3,164.99,0,2778022,Soporte Motor Chevy Trasero Con Aire 97-01 Marca Grob,5,6,0,0,#aa0009,1,11,7,15,0.6,0
+2078,12796,Soporte Motor Chevy IZquierdo Sin Aire,2,3,168,0,2778020,Soporte Motor Chevy IZquierdo Sin Aire Marca Grob,5,6,0,0,#aa0009,1,13,13,20,0.7,0
+2079,12797,Soporte Motor Chevy Izquierdo Con Aire 97-01,2,3,149.99,0,2778021,Soporte Motor Chevy Izquierdo Con Aire 97-01 Marca Grob,5,6,0,0,#aa0009,1,17,10,13,0.7,0
+2080,12798,Soporte Motor Chevy Trasero Sin Aire,2,3,167,0,2778017,Soporte Motor Chevy Trasero Sin Aire Marca Grob,5,6,0,0,#aa0009,1,13,10,13,0.6,0
+2081,7601,Soporte Motor Combi Caracol,2,2,58.99,0,SO36,Soporte Motor Combi Caracol Economico,48,53,0,0,#aa0009,1,12,8,6,0.5,0
+2082,7656,Soporte Transmicion Combi 1600 Cuerno,2,2,88.99,0,s/n,Soporte Transmicion Combi 1600 Cuerno,48,53,0,0,#aa0009,1,11,10,5,0.35,0
+2083,13078,Soporte Motor Combi,2,2,75,0,983-199-321B,Soporte Motor Combi Marca Safety,4,5,0,0,#aa0009,1,8,9,12,0.5,0
+2084,3641,Soporte Motor Corsa Derecho,2,3,565.46,0,93302279,Soporte Motor Corsa Derecho Marca Bruck,16,70,0,0,#aa0009,1,15,18,12,2.15,0
+2085,6594,Soporte Transmicion Corsa Trasero,2,3,581.99,0,9302282,Soporte Transmicion Corsa Trasero Marca Bruck,16,70,0,0,#aa0009,1,15,19,13,1.3,0
+2086,9043,Soporte Transmision Corsa Superior Izquierdo,2,3,252.99,0,93302256,Soporte Transmision Corsa Superior Izquierdo Marca Bruck,16,70,0,0,#aa0009,1,25,14,5,0.65,0
+2087,10807,Soporte Transmision Corsa Inferior Izquierdo,2,3,184.99,0,93302287,Soporte Transmision Corsa Inferior Izquierdo Marca Bruck,16,70,0,0,#aa0009,1,8,21,4,0.45,0
+2088,12642,Soporte Transmision Corsa Trasero,2,3,319.11,0,93302282,Soporte Transmision Corsa Trasero Marca Safety,16,71,0,0,#aa0009,1,12,9,15,1.4,0
+2089,12641,Soporte Motor Corsa Frontal,2,3,254.35,0,93302281,Soporte Motor Corsa Frontal Marca Safety,16,71,0,0,#aa0009,1,15,9,22,1.15,0
+2090,5541,Soporte Transmision Pick up D21,2,1,135,0,11320-f4010,Soporte Transmision Pick up D21 Marca Safety,30,40,0,0,#aa0009,1,12,14,7,0.95,0
+2091,2660,Soporte Motor Pick Up D22 Derecho,2,1,207,0,11210-vj20a,Soporte Motor Pick Up D22 Derecho Marca Safety,31,93,0,0,#aa0009,1,,,,,0
+2092,4535,Soporte Transmision Pick Up D22,2,1,198,0,11320-02g0a,Soporte Transmision Pick Up D22 Marca Safety,31,93,0,0,#aa0009,1,12,14,7,1,0
+2093,10005,Soporte Motor Pick Up D22 Derecho,2,1,399,0,11210-13g00,Soporte Motor Pick Up D22 Derecho Original,31,93,0,0,#aa0009,1,17,15,9,1.2,0
+2094,4401,Soporte Motor Golf A2 Lateral de Reloj,2,2,184.99,0,191 199 262 A,Soporte Motor Golf A2 Lateral de Reloj Marca Bruck,52,57,0,0,#aa0009,1,14,14,12,1.1,0
+2095,5199,Soporte Motor Golf A4 Izquierdo Automatico,2,2,492,0,1j0 199 555 ah,Soporte Motor Golf A4 Izquierdo Automatico Marca Bruck,69,66,0,0,#aa0009,1,20,20,14,1.85,0
+2096,7612,Soporte Motor Golf A2 Lateral Reloj,2,2,146.99,0,191 199 262,Soporte Motor Golf A2 Lateral Reloj Marca Safety,52,57,0,0,#aa0009,1,14,11,9,1.05,0
+2097,7619,Soporte Motor Golf A4 Izquierdo Automatico,2,2,468.98,0,1j0 199 555 ah,Soporte Motor Golf A4 Izquierdo Automatico Marca Herta,69,66,0,0,#aa0009,1,18,20,11,1.85,0
+2098,7621,Soporte Motor Golf A4 Izquierdo Estandar,2,2,477,0,1j0 199 555 aj,Soporte Motor Golf A4 Izquierdo Estandar Marca Hertra,69,66,0,0,#aa0009,1,18,20,11,1.38,0
+2099,7666,Soporte Transmision Golf A2 Vasito,2,2,115,0,191 199 402 c,Soporte Transmision Golf A2 Vasito Marca Safety,52,57,0,0,#aa0009,1,10,10,15,0.55,0
+2100,7666,Soporte Transmision Golf A3 Vasito,2,2,115,0,191 199 402 c,Soporte Transmision Golf A3 Vasito Marca Safety,68,65,0,0,#aa0009,1,10,10,15,0.55,0
+2101,7667,Soporte Transmision Golf A4 Automatico (Martillo),2,2,421.99,0,1j0 199 851n,Soporte Transmision Golf A4 Automatico (Martillo) Marca Bruck,69,66,0,0,#aa0009,1,7,16,37,1.3,0
+2102,13278,Soporte Transmision Golf A4 Estandar (Martillo),2,2,386,0,1j0 199 851m,Soporte Transmision Golf A4 Estandar (Martillo) Marca Safety,69,66,0,0,#aa0009,1,7,16,37,1.3,0
+2103,12948,Soporte Motor Golf A4 Derecho,2,2,598,0,1j0 199 262 bsft,rte Motor Golf A4 Derecho Estanda y Automatico Marca Safety,69,66,0,0,#aa0009,1,16,14,20,2.1,0
+2104,13413,Soporte Motor Golf A3 Lateral,2,2,265,0,1h0 199 262 a,Soporte Motor Golf A3 Lateral Marca Safety,68,65,0,0,#aa0009,1,15,15,12,1.75,0
+2105,13578,Soporte Motor Golf A3 Central,2,2,230,0,1h0 199 609b,Soporte Motor Golf A3 Central Marca Safety,68,65,0,0,#aa0009,1,12,12,15,4.2,0
+2106,11333,Soporte Motor I10 Frontal Derecho,2,6,755.99,0,3663,Soporte Motor I10 Frontal Derecho,71,87,0,0,#aa0009,1,30,26,15,2.15,0
+2107,4401,Soporte Motor Jetta A2 Lateral Reloj,2,2,184.99,0,191 199 262 a,Soporte Motor Jetta A2 Lateral Reloj Marca Bruck,53,15,0,0,#aa0009,1,14,14,12,1.1,0
+2108,7612,Soporte Motor Jetta A2 Laretal Reloj,2,2,146.99,0,191 199 262,Soporte Motor Jetta A2 Laretal Reloj Marca Safety,53,15,0,0,#aa0009,1,14,11,9,1.05,0
+2109,7666,Soporte Transmision Jetta A2 Vasito,2,2,115,0,191 199 402 c,Soporte Transmision Jetta A2 Vasito Marca Safety,53,15,0,0,#aa0009,1,10,10,15,0.55,0
+2110,7666,Soporte Transmision Jetta A3 Vasito,2,2,115,0,191 199 402 c,Soporte Transmision Jetta A3 Vasito Marca Safety,54,16,0,0,#aa0009,1,10,10,15,0.55,0
+2111,13578,Soporte Motor Jetta A3 Central,2,2,230,0,1h0 199 609b,Soporte Motor Jetta A3 Central Marca Safety,54,16,0,0,#aa0009,1,12,12,15,1.2,0
+2112,5199,Soporte Motor Jetta A4 Izquierdo Automatico,2,2,492,0,1j0 199 262bsft,Soporte Motor Jetta A4 Izquierdo Automatico Marca Bruck,55,17,0,0,#aa0009,1,16,14,20,2.1,0
+2113,7619,Soporte Motor Jetta A4 Izquierdo Automatico,2,2,468.98,0,1j0 199 555 ah,Soporte Motor Jetta A4 Izquierdo Automatico Marca Herta,55,17,0,0,#aa0009,1,18,20,11,1.85,0
+2114,7621,Soporte Motor Jetta A4 Izquierdo Estandar,2,2,477,0,1j0 199 555 aj,Soporte Motor Jetta A4 Izquierdo Estandar Marca Herta,55,17,0,0,#aa0009,1,18,20,11,1.38,0
+2115,7667,Soporte Transmision Jetta A4 Automatico (Martillo),2,2,421.99,0,1j0 199 851n,Soporte Transmision Jetta A4 Automatico (Martillo) Marca Bruck,55,17,0,0,#aa0009,1,7,16,37,1.3,0
+2116,12948,Soporte Motor Jetta A4 Derecho,2,2,598,0,1j0 199 262bsft,Soporte Motor Jetta A4 Derecho Estanar y Automatico Marca Safety,55,17,0,0,#aa0009,1,14,14,20,2.1,0
+2117,13278,Soporte Transmision Jetta A4 Estandar (Martillo),2,2,386,0,1j0 199 851m,Soporte Transmision Jetta A4 Estandar (Martillo) Marca Safety,55,17,0,0,#aa0009,1,7,16,37,1.3,0
+2118,1741,Soporte Motor Jetta A6,2,2,938.99,0,1k0 199 262 am,Soporte Motor Jetta A6 Marca Bruck,57,19,0,0,#aa0009,1,14,16,20,2,0
+2119,7623,Soporte motor Passat 88-92 Lateral Derecho,2,2,579,0,535 199 262,Soporte motor Passat 88-92 Lateral Derecho Aleman,59,59,0,0,#aa0009,1,22,12,12,1.6,0
+2120,12960,Soporta Motor Jetta A6,2,2,619.99,0,1k0 199 262sft,Soporta Motor Jetta A6 Marca Safety,57,19,0,0,#aa0009,1,14,16,20,2,0
+2121,12961,Soporte Transmision Jetta A6 Estandar,2,2,275.6,0,1k0 199 855aft,Soporte Transmision Jetta A6 Estandar Marca Safety,57,19,0,0,#aa0009,1,6,7,35,0.7,0
+2122,13546,Soporte Motor March Trasero (Huesito),2,1,269,0,1136-9hlobsft,Soporte Motor March Trasero (Huesito) Marca Safety,27,34,0,0,#aa0009,1,16,12,7,1,0
+2123,12524,Soporte Motor Matiz 03-12 Trasero,2,3,217,0,27780872,Soporte Motor Matiz 03-12 Trasero Marca Grob,18,73,0,0,#aa0009,1,18,9,7,0.85,0
+2124,12525,Soporte Transmision Matiz 03-12,2,3,319,0,2778065,Soporte Transmision Matiz 03-12 Marca Grob,18,73,0,0,#aa0009,1,14,14,23,1.25,0
+2125,7626,Soporte Motor Platina Hidraulico Derecho,2,1,338.99,0,11210-00qnk,Soporte Motor Platina Hidraulico Derecho Marca Safety,33,44,0,0,#aa0009,1,12,13,18,1.5,0
+2126,9028,Valvula Relenty Platina,5,1,405,0,026 906 247,Valvula Relenty Platina Marca Magneti Mareli Punta Plastico,33,44,0,0,#aa0009,1,0,0,0,0,0
+2127,9028,Valvula Relenty Pointer,5,2,405,0,026 906 247,Valvula Relenty Pointer Marca Magneti Mareli Punta Plastico,61,62,0,0,#aa0009,1,0,0,0,0,0
+2128,13078,Soporte Motor Pointer,2,2,75,0,893 199 381B,Soporte Motor Pointer Marca Safety,61,62,0,0,#aa0009,1,8,9,12,0.5,0
+2129,1329,Soporte Motor Sentra 07-12 Derecho,2,1,639.99,0,11210-ET01C,Soporte Motor Sentra 07-12 Derecho Marca Safety,34,47,0,0,#aa0009,1,23,24,18,3.4,0
+2130,4515,Soporte Transmision Sentra 01-12,2,1,110,0,11220-ET00A,Soporte Transmision Sentra 01-12 Marca Safety,34,47,0,0,#aa0009,1,0,0,0,0,0
+2131,6295,Soporte Motor Sentra 07-12 Trasero,2,1,230,0,11360-ET00a,Soporte Motor Sentra 07-12 Trasero,34,45,0,0,#aa0009,1,30,10,7,1,0
+2132,7632,Soporte Motor Sentra 01-06 Derecho,2,1,199.99,0,11210-7z0nk,Soporte Motor Sentra 01-06 Derecho Marca Safety,34,46,0,0,#aa0009,1,17,10,12,1.05,0
+2133,7677,Soporte Transmision Sentra 01-06,2,1,145,0,11320-4z0nk,Soporte Transmision Sentra 01-06 Marca Safety,34,46,0,0,#aa0009,1,10,7,15,0.8,0
+2134,12880,Soporte Motor Sentra 13-19 Superior Derecho,2,1,373.99,0,11350-3sg0asft,Soporte Motor Sentra 13-19 Superior Derecho Marca Safety,34,48,0,0,#aa0009,1,10,7,15,0.85,0
+2135,12922,Soporte Transmision Sentra 01-06 Estandar,2,1,299.99,0,11220-42015sft,Soporte Transmision Sentra 01-06 Estandar Marca Safety,34,46,0,0,#aa0009,1,15,21,15,1.85,0
+2136,13421,Soporte Motor Sentra 01-06 Derecho,2,1,337,0,7038/dai,Soporte Motor Sentra 01-06 Derecho Marca DAI,34,46,0,0,#aa0009,1,14,12,11,0.95,0
+2137,13521,Soporte Motor Sentra 07-12 Trasero,2,1,348.99,0,7219/dai,Soporte Motor Sentra 07-12 Trasero Marca DAI,34,47,0,0,#aa0009,1,19,26,11,1.05,0
+2138,13526,Soporte Motor Sentra 01-06 Trasero,2,1,62.99,0,7010/DAI,Soporte Motor Sentra 01-06 Trasero Marca DAI,34,46,0,0,#aa0009,1,15,17,16,0.95,0
+2139,12524,Soporte Motor Spark 11-15,2,3,217,0,2778072,Soporte Motor Spark 11-15 Marca Grob,20,75,0,0,#aa0009,1,18,9,7,0.85,0
+2140,883,Soporte Motor Tsuru III Delantero Derecho,2,1,233.99,0,6686/DAI,Soporte Motor Tsuru III Delantero Derecho Marca DAI,83,105,0,0,#aa0009,1,13,11,10,0.8,0
+2141,883,Soporte Motor Tsuru III Delantero Derecho,2,1,233.99,0,6686/DAI,Soporte Motor Tsuru III Delantero Derecho Marca DAI,83,105,0,0,#aa0009,1,13,11,10,0.8,0
+2142,4302,Soporte Motor Tsuru III Frontal,2,1,101.99,0,11350-50y00,Soporte Motor Tsuru III Frontal Marca Safety,83,105,0,0,#aa0009,1,13,6,4,0.2,0
+2143,7577,Soporte Motor Tsuru III Delantero Derecho,2,1,145,0,11210-f4100,Soporte Motor Tsuru III Delantero Derecho Marca Safety,83,105,0,0,#aa0009,1,13,9,17,1.1,0
+2144,7580,Soporte Motor Tsuru III Delantero Izquierdo,2,1,204.99,0,11220-f4101,Soporte Motor Tsuru III Delantero Izquierdo Marca Safety,83,105,0,0,#aa0009,1,12,9,20,1.3,0
+2145,7583,Soporte Motor Tsuru III Trasero,2,1,117.99,0,11320-0m002,Soporte Motor Tsuru III Trasero Marca Safety,83,105,0,0,#aa0009,1,7,17,9,0.7,0
+2146,7769,Horquilla Suspencion Tsuru III Izquierda,3,1,370,0,54501-52y10sft,Horquilla Suspencion Tsuru III Izquierda Marca Safety,83,105,0,0,#aa0009,1,55,17,10,3.1,0
+2147,7812,Horquilla Suspencion Tsuru III Derecha,3,1,370,0,54500-52y10sft,Horquilla Suspencion Tsuru III Derecha Marca Safety,83,105,0,0,#aa0009,1,55,17,10,3.1,0
+2148,9514,Soporte Mototr Tsuru III Delantero Izquierdo,2,1,218.99,0,11220-f4101,Soporte Mototr Tsuru III Delantero Izquierdo Marca Herta,83,105,0,0,#aa0009,1,20,15,25,1.2,0
+2149,10239,Soporte Motor Tsuru III Frontal (Hueso),2,1,145.99,0,11350-41b00,Soporte Motor Tsuru III Frontal (Hueso) Original,83,105,0,0,#aa0009,1,13,6,4,0.2,0
+2150,10853,Soporte Motor Tsuru III Repuesto Derecho/Izquierdo,2,1,59.99,0,1941/11320-0mo,Soporte Motor Tsuru III Repuesto Derecho/Izquierdo Marca Safety,83,105,0,0,#aa0009,1,8,8,7,0.35,0
+2151,12423,Soporte Motor Tsuru III Trasero,2,1,290,0,11320-0m002,Soporte Motor Tsuru III Trasero Original,83,105,0,0,#aa0009,1,16,9,5,0.7,0
+2152,12905,Soporte Motor Tsuru III Delantero Izquierdo,2,1,540,0,11210-f4101,Soporte Motor Tsuru III Delantero Izquierdo Original,83,105,0,0,#aa0009,1,18,20,10,1.2,0
+2153,13524,Soporte Motor Tsuru III Delantero Izquierdo,2,1,515,0,6688/DAI,Soporte Motor Tsuru III Delantero Izquierdo Marca DAI,83,105,0,0,#aa0009,1,18,22,9,1.4,0
+2154,7622,Soporte Motor Hormiga,2,2,68.99,0,s/n,Soporte Motor Hormiga Sedan,64,68,0,0,#aa0009,1,10,10,5,0.55,0
+2155,7675,Soporte Transmision Vocho 1600,2,2,90,0,311 301 265 B,Soporte Transmision Vocho 1600,64,68,0,0,#aa0009,1,0,0,0,0,0
+2156,13266,Soprte Transmision Versa Izquierdo,2,1,213.99,0,11220-1h0bsft,Soprte Transmision Versa Izquierdo Marca Safety,37,51,0,0,#aa0009,1,7,8,18,0.55,0
+2157,3060,Soporte Motor Tiida Izquierdo,2,1,100,0,11220-el50a,Soporte Motor Tiida Izquierdo 1.8 06-18 Marca Safety,35,49,0,0,#aa0009,1,0,0,0,0,0
+2158,5160,Soporte Motor Tiida Trasero,2,1,174.99,0,11360-el00a,Soporte Motor Tiida Trasero Marca Safety,35,49,0,0,#aa0009,1,6,10,28,0.9,0
+2159,11403,Soporte Motor Tiida Superior Derecho,2,1,194.99,0,11350-el00a,Soporte Motor Tiida Superior Derecho Marca Safety,35,49,0,0,#aa0009,1,6,8,24,0.9,0
+2160,13026,Soporte Motor Tiida Derecho,2,1,410,0,11210-el01b,Soporte Motor Tiida Derecho Marca Safety,35,49,0,0,#aa0009,1,13,14,23,2.45,0
+2161,13309,Soporte Motor Tiida Frontal Derecho,2,1,483,0,11210-ed50bsft,Soporte Motor Tiida Frontal Derecho Marca Safety,35,49,0,0,#aa0009,1,14,12,22,2.1,0
+2162,13422,Soporte Motor Tiida Superior,2,1,565,0,7203/dai,Soporte Motor Tiida Superior Marca DAI,35,49,0,0,#aa0009,1,8,10,24,1.3,0
+2163,13525,Soporte Motor Tiida Trasero,2,1,474.99,0,7196/DAI,Soporte Motor Tiida Trasero Marca DAI,35,49,0,0,#aa0009,1,18,9,24,0.9,0
+2164,13525,Soporte Motor Tiida Trasero,2,1,474.99,0,7196/DAI,Soporte Motor Tiida Trasero Marca DAI,35,49,0,0,#aa0009,1,18,9,24,0.9,0
+2165,13598,Soporte Motor Tiida Superior Derecho,2,1,691.99,0,11350-El00c,Soporte Motor Tiida Superior Derecho,35,49,0,0,#aa0009,1,7,8,14,0.9,0
+2166,7670,Soporte Transmision Platina Estandar/Automatico,2,1,194.99,0,11320-00qaf,Soporte Transmision Platina Estandar/Automatico de Fiero Marca Safety,33,44,0,0,#aa0009,1,5,9,27,0.8,0
+2167,9355,Soporte Transmision Platina Estandar (Repuesto),2,1,81,0,1122000qab,Soporte Transmision Platina Estandar (Repuesto) Marca Bruck,33,44,0,0,#aa0009,1,6,9,15,0.25,0
+2168,11204,Soporte Transmision Platina Estandar/Automatico,2,1,275.99,0,1132000qaa,Soporte Transmision Platina Estandar/Automatico Aluminio Marca Burck,33,44,0,0,#aa0009,1,6,10,27,0.4,0
+2169,13522,Soporte Transmision Platina Estandar/Automatico,2,1,710,0,7007/DAI,Soporte Transmision Platina Estandar/Automatico Aluminio Marca DAI,33,44,0,0,#aa0009,1,9,18,21,0.5,0
+2170,10276,Soporte Motor Matiz G1 Trasero Derecho,2,3,309.99,0,96322963,Soporte Motor Matiz G1 Trasero Derecho Marca Bruck,18,73,0,0,#aa0009,1,16,15,15,1.45,0
+2171,13266,Soporte Transmision March Izquierdo,2,1,213.99,0,11220-1ha0bsft,Soporte Transmision March Izquierdo Marca Safety,27,34,0,0,#aa0009,1,7,8,18,0.55,0
+2172,6530,Polea Direccion Hidraulica Golf A2,2,2,64.9,0,027 145 255,Polea Direccion Hidraulica Golf A2,52,57,0,0,#aa0009,1,0,0,0,0,0
+2173,6589,Pistones Pick Up D21 Juego 020,2,1,810,0,ep-ns01-020,Pistones Pick Up D21 Juego 020 Marca Top Engine,30,40,0,0,#aa0009,1,11,22,21,2.2,0
+2174,12952,Pistones Pick up D21 Juego 20,2,1,119,0,822-20,Pistones Pick up D21 Juego 20 Marca Moresa,30,40,0,0,#aa0009,1,9,21,21,2.15,0
+2175,12753,Pistones Pick Up D21 Juego 30,2,1,1019.99,0,822-30,Pistones Pick Up D21 Juego 30 Marca Moresa,30,40,0,0,#aa0009,1,9,21,21,2.15,0
+2176,7671,Soporte Transmision Corsar Estandar,2,2,80,0,811 399 151b,Soporte Transmision Corsar Estandar,79,98,0,0,#aa0009,1,7,9,10,0.3,0
+2177,5942,Pistones Atos 1.0  Estandar,2,6,525,0,P2341-std,Pistones Atos 1.0  Estandar Marca Diamond,70,37,0,0,#aa0009,1,7,17,17,0.85,0
+2178,6029,Pistones Atos 1.0 20,2,6,525,0,p2341-020,Pistones Atos 1.0 Marca Diamond en 20,70,36,0,0,#aa0009,1,7,17,17,0.85,0
+2179,6393,Pistones Atos 1.0 en 30,2,6,525,0,ep-cr04-030,Pistones Atos 1.0 en 30 Marca Top Engine,70,36,0,0,#aa0009,1,10,21,21,0.95,0
+2180,6394,Pistones Atos 1.0 En Estandar,2,6,525,0,ep-cr04-std,Pistones Atos 1.0 En Estandar Marca Top Engine,70,36,0,0,#aa0009,1,10,21,21,0.95,0
+2181,6395,Pistones Atos 1.1 En 20,2,6,595.99,0,92342-020,Pistones Atos 1.1 En 20 Marca Diamon,70,37,0,0,#aa0009,1,7,17,17,0.9,0
+2182,6396,Pistones Atos 1.1 en 30,2,6,595.99,0,92342-30,Pistones Atos 1.1 en 30 Marca Diamond,70,36,0,0,#aa0009,1,7,17,17,0.9,0
+2183,6397,Pistones Atos 1.1 en Estandar,2,6,595.99,0,p2342-std,Pistones Atos 1.1 en Estandar Marca Diamond,70,36,0,0,#aa0009,1,7,17,17,0.9,0
+2184,10282,Metal Biela Caribe 1800 en Estandar,2,2,140,0,68150CP-STD,Metal Biela Caribe 1800 en Estandar Marca Federal,47,22,0,0,#aa0009,1,14,7,3,0.15,0
+2185,10890,Metal Biela Caribe 1800 en 10,2,2,140,0,68150cp-010,Metal Biela Caribe 1800 en 10 Marca Federal Mogul,47,22,0,0,#aa0009,1,3,7,14,0.2,0
+2186,10891,Metal Biela Caribe 1800 en 20,2,2,140,0,68150cp-020,Metal Biela Caribe 1800 en 20 Marca Federal Mogul,47,22,0,0,#aa0009,1,3,7,14,0.2,0
+2187,11981,Metal Biela Caribe 1800 en 30,2,2,140,0,68150cp-030,Metal Biela Caribe 1800 en 30 Marca Federal Mogul,47,22,0,0,#aa0009,1,3,7,14,0.2,0
+2188,3051,Metal Biela Chevy en 10,2,3,184.99,0,4210cp-010,Metal Biela Chevy en 10 Marca Federal Mogul,5,6,0,0,#aa0009,1,3,7,14,0.2,0
+2189,3055,Metal Biela Chevy en Estandar,2,3,189.82,0,4210cp-std,Metal Biela Chevy en Estandar Marca Federal Mogul,5,6,0,0,#aa0009,1,3,7,14,0.2,0
+2190,3412,Metal Biela Chevy en 20,2,3,184.99,0,4210cp-020,Metal Biela Chevy en 20 Marca Federal Mogul,5,6,0,0,#aa0009,1,3,7,14,0.2,0
+2191,9238,Metal Biela Chevy en 20,2,3,168,0,4-4210.020,Metal Biela Chevy en 20 Marca Diamond,5,6,0,0,#aa0009,1,3,7,14,0.2,0
+2192,12713,Pistones Chevy 1.6 en Estandar,2,3,784.99,0,871-std,Pistones Chevy 1.6 en Estandar Marca Moresa,5,6,0,0,#aa0009,1,9,19,18,1.5,0
+2193,13576,Pistones Chevy 1.4 en 20,2,3,764.99,0,870-20,Pistones Chevy 1.4 en 20 Marca Moresa,5,6,0,0,#aa0009,1,0,0,0,0,0
+2194,13577,Pistones Chevy 1.4 en 30,2,3,764.99,0,870-30,Pistones Chevy 1.4 en 30 Marca Moresa,5,6,0,0,#aa0009,1,10,18,18,1.55,0
+2195,13661,Pistones Chevy 1.4 en Estandar,2,3,764.99,0,870-std,Pistones Chevy 1.4 en Estandar Marca Moresa,5,6,0,0,#aa0009,1,10,18,18,1.55,0
+2196,249,Metal Biela Pick Up D21 2.4 en 10,2,1,182,0,4460p-010,Metal Biela Pick Up D21 2.4 en 10 Marca Federal Mogul,30,40,0,0,#aa0009,1,7,3,14,0.2,0
+2197,393,Metal Biela Pick Up D21 2.4 en 30,2,1,186.37,0,4460p-030,Metal Biela Pick Up D21 2.4 en 30 Marca Federal Mogul,30,40,0,0,#aa0009,1,3,7,14,0.2,0
+2198,12754,Pistones Pick Up D21 12 Valvulas en Estandar,2,1,1019.99,0,822-std,Pistones Pick Up D21 12 Valvulas en Estandar Marca Moresa,30,40,0,0,#aa0009,1,9,21,21,2.15,0
+2199,10282,Metal Biela Golf A2 1800 en Estandar,2,2,140,0,68150cp-sdt,Metal Biela Golf A2 1800 en Estandar Marca Federal Mogul,52,57,0,0,#aa0009,1,3,7,14,0.2,0
+2200,10282,Metal Biela Golf A3 1800 en Estandar,2,2,140,0,98150cp-std,Metal Biela Golf A3 1800 en Estandar Marca Federal Mogul,68,65,0,0,#aa0009,1,3,7,14,0.2,0
+2201,10688,Metal Biela Golf A4 2.0 en 10,2,2,169.99,0,4465-cp-010,Metal Biela Golf A4 2.0 en 10 Marca Federal Mogul,69,66,0,0,#aa0009,1,3,7,14,0.2,0
+2202,10689,Metal Biela Golf A4 2.0 en Estandar,2,2,169.99,0,4465-CP-STD,Metal Biela Golf A4 2.0 en Estandar Marca Federal Mougli,69,66,0,0,#aa0009,1,3,7,14,0.2,0
+2203,10890,Metal Biela Golf A2 1800 en 10,2,2,140,0,68150cp-010,Metal Biela Golf A2 1800 en 10 Marca Federal Mogul,52,57,0,0,#aa0009,1,3,7,14,0.2,0
+2204,10890,Metal Biela Golf A3 1800 en 10,2,2,140,0,98150cp-010,Metal Biela Golf A3 1800 en 10 Marca Federal Mogul,68,65,0,0,#aa0009,1,3,7,14,0.2,0
+2205,10891,Metal Biela Golf A2 1800 en 20,2,2,140,0,68150cp-020,Metal Biela Golf A2 1800 en 20 Marca Federal Mogul,52,57,0,0,#aa0009,1,3,7,14,0.2,0
+2206,11848,Metal Biela Golf A4 2.0 en 30,2,2,174.74,0,4465cp-030,Metal Biela Golf A4 2.0 en 30 Marca Federal Mogul,69,66,0,0,#aa0009,1,3,7,14,0.2,0
+2207,11981,Metal Biela Golf A2 1800 en 30,2,2,140,0,68150cp-030,Metal Biela Golf A2 1800 en 30 Marca Federal Mogul,52,57,0,0,#aa0009,1,3,7,14,0.2,0
+2208,11981,Metal Biela Golf A3 1800 en 30,2,2,140,0,68150CP-030,Metal Biela Golf A3 1800 en 30 Marca Federal Mogul,68,65,0,0,#aa0009,1,3,7,14,0.2,0
+2209,10282,Metal Biela Jetta A2 1800 en Estandar,2,2,140,0,68150cp-std,Metal Biela Jetta A2 1800 en Estandar Marca federal Mogul,53,15,0,0,#aa0009,1,3,7,14,0.2,0
+2210,10890,Metal Biela Jetta A2 1800 en 10,2,2,140,0,68150cp-010,Metal Biela Jetta A2 1800 en 10 Marca Federal Mogul,53,15,0,0,#aa0009,1,3,7,14,0.2,0
+2211,10891,Metal Biela Jetta A2 1800 en 20,2,2,140,0,68150cp-020,Metal Biela Jetta A2 1800 en 20 Marca Federal Mogul,53,15,0,0,#aa0009,1,3,7,14,0.2,0
+2212,11981,Metal Biela Jetta A2 1800 en 30,2,2,140,0,68150cp-030,Metal Biela Jetta A2 1800 en 30 Marca Federal Mogul,53,15,0,0,#aa0009,1,3,7,14,0.2,0
+2213,10282,Metal Biela Jetta A3 1800 en Estandar,2,2,140,0,68150-cp-std,Metal Biela Jetta A3 1800 en Estandar Marca Federal Mogul,54,16,0,0,#aa0009,1,3,7,14,0.2,0
+2214,10890,Metal Biela Jetta A3 1800 en 10,2,2,140,0,68150cp-010,Metal Biela Jetta A3 1800 en 10 Marca Federal Mogul,54,16,0,0,#aa0009,1,3,7,14,0.2,0
+2215,10891,Metal Biela Jetta A3 1800 en 20,2,2,140,0,68150cp-020,Metal Biela Jetta A3 1800 en 20 Marca Federal Mogul,54,16,0,0,#aa0009,1,3,7,14,0.2,0
+2216,11981,Metal Biela Jetta A3 1800 en 30,2,2,140,0,68150cp-030,Metal Biela Jetta A3 1800 en 30 Marca Federal Mogul,54,16,0,0,#aa0009,1,3,7,14,0.2,0
+2217,10688,Metal Biel aJetta A4 2.0 en 10,2,2,169.99,0,4465-cp-010,Metal Biel aJetta A4 2.0 en 10 Marca Federal Mogul,55,17,0,0,#aa0009,1,3,7,14,0.2,0
+2218,10689,Metal Biela Jetta A4 2.0 en Estandar,2,2,169.99,0,4465-cp-STD,Metal Biela Jetta A4 2.0 en Estandar Marca Federal Mogul,55,17,0,0,#aa0009,1,3,7,14,0.2,0
+2219,11848,Metal Biela Jetta A4 2.0 en 30,2,2,174.74,0,4465cp-030,Metal Biela Jetta A4 2.0 en 30 Marca Federal Mogul,55,17,0,0,#aa0009,1,3,7,14,0.2,0
+2220,10967,Pistones Matiz en Estandar,2,3,624.99,0,p1203-std,Pistones Matiz en Estandar Marca Diamond,18,73,0,0,#aa0009,1,7,17,17,1.1,0
+2221,12474,Metal biela Platina en Estandar,2,1,225,0,142424-std,Metal biela Platina en Estandar Marca Federal Mogul,33,44,0,0,#aa0009,1,3,7,14,0.2,0
+2222,12475,Metal Biela Platina En 10,2,1,225,0,142424-10,Metal Biela Platina En 10 Marca Federal Mogul,33,44,0,0,#aa0009,1,3,7,14,0.2,0
+2223,3069,Metal Biela Sentra 01-06 1.6/1.8 en Estandar,2,1,250,0,4220cp-std,Metal Biela Sentra 01-06 1.6/1.8 en Estandar Marca Federal Mogul,34,46,0,0,#aa0009,1,3,7,14,0.2,0
+2224,5423,Pistones Sentra 07-12 en Estandar,2,1,545,0,p2599-std,Pistones Sentra 07-12 en Estandar Marca DIAMOND,34,47,0,0,#aa0009,1,7,17,17,1.35,0
+2225,5465,Pistones Sentra 07-12 en 20,2,1,545,0,p2599-020,Pistones Sentra 07-12 en 20 Marca DIAMOND,34,47,0,0,#aa0009,1,7,17,17,1.4,0
+2226,5518,Pistones Sentra 07-12 en 30,2,1,545,0,P2599-030,Pistones Sentra 07-12 en 30 Marca DIAMOND,34,47,0,0,#aa0009,1,7,17,17,1.4,0
+2227,6034,Pistones Sentra 07-12 en 40,2,1,545,0,p2599-040,Pistones Sentra 07-12 en 40 Marca DIAMOND,34,47,0,0,#aa0009,1,7,17,17,1.4,0
+2228,1430,Metal Biela Tsuru III en 20,2,1,168,0,66780cp-020,Metal Biela Tsuru III en 20 Marca Federal Mogul,83,105,0,0,#aa0009,1,3,7,14,0.2,0
+2229,13436,Metal Biela Tsuru III en 30,2,1,269,0,66780cp-030,Metal Biela Tsuru III en 30 Marca Federal Mogul,83,105,0,0,#aa0009,1,3,7,14,0.2,0
+2230,5968,Pistones Tsuru III en Estandar,2,1,985,0,832-std,Pistones Tsuru III en Estandar Marca Moresa,83,105,0,0,#aa0009,1,10,18,18,1.4,0
+2231,6923,Metal Biela Tsuru III en Estandar,2,1,172.53,0,667780cp-std,Metal Biela Tsuru III en Estandar Marca Federal Mogul,83,105,0,0,#aa0009,1,3,7,14,0.2,0
+2232,12823,Pistones Tsuru III en 20,2,1,960,0,832-20,Pistones Tsusu III en 20 Marca Moresa,83,105,0,0,#aa0009,1,10,18,18,1.4,0
+2233,12824,Pistones Tsuru III en 30,2,1,976.99,0,832-30,Pistones Tsuru III en 30 Marca Moresa,83,105,0,0,#aa0009,1,10,18,18,1.4,0
+2234,3254,Metal Biela Vocho 0.10,2,2,68.99,0,4-2930.010,Metal Biela Vocho 0.10,64,68,0,0,#aa0009,1,3,8,14,0.2,0
+2235,13057,Metal Biela Pick up Z24 en Estandar,2,1,168,0,4-67230-cp-std,Metal Biela Pick up Z24 en Estandar Marca DIAMON,77,96,0,0,#aa0009,1,3,7,14,0.2,0
+2236,3255,Metal Biela Vocho en 30,2,2,68.99,0,4-2930.030,Metal Biela Vocho en 30,64,68,0,0,#aa0009,1,3,8,14,0.2,0
+2237,3255,Metal Biela Vocho en 20,2,2,68.99,0,4-2930.020,Metal Biela Vocho en 20,64,67,0,0,#aa0009,1,3,8,14,0.2,0
+2238,4726,Metal Biela Tsuru III 16 Valvulas en 10,2,1,168,0,66780CP-010,Metal Biela Tsuru III 16 Valvulas en 10 Marca Federal Mogul,83,105,0,0,#aa0009,1,3,7,14,0.2,0
+2239,5798,Metal Biela Vocho en Estandar,2,2,69.99,0,4-2930std,Metal Biela Vocho en Estandar,64,68,0,0,#aa0009,1,3,8,14,0.2,0
+2240,5840,Metal Centro Vocho 80xEstandar,2,2,283,0,6826-std,Metal Centro Vocho 80xEstandar Marca Federal Mogul,64,68,0,0,#aa0009,1,7,8,8,0.35,0
+2241,5853,Metal Centro Vocho 20xEstandar,2,2,238.99,0,6807-std,Metal Centro Vocho 20xEstandar Marca Federal Mogul,64,68,0,0,#aa0009,1,7,8,14,0.35,0
+2242,5866,Metal Centro Vocho 40xEstandar,2,2,237.99,0,6809m std,Metal Centro Vocho 40xEstandar Marca Federal Mogul,64,68,0,0,#aa0009,1,7,8,8,0.35,0
+2243,8265,Metal Centro Vocho 20x30,2,2,238.99,0,6807m-030,Metal Centro Vocho 20x30 Marca Federal Mogul,64,68,0,0,#aa0009,1,8,8,8,0.35,0
+2244,8464,Metal Centro Vocho 40x30,2,2,237.99,0,6809M-030,Metal Centro Vocho 40x30 Marca Federal Mogul,64,68,0,0,#aa0009,1,7,8,8,0.35,0
+2245,10158,Metal Centro Vocho en Estandar,2,2,236,0,4213m-std,Metal Centro Vocho en Estandar Marca Federal Mogul,64,68,0,0,#aa0009,1,7,8,8,0.35,0
+2246,10284,Metal Centro Vocho 60x20,2,2,288,0,6825m-020,Metal Centro Vocho 60x20 Marca Federal Mogul,64,68,0,0,#aa0009,1,7,8,8,0.35,0
+2247,10385,Metal Biela Vocho en 10,2,2,76,0,2930cp-010,Metal Biela Vocho en 10 Marca Federal Mogul,64,68,0,0,#aa0009,1,3,7,14,0.2,0
+2248,10386,Metal Biela Vocho en Estandar,2,2,76,0,2930cp-std,Metal Biela Vocho en Estandar Marca Federal Mogul,64,68,0,0,#aa0009,1,3,7,14,0.2,0
+2249,10387,Metal Centro Vocho 80x20,2,2,283,0,6826m-020,Metal Centro Vocho 80x20 Marca Federal Mogul,64,68,0,0,#aa0009,1,7,8,8,0.35,0
+2250,10388,Metal Centro Vocho 40x20,2,2,237.99,0,6809m-020,Metal Centro Vocho 40x20 Marca Federal Mogul,64,68,0,0,#aa0009,1,8,8,5,0.35,59
+2251,10569,Metal Centro Vocho 80x10,2,2,283,0,6826m-010,Metal Centro Vocho 80x10 Marca Federal Mogul,64,68,0,0,#aa0009,1,7,8,8,0.35,0
+2252,11675,Metal Centro Vocho 60xEstandar,2,2,288,0,6825m-std,Metal Centro Vocho 60xEstandar Marca Federal Mogul,64,68,0,0,#aa0009,1,7,8,8,0.35,0
+2253,13885,Carburador Vocho 1600 Sin Sistema Marca BOCAR,2,2,2949.99,0,113 129 031g,Carburador Vocho 1600 Sin Sistema Marca BOCAR,64,68,0,0,#aa0009,1,0,0,0,0,44
+2254,10281,Metal Biela Vocho en 30,2,2,76,0,2930cp-030,Metal Biela Vocho en 30 Marca Federal Mogul,64,68,0,0,#aa0009,1,3,7,14,0.2,0
+2255,10568,Metal Centro Vocho 60x10,2,2,288,0,6825m-010,Metal Centro Vocho 60x10 Marca Federal Mogul,64,68,0,0,#aa0009,1,7,8,8,0.35,0
+2256,2233,Metal Centro Tsuru III 16 Valvulas en 30,2,1,365,0,7234m-030,Metal Centro Tsuru III 16 Valvulas en 30 Marca Federal Mogul,83,105,0,0,#aa0009,1,6,7,14,0.25,0
+2257,3485,Metal Centro Tsuru III 16 Valvulas en Estandar,2,1,365,0,7234m-std,Metal Centro Tsuru III 16 Valvulas en Estandar Marca Federal Mogul,83,105,0,0,#aa0009,1,6,7,14,0.25,0
+2258,5816,Metal Centro Tsuru III 16 Valvulas en 20,2,1,365,0,7234m-020,Metal Centro Tsuru III 16 Valvulas en 20 Marca Federal Mogul,83,105,0,0,#aa0009,1,6,7,14,0.25,0
+2259,6746,Metal Centro Tsuru III 8 Valvulas en 20,2,1,283,0,666502,Metal Centro Tsuru III 8 Valvulas en 20 Marca DIAMOND,83,104,0,0,#aa0009,1,10,4,21,0.35,0
+2260,6959,Metal Centro Tsuru III 16 Valvulas en 10,2,1,365,0,7234m-010,Metal Centro Tsuru III 16 Valvulas en 10 Marca Federal Mogul,83,105,0,0,#aa0009,1,6,7,14,0.25,0
+2261,9242,Metal Centro Tsuru III 16 Valvulas en 20,2,1,294.99,0,7257-020,Metal Centro Tsuru III 16 Valvulas en 20 Marca DIAMOND,83,105,0,0,#aa0009,1,4,8,20,0.25,0
+2262,10116,Metal Centro Tsuru III 8 Valvulas en 30,2,1,395,0,6665-m-030,Metal Centro Tsuru III 8 Valvulas en 30 Marca Federal Mogul,83,104,0,0,#aa0009,1,7,10,6,0.25,0
+2263,10181,Metal Centro Tsuru IIi 8 Valvulas en 10,2,1,403.84,0,6665-m-01,Metal Centro Tsuru IIi 8 Valvulas en 10 Marca Federal Mogul,83,104,0,0,#aa0009,1,7,10,6,0.35,0
+2264,10193,Metal Centro Tsuru IIi 8 Valvulas en 20,2,1,403.84,0,6665--020,Metal Centro Tsuru IIi 8 Valvulas en 20 Marca Federal Mogul,83,104,0,0,#aa0009,1,7,10,6,0.35,0
+2265,442,Metal Centro Chevy en 30,2,3,256,0,7218m-030,Metal Centro Chevy en 30 Marca Federal Mogul,5,6,0,0,#aa0009,1,7,10,6,0.35,0
+2266,3414,Metal Centro Chevy en 20,2,3,256,0,7218m-020,Metal Centro Chevy en 20 Marca Federal Mogul,5,6,0,0,#aa0009,1,,,,,0
+2267,10488,Metal Centro Chevy en 20,2,3,204.99,0,7218.02,Metal Centro Chevy en 20 Marca DIAMOND,5,6,0,0,#aa0009,1,10,4,21,0.35,0
+2268,10607,Metal Centro Chevy en 10,2,3,204.99,0,7218.01,Metal Centro Chevy en 10 Marca DIAMOND,5,6,0,0,#aa0009,1,10,4,21,0.35,0
+2269,12152,Metal Centro Chevy en 10,2,3,256,0,7218m-010,Metal Centro Chevy en 10 Marca Federal Mogul,5,6,0,0,#aa0009,1,7,10,6,0.35,0
+2270,10840,Metal Centro Atos en 30,2,6,395,0,7403.02,Metal Centro Atos en 30 Marca DIAMOND,70,37,0,0,#aa0009,1,3,8,15,0.2,0
+2271,2971,Focos H4 Juego Leds 4 Caras,8,10,319.99,0,LED4C-H4 h/l,Focos H4 Juego Leds 4 Caras Alta y Baja,86,119,0,0,#aa0009,1,18,12,5.5,1.3,0
+2272,62,Aceite Motor 5w40 Fuji Litro,8,10,125,0,4223,Aceite Motor Fuji 5w40 Sintetico Premium Litro,76,95,0,0,#aa0009,1,0,0,0,0,19
+2273,13058,Metal Centro Pick Up Z24 en 10,2,1,405,0,7139-m-10,Metal Centro Pick Up Z24 en 10 Marca Federal Mgul,77,96,0,0,#aa0009,1,6,10,16,0.5,0
+2274,13059,Metal Centro Pick up Z24 en Estanar,2,1,405,0,7139-m-std,Metal Centro Pick up Z24 en Estanar Marca Federal Mogul,77,96,0,0,#aa0009,1,6,10,16,0.5,0
+2275,5873,Metal Centro Vocho 60x30,2,2,288,0,6825m-030,Metal Centro Vocho 60x30 Marca Federal Mogul,64,68,0,0,#aa0009,1,8,8,8,0.35,0
+2276,10283,Metal Centro Vocho 20x10,2,2,237.99,0,6807m-010,Metal Centro Vocho 20x10 Marca Federal Mogul,64,68,0,0,#aa0009,1,8,8,8,0.3,0
+2277,10971,Metal Centro Vocho en 10,2,2,238.99,0,4213m-010,Metal Centro Vocho en 10 Marca Federal Mogul,64,68,0,0,#aa0009,1,8,8,8,0.3,0
+2278,3318,Disco Rueda Versa Delantero,7,1,397.99,0,BDNN0900,Disco Rueda Versa Delantero Marca Yokomitsu,37,51,0,0,#aa0009,1,5,28,26,4.85,0
+2279,3959,Disco Rueda Versa Delantero,7,1,375,0,40206-1hl0a,Disco Rueda Versa Delantero Marca Euro España,37,51,0,0,#aa0009,1,,,,,0
+2280,11451,Disco Rueda Versa Delantero,7,1,324.99,0,40206-00qaa,Disco Rueda Versa Delantero Marca FP,37,51,0,0,#aa0009,1,5,28,29,4.9,0
+2281,9376,Disco Rueda Vento Delantero,7,2,289,0,br-vw-34222,Disco Rueda Vento Delantero Marca FP,65,69,0,0,#aa0009,1,5,30,28,4.4,0
+2282,12129,Disco Rueda Vento Delantero Ventilado,7,2,324.73,0,bdnv1300,Disco Rueda Vento Delantero Ventilado Marca Yokomitsu,65,69,0,0,#aa0009,1,5,30,28,4.9,0
+2283,3203,Disco Rueda Tsuru III Delantero Solido,7,1,278,0,40206-61a01,Disco Rueda Tsuru III Delantero Solido Marca FP,83,105,0,0,#aa0009,1,,,,,0
+2284,3204,Disco Rueda Tsuru III Delantero Ventilado,7,1,262.82,0,4026-60y01,Disco Rueda Tsuru III Delantero Ventilado Marca FP,83,105,0,0,#aa0009,1,,,,,0
+2285,13561,Disco Rueda Tornado Ventilado 08-15,7,3,352,0,BR-GM580846R,Disco Rueda Tornado Ventilado 08-15 Marca FP,21,76,0,0,#aa0009,1,5,30,28,5.2,0
+2286,9703,Disco Rueda Tiida Delantero Ventilado,7,1,334.99,0,40206-EL000,Disco Rueda Tiida Delantero Ventilado Marca FP,35,49,0,0,#aa0009,1,5,28,29,4.5,0
+2287,4170,Disco Rueda Spark Delantero Ventilado,7,3,387.99,0,96471215,Disco Rueda Spark Delantero Ventilado Marca BERG,20,75,0,0,#aa0009,1,,,,,0
+2288,5861,Disco Rueda Sentra 07-12 Delantero Ventilado,7,1,465.99,0,bdnn1400,Disco Rueda Sentra 07-12 Delantero Ventilado Marca Yokomitzu,34,47,0,0,#aa0009,1,6,30,29,6.5,0
+2289,7669,Disco Rueda Sentra 01-06 Delantero Solido,7,1,295.99,0,Ferrau-d15080,Disco Rueda Sentra 01-06 Delantero Solido Marac Ferrau,34,46,0,0,#aa0009,1,5,27,25,3.4,0
+2290,9860,Disco Rueda Sentra 05-06 Trasero Solido,7,1,240,0,432069e601,Disco Rueda Sentra 05-06 Trasero Solido Marca Euro España,34,46,0,0,#aa0009,1,5,30,28,4.1,0
+2291,9376,Disco Rueda Polo Delantero Ventilado,7,2,289,0,br-vw-34222,Disco Rueda Polo Delantero Ventilado Marca FP,75,94,0,0,#aa0009,1,5,30,28,4.4,0
+2292,12529,Disco Rueda Polo Delantero Ventilado,7,2,52,0,bdnv1300,Disco Rueda Polo Delantero Ventilado Marca Yokomitsu,75,94,0,0,#aa0009,1,5,30,28,4.9,0
+2293,8948,Disco Rueda Pointer Solido,7,2,289,0,321 615 301,Disco Rueda Pointer Solido Marca BERG,61,62,0,0,#aa0009,1,5,27,25,3.55,45
+2294,3318,Disco Rueda Platina Delantero,7,1,397.99,0,bdnn0900,Disco Rueda Platina Delantero Marca Yokomitsu,33,44,0,0,#aa0009,1,5,28,26,4.85,10
+2295,3959,Disco Rueda Platina Delantero,7,1,375,0,4026-1hl0a,Disco Rueda Platina Delantero Marca Euro España,33,44,0,0,#aa0009,1,,,,,6
+2296,11451,Disco Rueda Platina Delantero,7,1,324.99,0,40206-00qaa,Disco Rueda Platina Delantero Marca FP,33,44,0,0,#aa0009,1,5,28,29,4.9,38
+2297,12650,Disco Rueda Meriva Ventilado,7,3,405,0,bdnc0200,Disco Rueda Meriva Ventilado Marca Yokomitsu,19,74,0,0,#aa0009,1,5,27,25,4.95,10
+2298,13561,Disco Rueda Meriva Ventilado,7,3,352,0,br-gm580846r,Disco Rueda Meriva Ventilado Marca FP,19,74,0,0,#aa0009,1,5,30,28,5.2,38
+2299,1381,Termostato Bomba Agua Pick up 720,2,1,62.99,0,ns1d0-tt130,Termostato Bomba Agua Pick up 720 Marca Herta,29,42,0,0,#aa0009,1,5,6,6,0.1,0
+2300,938,Espejo Interior Dia y Noche 10&amp;quot;,8,10,66,0,212-10,Espejo Interior Dia y Noche 10&amp;quot; Universal,76,95,0,0,#aa0009,1,0,0,0,0,4
+2301,3382,Emblema Cajuela Numero 1.8T,8,10,52,0,EMB-A4-1.8,Emblema Cajuela Numero 1.8T Cromado,76,95,0,0,#aa0009,1,0,0,0,0,4
+2302,3383,Emblema Cajuela Numero 2.0,8,10,49.99,0,E034,Emblema Cajuela Numero 2.0 Cromado,76,95,0,0,#aa0009,1,8,4,1,0.5,4
+2303,7591,Liquido Frenos Warner 946ml,7,10,89.91,0,WFC134281     OC,Liquido Frenos Warner 946ml,76,95,0,0,#aa0009,1,0,0,0,0,0
+2304,8105,Aceite Motor Fuji 10w50 Galon,2,10,222.99,0,4057,Aceite Motor Fuji 10w50 Galon,76,95,0,0,#aa0009,1,31,18,13,3.5,19
+2305,9457,Aceite Motor Fuji20w50 Garrafa 5 Litros,2,10,286.99,0,4070,Aceite Motor Fuji20w50 Garrafa 5 Litros,76,95,0,0,#aa0009,1,34,17,14,4.6,19
+2306,10133,Emblema Letras SPORT,8,10,53.99,0,E041,Emblema Letras SPORT,76,95,0,0,#aa0009,1,0,0,0,0,4
+2307,10141,Emblema GM Cuadrado,8,10,19.99,0,E091,Emblema GM Cuadrado Chico,76,95,0,0,#aa0009,1,0,0,0,0,4
+2308,10169,Desodorante Chica Fresita,8,10,24.99,0,401046,Desodorante Chica Fresita,76,95,0,0,#aa0009,1,20.5,15,0.5,0.05,4
+2309,10170,Desodorante Coco-Nut,8,10,29,0,401268,Desodorante Coco-Nut,76,95,0,0,#aa0009,1,21,15,0.5,0.05,4
+2310,10773,Emblema Letras MI,8,10,53.99,0,E030 MI,Emblema Letras MI,76,95,0,0,#aa0009,1,5,3.5,1,0.05,4
+2311,1275,Tubo Agua Atos 1.1,2,6,155.71,0,25632-02756,Tubo Agua Atos 1.1 Marca Bruck,70,36,0,0,#aa0009,1,11,10,21,0.35,0
+2312,10139,Emblema Letras Atos,8,6,59.99,0,E088,Emblema Letras Atos Cromado,70,36,0,0,#aa0009,1,0,0,0,0,4
+2313,4170,Disco Rueda Aveo Delantero Ventilado,7,3,387.99,0,96471215,Disco Rueda Aveo Delantero Ventilado Marca Berg,15,38,0,0,#aa0009,1,,,,,45
+2314,9893,Emblema Parrilla Aveo,8,3,187,0,E071,Emblema Parrilla Aveo,15,38,0,0,#aa0009,1,0,0,0,0,4
+2315,12549,Emblema Letras Aveo,8,3,63.99,0,E070,Emblema Letras Aveo Cromado,15,38,0,0,#aa0009,1,0,0,0,0,4
+2316,2738,Codo Cople Toma Agua Beetle,2,2,35.83,0,6q0 122 291 f,Codo Cople Toma Agua Beetle Marca Herta,45,39,0,0,#aa0009,1,12,6,10,0.1,24
+2317,3206,Disco Rueda Bora 2.5 Trasero Solido,7,2,309.99,0,1k0 615 601,Disco Rueda Bora 2.5 Trasero Solido  Marca FP,4,5,0,0,#aa0009,1,,,,,38
+2318,9835,Disco Rueda Bora 2.0 Delantero Ventilado,7,2,430,0,1k0 615 301,Disco Rueda Bora 2.0 Delantero Ventilado Marca FP,4,5,0,0,#aa0009,1,5,33,33,6,38
+2319,10153,Emblema Letras Bora,8,2,53.99,0,E0031,Emblema Letras Bora Cromado,4,5,0,0,#aa0009,1,0,0,0,0,4
+2320,2164,Disco Rueda Caribe Solido,7,2,275,0,321 615 301,Disco Rueda Caribe Solido Marca Euro España,47,22,0,0,#aa0009,1,5,27,25,3.6,6
+2321,2730,Codo Bomba Agua Caribe,2,2,25.99,0,055 121 121 f,Codo Bomba Agua Caribe Herta,47,22,0,0,#aa0009,1,,,,,24
+2322,8948,Disco Rueda Caribe Solido,7,2,289,0,321 615 301,Disco Rueda Caribe Solido Marca BERG,47,22,0,0,#aa0009,1,5,27,25,3.55,45
+2323,11971,Metal Centro Caribe en 10,2,2,318,0,6819m-010,Metal Centro Caribe en 10 Marca Federal Mogul,47,22,0,0,#aa0009,1,6,10,16,0.4,0
+2324,3393,Emblema Letras Chevy,8,3,58,0,E028,Emblema Letras Chevy Cromado,5,6,0,0,#aa0009,1,0,0,0,0,4
+2325,3406,Emblema Parrilla Chevy C1,8,3,100,0,E002,Emblema Parrilla Chevy C1  02-03,5,6,0,0,#aa0009,1,8,9,3,0.05,4
+2326,10772,Emblema Cajuela Chevy C2s Letras,8,3,58,0,E029,Emblema Cajuela Chevy C2s Letras,5,6,0,0,#aa0009,1,9.5,4,1,0.05,4
+2327,11397,Emblema Parrilla Chevy C3,8,3,174,0,E068,Emblema Parrilla Chevy C3,5,6,0,0,#aa0009,1,0,0,0,0,4
+2328,13139,Cople Tubo Agua Chevy,2,3,245,0,90091526,Cople Tubo Agua Chevy GM Original,5,6,0,0,#aa0009,1,5,3,3,0.1,8
+2329,13874,Kit Distribucion Chvey Original,2,3,373.99,0,TK-GCM203,Kit Distribucion Chvey Original &quot; Piezas,5,6,0,0,#aa0009,1,10,13,16,0.5,0
+2330,3410,Emblema Parrilla Combi Cromado,8,2,49.99,0,E027,Emblema Parrilla Combi Cromado Generico,48,53,0,0,#aa0009,1,0,0,0,0,4
+2331,3419,Emblema Tapa Trasera Combi,8,2,34.99,0,s/n,Emblema Tapa Trasera Combi,48,53,0,0,#aa0009,1,12,12,1,0.5,4
+2332,5787,Toma Aire Monoblock Combi 1800,2,2,155.99,0,048 103 772,Toma Aire Monoblock Combi 1800 Marca Herta,48,53,0,0,#aa0009,1,10,14,9,0.2,0
+2333,10152,Emblema Parrilla Corsa,8,3,76,0,E026,,16,70,0,0,#aa0009,1,0,0,0,0,4
+2334,12650,Disco Rueda Corsa Ventilado,7,3,405,0,bdnc0200,Disco Rueda Corsa Ventilado Marca Yokomitsu,16,71,0,0,#aa0009,1,5,27,25,4.95,10
+2335,13561,Disco Rueda Corsa Ventilado,7,3,352,0,br-gm580846r,Disco Rueda Corsa Ventilado Marca FP,16,71,0,0,#aa0009,1,5,30,28,5.2,38
+2336,13575,Tubo Agua Corsa 2 Salidas Rectas,2,3,98.99,0,9128719,Tubo Agua Corsa 2 Salidas Rectas Marca Best Cooling,16,71,0,0,#aa0009,1,17,10,35,0.2,0
+2337,522,Metal Centro Pick up D21 en 20,2,1,338.99,0,7285m-020,Metal Centro Pick up D21 en 20 Marca Federal Mogul,30,40,0,0,#aa0009,1,6,10,16,0.4,0
+2338,1894,Metal Centro Pick Up D21 en 30,2,1,338.99,0,7285m-030,Metal Centro Pick Up D21 2.4 en 30 Marca Federal Mogul,30,40,0,0,#aa0009,1,,,,,0
+2339,3036,Tolva Parabrisas Pick Up D21 Derecha,8,1,63.02,0,TIPNPU86R,a Parabrisas Pick Up D21 Derecha,30,40,0,0,#aa0009,1,0,0,0,0,0
+2340,3037,Tolva Parabrisas Pick Up D21 Izquierda,8,1,63.02,0,TIPNPU86L,Tolva Parabrisas Pick Up D21 Izquierda,30,40,0,0,#aa0009,1,0,0,0,0,0
+2341,3409,Emblema Parrilla Pick Up D21,8,1,96,0,E006,Emblema Parrilla Pick Up D21,30,40,0,0,#aa0009,1,14,10,5,0.1,4
+2342,6916,Manija Tapa Trasera Pick Up Z24,8,1,191.92,0,MTNPU87A,Manija Tapa Trasera Pick Up Z24,77,96,0,0,#aa0009,1,14,12,5,0.15,0
+2343,6919,Manija Tapa Trasera Pick Up D21,8,1,155.99,0,MTNPU87A,Manija Tapa Trasera Pick Up D21,30,40,0,0,#aa0009,1,0,0,0,0,0
+2344,10138,Emblema Parrilla Pick up D22,8,1,96,0,E051,Emblema Parrilla Pick up D22,31,93,0,0,#aa0009,1,0,0,0,0,4
+2345,13424,Emblema Letras Derby,8,2,59.99,0,E089,Emblema Letras Derby Cromado,50,55,0,0,#aa0009,1,0,0,0,0,4
+2346,3772,Emblema Letras Gol,8,2,58,0,E061,,51,56,0,0,#aa0009,1,10,8,1,0.05,4
+2347,1184,Disco Rueda Gol Ventilado,7,2,396.26,0,5u0 615 301 c,Disco Rueda Gol Ventilado Marca FP,51,56,0,0,#aa0009,1,5,27,25,4.25,38
+2348,786,Disco Rueda Golf A4 1.8 Turbo Delantero,7,2,353.99,0,dbnv3120,Disco Rueda Golf A4 1.8 Turbo Delantero Marca Yokomitsu,69,66,0,0,#aa0009,1,4,30,30,7.3,10
+2349,2134,Toma Agua Golf A4 1.8 Turbo 1 Bulbo 3 Salidas,2,2,46,0,06A 121 132 Q -1,Toma Agua Golf A4 1.8 Turbo 1 Bulbo 3 Salidas,69,66,0,0,#aa0009,1,9,12,15,0.1,0
+2350,2164,Disco Rueda Golf A2 Solido,7,2,275,0,321 615 301,Disco Rueda Golf A2 Solido Marca Euro España,52,57,0,0,#aa0009,1,5,27,25,3.6,6
+2351,2730,Codo Bomba Agua Golf A2,2,2,25.99,0,055 121 121 f,Codo Bomba Agua Golf A2 Marca Herta,52,57,0,0,#aa0009,1,,,,,24
+2352,2736,Codo Cople Golf A4 Calefaccion con Aire,2,2,29.96,0,1j0 122 291 b,Codo Cople Golf A4 Calefaccion con Aire Marca Herta,69,66,0,0,#aa0009,1,,,,,24
+2353,2737,Codo Cople Toma Agua Golf  A4,2,2,32,0,1J0 122 291 F,Codo Cople Toma Agua Golf  A4 Marca HErta,69,66,0,0,#aa0009,1,,,,,24
+2354,2738,Codo Cople Toma Agua Golf A4,2,2,35.83,0,6Q0 122 291 F,Codo Cople Toma Agua Golf A4 Marca Herta,69,66,0,0,#aa0009,1,12,6,10,0.1,24
+2355,3224,Disco Rueda Golf A3 Delantero Solido,2,2,209.99,0,357 615 301,Disco Rueda Golf A3 Delantero Solido Marca Regal Part,68,65,0,0,#aa0009,1,,,,,98
+2356,3226,Disco Rueda Golf A3 Delantero Ventilado,7,2,314.99,0,321 615 301 D,Disco Rueda Golf A3 Delantero Ventilado Marca Euro España,68,65,0,0,#aa0009,1,,,,,6
+2357,3231,Disco Rueda Golf A4 Delantero,7,2,415,0,BR-VW-145239,Disco Rueda Golf A4 Delantero 19 mm,69,66,0,0,#aa0009,1,,,,,38
+2358,3381,Emblema Cajuela Letras VR6,8,2,52,0,E019,Emblema Cajuela Letras VR6,69,66,0,0,#aa0009,1,11,4,1,0.5,4
+2359,3389,Emblema Cajuela Golf A3,8,2,69.99,0,E093,Emblema Cajuela Golf A3,68,65,0,0,#aa0009,1,10,10,1,0.5,4
+2360,3391,Emblema Letras Golf,8,2,58,0,E015,,69,66,0,0,#aa0009,1,0,0,0,0,4
+2361,3410,Emblema Parrilla Golf A2,8,2,49.99,0,E027,Emblema Parrilla Golf A2,52,57,0,0,#aa0009,1,0,0,0,0,4
+2362,3410,Emblema Parrilla Golf A3,8,2,49.99,0,E027,Emblema Parrilla Golf A3,68,65,0,0,#aa0009,1,0,0,0,0,4
+2363,5281,Metal Centro Golf 2.0 en 10,2,2,338,0,7286m-010,Metal Centro Golf 2.0 en 10,68,65,0,0,#aa0009,1,6,14,28,0.4,0
+2364,5787,Toma Aire Monoblock Golf  A2,2,2,155.99,0,048 103 772,Toma Aire Monoblock Golf  A2,52,57,0,0,#aa0009,1,10,14,9,0.2,0
+2365,5787,Toma Aire Monoblock Golf A3,2,2,155.99,0,048 103 772,Toma Aire Monoblock Golf A3,68,65,0,0,#aa0009,1,10,14,9,0.2,0
+2366,7066,Disco Rueda Golf A3 Ventilado,7,2,298,0,321 615 301 D,Disco Rueda Golf A3 Ventilado Marca FP,68,65,0,0,#aa0009,1,5,30,28,3.9,38
+2367,8313,Toma Agua Golf 1 Bulbo 2 Salidas con Peine y Pipita,2,2,39.99,0,037 121 133  E,Toma Agua Golf 1 Bulbo 2 Salidas con Peine y Pipita,69,66,0,0,#aa0009,1,10,11,11,0.1,0
+2368,8314,Toma Agua Golf 2 Bulbos 1 Salida,2,2,38,0,037 121 132 A,Toma Agua Golf 2 Bulbos 1 Salida,68,65,0,0,#aa0009,1,10,10,8,0.1,0
+2369,8318,Toma Agua Golf A2 2 Bulbos,2,2,42.22,0,037 121 133 c,Toma Agua Golf A2 2 Bulbos,52,57,0,0,#aa0009,1,10,10,9,0.1,0
+2370,8320,Toma Agua Golf A2 2 Salidas,2,2,22,0,026 121 145 f m,Toma Agua Golf A2 2 Salidas,52,57,0,0,#aa0009,1,10,10,9,0.1,0
+2371,8323,Toma agua Golf A3 2.0 2 Bulbos,2,2,43.99,0,037 121 144 j,Toma agua Golf A3 2.0 2 Bulbos Marca Herta,68,65,0,0,#aa0009,1,10,12,8,0.1,0
+2372,8324,Toma Agua Golf A3 2.0 2 Bulbos 2 Salidas,2,2,35.99,0,037 121 144 h,Marca Herta,68,65,0,0,#aa0009,1,10,8,13,0.1,0
+2373,8332,Toma Agua Golf A4,2,2,58.99,0,06a 121 133 j,Toma Agua Golf A4,69,65,0,0,#aa0009,1,10,8,20,0.1,0
+2374,9353,Disco Rueda Golf A4 Delantero Ventilado,7,2,439,0,1j0 615 301 e,Disco Rueda Golf A4 Delantero Ventilado 22mm Marca BERG,69,66,0,0,#aa0009,1,4,29,29,5.6,45
+2375,10143,Emblema Cajuela Golf A2,8,2,56,0,E092,Emblema Cajuela Golf A2,52,57,0,0,#aa0009,1,0,0,0,0,4
+2376,10198,Disco Rueda Golf A3 Delantero Ventilado 5 Birlos,7,2,233.99,0,1h0 615 301 a,Disco Rueda Golf A3 Delantero Ventilado 5 Birlos,68,65,0,0,#aa0009,1,4,28,31,5.25,38
+2377,10774,Emblema Parrilla Golf A4,8,2,106,0,E076,Emblema Parrilla Golf A4,69,66,0,0,#aa0009,1,0,0,0,0,4
+2378,12839,Toma Agua Jetta A2 2 Salidas,2,2,24,0,026 121 144 B,Toma Agua Jetta A2 2 Salidas,53,15,0,0,#aa0009,1,0,0,0,0,0
+2379,12848,Toma Agua Golf A4 1.8 2 Bulbos 4 Salidas,2,2,58.99,0,06a-121-133d,Toma Agua Golf A4 1.8 2 Bulbos 4 Salidas Marca Best Cooling,69,66,0,0,#aa0009,1,10,8,20,0.1,53
+2380,13526,Termostato Bomba Agua Golf A4,2,2,62.99,0,050 121 113c,Termostato Bomba Agua Golf A4 Marca Best Cooling,69,66,0,0,#aa0009,1,8,7,9,0.1,0
+2381,13875,Kit Distribucion Golf A4 Original,2,2,913.01,0,038 198 119AB,"Kit Distribucion Golf A4 Original (Banda, Tensor, Liga y Bomba de Agua)",69,66,0,0,#aa0009,1,12,13,24,1.4,0
+2382,1889,Disco Rueda i10 Delantero Ventilado 11-14,7,6,319.25,0,BDNK0800,Disco Rueda i10 Delantero Ventilado 11-14 Marca Yokomitsu,71,86,0,0,#aa0009,1,,,,,10
+2383,2729,Codo Agua Ibiza,2,5,33.99,0,032 121 121 k,Codo Agua Ibiza Marca Best Cooling,41,80,0,0,#aa0009,1,,,,,53
+2384,10151,Emblema Letras Seat,8,5,58,0,E024,Emblema Letras Seat,41,81,0,0,#aa0009,1,0,0,0,0,4
+2385,10134,Emblema Parrilla Seat,8,5,110,0,E052,Emblema Parrilla Seat,41,80,0,0,#aa0009,1,0,0,0,0,4
+2386,2164,Disco Rueda Jetta A2 Solido,7,2,275,0,321 615 301,Disco Rueda Jetta A2 Solido Marca Euro España,53,15,0,0,#aa0009,1,5,27,25,3.6,6
+2387,2730,Codo Bomba Agua Jetta A2,2,2,25.99,0,055 121 121 f,Codo Bomba Agua Jetta A2 Marca Herta,53,15,0,0,#aa0009,1,,,,,24
+2388,3410,Emblema Parrilla Jetta A2,8,2,49.99,0,E027,Emblema Parrilla Jetta A2,53,15,0,0,#aa0009,1,0,0,0,0,4
+2389,3410,Emblema Parrilla Jetta A3,8,2,49.99,0,E027,Emblema Parrilla Jetta A3,54,16,0,0,#aa0009,1,0,0,0,0,4
+2390,5787,Toma Aire Monoblock Jetta A3,2,2,155.99,0,048 103 772,Toma Aire Monoblock Jetta A3 Marca Herta,54,16,0,0,#aa0009,1,10,14,9,0.2,0
+2391,5787,Toma Aire Monoblock Jetta A2,2,2,155.99,0,048 103 772,Toma Aire Monoblock Jetta A2 Marca Herta,53,15,0,0,#aa0009,1,0,0,0,0,0
+2392,8948,Disco Rueda Jetta A2 Solido,7,2,289,0,321 615 301,Disco Rueda Jetta A2 Solido Marca BERG,53,15,0,0,#aa0009,1,5,27,25,3.55,45
+2393,12839,Toma Agua Golf A2 2 Salidas,2,2,24,0,026 121 144 b,Toma Agua Golf A2 2 Salidas,52,57,0,0,#aa0009,1,7,8,9,0.1,0
+2394,3224,Disco Rueda Jetta Ae Delantero Solido,7,2,209.99,0,357 615 301,Disco Rueda Jetta Ae Delantero Solido Marca Regal Parts,54,15,0,0,#aa0009,1,,,,,98
+2395,3410,Emblema Parrilla Jetta A2,8,2,49.99,0,E027,,53,15,0,0,#aa0009,0,0,0,0,0,0
+2396,5787,TOma Aire Monoblok Golf A3,2,2,155.99,0,048 103 772,,68,65,0,0,#aa0009,1,0,0,0,0,0
+2397,7066,Disco Rueda Jetta A3 Delantero Ventilado,7,2,298,0,321 615 301 d,Disco Rueda Jetta A3 Delantero Ventilado Marca FP,54,16,0,0,#aa0009,1,5,30,28,3.9,38
+2398,8323,Toma agua Jetta A3 2.0 2 Bulbos,2,2,43.99,0,037 121 144 j,Toma agua Jetta A3 2.0 2 Bulbos Marca Herta,54,16,0,0,#aa0009,1,10,12,8,0.1,0
+2399,8324,Toma Agua Jetta A3 2.0 2 Bulbos 2 Salidas Estandar,2,2,35.99,0,037 121 144 h,Toma Agua Jetta A3 2.0 2 Bulbos 2 Salidas Estandar Marca Herta,54,16,0,0,#aa0009,1,10,8,13,0.1,0
+2400,10198,Disco Rueda Jetta A3 Delantero Ventilado 5 Birlos,7,2,233.99,0,1h0 615 301 a,Disco Rueda Jetta A3 Delantero Ventilado 5 Birlos Marca FP,54,16,0,0,#aa0009,1,4,28,31,5.25,38
+2401,1272,Emblema Cajuela Jetta A4 con LLave,8,2,80,0,E060,Emblema Cajuela Jetta A4 con LLave,55,17,0,0,#aa0009,1,7,9,2,0.15,4
+2402,2134,Toma Agua Jetta A4 1.8 Turbo 1 Bulbo 3 Salidas,2,2,46,0,06a 121 132 q-1,Toma Agua Jetta A4 1.8 Turbo 1 Bulbo 3 Salidas,55,17,0,0,#aa0009,1,9,12,15,0.1,0
+2403,2736,Codo Cople Jetta A4 Calefaccion con Aire 2.5,2,2,29.96,0,1j0 122 291 b,Codo Cople Jetta A4 Calefaccion con Aire 2.5 Marca Herta,55,17,0,0,#aa0009,1,,,,,24
+2404,2737,Codo Cople Toma Agua Jetta A4,2,2,32,0,1j0 122 291 f,Codo Cople Toma Agua Jetta A4 Marca Herta,55,17,0,0,#aa0009,1,,,,,24
+2405,2738,Codo Cople Toma Agua Jetta A4,2,2,35.83,0,6q0 122 291 f,Codo Cople Toma Agua Jetta A4 Marca Herta,55,17,0,0,#aa0009,1,12,6,10,0.1,24
+2406,3226,Disco Rueda Jetta A3 Delantero Ventilado,7,2,314.99,0,321 615 301 D,Disco Rueda Jetta A3 Delantero Ventilado Marca Euro España,54,16,0,0,#aa0009,1,,,,,6
+2407,3231,Disco Rueda Jetta A4 Delantero 19mm,7,2,415,0,br-vw-14539,Disco Rueda Jetta A4 Delantero 19mm Marca FP,55,17,0,0,#aa0009,1,,,,,38
+2408,3413,Emblema Parrilla Jetta A4,8,2,78.99,0,E003,Emblema Parrilla Jetta A4,55,17,0,0,#aa0009,1,11,7,1,0.5,4
+2409,5191,Cerradura Cajuela Jetta A4 Solo Patita Plastico,8,2,78.99,0,s/n,Cerradura Cajuela Jetta A4 Solo Patita Plastico,55,17,0,0,#aa0009,1,0,0,0,0,4
+2410,5281,Metal Centro Jetta 2.0 en 10,2,2,338,0,7286m-010,Metal Centro Jetta 2.0 en 10 Marca Federal Mogul,55,17,0,0,#aa0009,1,6,14,28,0.4,0
+2411,5281,Metal Centro Jetta 2.0 en 10,2,2,338,0,7286m-010,Metal Centro Jetta 2.0 en 10 Marca Federal Mogul,54,16,0,0,#aa0009,1,6,14,28,0.4,0
+2412,8314,Toma Agua Jetta A4 2 Bulbos 1 Salida,2,2,38,0,037 121 132 a,Toma Agua Jetta A4 2 Bulbos 1 Salida,55,16,0,0,#aa0009,1,10,10,8,0.1,0
+2413,8332,Toma Agua Jetta A4,2,2,58.99,0,06A 121 133 J,Toma Agua Jetta A4,55,17,0,0,#aa0009,1,10,8,20,0.1,0
+2414,9353,Disco Rueda Jetta A4 2.0 Delantero Ventilado 22mm,7,2,439,0,1j0 615 301 e,Disco Rueda Jetta A4 2.0 Delantero Ventilado 22mm Marca Berg,55,17,0,0,#aa0009,1,4,29,29,5.6,45
+2415,12848,Toma Agua Golf A4 1.8 2 Bulbos 4 Salidas Marca,2,2,58.99,0,06a-121-133D,Toma Agua Golf A4 1.8 2 Bulbos 4 Salidas Marca Marca Best Cooling,55,17,0,0,#aa0009,1,10,8,20,0.1,53
+2416,13526,Termostato Agua Jetta A4,2,2,62.99,0,050 121 113c,Termostato Agua Jetta A4 Marca Best Cooling,55,17,0,0,#aa0009,1,8,7,9,0.1,0
+2417,13875,Kit Distribucion Jetta A4 Original,2,2,913.01,0,038 198 119ab,Kit Distribucion Jetta A4 Original,55,17,0,0,#aa0009,1,12,13,24,1.4,0
+2418,5712,Emblema Letras Jetta A5,8,2,59.99,0,E059,Emblema Letras Jetta A5,56,18,0,0,#aa0009,1,0,0,0,0,4
+2419,10860,Emblema Lateral Jetta Clasico,8,2,34.99,0,E062,Emblema Lateral Jetta Clasico,56,18,0,0,#aa0009,1,0,0,0,0,4
+2420,2729,Codo Agua Lupo,2,2,33.99,0,032 121 121 k,Codo Agua Lupo Marca Best Cooling,58,58,0,0,#aa0009,1,,,,,0
+2421,2738,Codo Cople Toma Agua Lupo,2,2,35.83,0,6q0 122 291 f,Codo Cople Toma Agua Lupo Marca Herta,58,58,0,0,#aa0009,1,12,6,10,0.1,24
+2422,8186,Termostato Bomba Agua Lupo,2,2,83.99,0,032 121 110 b,Termostato Bomba Agua Lupo Marca BERG,58,58,0,0,#aa0009,1,5,6,6,0.1,0
+2423,9376,Disco Rueda Lupo Delantero Ventilado,7,2,289,0,br-vw34222,Disco Rueda Lupo Delantero Ventilado Marca FP,58,58,0,0,#aa0009,1,5,30,28,4.4,38
+2424,12129,Disco Rueda Lupo Delantero Ventilado,7,2,324.73,0,bdnv1300,Disco Rueda Lupo Delantero Ventilado Marca Yokomitsu,58,58,0,0,#aa0009,1,5,30,28,4.9,10
+2425,3318,Disco Rueda March Delantero,7,1,397.99,0,bdnn0900,Disco Rueda March Delantero Marca Yokomitsu,27,34,0,0,#aa0009,1,5,28,26,4.85,10
+2426,3959,Disco Rueda March Delantero,7,1,375,0,40206-1hl0a,Disco Rueda March Delantero Marca Euro España,27,34,0,0,#aa0009,1,,,,,6
+2427,11451,Disco Rueda March Delantero,7,1,324.99,0,4026-00qaa,Disco Rueda March Delantero Marca FP,27,34,0,0,#aa0009,1,5,28,29,5,38
+2428,1952,Disco Rueda Matiz Solido,7,3,309.99,0,bdng0100,Disco Rueda Matiz Solido Marca Yokomitsu,18,73,0,0,#aa0009,1,,,,,10
+2429,3981,Disco Rueda Matiz Delantero,7,3,285.99,0,br-gm01,Disco Rueda Matiz Delantero Marca FP,18,73,0,0,#aa0009,1,,,,,38
+2430,8184,Termostato Bomba Agua Matiz,2,3,80,0,94580182,Termostato Bomba Agua Matiz,18,73,0,0,#aa0009,1,6,8,8,0.1,0
+2431,10137,Emblema Letras Matiz,8,3,56,0,E087,Emblema Letras Matiz,18,73,0,0,#aa0009,1,0,0,0,0,4
+2432,13575,Tubo Agua Meriva 2 Salidas Rectas,2,3,98.99,0,9128719,Tubo Agua Meriva 2 Salidas Rectas Marca BEst Cooling,19,74,0,0,#aa0009,1,17,10,38,0.2,0
+2433,3397,Emblema Letras Platina,8,1,59.99,0,E023,Emblema Letras Platina,33,44,0,0,#aa0009,1,0,0,0,0,4
+2434,3416,Emblema Parrilla Platina,8,1,80,0,E033,Emblema Parrilla Platina,33,44,0,0,#aa0009,1,10,11,1,0.5,4
+2435,13738,Kit Distribucion Platina Original,2,1,1105,0,16806 00qn,Kit Distribucion Platina Original,33,44,0,0,#aa0009,1,10,19,18,0.9,0
+2436,2732,Codo Bomba Agua Pointer,2,2,24,0,026 121 121a,Codo Bomba Agua Pointer Marca Best Cooling,61,62,0,0,#aa0009,1,,,,,53
+2437,2729,Codo Agua Polo,2,2,33.99,0,032 121 121 k,Codo Agua Polo Marca Best Cooling,75,94,0,0,#aa0009,1,,,,,53
+2438,2738,Codo Cople Toma Agua Polo,2,2,35.83,0,6q0 122 291f,Codo Cople Toma Agua Polo Marca Herta,75,94,0,0,#aa0009,1,12,6,10,0.1,24
+2439,3380,Emblema Cajuela Letras Polo,8,2,58,0,E017,Emblema Cajuela Letras Polo,75,94,0,0,#aa0009,1,13,5,1,0.5,4
+2440,8186,Termostato Bomba Agua Polo,2,2,83.99,0,032 121 110 b,Termostato Bomba Agua Polo Marca BERG,75,94,0,0,#aa0009,1,5,6,6,0.1,0
+2441,10774,Emblema Parrilla Saveiro,8,2,106,0,E076,Emblema Parrilla Saveiro,62,63,0,0,#aa0009,1,0,0,0,0,4
+2442,13426,Emblema Letras Saveiro,8,2,66,0,E0121,Emblema Letras Saveiro,62,63,0,0,#aa0009,1,0,0,0,0,4
+2443,10149,Emblema Cajuela Sentra 96-00,8,1,49.99,0,E012,Emblema Cajuela Sentra 96-00,34,45,0,0,#aa0009,1,0,0,0,0,4
+2444,10149,Emblema Cajuela Sentra 01-06,8,1,49.99,0,E012,Emblema Cajuela Sentra 01-06,34,46,0,0,#aa0009,1,0,0,0,0,4
+2445,10150,Emblema Letras Sentra,8,1,59.99,0,E016,Emblema Letras Sentra,34,46,0,0,#aa0009,1,0,0,0,0,4
+2446,10806,Emblema Parrilla Sentra 12-19,8,1,131.99,0,E079,Emblema Parrilla Sentra 12-19,34,48,0,0,#aa0009,1,0,0,0,0,4
+2447,4503,Toma Agua Tiida,2,1,51.99,0,13049-et000,Toma Agua Tiida 07-14 Marca Best Cooling,35,49,0,0,#aa0009,1,7,10,7,0.1,0
+2448,11394,Emblema Letras Tiida,8,1,59.99,0,E058,Emblema Letras Tiida,35,49,0,0,#aa0009,1,0,0,0,0,4
+2449,10152,Emblema Parrilla Tornado,8,3,76,0,E026,Emblema Parrilla Tornado,21,76,0,0,#aa0009,1,0,0,0,0,4
+2450,3372,Emblema Cajuela Tsuru III 05-08,8,1,49.99,0,E007,Emblema Cajuela Tsuru III 05-08,83,105,0,0,#aa0009,1,0,0,0,0,4
+2451,3401,Emblema Parrilla Tsuru III 01-03,8,1,49.99,0,E008,Emblema Parrilla Tsuru III 01-03,83,105,0,0,#aa0009,1,9,9,1,0.05,4
+2452,5335,Abrazadera Buje Horquilla Delantera Derecha,3,1,82,0,SYNN0101,Abrazadera Buje Horquilla Delantera Derecha Marca Yokomitsu,83,105,0,0,#aa0009,1,20,10,2,0.45,10
+2453,5336,Abrazadera Buje Horquilla Tsuru III Delantera Izquierda,3,1,82,0,SYNN0102,Abrazadera Buje Horquilla Tsuru III Delantera Izquierda Marca Yokomitsu,83,105,0,0,#aa0009,1,20,10,2,0.45,10
+2454,12424,Termostato Bomba Agua Tsuru III,2,1,198,0,21200-77A00,Termostato Bomba Agua Tsuru III Original,83,105,0,0,#aa0009,1,5,6,6,0.1,0
+2455,13020,Goima Barra Estabilizadora Tsuru III,3,1,66,0,6739009,Goima Barra Estabilizadora Tsuru III Juego de 2 Marca Grob,83,105,0,0,#aa0009,1,0,0,0,0,0
+2456,13441,Abrazadera Barra Estabilizadora Tsuru III,3,1,19.99,0,54614-F4200SFT,Abrazadera Barra Estabilizadora Tsuru III Marca Safety,83,105,0,0,#aa0009,1,0,0,0,0,2
+2457,4577,Emblema Parrilla Vento,8,2,162,0,E076,Emblema Parrilla Vento,65,69,0,0,#aa0009,1,0,0,0,0,4
+2458,13427,Emblema Letras Vento,8,2,59.99,0,E078,Emblema Letras Vento,65,69,0,0,#aa0009,1,0,0,0,0,4
+2459,6,Abrazadera Bobina Vocho,5,2,14.99,0,BAC 903 003 A,Abrazadera Bobina Vocho,64,67,0,0,#aa0009,1,0,0,0,0,4
+2460,12,Abrazadera Distribuidor Vocho,5,2,25.99,0,113 905 251 C,Abrazadera Distribuidor Vocho,64,68,0,0,#aa0009,1,0,0,0,0,4
+2461,1865,Roller Acelerador Vocho Negro,2,2,110,0,CO115 NEGRO,Roller Acelerador Vocho Negro,64,68,0,0,#aa0009,1,0,0,0,0,0
+2462,2690,Cincho Alternador Vovho Full Inyection,2,2,39.99,0,043 903 117,Cincho Alternador Vovho Full Inyection,64,68,0,0,#aa0009,1,0,0,0,0,4
+2463,3387,Emblema Cofre Vocho,8,2,42,0,1BM 853 601,Emblema Cofre Vocho,64,68,0,0,#aa0009,1,0,0,0,0,4
+2464,3681,Estabilizador Trasero Vocho Izquierdo Largo,3,2,85.72,0,113 501 819 A,Estabilizador Trasero Vocho Izquierdo Largo,64,68,0,0,#aa0009,1,0,0,0,0,0
+2465,5593,Manija Cofre Vocho Negra,4,2,107.12,0,s/n,Manija Cofre Vocho Negra,64,68,0,0,#aa0009,1,18,9,2,0.15,0
+2466,5592,Manija Cofre Vocho 1200 Cromada,4,2,116,0,s/n,Manija Cofre Vocho 1200 Cromada,64,67,0,0,#aa0009,1,0,0,0,0,0
+2467,13612,Roller Acelerador Vovho Amarillo,2,2,110.08,0,VWM001500A,Roller Acelerador Vovho Amarillo,64,68,0,0,#aa0009,1,0,0,0,0,0
+2468,13612,Roller Acelerador Vovho Verde,2,2,110.08,0,VWM001500V,Roller Acelerador Vovho Verde,64,68,0,0,#aa0009,1,0,0,0,0,0
+2469,12868,Desodorante America Black Ice,8,10,20.99,0,64075,Desodorante America Black Ice,76,95,0,0,#aa0009,1,0,0,0,0,4
+2470,12869,Desodorante Chivas Black Ice,8,10,30.36,0,64228,Desodorante Chivas Black Ice,76,95,0,0,#aa0009,1,0,0,0,0,4
+2471,13903,Foco Pellisco Multicolor Control Remoto,8,10,67,0,s/n,Foco Pellisco Multicolor Leds con Control Remoto Para Cambiar de color a Eleccion,76,95,0,0,#aa0009,1,0,0,0,0,0
+2472,9865,Termostato Bomba Agua Aveo,2,3,73.99,0,96143939,Termostato Bomba Agua Aveo Euro España,15,38,0,0,#aa0009,1,5,7,6,0.1,0
+2473,9865,Termostato Bomba Agua Matiz G3,2,3,73.99,0,96143939,Termostato Bomba Agua Matiz G3 Marca Euro España,18,73,0,0,#aa0009,1,5,6,7,0.1,0
+2474,8333,Toma Agua Golf A4,2,2,24,0,1J0 121 087 C,Toma Agua Golf A4,69,66,0,0,#aa0009,1,10,5,11,0.1,0
+2475,8333,Toma Agua Jetta A4,2,2,24,0,1J0 121 087 C,Toma Agua Jetta A4,55,17,0,0,#aa0009,1,10,5,11,0.1,0
+2476,8333,Toma Agua New Beetle,2,2,24,0,1J0 121 087 C,Toma Agua New Beetle,45,39,0,0,#aa0009,1,10,5,11,0.1,0
+2477,8333,Toma Agua Derby 01- 05,2,2,24,0,1J0 121 087 C,Toma Agua Derby 01- 05,50,55,0,0,#aa0009,1,10,5,11,0.1,0
+2478,8334,Toma Agua New Beetle,2,2,29.99,0,1J0 121 087 A,Toma Agua New Beetle,45,39,0,0,#aa0009,1,6,10,11,0.1,0
+2479,8334,Toma Agua Golf A4,2,2,29.99,0,1J0 121 087 A,Toma Agua Golf A4,69,66,0,0,#aa0009,1,6,10,11,0.1,0
+2480,8334,Toma Agua Jetta A4,2,2,29.99,0,1J0 121 087 A,Toma Agua Jetta A4,55,17,0,0,#aa0009,1,10,5,11,0.1,0
+2481,11888,Toma Agua Beetle 1.8 Turbo 1 Bulbo 4 Salidas,2,2,44.99,0,06A 121 132AQ,Toma Agua Beetle 1.8 Turbo 1 Bulbo 4 Salidas Marca Herta,45,39,0,0,#aa0009,1,10,11,19,0.1,0
+2482,11949,Toma Agua Beetle 2 Salidas 1 Pipeta,2,2,58.99,0,1C0 121 438A,Toma Agua Beetle 2 Salidas 1 Pipeta Marca Herta,45,39,0,0,#aa0009,1,7,4,10,0.1,0
+2483,8953,Codo Cople Bora 2.0 Turbo,2,2,57,0,1K0 122 291 C,Codo Cople Bora 2.0 Turbo Marca Berg,4,5,0,0,#aa0009,1,8,6,4,0.1,45
+2484,9169,Toma Agua Bora 2.0 1 Bulbo 1 Salida,2,2,58,0,1K0 122 291AD,Toma Agua Bora 2.0 1 Bulbo 1 Salida,4,5,0,0,#aa0009,1,10,8,10,0.1,0
+2485,9170,Toma Agua Bora 2.5 1 Bulbo 1 Salida,2,2,58.99,0,1K0 122 291AE,Toma Agua Bora 2.5 1 Bulbo 1 Salida,4,5,0,0,#aa0009,1,10,7,12,0.1,0
+2486,9442,Toma Agua Bora 2.5,2,2,62.99,0,1K0 121 087E,Toma Agua Bora 2.5 Marca Herta,4,5,0,0,#aa0009,1,5,10,9,0.1,0
+2487,10342,Toma Agua Bora 00-05,2,2,29,0,032 121 121J,Toma Agua Bora 00-05 Marca Herta,4,5,0,0,#aa0009,1,6,10,7,0.1,0
+2488,10342,Toma Agua Polo,2,2,29,0,032 121 121J,Toma Agua Polo Marca Hertra,75,94,0,0,#aa0009,1,6,10,7,0.1,0
+2489,10342,Toma Agua Lupo,2,2,29,0,032 121 121J,Toma Agua Lupo Marca Herta,58,58,0,0,#aa0009,1,6,10,7,0.1,0
+2490,10442,Codo Bomba Agua Grande Bora 05-09,2,2,65.13,0,1K0 121 087H,Codo Bomba Agua Grande Bora 05-09 Marca Bruck,4,5,0,0,#aa0009,1,12,5,10,0.1,1
+2491,10446,Toma Agua Bora Repartidor,2,2,53.99,0,1K0 121 087 LG,Toma Agua Bora Repartidor Marca Bruck,4,5,0,0,#aa0009,1,9,6,11,0.1,0
+2492,10444,TOma Agua Polo,2,2,47,0,038 121 132 C,,75,94,0,0,#aa0009,1,0,0,0,0,0
+2493,10444,Toma Agua Bora,2,2,47,0,038 121 132 C,Toma Agua Bora Marca Herta,4,5,0,0,#aa0009,1,7,10,19,0.1,0
+2494,10444,Toma Agua Golf A4,2,2,47,0,038 121 132 C,Toma Agua Golf A4,69,66,0,0,#aa0009,1,7,10,19,0.1,0
+2495,10444,Toma Agua Jetta A4,2,2,47,0,038 121 132 C,,55,17,0,0,#aa0009,1,7,10,19,0.1,0
+2496,10444,Toma Agua Ibiza,2,5,47,0,038 121 132 C,Toma Agua Ibiza,41,80,0,0,#aa0009,1,7,10,19,0.1,0
+2497,11953,Toma Agua Bora 2.5 1 Salida 1 Pipeta con Seguro,2,2,44.99,0,1K0 122 291R,Toma Agua Bora 2.5 1 Salida 1 Pipeta con Seguro Marca Herta,4,5,0,0,#aa0009,1,7,7,7,0.1,0
+2498,11966,Toma Agua Bora 2.0 1 Salida 1 Pipeta,2,2,54.99,0,06J 121 132G,Toma Agua Bora 2.0 1 Salida 1 Pipeta Marca Bruck,4,5,0,0,#aa0009,1,7,9,10,0.1,0
+2499,11966,Toma Agua Jetta A6 1 Salida 1 Pipeta,2,2,54.99,0,06J 121 132G,Toma Agua Jetta A6 1 Salida 1 Pipeta Marca Bruck,57,19,0,0,#aa0009,1,7,9,10,0.1,0
+2500,10285,Metal Ceentro Caribe en Estandar,2,2,318,0,6819M-STD,Metal Ceentro Caribe en Estandar Marca Federal Mogul,47,22,0,0,#aa0009,1,6,10,16,0.4,0
+2501,8974,Tubo Agua Corsa 2 Salidas Inclinada,2,3,92.99,0,93378094,Tubo Agua Corsa 2 Salidas Inclinada Marca Best Cooling,16,71,0,0,#aa0009,1,17,10,35,0.2,0
+2502,10622,Termostato Boba Agua Pick Up D21,2,1,67.99,0,NSD1-TT130,Termostato Boba Agua Pick Up D21 Marca Herta,30,40,0,0,#aa0009,1,5,6,6,0.1,0
+2503,8325,Toma Agua Golf A3 1 Bulbo,2,2,28,0,068 121 144,Toma Agua Golf A3 1 Bulbo Marca BERG,68,65,0,0,#aa0009,1,7,6,7,0.1,0
+2504,8328,Toma Agua Golf A3 2 Bulbos Peine y Pipeta,2,2,35,0,039 121 132 e,Toma Agua Golf A3 2 Bulbos Peine y Pipeta Marca Herta,68,65,0,0,#aa0009,1,10,11,10,0.1,0
+2505,8347,Toma Agua Golf A4 VR6,2,2,43,0,021 121 133 d,Toma Agua Golf A4 VR6,69,66,0,0,#aa0009,1,5,8,12,0.1,0
+2506,11833,Codo Bomba Agua Inferior Golf A4,2,2,32,0,021 121 121a,Codo Bomba Agua Inferior Golf A4 Marca Herta,69,66,0,0,#aa0009,1,9,5,6,0.1,24
+2507,8325,Toma Agua Jetta A3 1 Bulbo,2,2,28,0,068 121 144,Toma Agua Jetta A3 1 Bulbo Marca BErg,54,16,0,0,#aa0009,1,7,6,7,0.1,0
+2508,8328,Toma Agua Jetta A3 2 Bulbos Peine y Pipita,2,2,35,0,039 121 132 e,Toma Agua Jetta A3 2 Bulbos Peine y Pipita Marca BERG,54,16,0,0,#aa0009,1,10,11,10,0.1,0
+2509,9622,Codo Bomba Agua Jetta A3 Inferior Cople,2,2,25.99,0,037 121 619,Codo Bomba Agua Jetta A3 Inferior Cople Marca Herta,54,16,0,0,#aa0009,1,9,6,8,0.1,24
+2510,11563,Chicote Acelerador Pick up 720,2,1,45.79,0,18200-p05r1,Chicote Acelerador Pick up 720 Marca Nikko,29,42,0,0,#aa0009,1,27,5,41,0.3,32
+2511,4083,Filtro Aire Aprio,1,1,38.07,0,16546-00qaa,Filtro Aire Aprio Marca Nikko,7,26,0,0,#aa0009,1,17,14,7,0.3,32
+2512,2553,Chicote Velocimetro Atos,2,6,109,0,94240-02000,Chicote Velocimetro Atos OMarca EGP,70,37,0,0,#aa0009,1,14,7,40,0.3,61
+2513,4117,Filtro Gasolina Atos 05-10,1,6,62,0,31911-05000,Filtro Gasolina Atos 05-10 Marca Nikko,70,37,0,0,#aa0009,1,16,8,8,0.3,0
+2514,9009,Chicote Clutch Atos,2,6,226,0,41510-02010,Chicote Clutch Atos Marca BERG,70,36,0,0,#aa0009,1,14,3,41,0.75,45
+2515,11168,Filtro Gasolina Atos 00-04,1,6,58.99,0,AGNK0100,Filtro Gasolina Atos 00-04 Marca Nikko,70,36,0,0,#aa0009,1,19,8,8,0.3,0
+2516,4142,Filtro Aire Gasolina Beetle,1,2,49.99,0,ff-vw105,Filtro Aire Gasolina Beetle Marca EGP,45,39,0,0,#aa0009,1,18,8,9,0.3,0
+2517,2135,Chicote Acelerador Caribe Automatico,2,2,43,0,vw109nk,Chicote Acelerador Caribe Automatico Marca Nikko,47,22,0,0,#aa0009,1,45,37,5,0.3,32
+2518,2466,Chicote Clutch Caribe,2,2,58.68,0,171-721-335E,Chicote Clutch Caribe Marca Nikko,47,22,0,0,#aa0009,1,28,3,42,0.3,32
+2519,2557,Chicote Velocimetro Caribe Automatico,2,2,174.99,0,171 957 803 a,Chicote Velocimetro Caribe Automatico Aleman,47,22,0,0,#aa0009,1,29,3,40,0.3,97
+2520,2469,Chicocte Clutch Chevy 1.4,2,3,80,0,gm307NK,Chicocte Clutch Chevy 1.4 Marca Nikko,5,6,0,0,#aa0009,1,28,3,42,0.3,32
+2521,2417,Chicote Acelerador Chevy 1.4,2,3,53.99,0,90411031,Chicote Acelerador Chevy 1.4 EGP,5,6,0,0,#aa0009,1,,,,,61
+2522,2562,Chicote Velocimetro Chevy,2,3,56,0,93231079,Chicote Velocimetro Chevy Marca EGP,5,6,0,0,#aa0009,1,29,3,40,0.3,61
+2523,4385,Goma Barra Estabilizadora Chevy,3,3,19.99,0,93290890sft,Goma Barra Estabilizadora Chevy Marca Bruck,5,6,0,0,#aa0009,1,0,0,0,0,0
+2524,9914,Termostato Bomba Agua Chevy,2,3,62,0,90200836,Termostato Bomba Agua Chevy Solo Marca Herta,5,6,0,0,#aa0009,1,6,6,6,0.3,0
+2525,10211,Chicote Clutch Chevy 1.6,2,3,158,0,90522447,Chicote Clutch Chevy 1.6 Original,5,6,0,0,#aa0009,1,10,50,5,0.3,8
+2526,12382,Termostato Bomba Agua Chevy Completo,2,3,174.99,0,ks-93275736,Termostato Bomba Agua Chevy Completo Marca Tetzun,5,6,0,0,#aa0009,1,4,7,20,0.3,0
+2527,12907,Termostato Bomba Agua Chevy Completo,2,3,294.99,0,93275736,Termostato BOmba Agua Chevy Completo Marca GM Original,5,6,0,0,#aa0009,1,7,7,20,0.3,0
+2528,4392,Goma Barra Estabilizadora Clio,3,8,28,0,54613-00qaa,Goma Barra Estabilizadora ClioMarca Bruck,39,90,0,0,#aa0009,1,6,6,6,0.3,0
+2529,2422,Chicote Acelerador Combi,2,2,59.99,0,BAC 721 555A,Chicote Acelerador Combi Marca Nikko,48,53,0,0,#aa0009,1,,,,,32
+2530,2471,Chicocte Clutch Combi 1600/1800,2,2,33,0,vw355nk,Chicocte Clutch Combi 1600/1800 Marca Nikko,48,53,0,0,#aa0009,1,74,3,10,0.3,32
+2531,4386,Goma Barra Estabilizadora Corsa,3,3,24.99,0,90468567,Goma Barra Estabilizadora Corsa Marca Bruck,16,70,0,0,#aa0009,1,15,13,5,0.3,0
+2532,2207,Goma Barra Estabilizadora Pick up D21,3,1,42,0,54613-32g00j,Goma Barra Estabilizadora Pick up D21 Marca Safety,30,40,0,0,#aa0009,1,5,5,5,0.3,0
+2533,8727,Volante Vocho Original,2,2,1092,0,VOLANTE,Volante Vocho Original,64,68,0,0,#aa0009,1,30,30,15,2.2,0
+2534,7837,Tapa Bocina MediaLuna Negra,8,2,260,0,EUS,"Tapa Bocina MediaLuna Negra de Madera Forradqa con Alfombra, dos Orificios para bocinas y Logo de VW Estampado en la alfombra",64,68,0,0,#aa0009,1,117,45,5,4.2,0
+2535,5334,Luz Placa Vocho,4,2,198.99,0,l p vw,Luz Placa de Vocho Completa con luz incluida,64,68,0,0,#aa0009,1,0,0,0,0,0
+2536,3392,Maza Tsuru II Delantera,3,1,199,0,BMNN0500,Maza Tsuru II Delantera Marca NPPN,83,103,0,0,#aa0009,1,0,0,0,0,0
+2537,3691,Estribo Vocho Derecho Negro Franja Cromada,4,2,258.4,0,113 821 510A,Estribo Vocho Derecho Negro Franja Cromada,64,68,0,0,#aa0009,1,140,18,5,1.65,0
+2538,2691,Cincho Generador Vocho 1600,5,2,25.99,0,113 903 141 b,Cincho Generador Vocho 1600,64,68,0,0,#aa0009,1,2,15,14,0.3,4
+2539,1720,Bujias Vocho Platino Marca Bosch 87-92,1,2,56,0,wr8ap,Bujias Vocho Platino Marca Bosch 87-92,64,68,0,0,#aa0009,1,10,2,2,0.1,41
+2540,12383,Termostato Bomba Agua Versa,2,1,120,0,21200-ED00A,Termostato Bomba Agua Versa Marca Tetzun,37,51,0,0,#aa0009,1,7,6,6,0.2,0
+2541,13940,Facia Tsuru III GOLDEN Delantera,4,1,1431.99,0,R!-6202288Y25,Facia Tsuru III GOLDEN Delantera Original de Agencia,83,105,0,0,#aa0009,1,170,65,40,3.8,0
+2542,11277,Chicote Acelerador Tsuru III Mdiano,2,1,85,0,18201-f4204,Chicote Acelerador Tsuru III Mdiano Marca Nikko,83,105,0,0,#aa0009,1,27,5,41,0.3,32
+2543,8951,Toma Agua Tsuru III,2,1,38.07,0,13049-f4300,Toma Agua Tsuru III 16 Valvulas Marca Best Cooling,83,105,0,0,#aa0009,1,7,9,12,0.2,0
+2544,4035,Filtro Aire Tsuru III Chico,1,1,33.99,0,16546-f41001sm,Filtro Aire Tsuru III Chico Marca Nikko,83,105,0,0,#aa0009,1,23,17,4,0.3,0
+2545,2556,Chicote Velocimetro Tsuru III,2,1,46,0,25050-f4200,Chicote Velocimetro Tsuru III Marca Cablex,83,105,0,0,#aa0009,1,29,3,40,0.2,80
+2546,2459,Chicote Clutch Tsuru III,2,1,72.99,0,30770-62y01,Chicote Clutch Tsuru III Marca Cablex,83,105,0,0,#aa0009,1,28,3,42,0.3,0
+2547,1714,Bujia Tsuru III 16 Valvulas 3 Electrodos Bosch,8,1,58,0,F6DTC,Bujia Tsuru III 16 Valvulas 3 Electrodos Marca Bosch,83,105,0,0,#aa0009,1,10,2,2,0.1,41
+2548,1713,Bujia Tsuru III 16 Valvulas 1 Electrodo Platino Bosch,1,1,68.99,0,FR8DPP30X,Bujia Tsuru III 16 Valvulas 1 Electrodo Platino Marca Bosch,83,105,0,0,#aa0009,1,10,2,2,0.1,41
+2549,1705,Bujia Tsuru III 8 Valvulas 1 Electrodo Platino Bosch,8,1,68.99,0,WRDP WR7DP,Bujia Tsuru III 8 Valvulas 1 Electrodo Platino Marca Bosch,83,104,0,0,#aa0009,1,10,2,2,0.1,41
+2550,1702,Bujia Tsuru III 8 Valvulas 3 Electrodos Bosch,1,1,58.99,0,W7DTC,Bujia Tsuru III 8 Valvulas 3 Electrodos Marca Bosch,83,104,0,0,#aa0009,1,10,2,2,0.1,41
+2551,1695,Bujia Tsuru III 16 Valvulas Bosch,1,1,39.99,0,FR8DCX,Bujia Tsuru III 16 Valvulas Marca Bosch,83,105,0,0,#aa0009,1,10,2,2,0.1,41
+2552,1377,Chicote Acelerador Tsuru II 88-91,2,1,42.2,0,N115NK,Chicote Acelerador Tsuru II 88-91 Marca Nikko,83,103,0,0,#aa0009,1,27,5,41,0.1,32
+2553,1702,Bujia Tsuru II 3 Electrodos Bosch,1,1,58.99,0,W7DTC,Bujia Tsuru II 3 Electrodos Marca Bosch,83,103,0,0,#aa0009,1,10,2,2,0.1,41
+2554,1705,Bujia Tsuru II 1 Electrodo Bosch,1,1,68.99,0,WR8DP,Bujia Tsuru II 1 Electrodo Marca Bosch,83,103,0,0,#aa0009,1,10,2,2,0.1,41
+2555,8974,Tubo Agua Tornado 2 Salidas Inclinadas,2,3,92.99,0,93378094,Tubo Agua Tornado 2 Salidas InclinadasMarca Best Cooling,21,76,0,0,#aa0009,1,17,10,35,0.2,0
+2556,12157,Filtro Aire Tiida,1,1,28,0,16546-ED000,Filtro Aire Tiida Marca Nikko,35,49,0,0,#aa0009,1,24,14,4,0.3,0
+2557,12383,Termostato Bonga Agua Tiida,2,1,120,0,21200-ED00a,Termostato Bonga Agua Tiida Marca Tetzun,35,49,0,0,#aa0009,1,7,6,6,0.1,0
+2558,12623,Bujia Tiida Original Agencia,1,1,154.99,0,B2301JA01JNW,Bujia Tiida Original Agencia,35,49,0,0,#aa0009,1,10,2,2,0.1,7
+2559,730,Bujia Spark ACDelco,1,3,32,0,19280663,Bujia Spark Marca ACDelco,20,75,0,0,#aa0009,1,10,2,2,0.1,47
+2560,1715,Bujias Sentra 01-07 Champion,1,1,28,0,REC10TC4,Bujias Sentra 01-07 Marca Champion,34,46,0,0,#aa0009,1,10,2,2,0.1,17
+2561,4096,Filtro Aire Sentra 08-10,1,1,57,0,16546-et00a,Filtro Aire Sentra 08-10 Marca Nikko,34,47,0,0,#aa0009,1,25,2,7,0.3,0
+2562,4142,Filtro Gasolina Polo,1,2,49.99,0,FF-VW105,Filtro Gasolina Polo Marca EGP,75,94,0,0,#aa0009,1,18,8,9,0.3,0
+2563,4394,Goma Barra Estabilizadora Polo,3,2,20.04,0,6q0 411 314,Goma Barra Estabilizadora Polo Marca Bruck,75,94,0,0,#aa0009,1,15,13,5,0.1,0
+2564,10341,Toma Agua Polo,2,2,38.99,0,032 121 118d,Toma Agua Polo Marca Polo,75,94,0,0,#aa0009,1,5,8,5,0.2,0
+2565,10343,Toma Agua Polo 1.6,2,2,29,0,032 121 121a,Toma Agua Polo 1.6 Marca Herta,75,94,0,0,#aa0009,1,8,10,7,0.1,0
+2566,4083,Filtro Aire Platina,1,1,38.07,0,16546-00qaa,Filtro Aire Platina Marca Nikko,33,44,0,0,#aa0009,1,17,14,7,0.3,0
+2567,4392,Goma Barra Estabilizadora Platina,3,1,28,0,54613-00qaa,Goma Barra Estabilizadora Platina Marca Bruck,28,41,0,0,#aa0009,1,6,6,6,0.1,0
+2568,10038,Termostato Bomba Auga Platina,2,1,82.99,0,21200-00qaa,Termostato Bomba Auga Platina Marca Herta,33,44,0,0,#aa0009,1,5,6,6,0.1,0
+2569,1702,Bujias Matiz 3 Electrodos Bosch,1,3,58.99,0,W7DTC,Bujias Matiz 3 Electrodos Marca Bosch,18,73,0,0,#aa0009,1,10,2,2,0.1,41
+2570,2083,Filtro Aire Matiz G2 06-,1,3,44.99,0,96591485,Filtro Aire Matiz G2 06- Marca Nikko,18,73,0,0,#aa0009,1,29,19,3,0.3,0
+2571,7109,Goma Barra Estabilizadora Metiz Tunel Largo,3,3,38.99,0,96322618,Goma Barra Estabilizadora Metiz Tunel Largo Marca ACDelco,18,73,0,0,#aa0009,1,0,0,0,0,0
+2572,12383,Termostato Bomba Agua March,2,1,120,0,21200-ed00a,Termostato Bomba Agua March Marca Tetzun,27,34,0,0,#aa0009,1,7,6,6,0.1,0
+2573,12812,Chicote Selector Velocidad March Automatico,2,1,378.99,0,34935-1hk1a,Chicote Selector Velocidad March Automatico Marca Nikko,27,34,0,0,#aa0009,1,50,10,46,0.4,32
+2574,1833,Codo Bomba Agua Inferios Jetta A4,2,2,67.99,0,021 121 121a,Codo Bomba Agua Inferios Jetta A4 Marca Herta,55,17,0,0,#aa0009,1,9,5,6,0.1,24
+2575,10447,Codo Bomba Agua Jetta A4 VR6,2,2,29,0,1j0 121 087D,Codo Bomba Agua Jetta A4 VR6 Marca Bruck,55,17,0,0,#aa0009,1,6,4,9,0.1,1
+2576,8347,Toma Agua Vr6 Alemana,2,2,43,0,021 121 133D,Toma Agua Vr6 Alemana,55,17,0,0,#aa0009,1,5,8,12,0.1,0
+2577,4142,Filtro Gasolina Jetta A4,1,2,49.99,0,ff-vw105,Filtro Gasolina Jetta A4 Marca EGP,55,17,0,0,#aa0009,1,18,8,9,0.3,0
+2578,4388,Goma Barra Estabilizadora Jetta A3,3,2,11.99,0,191 411 314,Goma Barra Estabilizadora Jetta A3 Marca Safety,54,16,0,0,#aa0009,1,0,0,0,0,0
+2579,1713,Bujias Jetta A3 2.0 1 Electrodo Bosch,1,2,68.99,0,FR8DPP30X,Bujias Jetta A3 2.0 1 Electrodo Marca Bosch,54,16,0,0,#aa0009,1,10,2,2,0.1,0
+2580,1709,Bujia Jetta A3 2.0 1 Electrodo 1 Electrodo Bosch,1,2,34.99,0,FR6DC,Bujia Jetta A3 2.0 1 Electrodo 1 Electrodo Marca Bosch,54,16,0,0,#aa0009,1,10,2,2,0.1,41
+2581,1702,Bujia Jetta A2 3 Electrodos Bosch,1,2,58.99,0,W7DTC,Bujia Jetta A2 3 Electrodos Marca Bosch,53,15,0,0,#aa0009,1,10,2,2,0.1,41
+2582,1705,Bujia Jetta A2 1 Electrodo Platino Bosch,1,2,68.99,0,WR8DP WR7DP,Bujia Jetta A2 1 Electrodo Platino Marca Bosch,53,15,0,0,#aa0009,1,10,2,2,0.1,41
+2583,4388,Goma Barra Estabilizadora Jetta A2,3,2,11.99,0,191 411 314,Goma Barra Estabilizadora Jetta A2 Marca safety,53,15,0,0,#aa0009,1,0,0,0,0,0
+2584,8928,Bujias Jetta A2 ACDelco,1,2,28,0,MR42XLS,Bujias Jetta A2 Marca ACDelco,53,15,0,0,#aa0009,1,10,2,2,0.1,47
+2585,10427,Chicote Velocimetro Jetta A2 Estandar,2,2,66,0,BAT 957 031C,Chicote Velocimetro Jetta A2 Estandar Marca Nikko,53,15,0,0,#aa0009,1,27,5,30,0.2,32
+2586,1702,Bujia Golf A2 3 Electrodos Bosch,1,2,58.99,0,W7DTC,Bujia Golf A2 3 Electrodos Marca Bosch,52,57,0,0,#aa0009,1,10,2,2,0.1,41
+2587,1705,Bujia Golf A2 1 Electrodo Platino Bosch,1,2,68.99,0,WR8DP WR7DP,Bujia Golf A2 1 Electrodo Platino Marca Bosch,53,15,0,0,#aa0009,1,20,2,2,0.1,41
+2588,1709,Bujias Golf A3 2.0 1 Electrodo,1,2,34.99,0,fr6dc,Bujias Golf A3 2.0 1 Electrodo,68,65,0,0,#aa0009,1,10,2,2,0.1,0
+2589,1709,Bujia Golf A4 1 Electrodo,1,2,34.99,0,FR6DC,Bujia Golf A4 1 Electrodo,69,66,0,0,#aa0009,1,10,2,2,0.1,0
+2590,1713,Bujia Golf A4 1 Electrodo Platino Marca Bosch,1,2,68.99,0,FR8DPP30X,Bujia Golf A4 1 Electrodo Platino Marca Marca Bosch,69,66,0,0,#aa0009,1,10,2,2,0.1,41
+2591,1713,Bujia Golf A3 2.0 1 Electrodo Platino Marca Bosch,1,2,68.99,0,FR8DPP30X,Bujia Golf A3 2.0 1 Electrodo Platino Marca Marca Bosch,68,65,0,0,#aa0009,1,10,2,2,0.1,41
+2592,1714,Bujia Golf A3 2.0 3 Electrodos Boch,1,2,58,0,F6DTC,Bujia Golf A3 2.0 3 Electrodos Marca Boch,68,65,0,0,#aa0009,1,10,2,2,0.1,41
+2593,1714,Bujia Golf A4 3 Electrodos Boch,1,2,58,0,F6DTC,Bujia Golf A43 Electrodos Marca Boch,69,66,0,0,#aa0009,1,10,2,2,0.1,41
+2594,4142,Filtro Gasolina Golf A4,1,2,49.99,0,FF-VW105,Filtro Gasolina Golf A4 Marca EGP,69,66,0,0,#aa0009,1,18,8,9,0.3,0
+2595,8928,Bujia Golf A2 ACDelco,1,2,28,0,MR42XLS,Bujia Golf A2 Marca ACDelco,52,57,0,0,#aa0009,1,10,2,2,0.1,47
+2596,8622,Codo Bomba Agua Golf A3 Inferior (Cople),2,2,75.99,0,037 121 619,Codo Bomba Agua Golf A3 Inferior (Cople) Marca Herta,68,65,0,0,#aa0009,1,9,6,8,0.1,24
+2597,10427,Chicote Velocimetro Golf A2 Estandar,2,2,66,0,BAT 957 031c,Chicote Velocimetro Golf A2 Estandar Marca Nikko,52,57,0,0,#aa0009,1,27,5,30,0.2,32
+2598,4062,Filtro Aire Pick up D21,8,1,64.99,0,16546-86g00,Filtro Aire Pick up D21 Marca Nikko,30,40,0,0,#aa0009,1,,,,,0
+2599,8928,Bujia Corsa ACDelco,1,3,28,0,MR42XLS,Bujia Corsa MarcaACDelco,16,71,0,0,#aa0009,1,10,2,2,0.1,47
+2600,8928,Bujia Chevy ACDelco,1,3,28,0,MR42XLS,Bujia Chevy Marca ACDelco,5,6,0,0,#aa0009,1,10,2,2,0.1,47
+2601,1705,Bujia Chevy 1 Electrodo Platino Bosch,1,3,68.99,0,WR8DP WR7DP,Bujia Chevy 1 Electrodo Platino Marca Bosch,5,6,0,0,#aa0009,1,10,2,2,0.1,41
+2602,1702,Bujia Chevy 3 Electrodos Bosch,1,3,58.99,0,W7DTC,Bujia Chevy 3 Electrodos Marca Bosch,5,6,0,0,#aa0009,1,10,2,2,0.1,41
+2603,1705,Bujia Caribe 1 Electrodo Platino Bosch,1,2,68.99,0,WR8DP WR7DP,Bujia Caribe 1 Electrodo Platino Marca Bosch,47,22,0,0,#aa0009,1,10,2,2,0.1,41
+2604,1697,Bujia Bora Platino Bosch,1,2,68.46,0,FR8HPP30X,Bujia Bora Platino Marca Bosch,4,5,0,0,#aa0009,1,10,2,2,0.1,41
+2605,1701,Bujia Caribe 1 Electrodo Bosch,1,2,35.84,0,W9DC,Bujia Caribe 1 Electrodo Marca Bosch,47,22,0,0,#aa0009,1,10,2,2,0.1,41
+2606,1701,Bujia Golf A2 1 Electrodo Bosch,1,2,35.84,0,W9DC,Bujia Golf A2 1 Electrodo Bosch,52,57,0,0,#aa0009,1,10,2,2,0.1,41
+2607,1701,Bujia Matiz 1 Electrodo Bosch,8,3,35.84,0,W9DC,Bujia Matiz 1 Electrodo Bosch,18,73,0,0,#aa0009,1,10,2,2,0.1,41
+2608,1701,Bujia Chevy 1 Electrodo Bosch,1,3,35.84,0,W9DC,Bujia Chevy 1 Electrodo Bosch,5,6,0,0,#aa0009,1,10,2,2,0.1,41
+2609,1701,Bujia Tsuru II 1 Electrodo Bosch,1,1,35.84,0,W9DC,Bujia Tsuru II 1 Electrodo Bosch,83,103,0,0,#aa0009,1,10,2,2,0.1,41
+2610,1701,Bujia Tsuru III ( Valvulas 1 Electrodo Bosch,1,1,35.84,0,W9DC,Bujia Tsuru III ( Valvulas 1 Electrodo Bosch,83,104,0,0,#aa0009,1,10,2,2,0.1,41
+2611,1701,Bujia Jetta A2 1 Electrodo Bosch,1,2,35.84,0,W9DC,Bujia Jetta A2 1 Electrodo Marca Bosch,53,15,0,0,#aa0009,1,10,2,2,0.1,41
+2612,8928,Bujia Caribe ACDelco,1,2,28,0,MR42XLS,Bujia Caribe ACDelco,47,22,0,0,#aa0009,1,10,2,2,0.1,47
+2613,1695,Bujia Atos Boch,1,6,39.99,0,FR8DCX+,Bujia Atos Boch,70,36,0,0,#aa0009,1,10,2,2,0.1,41
+2614,1714,Bujia Atos 3 Electrodos Bosch,1,6,58,0,F6DTC,Bujia Atos 3 Electrodos Marca Bosch,70,36,0,0,#aa0009,1,10,2,2,0.1,41
+2615,11083,Bujia Atos NGK,1,6,24,0,BKR5E-11,Bujia Atos Marca NGK,70,36,0,0,#aa0009,1,10,8,8,0.1,33
+2616,11493,Bujia Atos Platino NGK,1,6,38.99,0,BKR5EGP,Bujia Atos Platino Marca NGK,70,37,0,0,#aa0009,1,10,2,2,0.1,33
+2617,4388,Goma Barra Estabilizadora Golf A2,3,2,11.99,0,191 411 314,Goma Barra Estabilizadora Golf A2 Marca Safety,52,57,0,0,#aa0009,1,0,0,0,0,0
+2618,4388,Goma Barra Estabilizadora Golf A3,3,2,11.99,0,191 411 314,Goma Barra Estabilizadora Golf A3 Marca Saefty,68,65,0,0,#aa0009,1,0,0,0,0,0
+2619,4394,Goma Barra Estabilizadora Lupo,3,2,20.04,0,6Q0 411 314,Goma Barra Estabilizadora Lupo Marca Bruck,58,58,0,0,#aa0009,1,15,13,5,0.2,0
+2620,12390,Bujias March 1.8 Platino Boch,1,1,172,0,2421350524,Bujias March 1.8 Platino Marca Boch,27,34,0,0,#aa0009,1,10,2,2,0.1,41
+2621,12623,Bujia March 1.8 Platino Original,1,1,154.99,0,B2401JA01JNW,Bujia March 1.8 Platino Original de Agencia,27,34,0,0,#aa0009,1,12,2,2,0.1,7
+2622,8928,Bujias Matiz ACDelco,1,3,28,0,MR42XLS,Bujias Matiz ACDelco,18,73,0,0,#aa0009,1,10,2,2,0.1,47
+2623,9519,Metal Centro Platina en 10,2,1,240,0,7337.01,Metal Centro Platina en 10 Marca Diamond,33,44,0,0,#aa0009,1,4,8,20,0.25,0
+2624,1486,Brack Defensas Vocho 77-,4,2,38,0,BRA,Brack Defensas Vocho 77 en Adelante Generico,64,68,0,0,#aa0009,1,32,9,9,0.6,4
+2625,1718,Bujia Vocho Bosch,1,2,35.99,0,W8BC,Bujia Vocho Marca Bosch,64,68,0,0,#aa0009,1,10,2,2,0.1,41
+2626,2178,Calavera Vocho Ambar Brasileña,4,2,159.99,0,BAA 945 095 A,Calavera Vocho Ambar Brasileña Generica,64,68,0,0,#aa0009,1,26,16,19,0.5,4
+2627,2784,Colilla Escape Vocho Cromada,2,2,48,0,113 251 163 G,Colilla Escape Vocho Cromada,64,68,0,0,#aa0009,1,0,0,0,0,4
+2628,2824,Condenzador Vocho 1600 Bosch,5,2,57.83,0,081 575,Condenzador Vocho 1600 Marca Bosch,64,68,0,0,#aa0009,1,7,4,3,0.1,41
+2629,2962,Cuarto Defensa Vocho,4,2,46,0,BAA 953 049 A,Cuarto Defensa Vocho Acrilico,64,68,0,0,#aa0009,1,0,0,0,0,4
+2630,3623,Espejo Vocho Cromado Derecho,4,2,163,0,1BM 857 502,Espejo Vocho Cromado Derecho Marca YTM,64,68,0,0,#aa0009,1,21,10,4,0.35,0
+2631,3627,Espejo Vocho Negro 2000 Derecho,4,2,187.58,0,1BM 857 502N,Espejo Vocho Negro 2000 Derecho Marca EA,64,68,0,0,#aa0009,1,21,10,4,0.35,0
+2632,3628,Espejo Vocho Negro 2000 Izquierdo,4,2,153,0,113 857 501N,Espejo Vocho Negro 2000 Izquierdo Marca EA,64,68,0,0,#aa0009,1,21,10,4,0.35,0
+2633,3692,Estribo Vocho Izquierdo Negro Franja Cromada,4,2,258.4,0,113 821 511 A,Estribo Vocho Izquierdo Negro Franja Cromada,64,68,0,0,#aa0009,1,140,18,5,1.4,0
+2634,7789,Tablero Vocho Modelo Nuevo,8,2,860,0,1BM 857 051A,Tablero Vocho Modelo Nuevo,64,68,0,0,#aa0009,1,106,27,7,1.15,0
+2635,8087,Tapon Rueda Golf A2,8,2,53.99,0,177,Tapon Rueda Golf A2,52,57,0,0,#aa0009,1,0,0,0,0,0
+2636,8582,Turbina Vocho 1600,2,2,145,0,TUR,Turbina Vocho 1600,64,68,0,0,#aa0009,1,0,0,0,0,0
+2637,8787,Vivos Salpicadera Vocho Negro,4,2,18,0,111 821 715 B,Vivos Salpicadera Vocho Negro,64,68,0,0,#aa0009,1,12,12,24,0.2,0
+2638,11438,Bujia Vocho NGK,1,2,22,0,BP5HS,Bujia Vocho NGK,64,68,0,0,#aa0009,1,10,2,2,0.1,33
+2639,13130,Tope Defensa Vocho,4,2,242.99,0,150,Tope Defensa Vocho Goma,64,68,0,0,#aa0009,1,0,0,0,0,0
+2640,13451,Tapon Aceite Vocho Full Inyection,2,2,19.99,0,026-103-485A,Tapon Aceite Vocho Full Inyection Marca Top Engine,64,68,0,0,#aa0009,1,10,10,7,0.1,0
+2641,7847,Tapa Carter Vocho con Tornillo,2,2,48.8,0,113 115 181,Tapa Carter Vocho con Tornillo,64,68,0,0,#aa0009,1,12,12,1.5,0.2,0
+2642,11210,Pastilla Encendido Versa,5,1,131.99,0,48750-0M010,Pastilla Encendido Versa Marca Bruck,37,51,0,0,#aa0009,1,5,5,5,0.1,0
+2643,6954,Espejo Versa Electrico Izquierdo,4,1,1255,0,96302-3AN5B,Espejo Versa Electrico Izquierdo Marca Nikko,37,51,0,0,#aa0009,1,17,23,32,1.45,0
+2644,2692,Espejo Versa Electrico Derecho,4,1,1255,0,96301-3AN5B,Espejo Versa Electrico Derecho Marca Nikko,37,51,0,0,#aa0009,1,32,23,17,1.4,0
+2645,8035,Tapon Gasolina Vocho con Llave,4,2,91,0,113 201 551H,Tapon Gasolina Vocho con Llave M Series,64,68,0,0,#aa0009,1,10,10,10,0.3,0
+2646,8033,Tapon Gasolina Vocho 1200,4,2,33.99,0,113 201 551,Tapon Gasolina Vocho 1200,64,67,0,0,#aa0009,1,10,10,5,0.25,0
+2647,7663,Reten Cigueñal Vocho Federal Mogul,2,2,34.99,0,1162,Reten Cigueñal Vocho Federal Mogul,64,68,0,0,#aa0009,1,5,5,2,0.1,0
+2648,7070,Reten Flecha Piloto Vocho,2,2,15.99,0,113 311 113A,Reten Flecha Piloto Vocho Marca Bruck,64,68,0,0,#aa0009,1,10,10,2,0.1,0
+2649,7057,Reten Cigueñal Vocho Negro,2,2,33,0,143 105 245,Reten Cigueñal Vocho Negro,64,68,0,0,#aa0009,1,10,10,2,0.1,0
+2650,6287,Pastilla Encendido Vocho,5,2,57.07,0,111 905 865,Pastilla Encendido Vocho Marca Voltmax,64,68,0,0,#aa0009,1,5,5,5,0.1,0
+2651,11243,Pastilla Encendido Pick up 720,5,1,72.99,0,48750-01B00,Pastilla Encendido Pick up 720 Marca Bruck,29,42,0,0,#aa0009,1,5,5,5,0.1,0
+2652,8134,Limpiabrisas 18 pulgadas,8,10,52,0,PAC66101,Limpiabrisas 18 pulgadas Marca Racing Tec,76,95,0,0,#aa0009,1,0,0,0,0,0
+2653,7025,Teten Barra Clutch 5 Velocidades,8,10,19.99,0,020 141 733,Teten Barra Clutch 5 Velocidades Marca Nikko,76,95,0,0,#aa0009,1,10,10,2,0.1,0
+2654,7468,Silicon Aluminio Nasca Blister,2,10,27.99,0,NASCA-ALUMINIO,Silicon Aluminio Nasca Blister,76,95,0,0,#aa0009,1,0,0,0,0,0
+2655,13680,Tapetes Universales Metalizados Verdes,8,10,194.99,0,IAC70008,Tapetes Universales Metalizados Verdes,88,121,0,0,#aa0009,1,0,0,0,0,0
+2656,13933,Barra Led Recta 41,8,10,1123.19,0,FEC009,Barra Led Recta 41 Marca Forcetec,86,119,0,0,#aa0009,1,110,8,8,2,39
+2657,13934,Barra Led Curva 40,8,10,1927.76,0,FEC10150,Barra Led Curva 40 Marca Forcetec,86,119,0,0,#aa0009,1,112,14,14,3.7,39
+2658,13963,Funda Asiento Universal Jgo Racin Tec,8,10,344.99,0,17050234,Funda Asiento Universal Jgo Racin Tec,76,95,0,0,#aa0009,1,21,35,14,0.8,0
+2659,3481,Espejo Atos 00-12 Derecho,4,6,298,0,AERK0101  RODR,Espejo Atos 00-12 Derecho,70,37,0,0,#aa0009,1,16,19,29,0.85,32
+2660,3482,Espejo Atos 00-12 Izquierdo,4,6,322,0,422A0102,Espejo Atos 00-12 Izquierdo,70,37,0,0,#aa0009,1,16,19,29,0.85,32
+2661,4682,Horquilla Suspension Atos Derecha,3,6,397.99,0,SHNK0101,Horquilla Suspension Atos Derecha Marca Yokomitsu,70,36,0,0,#aa0009,1,10,32,51,2.8,0
+2662,4682,Horquilla Suspension Atos Izquierda,3,6,397.99,0,SHNK0102,Horquilla Suspension Atos Izquierda Marca Yokomitsu,70,36,0,0,#aa0009,1,10,32,51,2.8,0
+2663,7079,Reten Pierna Atos,2,6,48.99,0,43119-28001K,Reten Pierna Atos  Original,70,37,0,0,#aa0009,1,10,10,2,0.1,0
+2664,7081,Reten Rueda Delantera Atos Interior/Exterior,3,6,64.21,0,51713-21100K,Reten Rueda Delantera Atos Interior/Exterior Coreano,70,36,0,0,#aa0009,1,10,10,2,0.1,0
+2665,8019,Tapon Gasolina Atos Sin Llave,8,6,48.99,0,HY831-TG240,Tapon Gasolina Atos Sin Llave Marca Herta,70,36,0,0,#aa0009,1,10,10,8,0.1,0
+2666,9312,Tapon Aceite Atos Con Rosca,2,6,33,0,265103800,Tapon Aceite Atos Con Rosca Marca Gepu,70,37,0,0,#aa0009,1,10,10,10,0.1,0
+2667,9453,Reten Cigueñal Atos Chico,2,6,22,0,21421-21020,Reten Cigueñal Atos Chico Marca Nikko,70,36,0,0,#aa0009,1,5,5,2,0.1,0
+2668,9919,Tapon Aceite Atos Con Grapa,2,6,37.47,0,HY131-TA010,Tapon Aceite Atos Con Grapa Marca Herta,70,36,0,0,#aa0009,1,10,10,8,0.1,0
+2669,11138,Reten Arbol Levas Atos Mediano,2,6,32,0,22144-21010K,Reten Arbol Levas Atos Mediano Marca Top Engine,70,36,0,0,#aa0009,1,10,10,2,0.1,0
+2670,4296,Horquilla Suspension Aveo Derecha,3,3,425,0,SHNC9901,Horquilla Suspension Aveo Derecha Mardca Yokomitsu,15,38,0,0,#aa0009,1,12,35,40,2.6,0
+2671,4299,Horquilla Suspension Aveo Izquierda,3,3,425,0,SHNC9902,Horquilla Suspension Aveo Izquierda Marca Yokomitsu,15,38,0,0,#aa0009,1,12,35,40,2.6,0
+2672,11621,Tapon Aceite Aveo,2,3,58.99,0,96413100-G,Tapon Aceite Aveo Marca Herta,15,38,0,0,#aa0009,1,10,10,8,0.1,0
+2673,11639,Tapon Deposito Anticongelante Aveo,2,3,78.99,0,94539597,Tapon Deposito Anticongelante AveomARCA gm,15,38,0,0,#aa0009,1,10,10,8,0.1,0
+2674,11741,Espejo Aveo Manual Liso Derecho,4,3,752,0,AERC9901,Espejo Aveo Manual Liso Derecho,15,38,0,0,#aa0009,1,27,15,40,1.5,0
+2675,11742,Espejo Aveo Manual Liso Izquierdo,4,3,752,0,AERC9902,Espejo Aveo Manual Liso Izquierdo,15,38,0,0,#aa0009,1,27,15,40,1.5,64
+2676,12567,Pastilla Encendido Aveo,5,3,125,0,96238726       I,Pastilla Encendido AveoMarca Bruck,15,38,0,0,#aa0009,1,5,5,5,0.1,0
+2677,12852,Tapon Deposito Anticongelante Aveo,2,3,32,0,94539597,Tapon Deposito Anticongelante Aveo Marca Best Cooling,15,38,0,0,#aa0009,1,10,10,10,0.1,0
+2678,12858,Reten Cigueñal Aveo Delantero,2,3,62.99,0,96350161,Reten Cigueñal Aveo Delantero GM Original,20,75,0,0,#aa0009,1,10,9,2,0.1,0
+2679,12859,Reten Cigueñal Aveo Trasero,2,3,85,0,96376569,Reten Cigueñal Aveo TraseroGM Original,15,38,0,0,#aa0009,1,10,10,2,0.1,0
+2680,13473,Reten Arbol levas Aveo,2,3,48,0,94580413CK,Reten Arbol levas Aveo Coreano,15,38,0,0,#aa0009,1,10,10,2,0.1,0
+2681,8006,Tapon Deposito Anticongelante Bora,2,2,32,0,3B0 121 321,Tapon Deposito Anticongelante Bora Marca Best Cooling,4,5,0,0,#aa0009,1,10,10,5,0.1,0
+2682,10389,Pastilla Encendido Bora,5,2,95,0,1K0 905 865,Pastilla Encendido Bora Marca Bruck,4,5,0,0,#aa0009,1,7,7,7,0.1,0
+2683,2823,Condensador Caribe Bosch,5,2,54.99,0,081 576,Condensador Caribe Bosch,47,22,0,0,#aa0009,1,10,5,5,0.1,41
+2684,3494,Espejo Caribe Derecho,4,2,72,0,N/A,Espejo Caribe Derecho Marca Generica,47,22,0,0,#aa0009,1,21,16,7,0.2,4
+2685,3495,Espejo Caribe Izquierdo,4,2,72,0,N/A,Espejo Caribe Izquierdo Marca Generica,47,22,0,0,#aa0009,1,21,16,7,0.2,4
+2686,5821,Metal Centro Caribe en 10,2,2,236,0,6819.01,Metal Centro Caribe en 10 Marca Diamond,47,22,0,0,#aa0009,1,4,10,21,0.35,0
+2687,3287,Pastilla Encendido Caribe,5,2,24.99,0,111 905 865,Pastilla Encendido Caribe Marca Voltmax,47,22,0,0,#aa0009,1,7,7,7,0.1,0
+2688,7608,Reten Arbolñ Levas Caribe,2,2,24,0,3476R,Reten Arbolñ Levas Caribe Federal Mogul,47,22,0,0,#aa0009,1,7,7,2,0.1,0
+2689,8117,Tapon Transmision Caribe Brida,2,2,17,0,020 409 289 B,Tapon Transmision Caribe Brida Aleman,47,22,0,0,#aa0009,1,10,10,10,0.1,0
+2690,13451,Tapon Acelte Caribe,2,2,19.99,0,026-103-485A,Tapon Acelte Caribe Marca Top Engine,47,22,0,0,#aa0009,1,10,10,7,0.1,0
+2691,1219,Tapon Deposito Anticongelante Chevy,2,3,23,0,93220885,Tapon Deposito Anticongelante Chevy Marca Nikko,5,6,0,0,#aa0009,1,10,10,10,0.1,0
+2692,2874,Copa Rueda Chevy,8,3,39.99,0,384,Copa Rueda Chevy Original,5,6,0,0,#aa0009,1,,,,,8
+2693,3094,Reten Cigueñal Chevy Delantero,2,3,18,0,RE-99336-SL,Reten Cigueñal Chevy Delantero Marca TF Victor,5,6,0,0,#aa0009,1,10,10,2,0.1,0
+2694,3496,Espejo Chevy C3 Derecho,4,3,449,0,AERC0601       R,Espejo Chevy C3 Derecho Marca View Max,5,6,0,0,#aa0009,1,16,22,38,1.1,129
+2695,3497,Espejo Chevy C3 Izquierdo,4,3,449,0,AERC0601       R,Espejo Chevy C3 IzquierdoMarca View Max,5,6,0,0,#aa0009,1,16,22,38,1.1,129
+2696,4698,Horquilla Suspencion chevy Pick up Izquierda,3,3,252.99,0,90542572,orquilla Suspencion chevy Pick up Izquierda Marca Safety,5,6,0,0,#aa0009,1,40,8,8,1.85,0
+2697,7031,Reten Candelero Caja Direccion Chevy,2,3,22,0,OS-21330,Reten Candelero Caja Direccion Chevy,5,6,0,0,#aa0009,1,7,7,2,0.1,0
+2698,7076,Reten Palanca Selectorqa Chevy,2,3,15.99,0,90182169,Reten Palanca Selectorqa Chevy Marca EGP,5,6,0,0,#aa0009,1,10,10,10,0.1,0
+2699,7447,Espejo Chevy C1 C2 con Control Derecho,4,3,183,0,9042813136RE,Espejo Chevy C1 C2 con Control Derecho Marca EGP,5,6,0,0,#aa0009,1,29,20,29,1.6,61
+2700,7448,Espejo Chevu C1 C2 con Contro Izquierdo,4,3,183,0,9042813136LE,Espejo Chevu C1 C2 con Contro Izquierdo Marca EGP,5,6,0,0,#aa0009,1,29,20,29,1.6,61
+2701,7704,Reten Cigueñal Chevy Trasero,2,3,96,0,6B04-1,Reten Cigueñal Chevy Trasero Marca TF Victor,5,6,0,0,#aa0009,1,10,10,2,0.1,0
+2702,9224,Espejo Chevy C3  Izquierdo,4,3,444.99,0,90582181C3,Espejo Chevy C3  Izquierdo Marca Niko,5,6,0,0,#aa0009,1,17,16,22,1.1,32
+2703,9225,Espejo Chevy C3  Derecho,4,3,444.99,0,90582180C3,Espejo Chevy C3  Derecho Marca Nikko,5,6,0,0,#aa0009,1,27,16,39,1.1,32
+2704,9743,Espejo Chevy C1 C2 Con Control Izquierdo,4,3,218.99,0,AEXC0102,Espejo Chevy C1 C2 Con Control Izquierdo Marca View Max,5,6,0,0,#aa0009,1,24,20,39,1.1,129
+2705,10358,Reten Arbol Levas Chevy,2,3,58,0,99079-SL,Reten Arbol Levas Chevy Marca TF Victor,5,6,0,0,#aa0009,1,10,10,2,0.1,0
+2706,10717,Palanca Velocidades Chevy Completa Original,2,3,2099.99,0,94670337,Palanca Velocidades Chevy Completa Original,5,6,0,0,#aa0009,1,114,29,22,3.5,0
+2707,11342,Tapon Aceite Chevy,2,3,33,0,GM141-TA250,Tapon Aceite Chevy Marca Herta,5,6,0,0,#aa0009,1,10,10,10,0.1,0
+2708,11976,Horquilla Suspencion Chevy Pick Up Derecha,3,3,252.99,0,90542573,Horquilla Suspencion Chevy Pick Up Derecha Marca Safety,5,6,0,0,#aa0009,1,40,8,8,1.85,0
+2709,13187,Pastilla Encendido Chevy C2 Larga,5,3,105,0,90505912,Pastilla Encendido Chevy C2 Larga Marca Voltmax,5,6,0,0,#aa0009,1,10,10,10,0.1,0
+2710,2015,Calavera Combi Brasileña Tres Colores,4,2,159,0,10054,Calavera Combi Brasileña Tres Colores Original,48,53,0,0,#aa0009,1,0,0,0,0,97
+2711,3506,Espejo Combi 1600 Negro Derecho,4,2,167,0,N/A,Espejo Combi 1600 Negro Derecho Marca Generica,48,53,0,0,#aa0009,1,22,15,5,0.5,4
+2712,2507,Espejo Combi 1600 Negro Izquierdo,4,2,67.99,0,N/A,Espejo Combi 1600 Negro Izquierdo Marca Generica,48,53,0,0,#aa0009,1,22,15,5,0.5,4
+2713,3508,Espejo Combi Crema 1600 Crema Derecho,4,2,110,0,BAC 857 514,Espejo Combi Crema 1600 Crema Derecho,48,53,0,0,#aa0009,1,22,15,5,0.5,4
+2714,1514,Brazo Paralelo Tsuru III,3,1,125.99,0,55120-50C00,Brazo Paralelo Tsuru III  Marca Safety,83,105,0,0,#aa0009,1,0,0,0,0,2
+2715,3964,Chicote Acelerador Tsuru III Corto,2,1,85,0,18201-75Y00,Chicote Acelerador Tsuru III Corto Marca Nikko,83,105,0,0,#aa0009,1,,,,,32
+2716,4962,Manguera Radiador Tsuru III Superior 16 Valvulas,2,1,52,0,Chicote Acelerador Tsuru III Corto,Manguera Radiador Tsuru III Superior 16 Valvulas Marca Bruck,83,105,0,0,#aa0009,1,19,14,5,0.15,0
+2717,5401,Manguera Calefaccion Tsuru III 16 Valvulas Termostato,2,1,19.99,0,14055-f4121,Manguera Calefaccion Tsuru III 16 Valvulas Termostato Marca Bruck,83,105,0,0,#aa0009,1,8,5,5,0.1,0
+2718,5528,Manguera Raiador Tsuru III Inferior 8 Valvulas Corta,2,1,52,0,521415,Manguera Raiador Tsuru III Inferior 8 Valvulas Corta,83,104,0,0,#aa0009,1,27,11,7,0.3,0
+2719,7018,Reten Arbol Levas Tsuru II,2,1,24.99,0,13042-01M00,Reten Arbol Levas Tsuru II Marca Nikko,83,103,0,0,#aa0009,1,10,10,2,0.1,0
+2720,7018,Reten Arbol Levas Tsuru III 8 Valvulas,2,1,24.99,0,13042-01M00,Reten Arbol Levas Tsuru III 8 Valvulas Marca Nikko,83,104,0,0,#aa0009,1,10,10,2,0.1,0
+2721,7037,Reten Cigueñal Tsuru III 16 Valvulas Federal Mogul,2,1,111.99,0,7037	320619	RETEN CIGUEÑAL B13 16 VAL CHICO FEDERAL MOGUL,Reten Cigueñal Tsuru III 16 Valvulas Federal Mogul,83,105,0,0,#aa0009,1,10,10,2,0.1,0
+2722,7040,Reten Cigueñal Tsuru III 16 Valvulas Trasero Grande,2,1,39.99,0,12279-53J10,Reten Cigueñal Tsuru III 16 Valvulas Trasero Grande Marca Top Engine,83,105,0,0,#aa0009,1,10,10,2,0.1,0
+2723,7042,Reten Cigueñal Tsuru III 8 Valvuas Trasero Grande Marca Nikko,2,1,25.99,0,12279-BO3G0,Reten Cigueñal Tsuru III 8 Valvuas Trasero Grande Marca Nikko,83,104,0,0,#aa0009,1,10,10,2,0.1,0
+2724,7059,Reten Distribuidor Tsuru III Nikko,2,1,12.74,0,OS-500459C,Reten Distribuidor Tsuru III Marca Nikko,83,105,0,0,#aa0009,1,5,5,2,0.1,0
+2725,7099,Reten Tapa Punterias Tsuru III 16 Valvulas,2,1,16.01,0,13276-53Y00,Reten Tapa Punterias Tsuru III 16 Valvulas Marca Topo Engine,83,105,0,0,#aa0009,1,10,10,2,0.1,0
+2726,7643,Manguera Calefaccion Tsuru III 16 Valvulas Termoiostato,2,1,22,0,14055-F4121,Manguera Calefaccion Tsuru III 16 Valvulas Termoiostato Marca Herta,83,105,0,0,#aa0009,1,8,5,5,0.1,0
+2727,7812,Horquilla Suspencion Tsuru III Derecha Safety,3,1,370,0,54500-52Y10SFT,Horquilla Suspencion Tsuru III Derecha Marca Safety,83,105,0,0,#aa0009,0,55,17,10,3.1,0
+2728,7972,Tapon Aceite Tsuru III 8 Valvulas,2,1,24,0,15255 01M00,Tapon Aceite Tsuru III 8 Valvulas Marca Top Engine,83,104,0,0,#aa0009,1,10,10,8,0.1,0
+2729,8023,Tapon Gasolina Tsuru III Sin Llave,2,1,22.94,0,17251-79915,Tapon Gasolina Tsuru III Sin Llave Marca Top Engine,83,105,0,0,#aa0009,1,10,10,8,0.1,0
+2730,8045,Tapon Radiador Tsuru III,2,1,22,0,21430-01F00,Tapon Radiador Tsuru III Marca Best Cooling,83,105,0,0,#aa0009,1,10,10,5,0.1,0
+2731,11448,Manguera Radiador Atos Superior,2,6,54.99,0,CH-CR110091,Manguera Radiador Atos Superior Marca Best Cooling,70,36,0,0,#aa0009,1,34,8,9,0.25,0
+2732,11884,Manguera Radiador Atos Inferior,2,6,110,0,CH-CR110082,Manguera Radiador Atos Inferior Marca Best Cooling,70,37,0,0,#aa0009,1,64,13,22,0.45,0
+2733,5417,Manguera Agua Pipa Caribe,2,2,38.99,0,521001,Manguera Agua Pipa Caribe Marca Tepeyac,47,22,0,0,#aa0009,1,25,7,7,0.2,0
+2734,3509,Espejo Combi 1600 Crema Izquierdo,4,2,110,0,N/A,Espejo Combi 1600 Crema Izquierdo Marca Generica,48,53,0,0,#aa0009,1,22,15,5,0.5,4
+2735,6321,Espejo Combi 1600 Cromado Izquierdo,4,2,135,0,211 857 513 CR,Espejo Combi 1600 Cromado Izquierdo,48,53,0,0,#aa0009,1,22,15,5,0.35,4
+2736,6323,Espejo Combi 1600 Cromado Derecho,4,2,162.2,0,211 857 514 CR,Espejo Combi 1600 Cromado Derecho,48,53,0,0,#aa0009,1,22,15,5,0.35,4
+2737,7974,Tapon Aceite Combi 1800,2,2,43.99,0,070 115 311,Tapon Aceite Combi 1800,48,53,0,0,#aa0009,1,10,10,10,0.1,0
+2738,8009,Tapon Deposito  Anticongelante Combi 1800 Superior,2,2,39.99,0,025 121 321B,Tapon Deposito  Anticongelante Combi 1800 Superior,48,53,0,0,#aa0009,1,10,10,10,0.1,0
+2739,4700,Horquilla Suspencion Corsa Izquierda,3,3,588,0,SHNC0202,Horquilla Suspencion Corsa Izquierda Con Bujes y Rotulas,16,71,0,0,#aa0009,1,10,32,51,3.5,0
+2740,4701,Horquilla Suspencion Corsar,3,2,349.99,0,282 001 ARE NIK,Horquilla Suspencion Corsar Con Bujes,79,98,0,0,#aa0009,1,0,0,0,0,0
+2741,6882,Manguer Tapa Punterias Corsa,2,3,48.99,0,93399285,Manguer Tapa Punterias Corsa Marca Bruck,16,71,0,0,#aa0009,1,26,7,4,0.1,0
+2742,8010,Tapon Deposito Anticongelante Corsa,2,3,107.99,0,93326521,Tapon Deposito Anticongelante Corsa Marca GM,16,71,0,0,#aa0009,1,10,10,10,0.1,0
+2743,10516,Pastilla Encendido Corsa,5,3,80,0,9115863,Pastilla Encendido Corsa Marca Bruck,16,71,0,0,#aa0009,1,10,10,10,0.1,0
+2744,133568,Manguera Radiador Corsa Inferior,2,3,648,0,CH-GM140222,Manguera Radiador Corsa Inferior Marca Best Cooling,16,71,0,0,#aa0009,1,43,13,27,0.4,0
+2745,7596,Manguera Agua Ventilacion Motor Pick up D21 (Codo),2,1,24.99,0,14055-F4000,Manguera Agua Ventilacion Motor Pick up D21 (Codo),30,40,0,0,#aa0009,1,3,9,7,0.05,0
+2746,8023,Tapon Gasolina Pick up D21 Sin Llave,2,1,22.94,0,17251-79915,Tapon Gasolina Pick up D21 Sin Llave,30,40,0,0,#aa0009,1,10,10,10,0.1,0
+2747,9477,Horquilla Suspencion Pick up D21 Superior Derecha,3,1,283,0,54526-92G00,Horquilla Suspencion Pick up D21 Superior Derecha Marca Safety,30,40,0,0,#aa0009,1,27,29,9,1.4,0
+2748,10223,Horquilla Suspencion Pick up D21 Inferior Derecha,3,1,456.94,0,54500-01PNKSFT,Horquilla Suspencion Pick up D21 Inferior Derecha Marca Safety,30,40,0,0,#aa0009,1,16,14,45,3.5,0
+2749,11615,Reten Diferencial Pick up D21,2,1,19,0,43252-18000,Reten Diferencial Pick up D21 Marca Kishio,30,40,0,0,#aa0009,1,10,10,1,0.1,0
+2750,11782,Horquilla Suspencion Pikc up D21 Inferior Izquierda,3,1,457,0,54501-01PNKSFT,Horquilla Suspencion Pikc up D21 Inferior Izquierda Marca Safety,30,40,0,0,#aa0009,1,16,14,45,3.5,0
+2751,12007,Espejo Pick up  D21 Derecho,4,1,220,0,96301-F4000,Espejo Pick up  D21 Derecho,30,40,0,0,#aa0009,1,10,22,32,1.1,0
+2752,12008,Espejo Pick up D21 Izquierdo,4,1,220,0,96302-F4000,Espejo Pick up D21 Izquierdo,30,40,0,0,#aa0009,1,10,22,32,1.1,0
+2753,13273,Varilla Direccion D21,3,1,196.78,0,48510-01G25SFT,Varilla Direccion D21 Marca Safety,30,40,0,0,#aa0009,1,0,0,0,0,0
+2754,2033,Calavera Pick up D21 Estaquitas Izquierda,4,1,230,0,FCHN0242,Calavera Pick up D21 Estaquitas Izquierda Marca CIB,30,40,0,0,#aa0009,1,,,,,63
+2755,2034,Calavera Pick up D21 Americana Larga Derecha,4,1,380,0,FCTN0251,Calavera Pick up D21 Americana Larga Derecha Marca KOTO,30,40,0,0,#aa0009,1,,,,,117
+2756,8023,Tapon Gasilina Pick up D22 Sin Llave,2,1,22.94,0,17251-79915,Tapon Gasilina Pick up D22 Sin Llave Marca Top Engine,31,93,0,0,#aa0009,1,10,10,10,0.1,0
+2757,6285,Pastilla Encendido Derby,5,2,85.79,0,6N0 905 865,Pastilla Encendido Derby Marca Voltmax,50,55,0,0,#aa0009,1,10,10,10,0.1,0
+2758,12194,Horquilla Suspension Gol Derecha,3,2,556.54,0,SHNV0601,Horquilla Suspension Gol Derecha Completa Marca Yokomitsu,51,56,0,0,#aa0009,1,45,35,10,3.25,0
+2759,12195,Horquilla Suspension Gol Izquierda,3,2,556.54,0,SHNV0602,Horquilla Suspension Gol Izquierda Completa Marca Yokomitsu,51,56,0,0,#aa0009,1,45,35,10,3.25,0
+2760,1892,Espejo Golf A3 Manual Derecho,4,2,580,0,1H0 894 602 RM,Espejo Golf A3 Manual Derecho con Control,68,65,0,0,#aa0009,1,,,,,4
+2761,2926,Cremallera Golf A3 Estadar Barra Gruesa,3,2,764.99,0,191 419 063C,Cremallera Golf A3 Estadar Barra Gruesa Marca Safety,68,65,0,0,#aa0009,1,64,21,10,3.35,2
+2762,3300,Espejo Golf A4 Electrico Derecho,4,2,549.1,0,1J1 857 502C,Espejo Golf A4 Electrico Derecho Marca Herta,69,66,0,0,#aa0009,1,19,21,32,1,24
+2763,3301,Espejo Golf A4 Electrico Izquierdo,4,2,549.1,0,1J1 857 501C,Espejo Golf A4 Electrico Izquierdo Marca Herta,69,66,0,0,#aa0009,1,19,21,32,1,24
+2764,3324,Pastilla Encendido Golf A3 6 Patas,5,2,58,0,357 905 865,Pastilla Encendido Golf A3 6 Patas Marca Voltmax,68,57,0,0,#aa0009,1,10,10,10,0.1,0
+2765,3543,Espejo Golf A2 Izquierdo con Control,4,2,250,0,191 857 507A,Espejo Golf A2 Izquierdo con Control Marca EGP,52,57,0,0,#aa0009,1,10,14,27,0.7,61
+2766,3546,Espejo Golf A2 con Control Derecho,4,2,251,0,191 857 508A,Espejo Golf A2 con Control DerechoMarca EGP,52,57,0,0,#aa0009,1,10,14,27,0.7,61
+2767,5427,Manguera Agua Radiador Inferior Golf sin Aire,2,2,54,0,521013,Manguera Agua Radiador Inferior Golf sin Aire Marca Tepeyac,69,66,0,0,#aa0009,1,26,12,5,0.3,0
+2768,5446,Manguera Bomba Agua Toma Agua a Cabeza Golf A3,2,2,91.99,0,037 121 053H,Manguera Bomba Agua Toma Agua a Cabeza Golf A3 Marca Herta,68,65,0,0,#aa0009,1,29,15,8,10,0
+2769,7021,Reten Arbol Levas Golf A4,2,2,36.89,0,038 103 085 B,Reten Arbol Levas Golf A4 Marca Bruck,69,66,0,0,#aa0009,1,10,10,2,0.1,0
+2770,7054,Reten Cigueñal Golf A3 Con Base sin Sensor,2,2,198.99,0,06A 103 171 A,Reten Cigueñal Golf A3 Con Base sin Sensor Marca Bruck,68,65,0,0,#aa0009,1,10,10,5,0.1,0
+2771,7054,Reten Cigueñal Golf A4 Con Base sin Sensor,2,2,198.99,0,06A 103 171 A,Reten Cigueñal Golf A4 Con Base sin Sensor Marca Bruck,69,66,0,0,#aa0009,1,10,10,5,0.1,0
+2772,7067,Reten Flecha Piloto Golf A4,2,2,43,0,085 311 113,Reten Flecha Piloto Golf A4 Aleman,69,66,0,0,#aa0009,1,10,10,4,0.1,0
+2773,7073,Reten Junta Homocinetica Golf A4,3,2,77.99,0,02A 301 189,Reten Junta Homocinetica Golf A4  Aleman,69,66,0,0,#aa0009,1,10,10,5,0.1,0
+2774,7608,Reten Arbol Levas Golf A2,2,2,24,0,3476R,Reten Arbol Levas Golf A2 Marca Federal Mogul,52,57,0,0,#aa0009,1,10,10,10,0.1,0
+2775,7608,Reten Arbol Levas Golf A3,2,2,24,0,3476R,Reten Arbol Levas Golf A3 Marca Federal Mogul,68,65,0,0,#aa0009,1,10,10,5,0.1,0
+2776,7662,Pastilla Encendido Golf A4,5,2,66,0,4A0 205 849B,Pastilla Encendido Golf A4 Marca Bruck,69,66,0,0,#aa0009,1,10,8,7,0.1,0
+2777,8011,Tapon Deposito Anticongelante Golf a2,2,2,25.99,0,357 121 321 C,Tapon Deposito Anticongelante Golf a2 Marca Safety,52,57,0,0,#aa0009,1,10,10,8,0.1,0
+2778,8011,Tapon Deposito Anticongelante Golf A3,2,2,25.99,0,357 121 321 C,Tapon Deposito Anticongelante Golf A3 Marca Safety,68,57,0,0,#aa0009,1,10,10,8,0.1,0
+2779,8016,Tapon Liquido Frenos Golf A2 Con Flotador,2,2,59.99,0,1H1 611 349,Tapon Liquido Frenos Golf A2 Con Flotador,52,57,0,0,#aa0009,1,10,10,10,0.1,0
+2780,8016,Tapon Liquido Frenos Golf A3 Con Flotador,2,2,59.99,0,1H1 611 349,Tapon Liquido Frenos Golf A3 Con Flotador,68,65,0,0,#aa0009,1,10,10,10,0.1,0
+2781,8032,Tapon Gasolina Golf A2 sin Llave,2,2,46,0,1H0 201 553B,Tapon Gasolina Golf A2 sin Llave Marca Bruck,52,57,0,0,#aa0009,1,10,10,10,0.1,0
+2782,8032,Tapon Gasolina Golf A3 sin Llave,2,2,46,0,1H0 201 553B,Tapon Gasolina Golf A3 sin Llave Marca Bruck,68,65,0,0,#aa0009,1,10,10,10,0.1,0
+2783,11294,Espejo Golf A4 control Manual Izquierdo,4,2,489.99,0,E-10063 E-A4-I-C,Espejo Golf A4 control Manual Izquierdo Marca AE,69,66,0,0,#aa0009,1,20,29,26,0.85,119
+2784,11339,Manguera Radiador Aceite Transmision Golf A4 Automatico,2,2,32,0,1J0 121 058AC,Manguera Radiador Aceite Transmision Golf A4 Automatico Marca Bruck,69,66,0,0,#aa0009,1,20,11,6,0.1,0
+2785,12439,Pastilla Encendido Golf A3 6 Patas,5,2,52,0,357 905 865,Pastilla Encendido Golf A3 6 Patas Marca Herta,68,57,0,0,#aa0009,1,10,10,10,0.1,0
+2786,12450,Tapon Deposito Anticongelante Golf A4,2,2,66,0,1J0 121 321B,Tapon Deposito Anticongelante Golf A4 Original,69,66,0,0,#aa0009,1,10,10,10,0.1,0
+2787,13027,Horquilla Suspencion Golf A3 Con Bujes,3,2,339.99,0,1H0-407-151SFT,Horquilla Suspencion Golf A3 Con Bujes Marca Safety,68,65,0,0,#aa0009,1,45,38,6,2.8,0
+2788,13451,Tapon Aceite Golf A3,2,2,19.99,0,026-103-485A,Tapon Aceite Golf A3 Marca Top Engine,68,65,0,0,#aa0009,1,10,10,7,0.1,0
+2789,7021,Raten Arbol Levas Ibiza,2,5,36.89,0,038 103 085 B,Raten Arbol Levas Ibiza Marca Bruck,41,81,0,0,#aa0009,1,10,10,5,0.1,0
+2790,3543,Espejo Jetta A2 con Control Izquierdo,4,2,250,0,191 857 507A,Espejo Jetta A2 con Control Izquierdo Marca EGP,53,15,0,0,#aa0009,1,10,14,27,0.7,0
+2791,3546,Espejo Jetta A2 con Control Derecho,4,2,251,0,191 857 508A,Espejo Jetta A2 con Control Derecho Marca EGP,53,15,0,0,#aa0009,1,10,14,27,0.7,61
+2792,5446,Manguera Bomba Agua Toma Agua a Cabeza Jetta A2,2,2,91.99,0,037 121 053H,Manguera Bomba Agua Toma Agua a Cabeza Jetta A2 Marca Herta,53,15,0,0,#aa0009,1,29,15,8,0.1,0
+2793,8011,Tapon Deposito Anticongelante Jetta A2,2,2,25.99,0,357 121 321 C,Tapon Deposito Anticongelante Jetta A2 Marca Safety,53,15,0,0,#aa0009,1,10,10,10,0.1,0
+2794,8016,Tapon Deposito Liquido d eFrenos Jetta A2 Con Flotador,2,2,59.99,0,1H1 611 349,Tapon Deposito Liquido d eFrenos Jetta A2 Con Flotador,53,15,0,0,#aa0009,1,10,10,10,0.1,0
+2795,8032,Tapon Gasolina Jetta A2 sin Llave,2,2,46,0,1H0 201 553B,Tapon Gasolina Jetta A2 sin Llave Marca Bruck,53,15,0,0,#aa0009,1,10,10,10,0.1,0
+2796,1892,Espejo Jetta A3 Manual Con Control Derecho,4,2,580,0,1H0 894 602 RM,Espejo Jetta A3 Manual Con Control Derecho,54,16,0,0,#aa0009,1,,,,,0
+2797,2926,Cremallera Jetta A3 Estadar Barra Gruesa,3,2,764.99,0,191 419 063C,Cremallera Jetta A3 Estadar Barra Gruesa Marca Safety,54,16,0,0,#aa0009,1,64,21,10,3.35,2
+2798,3324,Pastilla Encendido Jetta A3 6 Patas,5,2,58,0,357 905 865,Pastilla Encendido Jetta A3 6 Patas Marca Voltmax,54,16,0,0,#aa0009,1,10,10,1,0.1,0
+2799,7054,Reten CIagueñal Jetta A3 Con Base Sin Sensor,2,2,198.99,0,06A 103 171 A,Reten CIagueñal Jetta A3 Con Base Sin Sensor Marca Bruck,54,16,0,0,#aa0009,1,10,10,8,0.1,0
+2800,7608,Reten Arbol Levas Jetta A3 Federal Mogul,2,2,24,0,3476R,Reten Arbol Levas Jetta A3 Federal Mogul,54,15,0,0,#aa0009,1,10,10,5,0.1,0
+2801,8011,Tapon Deposito Anticongelante Jetta A3,2,2,25.99,0,357 121 321 C,Tapon Deposito Anticongelante Jetta A3 Marca Safety,54,16,0,0,#aa0009,1,10,10,10,0.1,0
+2802,8016,Tapon Deposito Liquido de Frenos Jetta A3 con Flotador,2,2,59.99,0,1H1 611 349,Tapon Deposito Liquido de Frenos Jetta A3 con Flotador,54,16,0,0,#aa0009,1,10,10,10,0.1,0
+2803,8032,Tapon Gasolina Jetta A3 sin Llave,2,2,46,0,1H0 201 553B,Tapon Gasolina Jetta A3 sin Llave Marca Bruck,54,16,0,0,#aa0009,1,10,10,10,0.1,0
+2804,11109,Manguera Pulpo Jetta A3 2 Litros,2,2,518.99,0,1HM 121 101,Manguera Pulpo Jetta A3 2 Litros  Marca Herta,54,16,0,0,#aa0009,1,10,10,10,0.1,0
+2805,12439,Pastilla Encendido Golf A3 6 Patas,5,2,52,0,357 905 865,Pastilla Encendido Golf A3 6 Patas Marca Herta,54,16,0,0,#aa0009,1,10,10,10,0.1,0
+2806,13027,Horquilla Suspencion Jetta A3 Con Bujes,3,2,339.99,0,1H0-407-151SFT,Horquilla Suspencion Jetta A3 Con Bujes Marca Safety,54,16,0,0,#aa0009,1,45,38,6,2.8,0
+2807,3300,Espejo Jetta A4 Electrico Derecho,4,2,549.1,0,1J1 857 502C,Espejo Jetta A4 Electrico Derecho Marca Herta,55,17,0,0,#aa0009,1,19,21,32,1,0
+2808,3301,Espejo Jetta A4 Electrico Izquierdo,4,2,549.1,0,1J1 857 501C,Espejo Jetta A4 Electrico Izquierdo Marca Herta,55,17,0,0,#aa0009,1,16,22,34,0.9,0
+2809,7021,Reten Arbol Levas Jetta A4,2,2,36.89,0,038 103 085 B,Reten Arbol Levas Jetta A4 Marca Bruck,55,16,0,0,#aa0009,1,10,10,8,0.1,0
+2810,7054,Reten Cigueñal Jetta A4 Con Base Sin Sensor Bruck,2,2,198.99,0,06A 103 171 A,Reten Cigueñal Jetta A4 Con Base Sin Sensor Marca Bruck,55,17,0,0,#aa0009,1,10,10,10,0.1,0
+2811,7067,Reten Flecha Piloto Jetta A4,2,2,43,0,085 311 113,Reten Flecha Piloto Jetta A4 Marca Bruck,55,17,0,0,#aa0009,1,10,10,10,0.1,0
+2812,7073,Reten Junta Homocinetica Jetta A4,3,2,77.99,0,02A 301 189,Reten Junta Homocinetica Jetta A4 Aleman,55,17,0,0,#aa0009,1,10,10,8,0.1,0
+2813,7662,Pastilla Encendido Jetta A4,5,2,66,0,4A0 205 849B,Pastilla Encendido Jetta A4 Marca Herta,55,17,0,0,#aa0009,1,10,10,10,0.1,0
+2814,11109,Manguera Pulpo Jetta A4,2,2,518.99,0,1HM 121 101,Manguera Pulpo Jetta A4 2 Litros Marca Herta,55,17,0,0,#aa0009,1,67,40,15,0.95,0
+2815,11293,Espejo Jetta A4 Con Control Manual Derecho,4,2,489.99,0,E-10064 E-A4-D-C,Espejo Jetta A4 Con Control Manual Derecho,55,17,0,0,#aa0009,1,20,29,26,0.85,0
+2816,11294,Espejo Jetta A4 Control Manual Izquierdo,4,2,489.99,0,E-10063 E-A4-I-C,Espejo Jetta A4 Control Manual Izquierdo,55,17,0,0,#aa0009,1,20,29,26,0.85,0
+2817,11339,Manguera Radiador Aceite Transmision Jetta A4 Automatico,2,2,32,0,1J0 121 058AC,Manguera Radiador Aceite Transmision Jetta A4 Automatico,55,17,0,0,#aa0009,1,20,110,6,0.1,0
+2818,12450,Tapon Deposito Anticongelante Jetta A4,2,2,66,0,1J0 121 321B,Tapon Deposito Anticongelante Jetta A4 Original,55,17,0,0,#aa0009,1,10,10,10,0.1,0
+2819,7021,Reten Arbol Levas Jetta A5,2,2,36.89,0,038 103 085 B,Reten Arbol Levas Jetta A5 Marca Bruck,56,18,0,0,#aa0009,1,10,10,10,0.1,0
+2820,12511,Horquilla Suspencion Jetta A5 Derecha,3,2,410,0,5C0-407-152BSFT,Horquilla Suspencion Jetta A5 Derecha Marca Safety,56,18,0,0,#aa0009,1,38,10,59,3.45,0
+2821,12512,Horquilla Suspencion Jetta A5 Izquierda,3,2,410,0,5C0-407-151BSFT,Horquilla Suspencion Jetta A5 Izquierda Marca Safety,56,18,0,0,#aa0009,1,38,10,59,3.45,0
+2822,6575,Polea Tensora Pointer Con Base,2,2,593,0,377 145 299,Polea Tensora Pointer Con Base y Con Direccion Hidraulica,61,62,0,0,#aa0009,1,0,0,0,0,0
+2823,3576,Esejo Lupo Manual Izquierdo,4,2,459,0,5Z0 857 507,Esejo Lupo Manual Izquierdo Marca Nikko,58,58,0,0,#aa0009,1,19,28,32,1.1,32
+2824,8006,Tapon Deposito Anticongelante Lupo,2,2,32,0,3B0 121 321,Tapon Deposito Anticongelante Lupo Marca Best Cooling,58,58,0,0,#aa0009,1,10,10,10,0.1,0
+2825,11210,Pastilla Encendido March,5,1,131.99,0,48750-0M010,Pastilla Encendido March Marca Bruck,27,34,0,0,#aa0009,1,10,10,10,0.1,0
+2826,11593,Horquilla Susoencion March  Derecha,3,1,396.99,0,SHNN0801,Horquilla Susoencion March  Derecha Marca Yokomitsu,27,34,0,0,#aa0009,1,8,33,45,2.5,0
+2827,11594,Horquilla Suspension March Izquierda,3,1,396.99,0,SHNN0802,Horquilla Suspension March Izquierda Marca Yokomitsu,27,34,0,0,#aa0009,1,8,33,45,2.5,0
+2828,2563,Reten Arbol Levas Matiz Original,2,3,38.99,0,94535472K,Reten Arbol Levas Matiz Original,18,34,0,0,#aa0009,1,10,10,5,0.1,0
+2829,10265,Tapon Aceite Matiz,2,3,28,0,94580172,Tapon Aceite MatizMarca Bruck,18,73,0,0,#aa0009,1,10,10,10,0.1,0
+2830,11094,Reten Cigueñal Matiz Delantero,2,3,38,0,94535472,Reten Cigueñal Matiz Delantero GM Original,18,73,0,0,#aa0009,1,10,10,5,0.1,0
+2831,11097,Reten Rueda Delantero Interior Matiz,3,3,90,0,96496903,Reten Rueda Delantero Interior Matiz GM Original,18,73,0,0,#aa0009,1,10,10,10,0.1,0
+2832,11098,Reten Rueda Trasera Matiz,3,3,72,0,96316633,Reten Rueda Trasera Matiz Original,18,73,0,0,#aa0009,1,10,10,10,0.1,0
+2833,4719,Horquilla Suspension Platina Izquierda,3,1,405,0,54501-00QAB,Horquilla Suspension Platina Izquierda Marca Safety,33,44,0,0,#aa0009,1,23,8,37,2.2,0
+2834,4718,Horquilla Suspension Platina Derecha,3,1,405,0,54500-00QAB,Horquilla Suspension Platina Derecha Marca Safety,33,44,0,0,#aa0009,1,23,8,37,2.2,0
+2835,7056,Reten Cigueñal Platina Trasero,2,1,38.03,0,12279-00QAA,Reten Cigueñal Platina Trasero Marca Top Engine,33,44,0,0,#aa0009,1,10,8,5,0.1,0
+2836,70870,Reten Pierna Platina Derecho,2,1,0,0,38189-00QAA,Reten Pierna Platina Derecho,33,44,0,0,#aa0009,1,10,10,10,0.1,0
+2837,12357,Tapon Aceite Platina,2,1,35.99,0,15255-00QAB,Tapon Aceite Platina Marca Top Engine,33,44,0,0,#aa0009,1,10,10,10,0.1,0
+2838,12522,Tapon Deposito Anticongelante Platina,2,1,29,0,21516-00QAABC,Tapon Deposito Anticongelante Platina Marca Best Cooling,33,44,0,0,#aa0009,1,10,10,10,0.1,0
+2839,3596,Espejo Pointer 4 Puertas Derecho,4,2,354.99,0,AEDV0201,Espejo Pointer 4 Puertas Derecho,61,62,0,0,#aa0009,1,16,22,34,0.85,0
+2840,3597,Espejo Pointer 4 Puertas Izquierdo,4,2,354.99,0,AEDV0202,Espejo Pointer 4 Puertas Izquierdo,61,62,0,0,#aa0009,1,16,22,34,0.85,0
+2841,5547,Manguera Agua Radiador Inferior Pointer,2,2,130,0,377 121 051 C,Manguera Agua Radiador Inferior Pointer Marca Best Cooling,61,62,0,0,#aa0009,1,34,16,10,0.3,0
+2842,7069,Reten Flecha Piloto Pointer,2,2,29.99,0,013 311 113 1,Reten Flecha Piloto Pointer Marca Nikko,61,62,0,0,#aa0009,1,10,10,10,0.1,0
+2843,7608,Reten Arbol Levas Pointer Federal Mogul,2,2,24,0,3476R,Reten Arbol Levas Pointer Federal Mogul,61,62,0,0,#aa0009,1,10,10,10,0.1,0
+2844,9035,Reten Cigueñal Pointer Con Base Con Sensor,2,2,348.99,0,030 103 171 Q,Reten Cigueñal Pointer Con Base Con Sensor Marca Nikko,61,62,0,0,#aa0009,1,10,10,10,0.1,0
+2845,9070,Horquilla Suspension Pointer Con Bujes,3,2,202.47,0,305 407 155SFT,Horquilla Suspension Pointer Con Bujes Marca Safety,61,62,0,0,#aa0009,1,8,37,36,1.65,0
+2846,581,Horquilla suspension Polo Iquierda,3,2,368.99,0,6R0-407-152SFT,Horquilla suspension Polo Iquierda Marca Safety,75,94,0,0,#aa0009,1,2,36,42,2.65,0
+2847,587,Horquilla Suspension Polo Derecha,3,2,368.99,0,6R0-407-151SFT,Horquilla Suspension Polo Derecha Marca Safety,75,94,0,0,#aa0009,1,8,36,42,2.65,0
+2848,3608,Espejo Polo Manual Derecho,4,2,633,0,6Q1 857 508,Espejo Polo Manual Derecho Marca Safety,75,94,0,0,#aa0009,1,33,24,12,0.85,0
+2849,3609,Espejo Polo Manual Izquierdo,4,2,633,0,6Q1 857 507,Espejo Polo Manual Izquierdo Marca Nikko,75,94,0,0,#aa0009,1,33,24,12,0.85,0
+2850,6285,Pastilla encendido Polo,5,2,85.79,0,6N0 905 865,Pastilla encendido Polo Marca Herta,75,94,0,0,#aa0009,1,10,10,10,0.1,0
+2851,7021,Reten Arbol Levas Polo,2,2,36.89,0,038 103 085 B,Reten Arbol Levas Polo Marca Bruck,75,94,0,0,#aa0009,1,10,10,4,0.1,0
+2852,8006,Tapon Deposito Anticongelante Polo,2,2,32,0,3B0 121 321,Tapon Deposito Anticongelante Polo Marca Best Cooling,75,94,0,0,#aa0009,1,10,10,8,0.1,0
+2853,2419,Reten Cigueñal Sentra 07-12 Grande,2,1,35.07,0,12279-ED000,Reten Cigueñal Sentra 07-12 Grande Marca Nikko,34,47,0,0,#aa0009,1,,,,,0
+2854,3108,Espejo Sentra 96-00 Manual Derecho,4,1,307,0,96301-1M300,Espejo Sentra 96-00 Manual Derecho Marca EGP,34,45,0,0,#aa0009,1,17,19,29,0.75,0
+2855,3109,Espejo Sentra 96-00 Manual Derecho,4,1,307.12,0,96302-1M300,Espejo Sentra 96-00 Manual Derecho Marca EGP,34,46,0,0,#aa0009,1,17,19,29,0.75,0
+2856,4688,Horquilla Suspension Sentra 01-06 Derecha,3,1,513.99,0,SHNN1301,Horquilla Suspension Sentra 01-06 Derecha Marca Yokomitsu,34,46,0,0,#aa0009,1,10,32,62,3.75,0
+2857,4689,Horquilla Suspension Sentra 01-06 Izquierda,3,1,513.99,0,SHNN1302,Horquilla Suspension Sentra 01-06 Izquierda Marca Yokomitsu,34,46,0,0,#aa0009,1,10,32,62,3.75,0
+2858,7840,Bujia Sentra 01-06 Platino Bosch,1,1,97.99,0,FR8MPP30X,Bujia Sentra 01-06 Platino Marca Bosch,34,46,0,0,#aa0009,1,10,2,2,0.1,41
+2859,8023,Tapon Gasolina Sentra 01-06 sin Llave,2,1,22.94,0,17251-79915,Tapon Gasolina Sentra 01-06 sin Llave Marca Top Engine,34,46,0,0,#aa0009,1,10,10,10,0.1,0
+2860,8023,Tapon Gasolina Sentra 07-12 sin Llave,2,1,22.94,0,17251-79915,Tapon Gasolina Sentra 07-12 sin Llave Marca Top Engine,34,47,0,0,#aa0009,1,10,10,10,0.1,0
+2861,8045,Tapon Radiador Sentra 96-00,2,1,22,0,21430-01F00,Tapon Radiador Sentra 96-00 Marca Best Cooling,34,45,0,0,#aa0009,1,10,10,10,0.1,0
+2862,8045,Tapon Radiador Sentra 01-06,2,1,22,0,21430-01F00,Tapon Radiador Sentra 01-06 Marca Best Cooling,34,46,0,0,#aa0009,1,10,10,10,0.1,0
+2863,8045,Tapon Radiador Sentra 07-12,2,1,22,0,21430-01F00,Tapon Radiador Sentra 07-12 Marca Best Cooling,34,47,0,0,#aa0009,1,10,10,10,0.1,0
+2864,8271,Manguera Radiador Sentra 01-06 2.0 Inferior,2,1,64.99,0,CH-NS22534,Manguera Radiador Sentra 01-06 2.0 Inferior Marca Best Cooling,34,46,0,0,#aa0009,1,35,17,8,0.3,0
+2865,8841,Bujia Sentra 01-06 NGK,1,1,67.99,0,LFR5A-11,Bujia Sentra 01-06 Marca NGK,34,46,0,0,#aa0009,1,10,2,2,0.1,33
+2866,9420,Espejo Sentra 01-06 Control Manual Derecho,4,1,454.99,0,96301-5M010,Espejo Sentra 01-06 Control Manual Derecho Marca EGP,34,46,0,0,#aa0009,1,17,23,32,0.85,0
+2867,11210,Pastilla Encendido Sentra 01-06,5,1,131.99,0,48750-0M010,Pastilla Encendido Sentra 01-06 Marca Bruck,34,46,0,0,#aa0009,1,10,10,10,0.1,0
+2868,12408,Manguera Radiador Sentra 01-06 1.8 Inferior,2,1,96,0,CH-NS22537,Manguera Radiador Sentra 01-06 1.8 Inferior Marca Best Cooling,34,46,0,0,#aa0009,1,48,25,9,0.3,0
+2869,13103,Espejo Sentra 07-12 Electrico Derecho,4,1,699,0,96302-ET92E,Espejo Sentra 07-12 Electrico Derecho,34,47,0,0,#aa0009,1,23,31,40,1.5,0
+2870,13104,Espejo Sentra 01-12 Electrico Izquierdo,4,1,699,0,96301-ET91E,Espejo Sentra 01-12 Electrico Izquierdo,34,47,0,0,#aa0009,1,23,31,40,1.5,0
+2871,13137,Horquilla Suspension Sentra 13-19 Derecha,3,1,489.04,0,54500-3SH2ASFT,Horquilla Suspension Sentra 13-19 Derecha Marca Safety,34,48,0,0,#aa0009,1,10,34,54,2.8,0
+2872,13138,Horquilla Suspension Sentra 13-19 Izquierda,3,1,489.04,0,54501-3SH2ASFT,Horquilla Suspension Sentra 13-19 Izquierda,34,48,0,0,#aa0009,1,10,34,54,2.8,0
+2873,13147,Reten Cigueñal Sentra 01-06 1.8 Trasero Grande,2,1,90,0,12279-0M310J,Reten Cigueñal Sentra 01-06 1.8 Trasero Grande Marca Nikko,34,46,0,0,#aa0009,1,10,10,5,0.1,0
+2874,10580,Reten Cigueñal Spark Trasero Original,2,3,97.99,0,96416398K,Reten Cigueñal Spark Trasero Original,20,75,0,0,#aa0009,1,10,10,5,0.1,0
+2875,10725,Bujia Spark MarcaDenso,1,3,47,0,XU24EPR-U,Bujia Spark MarcaDenso,20,75,0,0,#aa0009,1,10,2,2,0.1,0
+2876,2419,Reten Cigueñal Tiida Trasero Grande,2,1,35.07,0,12279-ED000,Reten Cigueñal Tiida Trasero Grande Marca Nikko,35,49,0,0,#aa0009,1,,,,,0
+2877,8514,Hoquilla Suspension Tiida Derecha,3,1,339.99,0,54500-EL000SFT,Hoquilla Suspension Tiida Derecha Con Bujes y Rotula Marca Safety,35,49,0,0,#aa0009,1,34,8,53,2.15,0
+2878,8515,Horquilla Suspension Tiida Izquierda,3,1,339.69,0,54501-EL000SFT,Horauilla Suspension Tiida Izquierda Con Bujes y Rotula Marca Safety,35,49,0,0,#aa0009,1,24,8,53,2.15,0
+2879,10036,Espejo Tiida 07- Electrico Derecho,4,1,825,0,51100627411,Espejo Tiida 07- Electrico Derecho Marca Nikko,35,49,0,0,#aa0009,1,32,16,23,1.15,0
+2880,10037,Espejo Tiida 07- Electrico Izquierdo,4,1,825,0,51100627421,Espejo Tiida 07- Electrico Izquierdo Marca Nikko,35,49,0,0,#aa0009,1,31,16,23,1.15,0
+2881,10434,Bujias Tiida Champion,1,1,39.99,0,REA8MX,Bujias Tiida Marca Champion,35,49,0,0,#aa0009,1,10,2,2,0.1,17
+2882,10791,Horquilla Suspension Tiida Derecha,3,1,372.99,0,SHNN1101,Horquilla Suspension Tiida Derecha Con Bujes y Rotula Marca Yokomitsu,35,49,0,0,#aa0009,1,34,8,53,2.4,0
+2883,10792,Horquilla Suspension Tiida Izquierda,3,1,372.99,0,SHNN1102,Horquilla Suspension Tiida Izquierda con Bujes y Rotulas Marca Yokomitsu,35,49,0,0,#aa0009,1,34,8,53,1.4,0
+2884,11210,Pastilla Encendido Tiida,5,1,131.99,0,48750-0M010,Pastilla Encendido Tiida Marca Bruck,35,49,0,0,#aa0009,1,10,10,1,0.1,0
+2885,12390,Bujias Tiida Platino Bosch,1,1,172,0,2421350524,Bujias Tiida Platino Bosch,35,49,0,0,#aa0009,1,10,2,2,0.1,41
+2886,14016,Perilla Palanca Velocidades Tiida Tipo Original,8,1,139,0,358,Perilla Palanca Velocidades Tiida Tipo Original,35,49,0,0,#aa0009,1,5,5,7,0.1,0
+2887,4512,Espejo Tsusu II Derecho,4,1,212.99,0,AERN0501,Espejo Tsusu II Derecho Marca EGP,83,103,0,0,#aa0009,1,14,18,26,0.8,0
+2888,5569,Espejo Tsuru II Izquierdo,4,1,212.99,0,AERN0502,Espejo Tsuru II Izquierdo Marca EGP,83,103,0,0,#aa0009,1,14,18,26,0.8,0
+2889,7018,Reten Arbol Levas Tsuru II,2,1,24.99,0,13042-01M00,Reten Arbol Levas Tsuru II  Marca Nikko,83,103,0,0,#aa0009,1,10,10,5,0.1,0
+2890,7038,Reten Cigueñal Tsuru II Chico,2,1,19.99,0,13510-01M00,Reten Cigueñal Tsuru II Chico Marca Nikko,83,103,0,0,#aa0009,1,10,10,5,0.1,0
+2891,7042,Reten Cigueñal Tsuru II Trasero Grande,2,1,25.99,0,12279-BO3G0,Reten Cigueñal Tsuru II Trasero Grande Marca Nikko,83,103,0,0,#aa0009,1,10,10,5,0.1,0
+2892,7972,Tapon Aceite Tsuru II,2,1,24,0,15255 01M00,Tapon Aceite Tsuru II Marca Top Engine,83,103,0,0,#aa0009,1,10,10,10,0.1,0
+2893,10642,Buje Cortador Aceite Flecha Piloto Vocho,2,2,69.02,0,BAA 301 200,Buje Cortador Aceite Flecha Piloto Vocho Generic,64,68,0,0,#aa0009,1,10,10,10,0.1,4
+2894,8764,Velocimetro Vocho Modelo Nuevo,8,2,758.99,0,1BM 957 021,Velocimetro Vocho Modelo Nuevo Original,64,68,0,0,#aa0009,1,20,10,20,0.65,0
+2895,7097,Reten Sin Fin y Campana Vocho,2,2,19.99,0,001 301 227,Reten Sin Fin y Campana Vocho Marca Bruck,64,68,0,0,#aa0009,1,10,10,10,0.1,0
+2896,7071,Reten Flecha Piloto Vocho,2,2,27,0,5500,Reten Flecha Piloto Vocho,64,68,0,0,#aa0009,1,10,10,10,0.1,0
+2897,3031,Cubo Turbina Vocho,2,2,43.99,0,111 119 123 A,Cubo Turbina Vocho Generic,64,68,0,0,#aa0009,1,10,10,10,0.1,4
+2898,2311,Casquillo Bujias Vocho 3ra Medida,2,2,22,0,N/A,Casquillo Bujias Vocho 3ra Medida,64,68,0,0,#aa0009,1,10,10,10,0.1,4
+2899,1125,Birlo Colador Vocho,2,2,4.99,0,N014 524 1,Birlo Colador Vocho Generico,64,68,0,0,#aa0009,1,5,5,5,0.1,4
+2900,678,Ancla Freno Mano Derecha Vocho,7,2,33,0,113 609 614 A,Ancla Freno Mano Derecha Vocho Generico,64,68,0,0,#aa0009,1,15,2,3,0.2,4
+2901,677,Ancla Freno Mano Izquierda Vocho,7,2,33,0,113 609 613 A,Ancla Freno Mano Izquierda Vocho Generico,64,68,0,0,#aa0009,1,15,2,3,0.2,4
+2902,526,Aumento Bujia Vocho,2,2,16.76,0,ABS01,Aumento Bujia Vocho,64,68,0,0,#aa0009,1,10,10,10,0.1,4
+2903,11594,Horquilñla Suspencion Versa Izquierda,3,1,396.99,0,SHNN0802,Horquilñla Suspencion Versa Izquierda Marca Yokomitsu,37,51,0,0,#aa0009,1,8,33,45,2.5,0
+2904,11593,Horquilla Suspencion Versa Derecha,3,1,396.99,0,SHNN0801,Horquilla Suspencion Versa Derecha Marca Yokomitsu,37,51,0,0,#aa0009,1,8,3,45,2.5,0
+2905,7021,Reten Arbol Levas Vento,2,2,36.89,0,038 103 085 B,Reten Arbol Levas Vento Marca Bruck,65,69,0,0,#aa0009,1,10,10,10,0.1,0
+2906,10434,Bujias Urvan Champion,1,1,39.99,0,REA8MX,Bujias Urvan Champion,36,50,0,0,#aa0009,1,10,2,2,0.1,17
+2907,2724,Codera Tsuru III Gris,8,1,58.99,0,329G 232G,Codera Tsuru III Gris,83,105,0,0,#aa0009,0,,,,,4
+2908,2724,Codera Tsuru III Gris,8,1,58.99,0,329G 232G,Codera Tsuru III Gris,83,105,0,0,#aa0009,1,,,,,4
+2909,4210,Codera Tsuru III Negra,8,1,68.99,0,232-N,Codera Tsuru III Negra,83,105,0,0,#aa0009,1,26,6,6,0.2,4
+2910,7099,Reten Tapa Punterias Tsuru III,2,1,16.01,0,13276-53Y00,Reten Tapa Punterias Tsuru III Marca Top Engine,83,105,0,0,#aa0009,1,10,10,10,0.1,0
+2911,8928,Bujias Tsuru III 8 Valvulas ACDelco,8,1,28,0,MR42XLS,Bujias Tsuru III 8 Valvulas Marca ACDelco,83,104,0,0,#aa0009,1,10,2,2,0.1,47
+2912,9721,Reten Cigueñal Tsuru III 16 Valvulas Trasero Grande,2,1,110,0,99075,Reten Cigueñal Tsuru III 16 Valvulas Trasero Grande Marca TF Victor,83,105,0,0,#aa0009,1,10,10,10,0.1,0
+2913,10573,Bujias Tsuru III 8 Valvulas 1 Electrodo NGK,1,1,22,0,BP5ES-A,Bujias Tsuru III 8 Valvulas 1 Electrodo Marca NGK,83,104,0,0,#aa0009,1,10,2,2,0.1,33
+2914,10574,Reten Flecha Sello Aceite Tsuru III,2,1,19.99,0,GRRN0109,Reten Flecha Sello Aceite Tsuru III Marca LYO,83,105,0,0,#aa0009,1,10,10,10,0.1,0
+2915,12410,Manguera Radiadsor Tsuru III Inferior Larga,2,1,52,0,CH-NS180162,Manguera Radiadsor Tsuru III Inferior Larga Marca Best Cooling,83,105,0,0,#aa0009,1,33,10,8,0.2,0
+2916,11083,Bujia Tsuru III 16 Valvulas NGK,1,1,24,0,BKR5E-11,Bujia Tsuru III 16 Valvulas Marca NGK,83,105,0,0,#aa0009,1,10,2,2,0.1,33
+2917,11369,Disco Rueda Tsuru III Delantero Solido,7,1,314.99,0,BDNN0100,Disco Rueda Tsuru III Delantero Solido Marca Seven,83,105,0,0,#aa0009,1,5,27,25,4,0
+2918,11913,Manguera Calefaccion Tsuru III 16 Valvulas Rectangurar,2,1,38.99,0,55430,Manguera Calefaccion Tsuru III 16 Valvulas Rectangurar,83,105,0,0,#aa0009,1,30,15,15,0.1,0
+2919,12783,Manguera Calefaccion Tsuru III 16 Valvulas Original,2,1,43,0,W2-14056F4100,Manguera Calefaccion Tsuru III 16 Valvulas Original,83,105,0,0,#aa0009,1,14,10,8,0.1,0
+2920,12801,Tapon Deposito Anticongelante Tsuru III Original,2,1,18,0,21712F4100,Tapon Deposito Anticongelante Tsuru III Original,83,105,0,0,#aa0009,1,10,10,10,0.1,0
+2921,13220,Deposito Anticongelante Tsuru III Original,2,1,198.99,0,21710-F4300N,Deposito Anticongelante Tsuru III Original,83,105,0,0,#aa0009,1,0,0,0,0,7
+2922,14018,Soporte Deposito Anticongelante Tsuru III,2,1,42,0,400,Soporte Deposito Anticongelante Tsuru III,83,105,0,0,#aa0009,1,15,15,15,0.1,0
+2923,12356,Pastilla Encendido Tsuru II,5,1,67.99,0,48750-T8001,Pastilla Encendido Tsuru II,83,103,0,0,#aa0009,1,15,10,5,0.1,0
+2924,8045,Tapon Radiador Tsuru II,2,1,22,0,21430-01F00,Tapon Radiador Tsuru II Marca Best Cooling,83,103,0,0,#aa0009,1,10,10,10,0.1,0
+2925,5189,Manguera Filtro Aire Sentra 07-12,2,1,276.08,0,N/A,Manguera Filtro Aire Sentra 07-12,34,47,0,0,#aa0009,1,18,20,9,0.3,0
+2926,11091,Horquilla Suspension Sentra 07-12 Derecha,3,1,482,0,1516022SFT,Horquilla Suspension Sentra 07-12 Derecha Completa Marca Safety,34,47,0,0,#aa0009,1,12,32,51,2.9,0
+2927,11091,Horquilla Suspension Sentra 07-12 Izquierda,3,1,482,0,1516021SFT,Horquilla Suspension Sentra 07-12 Izquierda Completa Marca Safety,34,47,0,0,#aa0009,1,10,32,51,2.95,0
+2928,3250,Guarda Polvo Palanca Velocidades Pointer Base Rectangular con Periila,8,2,167.53,0,Guarda Polvo Palanca Velocidades Pointer Base Rectangular con Periila,Guarda Polvo Palanca Velocidades Pointer Base Rectangular con Periila,61,62,0,0,#aa0009,1,20,26,6,0.15,0
+2929,4597,Guarda Polvo Palanca Velocidades Pointer Base Cuadrada y Perilla Original,8,2,235,0,339-BC,Guarda Polvo Palanca Velocidades Pointer Base Cuadrada y Perilla Original,61,62,0,0,#aa0009,1,20,26,6,0.15,0
+2930,4599,Guarda Polvo Palanca Velocidades Popinter Base Rectangular Sin Perilla,8,2,120,0,339-REC,Guarda Polvo Palanca Velocidades Popinter Base Rectangular Sin Perilla,61,62,0,0,#aa0009,1,20,26,6,0.15,0
+2931,4601,Guarda Polvo Palanca Velocidades Pointer Base Redonda Cromada Con Perrilla,8,2,241.99,0,339-FP,Guarda Polvo Palanca Velocidades Pointer Base Redonda Cromada Con Perrilla,61,62,0,0,#aa0009,1,20,26,6,0.15,0
+2932,4603,Guarda Polvo Palanca Velocidades Pointer Base Redonda Cromada Sin Perrilla,8,2,169,0,339-CRO,Guarda Polvo Palanca Velocidades Pointer Base Redonda Cromada Sin Perrilla,61,62,0,0,#aa0009,1,20,26,6,0.05,0
+2933,6945,Repuesto Palanca Velocidades Pointer Kit Completo,2,2,56,0,319-C,Repuesto Palanca Velocidades Pointer Kit Completo,61,62,0,0,#aa0009,1,19,9,5,0.1,0
+2934,6946,Repuesto Palanca Velocidades Pointer Kit Sencillo,2,2,34.98,0,319,Repuesto Palanca Velocidades Pointer Kit Sencillo,61,62,0,0,#aa0009,1,10,13,5,0.1,0
+2935,14017,Engrane Chicote Clutch Platina,2,1,92.99,0,399,Engrane Chicote Clutch Platina,33,44,0,0,#aa0009,1,10,3,81,0.05,4
+2936,12780,Espejo Pick up 720 Cromado Derecho,4,1,158,0,AERN0611,Espejo Pick up 720 Cromado Derecho Marca Nikko,29,42,0,0,#aa0009,1,17,9,23,0.9,0
+2937,12781,Espejo Pick up 720 Cromado Izquierdo,4,1,158,0,AERN0612,Espejo Pick up 720 Cromado Izquierdo Marca Nikko,29,42,0,0,#aa0009,1,17,9,23,0.9,0
+2938,2284,Carrete Asiento Vocho Economico,8,2,11.99,0,27,Carrete Asiento Vocho Economico,64,68,0,0,#aa0009,1,5,5,5,0.1,4
+2939,13796,Reten Rueda Trasera Vocho KIT,2,2,35.09,0,113-598-3151,Reten Rueda Trasera Vocho KIT Marca SMIDTD,64,68,0,0,#aa0009,1,10,10,10,0.1,0
+2940,13637,Engrane Distribuidor Vocho Con Seguro y Perno,5,2,34.99,0,BAA 998 235,Engrane Distribuidor Vocho Con Seguro y Perno,64,68,0,0,#aa0009,1,10,5,4,0.1,4
+2941,13154,Birlo Espace Vocho,2,2,3.35,0,035-B,Birlo Espace Vocho Generico,64,68,0,0,#aa0009,1,5,5,3,0.1,4
+2942,12217,Porta Platinos Vocho Tipo Bosch,5,2,174,0,BAA905227,Porta Platinos Vocho Tipo Bosch,64,68,0,0,#aa0009,1,15,15,5,0.1,0
+2943,6990,Resorte Pedal Freno Vocho Modelo Nacional,2,2,13.98,0,113 721 163,Resorte Pedal Freno Vocho Modelo Nacional,64,68,0,0,#aa0009,1,7,7,10,0.1,0
+2944,6650,Purgador Cilindro Rueda y Caliper Vocho,7,2,9.99,0,P039,Purgador Cilindro Rueda y Caliper Vocho,64,68,0,0,#aa0009,1,5,2,3,0.1,0
+2945,6342,Perno Cigueñal Vocho,2,2,11.99,0,P014,Perno Cigueñal Vocho,64,68,0,0,#aa0009,1,5,5,5,0.1,0
+2946,5707,Mariposa Clutch Vocho,2,2,15.01,0,SAO,Mariposa Clutch Vocho,64,68,0,0,#aa0009,1,5,5,5,0.1,0
+2947,3699,Exentrico Suspencion Vocho,3,2,95,0,131 405 319,Exentrico Suspencion Vocho,64,68,0,0,#aa0009,1,10,5,5,0.1,0
+2948,3089,Cuña Valvula Vocho Original,2,2,11.99,0,113 109 651 A,Cuña Valvula Vocho Generic,64,68,0,0,#aa0009,1,5,5,5,0.1,4
+2949,3086,Cuña Generador Vocho,2,2,4.69,0,N012 708 2,Cuña Generador Vocho,64,68,0,0,#aa0009,1,5,5,5,0.1,0
+2950,3083,Cuña Cigueñal Vocho de Polea Cigueñal,2,2,8,0,N/A,Cuña Cigueñal Vocho de Polea Cigueñal,64,68,0,0,#aa0009,1,5,5,5,0.1,4
+2951,3295,Eje Limpiabrisas Vocho Derecho,2,2,110,0,113 998 202,Eje Limpiabrisas Vocho Derecho,64,68,0,0,#aa0009,1,10,10,5,0.1,4
+2952,3031,Cubo Turbina Vocho,2,2,43.99,0,111 119 123 A,Cubo Turbina Vocho Generica,64,68,0,0,#aa0009,1,5,5,5,0.1,4
+2953,2868,Contra Puerta Vocho Modelo Nacional Derecha,4,2,53.89,0,111 837 036 F,Contra Puerta Vocho Modelo Nacional Derecha,64,68,0,0,#aa0009,1,,,,,4
+2954,2867,Contra Puerta Vocho-72 Izquierda,4,2,52,0,111 837 035 B,Contra Puerta Vocho-72 Izquierda,64,68,0,0,#aa0009,1,,,,,4
+2955,2734,Codo Cilindro Maestro Vocho,7,2,8,0,32,Codo Cilindro Maestro Vocho Generic,64,68,0,0,#aa0009,1,,,,,4
+2956,2386,Birlo Cabeza Vocho,2,2,5.99,0,BAA 251 139,Birlo Cabeza Vocho Generico,64,68,0,0,#aa0009,1,,,,,4
+2957,2326,Cazuela Generador Vocho,2,2,19,0,211 903 183,Cazuela Generador Vocho,64,68,0,0,#aa0009,1,15,10,10,0.1,4
+2958,2316,Casquillo Estabilizador trasero Vocho,2,2,9.99,0,113 513 371,Casquillo Estabilizador trasero Vocho,64,68,0,0,#aa0009,1,10,10,10,0.1,4
+2959,2311,Casquillo Bujias Vocho 3ra Medida,2,2,22,0,N/A,Casquillo Bujias Vocho 3ra Medida,64,68,0,0,#aa0009,1,5,5,5,0.1,4
+2960,2310,Casquillo Bujias Vocho 2da Medida,2,2,18,0,CO 032,Casquillo Bujias Vocho 2da Medida,64,68,0,0,#aa0009,1,10,10,5,0.1,4
+2961,2309,Casquillo Bujias Vocho 1ra Medida,2,2,18,0,CO 031,Casquillo Bujias Vocho 1ra Medida,64,68,0,0,#aa0009,1,10,5,5,0.1,4
+2962,2262,Carbon Marcha Vocho Grueso,5,2,14.95,0,9 001 049 015,Carbon Marcha Vocho Grueso Marca Bosch,64,68,0,0,#aa0009,1,15,10,5,0.1,41
+2963,2283,Carrete Acelerador Vocho,2,2,14.99,0,25,Carrete Acelerador Vocho,64,68,0,0,#aa0009,1,10,5,5,0.1,4
+2964,2259,Carbon Generador Vocho Marca Bosch,5,2,18,0,049 014,Carbon Generador Vocho Marca Bosch,64,68,0,0,#aa0009,1,5,5,5,0.1,41
+2965,1148,Birlo Rueda Vocho 1200 y 1500,2,2,22,0,111 601 139,Birlo Rueda Vocho 1200 y 1500 Generico,64,68,0,0,#aa0009,1,10,5,5,0.1,4
+2966,1134,Birlo Motor Vocho,2,2,9,0,N014 525 1,Birlo Motor Vocho Generico,64,68,0,0,#aa0009,1,10,5,5,0.1,4
+2967,1127,Borlo Flecha Piloto Vocho,2,2,5.01,0,N902 210 01,Borlo Flecha Piloto Vocho Generico,64,68,0,0,#aa0009,1,5,5,5,0.1,4
+2968,1883,Radiador Agua Versa Estandar,2,1,1300,0,CRNN0900,Radiador Agua Versa Estandar Con o Sin Aire Marca Izaka,37,51,0,0,#aa0009,1,  ,,,,0
+2969,2578,Chisguetero Tsuru III,8,1,32,0,28930-50Y00,Chisguetero Tsuru III Marca Bruck,83,105,0,0,#aa0009,1,5,5,5,0.1,1
+2970,7462,Deposito Anticongelante Tiida,2,1,189.99,0,21710-ED000,Deposito Anticongelante Tiida Marca Nikko,35,49,0,0,#aa0009,1,0,0,0,0,32
+2971,4206,Radiador Agua Spark Estandar,2,3,1489.99,0,CRNC0800-0810,Radiador Agua Spark Estandar con o sin Aire Marca Isaka,20,75,0,0,#aa0009,1,64,56,15,2.35,0
+2972,6341,Radiador Agua Sentra 01-06  Automatico,2,1,1219.99,0,RD-NS02,Radiador Agua Sentra 01-06  Automatico Marca Best Cooling,34,46,0,0,#aa0009,1,52,75,10,4,0
+2973,10336,Deposito Anticongelante Sentra 01-06 Original,2,1,189.99,0,21710-6M110,Deposito Anticongelante Sentra 01-06 Original,34,46,0,0,#aa0009,1,0,0,0,0,7
+2974,12963,Radiador Agua Polo Estandar Con Aire,2,2,1189,0,CRNV1310,Radiador Agua Polo Estandar Con Aire Marca Izaka,75,94,0,0,#aa0009,1,47,77,10,3,0
+2975,12569,Perno Collarin Polo,2,2,35.99,0,02A141777B,Perno Collarin Polo Marca Bruck,75,94,0,0,#aa0009,1,10,5,5,0.1,0
+2976,1673,Buje Palanca Velocidades Pointer Kit,2,2,28,0,334,Buje Palanca Velocidades Pointer Kit,61,62,0,0,#aa0009,1,10,13,5,0.05,0
+2977,7097,Reten Campana Pointer,2,2,19.99,0,001 301 227,Reten Campana Pointer Marca Bruck,61,62,0,0,#aa0009,1,10,10,5,0.1,0
+2978,3124,Deposito Anticongelante Pointer Original,2,2,120,0,171 121 407E,Deposito Anticongelante Pointer Original,61,62,0,0,#aa0009,1,24,19,15,0.5,97
+2979,6815,Rejillas Tapa Motor Vocho,4,2,44.99,0,N/A,Rejillas Tapa Motor Vocho,64,68,0,0,#aa0009,1,24,9,2,0.2,0
+2980,13098,Carbon Alternador Vocho Delgado,5,2,14.99,0,25174202 DIAZ,Carbon Alternador Vocho Delgado Marca Bosch,64,68,0,0,#aa0009,1,5,5,5,0.1,41
+2981,13529,Reten Rueda Trasero Vocho,3,2,29,0,OS-55511,Reten Rueda Trasero Vocho Marca Top Engine,64,68,0,0,#aa0009,1,10,10,10,0.1,0
+2982,12605,Rejilla Facia Vento 15-15 Derecha Con Hoyo,4,2,121.99,0,CBNV0701,Rejilla Facia Vento 15-15 Derecha Con Hoyo,65,69,0,0,#aa0009,1,50,16,10,0.2,0
+2983,12606,Rejilla Facia Vento 15-15 Izquierda Con Hoyo,4,2,121.99,0,CBNV0702,Rejilla Facia Vento 15-15 Izquierda Con Hoyo,65,69,0,0,#aa0009,1,50,16,10,0.2,0
+2984,12607,Rejilla Facia Vento 15-15 Derecha Negra Sin Hoyo,4,2,111.99,0,CBNV0711,Rejilla Facia Vento 15-15 Derecha Negra Sin Hoyo,65,69,0,0,#aa0009,1,48,17,7,0.2,0
+2985,12608,Rejilla Facia Vento 15-15 Izquierda Negra Sin Hoyo,4,2,114.23,0,CBNV0712,Rejilla Facia Vento 15-15 Izquierda Negra Sin Hoyo,65,69,0,0,#aa0009,1,48,17,7,0.2,0
+2986,7799,Carter Tsuru III 16 Valvulas,2,1,497,0,1111077A12,Carter Tsuru III 16 Valvulas Original,83,105,0,0,#aa0009,1,44,22,15,2.1,7
+2987,9027,Carter Tornado,2,3,977.99,0,93335205,Carter Tornado Marca Top Engine,21,76,0,0,#aa0009,1,45,32,17,3.05,27
+2988,3886,Carter Spark,2,3,574,0,25189002,Carter Spark  Marca Bruck,20,75,0,0,#aa0009,1,45,32,17,3.95,1
+2989,9014,Carter Transmision Sentra 07-12 2Litros,2,1,289,0,11110-ET010,Carter Transmision Sentra 07-12 2Litros Marca Top Engine,34,47,0,0,#aa0009,1,34,29,6,1.1,27
+2990,9014,Carter Transmision Versa 1.8Litros,2,1,289,0,11110-ET010,Carter Transmision Versa 1.8Litros Marca Top Engine,37,51,0,0,#aa0009,1,34,29,6,1.1,27
+2991,6808,Rejilla Facia Polo Para Faro de Niebla Izquierda,4,2,88.98,0,6Q0 853 665 A,Rejilla Facia Polo Para Faro de Niebla Izquierda Marca Bruck,75,94,0,0,#aa0009,1,38,15,8,0.2,0
+2992,6807,Rejilla Facia Polo Para Faro de Niebla Derecha,4,2,85,0,6Q0 853 666 C,Rejilla Facia Polo Para Faro de Niebla Derecha Marca Bruck,75,94,0,0,#aa0009,1,38,15,8,0.2,0
+2993,6803,Rejilla Facia Pointer 00-05 Con Hoyo Derecha,4,2,36.96,0,377 807 718,Rejilla Facia Pointer 00-05 Con Hoyo Derecha Marca Bruck,61,62,0,0,#aa0009,1,40,10,5,0.2,0
+2994,6804,Rejilla Facia Pointer 00-05 Con Hoyo Izquierda,4,2,37,0,377 807 717,Rejilla Facia Pointer 00-05 Con Hoyo Izquierda Marca Bruck,61,62,0,0,#aa0009,1,40,10,5,0.2,0
+2995,6809,Reljilla Tablero Pointer Guantera Gris,8,2,115,0,377 857 924,Reljilla Tablero Pointer Guantera Gris,61,62,0,0,#aa0009,1,40,20,10,0.2,0
+2996,6813,Rejilla Tablero Pointer Derecha Gris,1,2,115,0,377 857 044,Rejilla Tablero Pointer Derecha Gris,61,62,0,0,#aa0009,1,15,15,8,0.2,0
+2997,6591,Porta Carbones Marcha Pointer,5,2,267.99,0,F 000 AL1 053,Porta Carbones Marcha Pointer Marca Bosch,61,62,0,0,#aa0009,1,15,15,5,0.1,0
+2998,6591,Patin Asiento Pointer Original,8,2,267.99,0,44,Patin Asiento Pointer Original,61,62,0,0,#aa0009,1,5,3,2,0.1,0

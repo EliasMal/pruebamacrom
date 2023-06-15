@@ -1,0 +1,194 @@
+<section ng-controller="PedidosDetallesCtrl" ng-init="autorizacion={autorizacion}">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark"><i class="fa fa-user mr-1"></i> Pedidos </h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="?mod=Pedidos">Pedidos</a></li>
+                        <li class="breadcrumb-item active">Detalles del pedido</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <section class="content" ng-init="id={id}">
+        <div class="container-fluid">
+            <div class="invoice p-3 mb-3">
+                <div class="row">
+                    <div class="col-12">
+                        <h4>Detalle del pedido
+                            <small class="float-right">Fecha: {{Pedido.Fecha}}</small>
+                        </h4>
+                    </div>
+                </div>
+                <div class="row invoice-info">
+                    <div class="col-sm-4 invoice-col">
+                        Pedido de:
+                        <address>
+                            <strong>{{Pedido.nombres}} {{Pedido.Apellidos}}</strong>
+                            <br>
+                            <i class="fa fa-phone"></i> TEL: {{Pedido.Telefono}}
+                            <br>
+                            EMAIL: {{Pedido.correo}}
+                        </address>
+                        Direccion de Envio:
+                        <address>
+                            <strong>{{Pedido.Domicilio}} # {{Pedido.numExt}}</strong>
+                            <br>
+                            Colonia: {{Pedido.Colonia}}
+                            <br>
+                            {{Pedido.Ciudad}}, {{Pedido.Estado}}, CP. {{Pedido.Codigo_postal}}
+                           
+                        </address>
+                    </div>
+                    <div class="col-sm-4 invoice-col">
+                        Datos de facturacion:
+                        <h2 class="text-danger" ng-show="Pedido.Facturacion==0">No requiere Factura</h2>
+                        <address ng-show="Pedido.Facturacion==1">
+                            <strong>Razon social:</strong><br>
+                            {{Pedido.Razonsocial}}
+                            <br>
+                            <b>RFC:</b><br>
+                            {{Pedido.Rfc}}
+                            <br>
+                            <strong>Uso de Cfdi:</strong>
+                            <br>
+                            {{Pedido.Descripcion}}
+                        </address>
+                        <section ng-show="Pedido.Facturacion==1">
+                                <div id="archivoxml" class="alert alert-dismissible" role="alert" ng-if="Pedido.archivoxml != ''">
+                                    <button ng-click="btnClose('#archivoxml','archivoxml',Pedido.archivoxml)" class="close" tyṕe="button"  aria-hide="true">x</button>
+                                    <h5> <i class="fa fa-file-code-o"></i> {{Pedido.archivoxml}}</h5>
+                                </div>
+                                <div id="archivopdf" class="alert alert-dismissible" role="alert" ng-if="Pedido.archivopdf != ''">
+                                    <button ng-click="btnClose('#archivopdf','archivopdf',Pedido.archivopdf)" class="close" tyṕe="button" aria-hide="true">x</button>
+                                    <h5> <i class="fa fa-file-pdf-o"></i> {{Pedido.archivopdf}}</h5>
+                                </div>
+                        </section>
+                        <section ng-show="Pedido.Facturacion==1">
+                                <div ng-hide="!Pedido.archivoxml == ''" >
+                                    <label for="imagenprincipal">XML:</label>
+                                    <div class="custom-file">
+                                        <input class="custom-file-input archivos" id="xml" name="xml" type="file" uploader-model="Pedido.xml" accept="application/xml" ng-disabled="Pedido.Acreditado == 6" >
+                                        <label for="imagenprincipal" class="custom-file-label">{{xml.Categoria==="xml"? xml.name:xml.placeholder}}</label>
+                                    </div>
+                                </div>
+                                <div ng-hide="!Pedido.archivopdf == ''">
+                                    <label for="imagenprincipal">PDF:</label>
+                                    <div class="custom-file">
+                                        <input class="custom-file-input archivos" id="pdf" name="pdf" type="file" uploader-model="Pedido.pdf" accept="application/pdf" ng-disabled="Pedido.Acreditado == 6">
+                                        <label for="imagenprincipal"
+                                            class="custom-file-label">{{pdf.Categoria==="pdf"? pdf.name:pdf.placeholder}}</label>
+                                    </div>
+                                </div>
+                        </section>
+                        
+                    </div>
+                    <div class="col-sm-4 invoice-col">
+                        <b>No. orden:</b>
+                        <h4 class="text-right">#{{Pedido.noPedido}}</h4>
+                        <br>
+                        <div>
+                            <b>Forma de pago:</b>
+                        {{Pedido.FormaPago}}
+                        </div>
+                        <div ng-if="Pedido.FormaPago == 'Tarjeta'">
+                            <b>Tipo de Tarjeta</b>
+                            {{Tarjeta.cc_type}}
+                        </div>
+                        <div ng-if="Pedido.FormaPago == 'Tarjeta'">
+                            <b>Ultimos digitos:</b>
+                            {{Tarjeta.cc_number}}
+                        </div>
+                       
+                        
+                        <br>
+                        <b>Estatus:</b>
+                        <span class="pull-right badge {{getcolorEstatus(Pedido.Acreditado)}}">{{estatus[Pedido.Acreditado]}}</span>
+                        <select name="slcEstatus" id="slcEstatus" class="form-control" ng-model="Pedido.Acreditado" ng-show = "flagCancelado">
+                            <option ng-repeat="(key, a) in estatus" value="{{key}}">{{a}}</option>
+                        </select>
+                        <br>
+                        <b>No. Guia</b>
+                        <input type="text" class="form-control" name="txtguiaenvio" id="txtguiaenvio" ng-model ="Pedido.GuiaEnvio" ng-disabled="Pedido.Acreditado == 6">
+                        <br>
+                        <div class="pull-right" ng-show="Pedido.isFileComprobante && Pedido.Acreditado==0">
+                            <img src="../../images/icons/icono_facturacion.png" alt="Comprobante" width="32px">
+                            <a href="../../Public/Comprobantes/{{Pedido.comprobante}}" download ><b> Ver Comprobante de pago</b></a>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-12 table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <th>#</th>
+                                <th>Img</th>
+                                <th>Codigo</th>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Precio</th>
+                                <th>Importe</th>
+                                <th ng-show = "flagCancelado">Acciones</th>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="detalle in Detalles">
+                                    <td>{{$index+1}}</td>
+                                    <td><img ng-src="{{detalle.imagen? '../../images/refacciones/'+detalle.parte+'.png': '../../images/refacciones/motor.png'}}" 
+                                        alt="" class="rounded" style="width: 80px; height: auto;"></td>
+                                    <td>{{detalle.Clave}}</td>
+                                    <td>{{detalle.Producto}}</td>
+                                    <td class="text-center">{{detalle.cantidad}}</td>
+                                    <td class="text-right">{{detalle.Importe | currency}}</td>
+                                    <td class="text-right">{{detalle.cantidad * detalle.Importe | currency}}</td>
+                                    <td class="text-center" ng-show = "flagCancelado"><button class="btn btn-danger" 
+                                        ng-click="btnCancelarArticulo(detalle._id, detalle.Importe * detalle.cantidad)"
+                                        ><i class="fa fa-trash"></i></button></td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6"></div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3"></div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <th>Subtotal:</th>
+                                        <td class="text-right">{{Pedido.Importe | currency}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Envio:</th>
+                                        <td class="text-right">{{Pedido.cenvio | currency}} ({{Pedido.Servicio}})</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Descuento:</th>
+                                        <td class="text-right">{{Pedido.descuento | currency}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total:</th>
+                                        <td class="text-right"><h5><b> {{Pedido.Importe + Pedido.cenvio - Pedido.descuento| currency}}</b></h5></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <button class="btn btn-primary pull-right" ng-click="btnGuardarCambios()" ng-show = "flagCancelado"><i class="fa fa-save"></i> Guardar Cambios</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

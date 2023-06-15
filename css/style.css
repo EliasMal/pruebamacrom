@@ -1,0 +1,80 @@
+/* modulo por francisco */
+
+
+
+/* Slide3 */
+.wrap-slick3 {
+    position: relative;
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+  
+  .wrap-slick3 > img{
+    width: 100%;
+    height: 350px;
+  }
+  
+  .wrap-slick3-responsive {
+    position: relative;
+    margin-right: -15px;
+    margin-left: -15px;
+    display: none;
+  }
+  
+  .wrap-slick3-responsive > img{
+    width: 100%;
+  }
+  
+  
+  
+  .contenedor{
+    position: relative;
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+  
+  .contenedor img{
+    width: 100%;
+  }
+  
+  .contenedor-responsive{
+    position: relative;
+    margin-right: -15px;
+    margin-left: -15px;
+    display: none;
+  }
+  .contenedor-responsive img{
+    width: 100%;
+  }
+  
+  .contenedor h2, .contenedor-responsive h2{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+  }
+  
+  @media (max-width: 572px){
+    .wrap-slick3{
+        display: none;
+    }
+    .wrap-slick3-responsive{
+        display: block !important;
+    }
+    .contenedor{
+      display: none;
+    }
+  
+    .contenedor-responsive{
+      display: block !important;
+    }
+  }
+  /* termina modulo de francisco */
+
+  /* slide4 */
+
+  .wrap-slick4{
+    position: relative;
+  }
+
+  

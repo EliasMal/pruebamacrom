@@ -1,0 +1,97 @@
+<div ng-controller="MonederoCtrl">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                <h1>Monedero Electrónico</h1>
+                </div>
+                <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
+                    <li class="breadcrumb-item active"> Monedero electrónico</li>
+                </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-4">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-danger elevation-1">
+                            <i class="fa fa-credit-card"></i>
+                        </span>
+                        <div class="info-box-content">
+                            <h3 class="info-box-number">{{res.Monedero | currency}}</h3>
+                            <span class="info-box-text">Monedero Acumulado</span>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4"></div>
+                <div class="col-12 col-sm-6 col-md-4">
+                    <div class="info-box">
+                        <button class="btn btn-danger btn-block " style="font-size: 20px;" ng-click="btnCrearMonedero()"> 
+                            <i class="fa fa-money" style="width: 70px; font-size: 20px;"></i> Crea un nuevo monedero
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-danger">
+                        <div class="card-header">
+                            <h5 class="card-title">Listado de clientes con monedero electronico</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="float-right">
+                                        1-15/{{res.NoRegistros}}
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
+                                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
+                                        </div>
+                                        <!-- /.btn-group -->
+                                    </div>
+                                    <div class="float-left">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="Buscar cliente" aria-label="Username" aria-describedby="basic-addon1">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <table class="table table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>username</th>
+                                                <th>Cliente</th>
+                                                <th>Total</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="r in res.Registros">
+                                                <td scope="row">{{$index+1}}</td>
+                                                <td>{{r.username}}</td>
+                                                <td>{{r.nombreCliente}}</td>
+                                                <td class="text-right">{{r.Importe | currency}}</td>
+                                                <td class="text-center"><button class="btn btn-danger" ng-click="btnDetallesMonedero(r._id_cliente)"><i class="fa fa-eye"></i></button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

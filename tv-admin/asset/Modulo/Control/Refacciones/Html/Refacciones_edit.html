@@ -1,0 +1,505 @@
+<div ng-controller="RefaccionesEditCtrl">
+    <div class="content-header" ng-init="refaccion.id = {id}">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark"><i class="fa fa-truck"></i> Refacciones</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
+                            <li class="breadcrumb-item"><a href="?mod=Refacciones"> Refacciones</a></li>
+                            <li class="breadcrumb-item active">Editar Refacción</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <section class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12 connectedSortable">
+                    <div class="card card-danger">
+                        <div class="card-header ">
+                            <h3 class="card-title ">
+                                <i class="fa fa-users mr-1"></i>
+                                Editar Refaccion
+                            </h3>
+                            <div class="card-tools">
+                                <button class="btn btn-tool" data-card-widget="collapse"><i class="fa fa-minus"></i></button>
+                            </div>
+
+                        </div><!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                    <section class="text-center">
+                                        <img ng-src="{{img}}" alt="imagen refaccion" class="img-thumbnail" ng-style="backgroudimg">
+                                    </section>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12">
+                                            <label for="tagtitle">Tag title:</label>
+                                            <input type="text" class="form-control" name="tagtitle" id="tagtitle" ng-model="refaccion.tag_title" ng-disabled="habilitado">
+                                        </div>
+                                        <div class="col-md-12 col-lg-12">
+                                            <label for="tagalt">Tag alt:</label>
+                                            <input type="text" class="form-control" name="tagalt" id="tagalt" ng-model="refaccion.tag_alt" ng-disabled="habilitado">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 mt-2">
+                                    <ul class="nav nav-tabs" id="tabs" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <a class="nav-link active" id="Datosgenerales-tab" data-toggle="tab" href="#Datosgenerales" 
+                                            role="tab" aria-controls="Datosgenerales" aria-selected="true"> Datos Generales</a>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <a class="nav-link" id="Galeria-tab" data-toggle="tab" href="#Galeria" 
+                                            role="tab" aria-controls="Galeria" aria-selected="true">Galeria</a>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <a class="nav-link" id="Galeria-tab" data-toggle="tab" href="#Vehiculo" 
+                                            role="tab" aria-controls="Galeria" aria-selected="true">Vehiculos</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content" id="myTabContent">
+                                        <div class="tab-pane fade show active" id="Datosgenerales" role="tabpanel" aria-labelledby="Datosgenerales-tab">
+                                            <br>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-12 col-lg-12">
+                                                    <form name="frmrefaccion" id="frmrefaccion" novalidate>
+                                                        <h4>Datos generales del producto</h4>
+                                                        <div class="row">
+                                                            <div class="col-md-4 col-lg-4">
+                                                                <label>Clave: <span class="text-danger">*</span></label>
+                                                                <input type="text" name="txtclave" id="txtclave" class="form-control" ng-model="refaccion.Clave" ng-disabled="habilitado" required/>
+                                                                <!--<button class="btn btn-primary" ng-disabled="habilitado" ng-click="Buscarproducto">Buscar</button>-->
+                                                            </div>
+                                                            <div class="col-md-8 col-lg-8">
+                                                                <label>Refacción: <span class="text-danger">*</span></label>
+                                                                <input type="text" name="txtrafaccion" id="txtrefaccion" class="form-control" ng-model="refaccion.Producto" ng-disabled="habilitado" required/>
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-6">
+                                                                <label>No. Parte: <span class="text-danger">*</span></label>
+                                                                <input type="text" name="txtnoparte" id = "txtnoparte" class="form-control" ng-model="refaccion.No_parte" ng-disabled="habilitado" required/>
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-6">
+                                                                <label>Categoria: <span class="text-danger">*</span></label>
+                                                                <select name="slccategoria" id="slccategoria" class="form-control" ng-model="refaccion._idCategoria" ng-change="getMarcas()" ng-disabled="habilitado" required>
+                                                                    <optgroup label="Selecciona la categoria de la refaccion">
+                                                                        <option ng-repeat="categoria in categorias" value="{{categoria._id}}">{{categoria.Categoria}}</option>
+                                                                    </optgroup>
+                                                                </select>
+                                                            </div>
+                                                            
+                                                           <!--   -->
+                                                            <div class="col-md-6 col-lg-6">
+                                                                <label>Imagen de la refacción:</label>
+                                                                <div class="custom-file">
+                                                                    <input type="file" class="custom-file-input" name="txtfile" id="txtfile" uploader-model="refaccion.file" ng-disabled="habilitado"/>
+                                                                    <label class="custom-file-label" for="txtfile">Choose file...</label>
+                                                                    
+                                                                </div>
+                                                                
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-6">
+                                                                <label for="slcproveedor">Proveedor</label>
+                                                                <select name="slcproveedor" id="slcproveedor" class="form-control" ng-model="refaccion.id_proveedor" ng-disabled="habilitado">
+                                                                    <optgroup label="Selecciona el proveedor de la refaccion">
+                                                                        <option ng-repeat="prov in Proveedor" value="{{prov._id}}">{{prov.Proveedor}}</option>
+                                                                    </optgroup>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <ul class="nav flex-column">
+                                                                <li class="nav-item">
+                                                                    <span class="switch switch-sm">
+                                                                        <input type="checkbox" class="switch" id="switch-nuevo" name="switch-nuevo" ng-model="refaccion.RefaccionNueva" ng-disabled="habilitado">
+                                                                        <label for="switch-nuevo">Refaccion Nueva</label>
+                                                                        
+                                                                    </span>
+                                                                </li>
+                                                                <li class="nav-item">
+                                                                    <span class="switch switch-sm">
+                                                                    <input type="checkbox" class="switch" id="switch-oferta" name="switch-oferta" ng-model="refaccion.RefaccionOferta" ng-disabled="habilitado">
+                                                                    <label for="switch-oferta">Refaccion en Oferta</label>
+                                                                </span>
+                                                                </li>
+                                                                <li class="nav-item">
+                                                                    <span class="switch switch-sm">
+                                                                    <input type="checkbox" class="switch" id="switch-liquidacion" name="switch-liquidacion" ng-model="refaccion.RefaccionLiquidacion" ng-disabled="habilitado" >
+                                                                    <label for="switch-liquidacion">Refaccion en Liquidacion</label>
+                                                                </span>
+                                                                </li>
+                                                                <li class="nav-item">
+                                                                    <span class="switch switch-sm">
+                                                                    <input type="checkbox" class="switch" id="switch-activo" name="switch-activo" ng-model="refaccion.Estatus" ng-disabled="habilitado" >
+                                                                    <label for="switch-activo">Refaccion Activa</label>
+                                                                </span>
+                                                                </li>
+                                                                <li class="nav-item">
+                                                                    <span class="switch switch-sm">
+                                                                    <input type="checkbox" class="switch" id="switch-envio" name="switch-envio" ng-model="refaccion.Enviogratis" ng-disabled="habilitado" >
+                                                                    <label for="switch-envio">Envio Gratis</label>
+                                                                </span>
+                                                                </li>
+                                                                <li class="nav-item" ng-show="isAdmin">
+                                                                    <span class="switch switch-sm">
+                                                                        <input type="checkbox" class="switch" id="switch-publicar" name="switch-publicar" ng-model="refaccion.Publicar" ng-disabled="habilitado" >
+                                                                        <label for="switch-publicar">Publicar</label>
+                                                                    </span>
+                                                                </li>
+                
+                                                            </ul>
+                                                            </div>
+                                                            <div class="col-md-3">
+        
+                                                            </div>
+                                                            <div class="col-md-5">
+                                                                <label>Precio Publico: <span class="text-danger">*</span></label>
+                                                                <input type="text" name="txtpreciopublico" id="txtpŕeciopublico" class="form-control numeric" ng-model="refaccion.Precio1" ng-disabled="habilitado" required/>
+                                                                <label ng-show="refaccion.RefaccionOferta">Precio Oferta:</label>
+                                                                <input type="text" name="txtpreciopublico" id="txtpŕeciopublico" class="form-control numeric" ng-show="refaccion.RefaccionOferta" ng-model="refaccion.Precio2" ng-disabled="habilitado"/>
+                                                            </div>
+                                                        </div>
+                                                        <hr />
+                                                        <h4>Dimensiones del producto</h4>
+                                                        <div class="row">
+                                                            <div class="col-md-3 col-lg-3">
+                                                                <label>Alto</label>
+                                                                <div class="input-group mb-2">
+                                                                    <input type="text" convert-to-number name="txtalto" id="txtalto" ng-model="refaccion.Alto" class="form-control numeric" ng-disabled="habilitado" />
+                                                                    <div class="input-group-append">
+                                                                        <div class="input-group-text">cm.</div>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                            <div class="col-md-3 col-lg-3">
+                                                                <label>Largo</label>
+                                                                <div class="input-group mb-2">
+                                                                    <input type="text" convert-to-number name="txtlargo" id="txtlargo" ng-model="refaccion.Largo" class="form-control numeric" ng-disabled="habilitado" />
+                                                                    <div class="input-group-append">
+                                                                        <div class="input-group-text">cm.</div>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                            <div class="col-md-3 col-lg-3">
+                                                                <label>Ancho</label>
+                                                                <div class="input-group mb-2">
+                                                                    <input type="text" convert-to-number name="txtancho" id="txtancho" ng-model="refaccion.Ancho" class="form-control numeric" ng-disabled="habilitado" />
+                                                                    <div class="input-group-append">
+                                                                        <div class="input-group-text">cm.</div>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                            <div class="col-md-3 col-lg-3">
+                                                                <label>Peso</label>
+                                                                <div class="input-group mb-2">
+                                                                    <input type="text" convert-to-number name="txtpeso" id="txtpeso" ng-model="refaccion.Peso" class="form-control numeric" ng-disabled="habilitado" />
+                                                                    <div class="input-group-append">
+                                                                        <div class="input-group-text">Kg.</div>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <hr />
+                                                        <h4>Producto en sucursales</h4>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="text-center">Refacciones encontradas en existencia: <b>{{exisTotales}}</b></div>
+                                                                <table class="table table-bordered table-striped">
+                                                                    <thead>
+                                                                        <th>Sucursal</th>
+                                                                        <th>Existencias</th>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr ng-repeat="exis in existencias.Table">
+                                                                            <td>{{exis.em_nombre}}</td>
+                                                                            <td>{{exis.existencia}}</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        <hr />
+                                                        <h4>Detalles</h4>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <label>Descripcion de la Refaccion:</label>
+                                                                <textarea name="txtdescripcion" id="txtdescripcion" cols="30" rows="5" class="form-control" ng-model="refaccion.Descripcion" ng-disabled="habilitado"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 col-lg-12 mt-3">
+                                                    <button type="button" class="btn btn-primary float-right" 
+                                                    ng-disabled="frmrefaccion.$invalid" ng-click="habilitado? btnEditarRefaccion() : btnSaveRefaccion()">
+                                                    <i class="fa fa-save"></i> {{habilitado? "Editar":"Guardar cambios"}}</button>&nbsp;
+                                                    <button type="button" class="btn btn-secondary float-right mr-2" ng-click="btnRegresar()" > Cancelar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade " id="Galeria" role="tabpanel" aria-labelledby="Galeria-tab">
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-12 col-xl-4 col-md-4 col-lg-4" ng-repeat="gal in dataGaleria">
+                                                    <div class="card card-danger card-outline">
+                                                        <div class="card-body">
+                                                            <img ng-src="{{getImagen(gal)}}"
+                                                                alt="{{gal.tag_alt}}" title="{{gal.tag_title}}" class="img-fluid pad">
+                                                            <hr>
+                                                            
+                                                            <button class="btn btn-sm btn-outline-danger pull-right"
+                                                                type="button"
+                                                                ng-click="btnEliminarImagen(gal._id)">Desactivar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-12 col-xl-12 col-md-12 col-lg-12">
+                                                    <!-- <div class="input-group">
+                                                        <label for="imagenprincipal">Subir Imagen</label>
+                                                        <div class="input-group">
+                                                            <div class="custom-file">
+                                                                <input class="custom-file-input archivos" id="Principal" type="file"
+                                                                    uploader-model="imagen.file">
+                                                                <label for="imagenprincipal"
+                                                                    class="custom-file-label">{{imagen.Categoria==="Principal"? imagen.name:imagen.placeholder}}</label>
+                                                            </div>
+                                                            <div class="input-group-apped">
+                                                                <button class="btn btn-primary pull-right" ng-click="btnsubirimagen()"><i
+                                                                        class="fa fa-upload"> Subir imagen</i></button>
+                                                            </div>
+                                                        </div>
+                                                    </div> -->
+                                                    <button name="btnNuevaCategoria" ng-click="btnNuevaCategoria()" class="btn btn-danger">Nueva Galeria</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade " id="Vehiculo" role="tabpanel" aria-labelledby="Galeria-tab">
+                                            <div class="col-md-12 col-lg-12 mt-2">
+                                                <button class="btn btn-outline-danger mb-2" ng-click="btnNuevoVehiculo()"><i class="fa fa-car"></i> Nuevo Vehiculo</button>
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th width="15%" class="text-center">Agencia</th>
+                                                                <th width="15%" class="text-center">Vehiculo</th>
+                                                                <th width="15%" class="text-center">Generación</th>
+                                                                <th width="15%" class="text-center">Desde</th>
+                                                                <th width="15%" class="text-center">Hasta</th>
+                                                                <th width="15%" class="text-center">Accion</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="RV in Rvehiculo">
+                                                                <td>{{RV.Agencia}}</td>
+                                                                <td>{{RV.Vehiculo}}</td>
+                                                                <td>{{RV.generacion}}</td>
+                                                                <td class="text-center">{{RV.Anio_desde}}</td>
+                                                                <td class="text-center">{{RV.Anio_hasta}}</td>
+                                                                <td class="text-center">
+                                                                    <div class="dropdown d-block d-sm-none">
+                                                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                                                                          Dropdown button
+                                                                        </button>
+                                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                          <a class="dropdown-item" href="#">Action</a>
+                                                                          <a class="dropdown-item" href="#">Another action</a>
+                                                                          <a class="dropdown-item" href="#">Something else here</a>
+                                                                        </div>
+                                                                      </div>
+                                                                    <section class="d-none d-sm-block">
+                                                                        <button  class="btn btn-info" ng-click="btnEditarRvehiculo(RV)"> <i class="fa fa-edit"></i></button>
+                                                                        <button  class="btn btn-danger" ng-click="btnBorrarRvehiculo(RV)"> <i class="fa fa-close"></i></button>  
+                                                                    </section>
+                                                                    
+                                                                </td>
+                                                            </tr>
+                                        
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+
+                            
+                        </div>
+                       <!--  <div class="card-footer">
+                           
+
+                        </div> -->
+                    </div>
+                </section>
+            </div>
+    <!--        <div class="row">
+                <div class="col lg 12">
+                    <button type="button" class="btn btn-danger" ng-click="btnAgregarRefaccion()"><i class="fa fa-plus-square"></i> Agregar Refaccion</button>
+                    <span class="switch switch-sm pull-right">
+                        <input type="checkbox" class="switch" id="switch-id" ng-model="historico" ng-click="getRefacciones()">
+                        <label for="switch-id">Historico</label>
+                    </span>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-lg-12">
+                    <input type="text" name="txtbuscar" id="txtbuscar" <div class="col-md-6 col-lg-6">
+                                                        <label>Marca del Vehiculo: <span class="text-danger">*</span></label>
+                                                        <select name="slcmarcav" id="slcmarcav" class="form-control" ng-model = "refaccion._idMarca" ng-change="getVehiculos()" ng-disabled="habilitado" required>
+                                                            <optgroup label="Selecciona la marca del vehiculo">
+                                                                <option ng-repeat="marca in Marcas" value="{{marca._id}}">{{marca.Marca}}</option>
+                                                            </optgroup>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6">
+                                                        <label>Vehiculo: <span class="text-danger">*</span></label>
+                                                        <select name="slcvehiculo" id="slcvehiculo" class="form-control" ng-model = "refaccion.Modelo" ng-change="getModelos()" ng-disabled="habilitado" required>
+                                                            <optgroup label="Selecciona el vehiculo">
+                                                                <option ng-repeat="vehiculo in Vehiculos" value="{{vehiculo._id}}">{{vehiculo.Modelo}}</option>
+                                                            </optgroup>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6">
+                                                        <label>Modelo: <span class="text-danger">*</span></label>
+                                                        <select name="slcmodelo" id="slcmodelo" class="form-control" ng-model="refaccion.Anios" ng-disabled="habilitado" required>
+                                                            <optgroup label="Selecciona el año del Vehiculo">
+                                                                <option ng-repeat="modelo in Modelos" value="{{modelo._id}}">{{modelo.Anio}}</option>
+                                                            </optgroup>
+                                                        </select>
+                                                    </div>placeholder="Ingresa el codigo o nombre de la refaccion a buscar ...." class="form-control"/>
+                </div>
+            </div>-->
+        </div>
+    </section>
+    <!-- Modal -->
+    <div class="modal fade" id="Mcategoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">{{nuevo? "Nuevo":"Editar"}} Imagen</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-4" aling="center">
+                            <img ng-src="{{imgGaleria}}" alt="imagen proveedor" class="img-responsive img-thumbnail" />
+                        </div>
+                        <div class="col-lg-8">
+                            <label for="imagenprincipal">Subir Imagen</label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input class="custom-file-input archivos" id="Principal" type="file"
+                                        uploader-model="Galeria.file">
+                                    <label for="imagenprincipal"
+                                        class="custom-file-label">{{Galeria.Categoria==="Principal"? Galeria.name:Galeria.placeholder}}</label>
+                                </div>
+                            </div>
+                            <label for="slcMarca">Tag Title</label>
+                            <input type="text" name="txttitle" id="txttitle" class="form-control" ng-model="Galeria.tag_title" />
+                            <label for="slcMarca">Tag alt</label>
+                            <input type="text" name="txtalt" id="txtalt" class="form-control" ng-model="Galeria.tag_alt" />
+                            
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" ng-click="btnsubirimagen()" ng-disabled="btnsave">
+                        {{nuevo? "Subir":"Guardar"}} Imagen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="mdlVehiculo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">{{nuevo? "Nuevo":"Editar"}} Vehiculo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        
+                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <label>Marca del Vehiculo: <span class="text-danger">*</span></label>
+                            <select name="slcmarcav" id="slcmarcav" class="form-control" ng-model="vehiculo.id_Marca_RefaccionVehiculo"  ng-change="getVehiculos(vehiculo.id_Marca_RefaccionVehiculo)"  required>
+                                <optgroup label="Selecciona la marca del vehiculo">
+                                    <option ng-repeat="marca in Marcas" value="{{marca._id}}">{{marca.Marca}}</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <label>Vehiculo: <span class="text-danger">*</span></label>
+                            <select name="slcvehiculo" id="slcvehiculo" class="form-control" ng-model="vehiculo.id_Modelo_RefaccionVehiculo" 
+                            ng-change="getModelos(vehiculo.id_Modelo_RefaccionVehiculo); getAnios(vehiculo.id_Modelo_RefaccionVehiculo)"  required>
+                                <optgroup label="Selecciona el vehiculo">
+                                    <option ng-repeat="vehiculo in Vehiculos" value="{{vehiculo._id}}">{{vehiculo.Modelo}}</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <label>Generacion: <span class="text-danger">*</span></label>
+                            <select name="slcvehiculo" id="slcvehiculo" class="form-control" ng-model="vehiculo.id_generacion_RefaccionVehiculo"  required>
+                                <optgroup label="Selecciona el vehiculo">
+                                    <option ng-repeat="generacion in Modelos" value="{{generacion._id}}">{{generacion.Anio}}</option>
+                                </optgroup>
+                            </select>
+                        </div>
+
+                        <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+                            <label>Año desde: <span class="text-danger">*</span></label>
+                            <select name="slcmodelo" id="slcmodelo" class="form-control" ng-model="vehiculo.Anio_desde"   required>
+                                <optgroup label="Selecciona el año del Vehiculo">
+                                    <option ng-repeat="modelo in arrayAnios" value="{{modelo}}">{{modelo}}</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+                            <label>Año Hasta: <span class="text-danger">*</span></label>
+                            <select name="slcmodelo" id="slcmodelo" class="form-control" ng-model="vehiculo.Anio_hasta" required>
+                                <optgroup label="Selecciona el año del Vehiculo">
+                                    <option ng-repeat="modelo in arrayAnios" value="{{modelo}}">{{modelo}}</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" ng-click="btnAddVehicle()" ng-disabled="btnsave">
+                        {{nuevo? "Subir":"Guardar"}} Vehiculo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

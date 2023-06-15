@@ -1,0 +1,148 @@
+<section  ng-controller="ProfileCtrl" ng-init="pag='{opc}'">
+    <div class="banner bgwhite p-t-40 p-b-40">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 p-b-30">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Mispedidos')"> <img src="images/icons/icono_mis_pedidos.png" alt="logo-mispedidos" class="img icon-logo-small">Mis pedidos</a>
+                        <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Session')"><img src="images/icons/icono_inicio_de_sesión.png" alt="logo-session-seguridad" class="img icon-logo-small"> Sessi&oacute;n y Seg&uacute;ridad</a>
+                        <a href="#" class="list-group-item list-group-item-action active"> <img src="images/icons/icono_direcciones.png" alt="logo-direcciones" class="img icon-logo-small">Direcciones</a>
+                       <!-- <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Monedero')"><img src="images/icons/icono_monedero.png" alt="logo-monederoelectronico" class="img icon-logo-small"> Monedero Electronico</a>-->
+                        <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Facturacion')">
+                            <img src="images/icons/icono_facturacion.png" alt="logo-monederoelectronico" class="img icon-logo-small"> Datos de Facturación
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 p-b-30">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb gris">
+                          <li class="breadcrumb-item"><a href="?mod=Profile"><strong>Mi Cuenta</strong> </a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Direcciones</li>
+                        </ol>
+                    </nav>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-30">
+                            <div class="title-header">
+                                <img src="images/icons/icono_direcciones_rojo.png" alt="logo-direcciones" class="img icon-logos-grande">
+                                <h2>Direcciones de entrega</h2>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 p-b-30">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-b-30">
+                                     <div class="box-direcciones" ng-click="addDirecciones();">
+                                        <div class="box-add">
+                                            <h3><i class="fa fa-plus"></i></h3> 
+                                            <p>Agregar Dirección</p>
+                                        </div>  
+                                     </div>   
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-b-30" ng-repeat="dire in profile.arrayDomicilios">
+                                <div class="box-direcciones gris-light">
+                                    <div class="box-head predeterminado" ng-show="dire.Predeterminado == 1">
+                                        <h5>Predeterminado</h5>
+                                   </div>
+                                   <div class="box-body ">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                <p class="p-t-10">Domicilio</p>
+                                                <p class = "text-info-user">{{dire.Domicilio}}</p>    
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                <p class="p-t-10">Numero Exterior</p>
+                                                <p class = "text-info-user">{{dire.numExt}}</p>    
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                <p class="p-t-10">Numero Interior</p>
+                                                <p class = "text-info-user">{{dire.numInt}}</p>    
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                <p class="p-t-10">Telefono</p>
+                                                <p class = "text-info-user">{{dire.Telefono}}</p>  
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                <p class="p-t-10">Colonia</p>
+                                                <p class = "text-info-user">{{dire.Colonia}}</p>  
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                <p class="p-t-10">Codigo Postal</p>
+                                                <p class = "text-info-user">{{dire.Codigo_postal}}</p>  
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                <p class="p-t-10">Ciudad</p>
+                                                <p class = "text-info-user">{{dire.Ciudad}}</p>  
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                <p class="p-t-10">Estado</p>
+                                                <p class = "text-info-user">{{dire.Estado}}</p>  
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                                                <p class="p-t-10">Referencia</p>
+                                                <p class = "text-info-user">{{dire.Referencia}}</p>  
+                                            </div>
+                                        </div>
+                                    </div>
+                                   <br>
+                                   
+                                   <div class="box-footer">
+                                    <ul>
+                                        <li><a  ng-click="btneditDomicilio(dire._id)">Editar </a></li>
+                                        <li><a  ng-click="btndescartarDomicilio(dire._id)">Descartar </a></li>
+                                        <li><a  ng-click="btnPredeterminado(dire._id)" ng-show="dire.Predeterminado == 0">Predeterminado </a></li>
+                                    </ul>
+                                   </div>
+                                </div>   
+                           </div>
+                               
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 p-b-30 ">
+                            <div class="icon-center">
+                                <img src="images/icons/icono_direcciones.png" alt="logo-direcciones" class="img icon-logos-grande">
+                            </div>
+
+                           
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>    
+        </div>
+    </div>
+    <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      xfbml            : true,
+      version          : 'v3.3'
+    });
+  };
+
+  (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/es_LA/sdk/xfbml.customerchat.js';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+<!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '342958480063107');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=342958480063107&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Facebook Pixel Code -->
+</section>

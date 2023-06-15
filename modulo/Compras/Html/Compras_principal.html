@@ -1,0 +1,681 @@
+<section ng-controller="ComprasCtrl">
+	<!-- Title Page -->
+	<section class="contenedor" ng-repeat="comp in Banner.Escritorio">
+		<img src="images/Banners/{{comp.imagen}}" alt="Banner compras">
+		<h2 class="l-text2 t-center">
+			Compras
+		</h2>
+	</section>
+
+	<section class="contenedor-responsive" ng-repeat="comp in Banner.Movil">
+		<img src="images/Banners/{{comp.imagen}}" alt="Banner compras">
+		<h2 class="l-text2 t-center">
+			Compras
+		</h2>
+	</section>
+	
+	<div class="m-t-40 m-b-40 contajs" >
+		<form name="frmcompra" id="frmcompra" novalidate>
+			<div class="row">
+				<div class="p-l-40 p-r-40 m-l-ctm">
+					<div class="row user-dataShop" ng-show="session.autentificacion==1">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 deformprin">
+							<div class="row dentrega_tit">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<h4 class="p-t-20 p-b-10 txtred1" >Dirección de entrega</h4>
+								</div>
+							</div>
+							<div class="row rw-ajs">
+								<div class="col-xs-12 col-sm-12 col-md-4 col-lg-5 dentrega_inf" ng-controller="ProfileCtrl" ng-init="pag='Direcciones'">
+									<div class="row wd-respo bo-min-h">
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										</div>
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+											<p class = "p-t-5 p-b-10 text-info-user text-black">{{Costumer.profile.nombres}} {{Costumer.profile.Apellidos}}</p>
+										</div>
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-repeat="dire in profile.arrayDomicilios" ng-show="dire.Predeterminado == 1">
+											<p class="text-black">{{dire.Domicilio}} {{dire.numExt}}, {{dire.Colonia}}.</p>
+											<p class="text-black">{{dire.Ciudad}}, {{dire.Estado}}, {{dire.Codigo_postal}}.</p>
+											<p class="text-black">{{dire.Referencia}}</p>
+											<p class="p-t-10 text-black">Tel: {{dire.Telefono}}</p>
+										</div>
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="profile.arrayDomicilios[0].Predeterminado != 1">
+											<p class="text-black"><b>NOTA:</b> Agrega o selecciona una dirección para seguir con tu compra.</p>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 btn-dentrega opcwd-respo" ng-controller="ProfileCtrl" ng-init="pag='Direcciones'">
+										<div class="row" ng-show="profile.arrayDomicilios[0].Predeterminado != 0">
+											<button id="abrirModal" class="form-control fs-12 m-t-10 m-l-10 btndirecprueba" ng-click="btneditDomicilio(Costumer.dataDomicilio.data._id)" ng-show="profile.arrayDomicilios[0]"><img style="height:12px;" src="../images/icons/Editar.svg">&nbsp;&nbsp;Editar Dirección</button>
+										</div>
+										<div class="row" ng-show="profile.arrayDomicilios[0]">
+											<button id="abrirModal1" class="form-control fs-12 m-t-10 m-l-10 btndirecprueba"><img style="height:12px;" src="../images/icons/Seleccionar.svg">&nbsp;&nbsp;Seleccionar Otra</button>
+										</div>
+										<div class="row">
+											<button id="abrirModal2" class="form-control fs-12 m-t-10 m-l-10 btndirecprueba"><img style="height:12px; margin-left:-10px" src="../images/icons/Agregar.svg">&nbsp;&nbsp;Agregar Nueva</button>
+										</div>
+									</div>
+
+  <!-- Ventana modal Editar Dirección, por defecto no visiblel -->
+  <div id="ventanaModal" class="modal" ng-controller="ProfileCtrl" ng-init="pag='Direcciones_edit'">
+    <div class="contenido-modal p-b-15" style="margin-top: 0px;">
+        <span class="cerrar enlace">&times;</span>
+        <h2 class="text-center text-white p-t-10 bg9 p-b-10 m-tlr">Editar dirección de envío</h2>
+        <h5 class="edt-tit-envio">{{Costumer.profile.nombres}} {{Costumer.profile.Apellidos}}</h5>
+    <div class="grid-x grid-margin-x grid-margin-y">
+		<div class="cell cplabel">
+			<label>Calle: <b class="obligatorio">*</b></label>
+		</div>
+		<div class="cell auto bo4">
+			<input class="text-black inp-dts" value="comer" type="text" ng-model="dataDireccion.Domicilio" required autocomplete="off" placeholder="Ingresa Calle">
+		</div>
+    </div>
+    <div class="grid-x grid-margin-x grid-margin-y numeroextint" >
+		<div class="cell cplabel">
+			<label>Numero: <b class="obligatorio">*</b></label>
+		</div>
+		<div class="cell auto bo4" style="width: 105px;">
+			<input class="text-black inp-dts" ng-model="dataDireccion.numExt" required autocomplete="off" placeholder="Ext.">
+		</div>
+		<div class="cell cplabel">
+			<label>Int: </label>
+		</div>
+		<div class="cell auto bo4" style="width: 105px;">
+			<input class="text-black inp-dts" ng-model="dataDireccion.numInt" required autocomplete="off" placeholder="Int.">
+		</div>
+    </div>
+    <div class="grid-x grid-margin-x grid-margin-y" >
+		<div class="cell cplabel">
+			<label>Colonia: <b class="obligatorio">*</b></label>
+		</div>
+		<div class="cell auto bo4">
+			<input class="text-black inp-dts" ng-model="dataDireccion.Colonia" required autocomplete="off" placeholder="Ingresa Colonia"> 
+		</div>
+    </div>
+    <div class="grid-x grid-margin-x grid-margin-y" >
+		<div class="cell cplabel">
+			<label class="fzm-15">Cod.Postal: <b class="obligatorio">*</b></label>
+		</div>
+		<div class="cell auto bo4">
+			<input class="text-black inp-dts" maxlength="5" ng-model="dataDireccion.Codigo_postal" required autocomplete="off" placeholder="Codigo Postal">
+		</div>
+    </div>
+    <div class="grid-x grid-margin-x grid-margin-y" >
+		<div class="cell cplabel">
+			<label>Ciudad: <b class="obligatorio">*</b></label>
+		</div>
+		<div class="cell auto bo4">
+			<input class="text-black inp-dts" ng-model="dataDireccion.Ciudad" required autocomplete="off" placeholder="Ingresa Ciudad">
+		</div>
+    </div>
+    <div class="grid-x grid-margin-x grid-margin-y" >
+		<div class="cell cplabel">
+			<label>Estado: <b class="obligatorio">*</b></label>
+		</div>
+        <div class="cell auto">
+            <select name="estado" class="text-black ucfdi" ng-model="dataDireccion.Estado" id="optcfdi">
+              <optgroup label ="Selecciona tu Estado">
+                   <option ng-repeat="estados in Facturacion.estados" value="{{estados.Descripcion}}">({{estados.estados}}) {{estados.Descripcion}}</option>
+               </optgroup>
+             </select>
+        </div>
+    </div>
+    <div class="grid-x grid-margin-x grid-margin-y" >
+		<div class="cell cplabel">
+			<label>Referencia: </label>
+		</div>
+		<div class="cell auto bo4">
+			<input class="text-black inp-dts" ng-model="dataDireccion.Referencia" required autocomplete="off" placeholder="Ingresa Referencia">
+		</div>
+    </div>
+    <div class="grid-x grid-margin-x grid-margin-y" >
+		<div class="cell cplabel">
+			<label>Telefono: <b class="obligatorio">*</b></label>
+		</div>
+		<div class="cell auto bo4">
+			<input class="text-black inp-dts" ng-model="dataDireccion.Telefono" required autocomplete="off" placeholder="Ingresa Telefono">
+		</div>
+    </div>
+<button class="btn btn-danger guardaredit" ng-click="btnGuardarDireccion('save')">Guardar</button>
+  </div>
+
+</div> <!--Fin Modal Editar Dirección-->
+
+<!-- Ventana modal Seleccionar Otra, por defecto no visiblel -->
+  <div id="ventanaModal1" class="modal1" ng-controller="ProfileCtrl" ng-init="pag='Direcciones'">
+    <div class="contenido-modal1 selecotra-modal">
+        <span class="cerrar1 enlace">&times;</span>
+        <h2 class="text-center text-white p-t-10 bg9 p-b-10 m-tlr">Direcciones de entrega</h2>
+
+								<div class="colmodalfact modalselecotra p-b-15 p-t-10" ng-repeat="dire in profile.arrayDomicilios" id="mdl2">
+									<div class="row mdl-bg" style="border: 2px solid #e6e6e6; border-radius: 10px;">
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-white dr-sel" ng-show="dire.Predeterminado == 1">Seleccionada</div>
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+											<p class = "p-t-5 text-info-user text-black">{{Costumer.profile.nombres}} {{Costumer.profile.Apellidos}}</p>
+											<p class="p-b-10 text-black tit">Telefono: {{dire.Telefono}}</p>
+										</div>
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+											<p class="text-black">{{dire.Domicilio}} {{dire.numExt}}, {{dire.Colonia}}. </p>
+											<p class="text-black">{{dire.Ciudad}}, {{dire.Estado}}, {{dire.Codigo_postal}}.</p>
+											<p class="text-black">{{dire.Referencia}}</p>
+										</div>
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 opcmodal3">
+										<div class="row">
+											<button id="abrirModal" class="form-control fs-11 m-t-10 m-l-10 btndirecprueba2" ng-click="btnPredeterminado(dire._id)" ng-show="dire.Predeterminado == 0"><img style="height:12px;" src="../images/icons/Seleccionar.svg">&nbsp;&nbsp;Seleccionar</button>
+										</div>
+										<div class="row">
+											<button id="abrirModal1" class="form-control fs-12 m-t-10 m-l-10 btndirecprueba2" ng-click="btndescartarDomicilio(dire._id)"><img style="height:16px;" src="../images/icons/Basura.svg">&nbsp;&nbsp;Eliminar</button>
+										</div>
+									</div>
+								</div>
+								
+								
+  </div>
+
+</div> <!--Fin Modal Seleccionar Otra-->
+
+<!-- Ventana modal Agregar Nueva, por defecto no visiblel -->
+<div id="ventanaModal2" class="modal2"  ng-controller="ProfileCtrl" ng-init="pag='Direcciones_add'" >
+    <div class="contenido-modal2 p-b-15">
+        <span class="cerrar2 enlace">&times;</span>
+        <h2 class="text-center text-white p-t-10 bg9 p-b-10 m-tlr">Agregar dirección envío</h2>
+      <span id="alertvalid" style="border: 2px solid #de0007;border-radius: 0.25rem;padding-right: 8px;color: #000; margin-left: 10px; display: none;"><img src="images/icono notificacion.svg" alt="icon-user" style="width: 32px;padding-right: 2px;">Completa todos los datos para poder continuar</span>
+    <div class="grid-x grid-margin-x grid-margin-y p-t-20" >
+        <div class="cell cplabel">
+            <label id="lbladdcalle">Calle: <b class="obligatorio">*</b></label>
+        </div>
+        <div class="cell auto bo4" id="divaddcalle">
+            <input class="text-black inp-dts" placeholder="Ingresa tu Domicilio" ng-model="dataDireccion.Domicilio" id="inpaddncalle">
+        </div>
+    </div>
+    <div class="grid-x grid-margin-x grid-margin-y numeroextint" >
+        <div class="cell cplabel">
+            <label id="lbladdnumext">Numero: <b class="obligatorio">*</b></label>
+        </div>
+        <div class="cell auto bo4" style="width: 105px;" id="divaddnumext">
+            <input class="text-black" ng-model="dataDireccion.numExt" placeholder="Ext." id="inpaddnumext">
+        </div>
+        <div class="cell cplabel">
+            <label id="lbladdnumint">Int: </label>
+        </div>
+        <div class="cell auto bo4" style="width: 105px;" id="divaddnumint">
+            <input class="text-black" ng-model="dataDireccion.numInt" placeholder="Int." id="inpaddnumint">
+        </div>
+    </div>
+    <div class="grid-x grid-margin-x grid-margin-y" >
+        <div class="cell cplabel">
+            <label id="lbladdcol">Colonia: <b class="obligatorio">*</b></label>
+        </div>
+        <div class="cell auto bo4" id="divaddcol">
+            <input class="text-black inp-dts" placeholder="Ingresa tu colonia" ng-model="dataDireccion.Colonia" id="inpaddcol">
+        </div>
+    </div>
+    <div class="grid-x grid-margin-x grid-margin-y" >
+        <div class="cell cplabel">
+            <label class="fzm-15" id="lbladdcp">Cod.Postal: <b class="obligatorio">*</b></label>
+        </div>
+        <div class="cell auto bo4" id="divaddcp">
+            <input class="text-black inp-dts" type="number" placeholder="00000" maxlength="5" ng-model="dataDireccion.Codigo_postal" id="inpaddcp">
+        </div>
+    </div>
+    <div class="grid-x grid-margin-x grid-margin-y" >
+        <div class="cell cplabel">
+            <label id="lbladdcity">Ciudad: <b class="obligatorio">*</b></label>
+        </div>
+        <div class="cell auto bo4" id="divaddcity">
+            <input class="text-black inp-dts" placeholder="Ingresa tu ciudad" ng-model="dataDireccion.Ciudad" id="inpaddcity">
+        </div>
+    </div>
+    <div class="grid-x grid-margin-x grid-margin-y" >
+        <div class="cell cplabel">
+            <label id="lbladdest">Estado: <b class="obligatorio">*</b></label>
+        </div>
+        <div class="cell auto bo4" id="divaddest">
+            <input class="text-black inp-dts" placeholder="Ingresa tu estado" ng-model="dataDireccion.Estado" id="inpaddest">
+        </div>
+    </div>
+    <div class="grid-x grid-margin-x grid-margin-y" >
+        <div class="cell cplabel">
+            <label>Referencia: </label>
+        </div>
+        <div class="cell auto bo4">
+            <input class="text-black inp-dts" placeholder="Referencia de domicilio" ng-model="dataDireccion.Referencia">
+        </div>
+    </div>
+    <div class="grid-x grid-margin-x grid-margin-y" >
+        <div class="cell cplabel">
+            <label id="lbladdtel">Telefono: <b class="obligatorio">*</b></label>
+        </div>
+        <div class="cell auto bo4" id="divaddtel">
+            <input class="text-black inp-dts" type="number" placeholder="Ingresa numero de Telefono" ng-model="dataDireccion.Telefono" id="inpaddtel">
+        </div>
+    </div>
+<button class="btn btn-danger guardaredit" ng-click="inputvalidireccion()">Guardar</button>
+  </div>
+
+</div> <!--Fin Modal Agregar Nueva-->
+
+
+							<div class="row m-t-50 btn-dfactu">
+								<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+									<div class="title-header txtred1">
+										<h4>Datos Facturación</h4>
+									</div>
+								</div>
+
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 row m-l-10 dfactu-info wd-respo1" ng-show="Costumer.facturacion == 1">
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										</div>
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+											<p class="text-black">Actividad Empresarial: Persona Fisica.</p>
+											<p class="text-black">Razon Social: {{Costumer.dataFacturacion.data.Razonsocial}}.</p>
+											<p class="text-black">RFC: {{Costumer.dataFacturacion.data.Rfc}}</p>
+											<p class="p-t-40 text-black">Uso de CFDI: {{Costumer.dataFacturacion.data.usocfdi}}</p>
+										</div>
+									</div>
+
+							<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 row m-l-10 dfactu-info wd-respo1 bo-min-h" ng-show="Costumer.facturacion != 1" id="dfacturanota">
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										</div>
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+											<p class="text-black"><b>NOTA:</b> Si posterior a esta compra deseas facturar tu pedido, es necesario solicitarla el mismo dia de tu compra, en caso de lo contrario se genera con un RFC generico.</p>
+										</div>
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 opcmodal2">
+										<div class="row">
+											<button id="abrirModal3" class="form-control fs-12 m-t-10 m-l-10 btndirecprueba"><img style="height:12px;" src="../images/icons/Seleccionar.svg">&nbsp;&nbsp;Seleccionar Otra</button>
+										</div>
+										<div class="row">
+											<button id="abrirModal4" class="form-control fs-12 m-t-10 m-l-10 btndirecprueba"><img style="height:12px; margin-left: -10px;" src="../images/icons/Agregar.svg">&nbsp;&nbsp;Agregar Nueva</button>
+										</div>
+										<div class="row">
+											<button id="facturaNo" class="form-control fs-12 m-t-10 m-l-10 btndirecprueba" ng-click="facturaNo()"><img style="height:12px; margin-left: -10px;" src="../images/icons/Basura.svg">&nbsp;&nbsp;No Usar Datos</button>
+										</div>
+										<!--Facturacion: {{Costumer.facturacion}}-->
+									</div>
+
+									<!-- Ventana modal Seleccionar Otra Facturacion, por defecto no visiblel -->
+  <div id="ventanaModal3" class="modal3" ng-controller="ProfileCtrl" ng-init="pag='Facturacion'">
+    <div class="contenido-modal3 selecotra-modal p-b-15">
+        <span class="cerrar3 enlace">&times;</span>
+        <h2 class="text-center text-white p-t-10 bg9 p-b-10 m-tlr">Información Facturación</h2>
+
+								<div class="colmodalfact modalselecotra p-t-20" ng-repeat="d in Facturacion.dataFacturacion |filter: buscar | orderBy:'Predeterminado':true">
+									<div class="row" style="border: 2px solid #e6e6e6; border-radius: 10px; min-height: 150px;">
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-white dr-sel" ng-show="d.Predeterminado == 1">Seleccionada</div>
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+											<p class="text-black">Actividad Empresarial: {{d.Actividad}}.</p>
+											<p class="text-black">Razon Social: {{d.Razonsocial}}.</p>
+											<p class="text-black">RFC: {{d.Rfc}}</p>
+											<p class="p-t-40 text-black">Uso de CFDI: {{d.Descripcion}}</p>
+										</div>
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 opcmodal3">
+										<div class="row">
+											<button class="form-control fs-12 m-t-10 m-l-10 btndirecprueba2" name="facturacion" id="factsi" ng-click="btnFacpredetermiando(d._id, 'pre')"><img style="height:12px;" src="../images/icons/Seleccionar.svg">&nbsp;&nbsp;Seleccionar</button>
+										</div>
+										<div class="row">
+											<button class="form-control fs-12 m-t-10 m-l-10 btndirecprueba2" ng-click="btnEliminardatosfacturacion(d._id, 'del')"><img style="height:16px;" src="../images/icons/Basura.svg">&nbsp;&nbsp;Eliminar</button>
+										</div>
+									</div>
+								</div>
+								
+								
+  </div>
+
+</div> <!--Fin Modal Seleccionar Otra Facturacion-->
+
+							<!-- Ventana modal Agregar Nueva Factura, por defecto no visiblel -->
+<div id="ventanaModal4" class="modal4" ng-controller="ProfileCtrl" ng-init="pag='Facturacion_add'">
+	<form name="Facturacionform" novalidate>
+    <div class="contenido-modal4">
+        <span class="cerrar4 enlace">&times;</span>
+        <h2 class="text-center text-white p-t-10 bg9 p-b-10 m-tlr">Agregar Nuevos Datos</h2>
+        <span id="alertvalid1" style="border: 2px solid #de0007;border-radius: 0.25rem;padding-right: 8px;color: #000; margin-left: 10px; display: none;"><img src="images/icono notificacion.svg" alt="icon-user" style="width: 32px;padding-right: 2px;">Completa todos los datos para poder continuar</span>
+            <div class="grid-x grid-margin-x grid-margin-y" >
+        <div class="cell cplabel">
+            <label id="agraem">Actividad Empresarial: <b class="obligatorio">*</b></label>
+        </div>
+        <div class="cell auto">
+            <select name="Actividad" class="text-black actempre" ng-model="dataFacturacion.Actividad">
+                 <optgroup label ="Seleccion la actividad de la empresa">
+                   <option ng-repeat="Acti in Facturacion.Actividad" value="{{Acti.valor}}" id="novenoInput">{{Acti.valor}}</option>
+                 </optgroup>
+             </select>
+        </div>
+      
+    </div>
+     <div class="grid-x grid-margin-x grid-margin-y" >
+        <div class="cell cplabel">
+            <label id="Agrs">R.Social: <b class="obligatorio">*</b></label>
+        </div>
+        <div class="cell auto bo4" id="dveline">
+            <input name="razon" class="text-black inp-dts" type="text" placeholder="Introduce Razon Social" ng-model="dataFacturacion.Razonsocial" id="segundoInput" autocomplete="off">
+        </div>
+       
+    </div>
+    <div class="grid-x grid-margin-x grid-margin-y" >
+        <div class="cell cplabel">
+            <label id="Agrfc">RFC: <b class="obligatorio">*</b></label>
+        </div>
+        <div class="cell auto bo4" id="dveline1">
+            <input name="RFC" class="text-black inp-dts" type="text" placeholder="Ingresa tu RFC" ng-model="dataFacturacion.Rfc" id="primerInput" autocomplete="off">
+        </div>
+       
+    </div>
+     <div class="grid-x grid-margin-x grid-margin-y" >
+        <div class="cell cplabel">
+            <label id="Agrdm">Domicilio: <b class="obligatorio">*</b></label>
+        </div>
+        <div class="cell auto bo4" id="dveline3">
+            <input name="domicilio" class="text-black inp-dts" type="text" placeholder="Ingresa calle y numero" ng-model="dataFacturacion.Domicilio" id="terceroInput" autocomplete="off">
+        </div>
+        
+    </div>
+    <div class="grid-x grid-margin-x grid-margin-y" >
+        <div class="cell cplabel">
+            <label id="Agrcol">Colonia: <b class="obligatorio">*</b></label>
+        </div>
+        <div class="cell auto bo4" id="dveline4">
+            <input name="colonia" class="text-black inp-dts" type="text" placeholder="Ingresa tu colonia" ng-model="dataFacturacion.Colonia" id="cuartoInput" autocomplete="off">
+        </div>
+       
+    </div>
+    <div class="grid-x grid-margin-x grid-margin-y" >
+        <div class="cell cplabel">
+            <label class="fzm-15" id="Agrcp">C.Postal: <b class="obligatorio">*</b></label>
+        </div>
+        <div class="cell auto bo4" id="dveline5">
+            <input name="cp" class="text-black inp-dts" type="number" placeholder="Codigo Postal" maxlength="5" ng-model="dataFacturacion.Codigo_postal" id="quintoInput" autocomplete="off">
+        </div>
+       
+    </div>
+    <div class="grid-x grid-margin-x grid-margin-y" >
+        <div class="cell cplabel">
+            <label id="Agrciu">Ciudad: <b class="obligatorio">*</b></label>
+        </div>
+        <div class="cell auto bo4" id="dveline6">
+            <input class="text-black inp-dts" name="ciudad" type="text" placeholder="Ingresa tu ciudad" ng-model="dataFacturacion.Ciudad" id="sextoInput" autocomplete="off">
+        </div>
+       
+    </div>
+    <div class="grid-x grid-margin-x grid-margin-y" >
+        <div class="cell cplabel">
+            <label id="Agrest">Estado: <b class="obligatorio">*</b></label>
+        </div>
+        <div class="cell auto">
+            <select name="estado" class="text-black ucfdi" ng-model="dataFacturacion.Estado" id="optcfdi">
+              <optgroup label ="Selecciona tu Estado">
+                   <option ng-repeat="estados in Facturacion.estados" value="{{estados.Descripcion}}">({{estados.estados}}) {{estados.Descripcion}}</option>
+               </optgroup>
+             </select>
+        </div>
+       
+    </div>
+    <div class="grid-x grid-margin-x grid-margin-y" >
+        <div class="cell cplabel">
+            <label id="Agrcfdi">CFDI: <b class="obligatorio">*</b></label>
+        </div>
+        <div class="cell auto">
+            <select name="cfdi" class="text-black ucfdi" ng-model="dataFacturacion.cfdi" id="optcfdi">
+              <optgroup label ="Seleccion el tipo de uso de tu cfdi">
+                   <option ng-repeat="cfdi in Facturacion.usocfdi" value="{{cfdi._id}}" id="octavoInput">({{cfdi.UsoCFDI}}) {{cfdi.Descripcion}}</option>
+               </optgroup>
+             </select>
+        </div>
+    </div>
+<button class="btn btn-danger guardaredit" ng-click="inputvalidfactura()" id="btngfact">Guardar</button>
+  </div>
+</form>
+</div> <!--Fin Modal Agregar Nueva Factura-->
+
+
+							<div class="row de_metpago">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 m-t-20 m-b-50">
+									<div class="title-header pos-absolute">
+										<h4 class="p-t-20 p-b-10 txtred1 text-center" >Método de Pago</h4>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+									<button class="metodopago bo18 h-120" id="btncredito" ng-click="metarjeta()">
+										<label class="radio2">Tarjeta de crédito / debito</label>
+										 <img src="images/icons/VISA MASTERCARD.svg" alt="" class ="img-fluid mx-auto d-block" style="width: 150px;">
+									</button>
+									
+								</div>
+								<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 mt-mb">
+									<button class="metodopago bo18 h-120" id="btnefectivo" ng-click="medeposito()">
+										<label class="radio2">Deposito en efectivo</label>
+										<img src="images/icons/OXXO.svg" alt=""  class ="img-fluid mx-auto d-block" style="width: 150px;">
+									</button>
+									
+								</div>
+								<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+									<button class="metodopago bo18 h-120" ng-click="metransfe()" id="btntransfe">
+										<label class="radio2">Tranferencia bancaria</label>
+										<img src="images/icons/SPEI.svg" alt="" class ="img-fluid mx-auto d-block" style="width: 150px;">	
+									</button>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+				<div class="p-l-40 p-r-40 m-nl">
+					<p class=" p-b-36 p-t-15 text-red de_arti">Tienes {{Numproducts}} articulo(s) en el carrito</p>
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<section class="header-cart-wrapitem-500">
+								<table class="tablecompra">
+									<tbody>
+										<tr ng-repeat="product in session.cart">
+										<td>
+											<div class="header-cart-item-img p-b-20" ng-click="btnEliminarRefaccion(product, true)">
+												<img ng-src="{{getImagen(product.id)}}" alt="IMG" >
+											</div>
+										</td>
+										<td>
+											<div class="header-cart-item-txt">
+												<a ng-click="RefaccionDetalles(product.id)" class="header-cart-item-name cursorpnt tm-perso cms-b">
+													{{product.articulo}}
+												</a>
+												<span class="header-cart-item-info persobolder p-t-5 p-b-5">
+													No.Parte: {{product.noparte}}
+												</span>
+												<span class="header-cart-item-info persobolder p-b-5 text-blackI">
+													{{product.cantidad}} x {{product.precio | currency}}
+												</span>
+											</div>
+											<div class="d-ctd">
+											<div class="flex-w of-hidden w-size17 p-b-20">
+												<button class="btn-num-product-down colorwhite flex-c-m msize1 bg9 eff2 bor-1" ng-click="btnQuitar(product)">
+														<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
+												</button>
+												<span class="msize2 m-text28 t-center p-t-5 num-product">{{product.cantidad}}</span>
+												<!-- <input class="size8 m-text18 t-center num-product" type="number" name="num-product1" min="0" ng-model="product.cantidad"> -->
+												<button class="btn-num-product-up colorwhite flex-c-m msize1 bg9 eff2 bor-1" ng-click="btnAgregar(product)">
+														<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
+												</button>
+											</div>
+										</div>
+										</td>
+										
+										<td class="persobolder">
+											{{product.cantidad * product.precio | currency}}
+										</td>
+										</tr>
+									</tbody>
+								</table>
+							</section>
+							
+							<!-- <ul class="header-cart-wrapitem-500">
+								<li class="header-cart-item" ng-repeat="product in session.cart">
+									<div class="header-cart-item-img">
+										<img ng-src="{{getImagen(product.id)}}" alt="IMG">
+									</div>
+									<div class="header-cart-item-txt">
+										<a href="#" class="header-cart-item-name">
+											{{product.articulo}}
+										</a>
+										<span class="header-cart-item-info">
+											{{product.cantidad}} x {{product.precio | currency}}
+										</span>
+									</div>
+									<div class="header-cart-item-txt">
+										{{product.cantidad * product.precio | currency}}
+									</div>
+								</li>
+								
+							</ul> -->
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<hr>
+							<div class="row ml-resp">
+								<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+									<div class="sitio-seguro">
+										<img src="images/icons/Icono-seguridad.png" alt="" style="width: 50px;">
+										<b>Sitio seguro</b>
+										<p class="text-center">Nuestro sitio cuenta con certificaciones de seguridad por parte del MIT y Santander</p>
+									</div>
+									
+								</div>
+								<div class="col-xs-12 col-sm-12 col-md-8 col-lg-6">
+									<div class="cuponcont">
+										<input type="text" class="inpcpn" placeholder="Ingresa tu cupón." id="inpCupon" style="text-align: center;" autocomplete="off">
+										<button class="form-control" ng-click="cupon()" id="btncupon">Canjear</button>
+									</div>
+									<div>
+										<table class="tablecompra">
+											<thead>
+												<tr width="50%"></tr>
+												<tr width="50%"></tr>
+											</thead>
+											<tbody>
+												<!--<tr ng-show="session.autentificacion==1">
+													<td width="50%">Saldo en monedero</td>
+													<td width="50%" class="text-right">
+														<p class = "text-info-user">{{monedero.Importe | currency}}</p>
+														<a href="javascript:void(0);" ng-click="aplicarMonedero()" class="text-danger aplmone" ng-show="subtotal()!=0">Aplicar</a></td>
+												</tr>-->
+												<tr>
+													<td class="p-r-pz">Productos</td>
+													<td  class="text-right">{{subtotal() | currency}}</td>
+												</tr>
+												<tr ng-show="Costumer.descuento > 0">
+													<td class="p-r-pz text-red">Descuento</td>
+													<td class="csmdesc text-right">- {{Costumer.descuento | currency}}</td>
+												</tr>
+												<tr>
+													<td>Costo de envio</td>
+													<td class="text-right" ng-if="Costumer.Cenvio.Envio == 'L'">
+														<span ng-if="dataCotizador.parcel.weight==0">Envio Gratis</span>
+														<span ng-if="dataCotizador.parcel.weight>0">{{Costumer.Cenvio.Costo | currency}}</span>
+													</td>
+													<td ng-if="Costumer.Cenvio.Envio != 'L'" class="text-right">
+														<!-- <div class="bo16 of-hidden  size15 m-b-10 cenvio">
+															<select convert-to-string class="sizefull s-text7 p-l-22 p-r-22 bg-white" name="Cenvio" id="Cenvio" ng-model="Costumer.Cenvio.Costo" ng-change="Ttotal(); changeCenvio(Costumer.Cenvio.Costo);" required>
+																<option ng-repeat="e in Costumer.Cenvio.Costos" value="{{e.Tarifa}}">{{e.Tarifa | currency}} {{e.Servicio}}</option>
+															</select>
+															<i></i>
+														</div> -->
+														<span ng-if="dataCotizador.parcel.weight==0">Envio Gratis</span>
+														<span ng-if="dataCotizador.parcel.weight>0">{{Costumer.Cenvio.Costo | currency}}</span>
+													</td>
+												</tr>
+												<tr ng-if="Costumer.Cenvio.Envio == 'N' && dataCotizador.parcel.weight>0">
+													<td>Costos de envio</td>
+													<td><button class="btn form-control bg9 text-white bg9r" ng-click="btncotizar()">Cotizar</button></td>
+												</tr>
+												<!--<tr>
+													<td>Descuento</td>
+													<td  class="text-right">{{Costumer.descuento | currency}}</td>
+												</tr>-->
+												<tr class="table tbl-cms">
+													<td>Total(con iva)</td>
+													<td  class="text-right"><h5 class="text-red"><b>{{Ttotal() | currency}}</b></h6></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									
+									<button class="btn btn-danger bg9 form-control" id="btnfacomp" ng-click="btnPagar()" ng-show="subtotal() > 0"> {{session.autentificacion==1? 'Pagar':'Inicia Session'}}</button>
+									<p class="fs-12 m-t-10" ng-show="session.autentificacion==1">
+										<label class="checkbox ">
+											<input type="checkbox" name="aviso" id="aviso" ng-model="Costumer.aviso" required>
+											<span class="check"></span>
+											<div class="fs-12 p-l-40"> He leido y estoy de acuerdo con las <a href="?mod=Terminos-condiciones" class="text-red fs-12">condiciones generales</a> 
+											y el <a href="?mod=aviso-de-privacidad" class="text-red fs-12"> aviso de privacidad</a></div>
+										</label>
+										
+									</p>
+									<br>
+									<br>
+									<br>
+									<br>
+					
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>	
+
+		<!-- Modal -->
+		<div class="modal fade mdl-new" id="mdlcotizar" tabindex="-1" role="dialog" aria-labelledby="mdlcotizar" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content mdl-env-ed">
+				<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Selecciona tu paqueteria</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				</div>
+				<div class="modal-body">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<section ng-show="!Costumer.dataDomicilio.Bandera">
+							<div class="alert alert-danger fade-in">
+								<h4><i class="fa fa-close"></i> Error </h4>
+								No hay un codigo postal predeterminado para cotizar el envio, predetermine una direccion presionando el siguiente boton
+							</div>
+							<div class="text-center">
+								<button class="btn btn-danger" ng-click="btndireccionguardadas('Direcciones')">Predeterminar una direccion</button>
+							</div>
+						</section>
+						<section ng-show="Costumer.dataDomicilio.Bandera" >
+							<div class="alert alert-warning fade-in" ng-show="flag">
+								<i class="fa fa-refresh fa-spin"></i> Espera un momento por favor estamos cotizando tu envio
+							</div>
+							<div class="table-responsive">
+								<table class="table table-hover" ng-show="!flag">
+									<tbody>
+										<tr ng-repeat="paq in cotizador" ng-cloak ng-click="selectenvio(paq)" style="cursor: pointer;" class="bdl-a-r">
+											<td><input type="radio"></td>
+											<td class="text-center"><img class="bdl-c-itm" ng-src="images/paqueterias/{{paq.provider}}.svg" 
+												alt="{{paq.provider}}"></td>
+											<td>{{getFechaentrega(paq.days)}}</td>
+											<td class="text-red">{{paq.total_pricing | currency}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</section >
+					</div>
+				</div>
+				</div>
+				<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+			</div>
+		</div>
+	</section>
+
+

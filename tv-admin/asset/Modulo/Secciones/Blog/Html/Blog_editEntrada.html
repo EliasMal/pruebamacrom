@@ -1,0 +1,125 @@
+<section ng-controller="BlogeditCtrl" ng-init="id={id}">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark"><i class="fa fa-wordpress mr-1"></i> Blog</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
+                        <li class="breadcrumb-item active"><a href="?mod=Blog">Blog</a></li>
+                        <li class="breadcrumb-item active">Editar Entrada</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <section class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="card card-danger">
+                        <div class="card-header d-flex p-0">
+                            <h3 class="card-title p-3">
+                                <i class="fa fa-users mr-1"></i>
+                                Editar Entrada
+                            </h3>
+                            <div class="card-tools">
+                                <button class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body pad">
+                            <div ng-bind-html="entrada.Contenido"></div>
+                            <form name="frmBlog" novalidate>
+                                <div class="row">
+                                    <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
+                                        <label for="">Titulo de la entrada <span class="text-danger">*</span></label>
+                                        <input type="text" name="entrada" id="entrada" class="form-control" ng-model="entrada.Title" required>
+                                        <span class="text-danger" ng-if="frmBlog.entrada.$error.required && frmBlog.entrada.$touched">El campo es requerido</span>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
+                                        <textarea name="txtContenido" id="txtContenido" class="textarea form-control" placeholder="Por favor inserta texto aqui"
+                                        style="height: 400px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" 
+                                        rich-text-editor ng-model="entrada.Contenido"  required></textarea>
+                                        <span class="text-danger" ng-if="frmBlog.txtContenido.$error.required && frmBlog.txtContenido.$touched">El campo es requerido</span>
+                                    </div>    
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div style="margin-top:15px">
+                                                    <img ng-src="{{dominio}}/images/Blog/{{entrada.Imagen}}" alt="Vista previa" class="img-responsive img-thumbnail" id="previewimgcintillo" >
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="input-group">
+                                                    <label for="imagenprincipal">Agregar imagen cintillo</label>
+                                                    <div class="input-group">
+                                                        <div class="custom-file">
+                                                            <input class="custom-file-input archivos" id="imgcintillo" name="imdcintillo" type="file"
+                                                                uploader-model="Imagen.file" required>
+                                                            <label for="imagenprincipal"
+                                                                class="custom-file-label">{{Imagen.filename?  Imagen.filename: Imagen.placeholder}}</label>
+                                                        </div> 
+                                                        <span class="text-danger" ng-if="frmBlog.imdestacada.$error.required && frmBlog.imdestacada.$touched">El campo es requerido</span> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div style="margin-top:15px">
+                                                    <img ng-src="{{dominio}}/images/Blog/{{entrada.imagendestacada}}" alt="Vista previa" class="img-responsive img-thumbnail" id="previewimgminiatura" >
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="input-group">
+                                                    <label for="imagenprincipal">Agregar imagen miniatura</label>
+                                                    <div class="input-group">
+                                                        <div class="custom-file">
+                                                            <input class="custom-file-input archivos" id="imgdestacada" name="imdestacada" type="file"
+                                                                uploader-model="imagenDestacada.file" required>
+                                                            <label for="imagenprincipal"
+                                                                class="custom-file-label">{{imagenDestacada.filename?  imagenDestacada.filename:imagenDestacada.placeholder}}</label>
+                                                        </div> 
+                                                        <span class="text-danger" ng-if="frmBlog.imdestacada.$error.required && frmBlog.imdestacada.$touched">El campo es requerido</span> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        
+                                        <div style="margin-top:15px">
+                                            <span class="switch switch-sm">
+                                                <input type="checkbox" class="switch" id="switch-id" ng-model="entrada.Publicar" >
+                                                <label for="switch-id">Publicar</label>
+                                            </span>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-danger pull-right" ng-click="btnEditarEntrada()" ng-disabled="frmBlog.$invalid">Guardar la entrada</button>
+                            <button class="btn btn-default"><i class="fa fa-angle-double-left"></i> Regresar</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+</section>

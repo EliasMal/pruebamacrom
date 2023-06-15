@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<string xmlns="http://volksjson.org/">
+   
+        {
+            "Table": [
+              {
+                "em_nombre": "COLIMA (TSURUVOLKS)                                                   ",
+                "existencia": 16.0
+              },
+              {
+                "em_nombre": "VILLA DE ALVAREZ (TSURUVOLKS)                                         ",
+                "existencia": 23.0
+              },
+              {
+                "em_nombre": "MANZANILLO (TSURUVOLKS)                                               ",
+                "existencia": 6.0
+              }
+            ]
+        }
+    
+</string>

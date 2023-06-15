@@ -1,0 +1,150 @@
+<section  ng-controller="ProfileCtrl" ng-init="pag='{opc}'">
+    <div class="banner bgwhite p-t-40 p-b-40">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 p-b-30">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Mispedidos')"> <img src="images/icons/icono_mis_pedidos.png" alt="logo-mispedidos" class="img icon-logo-small">Mis pedidos</a>
+                        <a href="#" class="list-group-item list-group-item-action active"><img src="images/icons/icono_inicio_de_sesión.png" alt="logo-session-seguridad" class="img icon-logo-small"> Sessi&oacute;n y Seg&uacute;ridad</a>
+                        <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Direcciones')"> <img src="images/icons/icono_direcciones.png" alt="logo-direcciones" class="img icon-logo-small">Direcciones</a>
+                        <!--<a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Monedero')"><img src="images/icons/icono_monedero.png" alt="logo-monederoelectronico" class="img icon-logo-small"> Monedero Electronico</a>-->
+                        <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Facturacion')">
+                            <img src="images/icons/icono_facturacion.png" alt="logo-monederoelectronico" class="img icon-logo-small"> Datos de Facturación
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 p-b-30">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb gris">
+                          <li class="breadcrumb-item"><a href="?mod=Profile">Mi Cuenta</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Sessi&oacute;n y Seg&uacute;ridad</li>
+                        </ol>
+                    </nav>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-30">
+                            <h1>Session y Seguridad</h1>
+                        </div> 
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-30">
+                           
+                            
+                        </div> 
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 p-b-30">
+                            <div class="tab01">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab" href="#DatosGenerales" role="tab">Datos Generales</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#CambioContraseña" role="tab">Cambio de contraseña</a>
+                                    </li>
+                                </ul>
+    
+                                <div class="tab-content p-t-35">
+                                    <div class="tab-pane fade show active" id="DatosGenerales" role="tabpanel">
+                                        <div>
+                                            <label for="example-text-input" >Nombre(s):</label>
+                                            <div class="bo9 of-hidden size15 m-b-20">
+                                                <input class="sizefull s-text7 p-l-22 p-r-22" type="text" placeholder="Nombre(s)" ng-model="profile.nombres" required>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label for="example-text-input" >Apellidos:</label>
+                                            <div class="bo9 of-hidden size15 m-b-20">
+                                                <input class="sizefull s-text7 p-l-22 p-r-22" type="text" placeholder="Apellidos" ng-model="profile.Apellidos" required>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label for="example-text-input" >Correo Electronico</label>
+                                            <div class="bo9 of-hidden size15 m-b-20">
+                                                <input class="sizefull s-text7 p-l-22 p-r-22" type="text" placeholder="Correo electronico" ng-model="profile.correo" required>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label for="example-text-input" >Telefono</label>
+                                            <div class="bo9 of-hidden size15 m-b-20">
+                                                <input class="sizefull s-text7 p-l-22 p-r-22" type="text" placeholder="Telefono celular" ng-model="profile.telefono" required>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <button class="flex-c-m bg-red btn  bo-rad-10 hov7 m-text3 trans-0-4 float-right" ng-click="btnGuardarSession(1)">Guardar</button>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade show" id="CambioContraseña" role="tabpanel">
+                                        <form name="frmpassword" novalidate>
+                                            <div>
+                                                <label for="example-text-input" >Nueva Contraseña</label>
+                                                <div class="bo9 of-hidden size15 m-b-20">
+                                                    <input class="sizefull s-text7 p-l-22 p-r-22" type="password"  placeholder="Nueva Contraseña" ng-model="profile.Nuevapass" required>
+                                                    
+                                                </div>
+                                                <small class="text-danger" ng-show="msjprofiledisplay">Las contraseñas nos son iguales*</small>
+                                            </div>
+                                            <div>
+                                                <label for="example-text-input" >Confirma Contraseña</label>
+                                                <div class="bo9 of-hidden size15 m-b-20">
+                                                    <input class="sizefull s-text7 p-l-22 p-r-22" type="password"  placeholder="Confirmar contraseña" ng-model="profile.Confirmarpass" required>
+                                                </div>
+                                                <small class="text-danger" ng-show="msjprofiledisplay">Las contraseñas nos son iguales*</small>
+                                            </div>
+                                            <div>
+                                                <label for="example-text-input" >Contraseña Actual</label>
+                                                <div class="bo9 of-hidden size15 m-b-20">
+                                                    <input class="sizefull s-text7 p-l-22 p-r-22" type="password" placeholder="Contraseña Actual" ng-model="profile.passActual" required>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div>
+                                            <button class="flex-c-m bg-red btn  bo-rad-10 hov7 m-text3 trans-0-4 float-right" ng-disabled="frmpassword.$invalid" ng-click="btnGuardarSession(2)">Guardar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 p-b-30">
+                            <div class="icon-center">
+                                <img src="images/icons/icono_inicio_de_sesión.png" alt="logo-inicio_session" class="img icon-logos-grande">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>    
+        </div>
+    </div>
+    <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      xfbml            : true,
+      version          : 'v3.3'
+    });
+  };
+
+  (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/es_LA/sdk/xfbml.customerchat.js';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+<!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '342958480063107');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=342958480063107&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Facebook Pixel Code -->
+</section>

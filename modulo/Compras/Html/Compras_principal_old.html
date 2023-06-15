@@ -1,0 +1,121 @@
+<section ng-controller="CabeceraCtrl" ng-init="mod='{mod}'">
+	<!-- Title Page -->
+	<section class="contenedor" ng-repeat="comp in Banner.Escritorio">
+		<img src="images/Banners/{{comp.imagen}}" alt="Banner compras">
+		<h2 class="l-text2 t-center">
+			Compras
+		</h2>
+	</section>
+
+	<section class="contenedor-responsive" ng-repeat="comp in Banner.Movil">
+		<img src="images/Banners/{{comp.imagen}}" alt="Banner compras">
+		<h2 class="l-text2 t-center">
+			Compras
+		</h2>
+	</section>
+	
+	<!-- Cart -->
+	<section class="cart bgwhite p-t-70 p-b-100" >
+		<div class="container">
+			<!-- Cart item -->
+			<div class="container-table-cart pos-relative">
+				<div class="wrap-table-shopping-cart bgwhite">
+					<table class="table-shopping-cart">
+						<thead class="table-head">
+							<th class="column-1"></th>
+							<th class="column-2">Producto</th>
+							<th class="column-3">Precio</th>
+							<th class="column-4 p-l-70">Cantidad</th>
+							<th class="column-5">Importe</th>
+							<th class="column-5">Acción</th>
+						</thead>
+						<tbody>
+							<tr class="table-row" ng-repeat="product in session.cart">
+								<td class="column-1">
+									<div class="cart-img-product b-rad-4 o-f-hidden">
+										<img ng-src="{{getImagen(product.id)}}" alt="IMG-PRODUCT">
+									</div>
+								</td>
+								<td class="column-2">{{product.articulo}}</td>
+								<td class="column-3">{{product.precio | currency}}</td>
+								<td class="column-4" align="center">
+									<div class="flex-w bo5 of-hidden w-size17">
+										<button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2" ng-click="btnQuitar(product)">
+												<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
+										</button>
+
+										<input class="size8 m-text18 t-center num-product" type="number" name="num-product1" min="0" ng-model="product.cantidad">
+										<button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2" ng-click="btnAgregar(product)">
+												<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
+										</button>
+									</div>
+								</td>
+								<td class="column-5">{{product.cantidad*product.precio | currency}}</td>
+								<td class="column-5" align="center">
+									<button class="btn btn-danger" ng-click="btnEliminarRefaccion(product)">
+											<i class="fa fa-trash"></i>
+									</button>
+								</td>
+							</tr>
+						</tbody>    
+					</table>
+				</div>
+			</div>
+
+			<div class="flex-w flex-sb-m p-t-25 p-b-25 bo8 p-l-35 p-r-60 p-lr-15-sm">
+				<h5 class="m-text20 p-b-24">
+					AVISO IMPORTANTE:
+				</h5>
+				<span class="">
+
+				</span>
+
+			</div>
+
+			<!-- Total -->
+			<div class="bo9 w-size18 p-l-40 p-r-40 p-t-30 p-b-38 m-t-30 m-r-0 m-l-auto p-lr-15-sm">
+				<h5 class="m-text20 p-b-24">
+					Totales
+				</h5>
+
+				<!--  -->
+				<div class="flex-w flex-sb-m p-b-12">
+					<span class="s-text18 w-size19 w-full-sm">
+						Subtotal:
+					</span>
+
+					<span class="m-text21 w-size20 w-full-sm">
+						{{subtotal() | currency}}
+					</span>
+				</div>
+				<div class="flex-w flex-sb bo10 p-t-15 p-b-20">
+						<span class="s-text18 w-size19 w-full-sm">
+							Env&iacute;o:
+						</span>
+						<span class="m-text21 w-size20 w-full-sm" ng-show="!flagenvio">
+							{{session.Cenvio.costo | currency}}
+						</span>
+						<select convert-to-string name="Cenvio" id="Cenvio" class="m-text21 w-size20 w-full-sm" ng-show="flagenvio" ng-model="session.Cenvio.costo" ng-change="slcenvio()">
+							<option ng-repeat = "cot in cotizacion" value="{{cot.Tarifa}}">{{cot.Tarifa}} ({{cot.Servicio}})</option>
+						</select>
+				</div>
+				<div class="flex-w flex-sb-m p-t-26 p-b-30">
+					<span class="m-text22 w-size19 w-full-sm">
+						Total:
+					</span>
+
+					<span class="m-text21 w-size20 w-full-sm">
+						{{Ttotal() | currency}}
+					</span>
+				</div>
+
+				<div class="size15 trans-0-4">
+					<!-- Button -->
+                        <button type="button" class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4" name="btnProcesarcompra" ng-click="user? btnProcesarCompra():btnLogin()">
+						{{user? "Procesar la compra":"Iniciar Sessión"}}
+					</button>
+				</div>
+			</div>
+		</div>
+	</section>
+</section>

@@ -1,0 +1,60 @@
+<section ng-controller="CPostalesCtrl">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Importar  <small> Codigos postales </small></h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item ">Importar</li>
+                        <li class="breadcrumb-item active">Codigos Postales</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+        <!-- /.content-header -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="callout callout-warning">
+                        <h5>Advertencia</h5>
+                        <p>La importacion de codigos postales a la base de datos puede tardar varios minutos en completarse dependiendo
+                            del peso del archivo, le sugerimos que cuando se este realizando la importacion no cierre la ventana
+                        </p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group">
+                        <label for="">Subir Archivo CSV</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input archivos" id="filecsv" uploader-model="archivo.file" ng-disabled="disabled">
+                                <label for="filecsv" class="custom-file-label">{{archivo.nombre}}</label>
+                            </div>
+                            <div class="input-group-append">
+                                <button class="btn btn-danger" ng-click="btnUpload()" ng-disabled="disabled"><i class="fa fa-refresh fa-spin" ng-show="disabled"></i> Subir Archivo</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12" ng-show="disabled">
+                    <div class="card card-danger">
+                        <div class="card-header">
+                            <h3 class="card-title">Importando codigos postales</h3>
+                        </div>
+                        <div class="card-body">
+                            Por favor espere mientras importamos los codigos postales....
+                        </div>
+                        <div class="overlay">
+                            <i class="fa fa-refresh fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<title>Macrom autopartes</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="language" content="es-MX" />
+    <meta name="country" content="MEX" />
+    <meta name="currency" content="$" />
+    <meta name="description" content="¡Compra en línea! La mejor calidad en refacciones y auto partes a precios competitivos. Nos especializamos en Nissan, Volkswagen y Chevrolet. Tenemos envios a toda la republica." />
+    <meta name="Abstract" content="Refaccionaría en linea, Autopartes y Accesorios | Macrom" />                
+    <meta name="keywords" content="Refacciones en línea 24/7 con envios a toda la republica" />
+    <meta name="keywords" content="Colima, Macrom, Jalisco, Tamaulipas, Cancun, Refaccionaria, Refacciones, Auto Partes, Nissan, Chevrolet, Volkswagen, Vocho, VW, Tsuru, Chevy"/>
+    <meta name="Monterrey" />
+    <meta name="Colima" />
+    <meta name="Jalisco" />
+    <meta name="Tamaulipas" />
+    <meta name="Cancun" />
+    <meta name="Refacciones" />
+    <meta name="autopartes" />
+    <meta name="Nissan" />
+    <meta name="Chevrolet" />
+    <meta name="Volkswagen" />
+    <meta name="Ciudad de Mexico" />
+    <meta name="Vocho" />
+    <meta name="Tsuru" />
+    <meta name="Chevy" />
+    <meta name="macrom" />
+    <meta name="Mecanicos" />
+    <meta name="robots" content="index" />
+    <meta name="robots" content="follow" />
+    <!-- End Google Analytics -->
+    <meta name="google-site-verification" content="qCM6XimrT8ue8qAcveloUw">
+    <!-- OpenGraph Metas -->
+    <meta property="og:type" content="business.business">
+    <meta property="og:title" content="Macromautopartes - Macrom - Refaccionaria en Línea">
+    <meta property="og:description" content="Refacciones en línea 24/7 con envios a toda la republica">
+    <meta property="og:image" itemprop="image" content="https://macromautopartes.com/images/icons/previwmacrom.png">
+    <meta property="og:url" content="https://macromautopartes.com/">
+    <meta property="og:site_name" content="Macromautopartes - Macrom">
+    <meta property="og:locale" content="es_MX">
+    <meta property="business:contact_data:street_address" content="Av. Benito Juárez #164 Col. La Gloria">
+    <meta property="business:contact_data:locality" content="Villa de alvarez">
+    <meta property="business:contact_data:region" content="Colima">
+    <meta property="business:contact_data:postal_code" content="28980">
+    <meta property="business:contact_data:country_name" content="Mexico">
+
+    <!-- Facebook Metas -->
+    <meta property="fb:app_id" content="732648563841854">
+    <meta property="fb:pages" content="https://www.facebook.com/MacromAutopartes">
+    <meta property="fb:admins" content="732648563841854">
+        <link rel="shortcut icon" href="https://macromautopartes.com/images/icons/FaviconM.png" type="image/png" />
+    <link rel="canonical" href="https://macromautopartes.com/" />
+
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="images/icons/FaviconM.png"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/themify/themify-icons.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/elegant-font/html-css/style.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/lightbox2/css/lightbox.min.css">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/noui/nouislider.min.css">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/toastr/build/toastr.css">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/otra.css">
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-T0GT52FN43"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-T0GT52FN43');
+</script>
+
+</head>
+<body class="animsition" ng-app="tsuruVolks" ng-cloak>
+    
+    <?php 
+        include("./includes/cabecera.php");
+       
+        if (file_exists($path_modulo)){
+            include($path_modulo);
+        }else{
+            die ('Error al cargar el modulo <b>'.$modulo.'</b>. No existe el archivo <b>'.$conf[$modulo]['archivo'].'</b>');
+        }
+        
+        include("./includes/footer.php");
+    ?>
+	
+<div id="fb-root"></div>
+
+
+<!-- Your customer chat code -->
+<div class="fb-customerchat"
+  attribution=setup_tool
+  page_id="110475466202057"
+  theme_color="#FF121C"
+  logged_in_greeting="Hola, En que podemos ayudarte?"
+  logged_out_greeting="Hola, En que podemos ayudarte?">
+</div>
+<!--===============================================================================================-->
+    <script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="vendor/momentjs/moment.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
+   <script src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+    <script src="tv-admin/asset/Plugins/numeric/jquery.numeric.js"></script>
+    <!--====================================================================================    ==========-->
+        <!-- Angular -->
+        <script type="text/javascript" src="tv-admin/asset/Js/angular/angular.min.js"></script>
+        <script src="tv-admin/asset/Js/angular/angular-datatables.min.js"></script>
+        <!--=======================================reCaptchat===============================================-->
+        <script src="https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit" async defer></script>
+        <script src="tv-admin/asset/Js/angular/angular-recaptcha.min.js"></script>
+        <script type="text/javascript" src="tv-admin/asset/Js/angular/first.js"></script>
+        <script type="text/javascript" src="js/Cabecera.js"></script>
+        <script type="text/javascript">
+            $_SESSION = <?php print json_encode($_SESSION)?>;
+            
+        </script>
+<!--===============================================================================================-->
+	<script type="text/javascript" src="vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script type="text/javascript" src="vendor/bootstrap/js/popper.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
+    <script type="text/javascript" src="vendor/JsZip/dist/jszip.min.js"></script>
+    <script type="text/javascript" src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script> -->
+<!--===============================================================================================-->
+	<script type="text/javascript" src="vendor/select2/select2.min.js"></script>
+	<script type="text/javascript">
+		$(".selection-1").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect1')
+		});
+	</script>
+<!--===============================================================================================-->
+	<script type="text/javascript" src="vendor/slick/slick.min.js"></script>
+   <!--  <script type="text/javascript" src="js/slick-custom.js"></script> -->
+<!--===============================================================================================-->
+	<script type="text/javascript" src="vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+	<script type="text/javascript" src="vendor/lightbox2/js/lightbox.min.js"></script>
+<!--===============================================================================================-->
+	<script type="text/javascript" src="vendor/sweetalert/sweetalert.min.js"></script>
+	<script type="text/javascript">
+		$('.block2-btn-addcart').each(function(){
+			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
+			$(this).on('click', function(){
+				swal(nameProduct, "is added to cart !", "success");
+			});
+		});
+
+		$('.block2-btn-addwishlist').each(function(){
+			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
+			$(this).on('click', function(){
+				swal(nameProduct, "is added to wishlist !", "success");
+			});
+		});
+	</script>
+        
+        <!-- <script type="text/javascript" src="vendor/debounce/jquery.ba-throttle-debounce.min.js"></script> -->
+<!--===============================================================================================-->
+	<script type="text/javascript" src="vendor/parallax100/parallax100.js"></script>
+	<script type="text/javascript">
+        $('.parallax100').parallax100();
+	</script>
+<!--========================================tostr mensajes=======================================================-->
+<script type="text/javascript" src="vendor/toastr/build/toastr.min.js"></script>
+
+<!--===============================================================================================-->
+	
+<!-- <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v10.0" nonce="8LLG24aL"></script> -->
+	
+<!--===============================================================================================-->
+
+<!--	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKFWBqlKAGCeS1rMVoaNlwyayu0e0YRes"></script>
+	<script src="js/map-custom.js"></script>-->
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+        <?php
+        
+            $mod = isset($_GET["mod"])? $_GET["mod"]:"home";
+            switch ($mod){
+                case 'home':
+                    echo "<script type='text/javascript' src='modulo/home/Js/$mod.js'></script>";
+                    break;
+                case 'catalogo':
+                        echo "<script type='text/javascript' src='vendor/noui/nouislider.min.js'></script>";
+                        echo "<script type='text/javascript' src='modulo/Catalogo/Js/$mod.js'></script>";
+                        
+                    break;
+                case 'login':
+                        echo "<script type='text/javascript' src='modulo/Login/Js/Login.js'></script>";
+                    break;
+                    case 'register':
+                        echo "<script type='text/javascript' src='modulo/Login/Js/Login.js'></script>";
+                        break;
+                case 'ProcesoCompra':
+                case 'Compras':
+                        echo "<script type='text/javascript' src='modulo/$mod/Js/$mod.js'></script>";
+                    break;
+                case 'Blog':
+                        echo "<script type='text/javascript' src='modulo/$mod/Js/$mod.js'></script>";
+                    break;
+                case 'Profile':
+                    echo "<script type='text/javascript' src='modulo/$mod/Js/$mod.js'></script>";
+                break;
+                
+            }
+        ?>
+        <!-- Load Facebook SDK for JavaScript -->
+
+</body>
+</html>
+
+
+

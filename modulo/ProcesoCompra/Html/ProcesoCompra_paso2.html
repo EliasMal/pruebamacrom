@@ -1,0 +1,100 @@
+<section>
+    <section class="contenedor">
+        <img src="images/Banners/Compras.png" alt="Banner compras">
+        <h2 class="l-text2 t-center">
+            Acreditar compra
+        </h2>
+    </section>
+
+    <section class="contenedor-responsive">
+        <img src="images/Banners/Compras-movil.png" alt="Banner compras">
+        <h2 class="l-text2 t-center">
+            Acreditar compra
+        </h2>
+    </section>
+    <section class="p-t-66 p-b-60" ng-controller="CabeceraCtrl" ng-init="mod='{mod}'">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 p-b-30">
+                    <h4 class="m-text26 p-b-36 p-t-15"><i class="fa  fa-map-marker"></i> Formas de pago</h4>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-12 m-text26 p-b-36 p-t-15">
+                            <label for="radDeposito">
+                                <input type="radio" name="radDeposito" id="radDeposito" ng-model="tipoPago.value" ng-click="opcTipopago()" value="Deposito"/> Deposito o transferencia
+                            </label>
+                        </div>
+                        <div class="col-md-12 m-text26 p-b-36 p-t-15">
+                            <label for="radTarjeta">
+                                <input type="radio" name="radDeposito" id="radTarjeta" ng-model="tipoPago.value" ng-click="opcTipopago()" value="Tarjeta"/> Pago con tarjeta
+                            </label>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="col-md-4 p-b-30">
+                     <h4 class="m-text26 p-b-36 p-t-15 ">Resumen de pedido</h4>
+                      <hr />
+                      <div class="">
+                        <ul class="header-cart-wrapitem">
+                            <li class="header-cart-item" ng-repeat="product in session.cart">
+                               <div class="header-cart-item-img">
+                                   <img ng-src="{{getImagen(product.id)}}" alt="IMG">
+                               </div>
+                               <div class="header-cart-item-txt">
+                                   <a href="#" class="header-cart-item-name">
+                                       {{product.articulo}}
+                                   </a>
+                                   <span class="header-cart-item-info">
+                                       {{product.cantidad}} x {{product.precio | currency}}
+                                   </span>
+                               </div>
+                            </li>
+                            
+                        </ul>
+                        <div class="header-cart-total">
+                            Sub-total: {{subtotal() | currency}}
+                        </div>
+                        <div class="header-cart-total">
+                                Envio: {{session.Cenvio.costo | currency}}
+                        </div>
+                        <div class="header-cart-total">
+                                Total: {{Ttotal() | currency}}
+                        </div>
+                        <div class="w-size25">
+                               <!-- Button -->
+                               <button class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4" ng-click="btnPaso3()" ng-if="tipoPago.estatus">
+                                       Acreditar
+                               </button>
+                              
+                       </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Acreditar pago con tarjeta</h4>
+                </div>
+                <div class="modal-body">
+                    
+                    <div class="embed-responsive embed-responsive-4by3">
+                        <iframe id="frm" class="embed-responsive-item" ng-src="{{url}}" seamless="seamless"></iframe>
+                    </div>
+                     
+                </div>
+                <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+                </div> -->
+            </div>
+            </div>
+        </div>
+    </section>
+</section>
+

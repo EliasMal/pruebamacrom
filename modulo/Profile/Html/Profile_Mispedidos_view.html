@@ -1,0 +1,186 @@
+<section ng-controller="ProfileCtrl" ng-init="pag='{opc}'">
+    <div class="banner bgwhite p-t-40 p-b-40">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 p-b-30">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action active" ng-click="btnMenulinks('Mispedidos')"> <img src="images/icons/icono_mis_pedidos.png" alt="logo-mispedidos" class="img icon-logo-small">Mis pedidos</a>
+                        <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Session')"><img src="images/icons/icono_inicio_de_sesión.png" alt="logo-session-seguridad" class="img icon-logo-small"> Sessi&oacute;n y Seg&uacute;ridad</a>
+                        <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Direcciones')"> <img src="images/icons/icono_direcciones.png" alt="logo-direcciones" class="img icon-logo-small">Direcciones</a>
+                       <!-- <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Monedero')"><img src="images/icons/icono_monedero.png" alt="logo-monederoelectronico" class="img icon-logo-small"> Monedero Electronico</a>-->
+                        <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Facturacion')">
+                            <img src="images/icons/icono_facturacion.png" alt="logo-monederoelectronico" class="img icon-logo-small"> Datos de Facturación
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 p-b-30">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                          <li class="breadcrumb-item"><a href="?mod=Profile">Mi Cuenta</a></li>
+                          <li class="breadcrumb-item"><a href="#" ng-click="btnMenulinks('Mispedidos')">Mis pedidos</a> </li>
+                          <li class="breadcrumb-item active" aria-current="page">Detalles</li>
+
+                        </ol>
+                    </nav>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-30">
+                            <h1>Detalles del pedido</h1>
+                        </div>  
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="row m-b-10">
+                                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                    <div class="row orden">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 m-b-10">
+                                            <h4>Pedido #{{Mispedidos.noPedido}}</h4>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <label>Enviado por:</label>
+                                            <p class="m-b-10">{{Mispedidos.GuiaEnvio}}</p>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <label>Metodo de pago:</label>
+                                            <p class="m-b-10">{{Mispedidos.FormaPago}}</p>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <label>Total:</label>
+                                            <p class="m-b-10">{{Mispedidos.Totalpedido | currency}}</p>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <img src="./images/icons/icono-impresion.png" alt="Impresora" class="img-50 enlace" ng-show="Mispedidos.Acreditado != 0" ng-click="btnComprobanteCompra(Mispedidos._idPedidos)">
+                                            <!-- <img src="./images/icons/icono-correo.png" alt="Impresora" class="img-50"> -->
+                                            <img src="./images/icons/icono-facturacion-2.png" alt="Impresora" class="img-150" ng-show="Mispedidos.Facturacion==1">
+                                            
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                                    <section class="wizard">
+                                        <ul>
+                                            <li>
+                                                <div class="proceso {{wizard.preparacion? 'active':''}}">
+                                                    <img src="./images/icons/Preparacion.png" alt="Preparación">
+                                                    <span>&nbsp;</span>
+                                                    <p>En preparación</p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="proceso {{wizard.transito? 'active':''}}">
+                                                    <img src="./images/icons/Transito.png" alt="transito">
+                                                    <span>&nbsp;</span>
+                                                    <p>En tránsito</p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="proceso {{wizard.proceso? 'active':''}}">
+                                                    <img src="./images/icons/Reparto.png" alt="Reparto">
+                                                    <span>&nbsp;</span>
+                                                    <p>En proceso de Entrega</p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="proceso {{wizard.entregado? 'active':''}}">
+                                                    <img src="./images/icons/Entrega.png" alt="Entrega">
+                                                    <span>&nbsp;</span>
+                                                    <p>Entregado</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </section>
+                                    <hr>
+                                    <section ng-show="Mispedidos.FormaPago!='Tarjeta' && Mispedidos.Acreditado==0 && Mispedidos.isFileComprobante">
+                                        <a href="#"class="pull-right" ng-click="btnDeleteComp($event)"> <i class="fa fa-close" ></i> Borrar comprobante  </a> 
+                                        <a href="./Public/Comprobantes/{{Mispedidos.comprobante}}" download class="pull-right m-r-10"><i class="fa fa-download"></i> Ver Comprobante </a>
+                                        
+                                    </section>
+                                    <section ng-show="Mispedidos.FormaPago!='Tarjeta' && Mispedidos.Acreditado==0 && !Mispedidos.isFileComprobante">
+                                        <label for="comprobante">Subir comprobante de pago</label>
+                                            <div class="input-group">
+                                                <input type="file" name="comprobante" id="comprobante" class="form-control" uploader-model="comprobantefile" accept="image/*" capture="camera">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-secondary" type="button" ng-click="btnuploadComprobante()"><i class="fa fa-upload"></i> Subir</button>    
+                                                </div>
+                                            </div>
+                                    </section>  
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-pedidos">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <div class="table-responsive">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <th>#</th>
+                                                            <th></th>
+                                                            <th>Descripción</th>
+                                                            <th>Precio</th>
+                                                            <th>Importe</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="a in Mispedidos.Detalles">
+                                                                <td>{{$index+1}}</td>
+                                                                <td><img ng-src="./images/refacciones/{{a._idProducto}}.png" alt="{{a._idProducto}}.png" class="rounded img-80"></td>
+                                                                <td><p class="s-text18"> {{a.cantidad}} x {{a.Producto}}</p>
+                                                                    <p class="s-text17">SKU: {{a.No_parte}}</p></td>
+                                                                <td>{{a.Importe | currency}}</td>
+                                                                <td>{{a.cantidad * a.Importe | currency}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>    
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                                <table class="table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>Sub-total:</th>
+                                                            <td class="text-right">{{Mispedidos.Importe | currency}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Envio:</th>
+                                                            <td class="text-right">{{Mispedidos.cenvio | currency}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Descuento:</th>
+                                                            <td class="text-right">{{Mispedidos.descuento | currency}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Total (con IVA):</th>
+                                                            <td class="text-right"><h4>{{Mispedidos.Totalpedido | currency}}</h4></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <button class="btn btn-danger btn-block" ng-click="btnCancelarPedido()" ng-show="Mispedidos.Acreditado === 1 || Mispedidos.Acreditado === 2">Cancelar pedido</button>
+                                                <button class="btn btn-secondary btn-block" ng-click="btnRegresarviewPedidos()">Regresar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            
+
+            
+
+            
+        </div>
+    </div>
+</section>

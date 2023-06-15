@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<cfdi:Comprobante Version="3.3" Serie="CLJ" Folio="320906623" Fecha="2021-03-06T19:32:31" Sello="zun4v41/+50B9KRoqEf6CYKkNhxsHGv/kqAKLOue3hKV03Qh9CBd5z42xiR3ChMqhZ0U2ZDbA0HDFaGUOOBHevCOKwAAH/8YDR4zESZ7bupL5xBaLuRFIV7oIcy43SX2r/z2YcR+X3if8GAIc/2XrMiedpAKX94jvJc5xWjIvz9IuydaPY4b90y+p6ZWt+wTsfHGHKa4pP7vrSqPQ+aWrSxmJTN8yTHiG42/KnmULTlu3+7UOo0xUqNdJlLtyYE3terjxG+0KcPIbf4+LoRhClU4dSrbaIUiy5rcUpMfM9WL7XTLBmxpPm1kJlaUJm6F8+miemYtOlwAHMC5yFFHnw==" FormaPago="01" NoCertificado="00001000000506505905" Certificado="MIIGCDCCA/CgAwIBAgIUMDAwMDEwMDAwMDA1MDY1MDU5MDUwDQYJKoZIhvcNAQELBQAwggGEMSAwHgYDVQQDDBdBVVRPUklEQUQgQ0VSVElGSUNBRE9SQTEuMCwGA1UECgwlU0VSVklDSU8gREUgQURNSU5JU1RSQUNJT04gVFJJQlVUQVJJQTEaMBgGA1UECwwRU0FULUlFUyBBdXRob3JpdHkxKjAoBgkqhkiG9w0BCQEWG2NvbnRhY3RvLnRlY25pY29Ac2F0LmdvYi5teDEmMCQGA1UECQwdQVYuIEhJREFMR08gNzcsIENPTC4gR1VFUlJFUk8xDjAMBgNVBBEMBTA2MzAwMQswCQYDVQQGEwJNWDEZMBcGA1UECAwQQ0lVREFEIERFIE1FWElDTzETMBEGA1UEBwwKQ1VBVUhURU1PQzEVMBMGA1UELRMMU0FUOTcwNzAxTk4zMVwwWgYJKoZIhvcNAQkCE01yZXNwb25zYWJsZTogQURNSU5JU1RSQUNJT04gQ0VOVFJBTCBERSBTRVJWSUNJT1MgVFJJQlVUQVJJT1MgQUwgQ09OVFJJQlVZRU5URTAeFw0yMTAyMjIxNjQwNDVaFw0yNTAyMjIxNjQwNDVaMIHWMScwJQYDVQQDEx5DQURFTkEgQ09NRVJDSUFMIE9YWE8gU0EgREUgQ1YxJzAlBgNVBCkTHkNBREVOQSBDT01FUkNJQUwgT1hYTyBTQSBERSBDVjEnMCUGA1UEChMeQ0FERU5BIENPTUVSQ0lBTCBPWFhPIFNBIERFIENWMSUwIwYDVQQtExxDQ084NjA1MjMxTjQgLyBNRUNTNzMwNDA4N0kyMR4wHAYDVQQFExUgLyBNRUNTNzMwNDA4SFZaTkxSMDcxEjAQBgNVBAsTCU1PTlRFUlJFWTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANYLF1gm+Bz6S2WOXBLQIY46bnF5F2SKDkbGSvgvR8bl60uIitFCAp/JS2MUM0bPOgIGY2OeJLi4xo4czHgDVadbseSRE4/ziUX0Cu9hz0OwDmS0rA6bQIwBi/LboxPTEXV0UZqXBanzeuks9BnU/99OOHkION1ojslAFIteVCJMqQdxlB5xYT1mtVTULF/WR7XWxM7YRTXp6YOxiavlJjRfpOT4QgaaaaysyuobZ9bcD+/r3VQduX9aiM3b/84CIHOU8AxA6cyD1qGFGq7Fnyj6y1bttD3NMEdevupUdsxQ2CDd5pxkqpBBBQq+vGGg2fj4lKJ4ZXcIiHzhNCv/Mo0CAwEAAaMdMBswDAYDVR0TAQH/BAIwADALBgNVHQ8EBAMCBsAwDQYJKoZIhvcNAQELBQADggIBAFkWnnqZ6ex+DZx0oY3MLNh+P/f4tLusxP+ByxoyA7j7OppZebvf8BzefvbyPUI43wdmLtkcHI9m5BvK2oJjHmnBvTt5GbQwNU+BBznEfRPloRPPvzMTlS/LK1yc2jdLxKgeUZ6Jf1d7KC3ShVvow0R/Mp0RU1D0sM3bnRyvEFJk1J8wSidEtwZYkTf8/MG1eQ+ju/fzjO/734BBMa7wSKhl8M3l3WbsGf8itYkoHJVsFWJuTTMzOngMmBAXPB7tuk7Ft7ZBUfQPKIMVHmkQ6E0N2EaAEOlj+lo15echlJYziSargC84DDG031DPXQt7cyemR5Olte5JSbz5rC9BIfkoaTAeCmfAf/USLWG7Hk49MuTOSx5uXUy6ukdE/+AKbrx7Lnr2pj7ms/UzfgfarZMMcZWYpNZxBycNVt3S+nf7r5VREXc+UXWdUxdLm5E5dt0TjCTkg9JhdToB1EVLVnhsGld0ZrPNhDFuR6zFlgP/aYEuYQcLiL42HOiuHO9mqlmY+kQF0zrk8dTwOrlPnBHnnigFb/CKGlqYvRsoJz4VMlE/d95ssFbhmsX7f+ytbkHGnVFvgVDVzx6U4waoa2nF77UjnlazEPLXIuam4i9ougym7YsrrdgN45s4VPoe9Y+xipVV4y5vvfjxk5NgoMp9pTfmfmSUUXoXzwWyiYpA" SubTotal="315.00" Moneda="MXN" Total="351.00" TipoDeComprobante="I" MetodoPago="PUE" LugarExpedicion="28879" xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd" xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pago10="http://www.sat.gob.mx/Pagos" xmlns:implocal="http://www.sat.gob.mx/implocal">
+  <cfdi:Emisor Rfc="CCO8605231N4" Nombre="CADENA COMERCIAL OXXO, SA DE CV" RegimenFiscal="623"/>
+  <cfdi:Receptor Rfc="CCT060411HI7" Nombre="CENTRO DE COMPUTACIÓN PARA EL TRABAJO SC" UsoCFDI="G03"/>
+  <cfdi:Conceptos>
+    <cfdi:Concepto ClaveProdServ="50202301" Cantidad="15.000000" ClaveUnidad="EA" Unidad="EA" Descripcion="AGUA PURIFICADA BONAFONT 330 ML BOTELLA" ValorUnitario="6.00" Importe="90.00">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="90.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.000000" Importe="0.00"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="26111700" Cantidad="1.000000" ClaveUnidad="EA" Unidad="EA" Descripcion="ENE MAX AAA BP6 ECONOPACK" ValorUnitario="124.14" Importe="124.14">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="124.14" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="19.86"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="52151504" Cantidad="1.000000" ClaveUnidad="EA" Unidad="EA" Descripcion="VASOS DESECHABLES DE UNICEL FESTIVO BOLSA NO 1" ValorUnitario="14.74" Importe="14.74">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="14.74" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="2.36"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="26111700" Cantidad="1.000000" ClaveUnidad="EA" Unidad="EA" Descripcion="PILA ALCALINA AA 6 PZ BRIGHT LIGHT" ValorUnitario="65.95" Importe="65.95">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="65.95" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="10.55"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="52151500" Cantidad="1.000000" ClaveUnidad="EA" Unidad="EA" Descripcion="CUCHARA GRANDE 25PZ PLA OXXO" ValorUnitario="20.17" Importe="20.17">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="20.17" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="3.23"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+  </cfdi:Conceptos>
+  <cfdi:Impuestos TotalImpuestosTrasladados="36.00">
+    <cfdi:Traslados>
+      <cfdi:Traslado Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.000000" Importe="0.00"/>
+      <cfdi:Traslado Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="36.00"/>
+    </cfdi:Traslados>
+  </cfdi:Impuestos>
+  <cfdi:Complemento>
+        <tfd:TimbreFiscalDigital xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital" xsi:schemaLocation="http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd" Version="1.1" UUID="591cb7d5-4aad-49ce-b2c3-582f178483f2" RfcProvCertif="SNF171020F3A" FechaTimbrado="2021-03-06T19:32:31" SelloCFD="zun4v41/+50B9KRoqEf6CYKkNhxsHGv/kqAKLOue3hKV03Qh9CBd5z42xiR3ChMqhZ0U2ZDbA0HDFaGUOOBHevCOKwAAH/8YDR4zESZ7bupL5xBaLuRFIV7oIcy43SX2r/z2YcR+X3if8GAIc/2XrMiedpAKX94jvJc5xWjIvz9IuydaPY4b90y+p6ZWt+wTsfHGHKa4pP7vrSqPQ+aWrSxmJTN8yTHiG42/KnmULTlu3+7UOo0xUqNdJlLtyYE3terjxG+0KcPIbf4+LoRhClU4dSrbaIUiy5rcUpMfM9WL7XTLBmxpPm1kJlaUJm6F8+miemYtOlwAHMC5yFFHnw==" NoCertificadoSAT="00001000000414211380" SelloSAT="YZ3q7w8sgydtAq3vJEKr7COkSPzNTS0YVQsj3BUyMsIiM+iJWXCTXBULT5Trmv91jJEFGLIw96uU5XCVgAuRI7lK88Sw5pOiF9u1dMO4VCLC4BtL2md5KyGf3xXGvty4zagn89Dl/ZrJZjB7kYEaKPHlAioz7N+mN263xEeaF2MWCDvIPW+iugwkQLPiBFA6ZdWMD0tN7mNywioXjVPUJ8uUfaXUTqgzHmRf5bdDSeN7LJKd2/yGZEmtqinJXADevWK79S8olAhRzQnrTzB66VAKv6+Mx4NIOOUup0SdydKTMDnrJ6PP8G74S3u2EzikovQXN4OnzqENac1ietxDjA=="/>
+    </cfdi:Complemento><cfdi:Addenda>
+    <ns:diverza version="1.1" xmlns:ns="http://www.diverza.com/ns/addenda/diverza/1">
+      <ns:generales tipoDocumento="Factura"/>
+      <ns:clavesDescripcion c_TipoDeComprobante="Ingreso" c_MetodoPago="PAGO EN UNA SOLA EXHIBICION" c_RegimenFiscal="Opcional para Grupos de Sociedades" c_UsoCFDI="Gastos en general"/>
+      <ns:receptor>
+        <ns:domicilioFiscalR calle="BLVD. MIGUEL DE LA MADRID" colonia="LAS BRISAS" ciudad="MANZANILLO" municipio="MANZANILLO" estado="COLIMA" pais="México" codigoPostal="28216"/>
+      </ns:receptor>
+    </ns:diverza>
+  </cfdi:Addenda>
+</cfdi:Comprobante>

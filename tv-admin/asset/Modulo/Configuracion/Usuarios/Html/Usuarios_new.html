@@ -1,0 +1,153 @@
+<div ng-controller="UsuariosNewCtrl">
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark"><i class="fa fa-user mr-1"></i> Usuarios</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
+                    <li class="breadcrumb-item active">Usuarios</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <section class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 connectedSortable">
+                <div class="card card-danger card-outline shadow">
+                    <div class="card-body box-profile">
+                        <div class="text-center">
+                            <img ng-src="{{img}}" alt="User profile" class="profile-user-img img-fluid img-circle" />
+                        </div>
+                        <h3 class="profile-username text-center">{{usuario.nombre}} {{usuario.apPaterno}}</h3>
+                        <p class="text-muted text-center">{{gettipousuario(usuario.tipousuario)}}</p>
+                    </div>
+                </div>
+               
+            </section>
+            <section class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 connectedSortable">
+                 <div class="card card-danger shadow">
+                    <div class="card-header ">
+                        <h3 class="card-title">
+                            <i class="fa fa-user-plus mr-1"></i>
+                          Registrar nuevo Usuario
+                        </h3>
+                        <div class="card-tools">
+                            <button class="btn btn-tool" data-card-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+<!--                        <ul class="nav nav-pills ml-auto p-2">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
+                            </li>
+                        </ul>-->
+                    </div><!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="well">
+                            <form name="frmUsuarios" id="frmUsuarios" novalidate>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                        <label for="txtnombre">Nombre <span class="text-danger"> *</span></label>
+                                        <input type="text" class="form-control" name="txtnombre" id="txtnombre" ng-model="usuario.nombre" ng-disabled="disabled" required/>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                        <label for="txtapPaterno">Apellido paterno  <span class="text-danger"> *</span></label> 
+                                        <input type="text" class="form-control" name="txtapPaterno" id="txtapPaterno" ng-model="usuario.apPaterno" ng-disabled="disabled" required/>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                        <label for="txtapMaterno">Apellido materno  <span class="text-danger"> *</span></label>
+                                        <input type="text" class="form-control" name="txtapMaterno" id="txtapMaterno" ng-model="usuario.apMaterno" ng-disabled="disabled" required/>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                                        <label for="txtdomicilio">Domicilio  <span class="text-danger"> *</span></label>
+                                        <input type="text" class="form-control" name="txtdomicilio" id="txtdomicilio" ng-model="usuario.domicilio" ng-disabled="disabled" required/>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                        <label for="txtcolonia">Colonia  <span class="text-danger"> *</span></label>
+                                        <input type="text" class="form-control" name="txtcolonia" id="txtcolonia" ng-model = "usuario.colonia" ng-disabled="disabled" required/>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                        <label for="txtciudad">Ciudad  <span class="text-danger"> *</span></label>
+                                        <input type="text" class="form-control" name="txtciudad" id="txtciudad" ng-model = "usuario.ciudad" ng-disabled="disabled" required/>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                        <label for="txtestado">Estado  <span class="text-danger"> *</span></label>
+                                        <input type="text" class="form-control" name="txtestado" id="txtestado" ng-model = "usuario.estado" ng-disabled="disabled" required/>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                        <label for="txttelefono">Telefono  <span class="text-danger"> *</span></label>
+                                        <input type="text" class="form-control" name="txttelefono" id="txttelefono" ng-model = "usuario.telefono" ng-disabled="disabled" required/>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                        <label for="txtemail">email  <span class="text-danger"> *</span></label>
+                                        <input type="email" class="form-control" name="txtemail" id="txtemail" ng-model="usuario.email" ng-disabled="disabled" required/>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                                        <label for="txtemail">Foto</label>
+                                        <input type="file" class="form-control" name="txtavatar" id="txtavatar" uploader-model="usuario.file" ng-disabled="disabled"/>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                        <label for="slcrol">Rol de usuario <span class="text-danger"> *</span></label>
+                                        <select name="slcrol" id="slcrol" class="form-control" ng-model = "usuario.tipousuario" ng-disabled="disabled" required>
+                                            <optgroup label="Selecciona el tipo de rol para el usuario">
+                                                <option ng-repeat="tipo in tipoUsuario"value="{{tipo.value}}">{{tipo.descripcion}}</option>
+                                                
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div><!-- /.card-body -->
+                     <div class="card-footer">
+                        <button class="btn btn-info pull-left" ng-show="verpass" ng-click="btnverPass()"><i class="fa fa-key"> Ver password </i></button>
+                        <button class="btn btn-danger pull-right" ng-disabled="disabled? '':frmUsuarios.$invalid" ng-click="disabled? btnNuevoUsuario() : btnCrearUsuario()"><i class="fa fa-user-plus"> {{disabled? "Nuevo Usuario":"Crear Usuario"}}</i></button>
+                        <button class="btn btn-secondary pull-right mr-15" ng-click="btnRegresar()"><i class="fa "> Regresar </i></button>
+                    </div>
+                </div>
+            </section>
+            
+        </div>
+    </div>
+</section>
+
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="passuser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Usuario y Contraseña</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <thead>
+                        <th>Usuario</th>
+                        <th>Password</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="usuario" class="text-center"></td>
+                            <td id="password" class="text-center"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                
+            </div>
+        </div>
+    </div>
+</div>

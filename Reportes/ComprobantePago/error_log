@@ -1,0 +1,523 @@
+[07-Oct-2022 20:35:59 UTC] PHP Warning:  require(/home/macromautopartes/public_html/Reportes/ComprobantePago/vendor/autoload.php): failed to open stream: No such file or directory in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 34
+[07-Oct-2022 20:35:59 UTC] PHP Fatal error:  require(): Failed opening required '/home/macromautopartes/public_html/Reportes/ComprobantePago/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php72/root/usr/share/pear') in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 34
+[07-Oct-2022 20:36:22 UTC] PHP Warning:  require(/home/macromautopartes/public_html/Reportes/ComprobantePago/vendor/autoload.php): failed to open stream: No such file or directory in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 34
+[07-Oct-2022 20:36:22 UTC] PHP Fatal error:  require(): Failed opening required '/home/macromautopartes/public_html/Reportes/ComprobantePago/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php72/root/usr/share/pear') in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 34
+[07-Oct-2022 20:37:45 UTC] PHP Warning:  require(/home/macromautopartes/public_html/Reportes/ComprobantePagoHtml/vendor/autoload.php): failed to open stream: No such file or directory in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 34
+[07-Oct-2022 20:37:45 UTC] PHP Fatal error:  require(): Failed opening required '/home/macromautopartes/public_html/Reportes/ComprobantePagoHtml/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php72/root/usr/share/pear') in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 34
+[07-Oct-2022 20:38:30 UTC] PHP Warning:  require_once(compropago_view.php): failed to open stream: No such file or directory in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 40
+[07-Oct-2022 20:38:30 UTC] PHP Fatal error:  require_once(): Failed opening required 'compropago_view.php' (include_path='.:/opt/cpanel/ea-php72/root/usr/share/pear') in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 40
+[07-Oct-2022 20:39:09 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:21) in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 7705
+[07-Oct-2022 20:39:09 UTC] PHP Fatal error:  Uncaught Exception: TCPDF ERROR: Some data has already been output to browser, can't send PDF file in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php:3007
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php(7707): TCPDF->Error('Some data has a...')
+#1 /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/Html2Pdf.php(549): TCPDF->Output('ComprobanteDePa...', 'I')
+#2 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(46): Spipu\Html2Pdf\Html2Pdf->output('ComprobanteDePa...')
+#3 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3007
+[07-Oct-2022 20:56:46 UTC] PHP Warning:  require(/Html/vendor/autoload.php): failed to open stream: No such file or directory in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 7
+[07-Oct-2022 20:56:46 UTC] PHP Fatal error:  require(): Failed opening required '/Html/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php72/root/usr/share/pear') in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 7
+[07-Oct-2022 20:57:11 UTC] PHP Warning:  require_once(compropago_view.php): failed to open stream: No such file or directory in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 13
+[07-Oct-2022 20:57:11 UTC] PHP Fatal error:  require_once(): Failed opening required 'compropago_view.php' (include_path='.:/opt/cpanel/ea-php72/root/usr/share/pear') in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 13
+[07-Oct-2022 20:58:47 UTC] PHP Notice:  Undefined variable: html in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 46
+[07-Oct-2022 20:58:47 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:46) in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 7705
+[07-Oct-2022 20:58:47 UTC] PHP Fatal error:  Uncaught Exception: TCPDF ERROR: Some data has already been output to browser, can't send PDF file in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php:3007
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php(7707): TCPDF->Error('Some data has a...')
+#1 /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/Html2Pdf.php(549): TCPDF->Output('ComprobanteDePa...', 'I')
+#2 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(47): Spipu\Html2Pdf\Html2Pdf->output('ComprobanteDePa...')
+#3 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3007
+[07-Oct-2022 20:59:25 UTC] PHP Fatal error:  Uncaught Spipu\Html2Pdf\Exception\HtmlParsingException: The tag [thead] must contain at least one tag [tr] in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/Parsing/Html.php:183
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/Parsing/Html.php(149): Spipu\Html2Pdf\Parsing\Html->verifyMustContain(Array, 'thead', 'tr')
+#1 /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/Html2Pdf.php(563): Spipu\Html2Pdf\Parsing\Html->parse(Array)
+#2 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(35): Spipu\Html2Pdf\Html2Pdf->writeHTML('<page ng-app="R...')
+#3 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(44): retorna_vista('principal')
+#4 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(49): principal()
+#5 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/Parsing/Html.php on line 183
+[07-Oct-2022 21:00:40 UTC] PHP Notice:  Undefined variable: html in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 45
+[07-Oct-2022 21:00:40 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:45) in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 7705
+[07-Oct-2022 21:00:40 UTC] PHP Fatal error:  Uncaught Exception: TCPDF ERROR: Some data has already been output to browser, can't send PDF file in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php:3007
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php(7707): TCPDF->Error('Some data has a...')
+#1 /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/Html2Pdf.php(549): TCPDF->Output('ComprobanteDePa...', 'I')
+#2 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(46): Spipu\Html2Pdf\Html2Pdf->output('ComprobanteDePa...')
+#3 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(50): principal()
+#4 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3007
+[07-Oct-2022 21:00:55 UTC] PHP Notice:  Undefined variable: html in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 42
+[07-Oct-2022 21:00:55 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:42) in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 7705
+[07-Oct-2022 21:00:55 UTC] PHP Fatal error:  Uncaught Exception: TCPDF ERROR: Some data has already been output to browser, can't send PDF file in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php:3007
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php(7707): TCPDF->Error('Some data has a...')
+#1 /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/Html2Pdf.php(549): TCPDF->Output('ComprobanteDePa...', 'I')
+#2 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(43): Spipu\Html2Pdf\Html2Pdf->output('ComprobanteDePa...')
+#3 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(47): principal()
+#4 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3007
+[07-Oct-2022 21:02:00 UTC] PHP Notice:  Undefined variable: html2pdf in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 45
+[07-Oct-2022 21:02:00 UTC] PHP Fatal error:  Uncaught Error: Call to a member function writeHTML() on null in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:45
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(51): principal()
+#1 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 45
+[07-Oct-2022 21:02:55 UTC] PHP Notice:  Undefined variable: html2pdf in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 45
+[07-Oct-2022 21:02:55 UTC] PHP Fatal error:  Uncaught Error: Call to a member function writeHTML() on null in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:45
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(51): principal()
+#1 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 45
+[07-Oct-2022 21:10:07 UTC] PHP Parse error:  syntax error, unexpected 'ob_get_clean' (T_STRING) in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 48
+[07-Oct-2022 21:10:22 UTC] PHP Parse error:  syntax error, unexpected 'ob_get_clean' (T_STRING) in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 48
+[07-Oct-2022 21:13:48 UTC] PHP Notice:  Undefined variable: html2pdf in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 42
+[07-Oct-2022 21:13:48 UTC] PHP Fatal error:  Uncaught Error: Call to a member function writeHTML() on null in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:42
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(48): principal()
+#1 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 42
+[07-Oct-2022 21:14:01 UTC] PHP Notice:  Undefined variable: opc in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 47
+[07-Oct-2022 21:14:14 UTC] PHP Notice:  Undefined variable: opc in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 47
+[07-Oct-2022 21:14:18 UTC] PHP Notice:  Undefined variable: opc in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 47
+[07-Oct-2022 21:15:26 UTC] PHP Warning:  Use of undefined constant vishtml - assumed 'vishtml' (this will throw an Error in a future version of PHP) in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 51
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$inxobj in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3183
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$page in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3208
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$tocpage in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3237
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$numpages in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3261
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$page in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3261
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$numpages in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3271
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$booklet in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3272
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontFamily in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20736
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontStyle in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20737
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSizePt in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20738
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$cell_padding in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20741
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$cell_margin in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20742
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$LineWidth in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20743
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$linestyleWidth in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20744
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$linestyleCap in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20745
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$linestyleJoin in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20746
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$linestyleDash in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20747
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$textrendermode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20748
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$textstrokewidth in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20749
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$DrawColor in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20750
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FillColor in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20751
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$TextColor in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20752
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$ColorFlag in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20753
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$bgcolor in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20754
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$fgcolor in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20755
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$htmlvspace in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20756
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$listindent in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20757
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$listindentlevel in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20758
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$listnum in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20759
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$listordered in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20760
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$listcount in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20761
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$lispacer in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20762
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$cell_height_ratio in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20763
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$font_stretching in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20764
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$font_spacing in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20765
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$alpha in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20766
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$lasth in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20768
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$bMargin in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20770
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$AutoPageBreak in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20771
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$PageBreakTrigger in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20772
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$x in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20773
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$y in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20774
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$w in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20775
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$h in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20776
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$wPt in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20777
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$hPt in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20778
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$fwPt in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20779
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$fhPt in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20780
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$page in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20781
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$current_column in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20782
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$num_columns in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20783
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$page in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 10126
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$k in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2257
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$pagedim in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2257
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$k in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2261
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$k in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2265
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$k in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2269
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$k in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2273
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$feps in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2305
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$k in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2309
+[07-Oct-2022 21:15:26 UTC] PHP Warning:  Division by zero in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2309
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$k in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2310
+[07-Oct-2022 21:15:26 UTC] PHP Warning:  Division by zero in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2310
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$k in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2323
+[07-Oct-2022 21:15:26 UTC] PHP Warning:  Division by zero in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2323
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 10149
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$inxobj in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 10391
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$InFooter in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 10394
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$print_header in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3597
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$inxobj in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 10391
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$InFooter in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 10394
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$num_columns in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3703
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$thead in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3713
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/MyPdf.php on line 620
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/MyPdf.php on line 600
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$_myLastPageGroupNb in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/MyPdf.php on line 1523
+[07-Oct-2022 21:15:26 UTC] PHP Warning:  in_array() expects parameter 2 to be array, null given in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20994
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/MyPdf.php on line 600
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$k in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/MyPdf.php on line 238
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$inxobj in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 10391
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$InFooter in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 10394
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$_myLastPageGroupNb in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/MyPdf.php on line 1448
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$CurrentFont in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 22384
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$CurrentFont in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 22384
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$_myLastPageGroupNb in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/MyPdf.php on line 1473
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4113
+[07-Oct-2022 21:15:26 UTC] PHP Warning:  array_merge(): Argument #1 is not an array in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/include/tcpdf_fonts.php on line 2013
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$tmprtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4113
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4113
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4137
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4113
+[07-Oct-2022 21:15:26 UTC] PHP Warning:  array_merge(): Argument #1 is not an array in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/include/tcpdf_fonts.php on line 2013
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$tmprtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4113
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4113
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4137
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 7474
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 7474
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/MyPdf.php on line 644
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5088
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$txtshadow in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5095
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5155
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5158
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$k in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5167
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$check_page_regions in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 22791
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5170
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontAscent in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5282
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontDescent in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5282
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontAscent in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5286
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5288
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5317
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4113
+[07-Oct-2022 21:15:26 UTC] PHP Warning:  array_merge(): Argument #1 is not an array in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/include/tcpdf_fonts.php on line 2013
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$tmprtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4113
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4113
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4137
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$k in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5457
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5505
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5522
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$underline in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5551
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$linethrough in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5554
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$overline in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5557
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined index: type in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 22384
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined index: type in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 22384
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5600
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$inxobj in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 10391
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$InFooter in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 10394
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 7474
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/MyPdf.php on line 644
+[07-Oct-2022 21:15:26 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 7474
+[07-Oct-2022 21:16:32 UTC] PHP Warning:  Use of undefined constant vishtml - assumed 'vishtml' (this will throw an Error in a future version of PHP) in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 51
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$inxobj in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3183
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$page in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3208
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$tocpage in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3237
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$numpages in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3261
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$page in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3261
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$numpages in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3271
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$booklet in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3272
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontFamily in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20736
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontStyle in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20737
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSizePt in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20738
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$cell_padding in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20741
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$cell_margin in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20742
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$LineWidth in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20743
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$linestyleWidth in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20744
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$linestyleCap in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20745
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$linestyleJoin in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20746
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$linestyleDash in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20747
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$textrendermode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20748
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$textstrokewidth in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20749
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$DrawColor in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20750
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FillColor in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20751
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$TextColor in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20752
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$ColorFlag in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20753
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$bgcolor in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20754
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$fgcolor in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20755
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$htmlvspace in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20756
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$listindent in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20757
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$listindentlevel in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20758
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$listnum in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20759
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$listordered in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20760
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$listcount in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20761
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$lispacer in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20762
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$cell_height_ratio in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20763
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$font_stretching in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20764
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$font_spacing in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20765
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$alpha in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20766
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$lasth in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20768
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$bMargin in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20770
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$AutoPageBreak in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20771
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$PageBreakTrigger in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20772
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$x in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20773
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$y in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20774
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$w in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20775
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$h in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20776
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$wPt in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20777
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$hPt in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20778
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$fwPt in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20779
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$fhPt in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20780
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$page in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20781
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$current_column in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20782
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$num_columns in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20783
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$page in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 10126
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$k in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2257
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$pagedim in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2257
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$k in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2261
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$k in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2265
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$k in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2269
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$k in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2273
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$feps in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2305
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$k in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2309
+[07-Oct-2022 21:16:32 UTC] PHP Warning:  Division by zero in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2309
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$k in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2310
+[07-Oct-2022 21:16:32 UTC] PHP Warning:  Division by zero in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2310
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$k in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2323
+[07-Oct-2022 21:16:32 UTC] PHP Warning:  Division by zero in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 2323
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 10149
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$inxobj in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 10391
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$InFooter in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 10394
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$print_header in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3597
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$inxobj in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 10391
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$InFooter in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 10394
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$num_columns in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3703
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$thead in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 3713
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/MyPdf.php on line 620
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/MyPdf.php on line 600
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$_myLastPageGroupNb in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/MyPdf.php on line 1523
+[07-Oct-2022 21:16:32 UTC] PHP Warning:  in_array() expects parameter 2 to be array, null given in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 20994
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/MyPdf.php on line 600
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$k in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/MyPdf.php on line 238
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$inxobj in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 10391
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$InFooter in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 10394
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$_myLastPageGroupNb in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/MyPdf.php on line 1448
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$CurrentFont in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 22384
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$CurrentFont in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 22384
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$_myLastPageGroupNb in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/MyPdf.php on line 1473
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4113
+[07-Oct-2022 21:16:32 UTC] PHP Warning:  array_merge(): Argument #1 is not an array in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/include/tcpdf_fonts.php on line 2013
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$tmprtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4113
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4113
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4137
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4113
+[07-Oct-2022 21:16:32 UTC] PHP Warning:  array_merge(): Argument #1 is not an array in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/include/tcpdf_fonts.php on line 2013
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$tmprtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4113
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4113
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4137
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 7474
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 7474
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/MyPdf.php on line 644
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5088
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$txtshadow in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5095
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5155
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5158
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$k in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5167
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$check_page_regions in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 22791
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5170
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontAscent in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5282
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontDescent in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5282
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontAscent in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5286
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5288
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5317
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4113
+[07-Oct-2022 21:16:32 UTC] PHP Warning:  array_merge(): Argument #1 is not an array in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/include/tcpdf_fonts.php on line 2013
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$tmprtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4113
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4113
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$isunicode in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4137
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$FontSize in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 4616
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$k in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5457
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5505
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5522
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$underline in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5551
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$linethrough in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5554
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$overline in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5557
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined index: type in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 22384
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined index: type in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 22384
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 5600
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$inxobj in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 10391
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$InFooter in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 10394
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 7474
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/spipu/html2pdf/src/MyPdf.php on line 644
+[07-Oct-2022 21:16:32 UTC] PHP Notice:  Undefined property: Spipu\Html2Pdf\MyPdf::$rtl in /home/macromautopartes/public_html/Reportes/ComprobantePago/Html/vendor/tecnickcom/tcpdf/tcpdf.php on line 7474
+[07-Oct-2022 21:17:50 UTC] PHP Notice:  Undefined variable: html2pdf in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 42
+[07-Oct-2022 21:17:50 UTC] PHP Fatal error:  Uncaught Error: Call to a member function writeHTML() on null in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:42
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(48): principal()
+#1 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 42
+[07-Oct-2022 21:27:36 UTC] PHP Notice:  Undefined variable: template in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 38
+[07-Oct-2022 21:27:36 UTC] PHP Notice:  Undefined variable: html in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 27
+[07-Oct-2022 21:28:10 UTC] PHP Notice:  Undefined variable: html in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 38
+[07-Oct-2022 21:28:10 UTC] PHP Notice:  Undefined variable: html in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 27
+[07-Oct-2022 21:36:48 UTC] PHP Notice:  Undefined variable: html2pdf in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 25
+[07-Oct-2022 21:36:48 UTC] PHP Fatal error:  Uncaught Error: Call to a member function writeHTML() on null in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:25
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(37): retorna_vista('principal')
+#1 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(42): principal()
+#2 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 25
+[07-Oct-2022 21:37:02 UTC] PHP Notice:  Undefined variable: html2pdf in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 25
+[07-Oct-2022 21:37:02 UTC] PHP Fatal error:  Uncaught Error: Call to a member function writeHTML() on null in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:25
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(37): retorna_vista('principal')
+#1 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(42): principal()
+#2 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 25
+[07-Oct-2022 21:37:38 UTC] PHP Notice:  Undefined variable: html2pdf in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 25
+[07-Oct-2022 21:37:38 UTC] PHP Fatal error:  Uncaught Error: Call to a member function writeHTML() on null in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:25
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(37): retorna_vista('principal')
+#1 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(42): principal()
+#2 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 25
+[07-Oct-2022 21:37:41 UTC] PHP Notice:  Undefined variable: html2pdf in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 25
+[07-Oct-2022 21:37:41 UTC] PHP Fatal error:  Uncaught Error: Call to a member function writeHTML() on null in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:25
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(37): retorna_vista('principal')
+#1 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(42): principal()
+#2 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 25
+[07-Oct-2022 21:37:41 UTC] PHP Notice:  Undefined variable: html2pdf in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 25
+[07-Oct-2022 21:37:41 UTC] PHP Fatal error:  Uncaught Error: Call to a member function writeHTML() on null in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:25
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(37): retorna_vista('principal')
+#1 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(42): principal()
+#2 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 25
+[07-Oct-2022 21:37:41 UTC] PHP Notice:  Undefined variable: html2pdf in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 25
+[07-Oct-2022 21:37:41 UTC] PHP Fatal error:  Uncaught Error: Call to a member function writeHTML() on null in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:25
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(37): retorna_vista('principal')
+#1 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(42): principal()
+#2 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 25
+[07-Oct-2022 21:37:41 UTC] PHP Notice:  Undefined variable: html2pdf in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 25
+[07-Oct-2022 21:37:41 UTC] PHP Fatal error:  Uncaught Error: Call to a member function writeHTML() on null in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:25
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(37): retorna_vista('principal')
+#1 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(42): principal()
+#2 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 25
+[07-Oct-2022 21:38:18 UTC] PHP Notice:  Undefined variable: html2pdf in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 25
+[07-Oct-2022 21:38:18 UTC] PHP Fatal error:  Uncaught Error: Call to a member function writeHTML() on null in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:25
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(37): retorna_vista('principal')
+#1 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(42): principal()
+#2 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 25
+[07-Oct-2022 21:39:08 UTC] PHP Notice:  Undefined variable: html2pdf in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 29
+[07-Oct-2022 21:39:08 UTC] PHP Fatal error:  Uncaught Error: Call to a member function writeHTML() on null in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:29
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(38): retorna_vista('principal')
+#1 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(43): principal()
+#2 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 29
+[07-Oct-2022 21:39:15 UTC] PHP Notice:  Undefined variable: html2pdf in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 29
+[07-Oct-2022 21:39:15 UTC] PHP Fatal error:  Uncaught Error: Call to a member function writeHTML() on null in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:29
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(38): retorna_vista('principal')
+#1 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(43): principal()
+#2 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 29
+[07-Oct-2022 21:39:24 UTC] PHP Notice:  Undefined variable: html2pdf in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 29
+[07-Oct-2022 21:39:24 UTC] PHP Fatal error:  Uncaught Error: Call to a member function writeHTML() on null in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:29
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(38): retorna_vista('principal')
+#1 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(43): principal()
+#2 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 29
+[07-Oct-2022 21:39:38 UTC] PHP Notice:  Undefined variable: html2pdf in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 29
+[07-Oct-2022 21:39:38 UTC] PHP Fatal error:  Uncaught Error: Call to a member function printHTML() on null in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:29
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(38): retorna_vista('principal')
+#1 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(43): principal()
+#2 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 29
+[07-Oct-2022 21:39:49 UTC] PHP Notice:  Undefined variable: html2pdf in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 29
+[07-Oct-2022 21:39:49 UTC] PHP Fatal error:  Uncaught Error: Call to a member function writeHTML() on null in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:29
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(38): retorna_vista('principal')
+#1 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(43): principal()
+#2 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 29
+[07-Oct-2022 21:45:02 UTC] PHP Notice:  Undefined variable: html2pdf in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 29
+[07-Oct-2022 21:45:02 UTC] PHP Fatal error:  Uncaught Error: Call to a member function writeHTML() on null in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:29
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(38): retorna_vista('principal')
+#1 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(43): principal()
+#2 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 29
+[07-Oct-2022 21:50:54 UTC] PHP Notice:  Undefined variable: html2pdf in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 29
+[07-Oct-2022 21:50:54 UTC] PHP Fatal error:  Uncaught Error: Call to a member function writeHTML() on null in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:29
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(38): retorna_vista('principal')
+#1 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(43): principal()
+#2 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 29
+[07-Oct-2022 22:02:45 UTC] PHP Notice:  Undefined variable: file in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 20
+[07-Oct-2022 22:03:10 UTC] PHP Notice:  Undefined variable: template in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 20
+[07-Oct-2022 22:05:07 UTC] PHP Notice:  Undefined variable: html2pdf in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 18
+[07-Oct-2022 22:05:07 UTC] PHP Fatal error:  Uncaught Error: Call to a member function writeHTML() on null in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:18
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(44): get_template()
+#1 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 18
+[07-Oct-2022 22:09:27 UTC] PHP Notice:  Undefined variable: html2pdf in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 29
+[07-Oct-2022 22:09:27 UTC] PHP Fatal error:  Uncaught Error: Call to a member function writeHTML() on null in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:29
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(38): retorna_vista('principal')
+#1 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(43): principal()
+#2 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 29
+[07-Oct-2022 22:10:08 UTC] PHP Notice:  Undefined variable: html2pdf in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 29
+[07-Oct-2022 22:10:08 UTC] PHP Fatal error:  Uncaught Error: Call to a member function writeHTML() on null in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:29
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(38): retorna_vista('principal')
+#1 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(43): principal()
+#2 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 29
+[07-Oct-2022 22:10:47 UTC] PHP Notice:  Undefined variable: html2pdf in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 29
+[07-Oct-2022 22:10:47 UTC] PHP Fatal error:  Uncaught Error: Call to a member function writeHTML() on null in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:29
+Stack trace:
+#0 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(38): retorna_vista('principal')
+#1 /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php(43): principal()
+#2 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 29
+[07-Oct-2022 22:23:33 UTC] PHP Fatal error:  Uncaught Error: Class 'Html2Pdf' not found in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 8
+[07-Oct-2022 22:33:27 UTC] PHP Fatal error:  Uncaught Error: Class 'Html2Pdf' not found in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/macromautopartes/public_html/Reportes/ComprobantePago/Controller.php on line 8

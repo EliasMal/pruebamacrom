@@ -1,0 +1,204 @@
+<section ng-controller="ProfileCtrl" ng-init="pag='{opc}'">
+    <div class="banner bgwhite p-t-40 p-b-40">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 p-b-30">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action active" ng-click="btnMenulinks('Mispedidos')"> <img src="images/icons/icono_mis_pedidos.png" alt="logo-mispedidos" class="img icon-logo-small">Mis pedidos</a>
+                        <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Session')"><img src="images/icons/icono_inicio_de_sesión.png" alt="logo-session-seguridad" class="img icon-logo-small"> Sessi&oacute;n y Seg&uacute;ridad</a>
+                        <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Direcciones')"> <img src="images/icons/icono_direcciones.png" alt="logo-direcciones" class="img icon-logo-small">Direcciones</a>
+                        <!--<a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Monedero')"><img src="images/icons/icono_monedero.png" alt="logo-monederoelectronico" class="img icon-logo-small"> Monedero Electronico</a>-->
+                        <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Facturacion')">
+                            <img src="images/icons/icono_facturacion.png" alt="logo-monederoelectronico" class="img icon-logo-small"> Datos de Facturación
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 p-b-30">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                          <li class="breadcrumb-item"><a href="#" ng-click="btnMenulinks()">Mi Cuenta</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Mis pedidos</li>
+                        </ol>
+                    </nav>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-30">
+                            <h1>Mis Pedidos</h1>
+                        </div> 
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-30">
+                            <div class="bo4 of-hidden size15 m-b-20 input-group">
+                                <input type="text" class="form-control" placeholder="Buscar por titulo, departamento o destinatario">
+                                <span class="input-group-btn">
+                                    <button class="btn flex-c-m size2 bg1 bo-rad-5 hov1 m-text3 trans-0-4" type="button"> Buscar</button>
+                                </span>
+                            </div>
+                            
+                        </div> 
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-b-10">
+                            <nav aria-label="Page navigation example">
+                                <ul class="t-pagination justify-content-center">
+                                    <li class="t-page-item {{paginador.currentPage==0? 'disabled':''}}">
+                                        <a class="page-link" href="#" ng-click='lastPage()'>«</a>
+                                    </li>
+                                    <li class="t-page-item {{paginador.currentPage == (pag.no - 1)? 'active':''}}" ng-repeat="pag in paginador.pages" ng-click='setPage(pag)'>
+                                        <a class="page-link " href="#">{{pag.no}}</a>
+                                    </li>
+                                    <li class="t-page-item {{paginador.currentPage >= (No_Pedidos/paginador.pageSize - 1)? 'disabled':''}}">
+                                        <a class="page-link" href="#" ng-click='nextPage()' >»</a>
+                                    </li>
+                                </ul>
+                              </nav>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 p-b-10">
+                            <div class="box-pedidos" ng-repeat="p in Mispedidos">
+                               <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-15">
+                                        <span class="no-pedido">Pedido: #{{p.noPedido}}</span>  <span class="estatus">Estado:</span><span class="bg {{p.class}} text-white estatus">{{p.Estado}}</span>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-15">
+                                        <button class="flex-c-m bg-red btn  bo-rad-10 hov7 m-text3 trans-0-4 float-right" type="button" ng-click="btnverMispedidos(p._idPedidos)"> Ver pedido</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-10">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-b-10 datos-entrega">
+                                                <label>Metodo de pago:</label>
+                                                <p>{{p.FormaPago}}</p>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-b-10 datos-entrega">
+                                                <label>Total:</label>
+                                                <p>{{p.Totalpedido | currency}}</p>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-b-10 datos-entrega">
+                                                <label>Enviado a:</label>
+                                                <p>{{p.nombreCliente}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <img src="./images/icons/icono-impresion.png" alt="Impresora" class="img-50 enlace" ng-show="p.Acreditado!=0" ng-click="btnComprobanteCompra(p._idPedidos)">
+                                                <!-- <img src="./images/icons/icono-correo.png" alt="Impresora" class="img-50"> -->
+                                                <img src="./images/icons/icono-facturacion-2.png" alt="Impresora" class="img-150" ng-show="p.Facturacion == 1" ng-click="showModalFile(p)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-10">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr ng-repeat="a in p.Detalles ">
+                                                    <td><img ng-src="./images/refacciones/{{a._idProducto}}.png" alt="{{a._idProducto}}.png" class="rounded img-80"></td>
+                                                    <td><p class="s-text18"> {{a.Producto}}</p>
+                                                        <p class="s-text17">SKU: {{a.No_parte}}</p></td>
+                                                </tr>
+                                                <!-- <tr>
+                                                    <td><img src="./images/refacciones/301.png" alt="301.png" class="rounded img-80"></td>
+                                                    <td><p class="s-text18"> 1 x Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                                                        <p class="s-text17">1234sdfsdf</p></td>
+                                                </tr> -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 p-b-30">
+                            <div class="icon-center">
+                                <img src="images/icons/icono_mis_pedidos.png" alt="logo-direcciones" class="img icon-logos-grande">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+<div class="modal fade" id="Mdlfiles" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content ">
+            <div class="modal-header">
+            <h5 class="modal-title text-red" id="exampleModalLabel">Descarga tu factura</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true" class="text-danger">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div class="row orden">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>RFC:</label>
+                        <p>{{dataFactura.Rfc}}</p>
+                    </div>
+                    
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <label>Uso de CFDI:</label>
+                        <p>{{dataFactura.usoCFDI}}</p>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <label>Razon Social:</label>
+                        <p>{{dataFactura.Razon}}</p>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <a href="{{dataFactura.xml}}" download class="btn btn-secondary form-control bo-rad-10"><i class="fa fa-download"></i> XML</a>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <a href="{{dataFactura.pdf}}" download class="btn btn-secondary form-control bo-rad-10"><i class="fa fa-download"></i> PDF</a>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <a href="#" class="bo-rad-10 form-control btn bg-red text-white" ng-click="btnDownloadZip()"> <i class="fa fa-download"></i> Descargar Todo</a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn bg-red text-white" data-dismiss="modal">Close</button>
+            
+            </div>
+        </div>
+    </div>
+  </div>
+  <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      xfbml            : true,
+      version          : 'v3.3'
+    });
+  };
+
+  (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/es_LA/sdk/xfbml.customerchat.js';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+<!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '342958480063107');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=342958480063107&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Facebook Pixel Code -->
+</section>
+
+
+
+  

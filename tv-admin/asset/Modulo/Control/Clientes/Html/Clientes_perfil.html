@@ -1,0 +1,249 @@
+<div ng-controller="ClientesPerfilCtrl" ng-init="id={id}">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark"><i class="fa fa-user mr-1"></i> Clientes <small>Perfil</small></h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="?mod=Clientes">Clientes</a></li>
+                        <li class="breadcrumb-item active">Perfil</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <section class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                    <div class="card card-danger card-outline">
+                        <div class="card-body box-profile">
+                            <div class="text-center">
+                                <img class="profile-user-img img-fluid img-circle" src="Images/usuarios/root.png" alt="Avatar">
+                            </div>
+                            <h4 class="profile-username text-center">{{cliente.nombres}} {{cliente.Apellidos}}</h4>
+                            <p class="text-muted text-center"><small> {{cliente.username}}</small></p>
+                            <ul class="list-group list-group-unbordered">
+                                <li class="list-group-item">
+                                    <small><b> Ultima sessión</b></small>
+                                    <a class="float-right"><small> {{cliente.ultimoacceso}} </small></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <small><b>Compras realizadas</b></small>
+                                    <a class="float-right"><small> 0 </small></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card card-danger">
+                        <div class="card-header">
+                            Acerca del Cliente
+                        </div>
+                        <div class="card-body">
+                            <b><i class="fa fa-map-marker mr-1"></i>Lugar de residencia</b>
+                            <p class="text-muted">{{cliente.ciudad}}, {{cliente.estado}}</p>
+                            <hr>
+                            <b><i class="fa fa-phone"></i> Telefono</b>
+                            <p class="text-muted">{{cliente.telefono}}</p>
+                            <hr>
+                            <b><i class="fa fa-envelope-o "></i> Correo</b>
+                            <p class="text-muted">{{cliente.correo}}</p>
+                        </div>
+                    </div>
+                </section>
+                <section class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
+                    <div class="card card-danger card-outline">
+                        <div class="card-header">
+                            <ul class="nav nav-pills">
+                                
+                                <li class="nav-item"><a class="nav-link active" href="#timeline" data-toggle="tab">Compras</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Configuracion</a></li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="timeline">
+                                    <!-- The timeline -->
+                                    <ul class="timeline timeline-inverse">
+                                      <!-- timeline time label -->
+                                      <li class="time-label">
+                                        <span class="bg-danger">
+                                          10 Feb. 2014
+                                        </span>
+                                      </li>
+                                      <!-- /.timeline-label -->
+                                      <!-- timeline item -->
+                                      <li>
+                                        <i class="fa fa-envelope bg-primary"></i>
+                
+                                        <div class="timeline-item">
+                                          <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+                
+                                          <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+                
+                                          <div class="timeline-body">
+                                            Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
+                                            weebly ning heekya handango imeem plugg dopplr jibjab, movity
+                                            jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
+                                            quora plaxo ideeli hulu weebly balihoo...
+                                          </div>
+                                          <div class="timeline-footer">
+                                            <a href="#" class="btn btn-primary btn-sm">Read more</a>
+                                            <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                                          </div>
+                                        </div>
+                                      </li>
+                                      <!-- END timeline item -->
+                                      <!-- timeline item -->
+                                      <li>
+                                        <i class="fa fa-user bg-info"></i>
+                
+                                        <div class="timeline-item">
+                                          <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
+                
+                                          <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request
+                                          </h3>
+                                        </div>
+                                      </li>
+                                      <!-- END timeline item -->
+                                      <!-- timeline item -->
+                                      <li>
+                                        <i class="fa fa-comments bg-warning"></i>
+                
+                                        <div class="timeline-item">
+                                          <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
+                
+                                          <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
+                
+                                          <div class="timeline-body">
+                                            Take me to your leader!
+                                            Switzerland is small and neutral!
+                                            We are more like Germany, ambitious and misunderstood!
+                                          </div>
+                                          <div class="timeline-footer">
+                                            <a href="#" class="btn btn-warning btn-flat btn-sm">View comment</a>
+                                          </div>
+                                        </div>
+                                      </li>
+                                      <!-- END timeline item -->
+                                      <!-- timeline time label -->
+                                      <li class="time-label">
+                                        <span class="bg-success">
+                                          3 Jan. 2014
+                                        </span>
+                                      </li>
+                                      <!-- /.timeline-label -->
+                                      <!-- timeline item -->
+                                      <li>
+                                        <i class="fa fa-camera bg-purple"></i>
+                
+                                        <div class="timeline-item">
+                                          <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
+                
+                                          <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
+                
+                                          <div class="timeline-body">
+                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                          </div>
+                                        </div>
+                                      </li>
+                                      <!-- END timeline item -->
+                                      <li>
+                                        <i class="fa fa-clock-o bg-gray"></i>
+                                      </li>
+                                    </ul>
+                                </div>
+                                <div class="tab-pane" id="settings">
+                                    <form class="form-horizontal">
+                                        
+                                      <div class="form-group">
+                                        <label for="txtname" class="col-sm-3 control-label">Nombres</label>
+                                        <div class="col-sm-12 col-md-10">
+                                          <input type="text" class="form-control" id="txtname" placeholder="Name" ng-model = "cliente.nombres" ng-disabled="disabled">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="txtApellidos" class="col-sm-3 control-label">Apellidos</label>
+                
+                                        <div class="col-sm-12 col-md-10">
+                                          <input type="text" class="form-control" id="txtApellidos" placeholder="Apellidos" ng-model="cliente.Apellidos" ng-disabled="disabled">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="txtemail" class="col-sm-3 control-label">E-mail</label>
+                
+                                        <div class="col-sm-12 col-md-10">
+                                          <input type="email" class="form-control" id="txtemail" placeholder="email" ng-model="cliente.correo" ng-disabled="disabled">
+                                        </div>
+                                      </div>
+                                        <div class="form-group">
+                                            <label for="txtemail" class="col-sm-2 control-label">Domicilio</label>
+                    
+                                            <div class="col-sm-12 col-md-10">
+                                                <input type="text" class="form-control" id="txtdomicilio" placeholder="Domicilio" ng-model="cliente.Domicilio" ng-disabled="disabled">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="txtcp" class="col-sm-4 control-label">Codigo Postal</label>
+                    
+                                            <div class="col-sm-12 col-md-10">
+                                                <input type="text" class="form-control" id="txtcp" placeholder="Codigo postal" ng-model="cliente.Codigo_postal" ng-disabled="disabled">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="txtciudad" class="col-sm-4 control-label">Ciudad</label>
+                    
+                                            <div class="col-sm-12 col-md-10">
+                                                <input type="text" class="form-control" id="txtciudad" placeholder="Ciudad" ng-model="cliente.ciudad" ng-disabled="disabled">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="txtestado" class="col-sm-4 control-label">Estado</label>
+                    
+                                            <div class="col-sm-12 col-md-10">
+                                                <input type="text" class="form-control" id="txtestado" placeholder="Estado" ng-model="cliente.estado" ng-disabled="disabled">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="txttelefono" class="col-sm-4 control-label">Estado</label>
+                    
+                                            <div class="col-sm-12 col-md-10">
+                                                <input type="text" class="form-control" id="txttelefono" placeholder="Estado" ng-model="cliente.telefono" ng-disabled="disabled">
+                                            </div>
+                                        </div>
+                                      
+                                      
+                                        <div class="col-sm-12 col-md-offset-2 col-md-10">
+                                            
+                                                
+                                           
+                                          
+                                              <span class="switch switch-sm">
+                                                  <input type="checkbox" class="switch" id="switch-id" ng-model="data.avisoprivacidad" ng-disabled="disabled">
+                                                  <label for="switch-id">Acepto el <a href="#">Aviso de privacidad</a></label>
+                                              </span>
+                                            
+                                          
+                                        </div>
+                                      
+                                      <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                          <button type="submit" class="btn btn-danger" ng-click="btnEditar()"><i class="fa {{disabled? 'fa-edit':'fa-save'}}"></i> {{disabled? "Editar":"Guardar"}}</button>
+                                        </div>
+                                      </div>
+                                    </form>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,115 @@
+<div ng-controller="CategoriasCrtl">
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark"><i class="fa fa-user mr-1"></i> Categorias</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
+                    <li class="breadcrumb-item active">Categorias</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <section class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12 connectedSortable">
+                <div class="card card-danger">
+                    <div class="card-header d-flex p-0">
+                        <h3 class="card-title p-3">
+                            <i class="fa fa-users mr-1"></i>
+                            Registro de Categorias
+                        </h3>
+                        <div class="card-tools">
+                            <button class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+
+                    </div><!-- /.card-header -->
+                    
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-12 ">
+                                    <span class="switch switch-sm pull-right">
+                                        <input type="checkbox" class="switch" id="switch-id" ng-model="historico" ng-click="getCategorias()">
+                                        <label for="switch-id">Historico</label>
+                                    </span>
+                            </div>
+                            <div class="col-lg-12">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <th width="5%">#</th>
+                                        <th width="75">Categoria</th>
+                                        <th width="10%">Estatus</th>
+                                        <th width="10%">Acciones</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="categoria in categorias">
+                                            <td>{{$index +1}}</td>
+                                            <td>{{categoria.Categoria}}</td>
+                                            <td class="text-center"><span class="badge {{categoria.Status == 1? 'badge-success':'badge-danger'}}">{{categoria.Status == 1? "Activo":"Baja"}}</span>{{}}</td>
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    <button id="btnGroupDrop1" type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                      <a class="dropdown-item" ng-click="opcEditar(categoria)"><i class="fa fa-edit"> Editar</i></a>
+                                                      <a class="dropdown-item" ng-click="categoria.Status == 1? opcDesactivar(categoria._id):opcActivar(categoria._id)"><i class="fa {{categoria.Status == 1? ' fa-times-circle-o':'fa-check-square-o'}}"></i> {{categoria.Status == 1? "Desactivar":"Activar"}}</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div><!-- /.card-body -->
+                    <div class="card-footer">
+                        <button class="btn btn-danger pull-right" ng-click="btnNuevaCategoria()"><i class="fa fa-user-plus"> Nueva Categoria</i></button>
+<!--                        <button class="btn btn-dafult" ng-click="btnGetarticulo()"> Obtener prueba</button>-->
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+
+<!-- Modal -->
+<div class="modal fade" id="mcategoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">{{nuevo? "Nueva":"Editar"}} Categoria</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-4" >
+                        <center>
+                            <img ng-src="{{img}}" alt="" class="img-responsive img-thumbnail"/>
+                        </center>
+                    </div>
+                    <div class="col-lg-8">
+                        <label for="txtcategoria">Nombre de la categoria:</label>
+                        <input type="text" name="txtcategoria" id="txtcategoria" class="form-control" ng-model="categoria.Categoria"/>
+                        <label for="txtfile"></label>
+                        <input type="file" name="txtfile" id="txtfile" class="form-control" uploader-model="categoria.file"/>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" ng-click="nuevo? btnCrearCategoria():btnEditarCategoria()"> {{nuevo? "Crear":"Guardar"}} Categoria</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
