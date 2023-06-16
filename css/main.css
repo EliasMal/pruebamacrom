@@ -1,3 +1,34 @@
+:root{
+  --primario: #de0007;
+  --primario-oscuro: #bf040a;
+  --gris: #7f7f7f;
+  --gris-light: #ccc;
+  --blanco: #fff;
+  --negro: #000;
+  --naranja: #e65540;
+}
+
+html{
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*:after{
+  box-sizing: inherit;
+}
+
+
+/* GLOBALES */
+
+body{
+  font-size: 1.6rem;
+}
+
+
+
+
 /*[ FONT ]
 ///////////////////////////////////////////////////////////
 */
@@ -73,34 +104,14 @@ body, html {
   outline: none !important;
 }
 
-/* GLOBALES */
-html{
-  font-size: 62.5%;
-  box-sizing: border-box;
-}
-
-*,
-*::before,
-*:after{
-  box-sizing: inherit;
-}
-
-body{
-  font-size: 1.6rem;
-}
-
-/* GLOBALES */
-
-
-
 /*Cabecera Menu Usuario*/
 .vinculos{
     margin-left:160px;
 }
 .vinculos div:hover{
-    background:#De0007;
+    background-color: var(--primario);
     cursor: pointer;
-    color: #fff;
+    color: var(--blanco);
 }
 .vinculos div{
     height:25px;
@@ -174,7 +185,7 @@ background-color: #e6e6e6;
 
 /*-------Modal Seleccionar otra------*/
 .dr-sel{
-    background: #de0007;
+    background-color: var(--primario);
     border-radius: 0.25rem;
     height: 35px;
     font-size: 18px;
@@ -220,8 +231,8 @@ background-color: #e6e6e6;
     .guardaredit{
       margin-left: 30px;
        width: 486px;
-      background: #de0007;
-      border-color: #de0007;
+      background-color: var(--primario);
+      border-color: var(--primario)
     }
     .cplabel{
       width: 120px;
@@ -295,16 +306,16 @@ background-color: #e6e6e6;
 }
 
 .cerrar:hover, .cerrar1:hover, .cerrar2:hover, .cerrar3:hover, .cerrar4:hover{
-  color: #de0007;
+  color: var(--primario);
   text-decoration: none;
   cursor: pointer;
 }
 /*------------Botón cerrar------------- */
 .contenido-modal h2, .contenido-modal1 h2, .contenido-modal2 h2, .contenido-modal3 h2, .txtred1{
-  color: #de0007;
+  color:var(--primario);
 }
 .obligatorio{
-  color: #de0007;
+  color: var(--primario);
 }
 .fzm-15{
   font-size: 15px;
@@ -378,7 +389,7 @@ border-radius: 5px;
 }
 .btndirecprueba:hover,.btndirecprueba2:hover{
     color: white;
-    background: #de0007;
+    background: var(--primario);
   }
   .edt-tit-envio{
     text-align: center;
@@ -516,16 +527,16 @@ border-radius: 5px;
   border-radius: 0.25rem;
 }
 #btncupon{
-  border-color: #000;
+  border-color: var(--negro);
   margin-left: -60px;
-  background-color: #de0007;
-  color: white;
+  background-color: var(--primario);
+  color: var(--blanco);
 }
 #btncupon:focus{
   box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25) !important;
 }
 .csmdesc{
-  color:#de0007;
+  color:var(--primario);
 }
 
 @media (max-width:900px){
@@ -900,7 +911,7 @@ a:focus {
 
 a:hover {
 	text-decoration: none;
-	color: #de0007;
+	color: var(--primario);
 }
 
 /* ------------------------------------ */
@@ -1186,7 +1197,7 @@ font-size:0px;
 .footermob1{
   margin-top:-200px;
   height:200px;
-  background:#De0007;
+  background-color: var(--primario);
   padding:30px;
   
 }
@@ -1211,13 +1222,13 @@ font-size:0px;
   width: 114%;
   margin-left:-30px;
   font-family: Poppins;
-  background: #De0007;
+  background-color: var(--primario);
   border-radius: 5px;
 }
 .tab01 .nav-link.active {
-  color: #fff !important;
+  color: var(--blanco) !important;
   font-weight: bold;
-  background: #De0007;
+  background: var(--primario);
   /* border-bottom: 1px solid #6a6a6a; */
   border-bottom: 2px solid #e65540;
 }
@@ -1232,12 +1243,12 @@ font-size:0px;
 .prodtipos{
   margin-top:-16px;
   position: relative;
-background: #De0007 !important;
+background: var(--primario) !important;
 border-radius:5px;
 margin-left:0px;
 }
 .prodtipos li{
-  background: #De0007;
+  background: var(--primario);
 }
 
 .footermob1 p{
@@ -1270,7 +1281,7 @@ display: none;
   padding-left:0px;
   z-index:100;
   position:relative;
-  background:#fff;
+  background-color: var(--blanco);
 }
 .pt1,.pt2,.pt3, .pt4,.pt0{
   padding-top:10px;
@@ -2275,7 +2286,7 @@ li.sale-noti > a {
 .side-menu .main-menu {margin-bottom: 0;}
 
 .item-menu-mobile {
-  background-color: #de0007;
+  background-color: var(--primario);
 }
 
 .side-menu .main-menu > li > a {
