@@ -26,7 +26,10 @@ body{
   font-size: 1.6rem;
 }
 
-
+.contenedor{
+  max-width: 120rem;
+  margin: 0 auto;
+}
 
 
 /*[ FONT ]
@@ -97,9 +100,6 @@ body, html {
 }
 
 /* --------------CONTENIDO MODAL--------------------- */
-.container {
-  max-width: 1200px;
-}
 .slick-slide {
   outline: none !important;
 }
