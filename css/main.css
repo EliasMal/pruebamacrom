@@ -46,6 +46,15 @@ body{
   background-position: center center;
 }
 
+/*Contenido principal*/
+@media(min-width: 768px) {
+  .contenido-principal{
+      display: grid;
+      grid-template-columns: 6fr 1fr;
+      column-gap: 4rem;
+  }
+}
+
 /*[ FONT ]
 ///////////////////////////////////////////////////////////
 */
