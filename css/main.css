@@ -48,6 +48,9 @@ body{
 
 /*Contenido principal*/
 
+.categoria__cat{
+  max-width: 16rem;
+}
 
 /*[ FONT ]
 ///////////////////////////////////////////////////////////

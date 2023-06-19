@@ -14,11 +14,11 @@
 	<div class="contenedor contenido-principal">
 		<main class="macrom">
 			<!-- Banner -->
-			<div class="banner bgwhite p-t-40 p-b-40">
+			<div class="bgwhite p-t-40 p-b-40">
 				<div class="container">
 					<div class="row rowrap">
 									<!--m-l-r-auto-->
-										<div class="col-xs-4 col-sm-4 col-md-3 col-lg-3 " ng-repeat="categoria in Data.Categorias">
+										<div class="categoria__cat" ng-repeat="categoria in Data.Categorias">
 							<!-- block1 -->
 							<div class="block1 hov-img-zoom pos-relative m-b-30">
 													<a href="?mod=catalogo&cat={{categoria._id}}">
@@ -44,19 +44,12 @@
 							Nuestros Productos
 						</h3>
 					</div>
-
 					<!-- Tab01 -->
-					<div class="tab01">
+					<div>
 						<!-- Nav tabs -->
 						<ul class="nav nav-tabs" role="tablist">
 							<li class="nav-item">
 								<a class="nav-link active" data-toggle="tab" href="#best-seller" role="tab">M&aacute;s vendidos</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" data-toggle="tab" href="#newProducts" role="tab">Nuevos Productos</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" data-toggle="tab" href="#sales" role="tab">En Oferta</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" data-toggle="tab" href="#top-rate" role="tab">Liquidiaciones</a>
@@ -103,89 +96,6 @@
 											</div>
 										</div>
 									</div>
-
-									
-								</div>
-							</div>
-
-							<!-- newProducts  -->
-							<div class="tab-pane fade" id="newProducts" role="tabpanel">
-								<div class="row">
-									<div class="col-sm-6 col-md-4 col-lg-3 p-b-50 enlace" ng-repeat="producto in Data.nuevos">
-										<!-- Block2 -->
-										<div class="block2" ng-click="RefaccionDetalles(producto._id)">
-											<div class="block2-img wrap-pic-w of-hidden cursorpnt" 
-											ng-class="{
-												'ribbonnuevo': producto.RefaccionNueva==1,
-												'pos-relative': !producto.agotado
-
-											}"
-											ng-style="{'background-color': producto.color}">
-												<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/motor.png'}}" alt="IMG-PRODUCT">
-											</div>
-
-											<div class="block2-txt p-t-20">
-												<section class="descripcion-producto">
-													<img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.idProveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
-													alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}">
-													<p class="block2-name dis-block s-text3 p-b-5">
-														{{producto.Producto}}
-													</p>
-													
-												</section>
-
-												<span class="block2-price m-text6 p-r-5 p-t-5 text-white text-center">
-													<h3 class="precio">{{producto.Precio1 | currency}}</h3>
-												</span>
-												<div class="enviogratis"  ng-show="producto.Enviogratis">
-													<img src="/images/icons/Icono-camion.png" alt="">
-													<p > <strong>Envío Gratis </strong> </p> 
-												</div>
-											</div>
-										</div>
-									</div>
-
-									
-								</div>
-							</div>
-
-							<!-- ofertas -->
-							<div class="tab-pane fade" id="sales" role="tabpanel">
-								<div class="row">
-									<div class="col-sm-6 col-md-4 col-lg-3 p-b-50 enlace" ng-repeat="producto in Data.oferta">
-										<!-- Block2 -->
-										<div class="block2" ng-click="RefaccionDetalles(producto._id)">
-											<div class="block2-img wrap-pic-w of-hidden cursorpnt" 
-											ng-class="{
-												'ribbonoferta': producto.RefaccionOferta==1,
-												'pos-relative': !producto.agotado
-
-											}"
-											ng-style="{'background-color': producto.color}">
-												<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/motor.png'}}" alt="IMG-PRODUCT">
-											</div>
-
-											<div class="block2-txt p-t-20">
-												<section class="descripcion-producto">
-													<img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.idProveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
-													alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}">
-													<p class="block2-name dis-block s-text3 p-b-5">
-														{{producto.Producto}}
-													</p>
-													
-												</section>
-												<span class="block2-price m-text6 p-r-5 p-t-5 text-white text-center">
-													<h3 class="precio">{{producto.Precio2 | currency}}</h3>
-												</span>
-												<div class="enviogratis"  ng-show="producto.Enviogratis">
-													<img src="/images/icons/Icono-camion.png" alt="">
-													<p > <strong>Envío Gratis </strong> </p> 
-												</div>
-											</div>
-										</div>
-									</div>
-
-									
 								</div>
 							</div>
 
