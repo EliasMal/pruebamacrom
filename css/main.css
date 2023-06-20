@@ -24,6 +24,12 @@ html{
 
 body{
   font-size: 1.6rem;
+  background: -webkit-linear-gradient(to bottom, #d0d5df, #d1d4d9);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,#d0d5df, #d1d4d9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  line-height: 1.5;
+  font-family: Poppins, Montserrat-Regular;
+  font-weight: 400;
+  overflow-x: hidden;
 }
 
 .contenedor{
@@ -49,75 +55,46 @@ body{
 /*Contenido principal*/
 
 .categoria__cat{
-  max-width: 16rem;
+  max-width: 20rem;
 }
 
-/*[ FONT ]
-///////////////////////////////////////////////////////////
-*/
-@font-face{
-  font-family: Poppins-Light;
-  src: url('../fonts/poppins/Poppins-Light.ttf');
-}
-@font-face{
-  font-family: Poppins;
-  src: url('../fonts/poppins/Poppins-Medium.ttf');
-}
-@font-face {
-  font-family: Montserrat-Regular;
-  src: url('../fonts/montserrat/Montserrat-Regular.ttf'); 
+.size--a{
+  font-size: 20px;
 }
 
-@font-face {
-  font-family: Montserrat-Medium;
-  src: url('../fonts/montserrat/Montserrat-Medium.ttf'); 
+
+
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+  color: var(--primario);
+  background-color: #fff;
+  border-color: #dee2e6 #dee2e6 #fff;
 }
 
-@font-face {
-  font-family: Montserrat-Bold;
-  src: url('../fonts/montserrat/Montserrat-Bold.ttf'); 
+/** Botones DEMO **/
+.precio{
+  background-color: #aa0009;
+  border-radius: 5px;
+  margin-top: 20px;
+  height: 4rem;
+  padding-top: 1rem;
 }
 
-@font-face {
-  font-family: Montserrat-Italic;
-  src: url('../fonts/montserrat/Montserrat-Italic.ttf'); 
-}
 
-@font-face {
-  font-family: Montserrat-Black;
-  src: url('../fonts/montserrat/Montserrat-Black.ttf'); 
-}
 
-@font-face {
-  font-family: Linearicons;
-  src: url('../fonts/Linearicons-Free-v1.0.0/WebFont/Linearicons-Free.ttf'); 
-}
+/** FUENTES  **/
+@font-face{font-family: Poppins-Light;src: url('../fonts/poppins/Poppins-Light.ttf');}
+@font-face{font-family: Poppins;src: url('../fonts/poppins/Poppins-Medium.ttf');}
+@font-face{font-family: Montserrat-Regular;src: url('../fonts/montserrat/Montserrat-Regular.ttf');}
+@font-face{font-family: Montserrat-Medium;src: url('../fonts/montserrat/Montserrat-Medium.ttf');}
+@font-face{font-family: Montserrat-Bold;src: url('../fonts/montserrat/Montserrat-Bold.ttf');}
+@font-face{font-family: Montserrat-Italic;src: url('../fonts/montserrat/Montserrat-Italic.ttf');}
+@font-face{font-family: Montserrat-Black;src: url('../fonts/montserrat/Montserrat-Black.ttf');}
+@font-face{font-family: Linearicons;src: url('../fonts/Linearicons-Free-v1.0.0/WebFont/Linearicons-Free.ttf');}
+@font-face{font-family: Poppins-Bold;src: url('../fonts/poppins/Poppins-Bold.ttf');}
+@font-face{font-family: Poppins-Black;src: url('../fonts/poppins/Poppins-Black.ttf');}
 
-@font-face {
-  font-family: Poppins-Bold;
-  src: url('../fonts/poppins/Poppins-Bold.ttf'); 
-}
-
-@font-face {
-  font-family: Poppins-Black;
-  src: url('../fonts/poppins/Poppins-Black.ttf'); 
-}
-
-/*[ RESTYLE TAG ]
-///////////////////////////////////////////////////////////
-*/
-* {
-	margin: 0px; 
-	padding: 0px; 
-	box-sizing: border-box;
-}
-
-body, html {
-	height: 100%;
-	font-family: Poppins, Montserrat-Regular;
-  font-weight: 400;
-  overflow-x: hidden;
-}
+/** RESTYLE TAG **/
 
 /* --------------CONTENIDO MODAL--------------------- */
 .slick-slide {
@@ -961,9 +938,6 @@ h1,h2,h3,h4,h5,h6 {
   margin: 0;
   height:100%;
   margin-right: -80px;
-}
-.banner{
-  margin-left: 5%;
 }
 p {
 	font-family: Poppins;
