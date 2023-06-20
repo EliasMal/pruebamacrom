@@ -30,23 +30,6 @@
     width: 100%;
   }
   
-  .contenedor-responsive{
-    position: relative;
-    margin-right: -15px;
-    margin-left: -15px;
-    display: none;
-  }
-  .contenedor-responsive img{
-    width: 100%;
-  }
-  
-  .contenedor h2, .contenedor-responsive h2{
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-  }
-  
   @media (max-width: 572px){
     .wrap-slick3{
         display: none;

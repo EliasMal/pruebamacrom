@@ -1,4 +1,6 @@
 :root{
+  --fuenteHeading: 'PT Sans', sans-serif;
+  --fuenteParrafos: 'Open Sans', sans-serif;
   --primario: #de0007;
   --primario-oscuro: #bf040a;
   --gris: #7f7f7f;
@@ -37,6 +39,20 @@ body{
   margin: 0 auto;
 }
 
+a{
+  text-decoration: none;
+}
+
+h1,h2,h3,h3{
+  font-family: var(--fuenteHeading);
+  line-height: 1.2;
+}
+
+h1{font-size: 4.8rem;}
+h2{font-size: 4rem;}
+h3{font-size: 3.2rem;}
+h4{font-size: 2.8rem;}
+
 /** Utilidades **/
 .no-margin{
   margin: 0;
@@ -45,6 +61,9 @@ body{
   padding: 0;
 }
 
+img{
+  width: 100%;
+}
 /** Header **/
 .header{
   background-size: cover;
@@ -52,7 +71,44 @@ body{
   background-position: center center;
 }
 
-/*Contenido principal*/
+.contenido--responsive{
+  position: relative;
+  margin-right: -15px;
+  margin-left: -15px;
+  display: none;
+}
+
+.contenido--responsive img{
+  width: 100%;
+}
+
+.contenedor h2, .contenido--responsive h2{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.header__texto{
+  text-align: center;
+  color: var(--blanco);
+  margin-top: -5rem;
+  text-transform: uppercase;
+}
+.header__texto h2{
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+@media(min-width: 768px) {
+    .header__texto{
+      margin-top: -10rem;
+    }
+    .header__texto h2{
+      font-size: 4rem;
+    }
+}
+/** Contenido principal**/
 
 .categoria__cat{
   max-width: 20rem;
@@ -62,14 +118,16 @@ body{
   font-size: 20px;
 }
 
-
-
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
   color: var(--primario);
   background-color: #fff;
   border-color: #dee2e6 #dee2e6 #fff;
 }
+
+/* Contenido principal refacciones **/
+
+
 
 /** Botones DEMO **/
 .precio{
@@ -79,8 +137,6 @@ body{
   height: 4rem;
   padding-top: 1rem;
 }
-
-
 
 /** FUENTES  **/
 @font-face{font-family: Poppins-Light;src: url('../fonts/poppins/Poppins-Light.ttf');}
@@ -912,10 +968,7 @@ a:hover {
 }
 
 /* ------------------------------------ */
-h1,h2,h3,h4,h5,h6 {
-	margin: 0px;
-  font-family: Poppins;
-}
+
 .opccont, .opccont1{
   height:205px;
   margin-left:3%;

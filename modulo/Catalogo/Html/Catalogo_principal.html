@@ -1,13 +1,18 @@
 <div ng-controller="catalogosCtrl" ng-init="refaccion.categoria='{categoria}'">
 	<!-- Title Page -->
-	<section class="contenedor" ng-repeat="cat in catalogos.Escritorio">
-		<img src="images/Banners/{{cat.imagen}}" alt="Banner Catalogos">
-		<h2 class="l-text2 t-center">Cat&aacute;logos</h2>
-	</section>
-	<section class="contenedor-responsive" ng-repeat="cat in catalogos.Movil">
-		<img src="images/Banners/{{cat.imagen}}" alt="Banner Catalogos">
-		<h2 class="l-text2 t-center">Cat&aacute;logos</h2>
-	</section>
+	<header class="header">
+		<section class="header__contenido" ng-repeat="cat in catalogos.Escritorio">
+			<img src="images/Banners/{{cat.imagen}}" alt="Banner Catalogos">
+		</section>
+
+		<section class="header__contenido contenido--responsive" ng-repeat="cat in catalogos.Movil">
+			<img src="images/Banners/{{cat.imagen}}" alt="Banner Catalogos">
+		</section>
+
+		<div class="header__texto">
+			<h2 class="no-margin">Cat&aacute;logos</h2>
+		</div>
+	</header>
 	<!-- Content page -->
 	<section class="bgblack p-t-55 p-b-65">
 		<div class="container-fluid">
@@ -65,42 +70,6 @@
 								<i class="fs-12 fa fa-search" aria-hidden="true"></i>
 							</button>
 						</div>
-
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      xfbml            : true,
-      version          : 'v3.3'
-    });
-  };
-
-  (function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = 'https://connect.facebook.net/es_LA/sdk/xfbml.customerchat.js';
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-
-<!-- Facebook Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '342958480063107');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=342958480063107&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Facebook Pixel Code -->
-
 					</div>
 				</div>
 
@@ -181,3 +150,38 @@ src="https://www.facebook.com/tr?id=342958480063107&ev=PageView&noscript=1"
 	</section>
 
 </div>
+
+<script>
+	window.fbAsyncInit = function() {
+	  FB.init({
+		xfbml            : true,
+		version          : 'v3.3'
+	  });
+	};
+  
+	(function(d, s, id) {
+	var js, fjs = d.getElementsByTagName(s)[0];
+	if (d.getElementById(id)) return;
+	js = d.createElement(s); js.id = id;
+	js.src = 'https://connect.facebook.net/es_LA/sdk/xfbml.customerchat.js';
+	fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  
+  
+  <!-- Facebook Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '342958480063107');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=342958480063107&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Facebook Pixel Code -->
