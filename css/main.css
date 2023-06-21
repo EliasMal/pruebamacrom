@@ -1,3 +1,15 @@
+/** FUENTES  **/
+@font-face{font-family: Poppins-Light;src: url('../fonts/poppins/Poppins-Light.ttf');}
+@font-face{font-family: Poppins;src: url('../fonts/poppins/Poppins-Medium.ttf');}
+@font-face{font-family: Montserrat-Regular;src: url('../fonts/montserrat/Montserrat-Regular.ttf');}
+@font-face{font-family: Montserrat-Medium;src: url('../fonts/montserrat/Montserrat-Medium.ttf');}
+@font-face{font-family: Montserrat-Bold;src: url('../fonts/montserrat/Montserrat-Bold.ttf');}
+@font-face{font-family: Montserrat-Italic;src: url('../fonts/montserrat/Montserrat-Italic.ttf');}
+@font-face{font-family: Montserrat-Black;src: url('../fonts/montserrat/Montserrat-Black.ttf');}
+@font-face{font-family: Linearicons;src: url('../fonts/Linearicons-Free-v1.0.0/WebFont/Linearicons-Free.ttf');}
+@font-face{font-family: Poppins-Bold;src: url('../fonts/poppins/Poppins-Bold.ttf');}
+@font-face{font-family: Poppins-Black;src: url('../fonts/poppins/Poppins-Black.ttf');}
+
 :root{
   --fuenteHeading: 'PT Sans', sans-serif;
   --fuenteParrafos: 'Open Sans', sans-serif;
@@ -135,20 +147,8 @@ img{
   border-radius: 5px;
   margin-top: 20px;
   height: 4rem;
-  padding-top: 1rem;
+  padding-top: 0rem;
 }
-
-/** FUENTES  **/
-@font-face{font-family: Poppins-Light;src: url('../fonts/poppins/Poppins-Light.ttf');}
-@font-face{font-family: Poppins;src: url('../fonts/poppins/Poppins-Medium.ttf');}
-@font-face{font-family: Montserrat-Regular;src: url('../fonts/montserrat/Montserrat-Regular.ttf');}
-@font-face{font-family: Montserrat-Medium;src: url('../fonts/montserrat/Montserrat-Medium.ttf');}
-@font-face{font-family: Montserrat-Bold;src: url('../fonts/montserrat/Montserrat-Bold.ttf');}
-@font-face{font-family: Montserrat-Italic;src: url('../fonts/montserrat/Montserrat-Italic.ttf');}
-@font-face{font-family: Montserrat-Black;src: url('../fonts/montserrat/Montserrat-Black.ttf');}
-@font-face{font-family: Linearicons;src: url('../fonts/Linearicons-Free-v1.0.0/WebFont/Linearicons-Free.ttf');}
-@font-face{font-family: Poppins-Bold;src: url('../fonts/poppins/Poppins-Bold.ttf');}
-@font-face{font-family: Poppins-Black;src: url('../fonts/poppins/Poppins-Black.ttf');}
 
 /** RESTYLE TAG **/
 
@@ -187,7 +187,8 @@ img{
 .rowrap{
       justify-content: space-evenly;
 }
-/*Termina Cabecera Menu usuario*/
+
+
 
 /*////////////////Cuerpo de Mis Compras///////////////*/
 .m-l-ctm{
@@ -2330,7 +2331,7 @@ li.sale-noti > a {
   text-align: center;
 }
 
-.side-menu .main-menu {margin-bottom: 0;}
+.side-menu .main-menu {margin-bottom: 0; padding: 0;}
 
 .item-menu-mobile {
   background-color: var(--primario);
@@ -2347,6 +2348,7 @@ li.sale-noti > a {
 .side-menu .main-menu > li {
   color: white;
   position: relative;
+  padding: 0;
 }
 
 
