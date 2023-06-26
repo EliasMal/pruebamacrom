@@ -47,7 +47,7 @@ body{
 }
 
 .contenedor{
-  max-width: 120rem;
+  max-width: 119rem;
   margin: 0 auto;
 }
 
@@ -72,9 +72,11 @@ h4{font-size: 2.8rem;}
 .no-padding{
   padding: 0;
 }
-
 img{
   width: 100%;
+}
+.half-w{
+  width: 50%;
 }
 /** Header **/
 .header{
@@ -111,7 +113,9 @@ img{
   font-weight: 700;
   font-size: 2rem;
 }
-
+.header__picture--img{
+     height: 50%;   
+}
 @media(min-width: 768px) {
     .header__texto{
       margin-top: -10rem;
@@ -119,11 +123,24 @@ img{
     .header__texto h2{
       font-size: 4rem;
     }
+    .header__picture--img{
+      height: 350px;
+    }
+    .half-w{
+      width: 25%;
+    }
 }
+
 /** Contenido principal**/
 
 .categoria__cat{
-  max-width: 20rem;
+  max-width: 13rem;
+}
+
+@media(min-width: 400px) {
+    .categoria__cat{
+      max-width: 20rem;
+    }
 }
 
 .size--a{
@@ -138,7 +155,22 @@ img{
 }
 
 /* Contenido principal refacciones **/
+.descripcion-producto {
+  display: flex;
+  flex-wrap: nowrap;
+  height: 10rem;
 
+}
+
+.descripcion-producto p{
+  width: 70%;
+  padding-top: 5px;
+  margin-left: 15px;
+} 
+
+.descripcion-producto img{
+   width: 30%;
+}
 
 
 /** Botones DEMO **/
@@ -475,9 +507,6 @@ border-radius: 5px;
 }
 .contajs{
   max-width: 1920px;
-}
-.halfwi{
-  width: 50%;
 }
 @media(min-width: 2000px){
 .contajs{

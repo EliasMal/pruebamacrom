@@ -3,10 +3,16 @@
 	<header class="header">
 		<div class="header__contenido">
 			<div class="wrap-slick3" ng-repeat="banner in databannerPrincipal.Escritorio">
-				<img src="images/Banners/{{banner.imagen}}" alt="">
+				<picture class="header__picture">
+						<source srcset="images/Banners/BANNER-WEBBANNER-WEB-MOVIL-copia.webp" type="image/webp" class="header__picture--img">
+						<img loading="lazy" src="images/Banners/{{banner.imagen}}" alt="banner" height="350px" class="header__picture--img">
+				</picture>
 			</div>
 			<div class="wrap-slick3-responsive" ng-repeat="resp in databannerPrincipal.Movil">
-				<img src="images/Banners/{{resp.imagen}}" alt="">
+				<picture class="header__picture--img">
+					<source srcset="images/Banners/BANNER-WEBBANNER-WEB-MOVIL-copia.webp" type="image/webp" class="header__picture--img">
+					<img loading="lazy" src="images/Banners/{{resp.imagen}}" alt="banner" class="header__picture--img">
+			</picture>
 			</div>
 		</div>
 	</header>
@@ -211,7 +217,7 @@
 	var js, fjs = d.getElementsByTagName(s)[0];
 	if (d.getElementById(id)) return;
 	js = d.createElement(s); js.id = id;
-	js.src = 'https://connect.facebook.net/es_LA/sdk/xfbml.customerchat.js';
+	js.src = 'https://connect.facebook.net/es_LA/sdk/xfbml.customerchat.js' ;
 	fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));</script>
   
