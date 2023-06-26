@@ -3733,7 +3733,7 @@ input.num-product::-webkit-inner-spin-button {
 .login-box,
 .register-box {
   width: 360px;
-  margin-left:20%;
+  margin-left:20rem;
 }
 
 @media (max-width: 576px) {
