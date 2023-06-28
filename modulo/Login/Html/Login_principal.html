@@ -1,15 +1,6 @@
 <link rel="stylesheet" href="/css/loginpruebas.css">
 <div ng-controller="LoginCtrl" ng-init="mod='{mod}'">
-    <!--
-    <section class="contenedor" ng-repeat="login in Banner.Escritorio">
-        <img src="images/Banners/{{login.imagen}}" alt="Banner login">
-        <h2 class="l-text2 t-center">Registrate</h2>
-    </section>
-    <section class="contenedor-responsive" ng-repeat="login in Banner.Movil">
-        <img src="images/Banners/{{login.imagen}}" alt="Banner Catalogos">
-        <h2 class="l-text2 t-center">Registrate</h2>
-    </section>
-    -->
+
     <section class="p-b-60">
         
         <div class="container1">
@@ -59,73 +50,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!--<h4 class="m-text26 p-b-36 p-t-15">Crea tu cuenta</h4>
-                         <p class="login-box-msg">Formulario de registro para nuevos clientes</p>
-                        <div class="bo4 of-hidden size15 m-b-20">
-                            <input class="sizefull s-text7 p-l-22 p-r-22" type="email" name="correo" id = "correo" placeholder="Correo Electronico *" ng-model = "Registro.username" required>
-                            
-                            
-                        </div>
-                        <div class="alert alert-danger"  ng-show="frmReg.correo.$dirty && frmReg.correo.$invalid">
-                            <span>Ingresa un correo Valido</span>
-                        </div>
-                        <div class="bo4 of-hidden size15 m-b-20">
-                            <input class="sizefull s-text7 p-l-22 p-r-22" type="password" name="pass" placeholder="Contraseña *" ng-model="Registro.pass" required>
-                        </div>
-                         
-                        <div class="bo4 of-hidden size15 m-b-20">
-                            <input class="sizefull s-text7 p-l-22 p-r-22" type="password" name="cpass" placeholder="Confirmar Contraseña *" ng-model="Registro.Cpass" required>
-                        </div>
-                        <div class="alert alert-danger"  ng-show="frmReg.cpass.$dirty && frmReg.cpass.$invalid || (Registro.Cpass != Registro.pass)">
-                            <span>Las contraseñas no coinciden</span>
-                        </div> 
-                        <div class="bo4 of-hidden size15 m-b-20">
-                            <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="nombre" placeholder="Nombre(s) *" ng-model="Registro.Nombre" required>
-                        </div>
-                        <div class="bo4 of-hidden size15 m-b-20">
-                            <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="Apellidos" placeholder="Apellidos *" ng-model="Registro.Apellidos" required>
-                        </div>
-
-                        <div class="bo4 of-hidden size15 m-b-20">
-                            <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="domicilio" placeholder="Domicilio*" ng-model="Registro.Domicilio" required>
-                        </div>
-                        <div class="bo4 of-hidden size15 m-b-20">
-                            <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="NumExt" placeholder="Numero Exterior *" ng-model="Registro.numExt" required>
-                        </div>
-                        <div class="bo4 of-hidden size15 m-b-20">
-                            <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="NumInt" placeholder="Numero Interior" ng-model="Registro.numInt">
-                        </div>
-                        <div class="bo4 of-hidden size15 m-b-20">
-                            <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="Colonia" placeholder="Colonia *" ng-model="Registro.Colonia" required>
-                        </div>
-                        <div class="bo4 of-hidden size15 m-b-20">
-                            <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="Codigopostal" maxlength="5" placeholder="Codigo postal *" ng-model="Registro.Codigopostal" required>
-                        </div>
-                        <div class="bo4 of-hidden size15 m-b-20">
-                            <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="Ciudad" placeholder="Ciudad *" ng-model="Registro.Ciudad" required>
-
-                        </div>
-                        <div class="bo4 of-hidden size15 m-b-20">
-                            <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="Estado" placeholder="Estado *" ng-model="Registro.Estado" required>
-                        </div>
-                        <div class="bo4 of-hidden size15 m-b-20">
-                            <input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="Telefono" placeholder="Telefono *" ng-model="Registro.Telefono" required>
-                        </div>
-                        <div class=" m-b-20">
-                            <label for="aviso">
-                                <input type="checkbox" id="aviso" name="Aviso" ng-model="Registro.Aviso" required ng-click="chkModalAviso()"> Acepto el aviso de privacidad
-                            </label>    
-                        </div>
-                    </form>
-                        <div class="w-size25">
-                            <!-- Button 
-                            <button type="submit" class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4" ng-show="!frmReg.$invalid && !(Registro.Cpass != Registro.pass) && !frmReg.correo.$invalid" ng-click="btnRegistrar()">
-                                    Registrarme
-                            </button>
-                        </div>
-                    
-
-                    -->
                 </div>
             </div>
         </div>
