@@ -20,27 +20,24 @@
 			{{Refaccion.datos.Anio}}
 		</span>
 	</div>
-
 	<!-- Product Detail -->
-	<div class="container bgwhite p-t-35 p-b-80">
-		<div class="flex-w flex-sb">
-			<div class="w-size13 p-t-30 respon5">
-				<div class="wrap-slick4 flex-sb flex-w">
-					<div class="wrap-slick3-dots">
+	<div class="contenedor contenido-principal">
+		<div class="detalles">
+			<div class="detalles__visual">
+				<div class="detalles__visual--contenido">
+					<div class="detalles__visual--opciones">
 						<div ng-repeat="gal in Refaccion.galeria"
 							data-thumb="{{getGaleria(gal._id)}}">
-							<input type="radio">
-							<div class="wrap-pic-w caldet">
-								<img ng-src="{{getGaleria(gal._id)}}" alt="{{gal.tag_alt}}">
+							<div class="detalles__visual--miniatura">
+								<img src="{{getGaleria(gal._id)}}" alt="miniatura" class="secundaria">
 							</div>
 						</div>
 					</div>
-					<div class="slick3">
-						<div class="item-slick3"
+					<div class="">
+						<div class=""
 							data-thumb="{{getImagen(Refaccion.datos.imagen, Refaccion.datos._id)}}">
-							<div class="wrap-pic-w">
-								<img ng-src="{{getImagen(Refaccion.datos.imagen, Refaccion.datos._id)}}"
-									alt="IMG-PRODUCT">
+							<div class="detalles__visual--producto">
+								<img src="{{getImagen(Refaccion.datos.imagen, Refaccion.datos._id)}}" alt="IMG-PRODUCT" id="principal">
 							</div>
 						</div>
 					</div>
@@ -64,9 +61,6 @@
 						a solo {{Refaccion.datos.Precio2 | currency}} <small class="m-text15"> IVA incluido</small>
 					</span>
 				</section>
-				<!--				<p class="s-text8 p-t-10">
-					Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.
-				</p>-->
 
 				<!--  -->
 				<div class="p-t-33 p-b-60">
@@ -91,10 +85,7 @@
 								<div class="size8 m-text18 t-center num-product " style="display: flex; justify-content: center; align-items: center;">
 									<span >{{Refaccion.cantidad}}</span>
 								</div>
-								
-								<!-- <input class="size8 m-text18 t-center num-product" type="number" name="num-product"
-									min="1" ng-model="Refaccion.cantidad"> -->
-								<!--                                                                btn-num-product-up -->
+
 								<button class="color1 flex-c-m size7 bg8 eff2"
 									ng-click="btnaumentar();">
 									<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
@@ -127,7 +118,6 @@
 					<p class="s-text8 m-r-35">Marca del Vehiculo: <strong>{{Refaccion.datos.Marca}}</strong></p>
 					<p class="s-text8 m-r-35">Vehiculo: <strong>{{Refaccion.datos.Modelo}}</strong></p>
 					<p class="s-text8 m-r-35">Modelo: <strong>{{Refaccion.datos.Anio}}</strong></p>
-					<!--<p class="s-text8 m-r-35"><strong>2 3 y 4:{{session.cart}} </strong></p>-->
 				</div>
 
 				<div class="p-b-45" ng-show="Refaccion.datos.Enviogratis">
@@ -156,10 +146,9 @@
 		</div>
 	</div>
 
-
 	<!-- Relate Product -->
-	<section class="relateproduct bgwhite p-t-45 p-b-138">
-		<div class="container">
+	<section class="contenedor bgwhite p-t-45 p-b-138">
+		<div class="contenedor-cotnenido">
 			<div class="sec-title p-b-60">
 				<h3 class="m-text5 t-center">
 					Productos Relacionados
@@ -169,7 +158,7 @@
 			<!-- Slide2 -->
 			<div class="wrap-slick2">
 				<div class="slick2 row">
-					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 p-b-50 item-slick2 enlace" ng-repeat="producto in productos">
+					<div class="enlace" ng-repeat="producto in productos">
 						<div class="block2" ng-click="RefaccionDetalles(producto._id)">
 							<div class="block2-img wrap-pic-w of-hidden pos-relative cursorpnt" ng-style="{'background-color': producto.color}" ng-class="{
 								'ribboagotado': producto.agotado ,
@@ -207,6 +196,7 @@
 		</div>
 	</section>
 </div>
+
 <script>
 	window.fbAsyncInit = function() {
 	  FB.init({

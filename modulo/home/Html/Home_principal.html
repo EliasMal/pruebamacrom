@@ -2,17 +2,11 @@
 
 	<header class="header">
 		<div class="header__contenido">
-			<div class="wrap-slick3" ng-repeat="banner in databannerPrincipal.Escritorio">
+			<div class="header__contenido--banner" ng-repeat="banner in databannerPrincipal.Escritorio">
 				<picture class="header__picture">
 						<source srcset="images/Banners/BANNER-WEBBANNER-WEB-MOVIL-copia.webp" type="image/webp" class="header__picture--img">
 						<img loading="lazy" src="images/Banners/{{banner.imagen}}" alt="banner" height="350px" class="header__picture--img">
 				</picture>
-			</div>
-			<div class="wrap-slick3-responsive" ng-repeat="resp in databannerPrincipal.Movil">
-				<picture class="header__picture--img">
-					<source srcset="images/Banners/BANNER-WEBBANNER-WEB-MOVIL-copia.webp" type="image/webp" class="header__picture--img">
-					<img loading="lazy" src="images/Banners/{{resp.imagen}}" alt="banner" class="header__picture--img">
-			</picture>
 			</div>
 		</div>
 	</header>
@@ -20,7 +14,7 @@
 	<div class="contenedor contenido-principal">
 		<main class="macrom">
 			<!-- Banner -->
-			<div class="bgwhite p-t-100">
+			<div class="macrom__contenedor--categorias">
 				<div class="container">
 					<div class="row rowrap">
 									<!--m-l-r-auto-->
@@ -43,31 +37,27 @@
 			</div>
 
 			<!-- Our product -->
-			<section class="bgwhite p-b-50">
-				<div class="container">
-					<div class="sec-title p-b-22">
-						<h3 class="m-text5 t-center">
-							Nuestros Productos
-						</h3>
-					</div>
-					<!-- Tab01 -->
-					<div>
-						<!-- Nav tabs -->
-						<ul class="nav nav-tabs" role="tablist">
-							<li class="nav-item">
-								<a class="nav-link active size--a" data-toggle="tab" href="#best-seller" role="tab">M&aacute;s vendidos</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link size--a" data-toggle="tab" href="#top-rate" role="tab">Liquidiaciones</a>
-							</li>
-						</ul>
+			<section class="seccion__nuestrosproductos">
+				<div class="contenedor__nuestrosproductos">
+						<h3 class="center--text">Nuestros Productos</h3>
+					
+					<div class="nuestrosproductos">
+						<div class="nuestrosproductos__listaopciones">
+							<div class="nuestrosproductos__opciones center--text opcion__activada" id="idmasvendidos">
+								<label><span ng-click="mostrarvendido()">Más Vendidos</span></label>
+							</div>
+
+							<div class="nuestrosproductos__opciones center--text" id="idliquidacion">
+								<label><span ng-click="mostrarliquida()">Liquidación</span> </label>
+							</div>
+						</div>
 
 						<!-- Tab panes -->
-						<div class="tab-content p-t-35">
+						<div class="tab-content">
 							<!-- Mas vendidos -->
-							<div class="tab-pane fade show active" id="best-seller" role="tabpanel">
-								<div class="row">
-									<div class="col-sm-6 col-md-4 col-lg-3 p-b-50 enlace" ng-repeat="producto in Data.masVendidos">
+							<div class="contenedor__nuestrosproductos--masvendidos" id="masvendidos">
+								<div class="nuestrosproductos__masvendidos">
+									<div class="enlace" ng-repeat="producto in Data.masVendidos">
 										<!-- Block2 -->
 										<div class="block2" ng-click="RefaccionDetalles(producto._id)">
 											<div class="block2-img wrap-pic-w of-hidden cursorpnt" 
@@ -106,9 +96,9 @@
 							</div>
 
 							<!-- Liquidaciones -->
-							<div class="tab-pane fade" id="top-rate" role="tabpanel">
-								<div class="row">
-									<div class="col-sm-6 col-md-4 col-lg-3 p-b-50 enlace" ng-repeat="producto in Data.liquidacion">
+							<div class="contenedor__nuestrosproductos--liquidacion" id="liquidacion">
+								<div class="nuestrosproductos__liquidacion">
+									<div class="enlace" ng-repeat="producto in Data.liquidacion">
 										<!-- Block2 -->
 										<div class="block2" ng-click="RefaccionDetalles(producto._id)">
 											<div class="block2-img wrap-pic-w of-hidden cursorpnt" 
@@ -169,42 +159,42 @@
 			
 
 			<!-- Shipping -->
-			<section class="shipping bgwhite p-t-62 p-b-46">
-				<div class="flex-w p-l-15 p-r-15">
-					<div class="flex-col-c w-size5 p-l-15 p-r-15 p-t-16 p-b-15 respon1">
-						<h4 class="m-text12 t-center">
-							Env&iacute;os a toda la Republica
-						</h4>
+				<section class="shipping bgwhite p-t-62 p-b-46">
+					<div class="flex-w p-l-15 p-r-15">
+						<div class="flex-col-c w-size5 p-l-15 p-r-15 p-t-16 p-b-15 respon1">
+							<h4 class="m-text12 t-center">
+								Env&iacute;os a toda la Republica
+							</h4>
 
-						<a href="#" class="s-text11 t-center">
-							Click para mas informacion
-						</a>
+							<a href="#" class="s-text11 t-center">
+								Click para mas informacion
+							</a>
+						</div>
+
+						<div class="flex-col-c w-size5 p-l-15 p-r-15 p-t-16 p-b-15 bo2 respon2">
+							<h4 class="m-text12 t-center">
+								Garant&iacute;as
+							</h4>
+
+							<a href="#" class="s-text11 t-center">
+								Click para mas informacion
+							</a>
+						</div>
+
+						<div class="flex-col-c w-size5 p-l-15 p-r-15 p-t-16 p-b-15 respon1">
+							<h4 class="m-text12 t-center">
+								Tienda Abierta
+							</h4>
+
+							<span class="s-text11 t-center">
+								Te atendemos de Lunes a S&aacute;bado
+							</span>
+						</div>
 					</div>
-
-					<div class="flex-col-c w-size5 p-l-15 p-r-15 p-t-16 p-b-15 bo2 respon2">
-						<h4 class="m-text12 t-center">
-							Garant&iacute;as
-						</h4>
-
-						<a href="#" class="s-text11 t-center">
-							Click para mas informacion
-						</a>
-					</div>
-
-					<div class="flex-col-c w-size5 p-l-15 p-r-15 p-t-16 p-b-15 respon1">
-						<h4 class="m-text12 t-center">
-							Tienda Abierta
-						</h4>
-
-						<span class="s-text11 t-center">
-							Te atendemos de Lunes a S&aacute;bado
-						</span>
-					</div>
-				</div>
-			</section>
-		</div>
-	</main>
-</div>
+				</section>
+			</div>
+		</main>
+	</div>
 <script>
 	window.fbAsyncInit = function() {
 	  FB.init({

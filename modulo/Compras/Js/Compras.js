@@ -472,11 +472,6 @@ btncredito.style.borderColor="#de0007";
             return false;
         }
     }
-    /*alert("La resolución de tu pantalla es: " + screen.width);
-    if (screen.width < 900) {
-        mdl-entrega.style.display="flex";
-        mdl-entrega.style.justify-content="space-evenly";
-    }*/
 
     angular.element(document).ready(function () {
         if(obj.session.autentificacion==undefined && obj.session.autentificacion!=1){
@@ -540,78 +535,6 @@ function ProfileCtrl($scope, $http){
         obj.configPages();
         obj.sendMispedidos("buscar",{_id: localStorage.getItem("iduser")},obj.paginador.currentPage * obj.paginador.pageSize,obj.paginador.pageSize )
     }
-
-
-     // Ventana modal
-var modal = document.getElementById("ventanaModal");
-var modal1 = document.getElementById("ventanaModal1");
-var modal2 = document.getElementById("ventanaModal2");
-var modal3 = document.getElementById("ventanaModal3");
-var modal4 = document.getElementById("ventanaModal4");
-
-// Botón que abre el modal
-var boton = document.getElementById("abrirModal");
-var boton1 = document.getElementById("abrirModal1");
-var boton2 = document.getElementById("abrirModal2");
-var boton3 = document.getElementById("abrirModal3");
-var boton4 = document.getElementById("abrirModal4");
-
-// Hace referencia al elemento <span> que tiene la X que cierra la ventana
-var span = document.getElementsByClassName("cerrar")[0];
-var span1 = document.getElementsByClassName("cerrar1")[0];
-var span2 = document.getElementsByClassName("cerrar2")[0];
-var span3 = document.getElementsByClassName("cerrar3")[0];
-var span4 = document.getElementsByClassName("cerrar4")[0];
-// Cuando el usuario hace click en el botón, se abre la ventana
-boton.addEventListener("click",function() {
-  modal.style.display = "block";
-});
-boton1.addEventListener("click",function() {
-  modal1.style.display = "block";
-});
-boton2.addEventListener("click",function() {
-  modal2.style.display = "block";
-});
-boton3.addEventListener("click",function() {
-  modal3.style.display = "block";
-});
-boton4.addEventListener("click",function() {
-  modal4.style.display = "block";
-});
-
-// Si el usuario hace click en la x, la ventana se cierra
-span.addEventListener("click",function() {
-  modal.style.display = "none";
-});
-span1.addEventListener("click",function() {
-  modal1.style.display = "none";
-});
-span2.addEventListener("click",function() {
-  modal2.style.display = "none";
-});
-span3.addEventListener("click",function() {
-  modal3.style.display = "none";
-});
-span4.addEventListener("click",function() {
-  modal4.style.display = "none";
-});
-// Si el usuario hace click fuera de la ventana, se cierra.
-window.addEventListener("click",function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-});
-window.addEventListener("click",function(event) {
-  if (event.target == modal1) {
-    modal1.style.display = "none";
-  } else if (event.target == modal2) {
-     modal2.style.display = "none";   
-  }else if (event.target == modal3) {
-     modal3.style.display = "none";   
-  }else if (event.target == modal4){
-    modal4.style.display = "none";
-  }
-});
     
     obj.lastPage = ()=>{
         obj.paginador.currentPage = obj.paginador.currentPage - 1;

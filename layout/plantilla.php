@@ -49,7 +49,7 @@
     <meta property="fb:app_id" content="732648563841854">
     <meta property="fb:pages" content="https://www.facebook.com/MacromAutopartes">
     <meta property="fb:admins" content="732648563841854">
-        <link rel="shortcut icon" href="https://macromautopartes.com/images/icons/FaviconM.png" type="image/png" />
+    <link rel="shortcut icon" href="https://macromautopartes.com/images/icons/FaviconM.png" type="image/png" />
     <link rel="canonical" href="https://macromautopartes.com/" />
 
 <!--===============================================================================================-->
@@ -87,8 +87,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="preload" href="css/main" as="styles">
     <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/otra.css">
     <link rel="stylesheet" href="css/normalize.css">
 
@@ -128,10 +128,9 @@
   logged_out_greeting="Hola, En que podemos ayudarte?">
 </div>
 <!--===============================================================================================-->
-    <script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script type="text/javascript" src="vendor/momentjs/moment.min.js"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
-   <script src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
     <script src="tv-admin/asset/Plugins/numeric/jquery.numeric.js"></script>
     <!--====================================================================================    ==========-->
         <!-- Angular -->
@@ -149,25 +148,12 @@
 <!--===============================================================================================-->
 	<script type="text/javascript" src="vendor/animsition/js/animsition.min.js"></script>
 <!--===============================================================================================-->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
     <script type="text/javascript" src="vendor/JsZip/dist/jszip.min.js"></script>
 <!--===============================================================================================-->
-	<script type="text/javascript" src="vendor/select2/select2.min.js"></script>
-	<script type="text/javascript">
-		$(".selection-1").select2({
-			minimumResultsForSearch: 20,
-			dropdownParent: $('#dropDownSelect1')
-		});
-	</script>
-<!--===============================================================================================-->
 	<script type="text/javascript" src="vendor/slick/slick.min.js"></script>
-   <!--  <script type="text/javascript" src="js/slick-custom.js"></script> -->
-<!--===============================================================================================-->
-	<script type="text/javascript" src="vendor/countdowntime/countdowntime.js"></script>
-<!--===============================================================================================-->
-	<script type="text/javascript" src="vendor/lightbox2/js/lightbox.min.js"></script>
 <!--===============================================================================================-->
 	<script type="text/javascript" src="vendor/sweetalert/sweetalert.min.js"></script>
 	<script type="text/javascript">
@@ -186,7 +172,6 @@
 		});
 	</script>
         
-        <!-- <script type="text/javascript" src="vendor/debounce/jquery.ba-throttle-debounce.min.js"></script> -->
 <!--===============================================================================================-->
 	<script type="text/javascript" src="vendor/parallax100/parallax100.js"></script>
 	<script type="text/javascript">
@@ -195,14 +180,6 @@
 <!--========================================tostr mensajes=======================================================-->
 <script type="text/javascript" src="vendor/toastr/build/toastr.min.js"></script>
 
-<!--===============================================================================================-->
-	
-<!-- <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v10.0" nonce="8LLG24aL"></script> -->
-	
-<!--===============================================================================================-->
-
-<!--	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKFWBqlKAGCeS1rMVoaNlwyayu0e0YRes"></script>
-	<script src="js/map-custom.js"></script>-->
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
         <?php

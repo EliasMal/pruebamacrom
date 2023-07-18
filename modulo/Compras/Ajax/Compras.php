@@ -1,10 +1,31 @@
 <?php
-
     session_name("loginCliente");
     session_start();
     require_once "../../../tv-admin/asset/Clases/dbconectar.php";
     require_once "../../../tv-admin/asset/Clases/ConexionMySQL.php";
     require_once "../../../tv-admin/asset/Clases/redpack.php";
+
+    // function obtener_servicio() {
+    //     global $dbb;
+    //     try {
+    //         //Consulta SQL
+    //         $sql = "SELECT * FROM Carrito;";
+    //         //Realizar Consulta
+    //         $conjemplo = mysqli_query($dbb, $sql);
+    //         //Acceder a los resultados
+    //         return $conjemplo;
+    //     } catch(\Throwable $th){
+    //         var_dump($th);
+    //     }
+    // }
+
+    // $conjemp = obtener_servicio();
+    // echo "<pre>";
+    // var_dump(mysqli_fetch_assoc($conjemp));
+    // echo "</pre>";
+    // $servicio = mysqli_fetch_assoc($conjemp);
+    // echo $servicio['Producto'];
+    // echo $servicio['Clave'];
 
     class Compras{
         private $conn;
@@ -19,7 +40,7 @@
             $this->redpack = new redpack();
             $this->conn = new HelperMySql($array["server"], $array["user"], $array["pass"], $array["db"]);
         }
-         
+        
         public function __destruct() {
             unset($this->conn);
             unset($this->redpack);
@@ -77,7 +98,6 @@
             }
             return $Cenvio;
         }
-
 
         private function getDataUser($username){
             $dataArray = array("datauser"=>array(), "datafacturacion"=>array());

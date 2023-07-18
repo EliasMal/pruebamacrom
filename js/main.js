@@ -134,6 +134,12 @@
 
      /*[ Fixed Header ]
     ===========================================================*/
+    $(document).ready(function() {
+		$(".secundaria").click(function(){
+			$("#principal").attr("src", $(this).attr("src"));
+		 });
+	});
+    
     var posWrapHeader = $('.topbar').height();
     var header = $('.container-menu-header');
 
