@@ -41,6 +41,14 @@
     });
 
 
+
+    $('.slick').slick({
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+      });
+
     /*[ Show header dropdown ]
     ===========================================================*/
     $('.js-show-header-dropdown').on('click', function(){

@@ -32,6 +32,8 @@
 								<img src="{{getGaleria(gal._id)}}" alt="miniatura" class="secundaria">
 							</div>
 						</div>
+						<!-- <img src="{{getImagen(Refaccion.datos.imagen, Refaccion.datos._id)}}" alt="" class="secundaria"> -->
+						
 					</div>
 					<div class="">
 						<div class=""
@@ -44,7 +46,7 @@
 				</div>
 			</div>
 
-			<div class="w-size14 p-t-30 respon5">
+			<div class="p-t-30">
 				<h4 class="product-detail-name m-text16 p-b-13">
 					{{Refaccion.datos.Producto}}
 				</h4>
@@ -63,38 +65,40 @@
 				</section>
 
 				<!--  -->
-				<div class="p-t-33 p-b-60">
+				<div class="p-t-33 p-b-60 contenedor__botonesesion">
 
-					<div class="flex-r-m flex-w p-t-10" ng-show="Activa">
-						<div class="w-size16 flex-m flex-w">
-							<div class="btn-addcart-product-detail size9 trans-0-4 m-t-10 m-b-10">
+					<div class="botones__sesion" ng-show="Activa">
+						<div class="botones__sesion--noiniciada">
+							<div class="btn-addcart-product-detail iniciarsesion__contenedor">
 								<!-- Button -->
-								<button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4"
+								<button class="btn btn-danger iniciarsesion__contenedor--boton form-control"
 									ng-show="btnEnabled" ng-click="btnInciarSession()">
 									Iniciar sesion
 								</button>
 							</div>
 						</div>
-						<div class="w-size16 flex-m flex-w" ng-show="!btnEnabled">
-							<div class="flex-w bo5 of-hidden m-r-22 m-t-10 m-b-10">
-								<!--                                                                btn-num-product-down-->
-								<button class=" color1 flex-c-m size7 bg8 eff2"
+
+						<div class="botones__sesion--iniciada" ng-show="!btnEnabled">
+							<div class="agregarmas no-overflow">
+								
+								<button class="agregarmas__botones"
 									ng-click="btndisminuir()">
 									<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
 								</button>
-								<div class="size8 m-text18 t-center num-product " style="display: flex; justify-content: center; align-items: center;">
+
+								<div class="agregarmas__contador num-product center--text">
 									<span >{{Refaccion.cantidad}}</span>
 								</div>
 
-								<button class="color1 flex-c-m size7 bg8 eff2"
+								<button class="agregarmas__botones"
 									ng-click="btnaumentar();">
 									<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
 								</button>
 							</div>
 
-							<div class="btn-addcart-product-detail size9 trans-0-4 m-t-10 m-b-10">
+							<div class="btn-addcart-product-detail agregarcarrito__contenedor">
 								<!-- Button -->
-								<button class="btn btn-danger form-control mobilebtn"
+								<button class="btn btn-danger form-control agregarcarrito__contenedor--boton"
 									ng-click="Agregarcarrito()">
 									Agregar al carrito
 								</button>
@@ -109,15 +113,19 @@
 					</div>
 				</div>
 
-				<div class="p-b-45">
-					<p class="s-text8 m-r-35">No. Parte: <strong>{{Refaccion.datos.No_parte}}</strong></p>
-					<p class="s-text8">Articulos en Existencia: <strong
-							class="{{Refaccion.Existencias==0? 'text-danger':''}}">{{Refaccion.Existencias!=0?
-							Refaccion.Existencias:"Agotado"}}</strong></p>
-					<p class="s-text8 m-r-35">Categoria: <strong>{{Refaccion.datos.Categoria}}</strong></p>
-					<p class="s-text8 m-r-35">Marca del Vehiculo: <strong>{{Refaccion.datos.Marca}}</strong></p>
-					<p class="s-text8 m-r-35">Vehiculo: <strong>{{Refaccion.datos.Modelo}}</strong></p>
-					<p class="s-text8 m-r-35">Modelo: <strong>{{Refaccion.datos.Anio}}</strong></p>
+				<div class="descripcion p-b-45">
+					<p>No. Parte: </p>
+					<p><strong>{{Refaccion.datos.No_parte}}</strong></p>
+					<p>Articulos en Existencia: </p>
+					<p><strong class="{{Refaccion.Existencias==0? 'text-danger':''}}">{{Refaccion.Existencias!=0?Refaccion.Existencias:"Agotado"}}</strong></p>
+					<p>Categoria: </p>
+					<p><strong>{{Refaccion.datos.Categoria}}</strong></p>
+					<p>Marca del Vehiculo: </p>
+					<p><strong>{{Refaccion.datos.Marca}}</strong></p>
+					<p>Vehiculo: </p>
+					<p><strong>{{Refaccion.datos.Modelo}}</strong></p>
+					<p>Modelo: </p>
+					<p><strong>{{Refaccion.datos.Anio}}</strong></p>
 				</div>
 
 				<div class="p-b-45" ng-show="Refaccion.datos.Enviogratis">
@@ -127,7 +135,7 @@
 					</div>
 				</div>
 				<!--  --> 
-				<div class="wrap-dropdown-content bo6 p-t-15 p-b-14 active-dropdown-content">
+				<div class="wrap-dropdown-content active-dropdown-content descripcion__texto">
 					<h5 class="js-toggle-dropdown-content flex-sb-m cs-pointer m-text19 color0-hov trans-0-4">
 						Descripci&oacute;n
 						<i class="down-mark fs-12 color1 fa fa-minus dis-none" aria-hidden="true"></i>
@@ -156,8 +164,8 @@
 			</div>
 
 			<!-- Slide2 -->
-			<div class="wrap-slick2">
-				<div class="slick2 row">
+			<!-- <div class="">
+				<div class="slick2">
 					<div class="enlace" ng-repeat="producto in productos">
 						<div class="block2" ng-click="RefaccionDetalles(producto._id)">
 							<div class="block2-img wrap-pic-w of-hidden pos-relative cursorpnt" ng-style="{'background-color': producto.color}" ng-class="{
@@ -192,7 +200,42 @@
 						</div>
 					</div>
 				</div>
+			</div> -->
+
+			<div class="slick">
+				<div class="slick-slide enlace" ng-repeat="producto in productos">
+					<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/motor.png'}}" alt="Image" ng-click="RefaccionDetalles(producto._id)" class="slick__img" >
+					<div class="p-t-20 contenedor__descripcion--producto">
+								<section class="descripcion-producto">
+									<img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.id_proveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
+									alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}">
+									<p class="block2-name dis-block s-text3 p-b-5">
+										{{producto.Producto}}
+									</p>
+								</section>
+								
+								<span class="p-r-5 p-t-5 descripcion__producto--precio">
+									<h3>{{producto.Precio1 | currency}}</h3>
+								</span>
+
+								<div class="enviogratis"  ng-show="producto.Enviogratis">
+									<img src="/images/icons/Icono-camion.png" alt="">
+									<p > <strong>Envío Gratis </strong> </p> 
+								</div>
+							</div>
+				</div>
+				<div class="slick-slide">
+					<img src="https://prueba.macromautopartes.com/images/refacciones/2805.png" alt="Image">
+				</div>
+				<div class="slick-slide">
+					<img src="https://prueba.macromautopartes.com/images/refacciones/5175.png" alt="Image">
+				</div>
+				<div class="slick-slide">
+					<img src="https://prueba.macromautopartes.com/images/refacciones/" alt="Image">
+				</div>
+
 			</div>
+
 		</div>
 	</section>
 </div>

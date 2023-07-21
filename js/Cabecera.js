@@ -59,27 +59,6 @@ function CabeceraCtrl($scope,$http, $sce,vcRecaptchaService){
         }
         return obj.Costumer.Subtotal;
         }
-/*
-    obj.Ttotal = ()=>{
-       
-        if(obj.total > 0){
-           
-            obj.total += parseFloat(obj.session.Cenvio.costo);
-        }
-        return obj.total;
-    } */
-    
-    /* obj.btnAgregar = (p)=>{
-        p.cantidad = p.cantidad!=0? p.cantidad+1:0;
-        obj.actualizarSession(p,false);
-        obj.getCotizacionEnvio();
-    }
-    
-    obj.btnQuitar = (p)=>{
-        p.cantidad = p.cantidad!=0? p.cantidad-1:0;
-        obj.actualizarSession(p,false);
-        obj.getCotizacionEnvio();
-    } */
 
     obj.slcenvio = ()=>{
         //obj.session.Cenvio.costo = parseFloat( obj.session.Cenvio.costo);
@@ -115,6 +94,15 @@ function CabeceraCtrl($scope,$http, $sce,vcRecaptchaService){
         }
     }
     //eliminar refaccion
+
+    /** abrir y cerrar barra navegacion en mobil **/
+    var abrirmenu = document.querySelectorAll("#topbar--switch");
+    var contnavegacion = document.querySelectorAll(".contenedor__navegacion");
+    abrirmenu.forEach((b,i) =>{
+        b.addEventListener("click",()=>{
+          contnavegacion[i].classList.toggle("abierto")
+        });
+      });
 
     obj.btnLogin = ()=>{
         location.href="?mod=login";

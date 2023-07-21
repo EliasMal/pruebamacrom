@@ -59,14 +59,19 @@
 											<a ng-click="RefaccionDetalles(product.id)" class="productos__datos--info--articulo">{{product.articulo}}</a>
 											<p>No.Parte: {{product.noparte}}</p>
 											<p>{{product.cantidad}} x {{product.precio |currency}}</p>
-											<div class="productos__datos--contador d-ctd">
-												<div class="flex-w of-hidden w-size17 p-b-20">
-													<button class="btn-num-product-down colorwhite flex-c-m msize1 bg9 eff2 bor-1" ng-click="btnQuitar(product)">
-															<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
+											<div class="productos__datos--contador">
+												<div class="agregarmas no-overflow">
+									
+													<button class="agregarmas__botones" ng-click="btnQuitar(product)">
+														<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
 													</button>
-													<span class="msize2 m-text28 t-center p-t-5 num-product">{{product.cantidad}}</span>
-													<button class="btn-num-product-up colorwhite flex-c-m msize1 bg9 eff2 bor-1" ng-click="btnAgregar(product)">
-															<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
+
+													<div class="agregarmas__contador num-product center--text">
+														<span >{{product.cantidad}}</span>
+													</div>
+
+													<button class="agregarmas__botones" ng-click="btnAgregar(product)">
+														<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
 													</button>
 												</div>
 											</div>
