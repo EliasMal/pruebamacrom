@@ -1,38 +1,29 @@
 <script src="https://www.google.com/recaptcha/api.js"></script>
 <section ng-controller="CabeceraCtrl" ng-init="mod='{mod}'">
-	<section class="contenedor"  ng-repeat="contac in Banner.Escritorio">
-		<img src="images/Banners/{{contac.imagen}}" alt="Banner de contactanos">
-		<h2 class="l-text2 t-center">
-			Cont&aacute;ctanos
-		</h2>
-	</section>
-	<section class="contenedor-responsive" ng-repeat="contac in Banner.Movil">
-		<img src="images/Banners/{{contac.imagen}}" alt="banner de contactanos">
-		<h2 class="l-text2 t-center">
-			Cont&aacute;ctanos
-		</h2>
+	<section class="header"  ng-repeat="contac in Banner.Escritorio">
+		<picture class="header__picture">
+			<source srcset="images/Banners/contactanos.webp" type="image/webp" class="header__picture--img">
+			<img loading="lazy" src="images/Banners/{{contac.imagen}}" alt="Banner de contactanos">
+		</picture>
 	</section>
 	<!-- Title Page -->
-	<!-- <section ng-repeat="contac in Banner" class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(images/Banners/{{contac.imagen}});">
-		<h2 class="l-text2 t-center">
-			Contactanos
-		</h2>
-	</section> -->
 
 	<!-- content page -->
-	<section class="bgwhite p-t-66 p-b-60">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 p-b-30">
-					<div class="p-r-20 p-r-0-lg">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3766.712475121612!2d-103.70171749152664!3d19.25135870708902!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x84255a9768963441%3A0x3e7cfc0ab3f15bd5!2sRefaccionaria+Tsuruvolks!5e0!3m2!1ses-419!2smx!4v1557805747261!5m2!1ses-419!2smx" width="400" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
-						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3766.47048153931!2d-103.74390078464462!3d19.26189585110726!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842545532493215f%3A0x229ec182b93e6fdc!2sMacrom%20Autopartes!5e0!3m2!1ses-419!2smx!4v1676935585190!5m2!1ses-419!2smx" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10359.652205862709!2d-104.33917834066347!3d19.10698784817063!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8424d7608379eb3d%3A0xea005accd2a70e3c!2sMacrom%20Autopartes!5e0!3m2!1ses-419!2smx!4v1676935648359!5m2!1ses-419!2smx" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-						<!--<div class="contact-map size21" id="google_map" data-map-x="40.614439" data-map-y="-73.926781" data-pin="images/icons/icon-position-map.png" data-scrollwhell="0" data-draggable="1"></div>-->
+	<section class="contactanos">
+		<div class="contenedor contactanos__principal">
+			<div class="contactanos__contenido">
+				<div class="contactanos__contenido--mapas">
+					<div class="contenedor__mapas">
+						<h2>Colima - Blvd. Camino Real 597, Diezmo.</h2>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3766.712475121612!2d-103.70171749152664!3d19.25135870708902!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x84255a9768963441%3A0x3e7cfc0ab3f15bd5!2sRefaccionaria+Tsuruvolks!5e0!3m2!1ses-419!2smx!4v1557805747261!5m2!1ses-419!2smx" loading="lazy" allowfullscreen></iframe>
+						<h2>Villa de Alvarez - Av. Benito juarez 164, La Gloria.</h2>
+						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3766.47048153931!2d-103.74390078464462!3d19.26189585110726!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842545532493215f%3A0x229ec182b93e6fdc!2sMacrom%20Autopartes!5e0!3m2!1ses-419!2smx!4v1676935585190!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+						<h2>Manzanillo - Av. Elias Zamora Verduzco 2043, Salagua</h2>
+						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10359.652205862709!2d-104.33917834066347!3d19.10698784817063!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8424d7608379eb3d%3A0xea005accd2a70e3c!2sMacrom%20Autopartes!5e0!3m2!1ses-419!2smx!4v1676935648359!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 					</div>
                 </div>
 
-				<div class="col-md-6 p-b-30">
+				<div class="contactanos__contenido--contacto">
 					<div class="row" ng-show="msgContacto">
 						<div class="col-md-12">
 								<h4 class="m-text26 p-b-36 p-t-15">
@@ -65,7 +56,7 @@
 
 						<div class="w-size25">
 							<!-- Button -->
-							<button type="submit" class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4">
+							<button type="submit" class="btn btn-danger enviarcontatco--boton form-control">
 								Enviar
 							</button>
 						</div>

@@ -1,17 +1,12 @@
-<div ng-controller="catalogosCtrl" ng-init="refaccion.categoria='{categoria}'">
+<div ng-controller="catalogosCtrl" ng-init="refaccion.categoria='{categoria}'" class="ctrlmain">
 	<!-- Title Page -->
 	<header class="header">
 		<section class="header__contenido" ng-repeat="cat in catalogos.Escritorio">
-			<img src="images/Banners/{{cat.imagen}}" alt="Banner Catalogos">
+		<picture class="header__picture">
+						<source srcset="images/Banners/CATALOOG.webp" type="image/webp" class="header__picture--img">
+						<img loading="lazy" src="images/Banners/{{banner.imagen}}" alt="banner">
+				</picture>
 		</section>
-
-		<section class="header__contenido contenido--responsive" ng-repeat="cat in catalogos.Movil">
-			<img src="images/Banners/{{cat.imagen}}" alt="Banner Catalogos">
-		</section>
-
-		<div class="header__texto">
-			<h2 class="no-margin">Cat&aacute;logos</h2>
-		</div>
 	</header>
 	<!-- Content page -->
 	<main class="bgblack p-t-55 p-b-65">

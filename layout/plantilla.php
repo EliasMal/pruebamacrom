@@ -86,7 +86,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
-    <link rel="preload" href="css/main" as="styles">
+    <link rel="preload" href="css/main" as ="styles">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/otra.css">
     <link rel="stylesheet" href="css/normalize.css">

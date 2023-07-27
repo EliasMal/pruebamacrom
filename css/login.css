@@ -1,0 +1,142 @@
+.contmenubus, footer, .copyseccion, #myBtn, .carritoshop, .menudesinsreg{
+    visibility: collapse;
+    height:-100%;
+    width:-100%;
+}
+.prueba3, #login,#password, .login-box-msg, .entrarenses{
+  font-family: Poppins;
+}
+.header2{
+  display: none;
+  height: 0;
+}
+.ft0{
+  display: none;
+}
+body{
+  font-family: Poppins;
+  overflow: hidden;
+}
+.container1{
+  max-width: 200rem;
+}
+.login__contenedor__uno{
+  display: none;
+}
+.form__login{
+  padding: 5rem !important;
+}
+.contenedor__uno--texto{
+  color: var(--blanco);
+  font-size: xx-large;
+  font-weight: bold;
+  font-family: Poppins;
+  margin-top: 50%;
+}
+#frmReg{
+  padding: 0 5rem 0;
+}
+.contenedor__dos--logo{
+  padding-bottom: 2.5rem;
+}
+#alertvali, .alertvalid{
+  border: 2px solid var(--primario);
+  border-radius: 0.25rem;
+  color: #000;
+  box-shadow: 1px 1px 12px #ddd;
+  display: none; 
+  width: 100%;
+}
+#alertvali img, .alertvalid img{
+  width: 48px;
+  padding-right: 2px;
+}
+.login__contenedor__dos{
+  background-color: var(--blanco);
+  height: 100rem;
+}
+.contenedor__dos--titulo{
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+  font-size: xx-large;
+  padding-bottom: 2.5rem;
+  }
+.main__login, .contenedor__dos--registro div{
+  border: 0;
+  border-bottom: 1px solid #000;
+  margin-bottom: 1rem;
+}
+.main__login input, .contenedor__dos--registro div input{
+  height: 4rem;
+}
+.secondary__contenedor{
+  align-items: center;
+  width:100%;
+  text-align: center;
+}
+.secondary__contenedor--forgot:hover, .secondary__contenedor--register:hover, .registro__aviso a:hover, .yatienes__cuenta a:hover{
+  color: var(--primario-oscuro);
+  text-decoration: underline;
+}
+.secondary__contenedor--forgot, .secondary__contenedor--register{
+  color: var(--primario);
+}
+.secondary__contenedor--forgot a p, .secondary__contenedor--register a p{
+  font-size: 2rem;
+  color: var(--primario);
+}
+.secondary__contenedor--boton button{
+  width:100%;
+  height:40px;
+  border-radius: 0.40rem;
+}
+.contenedor__dos--registro{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  column-gap: 2rem;
+}
+.closeinsregform{
+  margin-left:90%;
+  margin-top:5rem;
+  font-size: 3rem;
+  color: var(--primario);
+  align-items: center;
+  visibility: visible;
+}
+.closeinsregform:hover{
+  color: var(--primario-oscuro); 
+}
+.form__contenedor{
+  position: relative;
+}
+.yatienes__cuenta{
+  color: var(--negro);
+  text-align: center;
+}
+.yatienes__cuenta a, .registro__aviso a{
+  color: var(--primario);
+}
+.registro__aviso{
+  padding: 2rem 0 2rem;
+}
+@media(min-width: 768px) {
+  .login{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+  }
+  .login__contenedor__uno{
+    display: block;
+    background:var(--primario-oscuro);
+    text-align: center;
+    height:120rem;
+  }
+  .closeinsregform{
+    margin-left: 95%;
+  }
+  .contenedor__dos--registro{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    column-gap: 4rem;
+  }
+}

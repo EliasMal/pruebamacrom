@@ -40,7 +40,14 @@
         $('html, body').animate({scrollTop: 0}, 300);
     });
 
-
+   /** abrir y cerrar barra navegacion en mobil **/
+   var abrirmenu = document.querySelectorAll("#topbar--switch");
+   var contnavegacion = document.querySelectorAll(".contenedor__navegacion");
+   abrirmenu.forEach((b,i) =>{
+       b.addEventListener("click",()=>{
+         contnavegacion[i].classList.toggle("abierto")
+       });
+     });
 
     $('.slick').slick({
         slidesToShow: 3,

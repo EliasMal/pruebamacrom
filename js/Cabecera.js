@@ -95,15 +95,6 @@ function CabeceraCtrl($scope,$http, $sce,vcRecaptchaService){
     }
     //eliminar refaccion
 
-    /** abrir y cerrar barra navegacion en mobil **/
-    var abrirmenu = document.querySelectorAll("#topbar--switch");
-    var contnavegacion = document.querySelectorAll(".contenedor__navegacion");
-    abrirmenu.forEach((b,i) =>{
-        b.addEventListener("click",()=>{
-          contnavegacion[i].classList.toggle("abierto")
-        });
-      });
-
     obj.btnLogin = ()=>{
         location.href="?mod=login";
     }

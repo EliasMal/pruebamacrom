@@ -20,9 +20,11 @@
                 "alto" => $formulario->modelo->datos->Alto,
                 "peso" => $formulario->modelo->datos->Peso,
                 "Enviogratis" =>$formulario->modelo->datos->Enviogratis,
+                "clave"=>$formulario->modelo->datos->Clave,
                 "id"=>$id);
         }
     }
+    
     class carrito{
         private function setCSeguridad ($id){
             $sql = "INSERT INTO Carrito(_clienteid, Clave, Producto, No_parte, Cantidad, precio) values "

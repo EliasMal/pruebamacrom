@@ -1,20 +1,20 @@
 <?php
 	/*
-	 * Clase que sirve para hacer la conexion a la base de datos, realizar consultas y obtener los resultados de la consulta
-	 * usando mysqli
+	 * Clase que sirve para hacer la conexion a la base de datos, realizar consultas y obtener los resultados de la consultamysqli
+	 * usando 
 	*/	 
 	class HelperMySql{
 		private $M;//Object MySQLi Connection
 		private $R = false;//Object Result
-		private $data = Array(); //Datos de conexi�n
+		private $data = Array(); //Datos de conexion
 		public $error;
                 
 		public function __construct($h,$u,$p,$d){
-			/* guardamos datos de conexi�n por si se
-			 * llega a perder conexi�n entonces reconectar */
+			/* guardamos datos de conexion por si se
+			 * llega a perder conexion entonces reconectar */
 			$this->data = Array($h,$u,$p,$d);
 			
-			/* realizamos la conexi�n */
+			/* realizamos la conexion */
 			$this->M = new mysqli($h, $u, $p, $d);
                         $this->M->set_charset("utf8");
 		}
