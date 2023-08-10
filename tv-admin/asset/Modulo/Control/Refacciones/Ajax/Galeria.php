@@ -108,7 +108,7 @@ class Galeria{
         if($this->foto["file"]["name"]!="" and $this->foto["file"]["size"]!=0){
             $subdir ="../../../../../../"; 
             $dir = "images/galeria/";
-            $archivo = $this->formulario["lastid"].".png";
+            $archivo = $this->formulario["lastid"].".webp";
             if(!is_dir($subdir.$dir)){
                 mkdir($subdir.$dir,0755);
             }
@@ -126,6 +126,12 @@ class Galeria{
     private function EraseImagen(){
         if(file_exists("../../../../../../images/galeria/{$this->formulario["id"]}.png")){
             return unlink("../../../../../../images/galeria/{$this->formulario["id"]}.png");
+        }else{
+            return false;
+        }
+        
+        if(file_exists("../../../../../../images/galeria/{$this->formulario["id"]}.webp")){
+            return unlink("../../../../../../images/galeria/{$this->formulario["id"]}.webp");
         }else{
             return false;
         }

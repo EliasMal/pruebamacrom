@@ -4,29 +4,7 @@
     require_once "../../../tv-admin/asset/Clases/dbconectar.php";
     require_once "../../../tv-admin/asset/Clases/ConexionMySQL.php";
     require_once "../../../tv-admin/asset/Clases/redpack.php";
-
-    // function obtener_servicio() {
-    //     global $dbb;
-    //     try {
-    //         //Consulta SQL
-    //         $sql = "SELECT * FROM Carrito;";
-    //         //Realizar Consulta
-    //         $conjemplo = mysqli_query($dbb, $sql);
-    //         //Acceder a los resultados
-    //         return $conjemplo;
-    //     } catch(\Throwable $th){
-    //         var_dump($th);
-    //     }
-    // }
-
-    // $conjemp = obtener_servicio();
-    // echo "<pre>";
-    // var_dump(mysqli_fetch_assoc($conjemp));
-    // echo "</pre>";
-    // $servicio = mysqli_fetch_assoc($conjemp);
-    // echo $servicio['Producto'];
-    // echo $servicio['Clave'];
-
+    
     class Compras{
         private $conn;
         private $redpack;

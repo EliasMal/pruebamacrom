@@ -6,7 +6,7 @@ var urlCostumer = "./modulo/ProcesoCompra/Ajax/ProcesoCompra.php";
 var url_session ="./modulo/home/Ajax/session.php";
 const url_monedero = "./tv-admin/asset/Modulo/Control/Monedero/Ajax/Monedero.php";
 //const urlSkydropx = "https://api-demo.skydropx.com/v1/quotations"
-const urlSkydropx = "https://api.skydropx.com/v1/quotations"
+const urlSkydropx = "https://api.skydropx.com/v1/quotations";
 //const token = "Token token=SuOZQz5IrqceQbJmBqQfAo4PMQvNKMCh2PtXOKMfKM0t";
 const token = "Token token=fInE1ArT8CJfaR2wkznA5hXSNCMSXs7vitsCFeM98Pct";
 

@@ -668,7 +668,7 @@ function RefaccionesEditCtrl($scope, $http){
                 obj.Proveedor  = res.data.data.Proveedores;
                 obj.refaccion.opc="edit";
                 obj.backgroudimg ={"background-color":obj.refaccion.color}
-                obj.img = obj.refaccion.imagen? obj.dominio+'/images/refacciones/'+obj.refaccion._id+'.png':obj.dominio+'/images/refacciones/motor.png';
+                obj.img = obj.refaccion.imagen? obj.dominio+'/images/refacciones/'+obj.refaccion._id+'.png':obj.dominio+'/images/refacciones/'+obj.refaccion._id+'.webp';
                 //obj.getCategorias();
                 //obj.getMarcas();
                 //obj.getVehiculos();
@@ -771,7 +771,7 @@ function RefaccionesEditCtrl($scope, $http){
     }
 
     obj.getImagen = (e) =>{
-        return e.imagen? obj.dominio+'/images/galeria/'+e._id+'.png':obj.dominio+'/images/refacciones/motor.png'
+        return e.imagen? obj.dominio+'/images/galeria/'+e._id+'.png':obj.dominio+'/images/galeria/'+e._id+'.webp';
     }
 
     obj.btnEliminarImagen = (_id) => {

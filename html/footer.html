@@ -2,52 +2,54 @@
 
 
 	<!-- Footer -->
-	<footer class="bg6 p-t-45 p-b-43 p-l-45 p-r-45" ng-controller="FooterCtrl">
-		<div class="flex-w p-b-90">
-			<div class="w-size6 p-t-30 p-l-15 p-r-15 respon3">
-				<h4 class="s-text12 p-b-30">
+	<footer class="footer__contenedor" ng-controller="FooterCtrl">
+		<div class="footer__contacto">
+			<div class="footer__contacto__sucursales">
+				<h4 class="p-b-30 center--text">
 					ESTAMOS EN CONTACTO
 				</h4>
 
-				<div>
-					<p class="s-text7 w-size27">
-						<strong>¿Tienes preguntas?</strong>  Envia un correo a <a href="mailto:ventas@tsuruvolks.com.mx">ventas@tsuruvolks.com.mx</a> o visita nuestras sucursales:
+				<div class="footer__contacto__contenedor">
+					<p class="footer__contacto--texto">
+						<strong>¿Tienes preguntas?</strong>  Envia un correo a <a href="mailto:ventas@tsuruvolks.com.mx" class="contacto__mail">ventas@tsuruvolks.com.mx</a> o visita nuestras sucursales:
 					</p>
-					<hr />
-					<section>
-						<div class="domicilios">
-							<address class="s-text7 w-size27">
+					<hr/>
+
+					<section class="contenedor__domicilios">
+
+						<div class="domicilios__macrom">
+							<a href="https://g.page/Macrom?share" target="_blank"><img src="images/fachadas/1.jpeg" loading="lazy" alt="macrom-colima"></a>
+							<address class="footer__contacto--texto">
 								<strong>COLIMA</strong><br> 
 								Blvd. Camino Real #597 <br> 
 								Col. El Diezmo cp. 28010<br>
 								Tel: 312 159 2291 y 312 161 1774
 							</address>
-							<a href="https://g.page/Macrom?share" target="_blank" ><img src="images/fachadas/1.jpeg" alt="macrom-colima" class="rounded" width="90px" height="90px"></a>
 						</div>
-						<hr />
-						<div class="domicilios">
-							<address class="s-text7 w-size27">
+
+						<div class="domicilios__macrom">
+							<a href="https://goo.gl/maps/QN8ZYuCsVfZrbkeS9" target="_blank"><img src="images/fachadas/3.jpeg" loading="lazy" alt="macrom-manzanillo"></a>
+							<address class="footer__contacto--texto">
 								<strong>MANZANILLO</strong><br> 
 								Av. Elías Zamora Verduzco #2043  <br> 
 								Col. Salagua c.p. 28867 <br />
 								Tel: 314 688 4519 y 3143377267
 							</address>
-							<a href="https://goo.gl/maps/QN8ZYuCsVfZrbkeS9" target="_blank" ><img src="images/fachadas/3.jpeg" alt="macrom-manzanillo" class="rounded" width="90px" height="90px"></a>
 						</div>
-						<hr />
-						<div class="domicilios">
-							<address class="s-text7 w-size27">
+
+						<div class="domicilios__macrom">
+							<a href="https://g.page/Tsuruvolks?share" target="_blank"><img src="images/fachadas/2.png" loading="lazy" alt="macrom-villadealvarez"></a>
+							<address class="footer__contacto--texto">
 								<strong>VILLA DE ÁLVAREZ</strong><br> 
 								Av. Benito Juárez #164 <br> 
 								Col. La Gloria c.p. 28980 <br>
 								Tel: 312 159 1040 y 312 311 6343
 							</address>    
-							<a href="https://g.page/Tsuruvolks?share" target="_blank" ><img src="images/fachadas/2.png" alt="macrom-villadealvarez" class="rounded" width="90px" height="90px"></a>
 						</div>
+
 					</section>
 
-					<div class="flex-m p-t-30">
-                                            
+					<div class="footer__contacto__contenedor--social">      
 						<a href="https://www.facebook.com/MacromAutopartes/" target="_blank" class="fs-18 color1 p-r-20 fa fa-facebook" target="_blank"></a>
 						<a href="https://www.instagram.com/macromautopartes/" class="fs-18 color1 p-r-20 fa fa-instagram" target="_blank"></a>
 						<a href="https://www.youtube.com/channel/UCbVJJH6AIZJ9lH7fE_2rtwA" class="fs-18 color1 p-r-20 fa fa-youtube-play" target="_blank"></a>
@@ -56,118 +58,86 @@
 				</div>
 			</div>
 
-			<div class="w-size7 p-t-30 p-l-15 p-r-15 respon4">
-				<h4 class="s-text12 p-b-30">
-					Categor&iacute;as
-				</h4>
-
-				<ul>
-					<li class="p-b-9" ng-repeat="categoria in categorias">
-							<a href="?mod=catalogo&cat={{categoria._id}}" class="s-text7">
-								{{categoria.Categoria}}
-							</a>
-					</li>
-
-                                    
-				</ul>
-			</div>
-
-			<div class="w-size7 p-t-30 p-l-15 p-r-15 respon4">
-				<h4 class="s-text12 p-b-30">
-					Links
-				</h4>
-
-				<ul>
+			<div class="footer_contacto__opciones">
+				<div class="contacto__opciones--links">
+					<h4 class="contacto__opciones--titulo">Links</h4>
 					
-					<li class="p-b-9">
-						<a href="?mod=catalogo" class="s-text7">
-							Refacciones
-						</a>
-					</li>
-                                        <li class="p-b-9">
-						<a href="?mod=compras" class="s-text7">
-							Compras
-						</a>
-					</li>
-					<li class="p-b-9">
-						<a href="?mod=nosotros" class="s-text7">
-							Acerca de nosotros
-						</a>
-					</li>
+					<ul>
+						<li class="contacto__opciones">
+							<a href="?mod=catalogo">
+								Refacciones
+							</a>
+						</li>
 
-					<li class="p-b-9">
-						<a href="?mod=contacto" class="s-text7">
-							Cont&aacute;ctanos
-						</a>
-					</li>
-					<li class="p-b-9">
-						<a href="?mod=aviso-de-privacidad" class="s-text7">
-							Aviso de privacidad
-						</a>
-					</li>
-					<li class="p-b-9">
-						<a href="?mod=Terminos-condiciones" class="s-text7">
-							Terminos y condiciones
-						</a>
-					</li>
-				</ul>
-			</div>
+						<li class="contacto__opciones">
+							<a href="?mod=compras">
+								Compras
+							</a>
+						</li>
 
-			<div class="w-size7 p-t-30 p-l-15 p-r-15 respon4">
-				<h4 class="s-text12 p-b-30">
-					Ayuda
-				</h4>
+						<li class="contacto__opciones">
+							<a href="?mod=nosotros">
+								Acerca de nosotros
+							</a>
+						</li>
 
-				<ul>
-					<li class="p-b-9">
-						<a href="#" class="s-text7">
-							Rastrear Orden
-						</a>
-					</li>
+						<li class="contacto__opciones">
+							<a href="?mod=contacto">
+								Cont&aacute;ctanos
+							</a>
+						</li>
+						
+						<li class="contacto__opciones">
+							<a href="?mod=aviso-de-privacidad">
+								Aviso de privacidad
+							</a>
+						</li>
 
-					<li class="p-b-9">
-						<a href="?mod=Devoluciones" class="s-text7">
-							Devoluciones
-						</a>
-					</li>
+						<li class="contacto__opciones">
+							<a href="?mod=Terminos-condiciones">
+								Terminos y condiciones
+							</a>
+						</li>
 
-					<li class="p-b-9">
-						<a href="#" class="s-text7">
-							Envios
-						</a>
-					</li>
+					</ul>
+				</div>
 
-					<li class="p-b-9">
-						<a href="#" class="s-text7">
-							FAQs
-						</a>
-					</li>
-				</ul>
-			</div>
+				<div class="contacto__opciones--ayuda">
+					<h4 class="contacto__opciones--titulo">Ayuda</h4>
 
-			<div class="w-size8 p-t-30 p-l-15 p-r-15 respon3">
-				<h4 class="s-text12 p-b-30">
-					Boletines Informativos
-				</h4>
+					<ul>
+						<li class="contacto__opciones">
+							<a href="#">
+								Rastrear Orden
+							</a>
+						</li>
 
-				<form>
-					<div class="effect1 w-size9">
-						<input class="s-text7 bg6 w-full p-b-5" type="text" name="email" placeholder="email@example.com">
-						<span class="effect1-line"></span>
-					</div>
+						<li class="contacto__opciones">
+							<a href="?mod=Devoluciones">
+								Devoluciones
+							</a>
+						</li>
 
-					<div class="w-size2 p-t-20">
-						<!-- Button -->
-						<button class="flex-c-m size2 bg4 bo-rad-23 hov1 m-text3 trans-0-4">
-							Suscribirse
-						</button>
-					</div>
+						<li class="contacto__opciones">
+							<a href="#">
+								Envios
+							</a>
+						</li>
 
-				</form>
+						<li class="contacto__opciones">
+							<a href="#">
+								FAQs
+							</a>
+						</li>
+
+					</ul>
+				</div>
+
 			</div>
 		</div>
 
 	</footer>
+
         <div class="row ft0">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bg0">
                 <div class="t-center s-text8 colorwhite ">
@@ -175,8 +145,6 @@
                 </div>
             </div>
         </div>
-
-
 	<!-- Back to top -->
 	<div class="btn-back-to-top bg0-hov" id="myBtn">
             <span class="symbol-btn-back-to-top">
@@ -184,35 +152,3 @@
             </span>
 	</div>
 
-	<!-- Container Selection1 -->
-	<div id="dropDownSelect1"></div>
-
-	<!-- Modal Video 01-->
-	<div class="modal fade" id="modal-video-01" tabindex="-1" role="dialog" aria-hidden="true">
-
-		<div class="modal-dialog" role="document" data-dismiss="modal">
-			<div class="close-mo-video-01 trans-0-4" data-dismiss="modal" aria-label="Close">&times;</div>
-
-			<div class="wrap-video-mo-01">
-				<div class="w-full wrap-pic-w op-0-0"><img src="images/icons/video-16-9.jpg" alt="IMG"></div>
-				<div class="video-mo-01">
-					<iframe src="https://www.youtube.com/embed/Nt8ZrWY2Cmk?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-				</div>
-			</div>
-		</div>
-	</div>
-        
-        <!-- Modal Login-->
-	<div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-hidden="true">
-
-		<div class="modal-dialog" role="document" data-dismiss="modal">
-			<div class="close-mo-video-01 trans-0-4" data-dismiss="modal" aria-label="Close">&times;</div>
-
-			<div class="wrap-video-mo-01">
-				<div class="w-full wrap-pic-w op-0-0"><img src="images/icons/video-16-9.jpg" alt="IMG"></div>
-				<div class="video-mo-01">
-					<iframe src="https://www.youtube.com/embed/Nt8ZrWY2Cmk?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-				</div>
-			</div>
-		</div>
-	</div>

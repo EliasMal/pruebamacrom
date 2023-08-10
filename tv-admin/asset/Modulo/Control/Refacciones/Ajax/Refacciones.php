@@ -297,7 +297,7 @@
             if($this->foto["file"]["name"]!="" and $this->foto["file"]["size"]!=0){
                 $subdir ="../../../../../../"; 
                 $dir = "images/refacciones/";
-                $archivo = $this->formulario["lastid"].".png";
+                $archivo = $this->formulario["lastid"].".webp";
                 if(!is_dir($subdir.$dir)){
                     mkdir($subdir.$dir,0755);
                 }

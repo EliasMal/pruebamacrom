@@ -1,9 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-//"./modulo/home/Ajax/home.php"
 const url_catalogo = "./modulo/Catalogo/Ajax/Catalogo.php";
 var url_session ="./modulo/home/Ajax/session.php";
 const url_seicom = "https://volks.dyndns.info:444/service.asmx/consulta_art";
@@ -16,8 +10,7 @@ tsuruVolks
                 start = +start;
                 return input.slice(start);
             }
-        })
-;
+        });
 
 function catalogosCtrl ($scope,$http){
     var obj = $scope;
@@ -369,7 +362,8 @@ function catalogosCtrl ($scope,$http){
 
 }
 
-function catalogosDetallesCtrl ($scope,$http){
+function catalogosDetallesCtrl($scope, $http){
+
    var obj = $scope;
    obj.session = $_SESSION;
    
@@ -399,6 +393,7 @@ function catalogosDetallesCtrl ($scope,$http){
         return Number(numStr)
    }
 
+      
    obj.getSeicom = async (clave)=>{
         try {
             const result = await $http({
@@ -503,12 +498,12 @@ function catalogosDetallesCtrl ($scope,$http){
     
     obj.getImagen = (status, id)=>{
         var url = "images/refacciones/";
-        return status? url+id+".png":url+"motor.png";
+        return status? url+id+".png":url+id+".webp";
     }
+    
     obj.getGaleria = (id)=>{
-        
         if(id != undefined){
-            url = "images/galeria/"+id+".png";
+            url = "images/galeria/"+id;
             return  url;
         }
         
@@ -539,12 +534,10 @@ function catalogosDetallesCtrl ($scope,$http){
                 slidesToShow: 4,
                 slidesToScroll: 4,
                 infinite: true,
+                dots: true,
                 autoplay: true,
                 autoplaySpeed: 5000,
                 arrows: true,
-                appendArrows: $('.wrap-slick2'),
-                prevArrow:'<button class="arrow-slick2 prev-slick2"><i class="fa  fa-angle-left" aria-hidden="true"></i></button>',
-                nextArrow:'<button class="arrow-slick2 next-slick2"><i class="fa  fa-angle-right" aria-hidden="true"></i></button>',  
                 responsive: [
                     {
                       breakpoint: 1200,
@@ -583,24 +576,3 @@ function catalogosDetallesCtrl ($scope,$http){
     });
     
 }
-/*[ No ui ]
-	    ===========================================================*/
-	/*    var filterBar = document.getElementById('filter-bar');
-
-	    noUiSlider.create(filterBar, {
-	        start: [ 0, 10000 ],
-	        connect: true,
-	        range: {
-	            'min': 0,
-	            'max': 10000
-	        }
-	    });
-
-	    var skipValues = [
-	    document.getElementById('value-lower'),
-	    document.getElementById('value-upper')
-	    ];
-
-	    filterBar.noUiSlider.on('update', function( values, handle ) {
-	        skipValues[handle].innerHTML = Math.round(values[handle]) ;
-	    });*/

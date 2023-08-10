@@ -68,11 +68,7 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.css">
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
 <!--===============================================================================================-->
@@ -82,6 +78,7 @@
 <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="vendor/toastr/build/toastr.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
 <!--===============================================================================================-->
@@ -131,7 +128,7 @@
     <script type="text/javascript" src="vendor/momentjs/moment.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
     <script src="tv-admin/asset/Plugins/numeric/jquery.numeric.js"></script>
-    <!--====================================================================================    ==========-->
+    <!--==============================================================================================-->
         <!-- Angular -->
         <script type="text/javascript" src="tv-admin/asset/Js/angular/angular.min.js"></script>
         <script src="tv-admin/asset/Js/angular/angular-datatables.min.js"></script>

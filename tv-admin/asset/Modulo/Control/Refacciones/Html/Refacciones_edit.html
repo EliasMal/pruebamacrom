@@ -271,21 +271,6 @@
                                             <hr>
                                             <div class="row">
                                                 <div class="col-xs-12 col-sm-12 col-xl-12 col-md-12 col-lg-12">
-                                                    <!-- <div class="input-group">
-                                                        <label for="imagenprincipal">Subir Imagen</label>
-                                                        <div class="input-group">
-                                                            <div class="custom-file">
-                                                                <input class="custom-file-input archivos" id="Principal" type="file"
-                                                                    uploader-model="imagen.file">
-                                                                <label for="imagenprincipal"
-                                                                    class="custom-file-label">{{imagen.Categoria==="Principal"? imagen.name:imagen.placeholder}}</label>
-                                                            </div>
-                                                            <div class="input-group-apped">
-                                                                <button class="btn btn-primary pull-right" ng-click="btnsubirimagen()"><i
-                                                                        class="fa fa-upload"> Subir imagen</i></button>
-                                                            </div>
-                                                        </div>
-                                                    </div> -->
                                                     <button name="btnNuevaCategoria" ng-click="btnNuevaCategoria()" class="btn btn-danger">Nueva Galeria</button>
                                                 </div>
                                             </div>
@@ -345,51 +330,9 @@
 
                             
                         </div>
-                       <!--  <div class="card-footer">
-                           
-
-                        </div> -->
                     </div>
                 </section>
             </div>
-    <!--        <div class="row">
-                <div class="col lg 12">
-                    <button type="button" class="btn btn-danger" ng-click="btnAgregarRefaccion()"><i class="fa fa-plus-square"></i> Agregar Refaccion</button>
-                    <span class="switch switch-sm pull-right">
-                        <input type="checkbox" class="switch" id="switch-id" ng-model="historico" ng-click="getRefacciones()">
-                        <label for="switch-id">Historico</label>
-                    </span>
-                </div>
-            </div>
-            <hr />
-            <div class="row">
-                <div class="col-lg-12">
-                    <input type="text" name="txtbuscar" id="txtbuscar" <div class="col-md-6 col-lg-6">
-                                                        <label>Marca del Vehiculo: <span class="text-danger">*</span></label>
-                                                        <select name="slcmarcav" id="slcmarcav" class="form-control" ng-model = "refaccion._idMarca" ng-change="getVehiculos()" ng-disabled="habilitado" required>
-                                                            <optgroup label="Selecciona la marca del vehiculo">
-                                                                <option ng-repeat="marca in Marcas" value="{{marca._id}}">{{marca.Marca}}</option>
-                                                            </optgroup>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-6 col-lg-6">
-                                                        <label>Vehiculo: <span class="text-danger">*</span></label>
-                                                        <select name="slcvehiculo" id="slcvehiculo" class="form-control" ng-model = "refaccion.Modelo" ng-change="getModelos()" ng-disabled="habilitado" required>
-                                                            <optgroup label="Selecciona el vehiculo">
-                                                                <option ng-repeat="vehiculo in Vehiculos" value="{{vehiculo._id}}">{{vehiculo.Modelo}}</option>
-                                                            </optgroup>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-6 col-lg-6">
-                                                        <label>Modelo: <span class="text-danger">*</span></label>
-                                                        <select name="slcmodelo" id="slcmodelo" class="form-control" ng-model="refaccion.Anios" ng-disabled="habilitado" required>
-                                                            <optgroup label="Selecciona el año del Vehiculo">
-                                                                <option ng-repeat="modelo in Modelos" value="{{modelo._id}}">{{modelo.Anio}}</option>
-                                                            </optgroup>
-                                                        </select>
-                                                    </div>placeholder="Ingresa el codigo o nombre de la refaccion a buscar ...." class="form-control"/>
-                </div>
-            </div>-->
         </div>
     </section>
     <!-- Modal -->

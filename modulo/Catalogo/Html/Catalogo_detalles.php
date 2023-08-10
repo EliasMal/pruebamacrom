@@ -26,18 +26,17 @@
 			<div class="detalles__visual">
 				<div class="detalles__visual--contenido">
 					<div class="detalles__visual--opciones">
-						<div ng-repeat="gal in Refaccion.galeria"
-							data-thumb="{{getGaleria(gal._id)}}">
+						<div ng-repeat="gal in Refaccion.galeria" data-thumb="{{getGaleria(gal._id)}}">
 							<div class="detalles__visual--miniatura">
-								<img src="{{getGaleria(gal._id)}}" alt="miniatura" class="secundaria">
+								<img src="{{getGaleria(gal._id)+'.webp'}}" alt="miniatura" class="secundaria">
+		
 							</div>
 						</div>
 						<!-- <img src="{{getImagen(Refaccion.datos.imagen, Refaccion.datos._id)}}" alt="" class="secundaria"> -->
 						
 					</div>
 					<div class="">
-						<div class=""
-							data-thumb="{{getImagen(Refaccion.datos.imagen, Refaccion.datos._id)}}">
+						<div class="" data-thumb="{{getImagen(Refaccion.datos.imagen, Refaccion.datos._id)}}">
 							<div class="detalles__visual--producto">
 								<img src="{{getImagen(Refaccion.datos.imagen, Refaccion.datos._id)}}" alt="IMG-PRODUCT" id="principal">
 							</div>
@@ -65,7 +64,7 @@
 				</section>
 
 				<!--  -->
-				<div class="p-t-33 p-b-60 contenedor__botonesesion">
+				<div class="contenedor__botonesesion">
 
 					<div class="botones__sesion" ng-show="Activa">
 						<div class="botones__sesion--noiniciada">
@@ -106,14 +105,15 @@
 						</div>
 					</div>
 
-					<div class="flex-r-m flex-w p-t-10" ng-show="!Activa">
-						<div class="w-size16 flex-m flex-w">
+					<div class="agotado__contenedor" ng-show="!Activa">
+						<div class="agotado__texto">
 							<h1 class="text-danger"><strong>Agotado</strong></h1>
 						</div> 
 					</div>
+
 				</div>
 
-				<div class="descripcion p-b-45">
+				<div class="descripcion">
 					<p>No. Parte: </p>
 					<p><strong>{{Refaccion.datos.No_parte}}</strong></p>
 					<p>Articulos en Existencia: </p>
@@ -156,18 +156,17 @@
 
 	<!-- Relate Product -->
 	<section class="contenedor bgwhite p-t-45 p-b-138">
-		<div class="contenedor-cotnenido">
+		<div class="contenedor-contenido">
 			<div class="sec-title p-b-60">
 				<h3 class="m-text5 t-center">
 					Productos Relacionados
 				</h3>
 			</div>
 
-			<!-- Slide2 -->
-			<!-- <div class="">
+			<div class="wrap-slick2">
 				<div class="slick2">
 					<div class="enlace" ng-repeat="producto in productos">
-						<div class="block2" ng-click="RefaccionDetalles(producto._id)">
+						<div class="block2 block2__contenedor" ng-click="RefaccionDetalles(producto._id)">
 							<div class="block2-img wrap-pic-w of-hidden pos-relative cursorpnt" ng-style="{'background-color': producto.color}" ng-class="{
 								'ribboagotado': producto.agotado ,
 								'ribbonnuevo': producto.RefaccionNueva==1,
@@ -200,77 +199,8 @@
 						</div>
 					</div>
 				</div>
-			</div> -->
-
-			<div class="slick">
-				<div class="slick-slide enlace" ng-repeat="producto in productos">
-					<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/motor.png'}}" alt="Image" ng-click="RefaccionDetalles(producto._id)" class="slick__img" >
-					<div class="p-t-20 contenedor__descripcion--producto">
-								<section class="descripcion-producto">
-									<img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.id_proveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
-									alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}">
-									<p class="block2-name dis-block s-text3 p-b-5">
-										{{producto.Producto}}
-									</p>
-								</section>
-								
-								<span class="p-r-5 p-t-5 descripcion__producto--precio">
-									<h3>{{producto.Precio1 | currency}}</h3>
-								</span>
-
-								<div class="enviogratis"  ng-show="producto.Enviogratis">
-									<img src="/images/icons/Icono-camion.png" alt="">
-									<p > <strong>Envío Gratis </strong> </p> 
-								</div>
-							</div>
-				</div>
-				<div class="slick-slide">
-					<img src="https://prueba.macromautopartes.com/images/refacciones/2805.png" alt="Image">
-				</div>
-				<div class="slick-slide">
-					<img src="https://prueba.macromautopartes.com/images/refacciones/5175.png" alt="Image">
-				</div>
-				<div class="slick-slide">
-					<img src="https://prueba.macromautopartes.com/images/refacciones/" alt="Image">
-				</div>
-
 			</div>
 
 		</div>
 	</section>
 </div>
-
-<script>
-	window.fbAsyncInit = function() {
-	  FB.init({
-		xfbml            : true,
-		version          : 'v3.3'
-	  });
-	};
-  
-	(function(d, s, id) {
-	var js, fjs = d.getElementsByTagName(s)[0];
-	if (d.getElementById(id)) return;
-	js = d.createElement(s); js.id = id;
-	js.src = 'https://connect.facebook.net/es_LA/sdk/xfbml.customerchat.js';
-	fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));</script>
-  
-  
-  <!-- Facebook Pixel Code -->
-  <script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '342958480063107');
-  fbq('track', 'PageView');
-  </script>
-  <noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=342958480063107&ev=PageView&noscript=1"
-  /></noscript>
-  <!-- End Facebook Pixel Code -->

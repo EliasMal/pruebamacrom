@@ -31,13 +31,13 @@
 							<p class="text-danger t-center"><b>¡Hola {{session.nombrecorto}}!</b></p>
 							<p class="js-show-header-dropdown t-center" style="cursor:pointer; color:white;">Mi Cuenta</p>
 							<div class="header-cart header-dropdown header__cart--usuario">
-										<img src="../images/usuarios/Avatar Lobo Macrom Grande.png" class="header-icon1 float-l" style="width: 100px; margin-left:20px;" alt="ICON">
+										<img src="../images/usuarios/Avatar Lobo Macrom Grande.png" class="perfil__usuario--img" loading="lazy" alt="ICON">
 														
 									<div class="vinculos">
-										<div class="s-text3a s-text3ab" onclick="location.href = '?mod=Profile&opc=Session'"> <img src="../images/icons/1.png" alt="">Sesión y Seguridad</div><br>
-										<div class="s-text3a" onclick="location.href = '?mod=Profile&opc=Mispedidos'"> <img src="../images/icons/2.png" alt="">Mis pedidos</div><br>
-										<div class="s-text3a" onclick="location.href = '?mod=Profile&opc=Direcciones'"> <img src="../images/icons/3.png" alt="">Mis direcciones</div><br>
-										<div class="s-text3a" onclick="location.href = '?mod=Profile&opc=Facturacion'"> <img src="../images/icons/4.png" alt="">Datos de facturación</div>
+										<div class="s-text3a s-text3ab" onclick="location.href = '?mod=Profile&opc=Session'"> <img src="../images/icons/1.png" loading="lazy" alt="">Sesión y Seguridad</div><br>
+										<div class="s-text3a" onclick="location.href = '?mod=Profile&opc=Mispedidos'"> <img src="../images/icons/2.png" loading="lazy" alt="">Mis pedidos</div><br>
+										<div class="s-text3a" onclick="location.href = '?mod=Profile&opc=Direcciones'"> <img src="../images/icons/3.png" loading="lazy" alt="">Mis direcciones</div><br>
+										<div class="s-text3a" onclick="location.href = '?mod=Profile&opc=Facturacion'"> <img src="../images/icons/4.png" loading="lazy" alt="">Datos de facturación</div>
 									</div> 
 															
 									<p class="sesionombre s-text3a">{{session.nombre}}</p>
@@ -108,30 +108,24 @@
 				<div class="contenedor__navegacion__menu">
 					<nav class="contenedor__navegacion__menu--principal">
 						<ul class="contenedor__navegacion__menu--opciones">
-                                                    <li>
-                                                            <a href="?mod=home">Inicio</a>
-            
-                                                    </li>
-
-                                                    <li >
-                                                            <a href="?mod=catalogo">Refacciones</a>
-                                                    </li>
-
-                                                    <li>
-                                                            <a href="?mod=Compras">Mis compras</a>
-                                                    </li>
-
-            										<li>
-                                                            <a href="?mod=Blog">Blog</a>
-                                                    </li>
-
-                                                    <li>
-                                                            <a href="?mod=nosotros">Nosotros</a>
-                                                    </li>
-
-                                                    <li>
-                                                            <a href="?mod=contacto">Contacto</a>
-                                                    </li>
+                            <li>
+                            	<a href="?mod=home">Inicio</a>
+                            </li>
+                            <li >
+                            	<a href="?mod=catalogo">Refacciones</a>
+                            </li>
+                            <li>
+                            	<a href="?mod=Compras">Mis compras</a>
+                            </li>
+            				<li>
+                                <a href="?mod=Blog">Blog</a>
+                            </li>
+                            <li>
+                                <a href="?mod=nosotros">Nosotros</a>
+                            </li>
+                            <li>
+                            	<a href="?mod=contacto">Contacto</a>
+                            </li>
 						</ul>
 					</nav>
 				</div>

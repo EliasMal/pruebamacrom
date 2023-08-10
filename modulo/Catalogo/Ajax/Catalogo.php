@@ -64,6 +64,7 @@
             }
             print json_encode($this->jsonData);
         }
+        
 //GetCategorias
         private function getCategorias (){
             $sql = "SELECT _id, Categoria FROM Categorias where status = 1 order by Categoria";

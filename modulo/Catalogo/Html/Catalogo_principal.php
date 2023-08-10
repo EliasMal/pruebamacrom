@@ -98,7 +98,7 @@
 
 										}"
 									ng-style="{'background-color': producto.color}">
-									<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/motor.png'}}"
+									<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}"
 										alt="{{producto.tag_alt}}" title = "{{producto.tag_title}}">
 
 								</div>

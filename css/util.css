@@ -2379,13 +2379,7 @@
 }
 
 @media (max-width: 1330px) {
-body .m-l-70{
-	margin-left:40px;
-}
 
-body .catcat, body .catcat1{
-	margin-top:-40px;
-}
 body .BVehiculo, body .BVehiculo1, body .BVehiculo2, body .BVehiculo3{
 margin-top:-8%;
 }
@@ -2396,14 +2390,6 @@ body .BVehiculo:focus, body .BVehiculo1:focus, body .BVehiculo2:focus, body .BVe
 	box-shadow:none;
 	border-color:#a8a2a2;
 	outline: 0;
-	}
-}
-@media (max-width:800px){
-	body .m-l-70{
-		margin-left: 0px;
-	}
-	body .catcat, body .catcat1{
-		margin-top: 0px;
 	}
 }
 .rango{

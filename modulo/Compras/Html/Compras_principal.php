@@ -583,8 +583,11 @@
 						</div> <!--Fin Modal Agregar Nueva Factura-->
 					</form>
 
-					<!-- Modal -->
-					<div class="modal fade mdl-new" id="mdlcotizar" tabindex="-1" role="dialog" aria-labelledby="mdlcotizar" aria-hidden="true">
+					
+				</section>
+
+				<!-- Modal -->
+				<div class="modal fade mdl-new" id="mdlcotizar" tabindex="-1" role="dialog" aria-labelledby="mdlcotizar" aria-hidden="true">
 						<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 							<div class="modal-content mdl-env-ed">
 								<div class="modal-header">
@@ -638,11 +641,9 @@
 
 							</div>
 						</div>
-					</div>
-				</section>
+				</div>
 			</form>
 		</div>
-
 	</body>
 </html>
 
