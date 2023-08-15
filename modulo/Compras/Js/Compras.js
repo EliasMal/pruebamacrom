@@ -210,7 +210,7 @@ window.addEventListener("click",function(event) {
 
     obj.getImagen = (id)=>{
         var url = "images/refacciones/";
-        return  url+id+".png";
+        return  url+id+".webp";
     }
 
     obj.comprobarDatosFacturacion = (value)=>{

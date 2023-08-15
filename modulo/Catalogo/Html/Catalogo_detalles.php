@@ -174,7 +174,7 @@
 								'pos-relative': !producto.agotado || producto.RefaccionNueva==0
 
 								}">
-								<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/motor.png'}}" alt="IMG-PRODUCT">
+								<img ng-src="{{producto.imagen? 'images/refacciones/motor.webp':'images/refacciones/'+producto._id+'.webp'}}" alt="IMG-PRODUCT">
 
 							</div>
 							<div class="block2-txt p-t-20">

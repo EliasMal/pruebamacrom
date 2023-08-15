@@ -105,7 +105,7 @@ function homeCtrl ($scope,$http){
     }
     
     obj.getImagen = (e)=>{
-        return e.logo? "images/Categorias/"+e._id+".png":"images/thumb-item-01.jpg";
+        return "images/Categorias/"+e._id+".webp";
     }
     
     obj.RefaccionDetalles = (_id)=>{

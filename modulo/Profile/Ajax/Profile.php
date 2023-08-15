@@ -221,7 +221,7 @@ class Profile{
                 $id = $this->conn->query($sql);
                 
                 while($row = $this->conn->fetch($id)){
-                    $row["imagen"] = file_exists("../../../images/refacciones/{$row["Clave"]}.png");
+                    $row["imagen"] = file_exists("../../../images/refacciones/{$row["Clave"]}.webp");
                     array_push($array,$row);
                 }
         return $array;

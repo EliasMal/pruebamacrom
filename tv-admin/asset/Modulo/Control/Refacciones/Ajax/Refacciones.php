@@ -168,6 +168,7 @@
                     . "{$this->formulario["Ancho"]},{$this->formulario["Peso"]},{$this->formulario["id_proveedor"]},'{$this->formulario["tag_title"]}','{$this->formulario["tag_alt"]}'
                     ,'{$this->formulario["Enviogratis"]}','{$this->formulario["liquidacion"]}',0,'{$_SESSION["usr"]}','{$_SESSION["usr"]}')";
                     break;
+                    
                 case 'edit':
                     $this->formulario["RefaccionNueva"] = $this->formulario["RefaccionNueva"]=="true"? 1:0;
                     $this->formulario["RefaccionOferta"] = $this->formulario["RefaccionOferta"] == "true"? 1:0;

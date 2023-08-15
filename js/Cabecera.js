@@ -46,7 +46,7 @@ function CabeceraCtrl($scope,$http, $sce,vcRecaptchaService){
     
     obj.getImagen = (id)=>{
         var url = "images/refacciones/";
-        return  url+id+".png";
+        return  url+id+".webp";
     }
     obj.recapchatKey = "6Le-C64UAAAAAMlSQyH3lu6aXLIkzgewZlVRgEam";
     obj.Contacto = {};

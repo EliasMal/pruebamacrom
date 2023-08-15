@@ -66,7 +66,7 @@ a:focus {
 
 a:hover {
 	text-decoration: none;
-	color: var(--primario);
+	color: var(--primario) !important;
 }
 
 ul, li {
@@ -111,6 +111,9 @@ img{
 }
 .no-overflow{
   overflow: hidden;
+}
+.pagination{
+  cursor: pointer;
 }
 /** Header **/
 .header{
@@ -180,7 +183,6 @@ img{
   display: grid;
   grid-template-columns: repeat(2,1fr);
   justify-items: center;
-  align-items: center;
 }
 .perfil__usuario--img{
   float: left;
@@ -1110,19 +1112,22 @@ width: 50%;
   font-size: 15px;
 }
 .cuponcont{
-  padding-top: 10px;
   display: flex;
+  padding: 1rem;
+  justify-content: center;
 }
 .inpcpn{
   border: 1px solid !important;
   border-right: 0px !important;
   border-radius: 0.25rem;
+  max-width: 25rem;
 }
 #btncupon{
   border-color: var(--negro);
-  margin-left: -60px;
   background-color: var(--primario);
   color: var(--blanco);
+  height: 4rem;
+  max-width: 12rem;
 }
 #btncupon:focus{
   box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25) !important;

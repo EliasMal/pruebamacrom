@@ -498,7 +498,7 @@ function catalogosDetallesCtrl($scope, $http){
     
     obj.getImagen = (status, id)=>{
         var url = "images/refacciones/";
-        return status? url+id+".png":url+id+".webp";
+        return status? url+id+".webp":url+id+".webp";
     }
     
     obj.getGaleria = (id)=>{

@@ -74,7 +74,7 @@
     for(var i=0; i<menu.length; i++){
         $(menu[i]).on('click', function(){ 
             
-                if(jQuery.inArray( this, menu ) == sub_menu_is_showed){
+                if(jQuery.inArray( this, menu ) == sub_menu_is_showed){ 
                     $(this).parent().find('.header-dropdown').toggleClass('show-header-dropdown');
                     sub_menu_is_showed = -1;
                     $("#usercba").css("background-color","transparent");
