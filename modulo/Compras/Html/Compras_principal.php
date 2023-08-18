@@ -155,7 +155,7 @@
 											</tr>
 											<tr ng-if="Costumer.Cenvio.Envio == 'N' && dataCotizador.parcel.weight>0">
 												<td>Costos de envio</td>
-												<td><button class="btn form-control bg9 text-white bg9r" ng-click="btncotizar()">Cotizar</button></td>
+												<td><button class="btn form-control cotizar__button" ng-click="btncotizar()">Cotizar</button></td>
 											</tr>
 											<tr class="table tbl-cms">
 												<td>Total(con iva)</td>

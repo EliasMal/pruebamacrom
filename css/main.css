@@ -115,6 +115,9 @@ img{
 .pagination{
   cursor: pointer;
 }
+.txtred{
+  color: var(--primario);
+}
 /** Header **/
 .header{
   background-size: cover;
@@ -192,7 +195,7 @@ img{
 .topbar-social{
   grid-row: 2;
   height: 100%;
-  top: -1rem;
+  top: -2.5rem;
   left: 0;
   display: flex;
   align-items: center;
@@ -292,7 +295,7 @@ img{
 .contenido--envios h4, .contenido--garantias h4, .contenido--tiendabierta h4{
   font-family: Poppins;
   font-size: 1.8rem;
-  color: var(--negro);
+  color: var(--primario);
   line-height: 1.5;
 }
 .contenido--envios a, .contenido--garantias a, .contenido--tiendabierta span{
@@ -437,7 +440,16 @@ img{
   box-shadow: 8px 5px 11px;
   border-radius: 0.5rem;
 }
-
+.redes__sociales--titulo{
+  padding: 2rem 0rem 4rem;
+}
+.redes__sociales--titulo h3{
+  font-weight: 700;
+}
+.redsocial__facebook{
+  display: grid;
+  justify-content: center;
+}
 @media(min-width: 768px) {
     .nuestrosproductos__masvendidos,.nuestrosproductos__liquidacion{
       grid-template-columns: repeat(4,1fr);
@@ -522,6 +534,13 @@ width: 50%;
   display: grid;
   column-gap: 10rem;
   padding: 2rem;
+}
+.cotizar__button{
+  background-color: var(--primario);
+  color: var(--blanco);
+}
+.cotizar__button:hover{
+  background-color: var(--primario-oscuro);
 }
 .metodo__pago--metodos{
   display: grid;
@@ -747,6 +766,9 @@ width: 50%;
   display: grid;
   grid-template-columns: repeat(3,1fr);
 }
+.contenedor__domicilios div strong{
+  color: var(--primario);
+}
 .domicilios__macrom{
   display: grid;
   grid-template-columns: repeat(2,1fr);
@@ -778,10 +800,11 @@ width: 50%;
 .contacto__opciones--titulo{
   font-family: Poppins;
   font-size: 1.5rem;
-  color: var(--negro);
+  color: var(--primario);
   line-height: 1.5;
   text-transform: uppercase;
   text-align: center;
+  font-weight: 700;
 }
 .contacto__opciones{
   padding-bottom: 1rem;
