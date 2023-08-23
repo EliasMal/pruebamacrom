@@ -291,12 +291,12 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr ng-repeat="RV in Rvehiculo">
-                                                                <td>{{RV.Agencia}}</td>
-                                                                <td>{{RV.Vehiculo}}</td>
-                                                                <td>{{RV.generacion}}</td>
-                                                                <td class="text-center">{{RV.Anio_desde}}</td>
-                                                                <td class="text-center">{{RV.Anio_hasta}}</td>
+                                                            <tr ng-repeat="RV in Compatibilidad" ng-show="RV.clave == refaccion.Clave">
+                                                                <td>{{RV.idcompatibilidad}}</td>
+                                                                <td>{{RV.clave}}</td>
+                                                                <td>{{RV.motor}}</td>
+                                                                <td class="text-center">{{RV.ainicial}}</td>
+                                                                <td class="text-center">{{RV.afinal}}</td>
                                                                 <td class="text-center">
                                                                     <div class="dropdown d-block d-sm-none">
                                                                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
@@ -309,7 +309,6 @@
                                                                         </div>
                                                                       </div>
                                                                     <section class="d-none d-sm-block">
-                                                                        <button  class="btn btn-info" ng-click="btnEditarRvehiculo(RV)"> <i class="fa fa-edit"></i></button>
                                                                         <button  class="btn btn-danger" ng-click="btnBorrarRvehiculo(RV)"> <i class="fa fa-close"></i></button>  
                                                                     </section>
                                                                     
@@ -321,20 +320,6 @@
                                                 </div>
                                             </div>
                                             
-                                            <form action="Modulo/Control/Refacciones/Ajax/Vehiculos.php" method="POST">
-                                                <input type="text" name="clave" placeholder="clave">
-                                                <input type="text" name="idmarca" placeholder="idmarca">
-                                                <input type="text" name="idmodelo" placeholder="idmodelo">
-                                                <input type="text" name="generacion" placeholder="generacion">
-                                                <input type="text" name="ainicial" placeholder="ainicial">
-                                                <input type="text" name="afinal" placeholder="afinal">
-                                                <input type="text" name="motor" placeholder="motor">
-                                                <input type="text" name="transmision" placeholder="transmision">
-                                                <input type="text" name="especificaciones" placeholder="especificaciones">
-                                                <input type="text" name="id_imagen" placeholder="id_imagen">
-                                                <input type="submit" value="Submit">
-                                            </form>
-
                                         </div>
                                         
                                     </div>
@@ -351,8 +336,7 @@
         </div>
     </section>
     <!-- Modal -->
-    <div class="modal fade" id="Mcategoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
+    <div class="modal fade" id="Mcategoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -405,56 +389,47 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        
-                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                            <label>Marca del Vehiculo: <span class="text-danger">*</span></label>
-                            <select name="slcmarcav" id="slcmarcav" class="form-control" ng-model="vehiculo.id_Marca_RefaccionVehiculo"  ng-change="getVehiculos(vehiculo.id_Marca_RefaccionVehiculo)"  required>
-                                <optgroup label="Selecciona la marca del vehiculo">
+                    <div class="subir__vehiculo">
+                        <form action="Modulo/Control/Refacciones/Ajax/Vehiculos.php" method="POST">
+                            <select name="clave" class="form-control d-grid">
+                                <optgroup>
+                                    <option disabled selected>Selecciona la Clave</option>
+                                    <option value="{{refaccion.Clave}}">{{refaccion.Clave}}</option>
+                                </optgroup>
+                            </select>
+
+                            <select name="id_imagen" class="form-control d-grid">
+                                <optgroup>
+                                    <option disabled selected>Selecciona la ID</option>
+                                    <option value="{{refaccion._id}}">{{refaccion._id}}</option>
+                                </optgroup>
+                            </select>
+
+                            <select name="idmarca" ng-model="vehiculo.id_Marca_RefaccionVehiculo" ng-change="getVehiculos(vehiculo.id_Marca_RefaccionVehiculo)" class="form-control d-grid">
+                                <optgroup>
+                                    <option disabled selected>Selecciona Marca</option>
                                     <option ng-repeat="marca in Marcas" value="{{marca._id}}">{{marca.Marca}}</option>
                                 </optgroup>
                             </select>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                            <label>Vehiculo: <span class="text-danger">*</span></label>
-                            <select name="slcvehiculo" id="slcvehiculo" class="form-control" ng-model="vehiculo.id_Modelo_RefaccionVehiculo" 
-                            ng-change="getModelos(vehiculo.id_Modelo_RefaccionVehiculo); getAnios(vehiculo.id_Modelo_RefaccionVehiculo)"  required>
-                                <optgroup label="Selecciona el vehiculo">
+
+                            <select name="idmodelo"  ng-model="vehiculo.id_Modelo_RefaccionVehiculo" ng-change="getModelos(vehiculo.id_Modelo_RefaccionVehiculo); getAnios(vehiculo.id_Modelo_RefaccionVehiculo)" class="form-control d-grid">
+                                <optgroup>
+                                    <option disabled selected>Selecciona Modelo</option>
                                     <option ng-repeat="vehiculo in Vehiculos" value="{{vehiculo._id}}">{{vehiculo.Modelo}}</option>
                                 </optgroup>
                             </select>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                            <label>Generacion: <span class="text-danger">*</span></label>
-                            <select name="slcvehiculo" id="slcvehiculo" class="form-control" ng-model="vehiculo.id_generacion_RefaccionVehiculo"  required>
-                                <optgroup label="Selecciona el vehiculo">
-                                    <option ng-repeat="generacion in Modelos" value="{{generacion._id}}">{{generacion.Anio}}</option>
-                                </optgroup>
-                            </select>
-                        </div>
-
-                        <div class="col-12 col-sm-12 col-md-2 col-lg-2">
-                            <label>Año desde: <span class="text-danger">*</span></label>
-                            <select name="slcmodelo" id="slcmodelo" class="form-control" ng-model="vehiculo.Anio_desde"   required>
-                                <optgroup label="Selecciona el año del Vehiculo">
-                                    <option ng-repeat="modelo in arrayAnios" value="{{modelo}}">{{modelo}}</option>
-                                </optgroup>
-                            </select>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-2 col-lg-2">
-                            <label>Año Hasta: <span class="text-danger">*</span></label>
-                            <select name="slcmodelo" id="slcmodelo" class="form-control" ng-model="vehiculo.Anio_hasta" required>
-                                <optgroup label="Selecciona el año del Vehiculo">
-                                    <option ng-repeat="modelo in arrayAnios" value="{{modelo}}">{{modelo}}</option>
-                                </optgroup>
-                            </select>
-                        </div>
+                            <input type="text" name="generacion" placeholder="generacion" class="form-control d-grid">
+                            <input type="text" name="ainicial" placeholder="año inicial" class="form-control d-grid">
+                            <input type="text" name="afinal" placeholder="año final" class="form-control d-grid">
+                            <input type="text" name="motor" placeholder="motor" class="form-control d-grid">
+                            <input type="text" name="transmision" placeholder="transmision" class="form-control d-grid">
+                            <input type="text" name="especificaciones" placeholder="especificaciones" class="form-control d-grid">
+                            <input type="submit" value="Agregar" class="form-control compatibilidad__agregar">
+                        </form>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger" ng-click="btnAddVehicle()" ng-disabled="btnsave">
-                        {{nuevo? "Subir":"Guardar"}} Vehiculo</button>
                 </div>
             </div>
         </div>

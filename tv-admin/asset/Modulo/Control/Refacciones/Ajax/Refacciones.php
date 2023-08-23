@@ -6,12 +6,6 @@
  * and open the template in the editor.
  */
 
-/**
- * Description of Refacciones
- *
- * @author francisco
- */
-
     session_name("loginUsuario");
     session_start();
     require_once "../../../../Clases/dbconectar.php";
@@ -19,7 +13,6 @@
     date_default_timezone_set('America/Mexico_City');
     
     class Refacciones {
-        //put your code here
         private $conn;
         private $jsonData = array("Bandera"=>0,"mensaje"=>"");
         private $formulario = array();
@@ -48,6 +41,10 @@
                                 $this->jsonData["data"] = $this->getMarcas();
                                 $this->jsonData["Bandera"] = 1;
                             break;
+                        case 'Compatibilidad':
+                            $this->jsonData["data"] = $this->getCompatibilidad();
+                            $this->jsonData["Bandera"] = 1;
+                            break;
                         case 'Vehiculos':
                                 $this->jsonData["data"] = $this->getModelos();
                                 $this->jsonData["Bandera"] = 1;
@@ -66,7 +63,7 @@
                         case 'Refaccion':
                                 $this->jsonData["data"]["Refaccion"] = $this->getRefaccionOne();
                                 $this->jsonData["data"]["Categorias"] = $this->getCategorias();
-                                
+                                $this->jsonData["data"]["Compatibilidad"] = $this->getCompatibilidad();
                                 $this->jsonData["data"]["Marcas"] = $this->getMarcas();
                                 $this->jsonData["data"]["Proveedores"] = $this->getProveedores();
                                 /**
@@ -86,6 +83,7 @@
                     break;
                 case 'new':
                 case 'edit':
+                // case 'newcompatibilidad':
                                         
                     $json = json_decode(file_get_contents($_POST["Rvehiculo"]),true);
                     echo $jsonError = json_last_error_msg();
@@ -103,7 +101,6 @@
                          $this->jsonData["mensaje"] = $id;
                     }
                     break;
-                
             }
             $this->jsonData["dominio"]=$this->url;
             print json_encode($this->jsonData);
@@ -128,7 +125,17 @@
             }
             return $array;
         }
-        
+
+        private function getCompatibilidad(){
+            $array = array();
+            $sql = "SELECT * FROM compatibilidad order by idcompatibilidad";
+            $id = $this->conn->query($sql);
+            while($row= $this->conn->fetch($id)){
+                array_push($array, $row);
+            }
+            return $array;
+        }
+
         private function getModelos(){
             $array = array();
             $sql = "SELECT * FROM Modelos where Estatus = 1 and _idMarca= ".$this->formulario["_idMarca"]. " order by Modelo";
@@ -187,6 +194,10 @@
                     . " userModify='{$_SESSION["usr"]}', dateModify='".date("Y-m-d H:i:s")."'"
                     . " where _id = {$this->formulario["_id"]}";
                     break;
+                // case 'newcompatibilidad':
+                //     $sql = "INSERT INTO compatibilidad (clave, idmarca, idmodelo, generacion, ainicial, afinal, motor, transmision, especificaciones, id_imagen) 
+                //     VALUES ('$clave', '$idmarca','$idmodelo', '$generacion', '$ainicial','$afinal','$motor','$transmision','$especificaciones', '$id_imagen')";
+                // break;
             }
             return $this->conn->query($sql) or $this->jsonData["error"] = $this->conn->error;
         }

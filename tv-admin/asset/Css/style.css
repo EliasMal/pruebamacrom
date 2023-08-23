@@ -73,3 +73,22 @@
 .highcharts-data-table tr:hover {
     background: #f1f7ff;
 }
+
+/** Refacciones editar**/
+.subir__vehiculo form{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+  }
+  .d-grid{
+    display: grid;
+  }
+  @media(min-width: 768px) {
+    .compatibilidad__agregar{
+        position: absolute;
+        top: 10.2rem;
+        width: 7rem;
+        left: 36rem;
+        background-color: #de0007;
+        color: #fff;
+    }
+  }

@@ -184,7 +184,7 @@ function RefaccionesCtrl($scope, $http) {
 function RefaccionesNewCtrl($scope, $http) {
     var obj = $scope;
     
-    obj.img = "/images/refacciones/motor.png";
+    obj.img = "/images/refacciones/motor.webp";
     obj.refaccion = {};
     obj.refaccion.Color = "#FFFFFF";
     obj.backgroudimg = {"background-color":obj.refaccion.color}
@@ -392,7 +392,7 @@ function RefaccionesNewCtrl($scope, $http) {
         obj.refaccion.Precio1 = 0.0;
         obj.refaccion.Precio2 = 0.0;
         obj.habilitado = false;
-        obj.img = obj.dominio+"/images/refacciones/motor.png";
+        obj.img = obj.dominio+"/images/refacciones/motor.wepb";
         document.getElementById("txtfile").value = "";
         $("#txtclave").focus();
     }
@@ -533,6 +533,33 @@ function RefaccionesEditCtrl($scope, $http){
         });
     }
 
+    obj.getCompatibilidad = () => {
+        $http({
+            method: 'POST',
+            url: url,
+            data: {modelo: {opc: "buscar", tipo: "Compatibilidad"}},
+            headers: {
+                'Content-Type': undefined
+            },
+            transformRequest: function (data) {
+                var formData = new FormData();
+                for (var m in data.modelo) {
+                    formData.append(m, data.modelo[m]);
+                }
+                //formData.append("file",dvehiculo.id_generacion_RefaccionVehiculoata.file);
+                return formData;
+            }
+        }).then(function successCallback(res) {
+            if (res.data.Bandera == 1) {
+                obj.Compatibilidad = res.data.data;
+            }
+
+
+        }, function errorCallback(res) {
+            toastr.error("Error: no se realizo la conexion con el servidor");
+        });
+    }
+
     obj.getVehiculos = (id=null) => {
         $http({
             method: 'POST',
@@ -665,6 +692,7 @@ function RefaccionesEditCtrl($scope, $http){
                 obj.refaccion = res.data.data.Refaccion;
                 obj.categorias = res.data.data.Categorias;
                 obj.Marcas = res.data.data.Marcas;
+                obj.Compatibilidad = res.data.data.Compatibilidad;
                 obj.Proveedor  = res.data.data.Proveedores;
                 obj.refaccion.opc="edit";
                 obj.backgroudimg ={"background-color":obj.refaccion.color}
@@ -810,7 +838,7 @@ function RefaccionesEditCtrl($scope, $http){
 
     obj.btnNuevaCategoria = () => {
         obj.Galeria = {placeholder:"Selecciona una imagen", name:"", opc:"new", id_refaccion: obj.refaccion._id};
-        obj.imgGaleria = obj.dominio+"/images/refacciones/motor.png"
+        obj.imgGaleria = obj.dominio+"/images/refacciones/motor.webp"
         $("#Mcategoria").modal('show');
     }
 

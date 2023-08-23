@@ -1,36 +1,26 @@
 <?php
     session_name("loginUsuario");
     session_start();
-    require_once "../../../../Clases/dbconectar.php";
-    require_once "../../../../Clases/ConexionMySQL.php";
-    date_default_timezone_set('America/Mexico_City');
 
-    class Vehiculos{
-        private $conn;
-        private $jsonData = array("Bandera"=>0,"mensaje"=>"");
-        private $formulario = array();
-    
-        public function __construct($array) {
-            $this->conn = new HelperMySql($array["server"], $array["user"], $array["pass"], $array["db"]);
-        }
-    
-        public function __destruct() {
-            unset($this->conn);
-        }
-
-        public function main (){
-            
-        }
-
-        public function setVehiculo(){
-            $sql =  "INSERT INTO compatibilidad (clave, idmarca, idmodelo, generacion, ainicial, afinal, motor, transmision, especificaciones, id_imagen) value "
-            ."('{$this->formulario["clave"]}', '{$this->formulario["idmarca"]}', '{$this->formulario["idmodelo"]}', '{$this->formulario["generacion"]}', '{$this->formulario["ainicial"]}', '{$this->formulario["afinal"]}',"
-            ."'{$this->formulario["motor"]}','{$this->formulario["transmision"]}','{$this->formulario["especificaciones"]}','{$this->formulario["id_imagen"]}')";
-            return $this->conn->query($sql) or $this->jsonData["error"] = $this->conn->error;
-        }
-
-
+    // Connect to the database
+    $conn = mysqli_connect('tsuruvolks.com.mx', 'macromau_admin','8nd$^&4m,Xjn','macromau_database');
+    if (!$conn) {
+      die("Connection failed: " . mysqli_connect_error());
     }
 
-    $app = new Vehiculos($array_principal);
-    $app->main();
+    $clave = $_POST["clave"];$idmarca = $_POST["idmarca"];$idmodelo = $_POST["idmodelo"];$generacion = $_POST["generacion"];$ainicial = $_POST["ainicial"];
+    $afinal = $_POST["afinal"];$motor = $_POST["motor"];$transmision = $_POST["transmision"];$especificaciones = $_POST["especificaciones"];$id_imagen = $_POST["id_imagen"];
+
+    $sql = "INSERT INTO compatibilidad (clave, idmarca, idmodelo, generacion, ainicial, afinal, motor, transmision, especificaciones, id_imagen) 
+    VALUES ('$clave', '$idmarca','$idmodelo', '$generacion', '$ainicial','$afinal','$motor','$transmision','$especificaciones', '$id_imagen')";
+    
+    if (mysqli_query($conn, $sql)) {
+      echo "Data inserted successfully";
+      header("Location: index.php");
+      exit;
+    } else {
+      echo "Error inserting data: " . mysqli_error($conn);
+    }
+  
+    // Close the connection
+    mysqli_close($conn);
