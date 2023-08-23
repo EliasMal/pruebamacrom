@@ -16,7 +16,6 @@
     
     if (mysqli_query($conn, $sql)) {
       echo "Data inserted successfully";
-      header("Location: index.php");
       exit;
     } else {
       echo "Error inserting data: " . mysqli_error($conn);

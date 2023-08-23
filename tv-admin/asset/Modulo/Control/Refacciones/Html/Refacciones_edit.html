@@ -390,15 +390,15 @@
                 </div>
                 <div class="modal-body">
                     <div class="subir__vehiculo">
-                        <form action="Modulo/Control/Refacciones/Ajax/Vehiculos.php" method="POST">
-                            <select name="clave" class="form-control d-grid">
+                        <form ng-submit="submitForm()">
+                            <select name="clave" class="form-control d-grid" ng-model="clave">
                                 <optgroup>
                                     <option disabled selected>Selecciona la Clave</option>
                                     <option value="{{refaccion.Clave}}">{{refaccion.Clave}}</option>
                                 </optgroup>
                             </select>
 
-                            <select name="id_imagen" class="form-control d-grid">
+                            <select name="id_imagen" class="form-control d-grid" ng-model="id_imagen">
                                 <optgroup>
                                     <option disabled selected>Selecciona la ID</option>
                                     <option value="{{refaccion._id}}">{{refaccion._id}}</option>
@@ -412,18 +412,18 @@
                                 </optgroup>
                             </select>
 
-                            <select name="idmodelo"  ng-model="vehiculo.id_Modelo_RefaccionVehiculo" ng-change="getModelos(vehiculo.id_Modelo_RefaccionVehiculo); getAnios(vehiculo.id_Modelo_RefaccionVehiculo)" class="form-control d-grid">
+                            <select name="idmodelo" ng-model="vehiculo.id_Modelo_RefaccionVehiculo" ng-change="getModelos(vehiculo.id_Modelo_RefaccionVehiculo); getAnios(vehiculo.id_Modelo_RefaccionVehiculo)" class="form-control d-grid">
                                 <optgroup>
                                     <option disabled selected>Selecciona Modelo</option>
                                     <option ng-repeat="vehiculo in Vehiculos" value="{{vehiculo._id}}">{{vehiculo.Modelo}}</option>
                                 </optgroup>
                             </select>
-                            <input type="text" name="generacion" placeholder="generacion" class="form-control d-grid">
-                            <input type="text" name="ainicial" placeholder="año inicial" class="form-control d-grid">
-                            <input type="text" name="afinal" placeholder="año final" class="form-control d-grid">
-                            <input type="text" name="motor" placeholder="motor" class="form-control d-grid">
-                            <input type="text" name="transmision" placeholder="transmision" class="form-control d-grid">
-                            <input type="text" name="especificaciones" placeholder="especificaciones" class="form-control d-grid">
+                            <input type="text" name="generacion" placeholder="generacion" class="form-control d-grid" ng-model="generacion">
+                            <input type="text" name="ainicial" placeholder="año inicial" class="form-control d-grid" ng-model="ainicial">
+                            <input type="text" name="afinal" placeholder="año final" class="form-control d-grid" ng-model="afinal">
+                            <input type="text" name="motor" placeholder="motor" class="form-control d-grid" ng-model="motor">
+                            <input type="text" name="transmision" placeholder="transmision" class="form-control d-grid" ng-model="transmision">
+                            <input type="text" name="especificaciones" placeholder="especificaciones" class="form-control d-grid" ng-model="especificaciones">
                             <input type="submit" value="Agregar" class="form-control compatibilidad__agregar">
                         </form>
                     </div>
