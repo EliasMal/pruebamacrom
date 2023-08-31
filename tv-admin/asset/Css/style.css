@@ -82,6 +82,9 @@
   .d-grid{
     display: grid;
   }
+  .center--text{
+    text-align: center;
+  }
   @media(min-width: 768px) {
     .compatibilidad__agregar{
         position: absolute;

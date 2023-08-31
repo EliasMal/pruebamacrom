@@ -141,7 +141,7 @@
                 if(isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0){
                     $condicion = $this->formulario["categoria"]!= "T"? " and P._idCategoria = {$this->formulario["categoria"]}":"";
                 }
-            
+                
                 if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
                     if(isset($this->formulario["marca"]) and (isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0)){
                         if(isset($this->formulario["marca"]) and isset($this->formulario["vehiculo"]) and (isset($this->formulario["anio"]) and strlen($this->formulario["anio"])!=0)){
@@ -155,10 +155,9 @@
                         }
                     }else{
                         $condicion .= " and P._idMarca = {$this->formulario["marca"]} ";
-                        
                     }
                 }
-            
+                
                 
             $sql = "SELECT P.*, PROV._id as idProveedor, PROV.tag_alt as tag_altproveedor, PROV.tag_title as tag_titleproveedor FROM Producto AS P "
             . "left join Proveedor as PROV on (P.id_proveedor = PROV._id) "
@@ -175,7 +174,7 @@
             }
             return $array;
         }
-
+            
         private function getOneRefaccion(){
             $sql = "select P._id, P.Clave, P.Producto, C.Categoria, M.Marca, P.Precio1, P.Precio2,
                 P.No_parte, P.Descripcion, V.Modelo, A.Anio, P.RefaccionNueva, P.RefaccionOferta,

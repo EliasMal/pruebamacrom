@@ -282,21 +282,21 @@
                                                     <table class="table table-striped">
                                                         <thead>
                                                             <tr>
-                                                                <th width="15%" class="text-center">Agencia</th>
-                                                                <th width="15%" class="text-center">Vehiculo</th>
-                                                                <th width="15%" class="text-center">Generación</th>
+                                                                <th width="15%" class="text-center">Marca</th>
+                                                                <th width="15%" class="text-center">Modelo</th>
                                                                 <th width="15%" class="text-center">Desde</th>
                                                                 <th width="15%" class="text-center">Hasta</th>
+                                                                <th width="15%" class="text-center">Transmision</th>
                                                                 <th width="15%" class="text-center">Accion</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr ng-repeat="RV in Compatibilidad" ng-show="RV.clave == refaccion.Clave">
-                                                                <td>{{RV.idcompatibilidad}}</td>
-                                                                <td>{{RV.clave}}</td>
-                                                                <td>{{RV.motor}}</td>
-                                                                <td class="text-center">{{RV.ainicial}}</td>
+                                                            <tr ng-repeat="RV in Compatibilidad" ng-show="RV.clave == refaccion.Clave" class="center--text">
+                                                                <td>{{RV.idmarca}}</td>
+                                                                <td>{{RV.idmodelo}}</td>
+                                                                <td>{{RV.ainicial}}</td>
                                                                 <td class="text-center">{{RV.afinal}}</td>
+                                                                <td class="text-center">{{RV.transmision}}</td>
                                                                 <td class="text-center">
                                                                     <div class="dropdown d-block d-sm-none">
                                                                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
@@ -327,8 +327,6 @@
                                 </div>
                             </div>
 
-
-                            
                         </div>
                     </div>
                 </section>
@@ -390,7 +388,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="subir__vehiculo">
-                        <form ng-submit="submitForm()">
+                        <form action="Modulo/Control/Refacciones/Ajax/Vehiculos.php" method="POST" >
                             <select name="clave" class="form-control d-grid" ng-model="clave">
                                 <optgroup>
                                     <option disabled selected>Selecciona la Clave</option>
@@ -419,10 +417,10 @@
                                 </optgroup>
                             </select>
                             <input type="text" name="generacion" placeholder="generacion" class="form-control d-grid" ng-model="generacion">
-                            <input type="text" name="ainicial" placeholder="año inicial" class="form-control d-grid" ng-model="ainicial">
-                            <input type="text" name="afinal" placeholder="año final" class="form-control d-grid" ng-model="afinal">
-                            <input type="text" name="motor" placeholder="motor" class="form-control d-grid" ng-model="motor">
-                            <input type="text" name="transmision" placeholder="transmision" class="form-control d-grid" ng-model="transmision">
+                            <input type="text" name="ainicial" placeholder="año inicial" class="form-control d-grid" ng-model="ainicial" required>
+                            <input type="text" name="afinal" placeholder="año final" class="form-control d-grid" ng-model="afinal" required>
+                            <input type="text" name="motor" placeholder="motor" class="form-control d-grid" ng-model="motor" required>
+                            <input type="text" name="transmision" placeholder="transmision" class="form-control d-grid" ng-model="transmision" required>
                             <input type="text" name="especificaciones" placeholder="especificaciones" class="form-control d-grid" ng-model="especificaciones">
                             <input type="submit" value="Agregar" class="form-control compatibilidad__agregar">
                         </form>

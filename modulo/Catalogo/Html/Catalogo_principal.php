@@ -1,4 +1,4 @@
-<div ng-controller="catalogosCtrl" ng-init="refaccion.categoria='{categoria}'" class="ctrlmain">
+<div ng-controller="catalogosCtrl" ng-init="refaccion.categoria='{categoria}'" class="ctrlmain global__content">
 	<!-- Title Page -->
 	<header class="header">
 		<section class="header__contenido" ng-repeat="cat in catalogos.Escritorio">
@@ -9,15 +9,15 @@
 		</section>
 	</header>
 	<!-- Content page -->
-	<main class="bgblack p-t-55 p-b-65">
+	<main class="bgblack p-b-65">
 		<div class="container-fluid">
-			<div class="row">
-				<div class="col-sm-6 col-md-4 col-lg-3 p-b-50">
-					<div class="leftbar p-r-20 p-r-0-sm">
-						<h4 class="m-text14 p-b-32 text-white">
+			<div class="contenedor__catalogo">
+				<div class="catalogo">
+					<div class="catalogo__filtrado">
+						<!-- <h4 class="m-text14 p-b-32 text-white">
 							Filtrar
-						</h4>
-						<div class="filter-price p-t-22 p-b-50 bo3">
+						</h4> -->
+						<div class="catalogo__filtrado--opciones">
 							<label for="txtMarca" class="text-white">Armadora:</label>
 							<select name="txtMarca" id="txtMarca" class="form-control" ng-model="refaccion.marca"
 								ng-change="getVehiculos(true)">
@@ -52,19 +52,20 @@
 								</optgroup>
 							</select>
 						</div>
-						<div class="search-product pos-relative bo4 of-hidden">
-							<input class="s-text7 size6 p-l-23 p-r-50" type="text" name="search-product"
+						<div class="search-product pos-relative catalogo__filtrado--buscador form-control">
+							<input class="p-l-23 p-r-50" type="text" name="search-product"
 								placeholder="Buscar Producto..." ng-model="refaccion.producto"
 								ng-model-options="{debounce:500}" ng-change="getRefaccion()">
 
-							<button class="flex-c-m size5 ab-r-m color2 color0-hov trans-0-4">
+							<button class="ab-r-m">
 								<i class="fs-12 fa fa-search" aria-hidden="true"></i>
 							</button>
 						</div>
 					</div>
+
 				</div>
 
-				<div class="col-sm-6 col-md-8 col-lg-9 p-b-50">
+				<div class="">
 					<!--  -->
 					<div class="flex-sb-m flex-w p-b-35">
 						<div class="flex-w">
@@ -75,20 +76,14 @@
 							Refacciones Encontradas: {{Trefacciones}} resultados
 						</span>
 					</div>
-					<!-- Pagination -->
-					<div class="pagination p-b-26">
-						<a href="#{{pag.no}}" class="item-pagination flex-c-m trans-0-4 {{currentPage == (pag.no - 1)? 'active-pagination':''}}"
-							ng-repeat='pag in pages' ng-click='setPage(pag.no)'>{{pag.no}}</a>
-
-					</div>
 					
 					<!-- Product -->
-					<div class="row">
-						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 p-b-50 enlace half-w"
+					<div class="row refacciones__productos">
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 p-b-50 half-w"
 							ng-repeat="producto in Refacciones">
 							<!-- Block2 -->
-							<div class="block2 " ng-click="RefaccionDetalles(producto._id)">
-								<div class="block2-img wrap-pic-w of-hidden
+							<div class="block2 ">
+								<div ng-click="RefaccionDetalles(producto._id)" class="block2-img enlace wrap-pic-w of-hidden
 									{{producto.RefaccionOferta==1? 'block2-labelsale':''}}"
 									ng-class="{
 											'ribboagotado': producto.agotado ,
@@ -109,14 +104,13 @@
 										alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}">
 										<p class="block2-name dis-block s-text3 p-b-5 text-white">
 											{{producto.Producto}}
-											
 										</p>
 										
 									</section>
 									
 
 									<span class="block2-price m-text6 p-r-5 p-t-5 text-white text-center">
-										<h3 class="precio">{{producto.RefaccionOferta? producto.Precio2:producto.Precio1 | currency}}</h3>
+										<h3 ng-click="RefaccionDetalles(producto._id)" class="precio enlace">{{producto.RefaccionOferta? producto.Precio2:producto.Precio1 | currency}}</h3>
 									</span>
 									<div class="enviogratis" ng-show="producto.Enviogratis">
 										<img src="/images/icons/Icono-camion.png" alt="" >

@@ -1,4 +1,4 @@
-<div ng-controller="catalogosDetallesCtrl" ng-init="Refaccion.id={id}" class="ctrlmain">
+<div ng-controller="catalogosDetallesCtrl" ng-init="Refaccion.id={id}" class="ctrlmain global__content">
 	<!-- breadcrumb -->
 	<div class="bread-crumb bgwhite flex-w p-l-52 p-r-15 p-t-30 p-l-15-sm">
 		<a href="?mod=catalogo" class="s-text16">

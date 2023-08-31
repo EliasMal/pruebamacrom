@@ -15,7 +15,8 @@
     VALUES ('$clave', '$idmarca','$idmodelo', '$generacion', '$ainicial','$afinal','$motor','$transmision','$especificaciones', '$id_imagen')";
     
     if (mysqli_query($conn, $sql)) {
-      echo "Data inserted successfully";
+      echo "<h4>Data inserted successfully</h4>";
+      echo '<meta http-equiv="refresh" content="0;url=../../../../?mod=Refacciones&opc=edit&id=',$id_imagen,'">';
       exit;
     } else {
       echo "Error inserting data: " . mysqli_error($conn);

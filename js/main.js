@@ -45,7 +45,16 @@
    var contnavegacion = document.querySelectorAll(".contenedor__navegacion");
    abrirmenu.forEach((b,i) =>{
        b.addEventListener("click",()=>{
-         contnavegacion[i].classList.toggle("abierto")
+         contnavegacion[i].classList.toggle("abierto");
+         if($(contnavegacion[i]).hasClass('abierto')){
+            $("#topbar--switch").removeClass("fa-bars");
+            $("#topbar--switch").addClass("fa-close");
+            $("#topbar--switch").css('color','var(--primario)');
+         } else {
+            $("#topbar--switch").removeClass("fa-close");
+            $("#topbar--switch").addClass("fa-bars");
+            $("#topbar--switch").css('color','var(--blanco)');
+         }
        });
      });
 
