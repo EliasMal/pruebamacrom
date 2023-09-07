@@ -1,4 +1,6 @@
-<?php   
+<?php
+session_name("loginCliente");
+session_start();   
     require_once "../../../tv-admin/asset/Clases/dbconectar.php";
     require_once "../../../tv-admin/asset/Clases/ConexionMySQL.php";
     
@@ -60,7 +62,7 @@
                             $this->jsonData["Bandera"] = true;
                             break;
                     }
-                    break;
+                break;
             }
             print json_encode($this->jsonData);
         }

@@ -487,6 +487,7 @@ function catalogosDetallesCtrl($scope, $http){
                 data: {modelo: obj.Refaccion}
 
             }).then(function successCallback(res) {
+                
 
                 location.reload();
 

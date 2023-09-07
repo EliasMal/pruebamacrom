@@ -103,7 +103,8 @@ function homeCtrl ($scope,$http){
         }
         
     }
-    
+
+
     obj.getImagen = (e)=>{
         return "images/Categorias/"+e._id+".webp";
     }

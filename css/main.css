@@ -179,6 +179,10 @@ img{
     }
 }
 
+.modal-backdrop{
+  z-index: 0 !important;
+}
+
 /** Contenido principal**/
 .global__content{
   position: relative;
