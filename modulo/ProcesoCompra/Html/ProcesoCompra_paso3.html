@@ -1,23 +1,20 @@
+<style>
+.contenedor__navegacion, .header__topbar--abrir{
+    display: none;
+}
+</style>
 <section>
-    <section class="contenedor">
+    <section class="titular__banner">
         <img src="images/Banners/Compras.png" alt="Banner compras">
-        <h2 class="l-text2 t-center">
+        <h2 class="l-text2 t-center" style="color: var(--primario)">
             Acreditar compra
         </h2>
     </section>
 
-    <section class="contenedor-responsive">
-        <img src="images/Banners/Compras-movil.png" alt="Banner compras">
-        <h2 class="l-text2 t-center">
-            Acreditar compra
-        </h2>
-    </section>
-    <section class="p-t-66 p-b-60" ng-controller="CabeceraCtrl" ng-init="mod='{mod}'">
+    <section class="contenedor" ng-controller="CabeceraCtrl" ng-init="mod='{mod}'">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 p-b-30">
-                    <h4 class="m-text26 p-b-36 p-t-15"><i class="fa  fa-map-marker"></i> Formas de pago</h4>
-                    <hr />
                     <div class="row">
                         <div class="col-md-12 m-text26 p-b-36 p-t-15">
                             !Gracias por realizar su compra!, en cuanto se acredite tu deposito se te enviara via correo tu codigo de envio de paqueteria para que pueda ser rastreado 

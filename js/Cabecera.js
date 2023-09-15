@@ -1,5 +1,5 @@
 
-/* var url_session ="./modulo/home/Ajax/session.php"; */
+var url_session ="./modulo/home/Ajax/session.php";
 var url = "./modulo/home/Ajax/home.php";
 var urlLogin = "./modulo/Login/Ajax/Login.php";
 
@@ -25,9 +25,8 @@ function CabeceraCtrl($scope,$http, $sce,vcRecaptchaService){
     var obj = $scope;
     obj.session = $_SESSION;
     obj.user = (obj.session.autentificacion!=undefined && obj.session.autentificacion==1)? true:false;
-    obj.Numproducts = obj.session.cart? Object.keys(obj.session.cart).length:0;
+    obj.Numproducts = obj.session.CarritoPrueba? Object.keys(obj.session.CarritoPrueba).length:0;
     obj.login = {};
-    obj.Actualizar = false;
     obj.Costumer = {};
     obj.tipoPago={
         value:"",
@@ -39,6 +38,7 @@ function CabeceraCtrl($scope,$http, $sce,vcRecaptchaService){
     obj.msgContacto = false;
     obj.flagenvio = false;
     obj.cotizacion;
+    obj.Data = {};
 
     toastr.options = {
         "progressBar": true,
@@ -54,8 +54,8 @@ function CabeceraCtrl($scope,$http, $sce,vcRecaptchaService){
      
        obj.subtotal = ()=>{
         obj.Costumer.Subtotal = 0
-        for(let e in obj.session.cart){
-            obj.Costumer.Subtotal += (obj.session.cart[e].cantidad * obj.session.cart[e].precio);
+        for(let e in obj.Data.Carrito){
+            obj.Costumer.Subtotal += (obj.Data.Carrito[e].Cantidad * obj.Data.Carrito[e].Precio);
         }
         return obj.Costumer.Subtotal;
         }
@@ -87,13 +87,40 @@ function CabeceraCtrl($scope,$http, $sce,vcRecaptchaService){
             toastr.error("Error: no se realizo la conexion con el servidor");
         });
     }
-        obj.btnEliminarRefaccion = (Refaccion)=>{
+    
+    obj.btnEliminarRefaccion = (Refaccion)=>{
         if(confirm("¿Esta seguro de eliminar la refaccion del carrito?")){
             Refaccion.erase = 1;
+            Refaccion.borrar = Refaccion.Clave;
+            Refaccion.n = $_SESSION["CarritoPrueba"]["length"];
             obj.actualizarSession(Refaccion,true);
         }
     }
     //eliminar refaccion
+
+    obj.getCategorias = async()=>{
+        try {
+            const result = await $http({
+                method: 'POST',
+                url: url,
+                data: {modelo: {opc: "buscar", tipo: "Categorias", home:true}},
+            }).then(function successCallback(res) {
+                return res
+            }, function errorCallback(res) {
+                toastr.error("Error: no se realizo la conexion con el servidor");
+            });
+            console.log(result.data)
+            if(result){
+                if (result.data.Bandera == 1) {
+                    obj.Data = result.data.Data;
+                }
+            }  
+            $scope.$apply();
+        } catch (error) {
+            toastr.error(error)
+        }
+        
+    }
 
     obj.btnLogin = ()=>{
         location.href="?mod=login";
@@ -213,54 +240,11 @@ function CabeceraCtrl($scope,$http, $sce,vcRecaptchaService){
         location.href="?mod=home";
     }
     
-    obj.btnActualizarDatos = ()=>{
-        obj.Actualizar = true;
-    }
     
     obj.opcTipopago = ()=>{
         obj.tipoPago.estatus = true;
         
     }
-
-    obj.btnGuardarActualizacion = ()=>{
-        obj.Actualizar = false;
-        obj.Costumer.opc="setC";
-        
-        $http({
-            method: 'POST',
-            url: urlCostumer,
-            data: {Costumer: obj.Costumer}
-
-        }).then(function successCallback(res) {
-            if (res.data.Bandera == 1) {
-                obj.Costumer = res.data.Data;
-            }else{
-                toastr.error(res.data.mensaje);
-            }
-        }, function errorCallback(res) {
-            toastr.error("Error: no se realizo la conexion con el servidor");
-        });
-    }
-    
-    /* obj.getCustomer = ()=>{
-        obj.Costumer.opc="getC";
-        obj.Costumer.usr = obj.session.usr;
-        $http({
-            method: 'POST',
-            url: urlCostumer,
-            data: {Costumer: obj.Costumer}
-
-        }).then(function successCallback(res) {
-            if (res.data.Bandera == 1) {
-                obj.Costumer = res.data.Data;
-                //toastr.success(res.data.mensaje);
-            }else{
-                toastr.error(res.data.mensaje);
-            }
-        }, function errorCallback(res) {
-            toastr.error("Error: no se realizo la conexion con el servidor");
-        });
-    } */
     
     obj.getBanners = (data)=>{
         $http({
@@ -342,6 +326,7 @@ function CabeceraCtrl($scope,$http, $sce,vcRecaptchaService){
              }
         }
         
+        obj.getCategorias();
 
         obj.getBanners({opc:"get", Categoria: obj.mod, Estatus:1});
         if(obj.mod === "ProcesoCompra" && obj.session.autentificacion==undefined && obj.session.autentificacion!=1){

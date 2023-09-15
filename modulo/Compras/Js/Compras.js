@@ -4,6 +4,7 @@ var url_getusercampras = "./modulo/Compras/Ajax/Compras.php";
 const urlProfile = "./modulo/Profile/Ajax/Profile.php";
 var urlCostumer = "./modulo/ProcesoCompra/Ajax/ProcesoCompra.php";
 var url_session ="./modulo/home/Ajax/session.php";
+var urlhome = "./modulo/home/Ajax/home.php";
 const url_monedero = "./tv-admin/asset/Modulo/Control/Monedero/Ajax/Monedero.php";
 //const urlSkydropx = "https://api-demo.skydropx.com/v1/quotations"
 const urlSkydropx = "https://api.skydropx.com/v1/quotations";
@@ -28,9 +29,9 @@ tsuruVolks.controller('ComprasCtrl', ["$scope","$http","$sce", ComprasCtrl])
 function ComprasCtrl($scope, $http , $sce){
     var obj = $scope;
     obj.session = $_SESSION;
-    obj.Costumer = {Cenvio:{costo:0}, aviso:false ,facturacion:0, profile:{}, metodoPago:"", cart: $_SESSION.cart, dataFacturacion: {}, dataDomicilio: {}, descuento:0};
+    obj.Costumer = {Cenvio:{costo:0}, aviso:false ,facturacion:0, profile:{}, metodoPago:"", cart: $_SESSION.CarritoPrueba, dataFacturacion: {}, dataDomicilio: {}, descuento:0};
     obj.cenvio = 0
-    obj.Numproducts = obj.session.cart? Object.keys(obj.session.cart).length:0;
+    obj.Numproducts = obj.session.CarritoPrueba? Object.keys(obj.session.CarritoPrueba).length:0;
     obj.factflag = false;
     obj.monedero = {Importe:0, aplicado:false};
     obj.cotizador = [];
@@ -52,8 +53,8 @@ function ComprasCtrl($scope, $http , $sce){
 
     obj.subtotal = ()=>{
         obj.Costumer.Subtotal = 0
-        for(let e in obj.session.cart){
-            obj.Costumer.Subtotal += (obj.session.cart[e].cantidad * obj.session.cart[e].precio);
+        for(let e in obj.session.CarritoPrueba){
+            obj.Costumer.Subtotal += (obj.session.CarritoPrueba[e].Cantidad * obj.session.CarritoPrueba[e].Precio);
         }
         return obj.Costumer.Subtotal;
     }
@@ -113,15 +114,13 @@ obj.cupon = () =>{
     }
 
     obj.btnQuitar = (p)=>{
-        
-        //p.cantidad = p.cantidad<=1? 1:p.cantidad-1;cotizador
+    
         p.cantidad--;
         obj.Ttotal();
         obj.actualizarSession(p);
         if (p.cantidad<=1) {
             p.cantidad=1;
         }
-        //obj.getCotizacionEnvio();
     }
 
      // Ventana modal
@@ -331,7 +330,7 @@ btncredito.style.borderColor="#de0007";
                     }
                     /*  */
                 }else{
-                    toastr.error(res.data.mensaje);
+                    toastr.error("ERROR");
                 }
             }, function errorCallback(res) {
                 toastr.error("Error: no se realizo la conexion con el servidor");
@@ -345,7 +344,6 @@ btncredito.style.borderColor="#de0007";
 
     obj.actualizarSession = (Refaccion,opc)=>{
         /*opc? true = elimina la variable de la session, false= no aplica nada*/
-        
         $http({
             method: 'POST',
             url: url_session,
@@ -353,7 +351,7 @@ btncredito.style.borderColor="#de0007";
 
         }).then(function successCallback(res) {
             if(opc){
-               location.reload();     
+               location.reload();
             }
         }, function errorCallback(res) {
             toastr.error("Error: no se realizo la conexion con el servidor");
@@ -373,6 +371,9 @@ btncredito.style.borderColor="#de0007";
     obj.btnEliminarRefaccion = (Refaccion)=>{
         if(confirm("¿Esta seguro de eliminar la refaccion del carrito?")){
             Refaccion.erase = 1;
+            Refaccion.borrar = Refaccion.Clave;
+            Refaccion.n = $_SESSION["CarritoPrueba"]["length"];
+
             obj.actualizarSession(Refaccion,true);
         }
     }
@@ -423,14 +424,14 @@ btncredito.style.borderColor="#de0007";
         obj.requiredEnvio = true;
         $("#mdlcotizar").modal('hide');
     }
-
+    
     obj.empaquetar = ()=>{
-        Object.values(obj.session.cart).forEach(e =>{
+        Object.values(obj.session.CarritoPrueba).forEach(e =>{
             if(!e.Enviogratis){
-                obj.dataCotizador.parcel.weight += parseFloat(e.peso)
-                obj.dataCotizador.parcel.width =  parseInt(e.ancho > obj.dataCotizador.parcel.width? e.ancho: obj.dataCotizador.parcel.width);
-                obj.dataCotizador.parcel.height += parseInt(e.alto)
-                obj.dataCotizador.parcel.length = parseInt(e.largo > obj.dataCotizador.parcel.length? e.largo:  obj.dataCotizador.parcel.length);
+                obj.dataCotizador.parcel.weight += parseFloat(e.Peso)
+                obj.dataCotizador.parcel.width =  parseInt(e.Ancho > obj.dataCotizador.parcel.width? e.Ancho: obj.dataCotizador.parcel.width);
+                obj.dataCotizador.parcel.height += parseInt(e.Alto)
+                obj.dataCotizador.parcel.length = parseInt(e.Largo > obj.dataCotizador.parcel.length? e.Largo:  obj.dataCotizador.parcel.length);
             }
         })
         obj.requiredEnvio = obj.dataCotizador.parcel.weight != 0? false: true;

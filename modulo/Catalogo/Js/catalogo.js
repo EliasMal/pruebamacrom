@@ -488,7 +488,6 @@ function catalogosDetallesCtrl($scope, $http){
 
             }).then(function successCallback(res) {
                 
-
                 location.reload();
 
             }, function errorCallback(res) {
@@ -496,12 +495,12 @@ function catalogosDetallesCtrl($scope, $http){
             });
         
     }
-    
+
     obj.getImagen = (status, id)=>{
         var url = "images/refacciones/";
         return status? url+id+".webp":url+id+".webp";
     }
-    
+
     obj.getGaleria = (id)=>{
         if(id != undefined){
             url = "images/galeria/"+id;
@@ -509,7 +508,7 @@ function catalogosDetallesCtrl($scope, $http){
         }
         
     }
-    
+
     obj.btnInciarSession = ()=>{
         location.href="?mod=login";
     }
@@ -526,7 +525,7 @@ function catalogosDetallesCtrl($scope, $http){
         })
         
     }
-    
+
    angular.element(document).ready(function () {
         obj.getRefaccion();
         setTimeout(()=>{

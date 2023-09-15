@@ -60,26 +60,26 @@
 						<div style="height: 47px;padding-top: 9px;" id="divcarri">
 							<div class="header-wrapicon2 m-r-13">
 								<img src="images/icons/Carrito.svg" class="header-icon1 js-show-header-dropdown1 filwhite" alt="ICON" id="carrisvg">
-								<span class="header-icons-noti">{{Numproducts}}</span>
+								<span class="header-icons-noti">{{Data.Carrito.length}}</span>
 
 								<!-- Header cart noti -->
 								<div class="header-cart header-dropdown carrito__contenedor">
 									<ul class="header-cart-wrapitem">
-																	<li class="header-cart-item" ng-repeat="product in session.cart">
+																	<li class="header-cart-item" ng-repeat="product in Data.Carrito" ng-show="user">
 																		<div class="header-cart-item-img" ng-click="btnEliminarRefaccion(product, true)">
-																			<img ng-src="{{getImagen(product.id)}}" alt="IMG">
+																			<img ng-src="{{getImagen(product.imagenid)}}" alt="IMG">
 																		</div>
 
 																		<div class="header-cart-item-txt">
-																			<a ng-click="RefaccionDetalles(product.id)" class="header-cart-item-name enlace">
-																				{{product.articulo}}
+																			<a ng-click="RefaccionDetalles(product.imagenid)" class="header-cart-item-name enlace">
+																				{{product._producto}}
 																			</a>
 																			<span class="header-cart-item-info">
-																				No.parte: {{product.noparte}}
+																				No.parte: {{product.No_parte}}
 																			</span>
 
 																			<span class="header-cart-item-info">
-																				{{product.cantidad}} x {{product.precio | currency}}
+																				{{product.Cantidad}} x {{product.Precio | currency}}
 																		
 																			</span>
 																		</div>
@@ -89,7 +89,7 @@
 									<div class="header-cart-total">
 										Total: {{subtotal() | currency}}
 									</div>
-
+				
 										<div class="header-cart-buttons">
 											<div class="header-cart-wrapbtn">
 												<!-- Button -->

@@ -11,6 +11,8 @@
  *
  * @author francisco
  */
+session_name("loginCliente");
+session_start();
 require_once "../../../tv-admin/asset/Clases/dbconectar.php";
 require_once "../../../tv-admin/asset/Clases/ConexionMySQL.php";
 
@@ -42,6 +44,8 @@ class home {
                     case 'Categorias':
                         $this->jsonData["Bandera"] = 1;
                         $this->jsonData["Data"]["Categorias"] = $this->getCategorias();
+                        $this->jsonData["Data"]["Carrito"]= $this->get_Carrito();
+                        $_SESSION["CarritoPrueba"] = $this->get_Carrito();
                         //$this->jsonData["Data"]["Marcas"] = $this->getMarcas();
                         if($this->formulario->modelo->home){
                             $this->jsonData["Data"]["masVendidos"]=$this->getImageProductos($this->getmasVendidos());
@@ -50,7 +54,6 @@ class home {
                             $this->jsonData["Data"]["oferta"] = $this->getImageProductos($this->getProductosOferta());
                         }
                     break;
-                   
                 }
             break;
             case 'OneRefaccion':
@@ -62,9 +65,6 @@ class home {
                 $this->jsonData["Data"] = $this->getOneCostumer();
                 $this->jsonData["Bandera"] = 1;
             break;
-            case 'carrito':
-                 $this->jsonData["Data3"] = $this->get_Carrito();
-                break;
            
         }
         print json_encode($this->jsonData);
@@ -84,7 +84,7 @@ class home {
 
     private function get_Carrito(){
         $array = array();
-        $sql = "SELECT _clienteid, Clave, No_parte, Cantidad, Precio, Producto as _producto FROM Carrito";
+        $sql = "SELECT _clienteid, Clave, No_parte, Cantidad, Precio, Producto as _producto, Alto, Largo, Ancho, Peso, imagenid FROM Carrito where _clienteid='{$_SESSION["iduser"]}'";
         $id = $this->conn->query($sql);
         while ($row = $this->conn->fetch($id)){
             array_push($array, $row);

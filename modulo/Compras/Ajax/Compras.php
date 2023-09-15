@@ -121,15 +121,12 @@
         private function getPaquetes(){
             $array = array();
             $i = 1;
-            /*PESO VOLUMETICOS 
-                (ANCHO * LARGO * ALTO) / 5000
-            */
-            foreach($_SESSION["cart"] as $key => $value){
+            foreach($_SESSION["CarritoPrueba"] as $key => $value){
                 $paquete = array(
-                    "largo" => (int)$value["largo"],
-                    "ancho" => (int)$value["cantidad"]*(int)$value["ancho"],
-                    "alto" => (int)$value["alto"],
-                    "peso" => $value["cantidad"]*$value["peso"],
+                    "largo" => (int)$value["Largo"],
+                    "ancho" => (int)$value["Cantidad"]*(int)$value["Ancho"],
+                    "alto" => (int)$value["Alto"],
+                    "peso" => $value["Cantidad"]*$value["Peso"],
                     "consecutivo" => $i
                 );
                 array_push($array, $paquete);

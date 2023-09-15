@@ -88,6 +88,7 @@ h1{font-size: 4.8rem;}
 h2{font-size: 4rem;}
 h3{font-size: 3.2rem;}
 h4{font-size: 2.8rem;}
+h5{font-size: 2.2rem;}
 
 .txtblack{color: var(--negro);}
 
@@ -580,7 +581,6 @@ img{
   display: flex;
   flex-wrap: nowrap;
   height: 10rem;
-
 }
 
 .descripcion-producto p{
@@ -794,7 +794,13 @@ width: 50%;
   position: relative;
   top: -4rem;
 }
-
+.metodo__pago{
+  grid-row: 2;
+}
+.pagar--button{
+  height: 4rem;
+  font-size: 2rem;
+}
 @media(min-width: 768px) {
   .contenedor-principal{
     display: grid;
@@ -1660,7 +1666,7 @@ iframe {
   width: 100%;
 }
 
-.header-cart-item-img::after {
+.header-cart-item-img::after{
   content: '\e870';
   font-family: Linearicons;
   font-size: 16px;
@@ -1733,7 +1739,10 @@ iframe {
   justify-content: space-between;
   align-items: center;
 }
-
+.header-cart-buttons button{
+  height: 4rem;
+  font-size: 1.6rem;
+}
 .header-cart-wrapbtn {
   width: calc((100% - 10px) / 2);
 }

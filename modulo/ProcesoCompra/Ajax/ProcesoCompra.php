@@ -72,7 +72,8 @@ class ProcesoCompra {
                 if($this->formulario->Costumer->value==="Deposito"){
                     $id = $this->setPedido();
                     if($this->setPedidosDetalles($id)){
-                        unset($_SESSION["cart"]);
+                        unset($_SESSION["CarritoPrueba"]);
+                        $this->deleteCarrito();
                         $this->jsonData["Bandera"] = 1;
                         $this->jsonData["mensaje"] = "Tu pedido se a generado satisfactoriamente";
                         $this->jsonData["Data"] = $id;
@@ -142,7 +143,8 @@ class ProcesoCompra {
                                     if($this->formulario->Costumer->descuento!=0){
                                         $this->setMonedero($this->formulario->Costumer->profile->id, $this->formulario->Costumer->noPedido["folio"], $this->formulario->Costumer->descuento);
                                     }
-                                    unset($_SESSION["cart"]);
+                                    unset($_SESSION["CarritoPrueba"]);
+                                    $this->deleteCarrito();
                                     $this->jsonData["Bandera"] = 1;
                                     $this->jsonData["mensaje"] = "Tu pedido se a generado satisfactoriamente";
                                     $this->jsonData["Data"] = $id;
@@ -235,7 +237,8 @@ class ProcesoCompra {
                     if($id){
                         if($this->setPedidosDetalles($id)){
                             if($this->setMonedero($this->formulario->Costumer->profile->id, $this->formulario->Costumer->noPedido["folio"], $this->formulario->Costumer->descuento)){
-                                unset($_SESSION["cart"]);
+                                unset($_SESSION["CarritoPrueba"]);
+                                $this->deleteCarrito();
                                 $this->jsonData["Bandera"] = 1;
                                 $this->jsonData["mensaje"] = "Tu pedido se a generado satisfactoriamente";
                                 $this->jsonData["Data"] = $id;
@@ -284,12 +287,17 @@ class ProcesoCompra {
 
     private function getImporte(){
         $importe = 0.0;
-        foreach($_SESSION["cart"] as $key=> $value){
-            $importe += ($value["cantidad"]*$value["precio"]);
+        foreach($_SESSION["CarritoPrueba"] as $key=> $value){
+            $importe += ($value["Cantidad"]*$value["Precio"]);
         }
         //Agregamos el costo de envio
         $importe += $_SESSION["Cenvio"]["costo"];
         return $importe;
+    }
+
+    private function deleteCarrito(){
+        $sql = "DELETE FROM Carrito WHERE _clienteid = '{$this->formulario->Costumer->profile->id}'";
+        return $this->conn->query($sql)? true: false;
     }
 
     private function setPedido(){
@@ -313,8 +321,8 @@ class ProcesoCompra {
 
     private function setPedidosDetalles($id=null){
         $values = "";
-        foreach($_SESSION["cart"] as $key => $value){
-            $values .="('$id','{$value["id"]}','{$value["precio"]}','{$value["cantidad"]}'),";
+        foreach($_SESSION["CarritoPrueba"] as $key => $value){
+            $values .="('$id','{$value["imagenid"]}','{$value["Precio"]}','{$value["Cantidad"]}'),";
         }
         $values = trim($values,',');
         $sql = "INSERT INTO DetallesPedidos(_idPedidos, _idProducto, Importe, cantidad) values $values";

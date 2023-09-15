@@ -1,18 +1,6 @@
 <html>
 	<head>
-		<!-- <meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="shortcut icon" href="https://macromautopartes.com/images/icons/FaviconM.png" type="image/png" />
-		<link rel="icon" type="image/png" href="images/icons/FaviconM.png"/>
-		<link rel="stylesheet" type="text/css" href="../../../css/main.css"> -->
-	 	<!-- Angular -->
-	 	<!-- <script type="text/javascript" src="../../../tv-admin/asset/Js/angular/angular.min.js"></script>
-    	<script src="../../../tv-admin/asset/Js/angular/angular-datatables.min.js"></script>
-		<script src="../modulo/Compras/Ajax/Compras.php"></script>
-		<script type="text/javascript" src="../../../vendor/jquery/jquery-3.2.1.min.js"></script>
-    	<script type="text/javascript" src="../../../vendor/momentjs/moment.min.js"></script>
-   		<script src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-    	<script src="../../../tv-admin/asset/Plugins/numeric/jquery.numeric.js"></script>
-		<script src="../modulo/Compras/Js/Compras.js"></script> -->
+	<meta charset="UTF-8">
 	</head>
 
 	<body>
@@ -50,33 +38,31 @@
 						<h4 class="cliente__titulo txtred center--text">Productos</h4>
 						<p class="center--text txtblack">Tienes {{Numproducts}} articulo(s) en el carrito.</p>
 						<div class="productos__contenedor">
-							<div class="productos__datos--contenedor" ng-repeat="product in session.cart">
-									<div class="productos__datos">
-										<div class="productos__datos--img">
-											<img ng-src="{{getImagen(product.id)}}" alt="IMG" ng-click="btnEliminarRefaccion(product, true)" >
-										</div>
-										<div class="productos__datos--info">
-											<a ng-click="RefaccionDetalles(product.id)" class="productos__datos--info--articulo">{{product.articulo}}</a>
-											<p>No.Parte: {{product.noparte}}</p>
-											<p>{{product.cantidad}} x {{product.precio |currency}}</p>
-											<div class="productos__datos--contador">
-												<div class="agregarmas no-overflow">
-									
-													<button class="agregarmas__botones" ng-click="btnQuitar(product)">
-														<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
-													</button>
-
-													<div class="agregarmas__contador num-product center--text">
-														<span >{{product.cantidad}}</span>
-													</div>
-
-													<button class="agregarmas__botones" ng-click="btnAgregar(product)">
-														<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
-													</button>
+							<div class="productos__datos--contenedor" ng-repeat="product in session.CarritoPrueba">
+								<div class="productos__datos">
+									<div class="productos__datos--img">
+										<img ng-src="{{getImagen(product.imagenid)}}" alt="IMG" ng-click="btnEliminarRefaccion(product, true)" >
+									</div>
+									<div class="productos__datos--info">
+										<a ng-click="RefaccionDetalles(product.imagenid)" class="productos__datos--info--articulo">{{product._producto}}</a>
+										<p>No.Parte: {{product.No_parte}}</p>
+										<p>{{product.Cantidad}} x {{product.Precio |currency}}</p>
+										<div class="productos__datos--contador">
+											<div class="agregarmas no-overflow">
+								
+												<button class="agregarmas__botones" ng-click="btnQuitar(product)">
+													<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
+												</button>
+												<div class="agregarmas__contador num-product center--text">
+													<span >{{product.Cantidad}}</span>
 												</div>
+												<button class="agregarmas__botones" ng-click="btnAgregar(product)">
+													<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
+												</button>
 											</div>
 										</div>
 									</div>
+								</div>
 							</div>
 						</div>
 						<hr>
@@ -165,7 +151,7 @@
 									</table>
 								</div>	
 								
-								<button class="btn btn-danger bg9 form-control" id="btnfacomp" ng-click="btnPagar()" ng-show="subtotal() > 0"> {{session.autentificacion==1? 'Pagar':'Inicia Session'}}</button>
+								<button class="btn btn-danger bg9 form-control pagar--button" id="btnfacomp" ng-click="btnPagar()" ng-show="subtotal() > 0"> {{session.autentificacion==1? 'Pagar':'Inicia Session'}}</button>
 								<p class="fs-12 m-t-10" ng-show="session.autentificacion==1">
 									<label class="checkbox ">
 										<input type="checkbox" name="aviso" id="aviso" ng-model="Costumer.aviso" required>

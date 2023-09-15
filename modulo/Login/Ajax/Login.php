@@ -61,6 +61,7 @@ class Login{
         return count($this->dataLogin)!=0? true:false;
         
     }
+
     
     private function setSession($flag = false){
         if($flag){
