@@ -141,37 +141,7 @@ class home {
         }
         return $array;
     }
-    
-    /* private function getMarcas (){
-        $array = array();
-        $sql = "SELECT * FROM Marcas where Estatus = 1 order by MArca";
-        $id = $this->conn->query($sql);
-        while($row= $this->conn->fetch($id)){
-            array_push($array, $row);
-        }
-        return $array;
-    }
-    
-    private function getModelos(){
-        $array = array();
-        $sql = "Select _id,Modelo from Modelos where Estatus = 1 and _idMarca = ".$this->formulario["marca"] ." order by Modelo asc";
-        $id = $this->conn->query($sql);
-        while($row= $this->conn->fetch($id)){
-            array_push($array, $row);
-        }
-        return $array;
-    }
-    
-    private function getAnios(){
-            $array = array();
-            $sql = "Select _id, Anio from Anios where _idModelo= ".$this->formulario["vehiculo"]. " order by Anio asc";
-            $id = $this->conn->query($sql);
-            while($row= $this->conn->fetch($id)){
-                array_push($array, $row);
-            }
-            return $array;
-        } */
-    
+     
     private function getRefacciones($x=0, $y = 21 ){
         $array = array();
             

@@ -137,10 +137,7 @@
         <script src="tv-admin/asset/Js/angular/angular-recaptcha.min.js"></script>
         <script type="text/javascript" src="tv-admin/asset/Js/angular/first.js"></script>
         <script type="text/javascript" src="js/Cabecera.js"></script>
-        <script type="text/javascript">
-            $_SESSION = <?php print json_encode($_SESSION)?>;
-            
-        </script>
+        <script type="text/javascript">$_SESSION = <?php print json_encode($_SESSION)?>;</script>
 <!--===============================================================================================-->
 	<script type="text/javascript" src="vendor/animsition/js/animsition.min.js"></script>
 <!--===============================================================================================-->

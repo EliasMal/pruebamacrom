@@ -122,6 +122,25 @@
         $("#divcarri").css("background-color","white");
     });
 
+    //cambio contraseña
+    $('#C__Contraseña').on('click', function(){
+        $("#DatosGenerales").addClass('non-active');
+        $("#CambioContraseña").removeClass('non-active');
+        $(this).addClass('underline--link');
+        $(this).removeClass('underline--link__none');
+        $("#D__Generales").addClass('underline--link__none');
+        $("#D__Generales").removeClass('underline--link');
+    });
+    //cambio datosgenerales
+    $('#D__Generales').on('click', function(){
+        $("#CambioContraseña").addClass('non-active');
+        $("#DatosGenerales").removeClass('non-active');
+        $(this).addClass('underline--link');
+        $(this).removeClass('underline--link__none');
+        $("#C__Contraseña").addClass('underline--link__none');
+        $("#C__Contraseña").removeClass('underline--link');
+    });
+
     var menu1 = $('.js-show-header-dropdown1');
     var sub_menu_is_showed1 = -1;
 

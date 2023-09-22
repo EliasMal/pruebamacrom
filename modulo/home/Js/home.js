@@ -89,7 +89,6 @@ function homeCtrl ($scope,$http){
             }, function errorCallback(res) {
                 toastr.error("Error: no se realizo la conexion con el servidor");
             });
-            console.log(result.data)
             if(result){
                 if (result.data.Bandera == 1) {
                     obj.Data = result.data.Data;

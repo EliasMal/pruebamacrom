@@ -162,19 +162,19 @@ function ProfileCtrl($scope, $http){
         let classEstatus = "";
         switch(estatus){
             case 0:
-                classEstatus = "badge-secondary";
+                classEstatus = "orange";
                 break;
             case 1:
             case 5:
-                classEstatus = "badge-success";
+                classEstatus = "success";
                 break;
             case 2:
             case 3:
             case 4:
-                classEstatus = "badge-warning";
+                classEstatus = "yellow";
             break;
             case 6:
-                classEstatus = "badge-danger";
+                classEstatus = "red";
             break;
         }
         return classEstatus;

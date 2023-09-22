@@ -20,94 +20,101 @@
                           <li class="breadcrumb-item active" aria-current="page">Sessi&oacute;n y Seg&uacute;ridad</li>
                         </ol>
                     </nav>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-30">
+
+                    <div class="SS__contenedor--titulo">
+                        <div class="SS__titulo">
                             <h1>Session y Seguridad</h1>
                         </div> 
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-30">
-                           
-                            
-                        </div> 
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 p-b-30">
-                            <div class="tab01">
-                                <ul class="nav nav-tabs" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" data-toggle="tab" href="#DatosGenerales" role="tab">Datos Generales</a>
+
+                    <div class="SS__perfil--contenedor">
+                        <div class="SS__perfil">
+                            <div class="">
+                                <ul class="SS__perfil--opciones" role="tablist">
+                                    <li class="">
+                                        <a class="underline--link" data-toggle="tab" id="D__Generales" role="tab">Datos Generales</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#CambioContraseña" role="tab">Cambio de contraseña</a>
+                                    <li class="">
+                                        <a class="underline--link__none" data-toggle="tab" id="C__Contraseña" role="tab">Cambio de contraseña</a>
                                     </li>
                                 </ul>
     
-                                <div class="tab-content p-t-35">
-                                    <div class="tab-pane fade show active" id="DatosGenerales" role="tabpanel">
+                                <div class="SS__perfil--vistas">
+
+                                    <div class="SS__perfil--dgenerales" id="DatosGenerales" role="tabpanel">
                                         <div>
-                                            <label for="example-text-input" >Nombre(s):</label>
-                                            <div class="bo9 of-hidden size15 m-b-20">
-                                                <input class="sizefull s-text7 p-l-22 p-r-22" type="text" placeholder="Nombre(s)" ng-model="profile.nombres" required>
+                                            <label for="nombre" >Nombre(s):</label>
+                                            <div class="">
+                                                <input class="" name="nombre" type="text" placeholder="Nombre(s)" ng-model="profile.nombres" required>
                                             </div>
                                         </div>
                                         <div>
                                             <label for="example-text-input" >Apellidos:</label>
-                                            <div class="bo9 of-hidden size15 m-b-20">
-                                                <input class="sizefull s-text7 p-l-22 p-r-22" type="text" placeholder="Apellidos" ng-model="profile.Apellidos" required>
+                                            <div class="">
+                                                <input class="" type="text" placeholder="Apellidos" ng-model="profile.Apellidos" required>
                                             </div>
                                         </div>
                                         <div>
                                             <label for="example-text-input" >Correo Electronico</label>
-                                            <div class="bo9 of-hidden size15 m-b-20">
-                                                <input class="sizefull s-text7 p-l-22 p-r-22" type="text" placeholder="Correo electronico" ng-model="profile.correo" required>
+                                            <div class="">
+                                                <input class="" type="text" placeholder="Correo electronico" ng-model="profile.correo" required>
                                             </div>
                                         </div>
                                         <div>
                                             <label for="example-text-input" >Telefono</label>
-                                            <div class="bo9 of-hidden size15 m-b-20">
-                                                <input class="sizefull s-text7 p-l-22 p-r-22" type="text" placeholder="Telefono celular" ng-model="profile.telefono" required>
+                                            <div class="">
+                                                <input class="" type="text" placeholder="Telefono celular" ng-model="profile.telefono" required>
                                             </div>
                                         </div>
-                                        <div>
-                                            <button class="flex-c-m bg-red btn  bo-rad-10 hov7 m-text3 trans-0-4 float-right" ng-click="btnGuardarSession(1)">Guardar</button>
+                                        <div class="SS__perfil--conbutton">
+                                            <button class="SS__perfil--button" ng-click="btnGuardarSession(1)">Guardar</button>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade show" id="CambioContraseña" role="tabpanel">
-                                        <form name="frmpassword" novalidate>
+
+                                    <div class="SS__perfil--ccontraseña non-active" id="CambioContraseña" role="tabpanel">
+
+                                        <form class="SS__perfil--datos" name="frmpassword" novalidate>
                                             <div>
                                                 <label for="example-text-input" >Nueva Contraseña</label>
-                                                <div class="bo9 of-hidden size15 m-b-20">
-                                                    <input class="sizefull s-text7 p-l-22 p-r-22" type="password"  placeholder="Nueva Contraseña" ng-model="profile.Nuevapass" required>
+                                                <div class="">
+                                                    <input class="" type="password"  placeholder="Nueva Contraseña" ng-model="profile.Nuevapass" required>
                                                     
                                                 </div>
-                                                <small class="text-danger" ng-show="msjprofiledisplay">Las contraseñas nos son iguales*</small>
+                                                <small class="" ng-show="msjprofiledisplay">Las contraseñas nos son iguales*</small>
                                             </div>
                                             <div>
                                                 <label for="example-text-input" >Confirma Contraseña</label>
-                                                <div class="bo9 of-hidden size15 m-b-20">
-                                                    <input class="sizefull s-text7 p-l-22 p-r-22" type="password"  placeholder="Confirmar contraseña" ng-model="profile.Confirmarpass" required>
+                                                <div class="">
+                                                    <input class="" type="password"  placeholder="Confirmar contraseña" ng-model="profile.Confirmarpass" required>
                                                 </div>
                                                 <small class="text-danger" ng-show="msjprofiledisplay">Las contraseñas nos son iguales*</small>
                                             </div>
                                             <div>
                                                 <label for="example-text-input" >Contraseña Actual</label>
-                                                <div class="bo9 of-hidden size15 m-b-20">
-                                                    <input class="sizefull s-text7 p-l-22 p-r-22" type="password" placeholder="Contraseña Actual" ng-model="profile.passActual" required>
+                                                <div class="">
+                                                    <input class="" type="password" placeholder="Contraseña Actual" ng-model="profile.passActual" required>
                                                 </div>
                                             </div>
+
                                         </form>
-                                        <div>
-                                            <button class="flex-c-m bg-red btn  bo-rad-10 hov7 m-text3 trans-0-4 float-right" ng-disabled="frmpassword.$invalid" ng-click="btnGuardarSession(2)">Guardar</button>
+
+                                        <div class="SS__perfil--conbutton">
+                                            <button class="SS__perfil--button" ng-disabled="frmpassword.$invalid" ng-click="btnGuardarSession(2)">Guardar</button>
                                         </div>
+
                                     </div>
                                 </div>
+
                             </div>
                             
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 p-b-30">
+
+                        <div class="SS__perfil--imagen">
                             <div class="icon-center">
                                 <img src="images/icons/icono_inicio_de_sesión.png" alt="logo-inicio_session" class="img icon-logos-grande">
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>    

@@ -56,7 +56,7 @@
                             <div class="box-pedidos" ng-repeat="p in Mispedidos">
                                <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-15">
-                                        <span class="no-pedido">Pedido: #{{p.noPedido}}</span>  <span class="estatus">Estado:</span><span class="bg {{p.class}} text-white estatus">{{p.Estado}}</span>
+                                        <span class="no-pedido">Pedido: #{{p.noPedido}}</span>  <span class="estatus">Estado:</span><span class="text-{{p.class}} estatus">{{p.Estado}}</span>
                                     </div>
                                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-15">
                                         <button class="flex-c-m bg-red btn  bo-rad-10 hov7 m-text3 trans-0-4 float-right" type="button" ng-click="btnverMispedidos(p._idPedidos)"> Ver pedido</button>

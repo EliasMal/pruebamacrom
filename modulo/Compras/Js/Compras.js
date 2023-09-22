@@ -103,8 +103,8 @@ obj.cupon = () =>{
 
     obj.btnAgregar = (p)=>{
         
-        if(p.cantidad < p.Existencias){
-            p.cantidad++; 
+        if(p.Cantidad < p.Existencias){
+            p.Cantidad++; 
             obj.Ttotal();
             obj.actualizarSession(p,false);
         }
@@ -115,11 +115,11 @@ obj.cupon = () =>{
 
     obj.btnQuitar = (p)=>{
     
-        p.cantidad--;
+        p.Cantidad--;
         obj.Ttotal();
         obj.actualizarSession(p);
-        if (p.cantidad<=1) {
-            p.cantidad=1;
+        if (p.Cantidad<=1) {
+            p.Cantidad=1;
         }
     }
 
@@ -241,7 +241,6 @@ window.addEventListener("click",function(event) {
                 localStorage.setItem("id",obj.Costumer.profile.id)
                 localStorage.setItem("id_rfc",obj.Costumer.dataFacturacion._id)
                 obj.Ttotal();
-                console.log(obj.cenvio)
             }else{
                 toastr.error(res.data.mensaje)
             }
@@ -528,7 +527,6 @@ function ProfileCtrl($scope, $http){
                 no: i, p: (obj.paginador.pageSize * i) - obj.paginador.pageSize
             });
         }
-        console.log(obj.paginador, ini, fin,obj.No_Pedidos)
     }
 
     obj.nextPage = ()=>{
@@ -793,7 +791,6 @@ function ProfileCtrl($scope, $http){
                     }
                     
                 }
-                console.log(obj.Mispedidos);
             }else{
                 toastr.error(res.data.mensaje);    
             }
@@ -844,7 +841,6 @@ function ProfileCtrl($scope, $http){
             xml: "Public/Facturas/" + data.archivoxml,
             pdf: "Public/Facturas/" + data.archivopdf
         }
-        console.log(obj.dataFactura)
         $("#Mdlfiles").modal('show');
     } 
     
@@ -854,7 +850,6 @@ function ProfileCtrl($scope, $http){
         
          zip.file(obj.dataFactura.xml,promise)
          promise = new Blob([$.get(obj.dataFactura.pdf)],{type: "text/plain;charset=utf-8"});
-         console.log(promise)
          zip.file(obj.dataFactura.pdf,promise)
 
     }
@@ -949,11 +944,8 @@ function ProfileCtrl($scope, $http){
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
                 obj.profile = res.data.Data;
-                console.log(obj.profile, "Entro a este dato");
                 if(!localStorage.getItem("iduser")){
                     localStorage.setItem("iduser",obj.profile._id)
-                }else{
-                    console.log(localStorage.getItem("iduser"));
                 }
             }else{
                 toastr.error("Error: ");    
@@ -1134,7 +1126,6 @@ function ProfileCtrl($scope, $http){
             }, function errorCallback(res){
                     toastr.error("Error: no se realizo la conexion con el servidor");
             });
-            console.log(resultado.data);
             if(resultado.data.Bandera==1){
                 switch(params.opc){
                     case 'Detalles':
@@ -1149,7 +1140,6 @@ function ProfileCtrl($scope, $http){
                 }
                 
                 $scope.$apply();
-                console.log(obj.monedero);
             }else{
                 toastr.error(resultado.data.mensaje);  
             } 
@@ -1186,8 +1176,7 @@ function ProfileCtrl($scope, $http){
         if(!localStorage.getItem("iduser")){
             obj.getDatosCliente(); 
         }
-
-        console.log(obj.pag)
+        
         switch(obj.pag){
             case 'Session':
             case 'Direcciones':
@@ -1209,7 +1198,6 @@ function ProfileCtrl($scope, $http){
             break;
             case 'Facturacion_edit':
                 obj.sendFacturacion('edit',{_id:localStorage.getItem("id_rfc")})
-                console.log("Entro",localStorage.getItem("id_rfc"));
             break
             case 'Mispedidos':
                 obj.sendMispedidos("buscar",{_id: localStorage.getItem("iduser")})

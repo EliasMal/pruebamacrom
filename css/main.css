@@ -634,6 +634,8 @@ img{
 .cliente__opciones{
   display: grid;
   height: 20rem;
+  position: relative;
+  top: 0;
 }
 .cliente__opciones--button{
   max-width: 45rem;
@@ -796,11 +798,16 @@ width: 50%;
 }
 .metodo__pago{
   grid-row: 2;
+  padding-top: 3rem;
 }
 .pagar--button{
   height: 4rem;
   font-size: 2rem;
 }
+.pagos__facturacion--titulo{
+  text-align: center;
+}
+
 @media(min-width: 768px) {
   .contenedor-principal{
     display: grid;
@@ -828,6 +835,9 @@ width: 50%;
     text-align: justify;
     max-width: 45rem;
   }
+  .cliente__opciones{
+    top: 4rem;
+  }
   .cliente__opciones--button{
   max-width: 20rem;
   border-radius: 5px;
@@ -837,6 +847,8 @@ width: 50%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-column-gap: 1rem;
+  }.pagos__facturacion--titulo{
+    text-align: justify;
   }
   .pagos__productos{
     grid-column: 2;
@@ -1113,6 +1125,96 @@ width: 50%;
     padding: 0 2rem;
   }
 }
+
+/** Perfil SESSION y SEGURIDAD**/
+.SS__perfil--vistas input{
+  border: 1px solid var(--negro) !important;
+  height: 4rem;
+  border-radius: 0.5rem;
+}
+.SS__perfil--imagen{
+  max-width: 20rem;
+  justify-self: center;
+  top: 5rem;
+  position: relative;
+}
+.SS__perfil--vistas{
+  display: grid;
+  justify-content: center;
+}
+.non-active{
+  display: none !important;
+}
+.underline--link{
+  text-decoration: underline 2px var(--primario);
+  color: var(--negro);
+}
+.underline--link__none{
+  text-decoration: none;
+  color: var(--gris-mid);
+}
+.SS__perfil--opciones li a{
+  cursor: pointer;
+}
+.SS__perfil--opciones{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  padding: 0 0 2rem 0;
+}
+.SS__perfil--conbutton{
+  display: grid;
+  grid-column: 2;
+  justify-self: end;
+}
+.SS__perfil--button{
+  background-color: var(--primario);
+  height: 4rem;
+  color: var(--blanco);
+  border-radius: 0.5rem;
+  width: 100%;
+  position: relative;
+  top: 3rem;
+}
+.SS__perfil--contenedor, .SS__perfil--dgenerale, .SS__perfil--datos{
+  display: grid;
+}
+.SS__perfil--dgenerales div, .SS__perfil--ccontraseña div{
+  margin-bottom: 1rem;
+}
+@media(min-width: 768px) {
+  .SS__perfil--contenedor{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    column-gap: 4rem;
+  }
+  .SS__perfil--imagen{
+    top: 0;
+  }
+  .non-active{
+    display: none !important;
+  }
+  .SS__perfil--dgenerales{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    column-gap: 4rem;
+    position: relative;
+    top: 2rem;
+  }
+  .SS__perfil--ccontraseña{
+    position: relative;
+    top: 2rem;
+  }
+  .SS__perfil--datos{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    column-gap: 2rem;
+  }
+  .SS__perfil--button{
+    width: 15rem;
+    top: 1rem;
+  }
+}
+
 
 /** Botones DEMO **/
 .precio{

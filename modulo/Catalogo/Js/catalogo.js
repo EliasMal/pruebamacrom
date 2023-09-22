@@ -392,7 +392,6 @@ function catalogosDetallesCtrl($scope, $http){
         var numStr = decimalLength > 0? s.substr(0, decimalLength + posiciones): s
         return Number(numStr)
    }
-
       
    obj.getSeicom = async (clave)=>{
         try {
@@ -449,6 +448,7 @@ function catalogosDetallesCtrl($scope, $http){
                 
         });
     }
+    
     obj.btndisminuir = ()=>{
         obj.Refaccion.cantidad = obj.Refaccion.cantidad!=1? obj.Refaccion.cantidad-1:1  
     }

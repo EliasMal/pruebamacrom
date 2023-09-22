@@ -8,19 +8,20 @@
 			<form name="frmcompra" id="frmcompra" novalidate>
 				<main class="compras">
 					<article class="cliente" ng-controller="ProfileCtrl" ng-init="pag='Direcciones'">
-						<h4 class="cliente__titulo txtred">Dirección Entrega</h4>
-						<div class="cliente__datos" ng-repeat="dire in profile.arrayDomicilios" ng-show="dire.Predeterminado == 1" >
-							<p>{{Costumer.profile.nombres}} {{Costumer.profile.Apellidos}}.</p>
-							<p>{{dire.Domicilio}} #{{dire.numExt}}, {{dire.Colonia}}.</p>
-							<p>{{dire.Ciudad}}, {{dire.Estado}}, {{dire.Codigo_postal}}.</p>
-							<p>{{dire.Referencia}}.</p>
-							<p>Tel: {{dire.Telefono}}</p>
+						<div>
+							<h4 class="cliente__titulo txtred">Dirección Entrega</h4>
+							<div class="cliente__datos" ng-repeat="dire in profile.arrayDomicilios" ng-show="dire.Predeterminado == 1" >
+								<p>{{Costumer.profile.nombres}} {{Costumer.profile.Apellidos}}.</p>
+								<p>{{dire.Domicilio}} #{{dire.numExt}}, {{dire.Colonia}}.</p>
+								<p>{{dire.Ciudad}}, {{dire.Estado}}, {{dire.Codigo_postal}}.</p>
+								<p>{{dire.Referencia}}.</p>
+								<p>Tel: {{dire.Telefono}}</p>
+							</div>
+							<div class="cliente__datos" ng-show="profile.arrayDomicilios[0].Predeterminado != 1" >
+								<p>{{Costumer.profile.nombres}} {{Costumer.profile.Apellidos}}.</p>
+								<p><b>NOTA:</b> Agrega o selecciona una direccion para seguir con tu compra.</p>
+							</div>
 						</div>
-						<div class="cliente__datos" ng-show="profile.arrayDomicilios[0].Predeterminado != 1" >
-							<p>{{Costumer.profile.nombres}} {{Costumer.profile.Apellidos}}.</p>
-							<p><b>NOTA:</b> Agrega o selecciona una direccion para seguir con tu compra.</p>
-						</div>
-
 						<div class="cliente__opciones" ng-controller="ProfileCtrl" ng-init="pag='Direcciones'">
 											<div class="cliente__opciones--editar" ng-show="profile.arrayDomicilios[0].Predeterminado != 0">
 												<button id="abrirModal" class="form-control fs-12 m-t-10 cliente__opciones--button" ng-click="btneditDomicilio(Costumer.dataDomicilio.data._id)" ng-show="profile.arrayDomicilios[0]"><img style="height:12px;" src="../images/icons/Editar.svg">&nbsp;&nbsp;Editar Dirección</button>
@@ -71,16 +72,18 @@
 
 				<main class="pagos">
 					<article class="pagos__facturacion">
-					<h4 class="pagos__facturacion--titulo txtred">Facturación</h4>
-						<div class="cliente__datos" ng-show="Costumer.facturacion == 1">
-							<p>Actividad Empresarial: Persona Fisica.</p>
-							<p>Razon Social: {{Costumer.dataFacturacion.data.Razonsocial}}.</p>
-							<p>RFC: {{Costumer.dataFacturacion.data.Rfc}}</p>
-							<p class="p-t-30">Uso de CFDI: {{Costumer.dataFacturacion.data.usocfdi}}</p>
-						</div>
-						<div class="cliente__datos" ng-show="Costumer.facturacion != 1" >
-							<p>{{Costumer.profile.nombres}} {{Costumer.profile.Apellidos}}.</p>
-							<p><b>NOTA:</b> Si posterior a esta compra deseas facturar tu pedido, es necesario solicitarla el mismo dia de tu compra, en caso de lo contrario se genera con un RFC generico.</p>
+						<div>
+							<h4 class="pagos__facturacion--titulo txtred">Facturación</h4>
+							<div class="cliente__datos" ng-show="Costumer.facturacion == 1">
+								<p>Actividad Empresarial: Persona Fisica.</p>
+								<p>Razon Social: {{Costumer.dataFacturacion.data.Razonsocial}}.</p>
+								<p>RFC: {{Costumer.dataFacturacion.data.Rfc}}</p>
+								<p class="p-t-30">Uso de CFDI: {{Costumer.dataFacturacion.data.usocfdi}}</p>
+							</div>
+							<div class="cliente__datos" ng-show="Costumer.facturacion != 1" >
+								<p>{{Costumer.profile.nombres}} {{Costumer.profile.Apellidos}}.</p>
+								<p><b>NOTA:</b> Si posterior a esta compra deseas facturar tu pedido, es necesario solicitarla el mismo dia de tu compra, en caso de lo contrario se genera con un RFC generico.</p>
+							</div>
 						</div>
 						<div class="cliente__opciones">
 							<div class="cliente__opciones--editar">

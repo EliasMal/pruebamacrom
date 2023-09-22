@@ -2199,6 +2199,9 @@
 .text-black {color: black;}
 .text-blackI {color: black !important;}
 .text-red {color: #De0007;}
+.text-orange{color: orange;}
+.text-yellow{color: yellow;}
+.text-success {color: green;}
 .text-oferta{color: #FF121C; text-decoration:overline}
 .t-b-gris{
 	color: #4d4d4d;

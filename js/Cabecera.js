@@ -109,7 +109,6 @@ function CabeceraCtrl($scope,$http, $sce,vcRecaptchaService){
             }, function errorCallback(res) {
                 toastr.error("Error: no se realizo la conexion con el servidor");
             });
-            console.log(result.data)
             if(result){
                 if (result.data.Bandera == 1) {
                     obj.Data = result.data.Data;
