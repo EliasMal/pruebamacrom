@@ -115,6 +115,7 @@
 										<input type="text" class="inpcpn" placeholder="Ingresa tu cupón." id="inpCupon" style="text-align: center;" autocomplete="off">
 										<button class="form-control" ng-click="cupon()" id="btncupon">Canjear</button>
 									</div>
+									<span class="cupon--alert" id="alert--cupon"></span>
 								</div>
 								<div>
 									<table class="tablecompra">

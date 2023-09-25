@@ -16,9 +16,9 @@
       $_SESSION["cart"][$id]["cantidad"] = $formulario->modelo->cantidad;
     }else{
 
-      $sql = "INSERT INTO Carrito (_clienteid, Clave, Producto, No_parte, Cantidad, Precio, Alto, Largo, Ancho, Peso, imagenid) 
+      $sql = "INSERT INTO Carrito (_clienteid, Clave, Producto, No_parte, Cantidad, Precio, Alto, Largo, Ancho, Peso, imagenid, Existencias) 
       VALUES ('{$_SESSION["iduser"]}','{$formulario->modelo->datos->Clave}','{$formulario->modelo->datos->Producto}','{$formulario->modelo->datos->No_parte}','{$formulario->modelo->cantidad}','{$formulario->modelo->precio}','{$formulario->modelo->datos->Alto}',
-      '{$formulario->modelo->datos->Largo}','{$formulario->modelo->datos->Ancho}','{$formulario->modelo->datos->Peso}','{$id}')";
+      '{$formulario->modelo->datos->Largo}','{$formulario->modelo->datos->Ancho}','{$formulario->modelo->datos->Peso}','{$id}','{$formulario->modelo->Existencias}')";
 
       if (mysqli_query($conn, $sql)) {
 

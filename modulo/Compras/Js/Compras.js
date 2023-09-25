@@ -67,11 +67,13 @@ function ComprasCtrl($scope, $http , $sce){
         obj.total = obj.Costumer.Subtotal + parseFloat(obj.Costumer.Cenvio.Costo)-obj.Costumer.descuento;
         return obj.total;
     }
+
     //prueba cupon local
 obj.cupon = () =>{
     let inpCupon = document.getElementById("inpCupon").value;
     var incpn = document.getElementById("inpCupon"); 
     var acrcupo = localStorage.getItem("acrcupon");
+    var cupon__alert = document.getElementById('alert--cupon');
     if(inpCupon == obj.session.cupon && obj.session.acreditacion == 0 && acrcupo != 1){
         obj.Costumer.Subtotal= (obj.Costumer.Subtotal*(10/100));
         obj.Costumer.descuento = obj.Costumer.Subtotal;
@@ -79,10 +81,16 @@ obj.cupon = () =>{
         incpn.disabled = true;
         btncupon.style.borderColor="#00ff00";
         btncupon.style.backgroundColor="#ccc";
-        
-    } else{
-        btncupon.style.borderColor="#de0007";
-        incpn.style.borderColor="#de0007";
+    } else if (inpCupon == ""){
+        cupon__alert.className += " cupon--alert-active";
+        cupon__alert.innerHTML ="Ingresa un cupón valido";
+    }else{
+        btncupon.style.backgroundColor="#ccc";
+        btncupon.style.cursor="default";
+        btncupon.disabled = true;
+        cupon__alert.innerHTML ="Este cupón YA ha sido utilizado"
+        cupon__alert.className += " cupon--alert-active";
+        incpn.disabled = true;
     }
 
 }

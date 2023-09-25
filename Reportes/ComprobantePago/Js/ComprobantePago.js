@@ -20,6 +20,15 @@ function ComprobantePagoCtrl($scope,$http){
             console.log(res.data);
             if(res.data.Bandera == 1){
                 obj.Comprobante = res.data.Data;
+                if(obj.Comprobante.Acreditado == 1 || obj.Comprobante.Acreditado == 5){
+                    var pedidoEstado = document.getElementById('estadoPedido');
+                    pedidoEstado.innerHTML = "Pagado";
+                    pedidoEstado.style.color="green";
+                    pedidoEstado.classList.remove("text-danger");
+                } else if(obj.Comprobante.Acreditado == 6){
+                    var pedidoEstado = document.getElementById('estadoPedido');
+                    pedidoEstado.innerHTML = "Cancelado";
+                }
             }else{
                 //toastr.error(res.data.mensaje)
             }
@@ -27,6 +36,8 @@ function ComprobantePagoCtrl($scope,$http){
             //toastr.error("Error: no se realizo la conexion con el servidor");
         });
     }
+
+    
 
     angular.element(document).ready(function () {
         obj.session = JSON.parse(localStorage.getItem('session'));

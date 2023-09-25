@@ -15,6 +15,7 @@
   --fuenteParrafos: 'Open Sans', sans-serif;
   --primario: #de0007;
   --primario-oscuro: #bf040a;
+  --gris-mid-dark:rgb(82, 86, 89);
   --gris: #7f7f7f;
   --gris-mid: #888888;
   --gris-light: #e6e6e6;
@@ -608,6 +609,7 @@ img{
 .productos__contenedor{
   display: grid;
   grid-template-columns: repeat(2,1fr);
+  overflow-y: scroll;
 }
 .contenedor-principal{
   background-color: var(--blanco);
@@ -694,7 +696,9 @@ width: 50%;
   background-color: var(--blanco);
   width: 100%;
   padding: 20px;
-  height: auto;
+  height: 60rem;
+  overflow-y: visible;
+  overflow-x: hidden;
   -webkit-animation-name: animarsuperior;
   -webkit-animation-duration: 0.5s;
   animation-name: animarsuperior;
@@ -807,7 +811,10 @@ width: 50%;
 .pagos__facturacion--titulo{
   text-align: center;
 }
-
+.productos{
+  max-height: 40rem;
+  display: grid;
+}
 @media(min-width: 768px) {
   .contenedor-principal{
     display: grid;
@@ -970,6 +977,17 @@ width: 50%;
     display: block;
   }
 
+}
+/*Comprobante pago*/
+.ComprobantePago__Body{
+  background: var(--gris-mid-dark);
+  display: grid;
+}
+.contenedor__ComprobantePago{
+  background-color: var(--blanco);
+  padding: 2rem;
+  justify-self: center;
+  max-width: 720px;
 }
 
 /*Contenido catalogo principal*/
@@ -1439,7 +1457,15 @@ width: 50%;
 .csmdesc{
   color:var(--primario);
 }
-
+.cupon--alert{
+  display: none;
+  color: var(--primario);
+  font-weight: 700;
+}
+.cupon--alert-active{
+  display: flex;
+  justify-content: center;
+}
 /* ------------------------------------ */
 .contreaco{
   margin-top:50px;

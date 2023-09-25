@@ -1,29 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
-<script type="text/javascript" src="../../tv-admin/asset/Js/angular/angular.min.js"></script>
   <script src="//code.angularjs.org/1.8.2/angular.min.js"></script>
 <script type="text/javascript" src="./Js/ComprobantePago.js"></script>
 <link rel="stylesheet" type="text/css" href="../../vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../../../css/main.css">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comprobante de Pago</title>
 </head>
-<body ng-app="RptsuruVolks">
-    <div class="container mt-3" ng-controller="ComprobantePagoCtrl">
+<body ng-app="RptsuruVolks" class="ComprobantePago__Body">
+    <div class="toolbar--comprobantepago"></div>
+
+    <div class="contenedor__ComprobantePago mt-3" ng-controller="ComprobantePagoCtrl">
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                  <img class="rounded mx-auto d-block" src="https://macromautopartes.com/images/icons/logomacrom.png">
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <h1 class="text-center text-danger">PAGADA</h1>
+                <h1 class="text-center text-danger" id="estadoPedido"></h1>
             </div>
         </div>
 
         <div class="row mt-3">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                <h3>Pedido: <span class="text-danger">#{{Comprobante.noPedido}}</span></h3>
+                <h3>Pedido: <span class="text-danger" id="nopedido">{{Comprobante.noPedido}}</span></h3>
             </div>
         </div>
         <hr>

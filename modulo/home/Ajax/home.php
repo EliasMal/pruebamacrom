@@ -84,7 +84,7 @@ class home {
 
     private function get_Carrito(){
         $array = array();
-        $sql = "SELECT _clienteid, Clave, No_parte, Cantidad, Precio, Producto as _producto, Alto, Largo, Ancho, Peso, imagenid FROM Carrito where _clienteid='{$_SESSION["iduser"]}'";
+        $sql = "SELECT _clienteid, Clave, No_parte, Cantidad, Precio, Producto as _producto, Alto, Largo, Ancho, Peso, imagenid, Existencias FROM Carrito where _clienteid='{$_SESSION["iduser"]}'";
         $id = $this->conn->query($sql);
         while ($row = $this->conn->fetch($id)){
             array_push($array, $row);
