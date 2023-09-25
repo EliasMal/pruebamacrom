@@ -34,10 +34,26 @@
 										<img src="../images/usuarios/Avatar Lobo Macrom Grande.png" class="perfil__usuario--img" loading="lazy" alt="ICON">
 														
 									<div class="vinculos">
-										<div class="s-text3a s-text3ab" onclick="location.href = '?mod=Profile&opc=Session'"> <img src="../images/icons/1.png" loading="lazy" alt="">Sesión y Seguridad</div><br>
-										<div class="s-text3a" onclick="location.href = '?mod=Profile&opc=Mispedidos'"> <img src="../images/icons/2.png" loading="lazy" alt="">Mis pedidos</div><br>
-										<div class="s-text3a" onclick="location.href = '?mod=Profile&opc=Direcciones'"> <img src="../images/icons/3.png" loading="lazy" alt="">Mis direcciones</div><br>
-										<div class="s-text3a" onclick="location.href = '?mod=Profile&opc=Facturacion'"> <img src="../images/icons/4.png" loading="lazy" alt="">Datos de facturación</div>
+										<div class="vinculos--contenedor" onclick="location.href = '?mod=Profile&opc=Session'">
+											<img src="../images/icons/1.png" loading="lazy" alt="">
+											<span class="vinculos--opciones">Sesión y Seguridad</span>
+										</div><br>
+
+										<div class="vinculos--contenedor" onclick="location.href = '?mod=Profile&opc=Mispedidos'">
+											<img src="../images/icons/2.png" loading="lazy" alt="">
+											<span class="vinculos--opciones">Mis pedidos</span>
+										</div><br>
+										
+										<div class="vinculos--contenedor" onclick="location.href = '?mod=Profile&opc=Direcciones'">
+											<img src="../images/icons/3.png" loading="lazy" alt="">
+											<span class="vinculos--opciones">Mis direcciones</span>
+										</div><br>
+
+										<div class="vinculos--contenedor" onclick="location.href = '?mod=Profile&opc=Facturacion'">
+											<img src="../images/icons/4.png" loading="lazy" alt="">
+											<span class="vinculos--opciones">Datos de facturación</span>
+										</div>
+
 									</div> 
 															
 									<p class="sesionombre s-text3a">{{session.nombre}}</p>

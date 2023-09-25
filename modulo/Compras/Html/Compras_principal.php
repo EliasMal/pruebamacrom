@@ -48,7 +48,8 @@
 										<a ng-click="RefaccionDetalles(product.imagenid)" class="productos__datos--info--articulo">{{product._producto}}</a>
 										<p>No.Parte: {{product.No_parte}}</p>
 										<p>{{product.Cantidad}} x {{product.Precio |currency}}</p>
-										<div class="productos__datos--contador">
+
+										<!-- <div class="productos__datos--contador">
 											<div class="agregarmas no-overflow">
 								
 												<button class="agregarmas__botones" ng-click="btnQuitar(product)">
@@ -61,7 +62,8 @@
 													<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
 												</button>
 											</div>
-										</div>
+										</div> -->
+
 									</div>
 								</div>
 							</div>

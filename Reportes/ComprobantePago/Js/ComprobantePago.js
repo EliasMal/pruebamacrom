@@ -37,7 +37,16 @@ function ComprobantePagoCtrl($scope,$http){
         });
     }
 
-    
+    document.querySelectorAll('.printbutton').forEach(function(element) {
+        element.addEventListener('click', function() {
+            this.style.display="none";
+            print();
+            setTimeout(1000);
+            this.style.display="block";
+        });
+    });
+
+
 
     angular.element(document).ready(function () {
         obj.session = JSON.parse(localStorage.getItem('session'));

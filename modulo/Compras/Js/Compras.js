@@ -81,7 +81,7 @@ obj.cupon = () =>{
         incpn.disabled = true;
         btncupon.style.borderColor="#00ff00";
         btncupon.style.backgroundColor="#ccc";
-    } else if (inpCupon == ""){
+    } else if (inpCupon == "" || inpCupon != obj.session.cupon){
         cupon__alert.className += " cupon--alert-active";
         cupon__alert.innerHTML ="Ingresa un cupón valido";
     }else{

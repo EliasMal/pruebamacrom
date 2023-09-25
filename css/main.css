@@ -989,7 +989,10 @@ width: 50%;
   justify-self: center;
   max-width: 720px;
 }
-
+.printbutton{
+  width: 5rem;
+  cursor: pointer;
+}
 /*Contenido catalogo principal*/
 .catalogo__filtrado{
   display: grid;
@@ -1360,18 +1363,26 @@ width: 50%;
 .vinculos{
   margin-left:160px;
 }
+.vinculos--contenedor{
+  display: flex;
+  align-items: flex-end;
+}
+.vinculos--opciones{
+  font-size: 1.5rem;
+}
 .vinculos div:hover{
   background-color: var(--primario);
   cursor: pointer;
   color: var(--blanco);
 }
 .vinculos div{
-  height:25px;
-  margin-bottom:-20px;
+  height:2.5rem;
+  margin-bottom:-2rem;
 }
 .vinculos div img{
-  height:20px;
-  width:20px;
+  height:2rem;
+  width:2rem;
+  margin-right: 1rem;
 }
 .sesionombre{
   margin-top:20px;
