@@ -20,7 +20,7 @@ function ComprobantePagoCtrl($scope,$http){
             console.log(res.data);
             if(res.data.Bandera == 1){
                 obj.Comprobante = res.data.Data;
-                if(obj.Comprobante.Acreditado == 1 || obj.Comprobante.Acreditado == 5){
+                if(obj.Comprobante.Acreditado != 6){
                     var pedidoEstado = document.getElementById('estadoPedido');
                     pedidoEstado.innerHTML = "Pagado";
                     pedidoEstado.style.color="green";

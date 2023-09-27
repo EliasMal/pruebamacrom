@@ -59,7 +59,7 @@ function CabeceraCtrl($scope,$http, $sce,vcRecaptchaService){
         }
         return obj.Costumer.Subtotal;
         }
-
+        
     obj.slcenvio = ()=>{
         //obj.session.Cenvio.costo = parseFloat( obj.session.Cenvio.costo);
         id = obj.cotizacion.find(e => e.Tarifa === parseFloat(obj.session.Cenvio.costo))

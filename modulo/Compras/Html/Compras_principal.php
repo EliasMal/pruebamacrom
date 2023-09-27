@@ -49,7 +49,7 @@
 										<p>No.Parte: {{product.No_parte}}</p>
 										<p>{{product.Cantidad}} x {{product.Precio |currency}}</p>
 
-										<!-- <div class="productos__datos--contador">
+										<div class="productos__datos--contador">
 											<div class="agregarmas no-overflow">
 								
 												<button class="agregarmas__botones" ng-click="btnQuitar(product)">
@@ -62,7 +62,7 @@
 													<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
 												</button>
 											</div>
-										</div> -->
+										</div> 
 
 									</div>
 								</div>
@@ -341,69 +341,69 @@
 								<span class="cerrar2 enlace">&times;</span>
 								<h2 class="center--text">Agregar dirección envío</h2>
 				
-								<div class="ventanaModal__contenido--agregar" >
+								<div class="ventanaModal__contenido--agregar" id="agregar_div1">
 									<div class="ventanaModal__contenido--dato">
-										<label id="lbladdcalle">Calle: <b class="obligatorio">*</b></label>
+										<label id="agregar_lbl1">Calle: <b class="obligatorio">*</b></label>
 									</div>
 
-									<div class="ventanaModal__contenido--usuario" id="divaddcalle">
-										<input class="text-black inp-dts" placeholder="Ingresa tu Domicilio" ng-model="dataDireccion.Domicilio" id="inpaddncalle">
+									<div class="ventanaModal__contenido--usuario">
+										<input class="text-black inp-dts" placeholder="Ingresa tu Domicilio" ng-model="dataDireccion.Domicilio" id="agregar_1">
 									</div>
 								</div>
 
-								<div class="ventanaModal__contenido--agregar" >
+								<div class="ventanaModal__contenido--agregar" id="agregar_div2">
 									<div class="ventanaModal__contenido--dato">
-										<label id="lbladdnumext">Numero: <b class="obligatorio">*</b></label>
+										<label id="agregar_lbl2">Numero: <b class="obligatorio">*</b></label>
 									</div>
 
-									<div class="ventanaModal__contenido--usuario" id="divaddnumext">
-										<input ng-model="dataDireccion.numExt" placeholder="Ext." id="inpaddnumext">
+									<div class="ventanaModal__contenido--usuario">
+										<input ng-model="dataDireccion.numExt" placeholder="Ext." id="agregar_2">
 									</div>
 
 									<div class="ventanaModal__contenido--dato">
-										<label id="lbladdnumint"></label>
+										<label id="agregar_lbl3"></label>
 									</div>
 
-									<div class="ventanaModal__contenido--usuario" id="divaddnumint">
-										<input ng-model="dataDireccion.numInt" placeholder="Int." id="inpaddnumint">
+									<div class="ventanaModal__contenido--usuario" id="agregar_div3">
+										<input ng-model="dataDireccion.numInt" placeholder="Int." id="agregar_3">
 									</div>
 								</div>
 
-								<div class="ventanaModal__contenido--agregar" >
+								<div class="ventanaModal__contenido--agregar" id="agregar_div4">
 									<div class="ventanaModal__contenido--dato">
-										<label id="lbladdcol">Colonia: <b class="obligatorio">*</b></label>
+										<label id="agregar_lbl4">Colonia: <b class="obligatorio">*</b></label>
 									</div>
 
-									<div class="ventanaModal__contenido--usuario" id="divaddcol">
-										<input placeholder="Ingresa tu colonia" ng-model="dataDireccion.Colonia" id="inpaddcol">
+									<div class="ventanaModal__contenido--usuario">
+										<input placeholder="Ingresa tu colonia" ng-model="dataDireccion.Colonia" id="agregar_4">
 									</div>
 								</div>
 
-								<div class="ventanaModal__contenido--agregar" >
+								<div class="ventanaModal__contenido--agregar" id="agregar_div5" >
 									<div class="ventanaModal__contenido--dato">
-										<label class="fzm-15" id="lbladdcp">Cod.Postal: <b class="obligatorio">*</b></label>
+										<label class="fzm-15" id="agregar_lbl5">Cod.Postal: <b class="obligatorio">*</b></label>
 									</div>
 
-									<div class="ventanaModal__contenido--usuario" id="divaddcp">
-										<input type="number" placeholder="00000" maxlength="5" ng-model="dataDireccion.Codigo_postal" id="inpaddcp">
+									<div class="ventanaModal__contenido--usuario">
+										<input type="number" placeholder="00000" maxlength="5" ng-model="dataDireccion.Codigo_postal" id="agregar_5">
 									</div>
 								</div>
 
-								<div class="ventanaModal__contenido--agregar" >
+								<div class="ventanaModal__contenido--agregar" id="agregar_div6">
 									<div class="ventanaModal__contenido--dato">
-										<label id="lbladdcity">Ciudad: <b class="obligatorio">*</b></label>
+										<label id="agregar_lbl6">Ciudad: <b class="obligatorio">*</b></label>
 									</div>
-									<div class="ventanaModal__contenido--usuario" id="divaddcity">
-										<input placeholder="Ingresa tu ciudad" ng-model="dataDireccion.Ciudad" id="inpaddcity">
+									<div class="ventanaModal__contenido--usuario">
+										<input placeholder="Ingresa tu ciudad" ng-model="dataDireccion.Ciudad" id="agregar_6">
 									</div>
 								</div>
 
-								<div class="ventanaModal__contenido--agregar" >
+								<div class="ventanaModal__contenido--agregar" id="agregar_div7">
 									<div class="ventanaModal__contenido--dato">
-										<label id="lbladdest">Estado: <b class="obligatorio">*</b></label>
+										<label id="agregar_lbl7">Estado: <b class="obligatorio">*</b></label>
 									</div>
-									<div class="ventanaModal__contenido--usuario" id="divaddest">
-										<input placeholder="Ingresa tu estado" ng-model="dataDireccion.Estado" id="inpaddest">
+									<div class="ventanaModal__contenido--usuario">
+										<input placeholder="Ingresa tu estado" ng-model="dataDireccion.Estado" id="agregar_7">
 									</div>
 								</div>
 
@@ -417,12 +417,12 @@
 									</div>
 								</div>
 
-								<div class="ventanaModal__contenido--agregar" >
+								<div class="ventanaModal__contenido--agregar" id="agregar_div8">
 									<div class="ventanaModal__contenido--dato">
-										<label id="lbladdtel">Telefono: <b class="obligatorio">*</b></label>
+										<label id="agregar_lbl8">Telefono: <b class="obligatorio">*</b></label>
 									</div>
-									<div class="ventanaModal__contenido--usuario" id="divaddtel">
-										<input type="number" placeholder="Ingresa numero de Telefono" ng-model="dataDireccion.Telefono" id="inpaddtel">
+									<div class="ventanaModal__contenido--usuario">
+										<input type="number" placeholder="Ingresa numero de Telefono" ng-model="dataDireccion.Telefono" id="agregar_8">
 									</div>
 								</div>
 								<span id="alertvalid" class="ventanaModal__contenido--alerta"><img src="images/icono notificacion.svg" alt="icon-user" style="width: 32px;padding-right: 2px;">Completa todos los datos para poder continuar</span>
@@ -468,101 +468,101 @@
 									<span class="cerrar4 enlace">&times;</span>
 									<h2 class="center--text">Agregar Nuevos Datos</h2>
 										
-									<div class="ventanaModal__contenido--agregar" >
+									<div class="ventanaModal__contenido--agregar" id="Fagregar_div0">
 										<div class="ventanaModal__contenido--dato">
-											<label id="agraem">Actividad Empresarial: <b class="obligatorio">*</b></label>
+											<label id="Fagregar_lbl0">Actividad Empresarial: <b class="obligatorio">*</b></label>
 										</div>
 
 										<div class="ventanaModal__contenido--usuario">
 											<select name="Actividad" ng-model="dataFacturacion.Actividad">
 												<optgroup label ="Seleccion la actividad de la empresa">
-													<option ng-repeat="Acti in Facturacion.Actividad" value="{{Acti.valor}}" id="novenoInput">{{Acti.valor}}</option>
+													<option ng-repeat="Acti in Facturacion.Actividad" value="{{Acti.valor}}" id="Fagregar_0">{{Acti.valor}}</option>
 												</optgroup>
 											</select>
 										</div>
 									</div>
 
-									<div class="ventanaModal__contenido--agregar" >
+									<div class="ventanaModal__contenido--agregar" id="Fagregar_div1">
 										<div class="ventanaModal__contenido--dato">
-											<label id="Agrs">R.Social: <b class="obligatorio">*</b></label>
+											<label id="Fagregar_lbl1">R.Social: <b class="obligatorio">*</b></label>
 										</div>
 										<div class="ventanaModal__contenido--usuario" id="dveline">
-											<input name="razon" type="text" placeholder="Introduce Razon Social" ng-model="dataFacturacion.Razonsocial" id="segundoInput" autocomplete="off">
+											<input name="razon" type="text" placeholder="Introduce Razon Social" ng-model="dataFacturacion.Razonsocial" id="Fagregar_1" autocomplete="off">
 										</div>
 									</div>
 
-									<div class="ventanaModal__contenido--agregar" >
+									<div class="ventanaModal__contenido--agregar" id="Fagregar_div2">
 										<div class="ventanaModal__contenido--dato">
-											<label id="Agrfc">RFC: <b class="obligatorio">*</b></label>
+											<label id="Fagregar_lbl2">RFC: <b class="obligatorio">*</b></label>
 										</div>
 
-										<div class="ventanaModal__contenido--usuario" id="dveline1">
-											<input name="RFC" type="text" placeholder="Ingresa tu RFC" ng-model="dataFacturacion.Rfc" id="primerInput" autocomplete="off">
+										<div class="ventanaModal__contenido--usuario">
+											<input name="RFC" type="text" placeholder="Ingresa tu RFC" ng-model="dataFacturacion.Rfc" id="Fagregar_2" autocomplete="off">
 										</div>
 									</div>
 
-									<div class="ventanaModal__contenido--agregar" >
+									<div class="ventanaModal__contenido--agregar" id="Fagregar_div3">
 										<div class="ventanaModal__contenido--dato">
-											<label id="Agrdm">Domicilio: <b class="obligatorio">*</b></label>
+											<label id="Fagregar_lbl3">Domicilio: <b class="obligatorio">*</b></label>
 										</div>
-										<div class="ventanaModal__contenido--usuario" id="dveline3">
-											<input name="domicilio" type="text" placeholder="Ingresa calle y numero" ng-model="dataFacturacion.Domicilio" id="terceroInput" autocomplete="off">
+										<div class="ventanaModal__contenido--usuario">
+											<input name="domicilio" type="text" placeholder="Ingresa calle y numero" ng-model="dataFacturacion.Domicilio" id="Fagregar_3" autocomplete="off">
 										</div>
 									</div>
 
-									<div class="ventanaModal__contenido--agregar" >
+									<div class="ventanaModal__contenido--agregar" id="Fagregar_div4">
 										<div class="ventanaModal__contenido--dato">
-											<label id="Agrcol">Colonia: <b class="obligatorio">*</b></label>
+											<label id="Fagregar_lbl4">Colonia: <b class="obligatorio">*</b></label>
 										</div>
 
-										<div class="ventanaModal__contenido--usuario" id="dveline4">
-											<input name="colonia" type="text" placeholder="Ingresa tu colonia" ng-model="dataFacturacion.Colonia" id="cuartoInput" autocomplete="off">
+										<div class="ventanaModal__contenido--usuario">
+											<input name="colonia" type="text" placeholder="Ingresa tu colonia" ng-model="dataFacturacion.Colonia" id="Fagregar_4" autocomplete="off">
 										</div>
 									</div>
 
-									<div class="ventanaModal__contenido--agregar" >
+									<div class="ventanaModal__contenido--agregar" id="Fagregar_div5">
 										<div class="ventanaModal__contenido--dato">
-											<label class="fzm-15" id="Agrcp">C.Postal: <b class="obligatorio">*</b></label>
+											<label class="fzm-15" id="Fagregar_lbl5">C.Postal: <b class="obligatorio">*</b></label>
 										</div>
 
-										<div class="ventanaModal__contenido--usuario" id="dveline5">
-											<input name="cp" type="number" placeholder="Codigo Postal" maxlength="5" ng-model="dataFacturacion.Codigo_postal" id="quintoInput" autocomplete="off">
+										<div class="ventanaModal__contenido--usuario">
+											<input name="cp" type="number" placeholder="Codigo Postal" maxlength="5" ng-model="dataFacturacion.Codigo_postal" id="Fagregar_5" autocomplete="off">
 										</div>
 									</div>
 
-									<div class="ventanaModal__contenido--agregar" >
+									<div class="ventanaModal__contenido--agregar" id="Fagregar_div6">
 										<div class="ventanaModal__contenido--dato">
-											<label id="Agrciu">Ciudad: <b class="obligatorio">*</b></label>
+											<label id="Fagregar_lbl6">Ciudad: <b class="obligatorio">*</b></label>
 										</div>
 
-										<div class="ventanaModal__contenido--usuario" id="dveline6">
-											<input name="ciudad" type="text" placeholder="Ingresa tu ciudad" ng-model="dataFacturacion.Ciudad" id="sextoInput" autocomplete="off">
+										<div class="ventanaModal__contenido--usuario">
+											<input name="ciudad" type="text" placeholder="Ingresa tu ciudad" ng-model="dataFacturacion.Ciudad" id="Fagregar_6" autocomplete="off">
 										</div>
 									</div>
 
-									<div class="ventanaModal__contenido--agregar" >
+									<div class="ventanaModal__contenido--agregar" id="Fagregar_div7">
 										<div class="ventanaModal__contenido--dato">
-											<label id="Agrest">Estado: <b class="obligatorio">*</b></label>
+											<label id="Fagregar_lbl7">Estado: <b class="obligatorio">*</b></label>
 										</div>
 
 										<div class="ventanaModal__contenido--usuario">
 											<select name="estado" ng-model="dataFacturacion.Estado" id="optcfdi">
 												<optgroup label ="Selecciona tu Estado">
-													<option ng-repeat="estados in Facturacion.estados" value="{{estados.Descripcion}}">({{estados.estados}}) {{estados.Descripcion}}</option>
+													<option ng-repeat="estados in Facturacion.estados" value="{{estados.Descripcion}}" id="Fagregar_7">({{estados.estados}}) {{estados.Descripcion}}</option>
 												</optgroup>
 											</select>
 										</div>
 									</div>
 
-									<div class="ventanaModal__contenido--agregar" >
+									<div class="ventanaModal__contenido--agregar" id="Fagregar_div8">
 										<div class="ventanaModal__contenido--dato">
-											<label id="Agrcfdi">CFDI: <b class="obligatorio">*</b></label>
+											<label id="Fagregar_lbl8">CFDI: <b class="obligatorio">*</b></label>
 										</div>
 
 										<div class="ventanaModal__contenido--usuario">
 											<select name="cfdi" ng-model="dataFacturacion.cfdi" id="optcfdi">
 												<optgroup label ="Seleccion el tipo de uso de tu cfdi">
-													<option ng-repeat="cfdi in Facturacion.usocfdi" value="{{cfdi._id}}" id="octavoInput">({{cfdi.UsoCFDI}}) {{cfdi.Descripcion}}</option>
+													<option ng-repeat="cfdi in Facturacion.usocfdi" value="{{cfdi._id}}" id="Fagregar_8">({{cfdi.UsoCFDI}}) {{cfdi.Descripcion}}</option>
 												</optgroup>
 											</select>
 										</div>

@@ -47,7 +47,7 @@ function ComprasCtrl($scope, $http , $sce){
             length: 0 } //largo
         }
     
-            obj.RefaccionDetalles = (_id)=>{
+        obj.RefaccionDetalles = (_id)=>{
         window.open("?mod=catalogo&opc=detalles&_id="+_id,"_self");
     }
 
@@ -81,22 +81,22 @@ obj.cupon = () =>{
         incpn.disabled = true;
         btncupon.style.borderColor="#00ff00";
         btncupon.style.backgroundColor="#ccc";
+        cupon__alert.innerHTML ="";
     } else if (inpCupon == "" || inpCupon != obj.session.cupon){
         cupon__alert.className += " cupon--alert-active";
         cupon__alert.innerHTML ="Ingresa un cupón valido";
-    }else{
-        btncupon.style.backgroundColor="#ccc";
-        btncupon.style.cursor="default";
-        btncupon.disabled = true;
-        cupon__alert.innerHTML ="Este cupón YA ha sido utilizado"
-        cupon__alert.className += " cupon--alert-active";
-        incpn.disabled = true;
-    }
+
+    }   else{
+            btncupon.style.backgroundColor="#ccc";
+            btncupon.style.cursor="default";
+            btncupon.disabled = true;
+            cupon__alert.innerHTML ="Este cupón YA ha sido utilizado"
+            cupon__alert.className += " cupon--alert-active";
+            incpn.disabled = true;
+        }
 
 }
 //fin de prueba cupon local
-
-
     obj.aplicarMonedero = ()=>{
         if(obj.monedero.Importe>0){
             obj.Costumer.descuento = (obj.monedero.Importe - obj.total) >= 0? obj.total: obj.monedero.Importe
@@ -301,47 +301,48 @@ window.addEventListener("click",function(event) {
             localStorage.setItem("acrcupon", 1);
         }
     }
-obj.metransfe = ()=>{
-obj.Costumer.metodoPago = "Transferencia"
-btntransfe.style.borderColor="#de0007";
-btnefectivo.style.borderColor="#e6e6e6";
-btncredito.style.borderColor="#e6e6e6";
-}
-obj.medeposito = ()=>{
-obj.Costumer.metodoPago = "Deposito"
-btntransfe.style.borderColor="#e6e6e6";
-btnefectivo.style.borderColor="#de0007";
-btncredito.style.borderColor="#e6e6e6";
-}
-obj.metarjeta = ()=>{
-obj.Costumer.metodoPago = "Tarjeta"
-btntransfe.style.borderColor="#e6e6e6";
-btnefectivo.style.borderColor="#e6e6e6";
-btncredito.style.borderColor="#de0007";
-}
+    obj.metransfe = ()=>{
+        obj.Costumer.metodoPago = "Transferencia"
+        btntransfe.style.borderColor="#de0007";
+        btnefectivo.style.borderColor="#e6e6e6";
+        btncredito.style.borderColor="#e6e6e6";
+    }
+    obj.medeposito = ()=>{
+        obj.Costumer.metodoPago = "Deposito"
+        btntransfe.style.borderColor="#e6e6e6";
+        btnefectivo.style.borderColor="#de0007";
+        btncredito.style.borderColor="#e6e6e6";
+    }
+    obj.metarjeta = ()=>{
+        obj.Costumer.metodoPago = "Tarjeta"
+        btntransfe.style.borderColor="#e6e6e6";
+        btnefectivo.style.borderColor="#e6e6e6";
+        btncredito.style.borderColor="#de0007";
+    }
+    
     obj.ProcesarCompra = (data) =>{
         
-            $http({
-                method: 'POST',
-                url: urlCostumer,
-                data: {Costumer: data}
-            }).then(function successCallback(res) {
-                if(res.data.Bandera == 1){
-                    if(obj.total === 0 && obj.monedero.aplicado ){
-                        location.href="?mod=ProcesoCompra&opc=paso3";
-                    }else if(obj.Costumer.metodoPago === "Deposito" || obj.Costumer.metodoPago === "Transferencia" ){
-                        obj.openDeposito(res.data.Data);
-                        //location.href="?mod=ProcesoCompra&opc=paso3";
-                    }else if(obj.Costumer.metodoPago ==="Tarjeta"){
-                        obj.seturl(res.data.data[0]);
-                    }
-                    /*  */
-                }else{
-                    toastr.error("ERROR");
+        $http({
+            method: 'POST',
+            url: urlCostumer,
+            data: {Costumer: data}
+        }).then(function successCallback(res) {
+            if(res.data.Bandera == 1){
+                if(obj.total === 0 && obj.monedero.aplicado ){
+                    location.href="?mod=ProcesoCompra&opc=paso3";
+                }else if(obj.Costumer.metodoPago === "Deposito" || obj.Costumer.metodoPago === "Transferencia" ){
+                    obj.openDeposito(res.data.Data);
+                    //location.href="?mod=ProcesoCompra&opc=paso3";
+                }else if(obj.Costumer.metodoPago ==="Tarjeta"){
+                    obj.seturl(res.data.data[0]);
                 }
-            }, function errorCallback(res) {
-                toastr.error("Error: no se realizo la conexion con el servidor");
-            });
+                /*  */
+            }else{
+                toastr.error("ERROR");
+            }
+        }, function errorCallback(res) {
+            toastr.error("Error: no se realizo la conexion con el servidor");
+        });
     }
 
     obj.seturl = (url)=>{
@@ -372,7 +373,6 @@ btncredito.style.borderColor="#de0007";
             alert("Por favor Deshabilita el bloqueador de ventanas emergentes");
         }
         location.href="?mod=ProcesoCompra&opc=paso3";
-        
     }
 
     obj.btnEliminarRefaccion = (Refaccion)=>{
@@ -470,7 +470,6 @@ btncredito.style.borderColor="#de0007";
                 }, function errorCallback(res){
                     console.error(res)
                     console.log("Error: no se realizo la conexion con el servidor");
-                    
             }); 
             obj.cotizador = obj.eliminarPaqueterias(result.data);
             obj.flag = false
@@ -567,180 +566,83 @@ function ProfileCtrl($scope, $http){
         //localStorage.setItem("pag",opc);
     }
 
-
-
     //Inicia Verificador de Agregar nueva Dirección.
     obj.inputvalidireccion = ()=>{
-        validateEmptyDire(inpaddncalle.value, inpaddnumext.value, inpaddnumint.value, inpaddcol.value, inpaddcp.value, inpaddcity.value, inpaddest.value, inpaddtel.value);
+        let agregar = []; for (var j = 0; j<=7;j++){
+            agregar[j]= document.getElementById("agregar_"+(j+1)).value;
+        }
+        let agregar_div = []; for (var j = 0; j<=7;j++){
+            agregar_div[j]= document.getElementById("agregar_div"+(j+1));
+        }
+        let agregar_lbl =[]; for (var j = 0; j<=7;j++){
+            agregar_lbl[j]= document.getElementById("agregar_lbl"+(j+1));
+        }
+        
+        validateEmptyDire(agregar,agregar_div,agregar_lbl);
     }
 
-    function validateEmptyDire(inpaddncalle, inpaddnumext, inpaddnumint, inpaddcol, inpaddcp, inpaddcity, inpaddest, inpaddtel){
-         if (inpaddncalle.length == 0) {
-            divaddcalle.style.borderColor="#de0007";
-            lbladdcalle.style.color="#de0007";
-           // toastr.error("Error: no se han llenado todos los espacios requeridos");
-        } else{
-            divaddcalle.style.borderColor="#666";
-            lbladdcalle.style.color="black";
+    function validateEmptyDire(agregar,agregar_div,agregar_lbl){
+        var contador = 0;
+        for (var i = 0; i<= 7; i++){
+            if(agregar[i].length == 0){
+                agregar_div[i].style.borderColor="var(--primario)";
+                agregar_lbl[i].style.color="var(--primario)";
+                alertvalid.style.display="block";
+            }else if(agregar[i].length>=1){
+                agregar_lbl[i].style.color="var(--negro)";
+                agregar_div[i].style.borderColor="var(--gris-ligth)";
+                
+                if(agregar[i].length>=1){
+                    contador++;
+                }                
+            }
         }
-
-        if (inpaddnumext.length == 0 && inpaddnumint.length == 0) {
-            divaddnumext.style.borderColor="#de0007";
-            lbladdnumext.style.color="#de0007";
-            //
-            divaddnumint.style.borderColor="#de0007";
-            lbladdnumint.style.color="#de0007";
-           // toastr.error("Error: no se han llenado todos los espacios requeridos");
-        } else{
-            divaddnumext.style.borderColor="#666";
-            lbladdnumext.style.color="black";
-            //
-            divaddnumint.style.borderColor="#666";
-            lbladdnumint.style.color="black";
-        }
-
-        if (inpaddcol.length == 0) {
-            divaddcol.style.borderColor="#de0007";
-            lbladdcol.style.color="#de0007";
-           // toastr.error("Error: no se han llenado todos los espacios requeridos");
-        } else{
-            divaddcol.style.borderColor="#666";
-            lbladdcol.style.color="black";
-        }
-
-        if (inpaddcp.length == 0) {
-            divaddcp.style.borderColor="#de0007";
-            lbladdcp.style.color="#de0007";
-           // toastr.error("Error: no se han llenado todos los espacios requeridos");
-        } else{
-            divaddcp.style.borderColor="#666";
-            lbladdcp.style.color="black";
-        }
-
-        if (inpaddcity.length == 0) {
-            divaddcity.style.borderColor="#de0007";
-            lbladdcity.style.color="#de0007";
-           // toastr.error("Error: no se han llenado todos los espacios requeridos");
-        } else{
-            divaddcity.style.borderColor="#666";
-            lbladdcity.style.color="black";
-        }
-
-        if (inpaddest.length == 0) {
-            divaddest.style.borderColor="#de0007";
-            lbladdest.style.color="#de0007";
-           // toastr.error("Error: no se han llenado todos los espacios requeridos");
-        } else{
-            divaddest.style.borderColor="#666";
-            lbladdest.style.color="black";
-        }
-
-        if (inpaddtel.length == 0) {
-            divaddtel.style.borderColor="#de0007";
-            lbladdtel.style.color="#de0007";
-           // toastr.error("Error: no se han llenado todos los espacios requeridos");
-        } else{
-            divaddtel.style.borderColor="#666";
-            lbladdtel.style.color="black";
-        }
-
-        if (inpaddncalle.length > 0 && inpaddcol.length > 0 && inpaddcp.length > 0 && inpaddcity.length > 0 && inpaddest.length > 0 && inpaddtel.length > 0) {
-            alertvalid.style.display="none";
-            if(confirm("¿Estas seguro de guardar el domicilio?")){
-            obj.SendDirecciones('add', obj.dataDireccion);
-        }
-
-        }else{ 
-            alertvalid.style.display="block";
-        }
-
-    }
-
-    //Termina Verificador de Agregar Nueva Dirección.
-
-
+            if (contador == 7){
+                alertvalid.style.display="none";
+                if(confirm("¿Estas seguro de guardar el domicilio?")){
+                obj.SendDirecciones('add', obj.dataDireccion);
+                }
+            }
+    } //Termina Verificador de Agregar Nueva Dirección.
 
     //Inicia Verificador de Agregar nueva factura.
     obj.inputvalidfactura = ()=>{
-        validateEmptyFact(primerInput.value, segundoInput.value, terceroInput.value, cuartoInput.value, quintoInput.value, sextoInput.value, novenoInput.value);
+        let agregar = []; for(var j = 1; j<=6;j++){
+            agregar[j] = document.getElementById("Fagregar_"+j).value;
+        }
+        let agregar_div = []; for(var j = 1;j<=6;j++){
+            agregar_div[j] = document.getElementById("Fagregar_div"+j); 
+        }
+        let agregar_lbl =[]; for(var j = 1; j<=6;j++){
+            agregar_lbl[j] =document.getElementById("Fagregar_lbl"+j) ;
+        }
+        validateEmptyFact(agregar,agregar_div,agregar_lbl);
     }
 
-    function validateEmptyFact(valueInput,valueInput1,valueInput2,valueInput3,valueInput4,valueInput5,valueInput6,novenoInput){
-        if (valueInput.length == 0) {
-            dveline1.style.borderColor="#de0007";
-            Agrfc.style.color="#de0007";
-           // toastr.error("Error: no se han llenado todos los espacios requeridos");
-        } else{
-            dveline1.style.borderColor="#666";
-            Agrfc.style.color="black";
+    function validateEmptyFact(agregar,agregar_div,agregar_lbl){
+       var contador = 0;
+        for (var i = 1; i<= 6; i++){
+            if(agregar[i].length == 0 || agregar[i].value == ""){
+                agregar_div[i].style.borderColor="var(--primario)";
+                agregar_lbl[i].style.color="var(--primario)";
+                alertvalid1.style.display="block";
+            }else if(agregar[i].length>1){
+                agregar_lbl[i].style.color="var(--negro)";
+                agregar_div[i].style.borderColor="var(--gris-ligth)";
+                
+                if(agregar[i].length>1){
+                    contador++;
+                }                
+            }
         }
-        //2
-        if (valueInput1.length == 0) {
-            dveline.style.borderColor="#de0007";
-            Agrs.style.color="#de0007";
-           // toastr.error("Error: no se han llenado todos los espacios requeridos");
-        } else{
-            dveline.style.borderColor="#666";
-            Agrs.style.color="black";
-        }
-        //3
-        if (valueInput2.length == 0) {
-            dveline3.style.borderColor="#de0007";
-            Agrdm.style.color="#de0007";
-           // toastr.error("Error: no se han llenado todos los espacios requeridos");
-        } else{
-            dveline3.style.borderColor="#666";
-            Agrdm.style.color="black";
-        }
-        //4
-        if (valueInput3.length == 0) {
-            dveline4.style.borderColor="#de0007";
-            Agrcol.style.color="#de0007";
-           // toastr.error("Error: no se han llenado todos los espacios requeridos");
-        } else{
-            dveline4.style.borderColor="#666";
-            Agrcol.style.color="black";
-        }
-        //5
-         if (valueInput4.length == 0) {
-            dveline5.style.borderColor="#de0007";
-            Agrcp.style.color="#de0007";
-           // toastr.error("Error: no se han llenado todos los espacios requeridos");
-        } else{
-            dveline5.style.borderColor="#666";
-            Agrcp.style.color="black";
-        }
-        //6
-         if (valueInput5.length == 0) {
-            dveline6.style.borderColor="#de0007";
-            Agrciu.style.color="#de0007";
-           // toastr.error("Error: no se han llenado todos los espacios requeridos");
-        } else{
-            dveline6.style.borderColor="#666";
-            Agrciu.style.color="black";
-        }
-        //7
-        //9
-        /*if (novenoInput == null) {
-            alert("Selecciona Actividad");
-            agraem.style.color="#de0007";
-        }else{
-            alert("Camaron");
-        }*/
-        //comprobacion
-        if (valueInput.length > 0 && valueInput1.length > 0 && valueInput2.length > 0 && valueInput3.length > 0 && valueInput4.length > 0 && valueInput5.length > 0) {
-            alertvalid1.style.display="none";
-            if(confirm("¿Estas seguro de dar de alta estos datos?")){
-            obj.sendFacturacion('add', obj.dataFacturacion)
-        }
-           
-        }else{
-            alertvalid1.style.display="block";
-        }
+            if (contador == 6){
+                alertvalid1.style.display="none";
+                if(confirm("¿Estas seguro de dar de alta estos datos?")){
+                    obj.sendFacturacion('add', obj.dataFacturacion)
+                }
+            }
 
-    }
-    //Termina Verificador de Agregar neuva Factura.
-
+    }//Termina Verificador de Agregar nueva Factura.
 
     /*Seccion para el modulo de mis pedidos */
     obj.setWizard = (estatus)=>{

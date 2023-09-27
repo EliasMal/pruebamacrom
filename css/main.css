@@ -645,8 +645,8 @@ img{
   color: #000;
 }
 .cliente__opciones--button:hover,.cliente__opciones--button:hover{
-      color: var(--blanco);
-      background: var(--primario);
+  color: var(--blanco);
+  background: var(--primario);
 }
 
 .productos__pago--seguro img{
@@ -2365,4 +2365,3 @@ input.num-product::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0; 
 }
-
