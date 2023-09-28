@@ -136,8 +136,7 @@ obj.cupon = () =>{
         el.addEventListener("click", e => {
           const id = e.target.getAttribute("id");
           var id_m = id.charAt(10);
-          let cerrar = [];
-          let modales = [];
+          let cerrar = []; let modales = [];
           for(var m = 0; m <= 4 ; m++){
             modales[m] = document.getElementById("ventanaModal"+m);
             cerrar[m] = document.getElementsByClassName("cerrar"+m)[0];
@@ -154,8 +153,7 @@ obj.cupon = () =>{
 
     document.querySelectorAll(".closem").forEach(el => {
         el.addEventListener("click", e => {
-          let cerrar = [];
-          let modales = [];
+          let cerrar = []; let modales = [];
           for(var m = 0; m <= 4 ; m++){
             modales[m] = document.getElementById("ventanaModal"+m);
             cerrar[m] = document.getElementsByClassName("cerrar"+m)[0];

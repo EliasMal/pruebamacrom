@@ -639,6 +639,10 @@ img{
   position: relative;
   top: 0;
 }
+.cliente__opciones--button img{
+  width:1.5rem;
+  align-self: center;
+}
 .cliente__opciones--button{
   font-size: 1.3rem;
   margin-top: 1rem;
