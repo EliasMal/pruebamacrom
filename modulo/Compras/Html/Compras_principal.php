@@ -23,16 +23,19 @@
 							</div>
 						</div>
 						<div class="cliente__opciones" ng-controller="ProfileCtrl" ng-init="pag='Direcciones'">
-											<div class="cliente__opciones--editar" ng-show="profile.arrayDomicilios[0].Predeterminado != 0">
-												<button id="abrirModal" class="form-control fs-12 m-t-10 cliente__opciones--button" ng-click="btneditDomicilio(Costumer.dataDomicilio.data._id)" ng-show="profile.arrayDomicilios[0]"><img style="height:12px;" src="../images/icons/Editar.svg">&nbsp;&nbsp;Editar Dirección</button>
-											</div>
-											<div class="cliente__opciones--otra" ng-show="profile.arrayDomicilios[0]">
-												<button id="abrirModal1" class="form-control fs-12 m-t-10 cliente__opciones--button"><img style="height:12px;" src="../images/icons/Seleccionar.svg">&nbsp;&nbsp;Seleccionar Otra</button>
-											</div>
-											<div class="cliente__opciones--nueva">
-												<button id="abrirModal2" class="form-control fs-12 m-t-10 cliente__opciones--button"><img style="height:12px; margin-left:-10px" src="../images/icons/Agregar.svg">&nbsp;&nbsp;Agregar Nueva</button>
-											</div>
-									</div>
+							<div class="cliente__opciones--editar" ng-show="profile.arrayDomicilios[0].Predeterminado != 0">
+								<span class="cliente__opciones--button form-control click" id="abrirModal0" ng-click="btneditDomicilio(Costumer.dataDomicilio.data._id)" ng-show="profile.arrayDomicilios[0]"><img style="height:12px;" src="../images/icons/Editar.svg">&nbsp;&nbsp;Editar Dirección</span>
+							</div>
+											
+							<div class="cliente__opciones--otra" ng-show="profile.arrayDomicilios[0]">
+								<span id="abrirModal1" class="form-control cliente__opciones--button click"><img style="height:12px;" src="../images/icons/Seleccionar.svg">&nbsp;&nbsp;Seleccionar Otra</span>
+							</div>
+
+							<div class="cliente__opciones--nueva">
+								<span id="abrirModal2" class="form-control cliente__opciones--button click"><img style="height:12px; margin-left:-10px" src="../images/icons/Agregar.svg">&nbsp;&nbsp;Agregar Nueva</span>
+							</div>
+						</div>
+
 					</article>
 
 					<article class="productos">
@@ -89,13 +92,13 @@
 						</div>
 						<div class="cliente__opciones">
 							<div class="cliente__opciones--editar">
-								<button id="abrirModal3" class="form-control fs-12 m-t-10 cliente__opciones--button" ><img style="height:12px;" src="../images/icons/Editar.svg">&nbsp;&nbsp;Seleccionar</button>
+								<span id="abrirModal3" class="form-control cliente__opciones--button click" ><img style="height:12px;" src="../images/icons/Editar.svg">&nbsp;&nbsp;Seleccionar</span>
 							</div>
 							<div class="cliente__opciones--otra">
-								<button id="abrirModal4" class="form-control fs-12 m-t-10 cliente__opciones--button"><img style="height:12px;" src="../images/icons/Seleccionar.svg">&nbsp;&nbsp;Agregar Nueva</button>
+								<span id="abrirModal4" class="form-control cliente__opciones--button click"><img style="height:12px;" src="../images/icons/Seleccionar.svg">&nbsp;&nbsp;Agregar Nueva</span>
 							</div>
 							<div class="cliente__opciones--nueva">
-								<button id="facturaNo" class="form-control fs-12 m-t-10 cliente__opciones--button" ng-click="facturaNo()"><img style="height:12px; margin-left:-10px" src="../images/icons/Agregar.svg">&nbsp;&nbsp;No Usar Datos</button>
+								<span id="facturaNo" class="form-control cliente__opciones--button" ng-click="facturaNo()"><img style="height:12px; margin-left:-10px" src="../images/icons/Agregar.svg">&nbsp;&nbsp;No Usar Datos</span>
 							</div>
 						</div>
 						
@@ -202,9 +205,9 @@
 				<section ng-controller="ComprasCtrl">
 					<form name="frmcompra" id="frmcompra" novalidate>
 						<!-- Ventana modal Editar Dirección, por defecto no visiblel -->
-						<div id="ventanaModal" class="modal" ng-controller="ProfileCtrl" ng-init="pag='Direcciones_edit'">
+						<div id="ventanaModal0" class="modal" ng-controller="ProfileCtrl" ng-init="pag='Direcciones_edit'">
 							<div class="ventanaModal__contenido">
-								<span class="cerrar enlace">&times;</span>
+								<span class="cerrar0 enlace closem">&times;</span>
 								<h2 class="text-center text-white p-t-10 bg9 p-b-10">Editar dirección de envío</h2>
 
 								<div class="ventanaModal__contenido--agregar">
@@ -304,7 +307,7 @@
 						<!-- Ventana modal Seleccionar Otra, por defecto no visiblel -->
 						<div id="ventanaModal1" class="ventanaModal__contenedor" ng-controller="ProfileCtrl" ng-init="pag='Direcciones'">
 							<div class="ventanaModal__contenido">
-								<span class="cerrar1">&times;</span>
+								<span class="cerrar1 closem">&times;</span>
 								<h2 class="center--text">Direcciones de entrega</h2>
 
 								<div class="ventanaModal__contenido--grid" ng-repeat="dire in profile.arrayDomicilios" id="mdl2">
@@ -323,11 +326,11 @@
 
 									<div class="ventanaModal__contenido--opciones">
 										<div class="ventanaModal__contenido--boton">
-											<button id="abrirModal" class="form-control" ng-click="btnPredeterminado(dire._id)" ng-show="dire.Predeterminado == 0"><img src="../images/icons/Seleccionar.svg">&nbsp;&nbsp;Seleccionar</button>
+											<button class="form-control" ng-click="btnPredeterminado(dire._id)" ng-show="dire.Predeterminado == 0"><img src="../images/icons/Seleccionar.svg">&nbsp;&nbsp;Seleccionar</button>
 										</div>
 
 										<div class="ventanaModal__contenido--boton">
-											<button id="abrirModal1" class="form-control" ng-click="btndescartarDomicilio(dire._id)"><img src="../images/icons/Basura.svg">&nbsp;&nbsp;Eliminar</button>
+											<button class="form-control" ng-click="btndescartarDomicilio(dire._id)"><img src="../images/icons/Basura.svg">&nbsp;&nbsp;Eliminar</button>
 										</div>
 									</div>
 
@@ -338,7 +341,7 @@
 						<!-- Ventana modal Agregar Nueva, por defecto no visiblel -->
 						<div id="ventanaModal2" class="modal2"  ng-controller="ProfileCtrl" ng-init="pag='Direcciones_add'" >
 							<div class="ventanaModal__contenido">
-								<span class="cerrar2 enlace">&times;</span>
+								<span class="cerrar2 enlace closem">&times;</span>
 								<h2 class="center--text">Agregar dirección envío</h2>
 				
 								<div class="ventanaModal__contenido--agregar" id="agregar_div1">
@@ -434,7 +437,7 @@
 						<!-- Ventana modal Seleccionar Otra Facturacion, por defecto no visiblel -->
 						<div id="ventanaModal3" class="modal3" ng-controller="ProfileCtrl" ng-init="pag='Facturacion'">
 							<div class="ventanaModal__contenido">
-								<span class="cerrar3">&times;</span>
+								<span class="cerrar3 closem">&times;</span>
 								<h2 class="center--text">Información Facturación</h2>
 
 								<div class="ventanaModal__contenido--grid" ng-repeat="d in Facturacion.dataFacturacion |filter: buscar | orderBy:'Predeterminado':true">
@@ -465,7 +468,7 @@
 						<div id="ventanaModal4" class="modal4" ng-controller="ProfileCtrl" ng-init="pag='Facturacion_add'">
 							<form name="Facturacionform" novalidate>
 								<div class="ventanaModal__contenido">
-									<span class="cerrar4 enlace">&times;</span>
+									<span class="cerrar4 enlace closem">&times;</span>
 									<h2 class="center--text">Agregar Nuevos Datos</h2>
 										
 									<div class="ventanaModal__contenido--agregar" id="Fagregar_div0">
@@ -584,7 +587,7 @@
 							<div class="modal-content mdl-env-ed">
 								<div class="modal-header">
 									<h5 class="modal-title" id="exampleModalLongTitle">Selecciona tu paqueteria</h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<button type="button" class="close" id="cotizarclose" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
 								</div>
@@ -625,10 +628,6 @@
 											</section>
 										</div>
 									</div>
-								</div>
-
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 								</div>
 
 							</div>

@@ -131,88 +131,69 @@ obj.cupon = () =>{
         }
     }
 
-     // Ventana modal
-var modal = document.getElementById("ventanaModal");
-var modal1 = document.getElementById("ventanaModal1");
-var modal2 = document.getElementById("ventanaModal2");
-var modal3 = document.getElementById("ventanaModal3");
-var modal4 = document.getElementById("ventanaModal4");
+    //Abrir y cerrar modales
+    document.querySelectorAll(".click").forEach(el => {
+        el.addEventListener("click", e => {
+          const id = e.target.getAttribute("id");
+          var id_m = id.charAt(10);
+          let cerrar = [];
+          let modales = [];
+          for(var m = 0; m <= 4 ; m++){
+            modales[m] = document.getElementById("ventanaModal"+m);
+            cerrar[m] = document.getElementsByClassName("cerrar"+m)[0];
+            if(m == id_m){
+                modales[m].style.display="block";
+            }
+            if(e.target == cerrar[m]){
+                modales[m].style.display='none';
+            }
 
-// Botón que abre el modal
-var boton = document.getElementById("abrirModal");
-var boton1 = document.getElementById("abrirModal1");
-var boton2 = document.getElementById("abrirModal2");
-var boton3 = document.getElementById("abrirModal3");
-var boton4 = document.getElementById("abrirModal4");
+          }
+        });
+    });
 
-// Hace referencia al elemento <span> que tiene la X que cierra la ventana
-var span = document.getElementsByClassName("cerrar")[0];
-var span1 = document.getElementsByClassName("cerrar1")[0];
-var span2 = document.getElementsByClassName("cerrar2")[0];
-var span3 = document.getElementsByClassName("cerrar3")[0];
-var span4 = document.getElementsByClassName("cerrar4")[0];
-// Cuando el usuario hace click en el botón, se abre la ventana
-boton.addEventListener("click",function() {
-  modal.style.display = "block";
-});
-boton1.addEventListener("click",function() {
-  modal1.style.display = "block";
-});
-boton2.addEventListener("click",function() {
-  modal2.style.display = "block";
-});
-boton3.addEventListener("click",function() {
-  modal3.style.display = "block";
-});
-boton4.addEventListener("click",function() {
-  modal4.style.display = "block";
-});
-
-// Si el usuario hace click en la x, la ventana se cierra
-span.addEventListener("click",function() {
-  modal.style.display = "none";
-});
-span1.addEventListener("click",function() {
-  modal1.style.display = "none";
-});
-span2.addEventListener("click",function() {
-  modal2.style.display = "none";
-});
-span3.addEventListener("click",function() {
-  modal3.style.display = "none";
-});
-span4.addEventListener("click",function() {
-  modal4.style.display = "none";
-});
-// Si el usuario hace click fuera de la ventana, se cierra.
-window.addEventListener("click",function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-});
-window.addEventListener("click",function(event) {
-  if (event.target == modal1) {
-    modal1.style.display = "none";
-  } else if (event.target == modal2) {
-     modal2.style.display = "none";   
-  }else if (event.target == modal3) {
-     modal3.style.display = "none";   
-  }else if (event.target == modal4){
-    modal4.style.display = "none";
-  }
-});
+    document.querySelectorAll(".closem").forEach(el => {
+        el.addEventListener("click", e => {
+          let cerrar = [];
+          let modales = [];
+          for(var m = 0; m <= 4 ; m++){
+            modales[m] = document.getElementById("ventanaModal"+m);
+            cerrar[m] = document.getElementsByClassName("cerrar"+m)[0];
+            if(e.target == cerrar[m]){
+                modales[m].style.display='none';
+            }
+          }
+        });
+    });
     
- var btnfacomp = document.getElementById('btnfacomp');
- btnfacomp.disabled = true;
- var tandcheck = document.getElementById('aviso');
+    window.addEventListener("click",function(event){
+        let modales = [];
+          for(var m = 0; m <= 4 ; m++){
+            modales[m] = document.getElementById("ventanaModal"+m);
 
- tandcheck.addEventListener('click', function(){
-    if (tandcheck.checked) {
-        btnfacomp.disabled = false; 
-    } else {
-         btnfacomp.disabled = true; 
-    }
- });
+            if(event.target == modales[m]){
+                modales[m].style.display ="none";
+            }
+        }
+    });
+
+    var closecotizar = document.getElementById("cotizarclose");
+    closecotizar.addEventListener("click",function() {
+        $("#mdlcotizar").modal('hide');
+    });
+    //Abrir y cerrar modales end.
+
+    var btnfacomp = document.getElementById('btnfacomp');
+    btnfacomp.disabled = true;
+    var tandcheck = document.getElementById('aviso');
+
+    tandcheck.addEventListener('click', function(){
+       if (tandcheck.checked) {
+           btnfacomp.disabled = false; 
+       } else {
+            btnfacomp.disabled = true; 
+       }
+    });
 
 
     obj.getImagen = (id)=>{
@@ -262,7 +243,7 @@ window.addEventListener("click",function(event) {
         if (obj.Costumer.facturacion == 0) {
             facturaNo.style.display="none";
         }else{
-            facturaNo.style.display="block";
+            facturaNo.style.display="flex";
         }  
 
 
@@ -511,8 +492,8 @@ function ProfileCtrl($scope, $http){
     obj.paginador2 = {page:0, limit:15}
     obj.monedero = {Importe:0, detalles:[],totalrecords:0}
 
-    /* Paginacion */
-    obj.configPages = ()=>{
+    
+    obj.configPages = ()=>{ /* Paginacion */
         obj.paginador.pages.length=0;
         var ini = obj.paginador.currentPage - 4;
         var fin = obj.paginador.currentPage + 5;
@@ -552,9 +533,9 @@ function ProfileCtrl($scope, $http){
         obj.paginador.currentPage = a.no - 1;
         obj.configPages();
         obj.sendMispedidos("buscar",{_id: localStorage.getItem("iduser")},a.p,obj.paginador.pageSize )
-    };
+    }; /* Termina Paginacion */
 
-    /* Termina Paginacion */
+    
     
     obj.btnMenulinks = (opc='') => {
         if(opc!=""){
@@ -566,8 +547,7 @@ function ProfileCtrl($scope, $http){
         //localStorage.setItem("pag",opc);
     }
 
-    //Inicia Verificador de Agregar nueva Dirección.
-    obj.inputvalidireccion = ()=>{
+    obj.inputvalidireccion = ()=>{ //Inicia Verificador de Agregar nueva Dirección.
         let agregar = []; for (var j = 0; j<=7;j++){
             agregar[j]= document.getElementById("agregar_"+(j+1)).value;
         }
@@ -604,9 +584,8 @@ function ProfileCtrl($scope, $http){
                 }
             }
     } //Termina Verificador de Agregar Nueva Dirección.
-
-    //Inicia Verificador de Agregar nueva factura.
-    obj.inputvalidfactura = ()=>{
+    
+    obj.inputvalidfactura = ()=>{ //Inicia Verificador de Agregar nueva factura.
         let agregar = []; for(var j = 1; j<=6;j++){
             agregar[j] = document.getElementById("Fagregar_"+j).value;
         }
@@ -644,8 +623,8 @@ function ProfileCtrl($scope, $http){
 
     }//Termina Verificador de Agregar nueva Factura.
 
-    /*Seccion para el modulo de mis pedidos */
-    obj.setWizard = (estatus)=>{
+    
+    obj.setWizard = (estatus)=>{ /*Seccion para el modulo de mis pedidos */
         switch(estatus){
             case 2:
                 obj.wizard.preparacion = true;

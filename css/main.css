@@ -640,8 +640,16 @@ img{
   top: 0;
 }
 .cliente__opciones--button{
+  font-size: 1.3rem;
+  margin-top: 1rem;
+  align-content: center;
+  justify-content: center;
+  cursor: pointer;
+  height: 6rem;
+  display: flex;
+  flex-wrap: wrap;
   max-width: 45rem;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   color: #000;
 }
 .cliente__opciones--button:hover,.cliente__opciones--button:hover{
@@ -760,7 +768,7 @@ width: 50%;
 .ventanaModal__contenido--boton button img{
   width: 2rem;
 }
-.cerrar, .cerrar1, .cerrar2, .cerrar3, .cerrar4{
+.cerrar0, .cerrar1, .cerrar2, .cerrar3, .cerrar4{
   z-index: 1;
   position: relative;
   top: -2.8rem;
@@ -846,9 +854,10 @@ width: 50%;
     top: 4rem;
   }
   .cliente__opciones--button{
-  max-width: 20rem;
-  border-radius: 5px;
-  color: #000;
+    height: 5rem;
+    max-width: 20rem;
+    border-radius: 5px;
+    color: #000;
   }
   .pagos__facturacion{
     display: grid;
