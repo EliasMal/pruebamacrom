@@ -8,6 +8,7 @@
 			<form name="frmcompra" id="frmcompra" novalidate>
 				<main class="compras">
 					<article class="cliente" ng-controller="ProfileCtrl" ng-init="pag='Direcciones'">
+
 						<div>
 							<h4 class="cliente__titulo txtred">Dirección Entrega</h4>
 							<div class="cliente__datos" ng-repeat="dire in profile.arrayDomicilios" ng-show="dire.Predeterminado == 1" >
@@ -22,17 +23,18 @@
 								<p><b>NOTA:</b> Agrega o selecciona una direccion para seguir con tu compra.</p>
 							</div>
 						</div>
+
 						<div class="cliente__opciones" ng-controller="ProfileCtrl" ng-init="pag='Direcciones'">
 							<div class="cliente__opciones--editar" ng-show="profile.arrayDomicilios[0].Predeterminado != 0">
-								<span class="cliente__opciones--button form-control click" id="abrirModal0" ng-click="btneditDomicilio(Costumer.dataDomicilio.data._id)" ng-show="profile.arrayDomicilios[0]"><img style="height:12px;" src="../images/icons/Editar.svg">&nbsp;&nbsp;Editar Dirección</span>
+								<span class="cliente__opciones--button form-control click" id="abrirModal0" ng-click="btneditDomicilio(Costumer.dataDomicilio.data._id)" ng-show="profile.arrayDomicilios[0]"><img width="15px" height="12px" src="../images/icons/Editar.svg">&nbsp;&nbsp;Editar Dirección</span>
 							</div>
 											
 							<div class="cliente__opciones--otra" ng-show="profile.arrayDomicilios[0]">
-								<span id="abrirModal1" class="form-control cliente__opciones--button click"><img style="height:12px;" src="../images/icons/Seleccionar.svg">&nbsp;&nbsp;Seleccionar Otra</span>
+								<span id="abrirModal1" class="form-control cliente__opciones--button click"><img width="15px" height="12px" src="../images/icons/Seleccionar.svg">&nbsp;&nbsp;Seleccionar Otra</span>
 							</div>
 
 							<div class="cliente__opciones--nueva">
-								<span id="abrirModal2" class="form-control cliente__opciones--button click"><img style="height:12px; margin-left:-10px" src="../images/icons/Agregar.svg">&nbsp;&nbsp;Agregar Nueva</span>
+								<span id="abrirModal2" class="form-control cliente__opciones--button click"><img width="15px" height="12px" style="margin-left:-10px" src="../images/icons/Agregar.svg">&nbsp;&nbsp;Agregar Nueva</span>
 							</div>
 						</div>
 
@@ -45,7 +47,7 @@
 							<div class="productos__datos--contenedor" ng-repeat="product in session.CarritoPrueba">
 								<div class="productos__datos">
 									<div class="productos__datos--img">
-										<img ng-src="{{getImagen(product.imagenid)}}" alt="IMG" ng-click="btnEliminarRefaccion(product, true)" >
+										<img ng-src="{{getImagen(product.imagenid)}}" width="90px" height="120px" alt="IMG" ng-click="btnEliminarRefaccion(product, true)" >
 									</div>
 									<div class="productos__datos--info">
 										<a ng-click="RefaccionDetalles(product.imagenid)" class="productos__datos--info--articulo">{{product._producto}}</a>
@@ -64,6 +66,7 @@
 												<button class="agregarmas__botones" ng-click="btnAgregar(product)">
 													<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
 												</button>
+
 											</div>
 										</div> 
 
@@ -90,15 +93,16 @@
 								<p><b>NOTA:</b> Si posterior a esta compra deseas facturar tu pedido, es necesario solicitarla el mismo dia de tu compra, en caso de lo contrario se genera con un RFC generico.</p>
 							</div>
 						</div>
+						
 						<div class="cliente__opciones">
 							<div class="cliente__opciones--editar">
-								<span id="abrirModal3" class="form-control cliente__opciones--button click" ><img style="height:12px;" src="../images/icons/Editar.svg">&nbsp;&nbsp;Seleccionar</span>
+								<span id="abrirModal3" class="form-control cliente__opciones--button click" ><img width="15px" height="12px" src="../images/icons/Editar.svg">&nbsp;&nbsp;Seleccionar</span>
 							</div>
 							<div class="cliente__opciones--otra">
-								<span id="abrirModal4" class="form-control cliente__opciones--button click"><img style="height:12px;" src="../images/icons/Seleccionar.svg">&nbsp;&nbsp;Agregar Nueva</span>
+								<span id="abrirModal4" class="form-control cliente__opciones--button click"><img width="15px" height="12px" src="../images/icons/Seleccionar.svg">&nbsp;&nbsp;Agregar Nueva</span>
 							</div>
 							<div class="cliente__opciones--nueva">
-								<span id="facturaNo" class="form-control cliente__opciones--button" ng-click="facturaNo()"><img style="height:12px; margin-left:-10px" src="../images/icons/Agregar.svg">&nbsp;&nbsp;No Usar Datos</span>
+								<span id="facturaNo" class="form-control cliente__opciones--button" ng-click="facturaNo()"><img width="15px" height="12px" style="margin-left:-10px" src="../images/icons/Agregar.svg">&nbsp;&nbsp;No Usar Datos</span>
 							</div>
 						</div>
 						
@@ -109,7 +113,7 @@
 							<div class="pagos__sitio-seguro">
 								<div class="pagos__sitio-seguro--contenedor">
 									<div class="pagos__sitio-seguro--info center--text">
-										<img src="images/icons/Icono-seguridad.png" alt="" style="width: 50px;">
+										<img src="images/icons/Icono-seguridad.png" alt="seguridad" style="width:5rem;">
 										<b>Sitio seguro</b>
 										<p class="text-center txtblack">Nuestro sitio cuenta con certificaciones de seguridad por parte del MIT y Santander</p>
 									</div>
@@ -122,6 +126,7 @@
 									</div>
 									<span class="cupon--alert" id="alert--cupon"></span>
 								</div>
+
 								<div>
 									<table class="tablecompra">
 										<thead>
@@ -159,7 +164,7 @@
 										</tbody>
 									</table>
 								</div>	
-								
+
 								<button class="btn btn-danger bg9 form-control pagar--button" id="btnfacomp" ng-click="btnPagar()" ng-show="subtotal() > 0"> {{session.autentificacion==1? 'Pagar':'Inicia Session'}}</button>
 								<p class="fs-12 m-t-10" ng-show="session.autentificacion==1">
 									<label class="checkbox ">
@@ -180,21 +185,21 @@
 								<div class="metodo__pago--metodo">
 									<button class="metodopago bo18 h-120" id="btncredito" ng-click="metarjeta()">
 										<label class="radio2">Tarjeta de crédito / debito</label>
-										<img src="images/icons/VISA MASTERCARD.svg" alt="" class ="img-fluid mx-auto d-block" style="width: 150px;">
+										<img src="images/icons/VISA MASTERCARD.svg" alt="tarjeta credito" class ="img-fluid mx-auto d-block" width="150px" height="31px">
 									</button>	
 								</div>
 
 								<div class="metodo__pago--metodo">
 									<button class="metodopago bo18 h-120" id="btnefectivo" ng-click="medeposito()">
 										<label class="radio2">Deposito en efectivo</label>
-										<img src="images/icons/OXXO.svg" alt=""  class ="img-fluid mx-auto d-block" style="width: 150px;">
+										<img src="images/icons/OXXO.svg" alt="deposito efectivo"  class ="img-fluid mx-auto d-block" width="150px" height="31px">
 									</button>
 								</div>
 
 								<div class="metodo__pago--metodo">
 									<button class="metodopago bo18 h-120" ng-click="metransfe()" id="btntransfe">
 										<label class="radio2">Tranferencia bancaria</label>
-										<img src="images/icons/SPEI.svg" alt="" class ="img-fluid mx-auto d-block" style="width: 150px;">	
+										<img src="images/icons/SPEI.svg" alt="transferencia bancaria" class ="img-fluid mx-auto d-block" width="150px" height="31px">	
 									</button>
 								</div>
 							</div>
@@ -326,11 +331,11 @@
 
 									<div class="ventanaModal__contenido--opciones">
 										<div class="ventanaModal__contenido--boton">
-											<button class="form-control" ng-click="btnPredeterminado(dire._id)" ng-show="dire.Predeterminado == 0"><img src="../images/icons/Seleccionar.svg">&nbsp;&nbsp;Seleccionar</button>
+											<button class="form-control" ng-click="btnPredeterminado(dire._id)" ng-show="dire.Predeterminado == 0"><img width="20px" height="20px" src="../images/icons/Seleccionar.svg">&nbsp;&nbsp;Seleccionar</button>
 										</div>
 
 										<div class="ventanaModal__contenido--boton">
-											<button class="form-control" ng-click="btndescartarDomicilio(dire._id)"><img src="../images/icons/Basura.svg">&nbsp;&nbsp;Eliminar</button>
+											<button class="form-control" ng-click="btndescartarDomicilio(dire._id)"><img width="20px" height="20px" src="../images/icons/Basura.svg">&nbsp;&nbsp;Eliminar</button>
 										</div>
 									</div>
 
@@ -428,7 +433,7 @@
 										<input type="number" placeholder="Ingresa numero de Telefono" ng-model="dataDireccion.Telefono" id="agregar_8">
 									</div>
 								</div>
-								<span id="alertvalid" class="ventanaModal__contenido--alerta"><img src="images/icono notificacion.svg" alt="icon-user" style="width: 32px;padding-right: 2px;">Completa todos los datos para poder continuar</span>
+								<span id="alertvalid" class="ventanaModal__contenido--alerta"><img src="images/icono notificacion.svg" alt="icon-user" style="width:3.2rem; padding-right: 2px;">Completa todos los datos para poder continuar</span>
 								<button class="btn btn-danger ventanaModal__contenido--botonguardar" ng-click="inputvalidireccion()">Guardar</button>
 							</div>
 						</div> <!--Fin Modal Agregar Nueva-->
@@ -453,10 +458,10 @@
 
 									<div class="ventanaModal__contenido--info">
 										<div class="ventanaModal__contenido--boton">
-											<button class="form-control" name="facturacion" id="factsi" ng-click="btnFacpredetermiando(d._id, 'pre')"><img src="../images/icons/Seleccionar.svg">&nbsp;&nbsp;Seleccionar</button>
+											<button class="form-control" name="facturacion" id="factsi" ng-click="btnFacpredetermiando(d._id, 'pre')"><img width="20px" height="20px" src="../images/icons/Seleccionar.svg">&nbsp;&nbsp;Seleccionar</button>
 										</div>
 										<div class="ventanaModal__contenido--boton">
-											<button class="form-control" ng-click="btnEliminardatosfacturacion(d._id, 'del')"><img src="../images/icons/Basura.svg">&nbsp;&nbsp;Eliminar</button>
+											<button class="form-control" ng-click="btnEliminardatosfacturacion(d._id, 'del')"><img width="20px" height="20px" src="../images/icons/Basura.svg">&nbsp;&nbsp;Eliminar</button>
 										</div>
 									</div>
 
@@ -571,67 +576,65 @@
 										</div>
 									</div>
 
-									<span id="alertvalid1" class="ventanaModal__contenido--alerta"><img src="images/icono notificacion.svg" alt="icon-user" style="width: 32px;padding-right: 2px;">Completa todos los datos para poder continuar</span>
+									<span id="alertvalid1" class="ventanaModal__contenido--alerta"><img src="images/icono notificacion.svg" alt="icon-user" style="width: 3.2rem; padding-right: 2px;">Completa todos los datos para poder continuar</span>
 									<button class="btn btn-danger ventanaModal__contenido--botonguardar" ng-click="inputvalidfactura()" id="btngfact">Guardar</button>
 								</div>
 							</form>
 						</div> <!--Fin Modal Agregar Nueva Factura-->
 					</form>
 
-					
 				</section>
 
 				<!-- Modal -->
 				<div class="modal fade mdl-new" id="mdlcotizar" tabindex="-1" role="dialog" aria-labelledby="mdlcotizar" aria-hidden="true">
 						<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-							<div class="modal-content mdl-env-ed">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLongTitle">Selecciona tu paqueteria</h5>
-									<button type="button" class="close" id="cotizarclose" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
+						<div class="modal-content mdl-env-ed">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLongTitle">Selecciona tu paqueteria</h5>
+								<button type="button" class="close" id="cotizarclose" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 
-								<div class="modal-body">
-									<div class="row">
-										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-											<section ng-show="!Costumer.dataDomicilio.Bandera">
-												<div class="alert alert-danger fade-in">
-													<h4><i class="fa fa-close"></i> Error </h4>
-													No hay un codigo postal predeterminado para cotizar el envio, predetermine una direccion presionando el siguiente boton
-												</div>
+							<div class="modal-body">
+								<div class="row">
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										<section ng-show="!Costumer.dataDomicilio.Bandera">
+											<div class="alert alert-danger fade-in">
+												<h4><i class="fa fa-close"></i> Error </h4>
+												No hay un codigo postal predeterminado para cotizar el envio, predetermine una direccion presionando el siguiente boton
+											</div>
 
-												<div class="text-center">
-													<button class="btn btn-danger" ng-click="btndireccionguardadas('Direcciones')">Predeterminar una direccion</button>
-												</div>
+											<div class="text-center">
+												<button class="btn btn-danger" ng-click="btndireccionguardadas('Direcciones')">Predeterminar una direccion</button>
+											</div>
 
-											</section>
+										</section>
 
-											<section ng-show="Costumer.dataDomicilio.Bandera" >
-												<div class="alert alert-warning fade-in" ng-show="flag">
-													<i class="fa fa-refresh fa-spin"></i> Espera un momento por favor estamos cotizando tu envio
-												</div>
+										<section ng-show="Costumer.dataDomicilio.Bandera" >
+											<div class="alert alert-warning fade-in" ng-show="flag">
+												<i class="fa fa-refresh fa-spin"></i> Espera un momento por favor estamos cotizando tu envio
+											</div>
 
-												<div class="table-responsive">
-													<table class="table table-hover" ng-show="!flag">
-														<tbody>
-															<tr ng-repeat="paq in cotizador" ng-cloak ng-click="selectenvio(paq)" style="cursor: pointer;" class="bdl-a-r">
-																<td><input type="radio"></td>
-																<td class="text-center"><img class="bdl-c-itm" ng-src="images/paqueterias/{{paq.provider}}.svg" 
-																	alt="{{paq.provider}}"></td>
-																<td>{{getFechaentrega(paq.days)}}</td>
-																<td class="text-red">{{paq.total_pricing | currency}}</td>
-															</tr>
-														</tbody>
-													</table>
-												</div>
-											</section>
-										</div>
+											<div class="table-responsive">
+												<table class="table table-hover" ng-show="!flag">
+													<tbody>
+														<tr ng-repeat="paq in cotizador" ng-cloak ng-click="selectenvio(paq)" style="cursor: pointer;" class="bdl-a-r">
+															<td><input type="radio"></td>
+															<td class="text-center"><img class="bdl-c-itm" ng-src="images/paqueterias/{{paq.provider}}.svg" alt="{{paq.provider}}"></td>
+															<td>{{getFechaentrega(paq.days)}}</td>
+															<td class="text-red">{{paq.total_pricing | currency}}</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</section>
 									</div>
 								</div>
-
 							</div>
+
 						</div>
+					</div>
 				</div>
 			</form>
 		</div>

@@ -74,6 +74,7 @@ body{
   align-items: center;
   width:100%;
   text-align: center;
+  display: grid;
 }
 .secondary__contenedor--forgot:hover, .secondary__contenedor--register:hover, .registro__aviso a:hover, .yatienes__cuenta a:hover{
   color: var(--primario-oscuro);
@@ -81,6 +82,9 @@ body{
 }
 .secondary__contenedor--forgot, .secondary__contenedor--register{
   color: var(--primario);
+  display: grid;
+  justify-self: center;
+  max-width: 45rem;
 }
 .secondary__contenedor--forgot a p, .secondary__contenedor--register a p{
   font-size: 2rem;

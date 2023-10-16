@@ -49,7 +49,7 @@
     <meta property="fb:app_id" content="732648563841854">
     <meta property="fb:pages" content="https://www.facebook.com/MacromAutopartes">
     <meta property="fb:admins" content="732648563841854">
-    <link rel="shortcut icon" href="https://macromautopartes.com/images/icons/FaviconM.png" type="image/png" />
+    <link rel="shortcut icon" href="https://macromautopartes.com/images/icons/FaviconM.webp" type="image/webp" />
     <link rel="canonical" href="https://macromautopartes.com/" />
 
 <!--===============================================================================================-->

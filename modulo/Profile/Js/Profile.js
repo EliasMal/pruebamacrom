@@ -68,8 +68,6 @@ function ProfileCtrl($scope, $http){
 
     /* Termina Paginacion */
 
-
-    
     obj.btnMenulinks = (opc='') => {
         if(opc!=""){
             location.href = "?mod=Profile&opc="+opc;

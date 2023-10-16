@@ -44,11 +44,12 @@ function ComprasCtrl($scope, $http , $sce){
             weight: 0, //peso
             height: 0, //altura
             width: 0, //ancho
-            length: 0 } //largo
-        }
+            length: 0 //largo
+        } 
+    }
     
-        obj.RefaccionDetalles = (_id)=>{
-        window.open("?mod=catalogo&opc=detalles&_id="+_id,"_self");
+    obj.RefaccionDetalles = (_id)=>{
+    window.open("?mod=catalogo&opc=detalles&_id="+_id,"_self");
     }
 
     obj.subtotal = ()=>{
@@ -68,8 +69,7 @@ function ComprasCtrl($scope, $http , $sce){
         return obj.total;
     }
 
-    //prueba cupon local
-obj.cupon = () =>{
+obj.cupon = () =>{ //prueba cupon local
     let inpCupon = document.getElementById("inpCupon").value;
     var incpn = document.getElementById("inpCupon"); 
     var acrcupo = localStorage.getItem("acrcupon");
@@ -95,8 +95,8 @@ obj.cupon = () =>{
             incpn.disabled = true;
         }
 
-}
-//fin de prueba cupon local
+}//fin de prueba cupon local
+
     obj.aplicarMonedero = ()=>{
         if(obj.monedero.Importe>0){
             obj.Costumer.descuento = (obj.monedero.Importe - obj.total) >= 0? obj.total: obj.monedero.Importe
@@ -117,8 +117,6 @@ obj.cupon = () =>{
             obj.actualizarSession(p,false);
         }
         
-        
-        //obj.getCotizacionEnvio();
     }
 
     obj.btnQuitar = (p)=>{
@@ -280,23 +278,24 @@ obj.cupon = () =>{
             localStorage.setItem("acrcupon", 1);
         }
     }
+    
     obj.metransfe = ()=>{
         obj.Costumer.metodoPago = "Transferencia"
-        btntransfe.style.borderColor="#de0007";
-        btnefectivo.style.borderColor="#e6e6e6";
-        btncredito.style.borderColor="#e6e6e6";
+        btntransfe.style.borderColor="var(--primario)";
+        btnefectivo.style.borderColor="var(--gris-light)";
+        btncredito.style.borderColor="var(--gris-light)";
     }
     obj.medeposito = ()=>{
         obj.Costumer.metodoPago = "Deposito"
-        btntransfe.style.borderColor="#e6e6e6";
-        btnefectivo.style.borderColor="#de0007";
-        btncredito.style.borderColor="#e6e6e6";
+        btntransfe.style.borderColor="var(--gris-light)";
+        btnefectivo.style.borderColor="var(--primario)";
+        btncredito.style.borderColor="var(--gris-light)";
     }
     obj.metarjeta = ()=>{
         obj.Costumer.metodoPago = "Tarjeta"
-        btntransfe.style.borderColor="#e6e6e6";
-        btnefectivo.style.borderColor="#e6e6e6";
-        btncredito.style.borderColor="#de0007";
+        btntransfe.style.borderColor="var(--gris-light)";
+        btnefectivo.style.borderColor="var(--gris-light)";
+        btncredito.style.borderColor="var(--primario)";
     }
     
     obj.ProcesarCompra = (data) =>{
@@ -410,22 +409,48 @@ obj.cupon = () =>{
         obj.requiredEnvio = true;
         $("#mdlcotizar").modal('hide');
     }
-    
+
     obj.empaquetar = ()=>{
-        Object.values(obj.session.CarritoPrueba).forEach(e =>{
-            if(!e.Enviogratis){
-                obj.dataCotizador.parcel.weight += parseFloat(e.Peso)
-                obj.dataCotizador.parcel.width =  parseInt(e.Ancho > obj.dataCotizador.parcel.width? e.Ancho: obj.dataCotizador.parcel.width);
-                obj.dataCotizador.parcel.height += parseInt(e.Alto)
-                obj.dataCotizador.parcel.length = parseInt(e.Largo > obj.dataCotizador.parcel.length? e.Largo:  obj.dataCotizador.parcel.length);
-            }
+        var TotalVolumen = 0;
+        var contador = 1;
+        Object.values(obj.session.CarritoPrueba). forEach(e=>{
+            obj.dataCotizador.parcel.length = parseInt(e.Largo > obj.dataCotizador.parcel.length? e.Largo:  obj.dataCotizador.parcel.length);
+            obj.dataCotizador.parcel.width =  parseInt(e.Ancho > obj.dataCotizador.parcel.width? e.Ancho: obj.dataCotizador.parcel.width);
+            e.Volumen = (e.Largo*e.Ancho*e.Alto)*e.Cantidad;
+            console.log("Volumen Cm3 P",contador,": ",e._producto, " = ",e.Volumen);
+            TotalVolumen = e.Volumen+ TotalVolumen;
+            contador++;
         })
+        console.log("Volumen Cm3 Total: ", TotalVolumen);
+        Object.values(obj.session.CarritoPrueba).forEach(e =>{
+            if(!e.Enviogratis && obj.dataCotizador.parcel.height <= 100){
+                obj.dataCotizador.parcel.weight += parseFloat(e.Peso);
+                obj.dataCotizador.parcel.width =  parseInt(e.Ancho > obj.dataCotizador.parcel.width? e.Ancho: obj.dataCotizador.parcel.width);
+                obj.dataCotizador.parcel.height += parseInt(e.Alto);
+                obj.dataCotizador.parcel.length = parseInt(e.Largo > obj.dataCotizador.parcel.length? e.Largo:  obj.dataCotizador.parcel.length);
+
+            }else if(!e.Enviogratis && obj.dataCotizador.parcel.height >=100 && obj.dataCotizador.parcel.width <= 100){
+                obj.dataCotizador.parcel.weight += parseFloat(e.Peso);
+                obj.dataCotizador.parcel.width +=  parseInt(e.Ancho);
+                obj.dataCotizador.parcel.height = parseInt(e.Alto > obj.dataCotizador.parcel.height? e.Alto: obj.dataCotizador.parcel.height);
+                obj.dataCotizador.parcel.length = parseInt(e.Largo > obj.dataCotizador.parcel.length? e.Largo:  obj.dataCotizador.parcel.length);
+                
+            }else if(!e.Enviogratis && obj.dataCotizador.parcel.height >= 100 && obj.dataCotizador.parcel.width >= 100 && obj.dataCotizador.parcel.length <= 100){
+                obj.dataCotizador.parcel.weight += parseFloat(e.Peso);
+                obj.dataCotizador.parcel.width = parseInt(e.Ancho > obj.dataCotizador.parcel.width? e.Ancho: obj.dataCotizador.parcel.width);
+                obj.dataCotizador.parcel.height = parseInt(e.Alto > obj.dataCotizador.parcel.height? e.Alto: obj.dataCotizador.parcel.height);
+                obj.dataCotizador.parcel.length += parseInt(e.Largo);
+            }
+
+        })
+        
+        console.log(obj.dataCotizador);
         obj.requiredEnvio = obj.dataCotizador.parcel.weight != 0? false: true;
         
     }
 
     obj.eliminarPaqueterias = (data)=>{
-       let arrayPaq = ["CARSSA", "SKYDROPX", "AMPM", "SANDEX", "ESTAFETA", "UPS"];
+       let arrayPaq = ["CARSSA", "SKYDROPX", "AMPM", "SANDEX", "ESTAFETA", "UPS", "TRACUSA", "TRESGUERRAS"];
        arrayPaq.forEach(e=>{
             data = data.filter(paqueteria => paqueteria.provider != e)
        })

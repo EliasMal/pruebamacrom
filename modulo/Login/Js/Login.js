@@ -33,6 +33,25 @@ function LoginCtrl($scope,$http){
             toastr.error("Error: no se realizo la conexion con el servidor");
         });
     }
+
+    obj.btnolvide = ()=>{
+        obj.login.opc="forgot";
+        $http({
+            method: 'POST',
+            url: urlLogin,
+            data: {Login: obj.login}
+
+        }).then(function successCallback(res) {
+            if(res.data.Olvidado == 1){
+                toastr.success(res.data.mensaje);
+            } else{
+                toastr.error("Error: el usuario no existe");
+            }
+        }, function errorCallback(res) {
+            toastr.error("Error: no se realizo la conexion con el servidor");
+        });
+    }
+
     obj.btnRegistrar = (form)=>{
         
         obj.Registro.FechaCreacion = new Date();

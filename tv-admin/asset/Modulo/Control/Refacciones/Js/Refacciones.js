@@ -478,24 +478,6 @@ function RefaccionesEditCtrl($scope, $http){
     ];
     obj.arrayAnios = [];
 
-    // $scope.submitForm = function() {
-    //     var data = {
-    //         clave : parseInt($scope.clave),
-    //         idmarca : $scope.vehiculo.id_Marca_RefaccionVehiculo,
-    //         idmodelo : $scope.vehiculo.id_Modelo_RefaccionVehiculo,
-    //         generacion : $scope.generacion,
-    //         ainicial : $scope.ainicial,
-    //         afinal : $scope.afinal,
-    //         motor : $scope.motor,
-    //         transmision : $scope.transmision,
-    //         especificaciones : $scope.especificaciones,
-    //         id_imagen : $scope.id_imagen
-    //     };
-      
-    //     $http.post('Modulo/Control/Refacciones/Ajax/Vehiculos.php', data).then(function(response) {
-    //       console.log(response);
-    //     });
-    //   };
 
     obj.getCategorias = () => {
         $http({
