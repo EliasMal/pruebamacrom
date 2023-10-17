@@ -412,6 +412,7 @@ obj.cupon = () =>{ //prueba cupon local
 
     obj.empaquetar = ()=>{
         var TotalVolumen = 0;
+        var TotalVolumen2 = 0;
         var contador = 1;
         Object.values(obj.session.CarritoPrueba). forEach(e=>{
             obj.dataCotizador.parcel.length = parseInt(e.Largo > obj.dataCotizador.parcel.length? e.Largo:  obj.dataCotizador.parcel.length);
@@ -420,30 +421,24 @@ obj.cupon = () =>{ //prueba cupon local
             console.log("Volumen Cm3 P",contador,": ",e._producto, " = ",e.Volumen);
             TotalVolumen = e.Volumen+ TotalVolumen;
             contador++;
-        })
-        console.log("Volumen Cm3 Total: ", TotalVolumen);
+        });
+        console.log("Volumen Cm3 Total Productos: ", TotalVolumen);
         Object.values(obj.session.CarritoPrueba).forEach(e =>{
-            if(!e.Enviogratis && obj.dataCotizador.parcel.height <= 100){
-                obj.dataCotizador.parcel.weight += parseFloat(e.Peso);
+            if(!e.Enviogratis){
+                obj.dataCotizador.parcel.weight += parseFloat(e.Peso*e.Cantidad);
                 obj.dataCotizador.parcel.width =  parseInt(e.Ancho > obj.dataCotizador.parcel.width? e.Ancho: obj.dataCotizador.parcel.width);
-                obj.dataCotizador.parcel.height += parseInt(e.Alto);
-                obj.dataCotizador.parcel.length = parseInt(e.Largo > obj.dataCotizador.parcel.length? e.Largo:  obj.dataCotizador.parcel.length);
-
-            }else if(!e.Enviogratis && obj.dataCotizador.parcel.height >=100 && obj.dataCotizador.parcel.width <= 100){
-                obj.dataCotizador.parcel.weight += parseFloat(e.Peso);
-                obj.dataCotizador.parcel.width +=  parseInt(e.Ancho);
                 obj.dataCotizador.parcel.height = parseInt(e.Alto > obj.dataCotizador.parcel.height? e.Alto: obj.dataCotizador.parcel.height);
                 obj.dataCotizador.parcel.length = parseInt(e.Largo > obj.dataCotizador.parcel.length? e.Largo:  obj.dataCotizador.parcel.length);
-                
-            }else if(!e.Enviogratis && obj.dataCotizador.parcel.height >= 100 && obj.dataCotizador.parcel.width >= 100 && obj.dataCotizador.parcel.length <= 100){
-                obj.dataCotizador.parcel.weight += parseFloat(e.Peso);
-                obj.dataCotizador.parcel.width = parseInt(e.Ancho > obj.dataCotizador.parcel.width? e.Ancho: obj.dataCotizador.parcel.width);
-                obj.dataCotizador.parcel.height = parseInt(e.Alto > obj.dataCotizador.parcel.height? e.Alto: obj.dataCotizador.parcel.height);
-                obj.dataCotizador.parcel.length += parseInt(e.Largo);
             }
 
-        })
-        
+        });
+        obj.dataCotizador.parcel.length += parseFloat(2);obj.dataCotizador.parcel.width += parseFloat(2);obj.dataCotizador.parcel.height += parseFloat(2);
+        TotalVolumen2 = (obj.dataCotizador.parcel.length * obj.dataCotizador.parcel.width * obj.dataCotizador.parcel.height);
+        if(TotalVolumen>TotalVolumen2){
+            obj.dataCotizador.parcel.length += parseFloat(2);obj.dataCotizador.parcel.width += parseFloat(2);obj.dataCotizador.parcel.height += parseFloat(2);
+            TotalVolumen2 = (obj.dataCotizador.parcel.length * obj.dataCotizador.parcel.width * obj.dataCotizador.parcel.height);
+        }
+        console.log("Volumen Cm3 Total Caja: ", TotalVolumen2);
         console.log(obj.dataCotizador);
         obj.requiredEnvio = obj.dataCotizador.parcel.weight != 0? false: true;
         

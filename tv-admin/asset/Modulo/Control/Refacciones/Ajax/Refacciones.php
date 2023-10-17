@@ -66,24 +66,24 @@
                                 $this->jsonData["data"]["Compatibilidad"] = $this->getCompatibilidad();
                                 $this->jsonData["data"]["Marcas"] = $this->getMarcas();
                                 $this->jsonData["data"]["Proveedores"] = $this->getProveedores();
-                                /**
-                                 * Especificar la funcion que ontendra los vehiculos que le quedan a la refaccion
-                                 */
+                                /*Especificar la funcion que ontendra los vehiculos que le quedan a la refaccion*/
+
                                 $this->jsonData["data"]["RVehiculo"] = array();
-                                /* $this->jsonData["data"]["Vehiculos"] = $this->getModelos();
-                                $this->jsonData["data"]["Modelos"] = $this->getAnios(); */
-                                
                                 $this->jsonData["Bandera"] = 1;
                             break;
                         case 'proveedores':
                                 $this->jsonData["data"] = $this->getProveedores();
                                 $this->jsonData["Bandera"] = 1;
                             break;
+
+                        case 'EliminarVehiculo':
+                                $this->EliminarComp();
+                                
+                            break;
                     }
                     break;
                 case 'new':
                 case 'edit':
-                // case 'newcompatibilidad':
                                         
                     $json = json_decode(file_get_contents($_POST["Rvehiculo"]),true);
                     echo $jsonError = json_last_error_msg();
@@ -106,6 +106,11 @@
             print json_encode($this->jsonData);
         }
         
+        private function EliminarComp (){
+            $sql = "DELETE FROM compatibilidad where idcompatibilidad ='{$this->formulario->Cvehiculo["idcompatibilidad"]}' and clave = '{$this->formulario->Cvehiculo["clave"]}'";
+            return $this->conn->query($sql);
+        }
+
         private function getCategorias(){
             $array = array();
             $sql = "SELECT * FROM Categorias where Status = 1 order by Categoria";
@@ -194,10 +199,6 @@
                     . " userModify='{$_SESSION["usr"]}', dateModify='".date("Y-m-d H:i:s")."'"
                     . " where _id = {$this->formulario["_id"]}";
                     break;
-                // case 'newcompatibilidad':
-                //     $sql = "INSERT INTO compatibilidad (clave, idmarca, idmodelo, generacion, ainicial, afinal, motor, transmision, especificaciones, id_imagen) 
-                //     VALUES ('$clave', '$idmarca','$idmodelo', '$generacion', '$ainicial','$afinal','$motor','$transmision','$especificaciones', '$id_imagen')";
-                // break;
             }
             return $this->conn->query($sql) or $this->jsonData["error"] = $this->conn->error;
         }

@@ -12,33 +12,7 @@ tsuruVolks
                 start = +start;
                 return input.slice(start);
             }
-        })
-        /* .directive('convertToString', function() {
-            return {
-                require: 'ngModel',
-                link: function($scope, element, attrs, ngModel) {
-                        ngModel.$parsers.push(function(value) {
-                                return parseFloat(value);
-                        });
-                        ngModel.$formatters.push(function(value) {
-                                return '' + value;
-                        });
-                }
-            };
-        })
-        .directive('converttoNumber',function(){
-            return{
-                    require: 'ngModel',
-                    link: function($scope, element, attrs, ngModel) {
-                        ngModel.$parsers.push(function(value) {
-                                        return '' + value;
-                        });
-                        ngModel.$formatters.push(function(value) {
-                                        return parseFloat(value);
-                        });
-                    }
-            }
-        }) */;
+        });
 
 function RefaccionesCtrl($scope, $http) {
     var obj = $scope;
@@ -108,7 +82,6 @@ function RefaccionesCtrl($scope, $http) {
                 for (var m in data.modelo) {
                     formData.append(m, data.modelo[m]);
                 }
-                //formData.append("file",data.file);
                 return formData;
             }
         }).then(function successCallback(res) {
@@ -158,21 +131,18 @@ function RefaccionesCtrl($scope, $http) {
     obj.nextPage = ()=>{
         obj.currentPage = obj.currentPage + 1;
         obj.getRefacciones(obj.currentPage*obj.pageSize, obj.pageSize)
-        //obj.configPages();
         
     }
     
     obj.lastPage = ()=>{
         obj.currentPage = obj.currentPage - 1;
         obj.getRefacciones(obj.currentPage*obj.pageSize, obj.pageSize)
-        //obj.configPages();
     }
     
     obj.setPage = function(index) {
         obj.currentPage = index - 1;
         
         obj.getRefacciones(obj.currentPage*obj.pageSize, obj.pageSize)
-        //obj.configPages();
         
     };
     angular.element(document).ready(function () {
@@ -228,7 +198,6 @@ function RefaccionesNewCtrl($scope, $http) {
                 obj.existencias = JSON.parse(json.text());
                 obj.existencias.Table.forEach(function(e){
                      obj.exisTotales += parseInt(e.existencia);
-                     //obj.refaccion.Precio1 = Math.round(e.precio_5 * 1.16);
                 })
 
 
@@ -251,7 +220,6 @@ function RefaccionesNewCtrl($scope, $http) {
                 for (var m in data.modelo) {
                     formData.append(m, data.modelo[m]);
                 }
-                //formData.append("file",data.file);
                 return formData;
             }
         }).then(function successCallback(res) {
@@ -280,7 +248,6 @@ function RefaccionesNewCtrl($scope, $http) {
                 for (var m in data.modelo) {
                     formData.append(m, data.modelo[m]);
                 }
-                //formData.append("file",data.file);
                 return formData;
             }
         }).then(function successCallback(res) {
@@ -307,7 +274,6 @@ function RefaccionesNewCtrl($scope, $http) {
                 for (var m in data.modelo) {
                     formData.append(m, data.modelo[m]);
                 }
-                //formData.append("file",data.file);
                 return formData;
             }
         }).then(function successCallback(res) {
@@ -335,7 +301,6 @@ function RefaccionesNewCtrl($scope, $http) {
                 for (var m in data.modelo) {
                     formData.append(m, data.modelo[m]);
                 }
-                //formData.append("file",data.file);
                 return formData;
             }
         }).then(function successCallback(res) {
@@ -364,7 +329,6 @@ function RefaccionesNewCtrl($scope, $http) {
                     for (var m in data.modelo) {
                         formData.append(m, data.modelo[m]);
                     }
-                    //formData.append("file",data.file);
                     return formData;
                 }
             }).then(function successCallback(res) {
@@ -414,7 +378,6 @@ function RefaccionesNewCtrl($scope, $http) {
                 for (var m in data.modelo) {
                     formData.append(m, data.modelo[m]);
                 }
-                //formData.append("file",data.file);
                 return formData;
             }
         }).then(function successCallback(res) {
@@ -492,7 +455,6 @@ function RefaccionesEditCtrl($scope, $http){
                 for (var m in data.modelo) {
                     formData.append(m, data.modelo[m]);
                 }
-                //formData.append("file",data.file);
                 return formData;
             }
         }).then(function successCallback(res) {
@@ -519,7 +481,6 @@ function RefaccionesEditCtrl($scope, $http){
                 for (var m in data.modelo) {
                     formData.append(m, data.modelo[m]);
                 }
-                //formData.append("file",dvehiculo.id_generacion_RefaccionVehiculoata.file);
                 return formData;
             }
         }).then(function successCallback(res) {
@@ -546,7 +507,6 @@ function RefaccionesEditCtrl($scope, $http){
                 for (var m in data.modelo) {
                     formData.append(m, data.modelo[m]);
                 }
-                //formData.append("file",dvehiculo.id_generacion_RefaccionVehiculoata.file);
                 return formData;
             }
         }).then(function successCallback(res) {
@@ -558,6 +518,21 @@ function RefaccionesEditCtrl($scope, $http){
         }, function errorCallback(res) {
             toastr.error("Error: no se realizo la conexion con el servidor");
         });
+    }
+
+    obj.btnBorrarRvehiculo = () =>{  //Prueba Eliminar Vehiculo de Compatibilidad
+        if(confirm("¿Esta seguro de eliminar la refaccion del carrito?")){
+            $http({
+                method: 'POST',
+                url: url,
+                data:{modelo: {opc:"buscar", tipo:"EliminarVehiculo"}, Cvehiculo: obj.Compatibilidad}
+            }).then(function successCallback(res) {
+                toastr.success("Vehiculo eliminado");
+
+            }, function errorCallback(res) {
+                toastr.error("Error: no se realizo la conexion con el servidor");
+            });
+        }
     }
 
     obj.getVehiculos = (id=null) => {
@@ -573,7 +548,6 @@ function RefaccionesEditCtrl($scope, $http){
                 for (var m in data.modelo) {
                     formData.append(m, data.modelo[m]);
                 }
-                //formData.append("file",data.file);
                 return formData;
             }
         }).then(function successCallback(res) {
@@ -600,7 +574,6 @@ function RefaccionesEditCtrl($scope, $http){
                 for (var m in data.modelo) {
                     formData.append(m, data.modelo[m]);
                 }
-                //formData.append("file",data.file);
                 return formData;
             }
         }).then(function successCallback(res) {
@@ -656,7 +629,6 @@ function RefaccionesEditCtrl($scope, $http){
                 for (var m in data.modelo) {
                     formData.append(m, data.modelo[m]);
                 }
-                //formData.append("file",data.file);
                 return formData;
             }
         }).then(function successCallcalendarioback(res) {
@@ -683,7 +655,6 @@ function RefaccionesEditCtrl($scope, $http){
                 for (var m in data.modelo) {
                     formData.append(m, data.modelo[m]);
                 }
-                //formData.append("file",data.file);
                 return formData;
             }
         }).then(function successCallback(res) {
@@ -697,12 +668,7 @@ function RefaccionesEditCtrl($scope, $http){
                 obj.refaccion.opc="edit";
                 obj.backgroudimg ={"background-color":obj.refaccion.color}
                 obj.img = obj.refaccion.imagen? obj.dominio+'/images/refacciones/'+obj.refaccion._id+'.png':obj.dominio+'/images/refacciones/'+obj.refaccion._id+'.webp';
-                //obj.getCategorias();
-                //obj.getMarcas();
-                //obj.getVehiculos();
-                //obj.getModelos();
                 obj.getArticulovolks();
-                //obj.getProveedores();
                 obj.getGaleria();
               
             }
@@ -737,7 +703,6 @@ function RefaccionesEditCtrl($scope, $http){
                     for (var m in data.modelo) {
                         formData.append(m, data.modelo[m]);
                     }
-                    //formData.append("file",data.file);
                     return formData;
                 }
             }).then(function successCallback(res) {
@@ -751,14 +716,12 @@ function RefaccionesEditCtrl($scope, $http){
         
     }
 
-    
     obj.getColorMarca = ()=>{
         var id = obj.Marcas.find(marca => marca._id === obj.refaccion._idMarca);
         obj.refaccion.color = id.Color;
     }
 
     /*Inicia seccioin de la galeria */
-
     obj.setImagenes = (Galeria) => {
         $http({
             method: 'POST',
@@ -782,7 +745,6 @@ function RefaccionesEditCtrl($scope, $http){
             }else{
                 toastr.error(res.data.mensaje);
             }
-
 
         }, function errorCallback(res) {
             toastr.error("Error: no se realizo la conexion con el servidor");
@@ -820,7 +782,6 @@ function RefaccionesEditCtrl($scope, $http){
                 obj.dataGaleria = res.data.Data;
                
             }
-
 
         }, function errorCallback(res) {
             toastr.error("Error: no se realizo la conexion con el servidor");
