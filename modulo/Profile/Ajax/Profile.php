@@ -181,7 +181,6 @@ class Profile{
             break;
         }
         
-
         return $this->conn->query($sql)? true:false;
     }
 

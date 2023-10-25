@@ -126,8 +126,8 @@ class Login{
     }
     
     private function getUser(){
-        $sql = "SELECT C.nombres, C.apellidos, C.Codigo_postal, CS._id_cliente, CS.cuponacre, CS._id FROM Cseguridad as CS inner join clientes as C on (CS._id_cliente = C._id) "
-                . "where username='{$this->formulario->Login->user}' and password='". sha1($this->formulario->Login->password)."'";
+        $sql = "SELECT C.nombres, C.apellidos, C.Codigo_postal, CS._id_cliente, CS.cuponacre, CS._id FROM Cseguridad as CS inner join clientes as C on (CS._id_cliente = C._id)
+            where username='{$this->formulario->Login->user}' and password='". sha1($this->formulario->Login->password)."'";
         $this->dataLogin = $this->conn->fetch($this->conn->query($sql));
         
         return count($this->dataLogin)!=0? true:false;

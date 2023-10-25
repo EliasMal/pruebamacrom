@@ -78,13 +78,12 @@
 
                         case 'EliminarVehiculo':
                                 $this->EliminarComp();
-                                
                             break;
                     }
                     break;
                 case 'new':
                 case 'edit':
-                                        
+                    
                     $json = json_decode(file_get_contents($_POST["Rvehiculo"]),true);
                     echo $jsonError = json_last_error_msg();
                     
@@ -102,12 +101,13 @@
                     }
                     break;
             }
+
             $this->jsonData["dominio"]=$this->url;
             print json_encode($this->jsonData);
         }
         
-        private function EliminarComp (){
-            $sql = "DELETE FROM compatibilidad where idcompatibilidad ='{$this->formulario->Cvehiculo["idcompatibilidad"]}' and clave = '{$this->formulario->Cvehiculo["clave"]}'";
+        private function EliminarComp(){
+            $sql = "DELETE FROM compatibilidad where idcompatibilidad =".$this->formulario["idcompatibilidad"]." and clave =".$this->formulario["clave"];
             return $this->conn->query($sql);
         }
 

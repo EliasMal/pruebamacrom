@@ -514,20 +514,30 @@ function RefaccionesEditCtrl($scope, $http){
                 obj.Compatibilidad = res.data.data;
             }
 
-
         }, function errorCallback(res) {
             toastr.error("Error: no se realizo la conexion con el servidor");
         });
     }
 
-    obj.btnBorrarRvehiculo = () =>{  //Prueba Eliminar Vehiculo de Compatibilidad
+    obj.btnBorrarRvehiculo = (RV=null) =>{  //Prueba Eliminar Vehiculo de Compatibilidad
         if(confirm("¿Esta seguro de eliminar la refaccion del carrito?")){
             $http({
                 method: 'POST',
                 url: url,
-                data:{modelo: {opc:"buscar", tipo:"EliminarVehiculo"}, Cvehiculo: obj.Compatibilidad}
+                data: {modelo: {opc:"buscar", tipo:"EliminarVehiculo", idcompatibilidad: RV.idcompatibilidad, clave: RV.clave}},
+                headers: {
+                    'Content-Type': undefined
+                },
+                transformRequest: function (data) {
+                    var formData = new FormData();
+                    for (var m in data.modelo) {
+                        formData.append(m, data.modelo[m]);
+                    }
+                    return formData;
+                }
             }).then(function successCallback(res) {
                 toastr.success("Vehiculo eliminado");
+                location.reload();
 
             }, function errorCallback(res) {
                 toastr.error("Error: no se realizo la conexion con el servidor");
