@@ -2386,9 +2386,6 @@
 body .BVehiculo, body .BVehiculo1, body .BVehiculo2, body .BVehiculo3{
 margin-top:-8%;
 }
-body .contenedor h2{
-margin-top:0%;
-}
 body .BVehiculo:focus, body .BVehiculo1:focus, body .BVehiculo2:focus, body .BVehiculo3:focus{
 	box-shadow:none;
 	border-color:#a8a2a2;

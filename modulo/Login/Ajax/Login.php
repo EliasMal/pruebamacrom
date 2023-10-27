@@ -120,9 +120,10 @@ class Login{
         $headers .= "Content-type:text/html;charset=UTF-8". "\r\n";
         mail($destinatario, $asunto, $mensaje, $headers);
         //Fin Envio de registro satisfactorio al Correo del usuario.
-
+        
         $sql = "UPDATE Cseguridad SET password = '$contrasenanueva' WHERE _id = '{$this->dataLogin["_id"]}' and username = '{$this->formulario->Login->user}'";
         return $this->conn->query($sql)? true:false;
+        
     }
     
     private function getUser(){

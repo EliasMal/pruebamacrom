@@ -601,9 +601,11 @@
 }
 
 .Bitem-pagination {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  font-size: 3.5rem;
   font-family: Montserrat-Regular;
-  font-size: 13px;
-  /*color: #808080;*/
   color: #fff;
   width: 56px;
   height: 56px;
@@ -633,6 +635,7 @@ color: white;
 .BD-title h2{
   font-family: Poppins-bold;
   color: #333;
+  font-size: 2.8rem;
 }
 
 .BDbody{

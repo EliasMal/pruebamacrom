@@ -150,7 +150,7 @@ class Blog{
                     . "'{$this->formulario["filename1"]}',$publicar,$estatus, '{$this->formulario["filename2"]}')";
                 break;
             case 'delete':
-                $sql = "UPDATE Blog SET Estatus = $estatus where _id = $id";
+                $sql = "DELETE FROM Blog where _id = $id";
                 break;
             case 'save':
                 $sql = "UPDATE Blog SET Title='".$this->formulario["Title"]."', Contenido='". $this->formulario["Contenido"] 
