@@ -98,7 +98,7 @@
 </script>
 
 </head>
-<body class="animsition" ng-app="tsuruVolks" ng-cloak>
+<body class="animsition" ng-app="tsuruVolks" ng-cloak id="BodyDark">
     
     <?php 
         include("./includes/cabecera.php");

@@ -4,7 +4,7 @@
 	</head>
 
 	<body>
-		<div class="contenedor contenedor-principal global__content" ng-controller="ComprasCtrl">
+		<div class="contenedor contenedor-principal global__content" id="MainDark" ng-controller="ComprasCtrl">
 			<form name="frmcompra" id="frmcompra" novalidate>
 				<main class="compras">
 					<article class="cliente" ng-controller="ProfileCtrl" ng-init="pag='Direcciones'">

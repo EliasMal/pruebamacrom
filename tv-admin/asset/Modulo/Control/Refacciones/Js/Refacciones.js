@@ -767,7 +767,7 @@ function RefaccionesEditCtrl($scope, $http){
 
     obj.btnEliminarImagen = (_id) => {
         if(confirm("¿Estas seguro de eliminar la imagen de la galeria?")){
-            obj.setImagenes({opc: "erase", id: _id});
+            obj.setImagenes({opc:"erase", id: _id});
         }
     }
 

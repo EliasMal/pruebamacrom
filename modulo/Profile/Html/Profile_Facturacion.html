@@ -1,5 +1,5 @@
 <section  ng-controller="ProfileCtrl" ng-init="pag='{opc}'" class="global__content">
-    <div class="banner bgwhite p-t-40 p-b-40">
+    <div class="banner p-t-40 p-b-40" id="PerfilDark">
         <div class="container-fluid contreaco">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 p-b-30">
@@ -55,7 +55,7 @@
                                      </div>   
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-b-30" ng-repeat="d in Facturacion.dataFacturacion |filter: buscar | orderBy:'Predeterminado':true">
-                                    <div class="box-facturas gris-light">
+                                    <div class="box-facturas">
                                        <div class="box-head predeterminado" ng-if="d.Predeterminado === '1'">
                                             <h5>Predeterminado</h5>
                                        </div>

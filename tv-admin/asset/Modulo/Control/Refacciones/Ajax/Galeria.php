@@ -124,12 +124,7 @@ class Galeria{
     }
 
     private function EraseImagen(){
-        if(file_exists("../../../../../../images/galeria/{$this->formulario["id"]}.png")){
-            return unlink("../../../../../../images/galeria/{$this->formulario["id"]}.png");
-        }else{
-            return false;
-        }
-        
+                
         if(file_exists("../../../../../../images/galeria/{$this->formulario["id"]}.webp")){
             return unlink("../../../../../../images/galeria/{$this->formulario["id"]}.webp");
         }else{

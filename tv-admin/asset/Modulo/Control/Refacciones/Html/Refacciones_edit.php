@@ -275,6 +275,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        
                                         <div class="tab-pane fade " id="Vehiculo" role="tabpanel" aria-labelledby="Galeria-tab">
                                             <div class="col-md-12 col-lg-12 mt-2">
                                                 <button class="btn btn-outline-danger mb-2" ng-click="btnNuevoVehiculo()"><i class="fa fa-car"></i> Nuevo Vehiculo</button>
