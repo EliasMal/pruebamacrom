@@ -1,8 +1,8 @@
 <section  ng-controller="ProfileCtrl" ng-init="pag='{opc}'" class="global__content">
-    <div class="banner p-t-40 p-b-40" id="PerfilDark">
+    <div class="banner Direc__perfil" id="PerfilDark">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 p-b-30">
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 perfil__navegador">
                     <div class="list-group">
                         <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Mispedidos')"> <img src="images/icons/icono_mis_pedidos.png" alt="logo-mispedidos" class="img icon-logo-small">Mis pedidos</a>
                         <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Session')"><img src="images/icons/icono_inicio_de_sesión.png" alt="logo-session-seguridad" class="img icon-logo-small"> Sessi&oacute;n y Seg&uacute;ridad</a>
@@ -13,7 +13,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 p-b-30">
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb gris">
                           <li class="breadcrumb-item"><a href="?mod=Profile"><strong>Mi Cuenta</strong> </a></li>
@@ -22,7 +22,7 @@
                         </ol>
                     </nav>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-30">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                             <div class="title-header">
                                 <img src="images/icons/icono_direcciones_rojo.png" alt="logo-direcciones" class="img icon-logos-grande">
                                 <h2>Agregar direccion de entrega</h2>
@@ -30,103 +30,102 @@
                         </div> 
                     </div>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 p-b-30">
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
                             <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-b-10 m-t-15">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 m-t-15">
                                     <div class="title-header">
                                         <img src="images/icons/Icono-camion.png" alt="logo-direcciones" class="img icon-logos-grande">
                                         <h5>¿A que domicilio enviaremos tu proximo pedido?</h5>
                                     </div>
                                     
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-10 m-t-15">
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 m-t-15">
                                     <div>
                                         <label for="example-text-input" >Domicilio:</label>
                                         <div class="bo16 of-hidden size15 m-b-20">
-                                            <input class="sizefull s-text7 p-l-22 p-r-22 gris-light " type="text" placeholder="Ingresa tu Domicilio" ng-model="dataDireccion.Domicilio" required>
+                                            <input class="sizefull s-text7 gris-light " type="text" placeholder="Ingresa tu Domicilio" ng-model="dataDireccion.Domicilio" required>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 p-b-10 m-t-15">
+                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 m-t-15">
                                     <div>
                                         <label for="example-text-input" >Numero Exterior:</label>
                                         <div class="bo16 of-hidden size15 m-b-20">
-                                            <input class="sizefull s-text7 p-l-22 p-r-22 gris-light" type="text" placeholder="Ingresa tu Domicilio" ng-model="dataDireccion.numExt" required>
+                                            <input class="sizefull s-text7 gris-light" type="text" placeholder="Ingresa tu Domicilio" ng-model="dataDireccion.numExt" required>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 p-b-10 m-t-15">
+                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 m-t-15">
                                     <div>
                                         <label for="example-text-input" >Numero Interior:</label>
                                         <div class="bo16 of-hidden size15 m-b-20">
-                                            <input class="sizefull s-text7 p-l-22 p-r-22 gris-light" type="text" placeholder="Ingresa tu Domicilio" ng-model="dataDireccion.numInt" required>
+                                            <input class="sizefull s-text7 gris-light" type="text" placeholder="Ingresa tu Domicilio" ng-model="dataDireccion.numInt" required>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-10">
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                     <div>
                                         <label for="example-text-input" >Colonia:</label>
                                         <div class="bo16 of-hidden size15 m-b-20">
-                                            <input class="sizefull s-text7 p-l-22 p-r-22 gris-light" type="text" placeholder="Ingresa tu colonia" ng-model="dataDireccion.Colonia" required>
+                                            <input class="sizefull s-text7 gris-light" type="text" placeholder="Ingresa tu colonia" ng-model="dataDireccion.Colonia" required>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 p-b-10">
+                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                                     <div>
                                         <label for="example-text-input" >Telefono:</label>
                                         <div class="bo16 of-hidden size15 m-b-20">
-                                            <input class="sizefull s-text7 p-l-22 p-r-22 gris-light" type="text" placeholder="Ingresa tu numero telefonico" ng-model="dataDireccion.Telefono" required>
+                                            <input class="sizefull s-text7 gris-light" type="text" placeholder="Ingresa tu numero telefonico" ng-model="dataDireccion.Telefono" required>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 p-b-10">
+                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                                     <div>
                                         <label for="example-text-input" >Codigo Postal:</label>
                                         <div class="bo16 of-hidden size15 m-b-20">
-                                            <input class="sizefull s-text7 p-l-22 p-r-22 gris-light" type="number" placeholder="00000" maxlength="5" ng-model="dataDireccion.Codigo_postal" required>
+                                            <input class="sizefull s-text7 gris-light" type="number" placeholder="00000" maxlength="5" ng-model="dataDireccion.Codigo_postal" required>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-10">
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                     <div>
                                         <label for="example-text-input" >Ciudad:</label>
                                         <div class="bo16 of-hidden size15 m-b-20">
-                                            <input class="sizefull s-text7 p-l-22 p-r-22 gris-light" type="text" placeholder="Ingresa tu ciudad" ng-model="dataDireccion.Ciudad" required>
+                                            <input class="sizefull s-text7 gris-light" type="text" placeholder="Ingresa tu ciudad" ng-model="dataDireccion.Ciudad" required>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-10">
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                     <div>
                                         <label for="example-text-input" >Estado:</label>
                                         <div class="bo16 of-hidden size15 m-b-20">
-                                            <input class="sizefull s-text7 p-l-22 p-r-22 gris-light" type="text" placeholder="Ingresa tu estado" ng-model="dataDireccion.Estado" required>
+                                            <input class="sizefull s-text7 gris-light" type="text" placeholder="Ingresa tu estado" ng-model="dataDireccion.Estado" required>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-b-10">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div>
                                         <label for="example-text-input" >Referencia:</label>
                                         <div class="bo16 of-hidden size15 m-b-20">
-                                            <input class="sizefull s-text7 p-l-22 p-r-22 gris-light" type="text" placeholder="Ingresa tu estado" ng-model="dataDireccion.Referencia" required>
+                                            <input class="sizefull s-text7 gris-light" type="text" placeholder="Ingresa tu estado" ng-model="dataDireccion.Referencia" required>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div>
+
+                            <div class="botones__direccion--add">
                                 <button class="flex-c-m bg-red btn  bo-rad-10 hov7 m-text3 trans-0-4 float-right" ng-click="btnGuardarDireccion('add')">Guardar</button>
                                 <button class="flex-c-m bg-dark btn bo-rad-10 hov7 m-text3 trans-0-4 float-right m-r-10" ng-click="btnMenulinks('Direcciones')">Regresar</button>
-                               
                             </div>   
                             
-                               
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 p-b-30 ">
+
+                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                             <div class="icon-center">
                                 <img src="images/icons/icono_direcciones.png" alt="logo-direcciones" class="img icon-logos-grande">
                             </div>
-
-                           
                         </div>
+
                     </div>
                     
                 </div>

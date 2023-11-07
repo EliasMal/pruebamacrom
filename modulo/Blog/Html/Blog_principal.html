@@ -5,14 +5,14 @@
 	</section>
 
 	<!-- content page -->
-	<section class="bgwhite contenedor p-t-66 p-b-38" id="MainDark">
+	<section class="bgwhite contenedor blog__principal" id="MainDark">
 		<div class="container">
             <h1 class="text-center text-red"><b> ¿Qué encontrarás aquí?</b></h1>
             <p>En este blog encontrarás desde noticias sobre el mundo automotor, errores más comunes, hasta tips mecánicos, todo para que lo puedas
                 implementar desde tu garage hasta en altunas emergencias
             </p>
-			<div class="row m-t-50">
-                <div class="col-md-4 m-b-40" ng-click="btnBlodDetalles(ent._id)" ng-repeat="ent in entradas">
+			<div class="row contenedor__entradas">
+                <div class="col-md-4 blog__entradas" ng-click="btnBlodDetalles(ent._id)" ng-repeat="ent in entradas">
                     <section class="blog-main">
                         <div class="hov-img-zoom blog-head">
                             <img ng-src="../images/Blog/{{ent.imagendestacada}}" alt="IMG-ABOUT">

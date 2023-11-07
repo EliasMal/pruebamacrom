@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/css/login.css">
 <div ng-controller="LoginCtrl" ng-init="mod='{mod}'" class="ctrlmain">
-    <section class="p-b-60">
+    <section>
         
         <div class="container1">
             <div class="login">
@@ -19,9 +19,7 @@
                         <h4 class="contenedor__dos--titulo">Registrarme</h4>
 
                             <div ng-show="frmReg.correo.$dirty && frmReg.correo.$invalid"><img src="images/icono notificacion.svg" alt="icon-user" style="width: 48px;padding-right: 2px;">Ingresa un correo valido.</div>
-                            <div class="p-b-20"></div>
                             <div ng-show="frmReg.cpass.$dirty && frmReg.cpass.$invalid || (Registro.Cpass != Registro.pass)"><img src="images/icono notificacion.svg" alt="icon-user" style="width: 48px;padding-right: 2px;">Contraseñas no coinciden.</div>
-                            <div class="p-b-20"></div>
 
                         <div class="contenedor__dos--registro">
 

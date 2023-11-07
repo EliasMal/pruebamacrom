@@ -1,8 +1,8 @@
 <section  ng-controller="ProfileCtrl" ng-init="pag='{opc}'" class="global__content">
-    <div class="banner p-t-40 p-b-40" id="PerfilDark">
-        <div class="container-fluid contreaco">
+    <div class="banner Direc__perfil" id="PerfilDark">
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 p-b-30">
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 perfil__navegador">
                     <div class="list-group">
                         <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Mispedidos')"> 
                             <img src="images/icons/icono_mis_pedidos.png" alt="logo-mispedidos" class="img icon-logo-small">Mis pedidos
@@ -18,7 +18,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 p-b-30">
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb gris">
                           <li class="breadcrumb-item"><a href="?mod=Profile"><strong>Mi Cuenta</strong> </a></li>
@@ -26,13 +26,13 @@
                         </ol>
                     </nav>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-30">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 perfil__titulo">
                             <div class="title-header">
                                 <img src="images/icons/icono_facturacion_rojo.png" alt="logo-direcciones" class="img icon-logos-grande">
                                 <h2>Datos de facturación</h2>
                             </div>
                         </div> 
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-30">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                             <div class="bo4 of-hidden size15 m-b-20 input-group">
                                 <input type="text" name="buscar" class="form-control" placeholder="ej. PEPE SA DE CV" ng-model="buscar">
                                 <span class="input-group-btn">
@@ -43,10 +43,10 @@
 
                     </div>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 p-b-30">
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
                             
                             <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-b-30" ng-click="addFacturacion()">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 perfil__direcciones--cont" ng-click="addFacturacion()">
                                      <div class="box-direcciones">
                                         <div class="box-add">
                                             <h3><i class="fa fa-plus"></i></h3> 
@@ -54,43 +54,43 @@
                                         </div>  
                                      </div>   
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-b-30" ng-repeat="d in Facturacion.dataFacturacion |filter: buscar | orderBy:'Predeterminado':true">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 perfil__direcciones--cont" ng-repeat="d in Facturacion.dataFacturacion |filter: buscar | orderBy:'Predeterminado':true">
                                     <div class="box-facturas">
                                        <div class="box-head predeterminado" ng-if="d.Predeterminado === '1'">
                                             <h5>Predeterminado</h5>
                                        </div>
                                        <div class="box-body">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                                                    <p class="p-t-10" >Rfc: </p>
+                                            <div class="Facturacion__contenedor--datos">
+                                                <div class="Facturacion__contenedor--info">
+                                                    <p class="datos__fact" >Rfc: </p>
                                                     <p class="text-info-user">{{d.Rfc}}</p>
                                                 </div>
-                                                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                                                    <p class="p-t-10">Razon social: </p>
+                                                <div class="Facturacion__contenedor--info">
+                                                    <p class="datos__fact">Razon social: </p>
                                                     <p class="text-info-user">{{d.Razonsocial}}</p>
                                                 </div>
-                                                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-                                                    <p class="p-t-10">Domicilio: </p>
+                                                <div class="Facturacion__contenedor--info">
+                                                    <p class="datos__fact">Domicilio: </p>
                                                     <p class="text-info-user">{{d.Domicilio}}</p>
                                                 </div>
-                                                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                                                    <p class="p-t-10">Colonia: </p>
+                                                <div class="Facturacion__contenedor--info">
+                                                    <p class="datos__fact">Colonia: </p>
                                                     <p class="text-info-user">{{d.Colonia}}</sppan>
                                                 </div>
-                                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                                                    <p class="p-t-10">Ciudad: </p>
+                                                <div class="Facturacion__contenedor--info">
+                                                    <p class="datos__fact">Ciudad: </p>
                                                     <p class="text-info-user">{{d.Ciudad}}</p>
                                                 </div>
-                                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                                                    <p class="p-t-10">Estado: </p>
+                                                <div class="Facturacion__contenedor--info">
+                                                    <p class="datos__fact">Estado: </p>
                                                     <p class="text-info-user">{{d.Estado}}</p>
                                                 </div>
-                                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                                                    <p class="p-t-10">Uso de Cfdi: </p>
+                                                <div class="Facturacion__contenedor--info">
+                                                    <p class="datos__fact">Uso de Cfdi: </p>
                                                     <p class="text-info-user">{{d.Descripcion}}</p>
                                                 </div>
-                                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                                                    <p class="p-t-10">Actividad empresarial: </p>
+                                                <div class="Facturacion__contenedor--info">
+                                                    <p class="datos__fact">Actividad empresarial: </p>
                                                     <p class="text-info-user">{{d.Actividad}}</p>
                                                 </div>
                                             </div>
@@ -104,32 +104,10 @@
                                        </div>
                                     </div>   
                                </div>
-                               <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-b-30">
-                                    <div class="box-direcciones">
-                                    <div class="box-body">
-                                            
-                                                Paseo de los duraznos #88,
-                                                Valle de las huertas,
-                                                Coquimatlan Colima,
-                                                CP. 28450,
-                                                Tel: 4525054145
-                                            
-                                    </div>
-                                    <br>
-                                    
-                                    <div class="box-footer">
-                                        <ul>
-                                            <li><a href="#">Editar </a></li>
-                                            <li><a href="#">Descartar </a></li>
-                                            <li><a href="#">Predeterminado </a></li>
-                                        </ul>
-                                    </div>
-                                    </div>   
-                                </div> -->
                                
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 p-b-30 ">
+                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                             <div class="icon-center">
                                 <img src="images/icons/icono_facturacion.png" alt="logo-Facturacion" class="img icon-logos-grande">
                             </div>

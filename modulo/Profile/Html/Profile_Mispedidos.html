@@ -1,8 +1,8 @@
 <section ng-controller="ProfileCtrl" ng-init="pag='{opc}'" class="global__content">
-    <div class="banner p-t-40 p-b-40" id="PerfilDark">
+    <div class="banner Direc__perfil" id="PerfilDark">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 p-b-30">
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 perfil__navegador">
                     <div class="list-group">
                         <a href="#" class="list-group-item list-group-item-action active" ng-click="btnMenulinks('Mispedidos')"> <img src="images/icons/icono_mis_pedidos.png" alt="logo-mispedidos" class="img icon-logo-small">Mis pedidos</a>
                         <a href="#" class="list-group-item list-group-item-action" ng-click="btnMenulinks('Session')"><img src="images/icons/icono_inicio_de_sesión.png" alt="logo-session-seguridad" class="img icon-logo-small"> Sessi&oacute;n y Seg&uacute;ridad</a>
@@ -13,7 +13,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 p-b-30">
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb gris">
                           <li class="breadcrumb-item"><a href="#" ng-click="btnMenulinks()">Mi Cuenta</a></li>
@@ -21,10 +21,10 @@
                         </ol>
                     </nav>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-30">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 perfil__titulo">
                             <h1>Mis Pedidos</h1>
                         </div> 
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-30">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 perfil__titulo">
                             <div class="bo4 of-hidden size15 m-b-20 input-group">
                                 <input type="text" class="form-control" placeholder="Buscar por titulo, departamento o destinatario">
                                 <span class="input-group-btn">
@@ -35,7 +35,7 @@
                         </div> 
                     </div>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-b-10">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pedidos__paginador">
                             <nav aria-label="Page navigation example">
                                 <ul class="t-pagination justify-content-center">
                                     <li class="t-page-item {{paginador.currentPage==0? 'disabled':''}}">
@@ -52,28 +52,28 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 p-b-10">
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 pedidos__paginador">
                             <div class="box-pedidos" ng-repeat="p in Mispedidos">
                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-15">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 pedidos__paginador">
                                         <span class="no-pedido">Pedido: #{{p.noPedido}}</span>  <span class="estatus">Estado:</span><span class="text-{{p.class}}">{{p.Estado}}</span>
                                     </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-15">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 pedidos__paginador">
                                         <button class="flex-c-m bg-red btn  bo-rad-10 hov7 m-text3 trans-0-4 float-right" type="button" ng-click="btnverMispedidos(p._idPedidos)"> Ver pedido</button>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-10">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 pedidos__paginador">
                                         <div class="row">
-                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-b-10 datos-entrega">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 datos-entrega">
                                                 <label>Metodo de pago:</label>
                                                 <p>{{p.FormaPago}}</p>
                                             </div>
-                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-b-10 datos-entrega">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 datos-entrega">
                                                 <label>Total:</label>
                                                 <p>{{p.Totalpedido | currency}}</p>
                                             </div>
-                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-b-10 datos-entrega">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 datos-entrega">
                                                 <label>Enviado a:</label>
                                                 <p>{{p.nombreCliente}}</p>
                                             </div>
@@ -86,7 +86,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-b-10">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 pedidos__paginador">
                                         <table class="table pedidos__datos">
                                             <tbody>
                                                 <tr ng-repeat="a in p.Detalles ">
@@ -101,7 +101,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 p-b-30">
+                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                             <div class="icon-center">
                                 <img src="images/icons/icono_mis_pedidos.png" alt="logo-direcciones" class="img icon-logos-grande">
                             </div>

@@ -48,10 +48,10 @@ class Registro{
                                 .pofam{font-family: Poppins;}
                                 </style>
                                     <div>
-                                        <section class="p-b-60">
+                                        <section style="padding-bottom:60px;>
                                             <div class="container1" style="width:1000px;">
                                                 <div class="row">
-                                                    <div class="col-md-6 p-b-30 insmob">
+                                                    <div class="col-md-6 insmob" style="padding-bottom:30px;">
                                                         <form name="frmReg" id="frmReg"  novalidate>
                                                             <h4><img src="https://macromautopartes.com/images/icons/CRcabecera.png" style="width:100%;"></h4>
                                                                 <div style="color:#de0007;text-align:center;">
@@ -63,7 +63,7 @@ class Registro{
                                                                     <h4 class="pofam" style="color:#757575;text-align:center;font-size:22px;margin-bottom:0px;">Tu cuenta está lista para usarse</h4>
                                                                     <h4 class="pofam" style="color:#9e9e9e;text-align:center;font-size:20px;margin-top:0px;">Comienza a comprar desde la comodidad de tu casa.</h4>
                                                                 </div>
-                                                            <h4 class="m-text26 p-b-20 prueba3 p-b-42"><img src="https://macromautopartes.com/images/icons/CRPie-pagina.png" style="width:100%;"></h4>
+                                                            <h4 class="m-text26 prueba3" style="padding-bottom:42px;"><img src="https://macromautopartes.com/images/icons/CRPie-pagina.png" style="width:100%;"></h4>
                                                         </form>
                                                     </div>
                                                 </div>

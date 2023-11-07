@@ -1,19 +1,19 @@
 <div ng-controller="catalogosDetallesCtrl" ng-init="Refaccion.id={id}" class="ctrlmain global__content">
 	<!-- breadcrumb -->
-	<div class="bread-crumb bgwhite flex-w p-l-52 p-r-15 p-t-30 p-l-15-sm">
+	<div class="bread-crumb bgwhite flex-w categorias__link">
 		<a href="?mod=catalogo" class="s-text16">
 			{{Refaccion.datos.Categoria}}
-			<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
+			<i class="fa fa-angle-right" aria-hidden="true"></i>
 		</a>
 
 		<span class="s-text16">
 			{{Refaccion.datos.Marca}}
-			<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
+			<i class="fa fa-angle-right" aria-hidden="true"></i>
 		</span>
 
 		<span class="s-text16">
 			{{Refaccion.datos.Modelo}}
-			<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
+			<i class="fa fa-angle-right" aria-hidden="true"></i>
 		</span>
 
 		<span class="s-text17">
@@ -21,7 +21,7 @@
 		</span>
 	</div>
 	<!-- Product Detail -->
-	<div class="contenedor contenido-principal">
+	<div class="contenedor contenido-principal bgwhite" id="MainDark">
 		<div class="detalles">
 			<div class="detalles__visual">
 				<div class="detalles__visual--contenido">
@@ -32,9 +32,9 @@
 		
 							</div>
 						</div>
-						<!-- <img src="{{getImagen(Refaccion.datos.imagen, Refaccion.datos._id)}}" alt="" class="secundaria"> -->
 						
 					</div>
+					
 					<div class="">
 						<div class="" data-thumb="{{getImagen(Refaccion.datos.imagen, Refaccion.datos._id)}}">
 							<div class="detalles__visual--producto">
@@ -45,8 +45,8 @@
 				</div>
 			</div>
 
-			<div class="p-t-30">
-				<h4 class="product-detail-name m-text16 p-b-13">
+			<div class="">
+				<h4 class="product-detail-name m-text16">
 					{{Refaccion.datos.Producto}}
 				</h4>
 
@@ -82,7 +82,7 @@
 								
 								<button class="agregarmas__botones"
 									ng-click="btndisminuir()">
-									<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
+									<i class="fa fa-minus" aria-hidden="true"></i>
 								</button>
 
 								<div class="agregarmas__contador num-product center--text">
@@ -91,7 +91,7 @@
 
 								<button class="agregarmas__botones"
 									ng-click="btnaumentar();">
-									<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
+									<i class="fa fa-plus" aria-hidden="true"></i>
 								</button>
 							</div>
 
@@ -128,7 +128,7 @@
 					<p><strong>{{Refaccion.datos.Anio}}</strong></p>
 				</div>
 
-				<div class="p-b-45" ng-show="Refaccion.datos.Enviogratis">
+				<div ng-show="Refaccion.datos.Enviogratis">
 					<div class="enviogratis">
 						<img src="/images/icons/Icono-camion.png" alt="" >
 						<p class="text-danger"> <strong>Envío Gratis a todo el país.</strong> </p> 
@@ -138,11 +138,11 @@
 				<div class="wrap-dropdown-content active-dropdown-content descripcion__texto">
 					<h5 class="js-toggle-dropdown-content flex-sb-m cs-pointer m-text19 color0-hov trans-0-4">
 						Descripci&oacute;n
-						<i class="down-mark fs-12 color1 fa fa-minus dis-none" aria-hidden="true"></i>
-						<i class="up-mark fs-12 color1 fa fa-plus" aria-hidden="true"></i>
+						<i class="down-mark color1 fa fa-minus dis-none" aria-hidden="true"></i>
+						<i class="up-mark color1 fa fa-plus" aria-hidden="true"></i>
 					</h5>
 
-					<div class="dropdown-content dis-none p-t-15 p-b-23">
+					<div class="dropdown-content dis-none">
 						<p class="s-text8">
 							{{Refaccion.datos.Descripcion}}
 						</p>
@@ -152,55 +152,55 @@
 				
 			</div>
 		</div>
-	</div>
 
-	<!-- Relate Product -->
-	<section class="contenedor bgwhite p-t-45 p-b-138">
-		<div class="contenedor-contenido">
-			<div class="sec-title p-b-60">
-				<h3 class="m-text5 t-center">
-					Productos Relacionados
-				</h3>
-			</div>
+		<!-- Relate Product -->
+		<section class="contenedor productos__relacionados">
+			<div class="contenedor-contenido">
+				<div class="sec-title">
+					<h3 class="m-text5 t-center">
+						Productos Relacionados
+					</h3>
+				</div>
 
-			<div class="wrap-slick2">
-				<div class="slick2">
-					<div class="enlace" ng-repeat="producto in productos">
-						<div class="block2 block2__contenedor" ng-click="RefaccionDetalles(producto._id)">
-							<div class="block2-img wrap-pic-w of-hidden pos-relative cursorpnt" ng-style="{'background-color': producto.color}" ng-class="{
-								'ribboagotado': producto.agotado ,
-								'ribbonnuevo': producto.RefaccionNueva==1,
-								'ribbonoferta': producto.RefaccionOferta==1,
-								'pos-relative': !producto.agotado || producto.RefaccionNueva==0
+				<div class="wrap-slick2">
+					<div class="slick2">
+						<div class="enlace" ng-repeat="producto in productos">
+							<div class="block2 block2__contenedor" ng-click="RefaccionDetalles(producto._id)">
+								<div class="block2-img wrap-pic-w of-hidden pos-relative cursorpnt" ng-style="{'background-color': producto.color}" ng-class="{
+									'ribboagotado': producto.agotado ,
+									'ribbonnuevo': producto.RefaccionNueva==1,
+									'ribbonoferta': producto.RefaccionOferta==1,
+									'pos-relative': !producto.agotado || producto.RefaccionNueva==0
 
-								}">
-								<img ng-src="{{producto.imagen? 'images/refacciones/motor.webp':'images/refacciones/'+producto._id+'.webp'}}" alt="IMG-PRODUCT">
+									}">
+									<img ng-src="{{producto.imagen? 'images/refacciones/motor.webp':'images/refacciones/'+producto._id+'.webp'}}" alt="IMG-PRODUCT">
 
-							</div>
-							<div class="block2-txt p-t-20">
-								<section class="descripcion-producto">
-									<img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.id_proveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
-									alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}">
-									<p class="block2-name dis-block s-text3 p-b-5">
-										{{producto.Producto}}
-									</p>
-									
-								</section>
-								
+								</div>
+								<div class="block2-txt">
+									<section class="descripcion-producto">
+										<img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.id_proveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
+										alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}">
+										<p class="block2-name dis-block s-text3">
+											{{producto.Producto}}
+										</p>
 
-								<span class="block2-price m-text6 p-r-5 p-t-5 text-white text-center">
-									<h3 class="precio">{{producto.Precio1 | currency}}</h3>
-								</span>
-								<div class="enviogratis"  ng-show="producto.Enviogratis">
-									<img src="/images/icons/Icono-camion.png" alt="">
-									<p > <strong>Envío Gratis </strong> </p> 
+									</section>
+
+
+									<span class="block2-price m-text6 text-white text-center">
+										<h3 class="precio">{{producto.Precio1 | currency}}</h3>
+									</span>
+									<div class="enviogratis"  ng-show="producto.Enviogratis">
+										<img src="/images/icons/Icono-camion.png" alt="">
+										<p > <strong>Envío Gratis </strong> </p> 
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+		</section>
 
-		</div>
-	</section>
+	</div>
 </div>

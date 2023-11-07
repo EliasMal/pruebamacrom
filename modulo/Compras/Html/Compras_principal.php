@@ -58,13 +58,13 @@
 											<div class="agregarmas no-overflow">
 								
 												<button class="agregarmas__botones" ng-click="btnQuitar(product)">
-													<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
+													<i class="fa fa-minus" aria-hidden="true"></i>
 												</button>
 												<div class="agregarmas__contador num-product center--text">
 													<span >{{product.Cantidad}}</span>
 												</div>
 												<button class="agregarmas__botones" ng-click="btnAgregar(product)">
-													<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
+													<i class="fa fa-plus" aria-hidden="true"></i>
 												</button>
 
 											</div>
@@ -166,12 +166,12 @@
 								</div>	
 
 								<button class="btn btn-danger bg9 form-control pagar--button" id="btnfacomp" ng-click="btnPagar()" ng-show="subtotal() > 0"> {{session.autentificacion==1? 'Pagar':'Inicia Session'}}</button>
-								<p class="fs-12 m-t-10" ng-show="session.autentificacion==1">
+								<p ng-show="session.autentificacion==1">
 									<label class="checkbox ">
 										<input type="checkbox" name="aviso" id="aviso" ng-model="Costumer.aviso" required>
 										<span class="check"></span>
-										<div class="fs-12 p-l-40"> He leido y estoy de acuerdo con las <a href="?mod=Terminos-condiciones" class="text-red fs-12">condiciones generales</a> 
-												y el <a href="?mod=aviso-de-privacidad" class="text-red fs-12"> aviso de privacidad</a>
+										<div class="p-l-40"> He leido y estoy de acuerdo con las <a href="?mod=Terminos-condiciones" class="text-red">condiciones generales</a> 
+												y el <a href="?mod=aviso-de-privacidad" class="text-red"> aviso de privacidad</a>
 										</div>
 									</label>
 								</p>
@@ -213,7 +213,7 @@
 						<div id="ventanaModal0" class="modal" ng-controller="ProfileCtrl" ng-init="pag='Direcciones_edit'">
 							<div class="ventanaModal__contenido">
 								<span class="cerrar0 enlace closem">&times;</span>
-								<h2 class="text-center text-white p-t-10 bg9 p-b-10">Editar dirección de envío</h2>
+								<h2 class="text-center text-white bg9">Editar dirección de envío</h2>
 
 								<div class="ventanaModal__contenido--agregar">
 									<div class="ventanaModal__contenido--dato">

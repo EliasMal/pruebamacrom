@@ -26,30 +26,30 @@
 				<div class="contactanos__contenido--contacto">
 					<div class="row" ng-show="msgContacto">
 						<div class="col-md-12">
-								<h4 class="m-text26 p-b-36 p-t-15">
+								<h4 class="m-text26">
 										Mensaje Recibido
 								</h4>
 							Gracias por ponerte en contacto con nosotros en breve un agente se comunicara contigo.
 						</div>
 					</div>
 					<form class="leave-comment" ng-submit="enviarContacto()" ng-hide="msgContacto">
-						<h4 class="m-text26 p-b-36 p-t-15">
+						<h4 class="m-text26">
 							Env&iacute;anos tu mensaje
 						</h4>
 
-						<div class="bo4 of-hidden size15 m-b-20">
-							<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="name" placeholder="Nombre Completo" ng-model="Contacto.nombre">
+						<div class="bo4 of-hidden size15">
+							<input class="sizefull s-text7" type="text" name="name" placeholder="Nombre Completo" ng-model="Contacto.nombre">
 						</div>
 
-						<div class="bo4 of-hidden size15 m-b-20">
-							<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="phone-number" placeholder="Número de teléfono" ng-model="Contacto.telefono">
+						<div class="bo4 of-hidden size15">
+							<input class="sizefull s-text7" type="text" name="phone-number" placeholder="Número de teléfono" ng-model="Contacto.telefono">
 						</div>
 
-						<div class="bo4 of-hidden size15 m-b-20">
-							<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="email" placeholder="Correo Electrónico" ng-model="Contacto.email">
+						<div class="bo4 of-hidden size15">
+							<input class="sizefull s-text7" type="text" name="email" placeholder="Correo Electrónico" ng-model="Contacto.email">
 						</div>
 
-						<textarea class="dis-block s-text7 size20 bo4 p-l-22 p-r-22 p-t-13 m-b-20" name="message" placeholder="Escribe tu mensaje" ng-model="Contacto.mensaje"></textarea>
+						<textarea class="dis-block s-text7 size20 bo4" name="message" placeholder="Escribe tu mensaje" ng-model="Contacto.mensaje"></textarea>
                                                 
                         <div class="g-recaptcha" data-sitekey="6Lfp3qEkAAAAAA5HOaCui7LjBlJhF4YFM0vIRBpH" data-callback="correctCaptcha"></div>
 

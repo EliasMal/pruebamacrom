@@ -17,10 +17,9 @@
 			<div class="macrom__contenedor--categorias">
 				<div class="container">
 					<div class="row rowrap">
-									<!--m-l-r-auto-->
-										<div class="categoria__cat" ng-repeat="categoria in Data.Categorias">
+						<div class="categoria__cat" ng-repeat="categoria in Data.Categorias">
 							<!-- block1 -->
-							<div class="block1 hov-img-zoom pos-relative m-b-30">
+							<div class="block1 hov-img-zoom pos-relative m-b-20">
 													<a href="?mod=catalogo&cat={{categoria._id}}">
 														<img ng-src="{{getImagen(categoria)}}" alt="IMG-BENNER" class="filcatego">
 													</a>
@@ -57,7 +56,7 @@
 							<!-- Mas vendidos -->
 							<div class="contenedor__nuestrosproductos--masvendidos" id="masvendidos">
 								<div class="nuestrosproductos__masvendidos">
-									<div class="enlace" ng-repeat="producto in Data.masVendidos">
+									<div class="enlace home__pr" ng-repeat="producto in Data.masVendidos">
 										<!-- Block2 -->
 										<div class="block2" ng-click="RefaccionDetalles(producto._id)">
 											<div class="block2-img wrap-pic-w of-hidden cursorpnt" 
@@ -71,17 +70,17 @@
 
 											</div>
 
-											<div class="block2-txt p-t-20">
+											<div class="block2-txt">
 												<section class="descripcion-producto">
 													<img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.idProveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
 													alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}">
-													<p class="block2-name dis-block s-text3 p-b-5">
+													<p class="block2-name dis-block s-text3">
 														{{producto.Producto}}
 													</p>
 													
 												</section>
 
-												<span class="block2-price m-text6 p-r-5 p-t-5 text-white text-center">
+												<span class="block2-price m-text6 text-white text-center">
 													<h3 class="precio">{{producto.Precio1 | currency}}</h3>
 												</span>
 												
@@ -98,7 +97,7 @@
 							<!-- Liquidaciones -->
 							<div class="contenedor__nuestrosproductos--liquidacion" id="liquidacion">
 								<div class="nuestrosproductos__liquidacion">
-									<div class="enlace" ng-repeat="producto in Data.liquidacion">
+									<div class="enlace home__pr" ng-repeat="producto in Data.liquidacion">
 										<!-- Block2 -->
 										<div class="block2" ng-click="RefaccionDetalles(producto._id)">
 											<div class="block2-img wrap-pic-w of-hidden cursorpnt" 
@@ -111,16 +110,16 @@
 												<img ng-src="{{producto.imagen? 'images/refacciones/' + producto._id + '.webp':'images/refacciones/' + producto._id + '.webp'}}" loading="lazy" alt="IMG-PRODUCT">
 											</div>
 
-											<div class="block2-txt p-t-20">
+											<div class="block2-txt">
 												<section class="descripcion-producto">
 													<img loading="lazy" ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.idProveedor + '.webp':'images/Marcasrefacciones/boxed-bg.webp'}}" 
 													alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}">
-													<p class="block2-name dis-block s-text3 p-b-5">
+													<p class="block2-name dis-block s-text3">
 														{{producto.Producto}}
 													</p>
 													
 												</section>
-												<span class="block2-price m-text6 p-r-5 p-t-5 text-white text-center">
+												<span class="block2-price m-text6 text-white text-center">
 													<h3 class="precio">{{producto.Precio1 | currency}}</h3>
 												</span>
 												<div class="enviogratis"  ng-show="producto.Enviogratis">

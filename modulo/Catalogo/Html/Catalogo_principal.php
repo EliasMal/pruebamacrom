@@ -9,7 +9,7 @@
 		</section>
 	</header>
 	<!-- Content page -->
-	<main class="bgblack p-b-65">
+	<main class="bgblack main__catalogo--principal">
 		<div class="container-fluid">
 			<div class="contenedor__catalogo">
 				<div class="catalogo">
@@ -58,12 +58,12 @@
 						</div>
 
 						<div class="search-product pos-relative catalogo__filtrado--buscador form-control">
-							<input class="p-l-23 p-r-50" type="text" name="search-product"
+							<input type="text" name="search-product"
 								placeholder="Buscar Producto..." ng-model="refaccion.producto"
 								ng-model-options="{debounce:500}" ng-change="getRefaccion()">
 
 							<button class="ab-r-m">
-								<i class="fs-12 fa fa-search" aria-hidden="true"></i>
+								<i class="fa fa-search" aria-hidden="true"></i>
 							</button>
 						</div>
 
@@ -73,12 +73,12 @@
 
 				<div class="">
 					<!--  -->
-					<div class="flex-sb-m flex-w p-b-35">
+					<div class="flex-sb-m flex-w Trefacciones__cont">
 						<div class="flex-w">
 
 						</div>
 
-						<span class="s-text8 p-t-5 p-b-5 text-white">
+						<span class="s-text8 text-white">
 							Refacciones Encontradas: {{Trefacciones}} resultados
 						</span>
 					</div>
@@ -86,7 +86,7 @@
 					<!-- Product -->
 					<div class="row refacciones__productos">
 
-						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 p-b-50 half-w" ng-repeat="producto in Refacciones">
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-3 half-w producto__contenedor" ng-repeat="producto in Refacciones">
 							<!-- Block2 -->
 							<div class="block2 ">
 
@@ -105,17 +105,17 @@
 
 								</div>
 								
-								<div class="block2-txt p-t-20">
+								<div class="block2-txt">
 
 									<section class="descripcion-producto">
 										<img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.id_proveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
 										alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}">
-										<p class="block2-name dis-block s-text3 p-b-5 text-white">
+										<p class="block2-name dis-block s-text3 text-white">
 											{{producto.Producto}}
 										</p>
 									</section>
 									
-									<span class="block2-price m-text6 p-r-5 p-t-5 text-white text-center">
+									<span class="block2-price m-text6 text-white text-center">
 										<h3 ng-click="RefaccionDetalles(producto._id)" class="precio enlace">{{producto.RefaccionOferta? producto.Precio2:producto.Precio1 | currency}}</h3>
 									</span>
 
@@ -132,11 +132,16 @@
 
 					<script type="text/javascript">function toTop() {window.scrollTo(0, 0)} </script>
 					<!-- Pagination -->
-					<div class="pagination p-t-26">
+					<!-- <div style="display:grid;justify-items: center;grid-template-columns:repeat(2,1fr);">
+						<span class="bg9 center--text" style="width:15rem;cursor:pointer;color:var(--blanco);" ng-click="mostrarmas()">Mostrar 20 más</span>
+						<span class="bg9 center--text" style="width:15rem;cursor:pointer;color:var(--blanco);" ng-click="mostrarmenos()">Mostrar 20 menos</span>
+					</div> -->
+
+					<div class="pagination">
 						<a onClick="toTop()" class="item-pagination flex-c-m trans-0-4 {{currentPage == (pag.no - 1)? 'active-pagination':''}}"
 							ng-repeat='pag in pages' ng-click='setPage(pag.no)'>{{pag.no}}</a>
-
 					</div>
+					
 				</div>
 			</div>
 		</div>

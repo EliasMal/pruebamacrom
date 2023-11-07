@@ -309,8 +309,33 @@ function catalogosCtrl ($scope,$http){
     obj.setPage = function(index) {
         obj.currentPage = index - 1;
         obj.configPages();
-        obj.getPaginador(obj.currentPage*obj.pageSize, obj.pageSize)
-    };
+        obj.getPaginador(obj.currentPage*obj.pageSize, obj.pageSize);
+        localStorage.setItem("LastPage",index);
+    }
+
+    // obj.mostrarmas = ()=>{
+    //     obj.pageSize += 20;
+    //     console.log(obj.pageSize);
+    //     obj.getCategorias();
+    // }
+    // obj.mostrarmenos = ()=>{
+    //     if(obj.pageSize>20){
+    //         obj.pageSize -= 20;
+    //         console.log(obj.pageSize);
+    //         obj.getCategorias();
+    //     }
+    // }
+    
+    // obj.pagesizeDefault = ()=>{
+    //     obj.pageSize=20;
+    //     console.log(obj.pageSize);
+    //     obj.getCategorias();
+    // }
+    
+    if(parseInt(localStorage.getItem("LastPage")) > 0){
+        console.log("Entro a la condición");
+        obj.setPage();
+    }
     
     obj.RefaccionDetalles = (_id)=>{
         window.open("?mod=catalogo&opc=detalles&_id="+_id,"_self");
@@ -355,7 +380,7 @@ function catalogosCtrl ($scope,$http){
     angular.element(document).ready(function () {
         obj.getCategorias();
         //obj.getMarcas();
-        obj.getBanners({opc:"get", Categoria: "Catalogos", Estatus:1});    
+        obj.getBanners({opc:"get", Categoria: "Catalogos", Estatus:1});
     });
     
 
