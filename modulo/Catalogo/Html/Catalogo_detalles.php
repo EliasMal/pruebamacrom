@@ -28,7 +28,7 @@
 					<div class="detalles__visual--opciones">
 						<div ng-repeat="gal in Refaccion.galeria" data-thumb="{{getGaleria(gal._id)}}">
 							<div class="detalles__visual--miniatura">
-								<img src="{{getGaleria(gal._id)+'.webp'}}" alt="miniatura">
+								<img src="{{getGaleria(gal._id)+'.webp'}}" alt="miniatura" class="secundaria">
 							</div>
 						</div>
 						
