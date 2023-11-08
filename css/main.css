@@ -185,7 +185,7 @@ img{
 .main__theme--dark #frmcompra .ventanaModal__contenido .ventanaModal__contenido--dato label, .main__theme--dark #frmcompra .ventanaModal__contenido--boton button,
 .main__theme--dark .contactanos__contenido--contacto input, .main__theme--dark .contactanos__contenido--contacto textarea, .perfil__theme--dark a, .perfil__theme--dark h1, .perfil__theme--dark label,
 .perfil__theme--dark .title-header h2, .perfil__theme--dark .box-direcciones i, .perfil__theme--dark .title-header h5, .perfil__theme--dark .box-pedidos .estatus, .perfil__theme--dark .pedidos__datos td p,
-.perfil__theme--dark .pedidos__datos td, .perfil__theme--dark .pedidos__datos th{
+.perfil__theme--dark .pedidos__datos td, .perfil__theme--dark .pedidos__datos th, .main__theme--dark .pagos__sitio-seguro--info b, .main__theme--dark .p-l-40, .main__theme--dark small, .main__theme--dark .descripcion__texto h5{
   color: var(--blanco) !important;
 }
 .main__theme--dark .categoria__cat img, .main__theme--dark #frmcompra .cliente__opciones img, .main__theme--dark #frmcompra .ventanaModal__contenido--opciones button img{
@@ -208,8 +208,8 @@ img{
 .main__theme--dark #frmcompra .cliente__datos, .main__theme--dark #frmcompra .ventanaModal__contenido--datos{
   border: 1px solid var(--blanco);
 }
-.main__theme--dark .terminos h5{
-  color: var(--primario);
+.main__theme--dark .terminos h5, .main__theme--dark .p-l-40 a{
+  color: var(--primario) !important;
 }
 .main__theme--dark .contactanos__contenido--contacto input, .main__theme--dark .contactanos__contenido--contacto textarea, .perfil__theme--dark .list-group a, .perfil__theme--dark .pedidos__datos td,
 .perfil__theme--dark .pedidos__datos th, .main__theme--dark #frmcompra .ventanaModal__contenido{
@@ -1346,7 +1346,6 @@ img{
   }
 .detalles__visual--miniatura:hover{
   border:3px solid var(--primario);
-  width: 15rem;
 }
 .enviogratis__texto{
   align-items: center;
