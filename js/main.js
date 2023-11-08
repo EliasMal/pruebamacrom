@@ -7,15 +7,15 @@
     $(".animsition").animsition({
         inClass: 'fade-in',
         outClass: 'fade-out',
-        inDuration: 1500,
-        outDuration: 800,
+        inDuration: 1000,
+        outDuration: 500,
         linkElement: '.animsition-link',
         loading: true,
         loadingParentElement: 'html',
         loadingClass: 'animsition-loading-1',
         loadingInner: '<div data-loader="ball-scale"></div>',
         timeout: false,
-        timeoutCountdown: 5000,
+        timeoutCountdown: 2000,
         onLoadEvent: true,
         browser: [ 'animation-duration', '-webkit-animation-duration'],
         overlay : false,
@@ -88,6 +88,16 @@
                 }
         });
     }
+
+    const hero = document.querySelector('.hero');
+    function activate(e) {
+      if (e.target.matches('.hero') || !e.target.matches('img')) return;
+      [hero.src, e.target.src] = [e.target.src, hero.src];
+    }
+    
+    window.addEventListener('click',activate,false);
+
+
 
     $(".js-show-header-dropdown, .header-dropdown").click(function(event){
         event.stopPropagation();
@@ -224,28 +234,6 @@
         }
     });
 
-    ///*** Prueba cambio de imagen con click ***/
-    $(document).ready(function() {
-		$(".secundaria").click(function(){
-			$("#principal").attr("src", $(this).attr("src"));
-		 });
-	});
-
-    /*[ +/- num product ]
-    ===========================================================*/
-    $('.btn-num-product-down').on('click', function(e){
-        e.preventDefault();
-        var numProduct = Number($(this).next().val());
-        if(numProduct > 1) $(this).next().val(numProduct - 1);
-    });
-
-    $('.btn-num-product-up').on('click', function(e){
-        e.preventDefault();
-        var numProduct = Number($(this).prev().val());
-        $(this).prev().val(numProduct + 1);
-    });
-
-
     /*[ Show content Product detail ]
     ===========================================================*/
     $('.active-dropdown-content .js-toggle-dropdown-content').toggleClass('show-dropdown-content');
@@ -255,7 +243,6 @@
         $(this).toggleClass('show-dropdown-content');
         $(this).parent().find('.dropdown-content').slideToggle('fast');
     });
-
 
     /*[ Play video 01]
     ===========================================================*/

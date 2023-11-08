@@ -37,7 +37,6 @@ function catalogosCtrl ($scope,$http){
     obj.pageSize = 20;
     obj.Trefacciones = 0;
     
-    
     obj.eachRefacciones = (array)=>{
         array.forEach(e=>{
             obj.getSeicom(e.Clave).then(token => {
@@ -104,12 +103,10 @@ function catalogosCtrl ($scope,$http){
         } catch (error) {
             toastr.error(error);
         }
-        
             
     }
     
     obj.getVehiculos = async () => {
-        //obj.refaccion.categoria = "";
         obj.refaccion.tipo="Vehiculos";
         obj.refaccion.vehiculo="";
         obj.refaccion.anio="";
@@ -213,7 +210,6 @@ function catalogosCtrl ($scope,$http){
         
     }
     
-        
     obj.getRefaccion = async (x=0, y=obj.pageSize)=>{
         
         obj.refaccion.tipo = "Refaccion";
@@ -313,25 +309,6 @@ function catalogosCtrl ($scope,$http){
         localStorage.setItem("LastPage",index);
     }
 
-    // obj.mostrarmas = ()=>{
-    //     obj.pageSize += 20;
-    //     console.log(obj.pageSize);
-    //     obj.getCategorias();
-    // }
-    // obj.mostrarmenos = ()=>{
-    //     if(obj.pageSize>20){
-    //         obj.pageSize -= 20;
-    //         console.log(obj.pageSize);
-    //         obj.getCategorias();
-    //     }
-    // }
-    
-    // obj.pagesizeDefault = ()=>{
-    //     obj.pageSize=20;
-    //     console.log(obj.pageSize);
-    //     obj.getCategorias();
-    // }
-    
     if(parseInt(localStorage.getItem("LastPage")) > 0){
         console.log("Entro a la condición");
         obj.setPage();
@@ -379,11 +356,9 @@ function catalogosCtrl ($scope,$http){
 
     angular.element(document).ready(function () {
         obj.getCategorias();
-        //obj.getMarcas();
         obj.getBanners({opc:"get", Categoria: "Catalogos", Estatus:1});
     });
     
-
 
 }
 
@@ -391,9 +366,7 @@ function catalogosDetallesCtrl($scope, $http){
 
    var obj = $scope;
    obj.session = $_SESSION;
-   
    obj.btnEnabled = obj.session.autentificacion == undefined? true:false;
-  
    obj.Refaccion={
        id:0,
        opc: "OneRefaccion",
@@ -402,14 +375,12 @@ function catalogosDetallesCtrl($scope, $http){
        Existencias: 0,
        cantidad : 1,
        precio:0
-       
    };
-       obj.RefaccionDetalles = (_id)=>{
+    obj.RefaccionDetalles = (_id)=>{
         window.open("?mod=catalogo&opc=detalles&_id="+_id,"_self");
     }
    
    obj.Activa = false;
-   
    obj.trunc = (x, posiciones = 0)=>{
         var s = x.toString()
         var l = s.length
@@ -417,7 +388,7 @@ function catalogosDetallesCtrl($scope, $http){
         var numStr = decimalLength > 0? s.substr(0, decimalLength + posiciones): s
         return Number(numStr)
    }
-      
+
    obj.getSeicom = async (clave)=>{
         try {
             const result = await $http({
@@ -534,10 +505,6 @@ function catalogosDetallesCtrl($scope, $http){
         
     }
 
-    obj.btnInciarSession = ()=>{
-        location.href="?mod=login";
-    }
-    
     obj.btnDetallesRelacionados = (id)=>{
         window.open("?mod=catalogo&opc=detalles&_id="+id,"_self");
     }

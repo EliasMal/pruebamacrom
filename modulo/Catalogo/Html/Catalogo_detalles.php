@@ -28,8 +28,7 @@
 					<div class="detalles__visual--opciones">
 						<div ng-repeat="gal in Refaccion.galeria" data-thumb="{{getGaleria(gal._id)}}">
 							<div class="detalles__visual--miniatura">
-								<img src="{{getGaleria(gal._id)+'.webp'}}" alt="miniatura" class="secundaria">
-		
+								<img src="{{getGaleria(gal._id)+'.webp'}}" alt="miniatura">
 							</div>
 						</div>
 						
@@ -38,7 +37,7 @@
 					<div class="">
 						<div class="" data-thumb="{{getImagen(Refaccion.datos.imagen, Refaccion.datos._id)}}">
 							<div class="detalles__visual--producto">
-								<img src="{{getImagen(Refaccion.datos.imagen, Refaccion.datos._id)}}" alt="IMG-PRODUCT" id="principal">
+								<img src="{{getImagen(Refaccion.datos.imagen, Refaccion.datos._id)}}" alt="IMG-PRODUCT" class="hero">
 							</div>
 						</div>
 					</div>
@@ -71,7 +70,7 @@
 							<div class="btn-addcart-product-detail iniciarsesion__contenedor">
 								<!-- Button -->
 								<button class="btn btn-danger iniciarsesion__contenedor--boton form-control"
-									ng-show="btnEnabled" ng-click="btnInciarSession()">
+									ng-show="btnEnabled" onclick="location.href='?mod=login'">
 									Iniciar sesion
 								</button>
 							</div>
