@@ -105,7 +105,7 @@ function homeCtrl ($scope,$http){
 
 
     obj.getImagen = (e)=>{
-        return "images/Categorias/"+e._id+".webp";
+        return "images/Categorias/"+e._id+".png";
     }
     
     obj.RefaccionDetalles = (_id)=>{

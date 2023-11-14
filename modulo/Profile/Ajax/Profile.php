@@ -64,8 +64,10 @@ class Profile{
         $id = $this->conn->query($sql);
         if($this->conn->count_rows() > 0){
             while($row = $this->conn->fetch($id)){
-                $sql = "UPDATE Cdirecciones SET Predeterminado = 0 where _id = {$row["_id"]}";
-                $this->conn->query($sql);
+                if($row["_id_cliente"] == $_SESSION["iduser"]){
+                    $sql = "UPDATE Cdirecciones SET Predeterminado = 0 where _id = {$row["_id"]}";
+                    $this->conn->query($sql);
+                }
             }
             
         }
@@ -185,12 +187,16 @@ class Profile{
     }
 
     private function get_datosFactuDeter(){
-        $sql = "Select _id from Facturacion where Predeterminado = 1";
+        $sql = "SELECT * FROM Facturacion where Predeterminado = 1";
         $id = $this->conn->query($sql);
         if($this->conn->count_rows() > 0){
-            $row = $this->conn->fetch($id);
-            $sql = "UPDATE Facturacion SET Predeterminado = 0 where _id = {$row["_id"]}";
-            $this->conn->query($sql);
+            while($row = $this->conn->fetch($id)){
+                if($row["_id_cliente"] == $_SESSION["iduser"]){
+                    $sql = "UPDATE Facturacion SET Predeterminado = 0 where _id = {$row["_id"]}";
+                    $this->conn->query($sql);
+                }
+            }
+            
         }
     }
 

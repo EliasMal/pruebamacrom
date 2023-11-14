@@ -130,6 +130,7 @@ obj.cupon = () =>{ //prueba cupon local
     }
 
     //Abrir y cerrar modales
+    var noflow = document.querySelector("#BodyDark");
     document.querySelectorAll(".click").forEach(el => {
         el.addEventListener("click", e => {
           const id = e.target.getAttribute("id");
@@ -140,9 +141,11 @@ obj.cupon = () =>{ //prueba cupon local
             cerrar[m] = document.getElementsByClassName("cerrar"+m)[0];
             if(m == id_m){
                 modales[m].style.display="block";
+                noflow.classList.add("no-overflow");
             }
             if(e.target == cerrar[m]){
                 modales[m].style.display='none';
+                noflow.classList.remove("no-overflow");
             }
 
           }
@@ -157,6 +160,7 @@ obj.cupon = () =>{ //prueba cupon local
             cerrar[m] = document.getElementsByClassName("cerrar"+m)[0];
             if(e.target == cerrar[m]){
                 modales[m].style.display='none';
+                noflow.classList.remove("no-overflow");
             }
           }
         });
@@ -169,6 +173,7 @@ obj.cupon = () =>{ //prueba cupon local
 
             if(event.target == modales[m]){
                 modales[m].style.display ="none";
+                noflow.classList.remove("no-overflow");
             }
         }
     });
@@ -241,11 +246,6 @@ obj.cupon = () =>{ //prueba cupon local
         }else{
             facturaNo.style.display="flex";
         }  
-
-
-        /*if (obj.Costumer.facturacion == "") {
-            dfacturanota.style.display="block !important";
-        }*/
 
           obj.facturaNo = ()=>{
             obj.Costumer.facturacion = 0;
@@ -354,13 +354,20 @@ obj.cupon = () =>{ //prueba cupon local
     }
 
     obj.btnEliminarRefaccion = (Refaccion)=>{
-        if(confirm("¿Esta seguro de eliminar la refaccion del carrito?")){
-            Refaccion.erase = 1;
-            Refaccion.borrar = Refaccion.Clave;
-            Refaccion.n = $_SESSION["CarritoPrueba"]["length"];
+        Swal.fire({
+            title: "¿Deseas Eliminar la Refaccion del carrito?",
+            showCancelButton: true,
+            confirmButtonText: "Eliminar",
+          }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire("Eliminado!", "", "Correctamente");
+                Refaccion.erase = 1;
+                Refaccion.borrar = Refaccion.Clave;
+                Refaccion.n = $_SESSION["CarritoPrueba"]["length"];
+                obj.actualizarSession(Refaccion,true);
 
-            obj.actualizarSession(Refaccion,true);
-        }
+            }
+          });
     }
 
     obj.getMonedero = async (metodo, params)=>{
@@ -592,9 +599,19 @@ function ProfileCtrl($scope, $http){
         }
             if (contador == 7){
                 alertvalid.style.display="none";
-                if(confirm("¿Estas seguro de guardar el domicilio?")){
-                obj.SendDirecciones('add', obj.dataDireccion);
-                }
+                Swal.fire({
+                    title: "¿Deseas Guardar Domicilio?",
+                    showDenyButton: true,
+                    confirmButtonText: "Guardar",
+                    denyButtonText: "Cancelar"
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({title:"Guardado!",icon: "success"});
+                        obj.SendDirecciones('add', obj.dataDireccion);
+                    }else if (result.isDenied) {
+                        Swal.fire("Domicilio no guardado", "", "error");
+                      }
+                  });
             }
     } //Termina Verificador de Agregar Nueva Dirección.
     
@@ -629,9 +646,19 @@ function ProfileCtrl($scope, $http){
         }
             if (contador == 6){
                 alertvalid1.style.display="none";
-                if(confirm("¿Estas seguro de dar de alta estos datos?")){
-                    obj.sendFacturacion('add', obj.dataFacturacion)
-                }
+                Swal.fire({
+                    title: "¿Deseas Guardar Estos Datos?",
+                    showDenyButton: true,
+                    confirmButtonText: "Guardar",
+                    denyButtonText: "Cancelar"
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({title:"Datos Guardados!",icon: "success"});
+                        obj.sendFacturacion('add', obj.dataFacturacion)
+                    }else if (result.isDenied) {
+                        Swal.fire("Los Datos No Fueron Guardados!", "", "error");
+                      }
+                  });
             }
 
     }//Termina Verificador de Agregar nueva Factura.
@@ -901,16 +928,33 @@ function ProfileCtrl($scope, $http){
     }
     
     obj.btnGuardarDireccion = (opc) =>{
-        if(confirm("¿Estas seguro de guardar el domicilio?")){
-            obj.SendDirecciones(opc, obj.dataDireccion)
-        }
+        Swal.fire({
+            title: "¿Deseas Guardar Domicilio?",
+            showDenyButton: true,
+            confirmButtonText: "Guardar",
+            denyButtonText: "Cancelar"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({title:"Guardado!",icon: "success"});
+                obj.SendDirecciones(opc, obj.dataDireccion)
+            }else if (result.isDenied) {
+                Swal.fire("Domicilio no guardado", "", "error");
+              }
+          });
     }
 
     obj.btndescartarDomicilio = (id) =>{
-        if(confirm("¿Estas seguro de Eliminar el domicilio?")){
-            obj.SendDirecciones("delete", {id:id});
-            location.reload();
-        }
+        Swal.fire({
+            title: "¿Deseas Eliminar Domicilio?",
+            showDenyButton: true,
+            confirmButtonText: "Eliminar",
+            denyButtonText: "Cancelar"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({title:"Eliminado!",icon: "success"});
+                obj.SendDirecciones("delete", {id:id})
+            }
+          });
     }
 
     obj.btneditDomicilio = (id) =>{
@@ -988,30 +1032,57 @@ function ProfileCtrl($scope, $http){
     }
 
     
-
     obj.btnGuardarnuevosdatos = (opc) => {
-        if(confirm("¿Estas seguro de dar de alta estos datos?")){
-            obj.sendFacturacion(opc, obj.dataFacturacion)
-        }
+        Swal.fire({
+            title: "¿Deseas Guardar Estos Datos?",
+            showDenyButton: true,
+            confirmButtonText: "Guardar",
+            denyButtonText: "Cancelar"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({title:"Guardado!",icon: "success"});
+                obj.sendFacturacion(opc, obj.dataFacturacion)
+            }else if (result.isDenied) {
+                Swal.fire("Datos Facturación no guardados", "", "error");
+              }
+          });
     }
 
-
     obj.btnEliminardatosfacturacion = (id, opc) => {
-        if(confirm("¿Estas seguro de eliminar los datos?")){
-            obj.sendFacturacion(opc, {_id:id})
-            location.reload();
-        }
+        Swal.fire({
+            title: "¿Deseas Eliminar Estos Datos?",
+            showDenyButton: true,
+            confirmButtonText: "Eliminar",
+            denyButtonText: "Cancelar"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({title:"Eliminado!",icon: "success"});
+                obj.sendFacturacion(opc, {_id:id})
+                location.reload();
+            }
+          });
     }
 
     obj.btnEditardatosfacturacion = (opc) => {
-        if(confirm("¿Estas seguro de modificar los datos de facturación?")){
-            obj.sendFacturacion(opc, obj.Facturacion.dataFacturacion);
-        }
+        Swal.fire({
+            title: "¿Deseas Guardar Los Cambios en los Datos?",
+            showDenyButton: true,
+            confirmButtonText: "Guardar",
+            denyButtonText: "Cancelar"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({title:"Cambios Guardados!",icon: "success"});
+                obj.sendFacturacion(opc, obj.Facturacion.dataFacturacion);
+            }else if (result.isDenied) {
+                Swal.fire("Cambios No Guardados!", "", "error");
+              }
+          });
     }
+
     obj.btnFacpredetermiando = (id, opc) => {
-            obj.sendFacturacion(opc, {_id: id});
-            obj.Costumer.facturacion = 1;
-            localStorage.setItem("facturaSi", obj.Costumer.facturacion);
+        obj.sendFacturacion(opc, {_id: id});
+        obj.Costumer.facturacion = 1;
+        localStorage.setItem("facturaSi", obj.Costumer.facturacion);
     }
     /* Finaliza modulo de Datos de Facturacion */
 

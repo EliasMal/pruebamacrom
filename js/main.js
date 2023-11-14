@@ -263,4 +263,5 @@
             $('.video-mo-01').css('opacity','1');
         },300);
     });
+
 })(jQuery);

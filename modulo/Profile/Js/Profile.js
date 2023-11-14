@@ -252,20 +252,95 @@ function ProfileCtrl($scope, $http){
 
     /* seccion para modulo Session y seguridad */
     obj.btnGuardarSession = (press) => {
-        if(confirm("Estas seguro de Actualizar los datos")){
-           if(press == 1){
-                obj.sendProfile("profile");
-           }else if(press == 2){
-                if(obj.profile.Nuevapass === obj.profile.Confirmarpass){
-                    obj.msjprofiledisplay =false;
-                    obj.sendProfile("password")
-                }else{
-                    obj.msjprofiledisplay =true;
-                    toastr.error("Las contraseñas no coinciden");
-                }
-           }
-        }
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+              confirmButton: "btn btn-success",
+              cancelButton: "btn btn-danger"
+            },
+            buttonsStyling: false
+          });
+          swalWithBootstrapButtons.fire({
+            title: "¿Guardar Cambios?",
+            text: "¿Deseas guardar los cambios?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Guardar",
+            cancelButtonText: "Cancelar!",
+            reverseButtons: true
+          }).then((result) => {
+            if (result.isConfirmed) {
+              switch(press){
+                case 1:
+                    obj.sendProfile("profile");
+                    obj.ConfirmacionSucces();
+                break;
+                case 2:
+                    if(obj.profile.Nuevapass === obj.profile.Confirmarpass){
+                        obj.msjprofiledisplay =false;
+                        obj.sendProfile("password");
+                        obj.ConfirmacionSucces();
+                    }else{
+                        obj.msjprofiledisplay =true;
+                        toastr.error("Las contraseñas no coinciden");
+                        obj.ConfirmacionError();
+                    }
+                break;
+              }
+            } else if (result.dismiss === Swal.DismissReason.cancel){
+              swalWithBootstrapButtons.fire({
+                title: "Cancelado",
+                text: "No sé realizo ningun cambio.",
+                icon: "error"
+              });
+            }
+          });
+
     }
+    obj.ConfirmacionSucces = () =>{
+        Swal.fire({
+            title: "Exitoso",
+            text: "Se han realizado los cambios.",
+            icon: "success"
+          });
+    }
+    obj.ConfirmacionError = () =>{
+        Swal.fire({
+            title: "Cancelado",
+            text: "No sé realizo ningun cambio.",
+            icon: "error"
+          });
+    }
+
+    obj.btnGuardarDireccion = (opc) =>{
+        Swal.fire({
+            title: "¿Deseas Guardar Domicilio?",
+            showDenyButton: true,
+            confirmButtonText: "Guardar",
+            denyButtonText: "Cancelar"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({title:"Guardado!",icon: "success"});
+                obj.SendDirecciones(opc, obj.dataDireccion)
+            }else if (result.isDenied) {
+                Swal.fire("Domicilio no guardado", "", "error");
+              }
+          });
+    }
+
+    obj.btndescartarDomicilio = (id) =>{
+        Swal.fire({
+            title: "¿Deseas Eliminar Domicilio?",
+            showDenyButton: true,
+            confirmButtonText: "Eliminar",
+            denyButtonText: "Cancelar"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({title:"Eliminado!",icon: "success"});
+                obj.SendDirecciones("delete", {id:id})
+            }
+          });
+    }
+
 
     obj.sendProfile = (opc)=> {
         $http({
@@ -345,18 +420,6 @@ function ProfileCtrl($scope, $http){
             toastr.error("Error: no se realizo la conexion con el servidor");
         });
     }
-    
-    obj.btnGuardarDireccion = (opc) =>{
-        if(confirm("¿Estas seguro de guardar el domicilio?")){
-            obj.SendDirecciones(opc, obj.dataDireccion)
-        }
-    }
-
-    obj.btndescartarDomicilio = (id) =>{
-        if(confirm("¿Estas seguro de Eliminar el domicilio?")){
-            obj.SendDirecciones("delete", {id:id})
-        }
-    }
 
     obj.btneditDomicilio = (id) =>{
         obj.btnMenulinks("Direcciones_edit");
@@ -365,9 +428,17 @@ function ProfileCtrl($scope, $http){
     }
 
     obj.btnPredeterminado = (id) => {
-        if(confirm("¿EStas seguro de Establecer como predterminado este domicilio?")){
-            obj.SendDirecciones("set", {id_domicilio:id, id: localStorage.getItem("id")})
-        }
+        Swal.fire({
+            title: "¿Deseas poner este domicilio como predeterminado?",
+            showDenyButton: true,
+            confirmButtonText: "Predeterminar",
+            denyButtonText: "Cancelar"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({title:"Guardado!",icon: "success"});
+                obj.SendDirecciones("set", {id_domicilio:id, id: localStorage.getItem("id")})
+            }
+          });
     }
 
     /* Termina modulo de direcciones */
@@ -381,7 +452,6 @@ function ProfileCtrl($scope, $http){
     obj.btnEditadatosFacturacion = (id) =>{
         localStorage.setItem("id_rfc",id)
         obj.btnMenulinks('Facturacion_edit');
-        //obj.sendFacturacion(opc, {_id:id})
     }
 
     obj.sendFacturacion = (opc="buscar", data=null ) => {
@@ -434,27 +504,63 @@ function ProfileCtrl($scope, $http){
     
 
     obj.btnGuardarnuevosdatos = (opc) => {
-        if(confirm("¿Estas seguro de dar de alta estos datos?")){
-            obj.sendFacturacion(opc, obj.dataFacturacion)
-        }
+        Swal.fire({
+            title: "¿Deseas Guardar Estos Datos?",
+            showDenyButton: true,
+            confirmButtonText: "Guardar",
+            denyButtonText: "Cancelar"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({title:"Guardado!",icon: "success"});
+                obj.sendFacturacion(opc, obj.dataFacturacion)
+            }else if (result.isDenied) {
+                Swal.fire("Datos Facturación no guardados", "", "error");
+              }
+          });
     }
 
     obj.btnEliminardatosfacturacion = (id, opc) => {
-        if(confirm("¿Estas seguro de eliminar los datos?")){
-            obj.sendFacturacion(opc, {_id:id})
-        }
+        Swal.fire({
+            title: "¿Deseas Eliminar Estos Datos?",
+            showDenyButton: true,
+            confirmButtonText: "Eliminar",
+            denyButtonText: "Cancelar"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({title:"Eliminado!",icon: "success"});
+                obj.sendFacturacion(opc, {_id:id})
+            }
+          });
     }
 
     obj.btnEditardatosfacturacion = (opc) => {
-        if(confirm("¿Estas seguro de modificar los datos de facturación?")){
-            obj.sendFacturacion(opc, obj.Facturacion.dataFacturacion);
-        }
+        Swal.fire({
+            title: "¿Deseas Guardar Los Cambios en los Datos?",
+            showDenyButton: true,
+            confirmButtonText: "Guardar",
+            denyButtonText: "Cancelar"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({title:"Cambios Guardados!",icon: "success"});
+                obj.sendFacturacion(opc, obj.Facturacion.dataFacturacion);
+            }else if (result.isDenied) {
+                Swal.fire("Cambios No Guardados!", "", "error");
+              }
+          });
     }
 
     obj.btnFacpredetermiando = (id, opc) => {
-        if(confirm("¿Estas seguro de activar los datos como predeterminado?")){
-            obj.sendFacturacion(opc, {_id: id});
-        }
+        Swal.fire({
+            title: "¿Deseas Predeterminar Estos Datos?",
+            showDenyButton: true,
+            confirmButtonText: "Predeterminar",
+            denyButtonText: "Cancelar"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({title:"Datos Predeterminados!",icon: "success"});
+                obj.sendFacturacion(opc, {_id: id});
+            }
+          });
     }
     /* Finaliza modulo de Datos de Facturacion */
 

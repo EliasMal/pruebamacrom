@@ -80,12 +80,20 @@ function CabeceraCtrl($scope,$http, $sce,vcRecaptchaService){
     }
     
     obj.btnEliminarRefaccion = (Refaccion)=>{
-        if(confirm("¿Esta seguro de eliminar la refaccion del carrito?")){
-            Refaccion.erase = 1;
-            Refaccion.borrar = Refaccion.Clave;
-            Refaccion.n = $_SESSION["CarritoPrueba"]["length"];
-            obj.actualizarSession(Refaccion,true);
-        }
+        Swal.fire({
+            title: "¿Deseas Eliminar la Refaccion del carrito?",
+            showCancelButton: true,
+            confirmButtonText: "Eliminar",
+          }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire("Eliminado!", "", "Correctamente");
+                Refaccion.erase = 1;
+                Refaccion.borrar = Refaccion.Clave;
+                Refaccion.n = $_SESSION["CarritoPrueba"]["length"];
+                obj.actualizarSession(Refaccion,true);
+
+            }
+          });
     }
     //eliminar refaccion
 

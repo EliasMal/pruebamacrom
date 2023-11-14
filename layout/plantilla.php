@@ -133,7 +133,6 @@
         <script type="text/javascript" src="tv-admin/asset/Js/angular/angular.min.js"></script>
         <script src="tv-admin/asset/Js/angular/angular-datatables.min.js"></script>
         <!--=======================================reCaptchat===============================================-->
-        <script src="https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit" async defer></script>
         <script src="tv-admin/asset/Js/angular/angular-recaptcha.min.js"></script>
         <script type="text/javascript" src="tv-admin/asset/Js/angular/first.js"></script>
         <script type="text/javascript" src="js/Cabecera.js"></script>
@@ -148,22 +147,8 @@
 <!--===============================================================================================-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 <!--===============================================================================================-->
-	<script type="text/javascript" src="vendor/sweetalert/sweetalert.min.js"></script>
-	<script type="text/javascript">
-		$('.block2-btn-addcart').each(function(){
-			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
-			$(this).on('click', function(){
-				swal(nameProduct, "is added to cart !", "success");
-			});
-		});
-
-		$('.block2-btn-addwishlist').each(function(){
-			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
-			$(this).on('click', function(){
-				swal(nameProduct, "is added to wishlist !", "success");
-			});
-		});
-	</script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
         
 <!--===============================================================================================-->
 	<script type="text/javascript" src="vendor/parallax100/parallax100.js"></script>

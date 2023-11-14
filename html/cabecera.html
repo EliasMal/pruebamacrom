@@ -3,30 +3,19 @@
 	<!-- Header -->
 	<header class="header2">
 
-		<!-- Header desktop -->
 		<div class="contenedor__header">
 			<div class="header__topbar">
-				<div class="topbar-social">
-					<a href="https://www.facebook.com/MacromAutopartes/" target="_blank" class="topbar-social-item fa fa-facebook"></a>
-					<a href="https://www.instagram.com/macromautopartes/" class="topbar-social-item fa fa-instagram" target="_blank"></a>
-					<a href="https://www.youtube.com/channel/UCbVJJH6AIZJ9lH7fE_2rtwA" class="topbar-social-item fa fa-youtube-play" target="_blank"></a>
-					<a href="https://www.tiktok.com/@macromautopartes?lang=en" class="topbar-social-item fa fa-tumblr" target="_blank"></a>
 
-				</div>
-
-				<!-- Logo2 -->
 				<a href="?mod=home" class="header__topbar--logo">
 					<img src="images/icons/logomacrom.png" alt="IMG-LOGO">
 				</a>
-
-
 
 				<div class="contenedor__usuario">
 					<!--Inicio de Usuario-->
 					<div class="contenedor__usuario--perfil" id="usercba" ng-show="user">
 						<div class="header-wrapicon1">
 							<p class="text-danger t-center"><b>¡Hola {{session.nombrecorto}}!</b></p>
-							<p class="js-show-header-dropdown t-center" style="cursor:pointer; color:white;">Mi Cuenta</p>
+							<p class="js-show-header-dropdown t-center" style="cursor:pointer; color:var(--blanco);">Mi Cuenta</p>
 							<div class="header-cart header-dropdown header__cart--usuario">
 										<img src="../images/usuarios/Avatar Lobo Macrom Grande.png" class="perfil__usuario--img" loading="lazy" alt="ICON">
 														
@@ -55,7 +44,7 @@
 															
 									<p class="sesionombre s-text3a">{{session.nombre}}</p>
 									<div>
-										<div><!-- Button -->
+										<div>
 												<button class="btn btn-danger usuario__cerrarsesion" ng-click="btnLogout()">Cerrar Sesión</button>
 										</div>
 									</div>
@@ -70,33 +59,37 @@
 
 					<div class="contenedor__usuario--carrito">
 											
-						<div style="height: 47px;padding-top: 9px;" id="divcarri">
+						<div id="divcarri">
 							<div class="header-wrapicon2 m-r-13">
 								<img src="images/icons/Carrito.svg" class="header-icon1 js-show-header-dropdown1 filwhite" alt="ICON" id="carrisvg">
 								<span class="header-icons-noti">{{Data.Carrito.length}}</span>
 
-								<!-- Header cart noti -->
 								<div class="header-cart header-dropdown carrito__contenedor">
 									<ul class="header-cart-wrapitem">
-																	<li class="header-cart-item" ng-repeat="product in Data.Carrito" ng-show="user">
-																		<div class="header-cart-item-img" ng-click="btnEliminarRefaccion(product, true)">
-																			<img ng-src="{{getImagen(product.imagenid)}}" alt="IMG">
-																		</div>
+										<li class="header-cart-item" ng-repeat="product in Data.Carrito" ng-show="user">
 
-																		<div class="header-cart-item-txt">
-																			<a ng-click="RefaccionDetalles(product.imagenid)" class="header-cart-item-name enlace">
-																				{{product._producto}}
-																			</a>
-																			<span class="header-cart-item-info">
-																				No.parte: {{product.No_parte}}
-																			</span>
+											<div class="header-cart-item-img" ng-click="btnEliminarRefaccion(product, true)">
+												<img ng-src="{{getImagen(product.imagenid)}}" alt="IMG">
+											</div>
 
-																			<span class="header-cart-item-info">
-																				{{product.Cantidad}} x {{product.Precio | currency}}
-																		
-																			</span>
-																		</div>
-																	</li>
+											<div class="header-cart-item-txt">
+												<a ng-click="RefaccionDetalles(product.imagenid)" class="header-cart-item-name enlace">
+													{{product._producto}}
+												</a>
+
+												<span class="header-cart-item-info">
+													No.parte: {{product.No_parte}}
+												</span>
+
+												<span class="header-cart-item-info">
+													{{product.Cantidad}} x {{product.Precio | currency}}
+											
+												</span>
+
+											</div>
+
+										</li>
+
 									</ul>
 
 									<div class="header-cart-total">
@@ -105,36 +98,28 @@
 				
 										<div class="header-cart-buttons">
 											<div class="header-cart-wrapbtn">
-												<!-- Button -->
+
 												<button class="btn btn-danger form-control" onclick="location.href='?mod=Compras'">Ver Carrito</button>
 											</div>
 										</div>
-									</div>
 								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 
 				<div class="modo__oscuro">
-					<label class="switch">
-						<input class="switch__input fa" type="checkbox" role="switch" id="switch__darkmode">
-						<svg class="switch__letters" viewBox="0 0 24 24" width="24px" height="24px" aria-hidden="true">
-						  <g stroke="currentcolor" stroke-linecap="round" stroke-width="4" transform="translate(0,4)">
-							<g class="switch__letter">
-							  <polyline class="switch__letter-stroke" points="2 2,2 14" />
-							  <polyline class="switch__letter-stroke" points="2 2,16 2" stroke-dasharray="14 16" stroke-dashoffset="8" transform="rotate(0,2,2)" />
-							  <polyline class="switch__letter-stroke" points="2 8,6 8" stroke-dasharray="4 6" />
-							</g>
-							<g class="switch__letter" transform="translate(14,0)">
-							  <polyline class="switch__letter-stroke" points="2 2,2 14" />
-							  <polyline class="switch__letter-stroke" points="2 2,8 2" stroke-dasharray="6 8" />
-							  <polyline class="switch__letter-stroke" points="2 8,6 8" stroke-dasharray="4 6" />
-							</g>
-						  </g>
-						</svg>
-						<span class="switch__text">Power</span>
-					  </label>
+
+					<i class="fa fa-sun-o" aria-hidden="true"></i>
+					<label class="switch btn-color-mode-switch">
+						<input type="checkbox" name="switch__darkmode" id="switch__darkmode">
+						<label for="switch__darkmode" data-on="Oscuro" data-off="Claro" class="btn-color-mode-switch-inner enlace"></label>
+					</label>
+				  	<i class="fa fa-moon-o" aria-hidden="true"></i>
+
+
 				</div>
+				
 			</div>
 
 			<div class="contenedor__navegacion">
