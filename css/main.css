@@ -862,7 +862,8 @@ img{
 .productos__contenedor{
   display: grid;
   grid-template-columns: repeat(2,1fr);
-  overflow-y: scroll;
+  max-height: 30rem;
+  overflow: auto;
 }
 .contenedor-principal{
   background-color: var(--blanco);
