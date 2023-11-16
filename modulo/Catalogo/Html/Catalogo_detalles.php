@@ -163,8 +163,8 @@
 
 				<div class="wrap-slick2">
 					<div class="slick2">
-						<div class="enlace" ng-repeat="producto in productos">
-							<div class="block2 block2__contenedor" ng-click="RefaccionDetalles(producto._id)">
+						<div class="enlace m-1-r" ng-repeat="producto in productos">
+							<div class="block2 block2__contenedor">
 								<div class="block2-img wrap-pic-w of-hidden pos-relative cursorpnt" ng-style="{'background-color': producto.color}" ng-class="{
 									'ribboagotado': producto.agotado ,
 									'ribbonnuevo': producto.RefaccionNueva==1,
@@ -172,7 +172,9 @@
 									'pos-relative': !producto.agotado || producto.RefaccionNueva==0
 
 									}">
-									<img ng-src="{{producto.imagen? 'images/refacciones/motor.webp':'images/refacciones/'+producto._id+'.webp'}}" alt="IMG-PRODUCT">
+									<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}">
+										<img ng-src="{{producto.imagen? 'images/refacciones/motor.webp':'images/refacciones/'+producto._id+'.webp'}}" alt="IMG-PRODUCT">
+									</a>
 
 								</div>
 								<div class="block2-txt">

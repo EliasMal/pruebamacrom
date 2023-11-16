@@ -246,8 +246,8 @@ obj.cupon = () =>{ //prueba cupon local
         }else{
             facturaNo.style.display="flex";
         }  
-
-          obj.facturaNo = ()=>{
+        
+        obj.facturaNo = ()=>{
             obj.Costumer.facturacion = 0;
             localStorage.setItem("facturaSi", obj.Costumer.facturacion);
             location.reload(); 

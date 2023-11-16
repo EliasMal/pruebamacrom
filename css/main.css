@@ -501,7 +501,7 @@ img{
 /*Termina prueba botones*/
 .header-cart {
   position: absolute;
-  z-index: 1100;
+  z-index: 2;
   right: -1.3rem;
   padding: 20px;
   background-color: var(--blanco);
@@ -1373,6 +1373,9 @@ img{
   margin-right: 1rem;
 
 }
+.m-1-r{
+  margin: 0.5rem;
+}
 /** Contenido contactanos**/
 .contactanos__principal .contactanos__contenido--contacto form div{
   margin-bottom: 2rem;
@@ -1416,6 +1419,9 @@ img{
 @media(min-width: 758px) {
   .contactanos__contenido--contacto{
     width: 100%
+  }
+  .m-1-r{
+    margin: 0;
   }
   .contactanos__contenido{
     display: grid;

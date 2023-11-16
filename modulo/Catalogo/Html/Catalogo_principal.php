@@ -90,7 +90,7 @@
 							<!-- Block2 -->
 							<div class="block2 ">
 
-								<div ng-click="RefaccionDetalles(producto._id)" class="block2-img enlace wrap-pic-w of-hidden
+								<div class="block2-img enlace wrap-pic-w of-hidden
 									{{producto.RefaccionOferta==1? 'block2-labelsale':''}}"
 									ng-class="{
 											'ribboagotado': producto.agotado ,
@@ -100,8 +100,10 @@
 
 										}"
 									ng-style="{'background-color': producto.color}">
-									<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}"
-										alt="{{producto.tag_alt}}" title = "{{producto.tag_title}}">
+									<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}">
+										<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}"
+											alt="{{producto.tag_alt}}" title = "{{producto.tag_title}}">
+									</a>
 
 								</div>
 								

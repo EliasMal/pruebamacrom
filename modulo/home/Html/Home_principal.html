@@ -58,7 +58,7 @@
 								<div class="nuestrosproductos__masvendidos">
 									<div class="enlace home__pr" ng-repeat="producto in Data.masVendidos">
 										<!-- Block2 -->
-										<div class="block2" ng-click="RefaccionDetalles(producto._id)">
+										<div class="block2">
 											<div class="block2-img wrap-pic-w of-hidden cursorpnt" 
 											ng-class="{
 												'ribboagotado': producto.agotado ,
@@ -66,8 +66,9 @@
 
 											}"
 											ng-style="{'background-color': producto.color}">
+											<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}">
 												<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}">
-
+											</a>
 											</div>
 
 											<div class="block2-txt">
@@ -99,7 +100,7 @@
 								<div class="nuestrosproductos__liquidacion">
 									<div class="enlace home__pr" ng-repeat="producto in Data.liquidacion">
 										<!-- Block2 -->
-										<div class="block2" ng-click="RefaccionDetalles(producto._id)">
+										<div class="block2">
 											<div class="block2-img wrap-pic-w of-hidden cursorpnt" 
 											ng-class="{
 												'ribbonliquidacion': producto.RefaccionLiquidacion ,
@@ -107,7 +108,9 @@
 
 											}"
 											ng-style="{'background-color': producto.color}">
+											<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}">
 												<img ng-src="{{producto.imagen? 'images/refacciones/' + producto._id + '.webp':'images/refacciones/' + producto._id + '.webp'}}" loading="lazy" alt="IMG-PRODUCT">
+											</a>
 											</div>
 
 											<div class="block2-txt">

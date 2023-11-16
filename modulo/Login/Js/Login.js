@@ -88,6 +88,28 @@ function LoginCtrl($scope,$http){
         
     }
 
+    var inprpass = document.querySelector("#inprpass");
+    var inprcpass = document.querySelector("#inprcpass");
+    document.querySelectorAll(".pass_ver").forEach(el => {
+        el.addEventListener("click", e => {
+        if(el.classList.contains('pss')){
+            inprpass.toggleAttribute("type");
+            console.log(el);
+            el.classList.toggle("fa-eye-slash");
+            if(inprpass.getAttribute("type") != null){
+                inprpass.setAttribute("type","password");
+            }
+        } else if(el.classList.contains('cpss')){
+            inprcpass.toggleAttribute("type");
+            console.log(el);
+            el.classList.toggle("fa-eye-slash");
+            if(inprcpass.getAttribute("type") != null){
+                inprcpass.setAttribute("type","password");
+            }
+        }
+        });
+    });
+
     obj.getBanners = (data)=>{
         $http({
             method: 'POST',

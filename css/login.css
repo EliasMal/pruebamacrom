@@ -38,6 +38,12 @@ body{
 }
 .contenedor__dos--logo{
   padding-bottom: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.contenedor__dos--logo img{
+  width: 100%;
 }
 #alertvali, .alertvalid{
   border: 2px solid var(--primario);
@@ -69,6 +75,7 @@ body{
 }
 .main__login input, .contenedor__dos--registro div input{
   height: 4rem;
+  font-size: 1.8rem;
 }
 .secondary__contenedor{
   align-items: center;
@@ -85,6 +92,15 @@ body{
   display: grid;
   justify-self: center;
   max-width: 45rem;
+  margin-bottom: 1rem;
+}
+.pass_ver{
+  font-size: 2.5rem;
+  align-items: center;
+}
+#divpass,#divcpass{
+  grid-column: 1/3;
+  display: flex;
 }
 .secondary__contenedor--forgot a p, .secondary__contenedor--register a p{
   font-size: 2rem;
@@ -94,6 +110,7 @@ body{
   width:100%;
   height:40px;
   border-radius: 0.40rem;
+  margin-bottom: 2rem;
 }
 .contenedor__dos--registro{
   display: grid;
@@ -129,6 +146,11 @@ body{
     display: grid;
     grid-template-columns: repeat(2,1fr);
   }
+  .contenedor__dos--logo img{
+    width: 70%;
+  }
+  #divpass{grid-column: 1;}
+  #divcpass{grid-column: 2;}
   .login__contenedor__uno{
     display: block;
     background:var(--primario-oscuro);
