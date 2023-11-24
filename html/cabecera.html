@@ -7,36 +7,36 @@
 			<div class="header__topbar">
 
 				<a href="?mod=home" class="header__topbar--logo">
-					<img src="images/icons/logomacrom.png" alt="IMG-LOGO">
+					<img src="images/icons/logomacromb.png" alt="IMG-LOGO">
 				</a>
 
 				<div class="contenedor__usuario">
 					<!--Inicio de Usuario-->
 					<div class="contenedor__usuario--perfil" id="usercba" ng-show="user">
 						<div class="header-wrapicon1">
-							<p class="text-danger t-center"><b>¡Hola {{session.nombrecorto}}!</b></p>
+							<p class="text-dark t-center">¡Hola {{session.nombrecorto}}!</p>
 							<p class="js-show-header-dropdown t-center" style="cursor:pointer; color:var(--blanco);">Mi Cuenta</p>
 							<div class="header-cart header-dropdown header__cart--usuario">
 										<img src="../images/usuarios/Avatar Lobo Macrom Grande.png" class="perfil__usuario--img" loading="lazy" alt="ICON">
 														
 									<div class="vinculos">
 										<div class="vinculos--contenedor" onclick="location.href = '?mod=Profile&opc=Session'">
-											<img src="../images/icons/1.png" loading="lazy" alt="icono seguridad">
+											<i loading="lazy" alt="icono seguridad" class="fa fa-shield-alt"> </i>
 											<span class="vinculos--opciones">Sesión y Seguridad</span>
 										</div><br>
 
 										<div class="vinculos--contenedor" onclick="location.href = '?mod=Profile&opc=Mispedidos'">
-											<img src="../images/icons/2.png" loading="lazy" alt="icono pedidos">
+											<i loading="lazy" alt="icono pedidos" class="fa fa-shopping-cart"></i>
 											<span class="vinculos--opciones">Mis pedidos</span>
 										</div><br>
 										
 										<div class="vinculos--contenedor" onclick="location.href = '?mod=Profile&opc=Direcciones'">
-											<img src="../images/icons/3.png" loading="lazy" alt="icono direcciones">
+											<i loading="lazy" alt="icono direcciones" class="fa fa-map-marked-alt"></i>
 											<span class="vinculos--opciones">Mis direcciones</span>
 										</div><br>
 
 										<div class="vinculos--contenedor" onclick="location.href = '?mod=Profile&opc=Facturacion'">
-											<img src="../images/icons/4.png" loading="lazy" alt="icono facturación">
+											<i loading="lazy" alt="icono facturación" class="fa fa-file-invoice-dollar"></i>
 											<span class="vinculos--opciones">Datos de facturación</span>
 										</div>
 
@@ -110,12 +110,12 @@
 
 				<div class="modo__oscuro">
 
-					<i class="fa fa-sun-o" aria-hidden="true"></i>
+					<i class="fa fa-sun" aria-hidden="true"></i>
 					<label class="switch btn-color-mode-switch">
 						<input type="checkbox" name="switch__darkmode" id="switch__darkmode">
 						<label for="switch__darkmode" data-on="Oscuro" data-off="Claro" class="btn-color-mode-switch-inner enlace"></label>
 					</label>
-				  	<i class="fa fa-moon-o" aria-hidden="true"></i>
+				  	<i class="fa fa-moon" aria-hidden="true"></i>
 
 
 				</div>
@@ -189,7 +189,7 @@
 			
 			<div class="contenedor__navegacion--mobile">
 				<span style="--i:0;--x:-1;--y:0;">
-				  <ion-icon class="fa fa-address-book-o" name="contact-outline" onclick="location.href='?mod=contacto'"></ion-icon>
+				  <ion-icon class="fa fa-address-book" name="contact-outline" onclick="location.href='?mod=contacto'"></ion-icon>
 				  <p class="navegacion__mobil--nombres">Contacto</p>
 				</span>
 				<span style="--i:1;--x:1;--y:0;" ng-show="user">
@@ -204,7 +204,7 @@
 					<ion-icon name="alarm-outline"><img src="https://macromautopartes.com/images/icons/FaviconM.webp"></img> </ion-icon>
 				</span>
 				<span style="--i:3;--x:1;--y:1;">
-				  <ion-icon class="fa fa-wpforms" name="blog-outline" onclick="location.href='?mod=Blog'"></ion-icon>
+				  <ion-icon class="fab fa-wpforms" name="blog-outline" onclick="location.href='?mod=Blog'"></ion-icon>
 				  <a class="navegacion__mobil--nombres">Blog</a>
 				</span>
 				<span style="--i:4;--x:-1;--y:-1;">
@@ -212,7 +212,7 @@
 				  <p class="navegacion__mobil--nombres">Inicio</p>
 				</span>
 				<span style="--i:5;--x:-1;--y:1;">
-				  <ion-icon class="fa fa-info-circle" name="info-outline" onclick="location.href='?mod=nosotros'"></ion-icon>
+				  <ion-icon class="fa fa-question-circle" name="info-outline" onclick="location.href='?mod=nosotros'"></ion-icon>
 				  <p class="navegacion__mobil--nombres">Nosotros</p>
 				</span>
 				<span style="--i:6;--x:1;--y:-1;">

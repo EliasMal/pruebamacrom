@@ -184,15 +184,15 @@
         $("#FooterDark").removeClass('main__theme--dark');
         $("#BodyDark").removeClass('body__theme--dark');
         $("#PerfilDark").removeClass('perfil__theme--dark');
-        $("#switch__darkmode").removeClass('fa-moon-o');
+        $("#switch__darkmode").removeClass('fa-moon');
         $("#PerfilDark").addClass('perfil__theme--light');
         $("#MainDark").addClass('main__theme--light');
         $("#FooterDark").addClass('main__theme--light');
         $("#BodyDark").addClass('body__theme--light');
-        $("#switch__darkmode").addClass('fa-sun-o');
+        $("#switch__darkmode").addClass('fa-sun');
     } else if(localStorage.getItem('darkmode') == "dark"){
         darkmode_switch.checked = true;
-        $("#switch__darkmode").removeClass('fa-sun-o');
+        $("#switch__darkmode").removeClass('fa-sun');
         $("#BodyDark").removeClass('body__theme--light');
         $("#MainDark").removeClass('main__theme--light');
         $("#FooterDark").removeClass('main__theme--light');
@@ -201,13 +201,13 @@
         $("#MainDark").addClass('main__theme--dark');
         $("#FooterDark").addClass('main__theme--dark');
         $("#BodyDark").addClass('body__theme--dark');
-        $("#switch__darkmode").addClass('fa-moon-o');
+        $("#switch__darkmode").addClass('fa-moon');
     }
     darkmode_switch.addEventListener('click', function() {
         if(darkmode_switch.checked == false){
 
             localStorage.setItem('darkmode',"light");
-            $("#switch__darkmode").removeClass('fa-moon-o');
+            $("#switch__darkmode").removeClass('fa-moon');
             $("#MainDark").removeClass('main__theme--dark');
             $("#FooterDark").removeClass('main__theme--dark');
             $("#BodyDark").removeClass('body__theme--dark');
@@ -216,12 +216,12 @@
             $("#MainDark").addClass('main__theme--light');
             $("#FooterDark").addClass('main__theme--light');
             $("#BodyDark").addClass('body__theme--light');
-            $("#switch__darkmode").addClass('fa-sun-o');
+            $("#switch__darkmode").addClass('fa-sun');
 
         }else if(darkmode_switch.checked == true){
 
             localStorage.setItem('darkmode',"dark");
-            $("#switch__darkmode").removeClass('fa-sun-o');
+            $("#switch__darkmode").removeClass('fa-sun');
             $("#BodyDark").removeClass('body__theme--light');
             $("#MainDark").removeClass('main__theme--light');
             $("#FooterDark").removeClass('main__theme--light');
@@ -230,7 +230,7 @@
             $("#MainDark").addClass('main__theme--dark');
             $("#FooterDark").addClass('main__theme--dark');
             $("#BodyDark").addClass('body__theme--dark');
-            $("#switch__darkmode").addClass('fa-moon-o');
+            $("#switch__darkmode").addClass('fa-moon');
         }
     });
 

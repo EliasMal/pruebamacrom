@@ -136,7 +136,7 @@ obj.cupon = () =>{ //prueba cupon local
           const id = e.target.getAttribute("id");
           var id_m = id.charAt(10);
           let cerrar = []; let modales = [];
-          for(var m = 0; m <= 4 ; m++){
+          for(var m = 0; m <= 5 ; m++){
             modales[m] = document.getElementById("ventanaModal"+m);
             cerrar[m] = document.getElementsByClassName("cerrar"+m)[0];
             if(m == id_m){
@@ -155,7 +155,7 @@ obj.cupon = () =>{ //prueba cupon local
     document.querySelectorAll(".closem").forEach(el => {
         el.addEventListener("click", e => {
           let cerrar = []; let modales = [];
-          for(var m = 0; m <= 4 ; m++){
+          for(var m = 0; m <= 5 ; m++){
             modales[m] = document.getElementById("ventanaModal"+m);
             cerrar[m] = document.getElementsByClassName("cerrar"+m)[0];
             if(e.target == cerrar[m]){
@@ -168,7 +168,7 @@ obj.cupon = () =>{ //prueba cupon local
     
     window.addEventListener("click",function(event){
         let modales = [];
-          for(var m = 0; m <= 4 ; m++){
+          for(var m = 0; m <= 5 ; m++){
             modales[m] = document.getElementById("ventanaModal"+m);
 
             if(event.target == modales[m]){
@@ -184,7 +184,7 @@ obj.cupon = () =>{ //prueba cupon local
     });
     //Abrir y cerrar modales end.
 
-    var btnfacomp = document.getElementById('btnfacomp');
+    var btnfacomp = document.querySelector(".pagar--button");
     btnfacomp.disabled = true;
     var tandcheck = document.getElementById('aviso');
 
@@ -447,7 +447,7 @@ obj.cupon = () =>{ //prueba cupon local
     }
 
     obj.eliminarPaqueterias = (data)=>{
-       let arrayPaq = ["CARSSA", "SKYDROPX", "AMPM", "SANDEX", "ESTAFETA", "UPS", "TRACUSA", "TRESGUERRAS"];
+       let arrayPaq = ["CARSSA", "SKYDROPX", "AMPM", "SANDEX", "SENDEX", "UPS", "TRACUSA", "TRESGUERRAS"];
        arrayPaq.forEach(e=>{
             data = data.filter(paqueteria => paqueteria.provider != e)
        })
@@ -473,8 +473,28 @@ obj.cupon = () =>{ //prueba cupon local
                     console.log("Error: no se realizo la conexion con el servidor");
             }); 
             obj.cotizador = obj.eliminarPaqueterias(result.data);
-            obj.flag = false
+            obj.flag = false;
             
+            // let maxcont = [];
+            // for(var i = 0; i <= obj.cotizador.length-1; i++){
+            //     var pqcont = 0;
+
+            //     for(var j = 0; j <= obj.cotizador.length-1; j++){
+
+            //         if(obj.cotizador[i].provider == obj.cotizador[j].provider && pqcont == 0){
+            //             pqcont++;
+                        
+            //         }else if(obj.cotizador[i].provider == obj.cotizador[j].provider && pqcont == 1){
+            //             maxcont[j] = j;
+            //         }
+
+            //     }
+            // }
+            
+            // maxcont.forEach(function (maxcon){
+            //     console.log(obj.cotizador[maxcon]);
+            // });
+
             $scope.$apply();
         } catch (error) {
             return false;
@@ -1156,7 +1176,7 @@ function ProfileCtrl($scope, $http){
                 obj.getDatosCliente();
             break;
             case 'Direcciones_add':
-                obj.dataDireccion.id = localStorage.getItem("iduser");
+                obj.dataDireccion.id = obj.session.iduser;
             break;
             case 'Direcciones_edit':
                 obj.dataDireccion.id_domicilio = localStorage.getItem('_id_domicilio');

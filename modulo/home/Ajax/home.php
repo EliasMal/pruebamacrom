@@ -25,6 +25,7 @@ class home {
     private $conn;
     private $jsonData = array("Bandera"=>0,"mensaje"=>"");
     private $formulario = array();
+    private $dataLogin = array();
     private $redpack;
     public function __construct($array) {
         $this->conn = new HelperMySql($array["server"], $array["user"], $array["pass"], $array["db"]);
@@ -52,6 +53,15 @@ class home {
                             $this->jsonData["Data"]["nuevos"] = $this->getImageProductos($this->getnuevosProductos());
                             $this->jsonData["Data"]["liquidacion"] = $this->getImageProductos($this->getProductosliquidacion());
                             $this->jsonData["Data"]["oferta"] = $this->getImageProductos($this->getProductosOferta());
+                            $this->getUser();
+
+                            if($_SESSION["iduser"] == null){
+                                
+                                $_SESSION["iduser"] = $this->dataLogin["_id_cliente"];
+                                $_SESSION["Cenvio"] = $this->getCenvio();
+                                $_SESSION["cupon"] = "macrupon";
+                                $_SESSION["acreditacion"] = $this->dataLogin["cuponacre"];
+                            }
                         }
                     break;
                 }
@@ -80,6 +90,31 @@ class home {
         }
         return $array;
         
+    }
+
+    private function getUser(){
+        $sql = "SELECT _id_cliente FROM Cseguridad where username='{$_SESSION["usr"]}'";
+        $this->dataLogin = $this->conn->fetch($this->conn->query($sql));
+        
+        return count($this->dataLogin)!=0? true:false;
+    }
+
+    private function getCenvio(){
+        $array = array("Envio"=>"","costo"=>0, "Servicio"=>"") ;
+        $sql = "select CE.precio from Cenvios as CE 
+        inner join CPmex as CP on (CP.D_mnpio = CE.Municipio)
+        where CP.d_codigo = '{$this->dataLogin["Codigo_postal"]}' group by CE.precio";
+        $id = $this->conn->query($sql);
+        if($this->conn->count_rows() != 0){
+            $row = $this->conn->fetch();
+            $array["Envio"] = "L"; //Envio Local
+            $array["costo"] = floatval($row["precio"]);
+            $array["Servicio"] = "METROPOLITANO";
+        }else{
+            $array["Envio"] = "N"; //Envio nacional
+            $array["costo"] = 0;
+        }
+        return $array;
     }
 
     private function get_Carrito(){

@@ -114,14 +114,6 @@ class Registro{
                 . "'{$this->formulario->Registro->Aviso}')";
         return $this->conn->query($sql)? $this->conn->last_id():false;
     }
-
-    private function set_domicilios($id){
-        $sql = "INSERT INTO Cdirecciones (Domicilio, Codigo_postal, Telefono, Colonia, Ciudad, Estado, Predeterminado, Estatus, _id_cliente, numExt, numInt, Referencia) "
-            . "values ('{$this->formulario->Registro->Domicilio}', '{$this->formulario->Registro->Codigopostal}', '{$this->formulario->Registro->Telefono}', "
-            . "'{$this->formulario->Registro->Colonia}', '{$this->formulario->Registro->Ciudad}', '{$this->formulario->Registro->Estado}', 1, 1, $id, '{$this->formulario->Registro->numInt}',"
-            . "'{$this->formulario->Registro->numExt}', '')";
-        return $this->conn->query($sql) or die($this->conn->error); 
-    }
     
     private function setCSeguridad ($id){
         $sql = "INSERT INTO Cseguridad(username, password, FechaCreacion, FechaModificacion, Estatus, _id_cliente, cuponacre) values "
@@ -139,7 +131,7 @@ class Registro{
             $_SESSION["ultimoAcceso"]= date("Y-n-j H:i:s");
             $_SESSION["nombrecorto"] = $this->formulario->Registro->Nombre;
             $_SESSION["nombre"] = $this->formulario->Registro->Nombre.' '.$this->formulario->Registro->Apellidos;
-////            $_SESSION["rol"] = $user["Tipo_usuario"];
+            $_SESSION["iduser"] = $id;
             $_SESSION["usr"] = $this->formulario->Registro->username;
             return true;
         }else{

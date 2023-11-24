@@ -106,11 +106,14 @@ body{
   font-size: 2rem;
   color: var(--primario);
 }
-.secondary__contenedor--boton button{
-  width:100%;
-  height:40px;
-  border-radius: 0.40rem;
+.secondary__contenedor--boton span{
+  width: 100%;
+  height: 40px;
+  border-radius: 0.4rem;
   margin-bottom: 2rem;
+  justify-items: center;
+  align-items: center;
+  display: grid;
 }
 .contenedor__dos--registro{
   display: grid;

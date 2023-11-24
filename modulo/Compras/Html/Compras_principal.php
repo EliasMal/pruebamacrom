@@ -12,37 +12,36 @@
 						<div>
 							<h4 class="cliente__titulo txtred">Dirección Entrega</h4>
 							<div class="cliente__datos" ng-repeat="dire in profile.arrayDomicilios" ng-show="dire.Predeterminado == 1" >
-								<p>{{Costumer.profile.nombres}} {{Costumer.profile.Apellidos}}.</p>
+								<p><b>{{Costumer.profile.nombres}} {{Costumer.profile.Apellidos}}.</b></p>
 								<p>{{dire.Domicilio}} #{{dire.numExt}}, {{dire.Colonia}}.</p>
 								<p>{{dire.Ciudad}}, {{dire.Estado}}, {{dire.Codigo_postal}}.</p>
 								<p>{{dire.Referencia}}.</p>
-								<p>Tel: {{dire.Telefono}}</p>
+								<p class="p-t-30">Tel: {{dire.Telefono}}</p>
 							</div>
 							<div class="cliente__datos" ng-show="profile.arrayDomicilios[0].Predeterminado != 1" >
-								<p>{{Costumer.profile.nombres}} {{Costumer.profile.Apellidos}}.</p>
+								<p><b>{{Costumer.profile.nombres}} {{Costumer.profile.Apellidos}}.</b></p>
 								<p><b>NOTA:</b> Agrega o selecciona una direccion para seguir con tu compra.</p>
 							</div>
 						</div>
 
 						<div class="cliente__opciones" ng-controller="ProfileCtrl" ng-init="pag='Direcciones'">
 							<div class="cliente__opciones--editar" ng-show="profile.arrayDomicilios[0].Predeterminado != 0">
-								<span class="cliente__opciones--button form-control click" id="abrirModal0" ng-click="btneditDomicilio(Costumer.dataDomicilio.data._id)" ng-show="profile.arrayDomicilios[0]"><img width="15px" height="12px" src="../images/icons/Editar.svg">&nbsp;&nbsp;Editar Dirección</span>
+								<span class="cliente__opciones--button form-control click" id="abrirModal0" ng-click="btneditDomicilio(Costumer.dataDomicilio.data._id)" ng-show="profile.arrayDomicilios[0]"><i class="fa fa-edit"></i>Editar Dirección</span>
 							</div>
 											
 							<div class="cliente__opciones--otra" ng-show="profile.arrayDomicilios[0]">
-								<span id="abrirModal1" class="form-control cliente__opciones--button click"><img width="15px" height="12px" src="../images/icons/Seleccionar.svg">&nbsp;&nbsp;Seleccionar Otra</span>
+								<span id="abrirModal1" class="form-control cliente__opciones--button click"><i class="far fa-check-square"></i>Seleccionar Otra</span>
 							</div>
 
 							<div class="cliente__opciones--nueva">
-								<span id="abrirModal2" class="form-control cliente__opciones--button click"><img width="15px" height="12px" style="margin-left:-10px" src="../images/icons/Agregar.svg">&nbsp;&nbsp;Agregar Nueva</span>
+								<span id="abrirModal2" class="form-control cliente__opciones--button click"><i class="fa fa-plus"></i>Agregar Nueva</span>
 							</div>
 						</div>
 
 					</article>
 
 					<article class="productos">
-						<h4 class="cliente__titulo txtred center--text">Productos</h4>
-						<p class="center--text txtblack">Tienes {{Numproducts}} articulo(s) en el carrito.</p>
+						<p class="center--text txtred">Tienes {{Numproducts}} articulo(s) en el carrito.</p>
 						<div class="productos__contenedor">
 							<div class="productos__datos--contenedor" ng-repeat="product in session.CarritoPrueba">
 								<div class="productos__datos">
@@ -52,9 +51,9 @@
 									<div class="productos__datos--info">
 										<a ng-click="RefaccionDetalles(product.imagenid)" class="productos__datos--info--articulo">{{product._producto}}</a>
 										<p>No.Parte: {{product.No_parte}}</p>
-										<p>{{product.Cantidad}} x {{product.Precio |currency}}</p>
+										<p class="text-dark">{{product.Cantidad}} x {{product.Precio |currency}}</p>
 
-										<div class="productos__datos--contador">
+										<!-- <div class="productos__datos--contador">
 											<div class="agregarmas no-overflow">
 								
 												<button class="agregarmas__botones" ng-click="btnQuitar(product)">
@@ -68,7 +67,7 @@
 												</button>
 
 											</div>
-										</div> 
+										</div>  -->
 
 									</div>
 								</div>
@@ -89,20 +88,20 @@
 								<p class="p-t-30">Uso de CFDI: {{Costumer.dataFacturacion.data.usocfdi}}</p>
 							</div>
 							<div class="cliente__datos" ng-show="Costumer.facturacion != 1" >
-								<p>{{Costumer.profile.nombres}} {{Costumer.profile.Apellidos}}.</p>
+								<p><b>{{Costumer.profile.nombres}} {{Costumer.profile.Apellidos}}.</b></p>
 								<p><b>NOTA:</b> Si posterior a esta compra deseas facturar tu pedido, es necesario solicitarla el mismo dia de tu compra, en caso de lo contrario se genera con un RFC generico.</p>
 							</div>
 						</div>
 						
 						<div class="cliente__opciones">
 							<div class="cliente__opciones--editar">
-								<span id="abrirModal3" class="form-control cliente__opciones--button click" ><img width="15px" height="12px" src="../images/icons/Editar.svg">&nbsp;&nbsp;Seleccionar</span>
+								<span id="abrirModal3" class="form-control cliente__opciones--button click" ><i class="far fa-check-square"></i>Seleccionar</span>
 							</div>
 							<div class="cliente__opciones--otra">
-								<span id="abrirModal4" class="form-control cliente__opciones--button click"><img width="15px" height="12px" src="../images/icons/Seleccionar.svg">&nbsp;&nbsp;Agregar Nueva</span>
+								<span id="abrirModal4" class="form-control cliente__opciones--button click"><i class="fa fa-plus"></i>Agregar Nueva</span>
 							</div>
 							<div class="cliente__opciones--nueva">
-								<span id="facturaNo" class="form-control cliente__opciones--button" ng-click="facturaNo()"><img width="15px" height="12px" style="margin-left:-10px" src="../images/icons/Agregar.svg">&nbsp;&nbsp;No Usar Datos</span>
+								<span id="facturaNo" class="form-control cliente__opciones--button" ng-click="facturaNo()"><i class="fa fa-ban"></i>No Usar Datos</span>
 							</div>
 						</div>
 						
@@ -121,7 +120,7 @@
 								</div>
 								<div class="pagos__cupon">
 									<div class="cuponcont">
-										<input type="text" class="inpcpn" placeholder="Ingresa tu cupón." id="inpCupon" style="text-align: center;" autocomplete="off">
+										<input type="text" class="inpcpn" placeholder="Ingresa tu cupón." id="inpCupon" autocomplete="off">
 										<button class="form-control" ng-click="cupon()" id="btncupon">Canjear</button>
 									</div>
 									<span class="cupon--alert" id="alert--cupon"></span>
@@ -129,17 +128,13 @@
 
 								<div>
 									<table class="tablecompra">
-										<thead>
-											<tr width="50%"></tr>
-											<tr width="50%"></tr>
-										</thead>
 										<tbody>
 											<tr>
-												<td class="p-r-pz">Productos</td>
+												<td>Productos</td>
 													<td  class="text-right">{{subtotal() | currency}}</td>
 												</tr>
 											<tr ng-show="Costumer.descuento > 0">
-												<td class="p-r-pz text-red">Descuento</td>
+												<td class="text-red">Descuento</td>
 												<td class="csmdesc text-right">- {{Costumer.descuento | currency}}</td>
 											</tr>
 											<tr>
@@ -155,7 +150,7 @@
 											</tr>
 											<tr ng-if="Costumer.Cenvio.Envio == 'N' && dataCotizador.parcel.weight>0">
 												<td>Costos de envio</td>
-												<td><button class="btn form-control cotizar__button" ng-click="btncotizar()">Cotizar</button></td>
+												<td class="flexcontent__end"><button class="form-control cotizar__button" ng-click="btncotizar()">Cotizar</button></td>
 											</tr>
 											<tr class="table tbl-cms">
 												<td>Total(con iva)</td>
@@ -164,47 +159,55 @@
 										</tbody>
 									</table>
 								</div>	
-
-								<button class="btn btn-danger bg9 form-control pagar--button" id="btnfacomp" ng-click="btnPagar()" ng-show="subtotal() > 0"> {{session.autentificacion==1? 'Pagar':'Inicia Session'}}</button>
+								<button id="abrirModal5" class="btn btn-danger bg9 form-control pagar--button click" ng-show="subtotal() > 0">Pagar</button>
 								<p ng-show="session.autentificacion==1">
 									<label class="checkbox ">
 										<input type="checkbox" name="aviso" id="aviso" ng-model="Costumer.aviso" required>
 										<span class="check"></span>
-										<div class="p-l-40"> He leido y estoy de acuerdo con las <a href="?mod=Terminos-condiciones" class="text-red">condiciones generales</a> 
-												y el <a href="?mod=aviso-de-privacidad" class="text-red"> aviso de privacidad</a>
+										<div class="p-l-40 acepto__tyc"> He leido y estoy de acuerdo con las <a href="?mod=Terminos-condiciones" class="text-red">condiciones generales</a> 
+												y el <a href="?mod=aviso-de-privacidad" class="text-red"> aviso de privacidad</a>.
 										</div>
 									</label>
 								</p>
 						</div>
 					</article>
 
-					<article class="metodo__pago">
-						<div class="metodo__pago--contenedor">
-							<h4 class="metodo__pago--titulo txtred" >Método de Pago</h4>
-							<div class="metodo__pago--metodos">
-								<div class="metodo__pago--metodo">
-									<button class="metodopago bo18 h-120" id="btncredito" ng-click="metarjeta()">
-										<label class="radio2">Tarjeta de crédito / debito</label>
-										<img src="images/icons/VISA MASTERCARD.svg" alt="tarjeta credito" class ="img-fluid mx-auto d-block" width="150px" height="31px">
-									</button>	
-								</div>
+					<!-- Ventana modal Metodo De Pago, por defecto no visiblel -->
+					<div id="ventanaModal5" class="ventanaModal__contenedor">
+							<div class="ventanaModal__contenido pagometodo">
+								<span class="cerrar5 closem">&times;</span>
+								<h2 class="center--text">Metodos de Pago</h2>
 
-								<div class="metodo__pago--metodo">
-									<button class="metodopago bo18 h-120" id="btnefectivo" ng-click="medeposito()">
-										<label class="radio2">Deposito en efectivo</label>
-										<img src="images/icons/OXXO.svg" alt="deposito efectivo"  class ="img-fluid mx-auto d-block" width="150px" height="31px">
-									</button>
-								</div>
+								<article class="metodo__pago">
+									<div class="metodo__pago--contenedor">
+										<h4 class="metodo__pago--titulo txtred" >Método de Pago</h4>
+										<div class="metodo__pago--metodos">
+											<div class="metodo__pago--metodo">
+												<button class="metodopago bo18 h-120" id="btncredito" ng-click="metarjeta()">
+													<label class="radio2">Tarjeta de crédito / debito</label>
+													<img src="images/icons/VISA MASTERCARD.svg" alt="tarjeta credito" class ="img-fluid mx-auto d-block" width="150px" height="31px">
+												</button>	
+											</div>
 
-								<div class="metodo__pago--metodo">
-									<button class="metodopago bo18 h-120" ng-click="metransfe()" id="btntransfe">
-										<label class="radio2">Tranferencia bancaria</label>
-										<img src="images/icons/SPEI.svg" alt="transferencia bancaria" class ="img-fluid mx-auto d-block" width="150px" height="31px">	
-									</button>
-								</div>
+											<div class="metodo__pago--metodo">
+												<button class="metodopago bo18 h-120" id="btnefectivo" ng-click="medeposito()">
+													<label class="radio2">Deposito en efectivo</label>
+													<img src="images/icons/OXXO.svg" alt="deposito efectivo"  class ="img-fluid mx-auto d-block" width="150px" height="31px">
+												</button>
+											</div>
+
+											<div class="metodo__pago--metodo">
+												<button class="metodopago bo18 h-120" ng-click="metransfe()" id="btntransfe">
+													<label class="radio2">Tranferencia bancaria</label>
+													<img src="images/icons/SPEI.svg" alt="transferencia bancaria" class ="img-fluid mx-auto d-block" width="150px" height="31px">	
+												</button>
+											</div>
+										</div>
+									</div>
+								</article>
+								<span class="btn btn-danger bg9 form-control confirmar--pago click" ng-click="btnPagar()">Confirmar Pago</span>
 							</div>
-						</div>
-					</article>
+					</div> <!--Fin Modal Metodo De Pago-->
 				</main>
 
 				<section ng-controller="ComprasCtrl">
@@ -331,11 +334,11 @@
 
 									<div class="ventanaModal__contenido--opciones">
 										<div class="ventanaModal__contenido--boton">
-											<button class="form-control" ng-click="btnPredeterminado(dire._id)" ng-show="dire.Predeterminado == 0"><img width="20px" height="20px" src="../images/icons/Seleccionar.svg">&nbsp;&nbsp;Seleccionar</button>
+											<button class="form-control" ng-click="btnPredeterminado(dire._id)" ng-show="dire.Predeterminado == 0"><i class="far fa-check-square"></i>Seleccionar</button>
 										</div>
 
 										<div class="ventanaModal__contenido--boton">
-											<button class="form-control" ng-click="btndescartarDomicilio(dire._id)"><img width="20px" height="20px" src="../images/icons/Basura.svg">&nbsp;&nbsp;Eliminar</button>
+											<button class="form-control" ng-click="btndescartarDomicilio(dire._id)"><i class="far fa-trash-alt"></i>Eliminar</button>
 										</div>
 									</div>
 
@@ -458,10 +461,10 @@
 
 									<div class="ventanaModal__contenido--info">
 										<div class="ventanaModal__contenido--boton">
-											<button class="form-control" name="facturacion" id="factsi" ng-click="btnFacpredetermiando(d._id, 'pre')"><img width="20px" height="20px" src="../images/icons/Seleccionar.svg">&nbsp;&nbsp;Seleccionar</button>
+											<button class="form-control" name="facturacion" id="factsi" ng-click="btnFacpredetermiando(d._id, 'pre')"><i class="far fa-check-square"></i>Seleccionar</button>
 										</div>
 										<div class="ventanaModal__contenido--boton">
-											<button class="form-control" ng-click="btnEliminardatosfacturacion(d._id, 'del')"><img width="20px" height="20px" src="../images/icons/Basura.svg">&nbsp;&nbsp;Eliminar</button>
+											<button class="form-control" ng-click="btnEliminardatosfacturacion(d._id, 'del')"><i class="far fa-trash-alt"></i>Eliminar</button>
 										</div>
 									</div>
 
@@ -613,16 +616,17 @@
 
 										<section ng-show="Costumer.dataDomicilio.Bandera" >
 											<div class="alert alert-warning fade-in" ng-show="flag">
-												<i class="fa fa-refresh fa-spin"></i> Espera un momento por favor estamos cotizando tu envio
+												<i class="fa fa-sync-alt fa-spin"></i> Espera un momento por favor estamos cotizando tu envio
 											</div>
-
 											<div class="table-responsive">
 												<table class="table table-hover" ng-show="!flag">
 													<tbody>
-														<tr ng-repeat="paq in cotizador" ng-cloak ng-click="selectenvio(paq)" style="cursor: pointer;" class="bdl-a-r">
+														<tr ng-repeat="paq in cotizador" ng-cloak ng-click="selectenvio(paq)" class="bdl-a-r enlace">
 															<td><input type="radio"></td>
 															<td class="text-center"><img class="bdl-c-itm" ng-src="images/paqueterias/{{paq.provider}}.svg" alt="{{paq.provider}}"></td>
 															<td>{{getFechaentrega(paq.days)}}</td>
+															<!-- <td><i class="fas fa-dollar-sign"></i></td>
+															<td><i class="fas fa-bolt"></i></td> -->
 															<td class="text-red">{{paq.total_pricing | currency}}</td>
 														</tr>
 													</tbody>

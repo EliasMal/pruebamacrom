@@ -138,7 +138,7 @@ class Login{
         $sql = "SELECT username FROM Cseguridad where username='{$this->formulario->Login->user}'";
         $this->dataLoginolv = $this->conn->fetch($this->conn->query($sql));
         
-        return count($this->dataLogin)!=0? true:false;
+        return count($this->dataLoginolv)!=0? true:false;
     }
     
     private function setSession($flag = false){
