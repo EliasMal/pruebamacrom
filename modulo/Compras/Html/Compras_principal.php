@@ -53,7 +53,7 @@
 										<p>No.Parte: {{product.No_parte}}</p>
 										<p class="text-dark">{{product.Cantidad}} x {{product.Precio |currency}}</p>
 
-										<!-- <div class="productos__datos--contador">
+										<div class="productos__datos--contador">
 											<div class="agregarmas no-overflow">
 								
 												<button class="agregarmas__botones" ng-click="btnQuitar(product)">
@@ -67,7 +67,7 @@
 												</button>
 
 											</div>
-										</div>  -->
+										</div> 
 
 									</div>
 								</div>
@@ -180,7 +180,6 @@
 
 								<article class="metodo__pago">
 									<div class="metodo__pago--contenedor">
-										<h4 class="metodo__pago--titulo txtred" >Método de Pago</h4>
 										<div class="metodo__pago--metodos">
 											<div class="metodo__pago--metodo">
 												<button class="metodopago bo18 h-120" id="btncredito" ng-click="metarjeta()">
@@ -625,8 +624,8 @@
 															<td><input type="radio"></td>
 															<td class="text-center"><img class="bdl-c-itm" ng-src="images/paqueterias/{{paq.provider}}.svg" alt="{{paq.provider}}"></td>
 															<td>{{getFechaentrega(paq.days)}}</td>
-															<!-- <td><i class="fas fa-dollar-sign"></i></td>
-															<td><i class="fas fa-bolt"></i></td> -->
+															<td><i class="fas fa-dollar-sign"></i></td>
+															<td><i class="fas fa-bolt"></i></td>
 															<td class="text-red">{{paq.total_pricing | currency}}</td>
 														</tr>
 													</tbody>

@@ -121,7 +121,7 @@ class Login{
         mail($destinatario, $asunto, $mensaje, $headers);
         //Fin Envio de registro satisfactorio al Correo del usuario.
         
-        $sql = "UPDATE Cseguridad SET password = '$contrasenanueva' WHERE _id = '{$this->dataLogin["_id"]}' and username = '{$this->formulario->Login->user}'";
+        $sql = "UPDATE Cseguridad SET password = '$contrasenanueva' WHERE _id = '{$this->dataLoginolv["_id"]}' and username = '{$this->formulario->Login->user}'";
         return $this->conn->query($sql)? true:false;
         
     }
@@ -135,7 +135,7 @@ class Login{
     }
 
     private function getUserOlvidado(){
-        $sql = "SELECT username FROM Cseguridad where username='{$this->formulario->Login->user}'";
+        $sql = "SELECT * FROM Cseguridad where username='{$this->formulario->Login->user}'";
         $this->dataLoginolv = $this->conn->fetch($this->conn->query($sql));
         
         return count($this->dataLoginolv)!=0? true:false;

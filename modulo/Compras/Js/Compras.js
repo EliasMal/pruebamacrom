@@ -447,7 +447,7 @@ obj.cupon = () =>{ //prueba cupon local
     }
 
     obj.eliminarPaqueterias = (data)=>{
-       let arrayPaq = ["CARSSA", "SKYDROPX", "AMPM", "SANDEX", "SENDEX", "UPS", "TRACUSA", "TRESGUERRAS"];
+       let arrayPaq = ["CARSSA", "SKYDROPX", "AMPM", "SANDEX","QUIKEN","SENDEX", "UPS", "TRACUSA", "TRESGUERRAS"];
        arrayPaq.forEach(e=>{
             data = data.filter(paqueteria => paqueteria.provider != e)
        })
