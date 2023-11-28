@@ -227,7 +227,6 @@ obj.cupon = () =>{ //prueba cupon local
                 obj.Costumer.dataFacturacion = res.data.Data.datafacturacion;
                 obj.Costumer.Cenvio = res.data.Data.Cenvio;
                 obj.cenvio = res.data.Data.Cenvio.Costo;
-                //obj.Costumer.Cenvio.Costo = res.data.Data.Cenvio.Envio == "N"? res.data.Data.Cenvio.Costos[0].Tarifa: res.data.Data.Cenvio.Costo
                 localStorage.setItem("id",obj.Costumer.profile.id)
                 localStorage.setItem("id_rfc",obj.Costumer.dataFacturacion._id)
                 obj.Ttotal();
@@ -239,21 +238,12 @@ obj.cupon = () =>{ //prueba cupon local
         });
     }
 
-    //Comprobacion Datos Facturación
-        obj.Costumer.facturacion = localStorage.getItem("facturaSi");
-        if (obj.Costumer.facturacion == 0) {
-            facturaNo.style.display="none";
-        }else{
-            facturaNo.style.display="flex";
-        }  
-        
-        obj.facturaNo = ()=>{
-            obj.Costumer.facturacion = 0;
-            localStorage.setItem("facturaSi", obj.Costumer.facturacion);
-            location.reload(); 
-        }
-    //Termina Comprobacion Datos Facturación
-
+    if($_SESSION.facturacion == null){
+        obj.Costumer.facturacion = 0;
+    } else if ($_SESSION.facturacion == 1){
+        obj.Costumer.facturacion = 1;
+    }
+    
     obj.btnPagar = () => {
         let aut = false;
         if(obj.Costumer.dataDomicilio.Bandera){
@@ -474,7 +464,7 @@ obj.cupon = () =>{ //prueba cupon local
             }); 
             obj.cotizador = obj.eliminarPaqueterias(result.data);
             obj.flag = false;
-            
+
             // let maxcont = [];
             // for(var i = 0; i <= obj.cotizador.length-1; i++){
             //     var pqcont = 0;
@@ -585,6 +575,10 @@ function ProfileCtrl($scope, $http){
         }
         
         //localStorage.setItem("pag",opc);
+    }
+    
+    obj.facturaNo = ()=>{
+        obj.sendFacturacion('none', obj.dataFacturacion)
     }
 
     obj.inputvalidireccion = ()=>{ //Inicia Verificador de Agregar nueva Dirección.
@@ -1022,6 +1016,9 @@ function ProfileCtrl($scope, $http){
                     case 'pre':
                         obj.btnMenulinks("Facturacion");
                     break;
+                    case 'none':
+                        obj.btnMenulinks("Facturacion");
+                    break;
                     case 'del':
                         toastr.success(res.data.mensaje);
                         obj.sendFacturacion();
@@ -1037,7 +1034,6 @@ function ProfileCtrl($scope, $http){
                         obj.Carrito.carrito = res.data.Data3;
                     break;
                     default:
-                        
                         obj.Facturacion.dataFacturacion = res.data.Data;
                     break;
                 }
@@ -1101,8 +1097,6 @@ function ProfileCtrl($scope, $http){
 
     obj.btnFacpredetermiando = (id, opc) => {
         obj.sendFacturacion(opc, {_id: id});
-        obj.Costumer.facturacion = 1;
-        localStorage.setItem("facturaSi", obj.Costumer.facturacion);
     }
     /* Finaliza modulo de Datos de Facturacion */
 
@@ -1164,7 +1158,6 @@ function ProfileCtrl($scope, $http){
             localStorage.clear();
             location.href = "?mod=login";
         }
-        
         
         if(!localStorage.getItem("iduser")){
             obj.getDatosCliente(); 

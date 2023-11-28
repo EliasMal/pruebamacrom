@@ -27,6 +27,7 @@ class home {
     private $formulario = array();
     private $dataLogin = array();
     private $redpack;
+    private $dataFacturacion = array();
     public function __construct($array) {
         $this->conn = new HelperMySql($array["server"], $array["user"], $array["pass"], $array["db"]);
         
@@ -54,6 +55,11 @@ class home {
                             $this->jsonData["Data"]["liquidacion"] = $this->getImageProductos($this->getProductosliquidacion());
                             $this->jsonData["Data"]["oferta"] = $this->getImageProductos($this->getProductosOferta());
                             $this->getUser();
+                            if($this->get_Facturacion()==true){
+                                $_SESSION["facturacion"] = $this->dataFacturacion["Predeterminado"];
+                            }else{
+                                $_SESSION["facturacion"] = 0;
+                            }
 
                             if($_SESSION["iduser"] == null){
                                 
@@ -92,6 +98,13 @@ class home {
         
     }
 
+    private function get_Facturacion(){
+        $sql = "SELECT * FROM Facturacion where _id_cliente = '{$_SESSION["iduser"]}' and Predeterminado = 1";
+        $this->dataFacturacion = $this->conn->fetch($this->conn->query($sql));
+
+        return count($this->dataFacturacion)!=0? true:false;
+    }
+    
     private function getUser(){
         $sql = "SELECT _id_cliente FROM Cseguridad where username='{$_SESSION["usr"]}'";
         $this->dataLogin = $this->conn->fetch($this->conn->query($sql));

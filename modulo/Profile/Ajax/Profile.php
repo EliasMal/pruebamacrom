@@ -180,6 +180,11 @@ class Profile{
             break;
             case 'pre':
                 $sql = "UPDATE Facturacion SET Predeterminado = 1 where _id = $id ";
+                $_SESSION["facturacion"] = 1;
+            break;
+            case 'none':
+                $sql = "UPDATE Facturacion SET Predeterminado = 0 where _id_cliente = '{$_SESSION["iduser"]}'";
+                $_SESSION["facturacion"] = 0;
             break;
         }
         
@@ -417,6 +422,16 @@ class Profile{
                             break;
                         break;
                         case 'pre':
+                            $this->get_datosFactuDeter();
+                            if($this->set_Facturacion($this->formulario->profile->opc, $this->formulario->profile->data->_id)){
+                                $this->jsonData["Bandera"] = 1;
+                                $this->jsonData["mensaje"] = "Datos de Facturacion han sido predeterminados";
+                            }else{
+                                $this->jsonData["Bandera"] = 0;
+                                $this->jsonData["mensaje"] = "Error: al predeterminar los datos de facturacion"; 
+                            }
+                            break;
+                        case 'none':
                             $this->get_datosFactuDeter();
                             if($this->set_Facturacion($this->formulario->profile->opc, $this->formulario->profile->data->_id)){
                                 $this->jsonData["Bandera"] = 1;

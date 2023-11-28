@@ -135,6 +135,7 @@ function CabeceraCtrl($scope,$http, $sce,vcRecaptchaService){
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
                 location.href = "?mod=home";
+                localStorage.clear();
             }else{
                 toastr.error(res.data.mensaje);
             }

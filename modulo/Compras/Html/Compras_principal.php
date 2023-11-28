@@ -78,16 +78,16 @@
 				</main>
 
 				<main class="pagos">
-					<article class="pagos__facturacion">
+					<article class="pagos__facturacion"  ng-controller="ProfileCtrl" ng-init="pag='Facturacion'">
 						<div>
 							<h4 class="pagos__facturacion--titulo txtred">Facturación</h4>
-							<div class="cliente__datos" ng-show="Costumer.facturacion == 1">
+							<div class="cliente__datos" ng-repeat="facliente in Facturacion.dataFacturacion" ng-show="facliente.Predeterminado == 1">
 								<p>Actividad Empresarial: Persona Fisica.</p>
-								<p>Razon Social: {{Costumer.dataFacturacion.data.Razonsocial}}.</p>
-								<p>RFC: {{Costumer.dataFacturacion.data.Rfc}}</p>
-								<p class="p-t-30">Uso de CFDI: {{Costumer.dataFacturacion.data.usocfdi}}</p>
+								<p>Razon Social: {{facliente.Razonsocial}}.</p>
+								<p>RFC: {{facliente.Rfc}}</p>
+								<p class="p-t-30">Uso de CFDI: {{facliente.Descripcion}}</p>
 							</div>
-							<div class="cliente__datos" ng-show="Costumer.facturacion != 1" >
+							<div class="cliente__datos" ng-show="Facturacion.dataFacturacion[1].Predeterminado != 1 && Costumer.facturacion != 1" >
 								<p><b>{{Costumer.profile.nombres}} {{Costumer.profile.Apellidos}}.</b></p>
 								<p><b>NOTA:</b> Si posterior a esta compra deseas facturar tu pedido, es necesario solicitarla el mismo dia de tu compra, en caso de lo contrario se genera con un RFC generico.</p>
 							</div>
@@ -100,7 +100,7 @@
 							<div class="cliente__opciones--otra">
 								<span id="abrirModal4" class="form-control cliente__opciones--button click"><i class="fa fa-plus"></i>Agregar Nueva</span>
 							</div>
-							<div class="cliente__opciones--nueva">
+							<div class="cliente__opciones--nueva" ng-show="Facturacion.dataFacturacion[1].Predeterminado != 0 && Costumer.facturacion != 0">
 								<span id="facturaNo" class="form-control cliente__opciones--button" ng-click="facturaNo()"><i class="fa fa-ban"></i>No Usar Datos</span>
 							</div>
 						</div>

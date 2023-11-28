@@ -93,6 +93,7 @@
                 
                     $this->jsonData["Bandera"] = 1;
                     $this->jsonData["Data"] = $this->getDataUser($this->formulario->Compras->username);
+                    
                 break;
 
                 case 'cotizar':
