@@ -36,6 +36,7 @@ function ComprasCtrl($scope, $http , $sce){
     obj.monedero = {Importe:0, aplicado:false};
     obj.cotizador = [];
     obj.flag = false;
+    obj.dataflag = false;
     obj.requiredEnvio = false;
     obj.dataCotizador = { 
         zip_from: "28000", 
@@ -230,6 +231,7 @@ obj.cupon = () =>{ //prueba cupon local
                 localStorage.setItem("id",obj.Costumer.profile.id)
                 localStorage.setItem("id_rfc",obj.Costumer.dataFacturacion._id)
                 obj.Ttotal();
+                obj.dataflag = true;
             }else{
                 toastr.error(res.data.mensaje)
             }
@@ -464,26 +466,26 @@ obj.cupon = () =>{ //prueba cupon local
             }); 
             obj.cotizador = obj.eliminarPaqueterias(result.data);
             obj.flag = false;
+            // console.table(obj.cotizador);
+            //  let maxcont = [];
+            //  for(var i = 0; i <= obj.cotizador.length-1; i++){
+            //      var pqcont = 0;
 
-            // let maxcont = [];
-            // for(var i = 0; i <= obj.cotizador.length-1; i++){
-            //     var pqcont = 0;
+            //      for(var j = 0; j <= obj.cotizador.length-1; j++){
 
-            //     for(var j = 0; j <= obj.cotizador.length-1; j++){
-
-            //         if(obj.cotizador[i].provider == obj.cotizador[j].provider && pqcont == 0){
-            //             pqcont++;
+            //          if(obj.cotizador[i].provider == obj.cotizador[j].provider && pqcont == 0){
+            //              pqcont++;
                         
-            //         }else if(obj.cotizador[i].provider == obj.cotizador[j].provider && pqcont == 1){
-            //             maxcont[j] = j;
-            //         }
+            //          }else if(obj.cotizador[i].provider == obj.cotizador[j].provider && pqcont == 1){
+            //              maxcont[j] = j;
+            //          }
 
-            //     }
-            // }
+            //      }
+            //  }
             
-            // maxcont.forEach(function (maxcon){
-            //     console.log(obj.cotizador[maxcon]);
-            // });
+            //   maxcont.forEach(function (maxcon){
+            //       console.log(obj.cotizador[maxcon]);
+            //   });
 
             $scope.$apply();
         } catch (error) {
@@ -966,7 +968,8 @@ function ProfileCtrl($scope, $http){
           }).then((result) => {
             if (result.isConfirmed) {
                 Swal.fire({title:"Eliminado!",icon: "success"});
-                obj.SendDirecciones("delete", {id:id})
+                obj.SendDirecciones("delete", {id:id});
+                location.reload();
             }
           });
     }

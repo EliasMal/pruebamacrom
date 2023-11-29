@@ -214,7 +214,7 @@ class Profile{
         $array = array();
         $sql = "SELECT F.*, U.Descripción as Descripcion FROM Facturacion as F " 
             . "inner join usocfdi as U on (F.cfdi = U._id) where "
-            . "F._id_cliente = $_id_cliente and F.Estatus = 1  order by F.Predeterminado asc";
+            . "F._id_cliente = $_id_cliente and F.Estatus = 1  order by F.Predeterminado desc";
         $id = $this->conn->query($sql) or die($this->conn->error);
         while($row = $this->conn->fetch($id)){
             array_push($array,$row);
@@ -406,6 +406,7 @@ class Profile{
                             if($this->set_Facturacion($this->formulario->profile->opc)){
                                 $this->jsonData["Bandera"] = 1;
                                 $this->jsonData["mensaje"] = "Datos de Facturacion registrado satisfactoriamente";
+                                $_SESSION["facturacion"] = 1;
                             }else{
                                 $this->jsonData["Bandera"] = 0;
                                 $this->jsonData["mensaje"] = "Error: al intentar registrar los datos de facturacion"; 
@@ -415,6 +416,7 @@ class Profile{
                             if($this->set_Facturacion($this->formulario->profile->opc, $this->formulario->profile->data->_id)){
                                 $this->jsonData["Bandera"] = 1;
                                 $this->jsonData["mensaje"] = "Datos de Facturacion han sido eliminados";
+                                $_SESSION["facturacion"] = 0;
                             }else{
                                 $this->jsonData["Bandera"] = 0;
                                 $this->jsonData["mensaje"] = "Error: al intentar eliminar los datos de facturacion"; 

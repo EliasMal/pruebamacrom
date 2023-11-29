@@ -12,23 +12,19 @@
 						<div>
 							<h4 class="cliente__titulo txtred">Dirección Entrega</h4>
 							<div class="cliente__datos" ng-repeat="dire in profile.arrayDomicilios" ng-show="dire.Predeterminado == 1" >
-								<p><b>{{Costumer.profile.nombres}} {{Costumer.profile.Apellidos}}.</b></p>
+								<p><b ng-show="!dataflag"><i class="fa fa-sync-alt fa-spin"></i>Cargando Datos.</b><b>{{Costumer.profile.nombres}} {{Costumer.profile.Apellidos}}.</b></p>
 								<p>{{dire.Domicilio}} #{{dire.numExt}}, {{dire.Colonia}}.</p>
 								<p>{{dire.Ciudad}}, {{dire.Estado}}, {{dire.Codigo_postal}}.</p>
 								<p>{{dire.Referencia}}.</p>
 								<p class="p-t-30">Tel: {{dire.Telefono}}</p>
 							</div>
 							<div class="cliente__datos" ng-show="profile.arrayDomicilios[0].Predeterminado != 1" >
-								<p><b>{{Costumer.profile.nombres}} {{Costumer.profile.Apellidos}}.</b></p>
+								<p><b ng-show="!dataflag"><i class="fa fa-sync-alt fa-spin"></i>Cargando Datos.</b><b>{{Costumer.profile.nombres}} {{Costumer.profile.Apellidos}}.</b></p>
 								<p><b>NOTA:</b> Agrega o selecciona una direccion para seguir con tu compra.</p>
 							</div>
 						</div>
 
 						<div class="cliente__opciones" ng-controller="ProfileCtrl" ng-init="pag='Direcciones'">
-							<div class="cliente__opciones--editar" ng-show="profile.arrayDomicilios[0].Predeterminado != 0">
-								<span class="cliente__opciones--button form-control click" id="abrirModal0" ng-click="btneditDomicilio(Costumer.dataDomicilio.data._id)" ng-show="profile.arrayDomicilios[0]"><i class="fa fa-edit"></i>Editar Dirección</span>
-							</div>
-											
 							<div class="cliente__opciones--otra" ng-show="profile.arrayDomicilios[0]">
 								<span id="abrirModal1" class="form-control cliente__opciones--button click"><i class="far fa-check-square"></i>Seleccionar Otra</span>
 							</div>
@@ -36,6 +32,11 @@
 							<div class="cliente__opciones--nueva">
 								<span id="abrirModal2" class="form-control cliente__opciones--button click"><i class="fa fa-plus"></i>Agregar Nueva</span>
 							</div>
+											
+							<div class="cliente__opciones--editar" ng-show="profile.arrayDomicilios[0].Predeterminado != 0">
+								<span class="cliente__opciones--button form-control click" id="abrirModal0" ng-click="btneditDomicilio(Costumer.dataDomicilio.data._id)" ng-show="profile.arrayDomicilios[0]"><i class="fa fa-edit"></i>Editar Dirección</span>
+							</div>
+
 						</div>
 
 					</article>
@@ -82,19 +83,20 @@
 						<div>
 							<h4 class="pagos__facturacion--titulo txtred">Facturación</h4>
 							<div class="cliente__datos" ng-repeat="facliente in Facturacion.dataFacturacion" ng-show="facliente.Predeterminado == 1">
+								<b ng-show="!dataflag"><i class="fa fa-sync-alt fa-spin"></i>Cargando Datos.</b>
 								<p>Actividad Empresarial: Persona Fisica.</p>
 								<p>Razon Social: {{facliente.Razonsocial}}.</p>
 								<p>RFC: {{facliente.Rfc}}</p>
 								<p class="p-t-30">Uso de CFDI: {{facliente.Descripcion}}</p>
 							</div>
-							<div class="cliente__datos" ng-show="Facturacion.dataFacturacion[1].Predeterminado != 1 && Costumer.facturacion != 1" >
-								<p><b>{{Costumer.profile.nombres}} {{Costumer.profile.Apellidos}}.</b></p>
+							<div class="cliente__datos" ng-show="Facturacion.dataFacturacion[0].Predeterminado != 1" >
+								<p><b ng-show="!dataflag"><i class="fa fa-sync-alt fa-spin"></i>Cargando Datos.</b><b>{{Costumer.profile.nombres}} {{Costumer.profile.Apellidos}}.</b></p>
 								<p><b>NOTA:</b> Si posterior a esta compra deseas facturar tu pedido, es necesario solicitarla el mismo dia de tu compra, en caso de lo contrario se genera con un RFC generico.</p>
 							</div>
 						</div>
 						
 						<div class="cliente__opciones">
-							<div class="cliente__opciones--editar">
+							<div class="cliente__opciones--editar" ng-show="Facturacion.dataFacturacion[0]">
 								<span id="abrirModal3" class="form-control cliente__opciones--button click" ><i class="far fa-check-square"></i>Seleccionar</span>
 							</div>
 							<div class="cliente__opciones--otra">
@@ -624,8 +626,8 @@
 															<td><input type="radio"></td>
 															<td class="text-center"><img class="bdl-c-itm" ng-src="images/paqueterias/{{paq.provider}}.svg" alt="{{paq.provider}}"></td>
 															<td>{{getFechaentrega(paq.days)}}</td>
-															<td><i class="fas fa-dollar-sign"></i></td>
-															<td><i class="fas fa-bolt"></i></td>
+															<!-- <td ng-show="paq.days<=3"><i class="fas fa-dollar-sign"></i></td>
+															<td ng-show="paq.days<=3"><i class="fas fa-bolt"></i></td> -->
 															<td class="text-red">{{paq.total_pricing | currency}}</td>
 														</tr>
 													</tbody>
