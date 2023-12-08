@@ -130,61 +130,6 @@ obj.cupon = () =>{ //prueba cupon local
         }
     }
 
-    //Abrir y cerrar modales
-    var noflow = document.querySelector("#BodyDark");
-    document.querySelectorAll(".click").forEach(el => {
-        el.addEventListener("click", e => {
-          const id = e.target.getAttribute("id");
-          var id_m = id.charAt(10);
-          let cerrar = []; let modales = [];
-          for(var m = 0; m <= 5 ; m++){
-            modales[m] = document.getElementById("ventanaModal"+m);
-            cerrar[m] = document.getElementsByClassName("cerrar"+m)[0];
-            if(m == id_m){
-                modales[m].style.display="block";
-                noflow.classList.add("no-overflow");
-            }
-            if(e.target == cerrar[m]){
-                modales[m].style.display='none';
-                noflow.classList.remove("no-overflow");
-            }
-
-          }
-        });
-    });
-
-    document.querySelectorAll(".closem").forEach(el => {
-        el.addEventListener("click", e => {
-          let cerrar = []; let modales = [];
-          for(var m = 0; m <= 5 ; m++){
-            modales[m] = document.getElementById("ventanaModal"+m);
-            cerrar[m] = document.getElementsByClassName("cerrar"+m)[0];
-            if(e.target == cerrar[m]){
-                modales[m].style.display='none';
-                noflow.classList.remove("no-overflow");
-            }
-          }
-        });
-    });
-    
-    window.addEventListener("click",function(event){
-        let modales = [];
-          for(var m = 0; m <= 5 ; m++){
-            modales[m] = document.getElementById("ventanaModal"+m);
-
-            if(event.target == modales[m]){
-                modales[m].style.display ="none";
-                noflow.classList.remove("no-overflow");
-            }
-        }
-    });
-
-    var closecotizar = document.getElementById("cotizarclose");
-    closecotizar.addEventListener("click",function() {
-        $("#mdlcotizar").modal('hide');
-    });
-    //Abrir y cerrar modales end.
-
     var btnfacomp = document.querySelector(".pagar--button");
     btnfacomp.disabled = true;
     var tandcheck = document.getElementById('aviso');
@@ -197,7 +142,11 @@ obj.cupon = () =>{ //prueba cupon local
        }
     });
 
-
+    var closecotizar = document.getElementById("cotizarclose");
+    closecotizar.addEventListener("click",function() {
+        $("#mdlcotizar").modal('hide');
+    });
+    
     obj.getImagen = (id)=>{
         var url = "images/refacciones/";
         return  url+id+".webp";

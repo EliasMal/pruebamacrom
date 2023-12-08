@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="Macrom_page">
 <head>
 	<title>Macrom autopartes</title>
 	<meta charset="UTF-8">

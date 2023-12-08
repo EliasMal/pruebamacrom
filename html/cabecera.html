@@ -3,14 +3,20 @@
 	<!-- Header -->
 	<header class="header2">
 
-		<div class="contenedor__header">
+		<div class="contenedor__header pd-1">
 			<div class="header__topbar">
+				<div class="contenedor__navegacion--mobile">
+					<i id="abrirModal6" class="fas fa-bars click filwhite"></i>
+				</div>
 
-				<a href="?mod=home" class="header__topbar--logo">
+				<a href="?mod=home" class="header__topbar--logo clicksidebar">
 					<img src="images/icons/logomacromb.png" alt="IMG-LOGO">
 				</a>
 
 				<div class="contenedor__usuario">
+					<div class="header-wrapicon1 login__text" ng-show="!user">
+						<span class="topbar-email header-icon1" onclick="location.href='?mod=login'">Iniciar Sesion</span>
+					</div> 
 					<!--Inicio de Usuario-->
 					<div class="contenedor__usuario--perfil" id="usercba" ng-show="user">
 						<div class="header-wrapicon1">
@@ -53,15 +59,12 @@
 						</div>
 					</div>
 					<!--Termina de Usuario-->
-					<div class="header-wrapicon1" ng-show="!user">
-						<span class="topbar-email header-icon1" onclick="location.href='?mod=login'">Iniciar Sesion</span>
-					</div> 
 
 					<div class="contenedor__usuario--carrito">
 											
 						<div id="divcarri">
 							<div class="header-wrapicon2 m-r-13">
-								<img src="images/icons/Carrito.svg" class="header-icon1 js-show-header-dropdown1 filwhite" alt="ICON" id="carrisvg">
+								<i class="fas fa-shopping-cart header-icon1 js-show-header-dropdown1 filwhite" id="carrisvg"></i>
 								<span class="header-icons-noti">{{Data.Carrito.length}}</span>
 
 								<div class="header-cart header-dropdown carrito__contenedor">
@@ -99,7 +102,7 @@
 										<div class="header-cart-buttons">
 											<div class="header-cart-wrapbtn">
 
-												<button class="btn btn-danger form-control" onclick="location.href='?mod=Compras'">Ver Carrito</button>
+												<button class="btn btn-danger form-control clicksidebarshop" onclick="location.href='?mod=Compras'">Ver Carrito</button>
 											</div>
 										</div>
 								</div>
@@ -107,21 +110,24 @@
 						</div>
 					</div>
 				</div>
-
-				<div class="modo__oscuro">
-
+				
+				<div class="modo__oscuro__pc">
 					<i class="fa fa-sun" aria-hidden="true"></i>
 					<label class="switch btn-color-mode-switch">
-						<input type="checkbox" name="switch__darkmode" id="switch__darkmode">
+						<input type="checkbox" name="switch__darkmode" class="switch__darkmode">
 						<label for="switch__darkmode" data-on="Oscuro" data-off="Claro" class="btn-color-mode-switch-inner enlace"></label>
 					</label>
-				  	<i class="fa fa-moon" aria-hidden="true"></i>
-
-
+					  <i class="fa fa-moon" aria-hidden="true"></i>
 				</div>
-				
+
 			</div>
 
+			<div class="buscador__general">
+				<i class="fas fa-search">
+					<input type="text" autocomplete="off" placeholder="Busca tu refacción">
+				</i>
+			</div>
+			
 			<div class="contenedor__navegacion">
 				<!-- Menu -->
 				<div class="contenedor__navegacion__menu">
@@ -186,42 +192,100 @@
 					</nav>
 				</div>
 			</div>
-			
-			<div class="contenedor__navegacion--mobile">
-				<span style="--i:0;--x:-1;--y:0;">
-				  <ion-icon class="fa fa-address-book" name="contact-outline" onclick="location.href='?mod=contacto'"></ion-icon>
-				  <p class="navegacion__mobil--nombres">Contacto</p>
-				</span>
-				<span style="--i:1;--x:1;--y:0;" ng-show="user">
-				  <ion-icon class="fa fa-shopping-cart" name="shopping-cart-outline" onclick="location.href='?mod=Compras'"></ion-icon>
-				  <a class="navegacion__mobil--nombres">Carrito</a>
-				</span>
-				<span style="--i:1;--x:1;--y:0;" ng-show="!user">
-					<ion-icon class="fa fa-shopping-cart" name="shopping-cart-outline" onclick="location.href='?mod=login'"></ion-icon>
-					<a class="navegacion__mobil--nombres">Carrito</a>
-				  </span>
-				<span style="--i:2;--x:0;--y:0;">
-					<ion-icon name="alarm-outline"><img src="https://macromautopartes.com/images/icons/FaviconM.webp"></img> </ion-icon>
-				</span>
-				<span style="--i:3;--x:1;--y:1;">
-				  <ion-icon class="fab fa-wpforms" name="blog-outline" onclick="location.href='?mod=Blog'"></ion-icon>
-				  <a class="navegacion__mobil--nombres">Blog</a>
-				</span>
-				<span style="--i:4;--x:-1;--y:-1;">
-				  <ion-icon class="fa fa-home" name="home-outline" onclick="location.href='?mod=home'"></ion-icon>
-				  <p class="navegacion__mobil--nombres">Inicio</p>
-				</span>
-				<span style="--i:5;--x:-1;--y:1;">
-				  <ion-icon class="fa fa-question-circle" name="info-outline" onclick="location.href='?mod=nosotros'"></ion-icon>
-				  <p class="navegacion__mobil--nombres">Nosotros</p>
-				</span>
-				<span style="--i:6;--x:1;--y:-1;">
-				  <ion-icon class="fa fa-wrench" name="wrench-outline" onclick="location.href='?mod=catalogo'"></ion-icon>
-				  <a class="navegacion__mobil--nombres">Refacciones</a>
-				</span>
-			  </div>
-
+			  
 		</div>
 	</header>
+<!-- Ventana modal Metodo De Pago, por defecto no visiblel -->
+	<div id="ventanaModal6" class="sidebar__mobil" >
+		<div class="sidebar__mobil__contenido" id="CabeceraDark">
+
+			<article class="sidebar__mobil__menu">
+					<span class="cerrar6 closem">&times;</span>
+					<div class="menu__cliente__informacion">
+						<img src="../images/usuarios/Avatar Lobo Macrom Grande.png" class="menu__cliente__informacion--img" alt="ICON">
+						<div class="cliente__informacion--datos">
+							<p class="txtred">¡Hola!</p>
+							<p class="text-dark">{{session.nombre}}</p>
+						</div>
+					</div>
+					<div class="sidebar__mobil__menu--enlaces">
+
+						<div class="modo__oscuro">
+							<i class="fa fa-sun" aria-hidden="true"></i>
+							<label class="switch btn-color-mode-switch">
+								<input type="checkbox" name="switch__darkmode" class="switch__darkmode">
+								<label for="switch__darkmode" data-on="Oscuro" data-off="Claro" class="btn-color-mode-switch-inner enlace"></label>
+							</label>
+							  <i class="fa fa-moon" aria-hidden="true"></i>
+						</div>
+
+						<div class="menu__enlaces__contenedor">
+							<div class="menu__enlaces">
+								<span id="sidebar0" class="sidebar__click" onclick="location.href ='?mod=home'">
+									<i class="fa fa-home" name="home-outline"></i>
+									<a class="menu__enlaces--links txtgris">Inicio</a>
+								</span>
+								<span id="sidebar1" class="sidebar__click" onclick="location.href ='?mod=catalogo'">
+									<i class="fa fa-wrench" name="wrench-outline"></i>
+									<a class="menu__enlaces--links txtgris">Refacciones</a>
+								</span>
+								<span id="sidebar2" class="sidebar__click" ng-show="user" onclick="location.href ='?mod=Compras'">
+									<i class="fa fa-shopping-cart" name="shopping-cart-outline"></i>
+									<a class="menu__enlaces--links txtgris">Carrito</a>
+								</span>
+								<span id="sidebar3" class="sidebar__click" ng-show="!user" onclick="location.href ='?mod=login'">
+									<i class="fa fa-shopping-cart" name="shopping-cart-outline"></i>
+									<a class="menu__enlaces--links txtgris">Carrito</a>
+								</span>
+								<span id="sidebar4" class="sidebar__click" onclick="location.href ='?mod=nosotros'">
+									<i class="fa fa-question-circle" name="info-outline"></i>
+									<a class="menu__enlaces--links txtgris">Nosotros</a>
+								</span>
+							</div>
+							<hr>
+							<div class="menu__enlaces" ng-show="user">
+
+								<span id="sidebar5" class="sidebar__click" onclick="location.href ='?mod=Profile&opc=Session'">
+									<i loading="lazy" alt="icono seguridad" class="fa fa-shield-alt"></i>
+									<a class="menu__enlaces--links txtgris">Sesión y Seguridad</a>
+								</span>
+								<span id="sidebar6" class="sidebar__click" onclick="location.href ='?mod=Profile&opc=Mispedidos'">
+									<i loading="lazy" alt="icono pedidos" class="fa fa-shopping-cart"></i>
+									<a class="menu__enlaces--links txtgris">Mis Pedidos</a>
+								</span>
+								<span id="sidebar7" class="sidebar__click" onclick="location.href ='?mod=Profile&opc=Direcciones'">
+									<i loading="lazy" alt="icono direcciones" class="fa fa-map-marked-alt"></i>
+									<a class="menu__enlaces--links txtgris">Mis Direcciones</a>
+								</span>
+								<span id="sidebar8" class="sidebar__click" onclick="location.href ='?mod=Profile&opc=Facturacion'">
+									<i loading="lazy" alt="icono facturación" class="fa fa-file-invoice-dollar"></i>
+									<a class="menu__enlaces--links txtgris">Datos Facturación</a>
+								</span>
+								<span id="sidebar9" class="sidebar__click center--text" ng-click="btnLogout()">
+									<i loading="lazy" alt="icono cerrar_sesión" class="fas fa-sign-out-alt"></i>
+									<a class="menu__enlaces--links text-white">Cerrar Sesión</a>
+								</span>
+
+							</div>
+						</div>
+
+						<div class="menu__sesion" ng-show="!user">
+							<div class="menu__sesion__inicio">
+								<p>¿Ya tienes cuenta?</p>
+								<span onclick="location.href ='?mod=login'">Iniciar Sesión</span>
+							</div>
+							<div class="menu__sesion__registrar">
+								<p>¿Aún no tienes cuenta?</p>
+								<span onclick="location.href ='?mod=register'">Registrarse</span>
+							</div>
+						</div>
+
+					</div>
+
+			</article>
+		</div>
+	</div>
+<!--Fin Modal Metodo De Pago-->
+
 </div>
 	

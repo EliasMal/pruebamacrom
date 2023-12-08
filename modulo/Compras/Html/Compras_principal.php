@@ -54,7 +54,7 @@
 										<p>No.Parte: {{product.No_parte}}</p>
 										<p class="text-dark">{{product.Cantidad}} x {{product.Precio |currency}}</p>
 
-										<div class="productos__datos--contador">
+										<!-- <div class="productos__datos--contador">
 											<div class="agregarmas no-overflow">
 								
 												<button class="agregarmas__botones" ng-click="btnQuitar(product)">
@@ -68,7 +68,7 @@
 												</button>
 
 											</div>
-										</div> 
+										</div>  -->
 
 									</div>
 								</div>
@@ -102,7 +102,7 @@
 							<div class="cliente__opciones--otra">
 								<span id="abrirModal4" class="form-control cliente__opciones--button click"><i class="fa fa-plus"></i>Agregar Nueva</span>
 							</div>
-							<div class="cliente__opciones--nueva" ng-show="Facturacion.dataFacturacion[1].Predeterminado != 0 && Costumer.facturacion != 0">
+							<div class="cliente__opciones--nueva" ng-show="Facturacion.dataFacturacion[0].Predeterminado != 0 && Costumer.facturacion != 0">
 								<span id="facturaNo" class="form-control cliente__opciones--button" ng-click="facturaNo()"><i class="fa fa-ban"></i>No Usar Datos</span>
 							</div>
 						</div>
