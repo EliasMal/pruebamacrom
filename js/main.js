@@ -210,7 +210,6 @@
     });
     
     $(".switch__darkmode").on('click',function() {
-        console.log($(this));
         if($(this).is(':checked')){
             localStorage.setItem('darkmode',"dark");
             $(".switch__darkmode").removeClass('fa-sun');
@@ -310,16 +309,6 @@ document.querySelectorAll(".click").forEach(el => {
     });
 });
 
-document.querySelectorAll(".sidebar__click").forEach(sd =>{
-    sd.addEventListener("click", s =>{
-        const ids = s.target.getAttribute("id");
-        var id_s = ids.charAt(7);
-        localStorage.setItem("menu","sidebar"+id_s);
-        let id_s_cambio = document.getElementById("sidebar"+id_s);
-        id_s_cambio.classList.add("sidebar__active");
-    });
-});
-
 document.querySelectorAll(".closem").forEach(el => {
     el.addEventListener("click", e => {
       let cerrar = []; let modales = [];
@@ -354,11 +343,38 @@ window.addEventListener("click",function(event){
     }
 });
 //Abrir y cerrar modales end.
-const sidemenu = document.querySelector("#"+localStorage.getItem("menu"));
-sidemenu.classList.add("sidebar__active");
-document.querySelector(".clicksidebar").addEventListener("click", function(){
-    localStorage.setItem("menu","sidebar0");
-});
-document.querySelector(".clicksidebarshop").addEventListener("click", function(){
-    localStorage.setItem("menu","sidebar2");
-});
+
+switch(window.location.href){
+    case "https://macromautopartes.com/?mod=nosotros":
+        document.querySelector("#sidebar4").classList.add("sidebar__active");
+    break;
+    case "https://macromautopartes.com/?mod=home":
+        document.querySelector("#sidebar0").classList.add("sidebar__active");
+    break;
+    case "https://macromautopartes.com/?mod=Blog":
+        document.querySelector("#sidebar9").classList.add("sidebar__active");
+    break;
+    case "https://macromautopartes.com/?mod=catalogo":
+        document.querySelector("#sidebar1").classList.add("sidebar__active");
+    break;
+    case "https://macromautopartes.com/?mod=Compras":
+        document.querySelector("#sidebar2").classList.add("sidebar__active");
+    break;
+    case "https://macromautopartes.com/?mod=Profile&opc=Session":
+        document.querySelector("#sidebar5").classList.add("sidebar__active");
+    break;
+    case "https://macromautopartes.com/?mod=Profile&opc=Mispedidos":
+    case "https://macromautopartes.com/?mod=Profile&opc=Mispedidos_view":
+        document.querySelector("#sidebar6").classList.add("sidebar__active");
+    break;
+    case "https://macromautopartes.com/?mod=Profile&opc=Facturacion":
+    case "https://macromautopartes.com/?mod=Profile&opc=Facturacion_add":
+    case "https://macromautopartes.com/?mod=Profile&opc=Facturacion_edit":
+        document.querySelector("#sidebar8").classList.add("sidebar__active");    
+    break;
+    case "https://macromautopartes.com/?mod=Profile&opc=Direcciones":
+    case "https://macromautopartes.com/?mod=Profile&opc=Direcciones_add":
+    case "https://macromautopartes.com/?mod=Profile&opc=Direcciones_edit":
+        document.querySelector("#sidebar7").classList.add("sidebar__active");  
+    break;
+}

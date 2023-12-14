@@ -25,6 +25,23 @@ function homeCtrl ($scope,$http){
     obj.productos = [];
     obj.databannerPrincipal;
     obj.promociones;
+    
+    const vistamasvendidos = document.querySelector("#vistamasvendidos");
+    const vistaliquidacion = document.querySelector("#vistaliquidacion");
+
+    document.querySelector(".toolbar_click").addEventListener("click", function(){
+        vistaliquidacion.style.display="none";
+        vistamasvendidos.style.display="block";
+        this.classList.add("toolbar__activada");
+        document.querySelector(".toolbar_click0").classList.remove("toolbar__activada");
+    });
+    document.querySelector(".toolbar_click0").addEventListener("click", function(){
+        vistamasvendidos.style.display="none";
+        vistaliquidacion.style.display="block";
+        this.classList.add("toolbar__activada");
+        document.querySelector(".toolbar_click").classList.remove("toolbar__activada");
+    });
+
 
     obj.eachRefacciones = (array)=>{
         array.forEach(e=>{
@@ -32,23 +49,6 @@ function homeCtrl ($scope,$http){
                 e.agotado = token
             })
         })
-    }
-
-    const masvendidos = document.getElementById("masvendidos");
-    const liquidacion = document.getElementById("liquidacion");
-    const idopcion1 = document.getElementById("idmasvendidos");
-    const idopcion2 = document.getElementById("idliquidacion");
-    obj.mostrarvendido = ()=>{
-        liquidacion.style.display = "none";
-        masvendidos.style.display = "block";
-        idopcion1.classList.add("opcion__activada");
-        idopcion2.classList.remove("opcion__activada");
-    }
-    obj.mostrarliquida = () =>{
-        masvendidos.style.display = "none";
-        liquidacion.style.display = "block";
-        idopcion2.classList.add("opcion__activada");
-        idopcion1.classList.remove("opcion__activada");
     }
 
     obj.getSeicom = async (clave)=>{
@@ -102,7 +102,6 @@ function homeCtrl ($scope,$http){
         }
         
     }
-
 
     obj.getImagen = (e)=>{
         return "images/Categorias/"+e._id+".png";

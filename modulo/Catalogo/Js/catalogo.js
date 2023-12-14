@@ -36,7 +36,7 @@ function catalogosCtrl ($scope,$http){
     obj.pages = [];
     obj.pageSize = 20;
     obj.Trefacciones = 0;
-    
+
     obj.eachRefacciones = (array)=>{
         array.forEach(e=>{
             obj.getSeicom(e.Clave).then(token => {
@@ -44,6 +44,7 @@ function catalogosCtrl ($scope,$http){
             })
         })
     }
+
     obj.getSeicom = async (clave)=>{
         try {
             const result = await $http({

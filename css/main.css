@@ -356,7 +356,7 @@ img{
 }
 
 .home__pr{
-  margin-bottom:4rem;
+  border: 1px solid var(--gris-mid);
 }
 
 .sidebar__mobil{
@@ -380,10 +380,10 @@ img{
   box-shadow:0 0.4rem 1rem var(--gris);
   color: var(--blanco) !important;
 }
-.sidebar__active a{
+.sidebar__active a, .sidebar__logout i{
   color: var(--blanco);
 }
-#sidebar9{
+.sidebar__logout{
   justify-content: center;
   background-color: var(--primario);
   color: var(--blanco);
@@ -442,7 +442,10 @@ img{
   align-content: center;
   align-items: center;
 }
-
+.menu__enlaces__contenedor{
+  position: relative;
+  top: 1rem;
+}
 /*Prueba Botón Modo Oscuro*/
 .modo__oscuro, .modo__oscuro__pc{
   display: table-cell;
@@ -453,6 +456,7 @@ img{
   padding-left: 3rem;
 }
 .modo__oscuro__pc{
+  margin-bottom: 1rem;
   display: none;
 }
 .modo__oscuro i, .modo__oscuro__pc i{
@@ -510,7 +514,8 @@ img{
 }
 .btn-color-mode-switch input[type="checkbox"]{
   cursor: pointer;
-  width: 50px;
+  width: 100%;
+  left: 0;
   height: 25px;
   opacity: 0;
   position: absolute;
@@ -634,6 +639,7 @@ img{
 }
 .buscador__general{
   margin-top: 1rem;
+  display: none !important;
 }
 .buscador__general i{
   display: flex;
@@ -650,13 +656,72 @@ img{
   margin-top: 0.5rem;
   padding-left: 1rem;
 }
-@media(min-width: 800px) {
+.avisos__productos{
+  display: flex;
+  flex-wrap:wrap;
+}
+.promocion__aviso{
+  background-color: var(--primario);
+  color: var(--blanco);
+  border-radius: 0.3rem;
+  padding: 0 0.3rem 0 0.3rem;
+  text-transform: uppercase;
+  width: 9rem;
+  font-size: 1.2rem;
+}
+.enviogratis__aviso{
+  background-color: royalblue;
+  color: var(--blanco);
+  border-radius: 0.3rem;
+  padding: 0 0.3rem 0 0.3rem;
+  text-transform: uppercase;
+  width: 9rem;
+  font-size: 1.2rem;
+}
+.precio__producto{
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+.precio__imgprove{
+display: grid;
+}
+#vistaliquidacion, .nuestrosproductos__opciones{
+  display: block;
+}
+.toolbar__vistaopciones{
+  display: none;
+}
+.toolbar__activada{
+  border-bottom: 0.2rem solid var(--primario);
+}
+@media(min-width: 800px) { 
   .buscador__general{
     margin-top: 0;
     margin-bottom: 1rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+  }
+  .toolbar__vistaopciones{
+    display: grid;
+    margin-top: 3rem;
+    grid-template-columns: repeat(2,1fr);
+    justify-items: center;
+    align-items: center;
+  }
+  #vistaliquidacion, .nuestrosproductos__opciones{
+    display:none;
+  }
+  .home__pr:hover {
+    box-shadow: 5px 10px 20px #000;
+  }
+  .precio__imgprove{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .avisos__productos{
+    flex-wrap:nowrap;
   }
   .buscador__general input{
     width: 50rem;
@@ -862,7 +927,6 @@ img{
   padding-bottom: 5rem;
 }
 .contenedor__nuestrosproductos h3{
-  padding-bottom: 5rem;
   line-height: 1.2;
   text-transform: uppercase;
   font-weight: 700;
@@ -873,11 +937,13 @@ img{
       max-width: 20rem;
     }
 }
-
-.nuestrosproductos__masvendidos, .nuestrosproductos__liquidacion{
+.productos__informacion{
   display: grid;
   grid-template-columns: repeat(2,1fr);
-  column-gap: 4rem;
+}
+.productos__informacion a img{
+  width: 100%;
+  padding: 2.5rem;
 }
 .contenedor__nuestrosproductos--masvendidos, .contenedor__nuestrosproductos--liquidacion{
   padding: 2rem;
@@ -888,25 +954,18 @@ img{
 }
 
 #liquidacion{
-	display:none;
   padding:10px;
   cursor:pointer;
-}
-.nuestrosproductos__listaopciones{
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  column-gap: 4rem;
 }
 .nuestrosproductos__opciones{
   font-size: 2rem;
 }
-.nuestrosproductos__opciones label span{
-  cursor: pointer;
-}
 .opcion__activada{
-  color: var(--primario);
-  box-shadow: 8px 5px 11px;
-  border-radius: 0.5rem;
+  color: var(--blanco);
+  background-color: var(--primario);
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  height: 4rem;
 }
 .redes__sociales--titulo{
   padding: 2rem 0rem 4rem;
@@ -922,27 +981,44 @@ img{
 
 @media(min-width: 768px) {
     .nuestrosproductos__masvendidos,.nuestrosproductos__liquidacion{
-      grid-template-columns: repeat(4,1fr);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(25rem, 100%),1fr));
+      grid-gap: 2rem;
+      text-align: justify;
+    }
+    .productos__informacion{
+      grid-template-columns: none;
+    }
+    .productos__informacion a img{
+      width: 70%;
+      justify-self: center;
+      padding: 0;
+    }
+    .productos__informacion .wrap-pic-w a{
+      display: grid;
     }
 }
 
 /* Contenido principal refacciones **/
 .descripcion-producto {
   display: flex;
-  flex-wrap: nowrap;
-  height: 10rem;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
-
+.descripcion-producto-refa{
+  display: flex;
+}
+.descripcion-producto-refa img{
+  width: 30%;
+}
 .descripcion-producto p{
-  width: 70%;
-  padding-top: 5px;
-  margin-left: 15px;
+  color: var(--negro);
 } 
-
-.descripcion-producto img{
-   width: 30%;
+.proovedor__img{
+  align-self: flex-end;
+  justify-self: flex-end;
+  width: 50%;
 }
-
 /* Contenido principal compras */
 .productos__datos--img img{
   width: 9rem;
@@ -1209,6 +1285,9 @@ img{
     display: grid;
     grid-template-columns: 1fr;
     column-gap: 4rem;
+  }
+  .proovedor__img{
+    width: 35%;
   }
   .acepto__tyc{
     font-size: 1.2rem;
@@ -1505,6 +1584,7 @@ img{
 }
 .block2-txt{
   padding-top: 2rem;
+  display: grid;
 }
 .categorias__link i{
   margin-right: 1rem;
@@ -1981,9 +2061,6 @@ margin: 0;
     position: absolute;
     margin-top:-95px;
     margin-left:100px;
-  }
-  .descripcion-producto{
-    margin-top:20px;
   }
   html, body, section{
     overflow-x: hidden;

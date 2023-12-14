@@ -605,7 +605,7 @@ color: white;
   border-bottom: 25px solid #FFF;
   line-height:23px;
   transform: rotate(-45deg);
-  box-shadow: 0px 3px 5px -3px #000;
+  box-shadow: 0 3px 3px -3px #000;
 }
 
 .ribboagotado{
@@ -632,7 +632,7 @@ color: white;
   border-bottom: 25px solid #fff;
   line-height:23px;
   transform: rotate(-45deg);
-  box-shadow: 0px 3px 5px -3px #000;
+  box-shadow: 0 3px 3px -3px #000;
 }
 
 .ribbonoferta{
@@ -659,7 +659,7 @@ color: white;
   border-bottom: 25px solid #fff;
   line-height:23px;
   transform: rotate(-45deg);
-  box-shadow: 0px 3px 5px -3px #000;
+  box-shadow: 0 3px 3px -3px #000;
 }
 
 .ribbonliquidacion{
@@ -686,7 +686,7 @@ color: white;
   border-bottom: 25px solid #fff;
   line-height:23px;
   transform: rotate(-45deg);
-  box-shadow: 0px 3px 5px -3px #000;
+  box-shadow: 0 3px 3px -3px #000;
 }
 
 .enviogratis{

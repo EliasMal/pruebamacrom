@@ -212,9 +212,9 @@
 
 						<div class="modo__oscuro">
 							<i class="fa fa-sun" aria-hidden="true"></i>
-							<label class="switch btn-color-mode-switch">
+							<label class="switch btn-color-mode-switch" for="switch__darkmode">
 								<input type="checkbox" name="switch__darkmode" class="switch__darkmode">
-								<label for="switch__darkmode" data-on="Oscuro" data-off="Claro" class="btn-color-mode-switch-inner enlace"></label>
+								<label for="switch__darkmode" data-on="Oscuro" data-off="Claro" class="btn-color-mode-switch-inner"></label>
 							</label>
 							  <i class="fa fa-moon" aria-hidden="true"></i>
 						</div>
@@ -223,23 +223,27 @@
 							<div class="menu__enlaces">
 								<span id="sidebar0" class="sidebar__click" onclick="location.href ='?mod=home'">
 									<i class="fa fa-home" name="home-outline"></i>
-									<a class="menu__enlaces--links txtgris">Inicio</a>
+									Inicio
 								</span>
 								<span id="sidebar1" class="sidebar__click" onclick="location.href ='?mod=catalogo'">
 									<i class="fa fa-wrench" name="wrench-outline"></i>
-									<a class="menu__enlaces--links txtgris">Refacciones</a>
+									Refacciones
 								</span>
 								<span id="sidebar2" class="sidebar__click" ng-show="user" onclick="location.href ='?mod=Compras'">
 									<i class="fa fa-shopping-cart" name="shopping-cart-outline"></i>
-									<a class="menu__enlaces--links txtgris">Carrito</a>
+									Carrito
 								</span>
-								<span id="sidebar3" class="sidebar__click" ng-show="!user" onclick="location.href ='?mod=login'">
+								<span id="sidebar3" class="sidebar__click" ng-show="!user" onclick="location.href ='?mod=login'"><!--Puede asignarse su id a otro modulo, no es necesario en este(Redirecciona a Login, por lo que jamas marcara este modulo)-->
 									<i class="fa fa-shopping-cart" name="shopping-cart-outline"></i>
 									<a class="menu__enlaces--links txtgris">Carrito</a>
 								</span>
 								<span id="sidebar4" class="sidebar__click" onclick="location.href ='?mod=nosotros'">
 									<i class="fa fa-question-circle" name="info-outline"></i>
-									<a class="menu__enlaces--links txtgris">Nosotros</a>
+									Nosotros
+								</span>
+								<span id="sidebar9" class="sidebar__click" onclick="location.href ='?mod=Blog'">
+									<i class="fas fa-book"></i>
+									Blog
 								</span>
 							</div>
 							<hr>
@@ -247,21 +251,21 @@
 
 								<span id="sidebar5" class="sidebar__click" onclick="location.href ='?mod=Profile&opc=Session'">
 									<i loading="lazy" alt="icono seguridad" class="fa fa-shield-alt"></i>
-									<a class="menu__enlaces--links txtgris">Sesión y Seguridad</a>
+									Sesión y Seguridad
 								</span>
 								<span id="sidebar6" class="sidebar__click" onclick="location.href ='?mod=Profile&opc=Mispedidos'">
 									<i loading="lazy" alt="icono pedidos" class="fa fa-shopping-cart"></i>
-									<a class="menu__enlaces--links txtgris">Mis Pedidos</a>
+									Mis Pedidos
 								</span>
 								<span id="sidebar7" class="sidebar__click" onclick="location.href ='?mod=Profile&opc=Direcciones'">
 									<i loading="lazy" alt="icono direcciones" class="fa fa-map-marked-alt"></i>
-									<a class="menu__enlaces--links txtgris">Mis Direcciones</a>
+									Mis Direcciones
 								</span>
 								<span id="sidebar8" class="sidebar__click" onclick="location.href ='?mod=Profile&opc=Facturacion'">
 									<i loading="lazy" alt="icono facturación" class="fa fa-file-invoice-dollar"></i>
-									<a class="menu__enlaces--links txtgris">Datos Facturación</a>
+									Datos Facturación
 								</span>
-								<span id="sidebar9" class="sidebar__click center--text" ng-click="btnLogout()">
+								<span class="sidebar__logout center--text" ng-click="btnLogout()">
 									<i loading="lazy" alt="icono cerrar_sesión" class="fas fa-sign-out-alt"></i>
 									<a class="menu__enlaces--links text-white">Cerrar Sesión</a>
 								</span>

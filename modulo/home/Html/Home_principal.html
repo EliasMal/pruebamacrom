@@ -42,92 +42,83 @@
 					
 					<div class="nuestrosproductos">
 						<div class="nuestrosproductos__listaopciones">
-							<div class="nuestrosproductos__opciones center--text opcion__activada" id="idmasvendidos">
-								<label><span ng-click="mostrarvendido()">Más Vendidos</span></label>
-							</div>
 
-							<div class="nuestrosproductos__opciones center--text" id="idliquidacion">
-								<label><span ng-click="mostrarliquida()">Liquidación</span> </label>
-							</div>
 						</div>
 
 						<!-- Tab panes -->
 						<div class="tab-content">
+							<div class="toolbar__vistaopciones">
+								<span class="enlace toolbar_click toolbar__activada">Más Vendidos</span>
+								<span class="enlace toolbar_click0">Liquidación</span>
+							</div>
 							<!-- Mas vendidos -->
-							<div class="contenedor__nuestrosproductos--masvendidos" id="masvendidos">
+							<div class="contenedor__nuestrosproductos--masvendidos" id="vistamasvendidos">
+								<div class="nuestrosproductos__opciones center--text opcion__activada">
+									<label><span>Más Vendidos</span></label>
+								</div>
 								<div class="nuestrosproductos__masvendidos">
-									<div class="enlace home__pr" ng-repeat="producto in Data.masVendidos">
+									<div class="home__pr" ng-repeat="producto in Data.masVendidos | limitTo: 8">
 										<!-- Block2 -->
-										<div class="block2">
-											<div class="block2-img wrap-pic-w of-hidden cursorpnt" 
-											ng-class="{
-												'ribboagotado': producto.agotado ,
-												'pos-relative': !producto.agotado
+										<div class="productos__informacion">
+											<div class="wrap-pic-w of-hidden cursorpnt" 
+											ng-class="{'ribboagotado': producto.agotado ,'pos-relative': !producto.agotado}">
 
-											}"
-											ng-style="{'background-color': producto.color}">
-											<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}">
+											<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="enlace">
 												<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}">
 											</a>
 											</div>
 
 											<div class="block2-txt">
 												<section class="descripcion-producto">
-													<img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.idProveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
-													alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}">
-													<p class="block2-name dis-block s-text3">
-														{{producto.Producto}}
-													</p>
-													
+													<div class="avisos__productos">
+														<!-- <span class="promocion__aviso">promoción</span> -->
+														<span class="enviogratis__aviso" ng-show="producto.Enviogratis">envío gratis</span>
+													</div>
+													<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
+													<div class="precio__imgprove">	
+														<p class="precio__producto">{{producto.Precio1 | currency}}</p>
+														<img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.idProveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
+														alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}" class="proovedor__img">
+													</div>
 												</section>
-
-												<span class="block2-price m-text6 text-white text-center">
-													<h3 class="precio">{{producto.Precio1 | currency}}</h3>
-												</span>
 												
-												<div class="enviogratis"  ng-show="producto.Enviogratis">
-													<img src="/images/icons/Icono-camion.png" loading="lazy" alt="">
-													<p > <strong>Envío Gratis </strong> </p> 
-												</div>
+
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-
-							<!-- Liquidaciones -->
-							<div class="contenedor__nuestrosproductos--liquidacion" id="liquidacion">
-								<div class="nuestrosproductos__liquidacion">
-									<div class="enlace home__pr" ng-repeat="producto in Data.liquidacion">
+							<div class="contenedor__nuestrosproductos--masvendidos" id="vistaliquidacion">
+								<div class="nuestrosproductos__opciones center--text opcion__activada">
+									<label><span>Liquidación</span> </label>
+								</div>
+								<div class="nuestrosproductos__masvendidos">
+									<div class="home__pr" ng-repeat="producto in Data.liquidacion | limitTo: 8">
 										<!-- Block2 -->
-										<div class="block2">
-											<div class="block2-img wrap-pic-w of-hidden cursorpnt" 
-											ng-class="{
-												'ribbonliquidacion': producto.RefaccionLiquidacion ,
-												'pos-relative': !producto.agotado
-
-											}"
-											ng-style="{'background-color': producto.color}">
-											<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}">
-												<img ng-src="{{producto.imagen? 'images/refacciones/' + producto._id + '.webp':'images/refacciones/' + producto._id + '.webp'}}" loading="lazy" alt="IMG-PRODUCT">
+										<div class="productos__informacion">
+											<div class="wrap-pic-w of-hidden cursorpnt" 
+											ng-class="{'ribbonliquidacion': producto.RefaccionLiquidacion ,'pos-relative': !producto.agotado}">
+											<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="enlace">
+												<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}">
 											</a>
 											</div>
 
 											<div class="block2-txt">
 												<section class="descripcion-producto">
-													<img loading="lazy" ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.idProveedor + '.webp':'images/Marcasrefacciones/boxed-bg.webp'}}" 
-													alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}">
-													<p class="block2-name dis-block s-text3">
-														{{producto.Producto}}
-													</p>
-													
+
+													<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
+													<div class="precio__imgprove">	
+														<p class="precio__producto">{{producto.Precio1 | currency}}</p>
+														<img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.idProveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
+														alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}" class="proovedor__img">
+													</div>
+
 												</section>
-												<span class="block2-price m-text6 text-white text-center">
-													<h3 class="precio">{{producto.Precio1 | currency}}</h3>
-												</span>
+												
+
 												<div class="enviogratis"  ng-show="producto.Enviogratis">
 													<img src="/images/icons/Icono-camion.png" loading="lazy" alt="">
-													<p > <strong>Envío Gratis </strong> </p> 
+													<p> <strong>Envío Gratis </strong> </p> 
 												</div>
 											</div>
 										</div>

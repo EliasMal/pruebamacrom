@@ -178,7 +178,7 @@
 
 								</div>
 								<div class="block2-txt">
-									<section class="descripcion-producto">
+									<section class="descripcion-producto-refa">
 										<img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.id_proveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
 										alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}">
 										<p class="block2-name dis-block s-text3">
