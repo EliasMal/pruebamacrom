@@ -186,6 +186,23 @@ img{
 .Proceso__Compra2{
   padding: 2rem;
 }
+.acreditar__boton {
+  background-color: var(--primario);
+  color: var(--blanco);
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+.acreditar__contenedor--links {
+  display: flex;
+  justify-content: space-evenly;
+}
+.acreditar__boton:hover {
+  box-shadow: 3px 4px 5px var(--negro);
+  color: var(--blanco);
+}
 /*Dark Theme*/
 .perfil__theme--dark, .perfil__theme--dark .box-pedidos, .perfil__theme--dark ul li .page-link{
   background-color: transparent;
