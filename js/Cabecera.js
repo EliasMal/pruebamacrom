@@ -83,10 +83,15 @@ function CabeceraCtrl($scope,$http, $sce,vcRecaptchaService){
         Swal.fire({
             title: "¿Deseas Eliminar la Refaccion del carrito?",
             showCancelButton: true,
-            confirmButtonText: "Eliminar",
+            confirmButtonText: "Eliminar"
           }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire("Eliminado!", "", "Correctamente");
+                Swal.fire({
+                    showConfirmButton: false,
+                    title: "¡Eliminado!",
+                    text: "El articulo fue eliminado",
+                    icon: "success"
+                });
                 Refaccion.erase = 1;
                 Refaccion.borrar = Refaccion.Clave;
                 Refaccion.n = $_SESSION["CarritoPrueba"]["length"];

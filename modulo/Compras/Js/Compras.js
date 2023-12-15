@@ -301,7 +301,12 @@ obj.cupon = () =>{ //prueba cupon local
             confirmButtonText: "Eliminar",
           }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire("Eliminado!", "", "Correctamente");
+                Swal.fire({
+                    showConfirmButton: false,
+                    title: "¡Eliminado!",
+                    text: "El articulo fue eliminado",
+                    icon: "success"
+                });
                 Refaccion.erase = 1;
                 Refaccion.borrar = Refaccion.Clave;
                 Refaccion.n = $_SESSION["CarritoPrueba"]["length"];
