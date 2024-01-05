@@ -366,7 +366,6 @@ function ProfileCtrl($scope, $http){
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
                 obj.profile = res.data.Data;
-                console.log(obj.profile, "Entro a este dato");
                 if(!localStorage.getItem("iduser")){
                     localStorage.setItem("iduser",obj.profile._id)
                 }else{
@@ -630,7 +629,6 @@ function ProfileCtrl($scope, $http){
             obj.getDatosCliente(); 
         }
 
-        console.log(obj.pag)
         switch(obj.pag){
             case 'Session':
             case 'Direcciones':

@@ -74,12 +74,12 @@ session_start();
         }
 
         private function getMarcas (){
-            $sql = "SELECT * FROM Marcas where Estatus = 1 order by Marca";
+            $sql = "SELECT _id, Marca FROM Marcas where Estatus = 1 order by Marca";
             return $this->conn->fetch_all($this->conn->query($sql));
         }
 
         private function getModelos(){
-            $sql = "Select _id,Modelo from Modelos where Estatus = 1 and _idMarca = "
+            $sql = "Select _id, Modelo from Modelos where Estatus = 1 and _idMarca = "
                     .$this->formulario["marca"] ." order by Modelo asc";
             return $this->conn->fetch_all($this->conn->query($sql));
         }
@@ -140,26 +140,29 @@ session_start();
         private function getRefacciones($arrayLikes, $x=0, $y = 20 ){
             $array = array();
                 
-                if(isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0){
-                    $condicion = $this->formulario["categoria"]!= "T"? " and P._idCategoria = {$this->formulario["categoria"]}":"";
-                }
-                
-                if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
-                    if(isset($this->formulario["marca"]) and (isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0)){
-                        if(isset($this->formulario["marca"]) and isset($this->formulario["vehiculo"]) and (isset($this->formulario["anio"]) and strlen($this->formulario["anio"])!=0)){
-                            if(isset($this->formulario["marca"]) and isset($this->formulario["vehiculo"]) and isset($this->formulario["anio"]) and (isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0)){
-                                    $condicion .= " and P._idMarca = {$this->formulario["marca"]} and P.Modelo = {$this->formulario["vehiculo"]} and P.Anios = {$this->formulario["anio"]}"; 
-                            }else{
-                               $condicion .= " and P._idMarca = {$this->formulario["marca"]} and P.Modelo = {$this->formulario["vehiculo"]} and P.Anios = {$this->formulario["anio"]}"; 
-                            }
+            if(isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0){
+                $condicion = $this->formulario["categoria"]!= "T"? " and P._idCategoria = {$this->formulario["categoria"]}":"";
+            }
+        
+            if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
+
+                if(isset($this->formulario["marca"]) and (isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0)){
+                    if(isset($this->formulario["marca"]) and isset($this->formulario["vehiculo"]) and (isset($this->formulario["anio"]) and strlen($this->formulario["anio"])!=0)){
+                        if(isset($this->formulario["marca"]) and isset($this->formulario["vehiculo"]) and isset($this->formulario["anio"]) and (isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0)){
+                            $condicion .= " and P._idMarca = {$this->formulario["marca"]} and P.Modelo = {$this->formulario["vehiculo"]} and P.Anios = {$this->formulario["anio"]}"; 
+
                         }else{
-                           $condicion .= " and P._idMarca = {$this->formulario["marca"]} and P.Modelo = {$this->formulario["vehiculo"]}"; 
+                            $condicion .= " and P._idMarca = {$this->formulario["marca"]} and P.Modelo = {$this->formulario["vehiculo"]} and P.Anios = {$this->formulario["anio"]}"; 
                         }
+
                     }else{
-                        $condicion .= " and P._idMarca = {$this->formulario["marca"]} ";
+                        $condicion .= " and P._idMarca = {$this->formulario["marca"]} and P.Modelo = {$this->formulario["vehiculo"]}"; 
                     }
+
+                }else{
+                    $condicion .= " and P._idMarca = {$this->formulario["marca"]} ";
                 }
-                
+            }
                 
             $sql = "SELECT P.*, PROV._id as idProveedor, PROV.tag_alt as tag_altproveedor, PROV.tag_title as tag_titleproveedor FROM Producto AS P "
             . "left join Proveedor as PROV on (P.id_proveedor = PROV._id) "

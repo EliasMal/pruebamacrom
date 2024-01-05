@@ -196,7 +196,7 @@
                     . " Peso = {$this->formulario["Peso"]}, id_proveedor = {$this->formulario["id_proveedor"]}, tag_title='{$this->formulario["tag_title"]}'," 
                     . " tag_alt='{$this->formulario["tag_alt"]}', RefaccionLiquidacion = '{$this->formulario["RefaccionLiquidacion"]}', "
                     . " Enviogratis = '{$this->formulario["Enviogratis"]}', Publicar={$this->formulario["Publicar"]},"
-                    . " userModify='{$_SESSION["usr"]}', dateModify='".date("Y-m-d H:i:s")."'"
+                    . " userModify='{$_SESSION["nombre"]}', dateModify='".date("Y-m-d H:i:s")."'"
                     . " where _id = {$this->formulario["_id"]}";
                     break;
             }

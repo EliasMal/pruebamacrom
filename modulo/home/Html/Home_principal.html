@@ -20,12 +20,12 @@
 						<div class="categoria__cat" ng-repeat="categoria in Data.Categorias">
 							<!-- block1 -->
 							<div class="block1 hov-img-zoom pos-relative m-b-20">
-													<a href="?mod=catalogo&cat={{categoria._id}}">
+													<a href="?mod=catalogo&pag=1&prod=&cate={{categoria._id}}&armadora=&mdl=&[a]=">
 														<img ng-src="{{getImagen(categoria)}}" alt="IMG-BENNER" class="filcatego">
 													</a>
 								<div class="block1-wrapbtn">
 									<!-- Button -->
-									<a href="?mod=catalogo&cat={{categoria._id}}" class="categoria__enlace">
+									<a href="?mod=catalogo&pag=1&prod=&cate={{categoria._id}}&armadora=&mdl=&[a]=" class="categoria__enlace">
 										{{categoria.Categoria}}
 									</a>
 								</div>
@@ -197,22 +197,33 @@
 			</div>
 		</main>
 	</div>
+	<!-- Messenger plugin del chat Code -->
+    <div id="fb-root"></div>
 
-<div id="fb-root"></div>
-<script>
-	window.fbAsyncInit = function() {
-	  FB.init({
-		xfbml            : true,
-		version          : 'v10.0'
-	  });
-	};
-  
-	(function(d, s, id) {
-	var js, fjs = d.getElementsByTagName(s)[0];
-	if (d.getElementById(id)) return;
-	js = d.createElement(s); js.id = id;
-	js.src = 'https://connect.facebook.net/es_LA/sdk/xfbml.customerchat.js';
-	fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));</script>
-  
-  <!-- End Facebook Pixel Code -->
+    <!-- Your plugin del chat code -->
+    <div id="fb-customer-chat" class="fb-customerchat">
+    </div>
+
+    <script>
+      var chatbox = document.getElementById('fb-customer-chat');
+      chatbox.setAttribute("page_id", "110475466202057");
+      chatbox.setAttribute("attribution", "biz_inbox");
+    </script>
+
+    <!-- Your SDK code -->
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          xfbml            : true,
+          version          : 'v18.0'
+        });
+      };
+
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/es_LA/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>

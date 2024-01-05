@@ -31,7 +31,6 @@
 								<img src="{{getGaleria(gal._id)+'.webp'}}" alt="miniatura" class="secundaria">
 							</div>
 						</div>
-						
 					</div>
 					
 					<div class="">
@@ -44,7 +43,7 @@
 				</div>
 			</div>
 
-			<div class="">
+			<div class="detalles__informacion center--text">
 				<h4 class="product-detail-name m-text16">
 					{{Refaccion.datos.Producto}}
 				</h4>

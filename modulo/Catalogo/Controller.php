@@ -12,7 +12,7 @@
     function principal(){
         $formulario = array_map("htmlspecialchars", $_GET);
         $opc = isset($formulario["opc"])? $formulario["opc"]:"principal";
-        $data["categoria"] = isset($formulario["cat"])? $formulario["cat"]:"";
+        $data["categoria"] = isset($formulario["cate"])? $formulario["cate"]:"";
         switch($opc){
            case 'principal':
                retorna_vista($opc,$data);

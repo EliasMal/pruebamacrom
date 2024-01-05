@@ -1,4 +1,4 @@
-  .enlace{
+  .enlace, .list-group a{
     cursor: pointer;
   }
   .enlace:hover{

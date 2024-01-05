@@ -21,6 +21,6 @@
     } else {
       echo "Error inserting data: " . mysqli_error($conn);
     }
-  
+    
     // Close the connection
     mysqli_close($conn);

@@ -46,6 +46,10 @@
                                             <label for="tagalt">Tag alt:</label>
                                             <input type="text" class="form-control" name="tagalt" id="tagalt" ng-model="refaccion.tag_alt" ng-disabled="habilitado">
                                         </div>
+                                        <div class="col-md-12 col-lg-12">
+                                            <label for="">Ultimo en modificar:</label>
+                                            <input type="text" class="form-control" ng-model="refaccion.userModify" disabled/>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 mt-2">
@@ -363,7 +367,6 @@
                             <input type="text" name="txttitle" id="txttitle" class="form-control" ng-model="Galeria.tag_title" />
                             <label for="slcMarca">Tag alt</label>
                             <input type="text" name="txtalt" id="txtalt" class="form-control" ng-model="Galeria.tag_alt" />
-                            
 
                         </div>
                     </div>

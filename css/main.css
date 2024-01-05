@@ -324,6 +324,9 @@ img{
   position: relative;
   z-index: 1;
 }
+.macrom{
+  background-color: var(--blanco);
+}
 .header__topbar{
   display: flex;
   column-gap: 2rem;
@@ -1540,6 +1543,10 @@ display: grid;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
+.paginador__new{
+  display: flex;
+  justify-content: center;
+}
 @media(min-width: 800px) {
   .catalogo__filtrado--opciones{
     display: grid;
@@ -1910,8 +1917,14 @@ display: grid;
   grid-template-columns: repeat(3,1fr);
   justify-items: center;
 }
-
-@media(min-width: 768px) {
+.hero{
+  width: 40rem;
+}
+.detalles__visual--producto{
+  display: flex;
+  justify-content: center;
+}
+@media(min-width: 800px) {
   .detalles{
     grid-template-columns: repeat(2,1fr);
   }

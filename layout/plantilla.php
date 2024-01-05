@@ -45,18 +45,11 @@
     <meta property="business:contact_data:postal_code" content="28980">
     <meta property="business:contact_data:country_name" content="Mexico">
 
-    <!-- Facebook Metas -->
-    <meta property="fb:app_id" content="732648563841854">
-    <meta property="fb:pages" content="https://www.facebook.com/MacromAutopartes">
-    <meta property="fb:admins" content="732648563841854">
-    <link rel="shortcut icon" href="https://macromautopartes.com/images/icons/FaviconM.webp" type="image/webp" />
-    <link rel="canonical" href="https://macromautopartes.com/" />
-
 <!--===============================================================================================-->
 	<link rel="icon" type="image/png" href="images/icons/FaviconM.png"/>
 <!--===============================================================================================-->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="fonts/fontawesome-5/css/all.min.css">
 <!--===============================================================================================-->
@@ -98,8 +91,8 @@
 </script>
 
 </head>
-<body class="animsition" ng-app="tsuruVolks" ng-cloak id="BodyDark">
-    
+<body class="animsition body__theme--light" ng-app="tsuruVolks" ng-cloak id="BodyDark">
+
     <?php 
         include("./includes/cabecera.php");
        
@@ -111,18 +104,6 @@
         
         include("./includes/footer.php");
     ?>
-	
-<div id="fb-root"></div>
-
-
-<!-- Your customer chat code -->
-<div class="fb-customerchat"
-  attribution=setup_tool
-  page_id="110475466202057"
-  theme_color="#FF121C"
-  logged_in_greeting="Hola, En que podemos ayudarte?"
-  logged_out_greeting="Hola, En que podemos ayudarte?">
-</div>
 <!--===============================================================================================-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script type="text/javascript" src="vendor/momentjs/moment.min.js"></script>

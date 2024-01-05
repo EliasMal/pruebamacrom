@@ -19,36 +19,36 @@
 						<div class="catalogo__filtrado--opciones">
 
 							<label for="txtMarca" class="text-white">Armadora:</label>
-							<select name="txtMarca" id="txtMarca" class="form-control" ng-model="refaccion.marca"
-								ng-change="getVehiculos(true)">
+							<select name="txtMarca" id="txtMarca" class="form-control" onchange="window.location.href='?mod=catalogo&pag=1&prod='+document.getElementById('prod_input').value+'&cate='+document.getElementById('txtCategoria').value+'&armadora='+this.value+'&mdl=&[a]='"
+								ng-model="refaccion.marca">
 								<optgroup label="Selecciona la Marca">
-									<option value="T">-- Todas --</option>
+									<option value="">--Todas--</option>
 									<option ng-repeat="marca in Marcas" value="{{marca._id}}">{{marca.Marca}}</option>
 								</optgroup>
 							</select>
 
 							<label for="txtVehiculo" class="text-white">Vehiculo</label>
-							<select name="txtVehiculo" id="txtVehiculo" class="form-control"
-								ng-model="refaccion.vehiculo" ng-change="getModelos()">
+							<select name="txtVehiculo" id="txtVehiculo" class="form-control" onchange="window.location.href='?mod=catalogo&pag=1&prod='+document.getElementById('prod_input').value+'&cate='+document.getElementById('txtCategoria').value+'&armadora='+document.getElementById('txtMarca').value+'&mdl='+this.value+'&[a]='"
+								ng-model="refaccion.vehiculo">
 								<optgroup label="Selecciona el Vehiculo">
-									<option value="">-- Todas --</option>
+									<option value="">--Todas--</option>
 									<option ng-repeat="vehiculo in Vehiculos" value="{{vehiculo._id}}">{{vehiculo.Modelo}}</option>
 								</optgroup>
 							</select>
 
 							<label for="txtModelo" class="text-white">Modelo</label>
-							<select name="txtModelo" id="txtModelo" class="form-control" ng-model="refaccion.anio"
-								ng-change="getAnios()">
+							<select name="txtModelo" id="txtModelo" class="form-control" onchange="window.location.href='?mod=catalogo&pag=1&prod='+document.getElementById('prod_input').value+'&cate='+document.getElementById('txtCategoria').value+'&armadora='+document.getElementById('txtMarca').value+'&mdl='+document.getElementById('txtVehiculo').value+'&[a]='+this.value"
+								ng-model="refaccion.anio">
 								<optgroup label="Selecciona el Modelo">
-									<option value="">-- Todas --</option>
+									<option value="">--Todas--</option>
 									<option ng-repeat="modelo in Modelos" value="{{modelo._id}}">{{modelo.Anio}}
 									</option>
 								</optgroup>
 							</select>
 
 							<label for="txtCategoria" class="text-white">Categorias:</label>
-							<select name="txtCategoria" id="txtCategoria" class="form-control"
-								ng-model="refaccion.categoria" ng-change="getCategorias(true)">
+							<select name="txtCategoria" id="txtCategoria" class="form-control" onchange="window.location.href='?mod=catalogo&pag=1&prod='+document.getElementById('prod_input').value+'&cate='+this.value+'&armadora='+document.getElementById('txtMarca').value+'&mdl='+document.getElementById('txtVehiculo').value+'&[a]='+document.getElementById('txtModelo').value" 
+								ng-model="refaccion.categoria">
 								<optgroup label="Selecciona una categoria">
 									<option value="T">--Todas--</option>
 									<option ng-repeat="cat in categorias" value="{{cat._id}}">{{cat.Categoria}}</option>
@@ -60,7 +60,7 @@
 						<div class="search-product pos-relative catalogo__filtrado--buscador form-control">
 							<input type="text" name="search-product"
 								placeholder="Buscar Producto..." ng-model="refaccion.producto"
-								ng-model-options="{debounce:500}" ng-change="getRefaccion()">
+								ng-model-options="{debounce:1500}" ng-change="getRefaccion()" id="prod_input">
 
 							<button class="ab-r-m">
 								<i class="fa fa-search" aria-hidden="true"></i>
@@ -134,19 +134,14 @@
 
 					<script type="text/javascript">function toTop() {window.scrollTo(0, 0)} </script>
 					<!-- Pagination -->
-					<!-- <div style="display:grid;justify-items: center;grid-template-columns:repeat(2,1fr);">
-						<span class="bg9 center--text" style="width:15rem;cursor:pointer;color:var(--blanco);" ng-click="mostrarmas()">Mostrar 20 más</span>
-						<span class="bg9 center--text" style="width:15rem;cursor:pointer;color:var(--blanco);" ng-click="mostrarmenos()">Mostrar 20 menos</span>
-					</div> -->
-
 					<div class="pagination">
-						<a onClick="toTop()" class="item-pagination flex-c-m trans-0-4 {{currentPage == (pag.no - 1)? 'active-pagination':''}}"
-							ng-repeat='pag in pages' ng-click='setPage(pag.no)'>{{pag.no}}</a>
+						<a class="item-pagination flex-c-m trans-0-4 {{currentPage == (pag.no - 1)? 'active-pagination':''}}"
+							ng-repeat='pag in pages' ng-click='setPage(pag.no)'>{{pag.no}}</a>                                                                                                                                                                                                                               
 					</div>
-					
+
 				</div>
 			</div>
 		</div>
 	</main>
 
-</div>
+ </div>
