@@ -297,8 +297,8 @@
                                                         </thead>
                                                         <tbody>
                                                             <tr ng-repeat="RV in Compatibilidad" ng-show="RV.clave == refaccion.Clave" class="center--text">
-                                                                <td>{{RV.idmarca}}</td>
-                                                                <td>{{RV.idmodelo}}</td>
+                                                                <td>{{RV.Marca}}</td>
+                                                                <td>{{RV.Modelo}}</td>
                                                                 <td>{{RV.ainicial}}</td>
                                                                 <td class="text-center">{{RV.afinal}}</td>
                                                                 <td class="text-center">{{RV.transmision}}</td>

@@ -1,5 +1,5 @@
   .enlace, .list-group a{
-    cursor: pointer;
+    cursor: pointer !important;
   }
   .enlace:hover{
     filter: brightness(.50);

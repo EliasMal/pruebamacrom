@@ -1,24 +1,24 @@
 <div ng-controller="catalogosDetallesCtrl" ng-init="Refaccion.id={id}" class="ctrlmain global__content">
 	<!-- breadcrumb -->
 	<div class="bread-crumb bgwhite flex-w categorias__link">
-		<a href="?mod=catalogo" class="s-text16">
+		<a href="?mod=catalogo&pag=1&prod=&cate={{Refaccion.datos._idCategoria}}&armadora=&mdl=&[a]=" class="s-text16">
 			{{Refaccion.datos.Categoria}}
 			<i class="fa fa-angle-right" aria-hidden="true"></i>
 		</a>
 
-		<span class="s-text16">
+		<a href="?mod=catalogo&pag=1&prod=&cate={{Refaccion.datos._idCategoria}}&armadora={{Refaccion.datos._idMarca}}&mdl=&[a]=" class="s-text16">
 			{{Refaccion.datos.Marca}}
 			<i class="fa fa-angle-right" aria-hidden="true"></i>
-		</span>
+		</a>
 
-		<span class="s-text16">
+		<a href="?mod=catalogo&pag=1&prod=&cate={{Refaccion.datos._idCategoria}}&armadora={{Refaccion.datos._idMarca}}&mdl={{Refaccion.datos._idModelo}}&[a]=" class="s-text16">
 			{{Refaccion.datos.Modelo}}
 			<i class="fa fa-angle-right" aria-hidden="true"></i>
-		</span>
+		</a>
 
-		<span class="s-text17">
+		<a href="?mod=catalogo&pag=1&prod=&cate={{Refaccion.datos._idCategoria}}&armadora={{Refaccion.datos._idMarca}}&mdl={{Refaccion.datos._idModelo}}&[a]={{Refaccion.datos.Anios}}" class="s-text17">
 			{{Refaccion.datos.Anio}}
-		</span>
+		</a>
 	</div>
 	<!-- Product Detail -->
 	<div class="contenedor contenido-principal bgwhite" id="MainDark">
@@ -33,7 +33,7 @@
 						</div>
 					</div>
 					
-					<div class="">
+					<div class="detalles__visual--imagen">
 						<div class="" data-thumb="{{getImagen(Refaccion.datos.imagen, Refaccion.datos._id)}}">
 							<div class="detalles__visual--producto">
 								<img src="{{getImagen(Refaccion.datos.imagen, Refaccion.datos._id)}}" alt="IMG-PRODUCT" class="hero">
@@ -150,6 +150,68 @@
 				
 			</div>
 		</div>
+		<!-- Compatibilidad -->
+		<section ng-show="Refaccion.compatibilidad.length != 0">
+			<div class="contenedor productos__compatibilidad">
+				<div class="contenedor-contenido">
+					<div class="compatibilidad__titulo">
+						<h3 class="m-text5 t-center">
+							Compatibilidad con otros Vehiculos
+						</h3>
+					</div>
+					<!-- <article class="tabla__compatibilidad">
+    					<section>
+    					    <div class="datos__compatibilidad center--text">
+    					        <span class="text-center">Marca</span>
+    					        <span class="text-center">Modelo</span>
+    					        <span class="text-center">Desde</span>
+    					        <span class="text-center">Hasta</span>
+								<span class="text-center">Motor</span>
+    					    	<span class="text-center">Transmision</span>
+							</div>
+    					</section>
+
+    					<section>
+    					    <div ng-repeat="com in Refaccion.compatibilidad" class="info__compatibilidad center--text">
+    					        <span class="text-center">{{com.Marca}}</span>
+    					        <span class="text-center">{{com.Modelo}}</span>
+    					        <span class="text-center">{{com.ainicial}}</span>
+    					        <span class="text-center">{{com.afinal}}</span>
+    					        <span class="text-center">{{com.motor}}</span>
+								<span class="text-center">{{com.transmision}}</span>
+    					    </div>
+    					</section>
+					</article> -->
+
+				<div class="table-responsive">
+					<table class="table table-striped">
+                        <thead>
+                            <tr class="datos__compatibilidad center--text">
+                                <th class="text-center">Marca</th>
+                                <th class="text-center">Modelo</th>
+                                <th class="text-center">Desde</th>
+                                <th class="text-center">Hasta</th>
+								<th class="text-center">Motor</th>
+                                <th class="text-center">Transmision</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="com in Refaccion.compatibilidad" class="info__compatibilidad center--text">
+                                <td>{{com.Marca}}</td>
+                                <td>{{com.Modelo}}</td>
+                                <td>{{com.ainicial}}</td>
+                                <td class="text-center">{{com.afinal}}</td>
+								<td class="text-center">{{com.motor}}</td>
+                                <td class="text-center">{{com.transmision}}</td>
+                            </tr>
+        
+                        </tbody>
+                    </table>
+				</div>
+
+				</div>
+			</div>
+		</section>
 
 		<!-- Relate Product -->
 		<section class="contenedor productos__relacionados">

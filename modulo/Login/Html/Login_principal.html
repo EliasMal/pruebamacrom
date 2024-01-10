@@ -30,8 +30,11 @@
                                             <input type="email" name="login" id="login" class="form-control" placeholder="Correo electronico" ng-model="login.user" required>
                                         </div>
 
-                                        <div class="form-group has-feedback main__login">
-                                            <input type="password" name="password" id="password" class="form-control" placeholder="Contraseña" ng-model="login.password" required>
+                                        <div class="form-group has-feedback main__login" id="divcpass">
+                                            <input type="password" name="cpass" id="inprcpass" class="form-control" placeholder="Contraseña" ng-model="login.password" required>
+                                            <button class="password__ver">
+                                                <i class="pass_ver cpss fa fa-eye" aria-hidden="true"></i>
+                                            </button>
                                         </div>
 
                                         <div class="login__contenedor--secondary">

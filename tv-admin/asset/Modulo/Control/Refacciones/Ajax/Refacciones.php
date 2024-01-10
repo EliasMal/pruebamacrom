@@ -133,14 +133,16 @@
 
         private function getCompatibilidad(){
             $array = array();
-            $sql = "SELECT * FROM compatibilidad order by idcompatibilidad";
+            $sql = "SELECT * FROM compatibilidad as comp 
+            inner join Marcas as M on (M._id = comp.idmarca)
+            inner join Modelos as V on (V._id = comp.idmodelo) where id_imagen='{$this->formulario["id"]}' order by idcompatibilidad";
             $id = $this->conn->query($sql);
             while($row= $this->conn->fetch($id)){
                 array_push($array, $row);
             }
             return $array;
         }
-
+        
         private function getModelos(){
             $array = array();
             $sql = "SELECT * FROM Modelos where Estatus = 1 and _idMarca= ".$this->formulario["_idMarca"]. " order by Modelo";

@@ -501,6 +501,7 @@ function catalogosDetallesCtrl($scope, $http){
                 obj.Refaccion.datos = res.data.Data.Refaccion;
                 obj.Refaccion.galeria = res.data.Data.Galeria;
                 obj.productos = res.data.Data.Productos;
+                obj.Refaccion.compatibilidad = res.data.Data.Compatibilidad;
                 obj.eachRefacciones(obj.productos);
                 obj.getArticulovolks();
             }

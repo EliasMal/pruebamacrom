@@ -59,6 +59,7 @@ session_start();
                             $this->jsonData["Data"]["Refaccion"] = $this->getOneRefaccion();
                             $this->jsonData["Data"]["Galeria"] = $this->getGeleria($this->formulario["id"]);
                             $this->jsonData["Data"]["Productos"] = $this->getProductos($this->jsonData["Data"]["Refaccion"]);
+                            $this->jsonData["Data"]["Compatibilidad"] = $this->getCompatibilidad($this->formulario["id"]);
                             $this->jsonData["Bandera"] = true;
                             break;
                     }
@@ -68,6 +69,17 @@ session_start();
         }
         
 //GetCategorias
+        private function getCompatibilidad($id){
+            $array = array();
+            $sql = "SELECT * FROM compatibilidad as comp 
+            inner join Marcas as M on (M._id = comp.idmarca)
+            inner join Modelos as V on (V._id = comp.idmodelo) where id_imagen = $id order by idcompatibilidad";
+            $di = $this->conn->query($sql);
+            while($row= $this->conn->fetch($di)){
+                array_push($array, $row);
+            }
+            return $array;
+        }
         private function getCategorias (){
             $sql = "SELECT _id, Categoria FROM Categorias where status = 1 order by Categoria";
             return $this->conn->fetch_all($this->conn->query($sql));
