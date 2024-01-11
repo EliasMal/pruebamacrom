@@ -378,3 +378,6 @@ switch(window.location.href){
         document.querySelector("#sidebar7").classList.add("sidebar__active");  
     break;
 }
+    if(window.location.href.includes("?mod=catalogo")){
+        document.querySelector("#sidebar1").classList.add("sidebar__active");
+    }
