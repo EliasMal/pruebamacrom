@@ -142,7 +142,6 @@
             }
             return $array;
         }
-        
         private function getModelos(){
             $array = array();
             $sql = "SELECT * FROM Modelos where Estatus = 1 and _idMarca= ".$this->formulario["_idMarca"]. " order by Modelo";
