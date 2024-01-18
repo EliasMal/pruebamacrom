@@ -22,7 +22,6 @@
 body{
   font-family: Poppins;
 }
-
 #alertvalid{
 border: 2px solid var(--primario);
 border-radius: 0.25rem;
@@ -30,192 +29,185 @@ color: #000;box-shadow: 1px 1px 12px #ddd;
  margin-left: 17%;
  width: 66%;
 }
-
 .closeinsregform{
-        margin-left:94%;
-        margin-top:2%;
-        font-size: 30px;
-        color: #de0007;
-        align-items: center;
-        visibility: visible;
-    }
-    .closeinsregform:hover{
-      color:#bf040a; 
-    }
-    body{
-        overflow: hidden;
-    }
-    .prueba1{
-        background:#BF040A;
-        text-align: center;
-        height:2000px;
-      }
-      .card{
-        border:#fff;
-      }
-      .card-body{
-        width:150%;
-      }
-      .prueba2{
-        color: #fff;
-        font-size: xx-large;
-        font-weight: bold;
-        margin-top:50%;
-      
-      }
-      .prueba3{
-        font-weight: bold;
-      text-align: center;
-      position: relative;
-      font-size: xx-large;
-      }
-      .logomacromlogin{
-        margin-left:32%;
-        margin-top:20%;
-        padding-bottom: 25px;
-      }
-      .logoimgtmn{
-        height: 70px;
-      }
-      .entrarenses{
-        width:68%;
-        height:40px;
-        border-radius: 0.40rem;
-      }
-
-      .lboxmsg{
-        align-items: center;
-        width:100%;
-        text-align: center;
-    }
-    .closeinsregform2{
-      visibility: collapse;
-          margin-left:92%;
-          margin-top:-100px;
-          font-size: -5px;
-          transition: 0s;
-          color: red;
-          align-items: center;
-      }
-
-      #aviso:checked{
-        background-color: #de0007;
-      }
-
-      .aviso a, .iss a{
-        color: #De0007;
-        font-size: 18px;
-      }
-
-      .aviso a:hover, .iss a:hover{
-        color: #bf040a;
-        text-decoration: underline;
-      }
-
-
-    /*inicio pagina responsive 800 px */
-    @media (max-width:800px){
-      .aviso a{
-        visibility: visible;
-      }
-      .contlogo a{
-        visibility: hidden;
-      }
-      .iss{
-        padding-bottom: 20px;
-        padding-top: 15px;
-      }
-        #frmReg{
-            border: 1px solid #De0007;
-            -webkit-border-radius: 10px;
-            margin-left:3%;
-            width: 94%;
-            transition: 0s;
-            margin-top:-10%;
-        }
-        .footermob1{
-          visibility: hidden;
-        }
-        #alertvalid{
-          margin-left: 10%;
-          width: 80%;
-        }
-.closeinsregform{
-    visibility: visible;
-        margin-left:88%;
-        margin-top:-100px;
-        font-size: -5px;
-        color: red;
-        transition: 0s;
-        align-items: center;
-    }
-    .closeinsregform2{
-      margin-left:90%;
-      margin-top:2%;
-      font-size: 30px;
-      color: red;
-      align-items: center;
-      visibility: visible;
-      }
-    body{
-        background: #De0007;
-        overflow-y: visible;
-    }
-    .prueba1{
-       visibility: collapse;
-       height:10px;
-    }
-    .logomacromlogin img{
-        margin-left: -25%;
-        padding-bottom: 0px;
-
-    }
-    .logoimgtmn{
-        height: 60px;
-      }
-    .entrarenses{
-        width:100%;
-        position: relative;
-        height:40px;
-        float:right;
-        margin-top:-32px;
-        background: #de0007;
-      }
-    .insmob{
-        margin-top:5%;
-    }
-    .insmob .mysize{
-      width:80%;
-      margin-left:10%;
-      height:30px;
-    }
-    .float-r{
-      float:left;
-    }
-    .m-l-my{
-      margin-left:0%;
-    }
-    .m-r-my{
-      margin-right:0%;
-    }
-    .row{
-        background:#De0007;
-    }
-    .login-box-msg, #frmReg{
-        background: #fff;
-    }
-    .lboxmsg{
-        width:100%;
-        background: #fff;
-    }
-    .card-body{
-      width:100%;
-    }
-    .login-box,
-    .register-box {
-  margin-left:5%;
-
+  margin-left:94%;
+  margin-top:2%;
+  font-size: 30px;
+  color: #de0007;
+  align-items: center;
+  visibility: visible;
 }
+.closeinsregform:hover{
+  color:#bf040a; 
+}
+body{
+    overflow: hidden;
+}
+.prueba1{
+  background:#BF040A;
+  text-align: center;
+  height:2000px;
+}
+.card{
+  border:#fff;
+}
+.card-body{
+  width:150%;
+}
+.prueba2{
+  color: #fff;
+  font-size: xx-large;
+  font-weight: bold;
+  margin-top:50%;
+}
+.prueba3{
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+  font-size: xx-large;
+}
+.logomacromlogin{
+  margin-left:32%;
+  margin-top:20%;
+  padding-bottom: 25px;
+}
+.logoimgtmn{
+  height: 70px;
+}
+.entrarenses{
+  width:68%;
+  height:40px;
+  border-radius: 0.40rem;
+}
+.lboxmsg{
+  align-items: center;
+  width:100%;
+  text-align: center;
+}
+.closeinsregform2{
+  visibility: collapse;
+  margin-left:92%;
+  margin-top:-100px;
+  font-size: -5px;
+  transition: 0s;
+  color: red;
+  align-items: center;
+}
+
+#aviso:checked{
+  background-color: #de0007;
+}
+
+.aviso a, .iss a{
+  color: #De0007;
+  font-size: 18px;
+}
+
+.aviso a:hover, .iss a:hover{
+  color: #bf040a;
+  text-decoration: underline;
+}
+/*inicio pagina responsive 800 px */
+@media (max-width:800px){
+  .aviso a{
+    visibility: visible;
+  }
+  .contlogo a{
+    visibility: hidden;
+  }
+  .iss{
+    padding-bottom: 20px;
+    padding-top: 15px;
+  }
+  #frmReg{
+    border: 1px solid #De0007;
+    -webkit-border-radius: 10px;
+    margin-left:3%;
+    width: 94%;
+    transition: 0s;
+    margin-top:-10%;
+  }
+  .footermob1{
+    visibility: hidden;
+  }
+  #alertvalid{
+    margin-left: 10%;
+    width: 80%;
+  }
+  .closeinsregform{
+    visibility: visible;
+    margin-left:88%;
+    margin-top:-100px;
+    font-size: -5px;
+    color: red;
+    transition: 0s;
+    align-items: center;
+  }
+  .closeinsregform2{
+    margin-left:90%;
+    margin-top:2%;
+    font-size: 30px;
+    color: red;
+    align-items: center;
+    visibility: visible;
+  }
+  body{
+    background: #De0007;
+    overflow-y: visible;
+  }
+  .prueba1{
+    visibility: collapse;
+    height:10px;
+  }
+  .logomacromlogin img{
+    margin-left: -25%;
+    padding-bottom: 0px;
+  }
+  .logoimgtmn{
+    height: 60px;
+  }
+  .entrarenses{
+    width:100%;
+    position: relative;
+    height:40px;
+    float:right;
+    margin-top:-32px;
+    background: #de0007;
+  }
+  .insmob{
+    margin-top:5%;
+  }
+  .insmob .mysize{
+    width:80%;
+    margin-left:10%;
+    height:30px;
+  }
+  .float-r{
+    float:left;
+  }
+  .m-l-my{
+    margin-left:0%;
+  }
+  .m-r-my{
+    margin-right:0%;
+  }
+  .row{
+      background:#De0007;
+  }
+  .login-box-msg, #frmReg{
+      background: #fff;
+  }
+  .lboxmsg{
+      width:100%;
+      background: #fff;
+  }
+  .card-body{
+    width:100%;
+  }
+  .login-box,
+  .register-box {
+    margin-left:5%;
+  }
 
 }
 /* termina pagina responsive*/
@@ -226,12 +218,10 @@ color: #000;box-shadow: 1px 1px 12px #ddd;
     overflow-y: visible;
   }
   .logomacromlogin img{
-        margin-left: -35%;
+    margin-left: -35%;
   }
   #alertvalid{
     margin-left: 4%;
     width: 90%;
   }
-
-
-  }
+}

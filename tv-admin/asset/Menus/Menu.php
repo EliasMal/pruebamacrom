@@ -46,9 +46,10 @@ function menu(){
             $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Pedidos";                $opcMenu[$sum]["opc"]="?mod=Pedidos";           $sum++;
             $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Clientes";               $opcMenu[$sum]["opc"]="?mod=Clientes";          $sum++;
             $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Contacto";               $opcMenu[$sum]["opc"]="?mod=Contacto";          $sum++;
+            $opcMenu[$sum]["grupo"]="Secciones";            $opcMenu[$sum]["titulo"]= "Principal";              $opcMenu[$sum]["opc"]="?mod=webprincipal";      $sum++;
             $opcMenu[$sum]["grupo"]="Secciones";            $opcMenu[$sum]["titulo"]= "Blog";                   $opcMenu[$sum]["opc"]="?mod=Blog";              $sum++;
             $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Categorias";             $opcMenu[$sum]["opc"]="?mod=Categorias";        $sum++;
-            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Agencias";                 $opcMenu[$sum]["opc"]="?mod=Marcas";            $sum++;
+            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Agencias";               $opcMenu[$sum]["opc"]="?mod=Marcas";            $sum++;
             $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Vehiculos";              $opcMenu[$sum]["opc"]="?mod=Modelos";           $sum++;
             $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Usuarios";               $opcMenu[$sum]["opc"]="?mod=usuarios";          $sum++;
             $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Costos Envios";          $opcMenu[$sum]["opc"]="?mod=Cenvios";           $sum++;
@@ -57,8 +58,9 @@ function menu(){
             $opcMenu[$sum]["grupo"]="Importar";             $opcMenu[$sum]["titulo"]= "Codigos Postales";       $opcMenu[$sum]["opc"]="?mod=CPostales";         $sum++;
             $opcMenu[$sum]["grupo"]="Importar";             $opcMenu[$sum]["titulo"]= "Refacciones";            $opcMenu[$sum]["opc"]="?mod=IRefacciones";      $sum++;
             $opcMenu[$sum]["grupo"]="Respaldo";             $opcMenu[$sum]["titulo"]= "Actualizar precios";     $opcMenu[$sum]["opc"]="?mod=Actualizarpre";     $sum++;
-            $opcMenu[$sum]["grupo"]="Mantenimiento";        $opcMenu[$sum]["titulo"]= "Refacciones";            $opcMenu[$sum]["opc"]="?mod=repRefacciones";     $sum++;
-            
+            $opcMenu[$sum]["grupo"]="Respaldo";             $opcMenu[$sum]["titulo"]= "Pruebas";                $opcMenu[$sum]["opc"]="?mod=Pruebas";           $sum++;
+            $opcMenu[$sum]["grupo"]="Reportes";             $opcMenu[$sum]["titulo"]= "Refacciones capturadas"; $opcMenu[$sum]["opc"]="?mod=RepProductos";      $sum++;
+            $opcMenu[$sum]["grupo"]="Mantenimiento";        $opcMenu[$sum]["titulo"]= "Refacciones";            $opcMenu[$sum]["opc"]="?mod=repRefacciones";    $sum++;
         break;
         case 'Web':
             $opcMenu[$sum]["grupo"]="Secciones";            $opcMenu[$sum]["titulo"]= "Principal";              $opcMenu[$sum]["opc"]="?mod=webprincipal";      $sum++;
@@ -69,18 +71,13 @@ function menu(){
             $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Pedidos";                $opcMenu[$sum]["opc"]="?mod=Pedidos";           $sum++;
             $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Clientes";               $opcMenu[$sum]["opc"]="?mod=Clientes";          $sum++;
             $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Contacto";               $opcMenu[$sum]["opc"]="?mod=Contacto";          $sum++;
-            $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Monedero";               $opcMenu[$sum]["opc"]="?mod=Monedero";          $sum++;
             $opcMenu[$sum]["grupo"]="Secciones";            $opcMenu[$sum]["titulo"]= "Blog";                   $opcMenu[$sum]["opc"]="?mod=Blog";              $sum++;
             $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Categorias";             $opcMenu[$sum]["opc"]="?mod=Categorias";        $sum++;
-            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Agencias";                 $opcMenu[$sum]["opc"]="?mod=Marcas";            $sum++;
+            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Agencias";               $opcMenu[$sum]["opc"]="?mod=Marcas";            $sum++;
             $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Vehiculos";              $opcMenu[$sum]["opc"]="?mod=Modelos";           $sum++;
-            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Usuarios";               $opcMenu[$sum]["opc"]="?mod=usuarios";          $sum++;
             $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Costos Envios";          $opcMenu[$sum]["opc"]="?mod=Cenvios";           $sum++;
             $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Proveedores";            $opcMenu[$sum]["opc"]="?mod=Proveedores";       $sum++;
-
             $opcMenu[$sum]["grupo"]="Respaldo";             $opcMenu[$sum]["titulo"]= "Actualizar precios";     $opcMenu[$sum]["opc"]="?mod=Actualizarpre";     $sum++;
-            $opcMenu[$sum]["grupo"]="Respaldo";             $opcMenu[$sum]["titulo"]= "Pruebas";                $opcMenu[$sum]["opc"]="?mod=Pruebas";           $sum++;
-            /*Reportes */
             $opcMenu[$sum]["grupo"]="Reportes";             $opcMenu[$sum]["titulo"]= "Refacciones capturadas"; $opcMenu[$sum]["opc"]="?mod=RepProductos";      $sum++;
         break;
         case 'user':
@@ -89,8 +86,12 @@ function menu(){
         case 'capturista':
             $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Refacciones";            $opcMenu[$sum]["opc"]="?mod=Refacciones";       $sum++;
             $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Categorias";             $opcMenu[$sum]["opc"]="?mod=Categorias";        $sum++;
-            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Marcas";                 $opcMenu[$sum]["opc"]="?mod=Marcas";            $sum++;
+            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Agencias";               $opcMenu[$sum]["opc"]="?mod=Marcas";            $sum++;
             $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Vehiculos";              $opcMenu[$sum]["opc"]="?mod=Modelos";           $sum++;
+            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Proveedores";            $opcMenu[$sum]["opc"]="?mod=Proveedores";       $sum++;
+            $opcMenu[$sum]["grupo"]="Respaldo";             $opcMenu[$sum]["titulo"]= "Actualizar precios";     $opcMenu[$sum]["opc"]="?mod=Actualizarpre";     $sum++;
+            $opcMenu[$sum]["grupo"]="Secciones";            $opcMenu[$sum]["titulo"]= "Blog";                   $opcMenu[$sum]["opc"]="?mod=blog";              $sum++;
+        break;
             break;
     }
     $conM = count($opcMenu);

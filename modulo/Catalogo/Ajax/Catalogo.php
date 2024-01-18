@@ -1,9 +1,8 @@
 <?php
-session_name("loginCliente");
-session_start();   
+    session_name("loginCliente");
+    session_start();   
     require_once "../../../tv-admin/asset/Clases/dbconectar.php";
-    require_once "../../../tv-admin/asset/Clases/ConexionMySQL.php";
-    
+    require_once "../../../tv-admin/asset/Clases/ConexionMySQL.php";    
     date_default_timezone_set('America/Mexico_City');
 
     class Catalogo{
@@ -11,8 +10,7 @@ session_start();
         private $jsonData = array("Bandera"=>false, "Mensaje"=>"", "Data"=>array());
 
         public function __construct($array) {
-            $this->conn = new HelperMySql($array["server"], $array["user"], $array["pass"], $array["db"]);
-            
+            $this->conn = new HelperMySql($array["server"], $array["user"], $array["pass"], $array["db"]);    
         }
     
         public function __destruct() {
@@ -21,7 +19,6 @@ session_start();
 
         public function principal(){
             $this->methodo = $_SERVER['REQUEST_METHOD'];
-            //$this->formulario = json_decode(file_get_contents('php://input'));
             switch($this->methodo){
                 case 'GET':
                     $this->formulario = array_map("htmlspecialchars", $_GET);
@@ -34,22 +31,21 @@ session_start();
                                     $this->jsonData["Data"]["Categorias"] = $this->getCategorias();
                                     $this->jsonData["Data"]["Marcas"] = $this->getMarcas();
                                    
-                                    break;
+                                break;
                                 case 'Vehiculos':
                                     $this->jsonData["Bandera"] = true;
                                     $this->jsonData["Mensaje"] = "Entro a la seccion de categorias";
                                     $this->jsonData["Data"]["Vehiculos"] = $this->getModelos();
-                                    break;
+                                break;
                                 case 'Modelos':
                                     $this->jsonData["Bandera"] = true;
                                     $this->jsonData["Data"]["Modelos"] = $this->getAnios();
-                                    break;
+                                break;
                                 case 'Anios':
                                 case 'Refaccion':
                                 case 'Paginacion':
                                     $this->jsonData["Bandera"] = true;
-                                    break;
-                                
+                                break;
                             }
                             $buscarlikes = $this->getexplode($this->formulario["producto"]);
                             $this->jsonData["Data"]["Trefacciones"] = $this->getTrefacciones($buscarlikes);
@@ -61,14 +57,13 @@ session_start();
                             $this->jsonData["Data"]["Productos"] = $this->getProductos($this->jsonData["Data"]["Refaccion"]);
                             $this->jsonData["Data"]["Compatibilidad"] = $this->getCompatibilidad($this->formulario["id"]);
                             $this->jsonData["Bandera"] = true;
-                            break;
+                        break;
                     }
                 break;
             }
             print json_encode($this->jsonData);
         }
         
-//GetCategorias
         private function getCompatibilidad($id){
             $array = array();
             $sql = "SELECT * FROM compatibilidad as comp 
@@ -138,7 +133,6 @@ session_start();
                     
                 }
             }
-        
             
            $sql = "SELECT count(*) as Trefacciones FROM Producto AS P "
             . "left join Proveedor as PROV on (P.id_proveedor = PROV._id) "
@@ -151,7 +145,7 @@ session_start();
 
         private function getRefacciones($arrayLikes, $x=0, $y = 20 ){
             $array = array();
-                
+              
             if(isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0){
                 $condicion = $this->formulario["categoria"]!= "T"? " and P._idCategoria = {$this->formulario["categoria"]}":"";
             }
@@ -175,7 +169,7 @@ session_start();
                     $condicion .= " and P._idMarca = {$this->formulario["marca"]} ";
                 }
             }
-                
+            
             $sql = "SELECT P.*, PROV._id as idProveedor, PROV.tag_alt as tag_altproveedor, PROV.tag_title as tag_titleproveedor FROM Producto AS P "
             . "left join Proveedor as PROV on (P.id_proveedor = PROV._id) "
             ."where P.Estatus = 1 and P.Publicar = 1 and ({$arrayLikes['Productos']} OR {$arrayLikes['Clave']}) "
@@ -191,7 +185,7 @@ session_start();
             }
             return $array;
         }
-            
+
         private function getOneRefaccion(){
             $sql = "select P._id, P.Clave, P.Producto, C.Categoria, M.Marca, P.Precio1, P.Precio2,
                 P.No_parte, P.Descripcion, V.Modelo, A.Anio, P.RefaccionNueva, P.RefaccionOferta,
@@ -232,8 +226,7 @@ session_start();
             return $array;
         }
 
-
     }
-
-    $app = new Catalogo($array_principal);
-    $app->principal();
+    
+$app = new Catalogo($array_principal);
+$app->principal();

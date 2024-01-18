@@ -74,7 +74,7 @@ function UsuariosNewCtrl ($scope,$http){
     obj.usuario.opc="new";
     obj.disabled = true;
     obj.verpass = false;
-    obj.tipoUsuario = [{value:"admin",descripcion:"Administrador"},{value:"Web",descripcion:"Web"},{value:"user",descripcion:"Usuario"},
+    obj.tipoUsuario = [{value:"Admin",descripcion:"Administrador"},{value:"Web",descripcion:"Web"},{value:"user",descripcion:"Usuario"},
                        {value:"capturista", descripcion:"Capturista"},{value:"venta", descripcion:"Ventas"}];
     
     obj.btnCrearUsuario = function(){
@@ -98,8 +98,8 @@ function UsuariosNewCtrl ($scope,$http){
                     obj.disabled = true
                     obj.verpass = true;
                     $("#usuario").html(res.data.Username);
-                    $("#password").html(res.data.password);
-                    $("#passuser").modal("show");
+                    //$("#password").html(res.data.password);
+                    //$("#passuser").modal("show");
                     toastr.success(res.data.mensaje);
                 }else{
                     toastr.error("Error: No se ha guardado el usuario");
@@ -165,7 +165,7 @@ function UsuariosEditCtrl($scope,$http){
     obj.usuario={};
     obj.verpass = true;
     obj.disabled = true;
-    obj.tipoUsuario = [{value:"admin",descripcion:"Administrador"},{value:"Web",descripcion:"Web"},{value:"user",descripcion:"Usuario"},
+    obj.tipoUsuario = [{value:"Admin",descripcion:"Administrador"},{value:"Web",descripcion:"Web"},{value:"user",descripcion:"Usuario"},
                        {value:"capturista", descripcion:"Capturista"},{value:"venta", descripcion:"Ventas"}];
     obj.img;
     obj.newpass;

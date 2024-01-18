@@ -76,11 +76,11 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
-    <link rel="preload" href="css/main" as ="styles">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="preload" href="css/main.css" as="style">
     <link rel="stylesheet" type="text/css" href="css/otra.css">
     <link rel="stylesheet" href="css/normalize.css">
-    <script src="//code.jivosite.com/widget/MRXulua5n3" async></script>
+    <script src="//code.tidio.co/riqhfbsckekmjhx1jb8klwjea1bp20h4.js" async></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-T0GT52FN43"></script>
 <script>
   window.dataLayer = window.dataLayer || [];

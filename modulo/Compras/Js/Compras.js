@@ -387,7 +387,6 @@ obj.cupon = () =>{ //prueba cupon local
             obj.dataCotizador.parcel.length += parseFloat(2);obj.dataCotizador.parcel.width += parseFloat(2);obj.dataCotizador.parcel.height += parseFloat(2);
             TotalVolumen2 = (obj.dataCotizador.parcel.length * obj.dataCotizador.parcel.width * obj.dataCotizador.parcel.height);
         }
-        console.log(obj.dataCotizador);
         obj.requiredEnvio = obj.dataCotizador.parcel.weight != 0? false: true;
         
     }

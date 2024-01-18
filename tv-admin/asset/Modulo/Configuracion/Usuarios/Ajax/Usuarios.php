@@ -35,7 +35,7 @@
             switch ($this->formulario["opc"]) {
                 case 'new':
                         //var_dump($this->formulario);
-                        $this->jsonData["Username"] = $this->getnumUser()+1;
+                        $this->jsonData["Username"] = $this->getnumUser();
                         $this->jsonData["password"] = $this->create_password();
                         if($this->setUsuarios()){
                             $this->formulario["lastid"]=$this->conn->last_id();
@@ -43,7 +43,6 @@
                                 if(count($this->foto)!=0){
                                     $this->subirImagen();
                                 }
-                                $this->Sendusernamexemail($this->formulario, $this->jsonData["Username"], $this->jsonData["password"]); 
                                 $this->jsonData["Bandera"] = 1;
                                 $this->jsonData["mensaje"] = "La cuenta del usuario se genero de manera satisfactoria";
                             }else{
@@ -74,29 +73,17 @@
             }
             print json_encode($this->jsonData);
         }
-
-        private function Sendusernamexemail($data, $username, $pass){
-            $subjet = "Bienvenido {$data["nombre"]} a Macromautopartes";
-            $correos = array();
-            $body = file_get_contents("../../../../View/Nuevousuario.html");
-            $body = str_replace('{nombre}',$data["nombre"],$body);
-            $body = str_replace('{username}',$username, $body);
-            $body = str_replace('{password}',$pass, $body);
-            array_push($correos, array("email"=>$data["email"], "nombre"=>$data["apPaterno"]." ".$data["apMaterno"]." ".$data["nombre"])); 
-            $this->correo->Send($subjet,$correos,$body);
-        }
         
         private function getnumUser(){
             $sql = "select * from Usuarios";
-            $this->conn->query($sql);
-            return $this->conn->count_rows();
+            return $this->conn->query($sql);
         }
         
         private function setUsuarios(){
             if($this->formulario["opc"]=="new"){
                 $sql = "INSERT INTO Usuarios (Nombre, ApPaterno, ApMaterno, Domicilio, Username, Colonia, Ciudad, Estado, Telefono, email, FechaCreacion, USRCreacion, FechaModificacion,USRModificacion, Estatus)"
                     . " values('{$this->formulario["nombre"]}','{$this->formulario["apPaterno"]}','{$this->formulario["apMaterno"]}','{$this->formulario["domicilio"]}',"
-                    . "'{$this->jsonData["Username"]}','{$this->formulario["colonia"]}','{$this->formulario["ciudad"]}','{$this->formulario["estado"]}','{$this->formulario["telefono"]}','{$this->formulario["email"]}',"
+                    . "'{$this->formulario["nombre"]}','{$this->formulario["colonia"]}','{$this->formulario["ciudad"]}','{$this->formulario["estado"]}','{$this->formulario["telefono"]}','{$this->formulario["email"]}',"
                     . "'".date("Y-m-d H:i:s")."','{$_SESSION["usr"]}','".date("Y-m-d H:i:s")."','{$_SESSION["usr"]}','1')";
             }else if($this->formulario["opc"]=="save"){
                 $sql = "UPDATE Usuarios SET Nombre = '{$this->formulario["Nombre"]}', ApPaterno = '{$this->formulario["ApPaterno"]}', ApMaterno = '{$this->formulario["ApMaterno"]}', Domicilio='{$this->formulario["Domicilio"]}',"
@@ -110,7 +97,7 @@
         private function setSeguridad(){
             if($this->formulario["opc"]=="new"){
                 $sql = "INSERT INTO Seguridad (username, password, Tipo_usuario, FechaCreacion, FechaModificacion, USRCreacion, USRModificacion, _idUsuarios, Estatus) values "
-                    . "('{$this->jsonData["Username"]}',SHA('{$this->jsonData["password"]}'),'{$this->formulario["tipousuario"]}','".date("Y-m-d H:i:s")."',"
+                    . "('{$this->formulario["nombre"]}',SHA('{$this->formulario["password"]}'),'{$this->formulario["tipousuario"]}','".date("Y-m-d H:i:s")."',"
                             . "'".date("Y-m-d H:i:s")."','{$_SESSION["usr"]}','{$_SESSION["usr"]}','{$this->formulario["lastid"]}','1')";
             }else if($this->formulario["opc"]=="save"){
                 $sql = "UPDATE Seguridad SET Tipo_usuario = '{$this->formulario["Tipo_usuario"]}' where _id = ".$this->formulario["idseguridad"];
@@ -123,7 +110,7 @@
             if($this->foto["file"]["name"]!="" and $this->foto["file"]["size"]!=0){
                 $subdir ="../../../../"; 
                 $dir = "Images/usuarios/";
-                $archivo = $this->jsonData["Username"].".png";
+                $archivo = $this->formulario["nombre"].".png";
                 if(!is_dir($subdir.$dir)){
                     mkdir($subdir.$dir,0755);
                 }

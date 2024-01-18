@@ -317,7 +317,6 @@ function catalogosCtrl ($scope,$http){
     const next_marca = mylink[4].split("=")[1];
     const next_vehi = mylink[5].split("=")[1];
     const next_mdl = mylink[6].split("=")[1];
-    console.log(mylink);
 
     obj.configPages = function() {
         obj.pages.length = 0;

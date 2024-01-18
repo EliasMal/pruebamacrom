@@ -206,7 +206,7 @@
 										</div>
 									</div>
 								</article>
-								<span class="btn btn-danger bg9 form-control confirmar--pago click" ng-click="btnPagar()">Confirmar Pago</span>
+								<span class="btn btn-danger bg9 form-control confirmar--pago" ng-click="btnPagar()">Confirmar Pago</span>
 							</div>
 					</div> <!--Fin Modal Metodo De Pago-->
 				</main>
