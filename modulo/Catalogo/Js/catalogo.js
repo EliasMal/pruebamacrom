@@ -110,7 +110,12 @@ function catalogosCtrl($scope, $http) {
             } else {
                 obj.refaccion.producto = next_prod;
             }
-
+            if(obj.refaccion.producto.includes("%C3%B1")){
+                obj.refaccion.producto = obj.refaccion.producto.replaceAll("%C3%B1","ñ");
+            }
+            if(obj.refaccion.producto.includes("%C3%BC")){
+                obj.refaccion.producto = obj.refaccion.producto.replaceAll("%C3%BC","ü");
+            }
             if (next_marca.includes("?%20string:")) {
                 obj.refaccion.marca = "";
             } else {
