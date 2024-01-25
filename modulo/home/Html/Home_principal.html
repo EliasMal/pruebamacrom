@@ -4,7 +4,7 @@
 		<div class="header__contenido">
 			<div class="header__contenido--banner" ng-repeat="banner in databannerPrincipal.Escritorio">
 				<picture class="header__picture">
-						<img src="images/Banners/{{banner.imagen}}" alt="banner" class="header__picture--img" width="100%" height="350px">
+					<img decoding="sync" src="images/Banners/{{banner.imagen}}" alt="banner" class="header__picture--img" width="100%" height="350px">
 				</picture>
 			</div>
 		</div>
@@ -19,9 +19,9 @@
 						<div class="categoria__cat" ng-repeat="categoria in Data.Categorias">
 							<!-- block1 -->
 							<div class="block1 hov-img-zoom pos-relative m-b-20">
-													<a href="?mod=catalogo&pag=1&prod=&cate={{categoria._id}}&armadora=&mdl=&[a]=">
-														<img ng-src="{{getImagen(categoria)}}" alt="IMG-BENNER" class="filcatego">
-													</a>
+								<a href="?mod=catalogo&pag=1&prod=&cate={{categoria._id}}&armadora=&mdl=&[a]=">
+									<img ng-src="{{getImagen(categoria)}}" alt="IMG-BENNER" class="filcatego">
+								</a>
 								<div class="block1-wrapbtn">
 									<!-- Button -->
 									<a href="?mod=catalogo&pag=1&prod=&cate={{categoria._id}}&armadora=&mdl=&[a]=" class="categoria__enlace">
@@ -80,9 +80,8 @@
 														alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}" class="proovedor__img">
 													</div>
 												</section>
-												
-
 											</div>
+											
 										</div>
 									</div>
 								</div>
@@ -148,7 +147,6 @@
 								<div class="fb-page" data-href="https://www.facebook.com/MacromAutopartes/" data-tabs="timeline" data-width="" data-height="" data-small-header="false" 
 								data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/MacromAutopartes/" 
 								class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/MacromAutopartes/">Macrom Autopartes</a></blockquote></div>
-
 							</div>
 
 						</div>
@@ -196,3 +194,20 @@
 			</div>
 		</main>
 </div>
+ <!-- Facebook Metas -->
+ <script>
+	window.fbAsyncInit = function() {
+		FB.init({
+			xfbml            : true,
+			version          : 'v3.3'
+		});
+	};
+	(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = 'https://connect.facebook.net/es_LA/sdk/xfbml.customerchat.js';
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+
+</script>

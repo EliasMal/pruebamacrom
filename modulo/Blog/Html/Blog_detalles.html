@@ -3,13 +3,13 @@
         <section class="contenedor" ng-show="entrada.Estatus && entrada.Publicar">
             <img ng-src="./images/Blog/{{entrada.Imagen}}" alt="Banner Blog">
         </section>
-        <div class="container" >
+        <div class="container">
             <div class="row" ng-show="entrada.Estatus && entrada.Publicar">
                 <div class="col-md-12">
                     <section class="BD-title">
                         <h3 class="text-center">{{entrada.Title}}</h3>
                     </section>
-                    <section class="BDbody" >
+                    <section class="BDbody">
                         <div ng-bind-html="entrada.Contenido | bypass"></div>
                     </section>
                     <section class="BDfooter">
@@ -21,9 +21,9 @@
                             <p>Publicado en {{entrada.FechaCorta | date:'longDate'}}</p>
                         </div>
                     </section>
-                    
+
                 </div>
-                
+
             </div>
             <div class="row" ng-show="!entrada.Estatus && !entrada.Publicar">
                 <div class="col-md-12">
@@ -36,24 +36,24 @@
     <section>
         <div class="container">
             <hr>
-        
+
             <div class="row contenedor__entradas">
                 <div class="col-md-4 blog__entradas" ng-click="btnBlodDetalles(post._id)" ng-repeat="post in posts">
                     <section class="blog-main">
                         <div class="hov-img-zoom blog-head">
                             <img ng-src="./images/Blog/{{post.imagendestacada}}" alt="IMG-ABOUT">
-                         </div>
-                         <div class="blog-body">
+                        </div>
+                        <div class="blog-body">
                             <h4 class="text-center"><b> {{post.Title}}</b></h4>
                             <hr class="Bseparator">
                             <p class="text-center user-dataShop">
                                 {{post.Contenido}}
                             </p>
-                         </div>   
+                        </div>
                     </section>
                 </div>
             </div>
         </div>
-        
+
     </section>
 </section>

@@ -159,30 +159,6 @@
 							Compatibilidad con otros Vehiculos
 						</h3>
 					</div>
-					<!-- <article class="tabla__compatibilidad">
-    					<section>
-    					    <div class="datos__compatibilidad center--text">
-    					        <span class="text-center">Marca</span>
-    					        <span class="text-center">Modelo</span>
-    					        <span class="text-center">Desde</span>
-    					        <span class="text-center">Hasta</span>
-								<span class="text-center">Motor</span>
-    					    	<span class="text-center">Transmision</span>
-							</div>
-    					</section>
-
-    					<section>
-    					    <div ng-repeat="com in Refaccion.compatibilidad" class="info__compatibilidad center--text">
-    					        <span class="text-center">{{com.Marca}}</span>
-    					        <span class="text-center">{{com.Modelo}}</span>
-    					        <span class="text-center">{{com.ainicial}}</span>
-    					        <span class="text-center">{{com.afinal}}</span>
-    					        <span class="text-center">{{com.motor}}</span>
-								<span class="text-center">{{com.transmision}}</span>
-    					    </div>
-    					</section>
-					</article> -->
-
 				<div class="table-responsive">
 					<table class="table table-striped">
                         <thead>

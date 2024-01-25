@@ -2,28 +2,6 @@
 (function ($) {
     "use strict";
 
-    /*[ Load page ]
-    ===========================================================*/
-    $(".animsition").animsition({
-        inClass: 'fade-in',
-        outClass: 'fade-out',
-        inDuration: 1000,
-        outDuration: 500,
-        linkElement: '.animsition-link',
-        loading: true,
-        loadingParentElement: 'html',
-        loadingClass: 'animsition-loading-1',
-        loadingInner: '<div data-loader="ball-scale"></div>',
-        timeout: false,
-        timeoutCountdown: 2000,
-        onLoadEvent: true,
-        browser: ['animation-duration', '-webkit-animation-duration'],
-        overlay: false,
-        overlayClass: 'animsition-overlay-slide',
-        overlayParentElement: 'html',
-        transition: function (url) { window.location.href = url; }
-    });
-
     /*[ Back to top ]
     ===========================================================*/
     var windowH = $(window).height() / 2;
@@ -40,16 +18,11 @@
         $('html, body').animate({ scrollTop: 0 }, 300);
     });
 
-    /** Slick Slider **/
-    $('.slick').slick({
-        method: {},
-        dots: true,
-        autoplay: true,
-        infinite: true,
-        autoplaySpeed: 2000,
-        slidesToShow: 3,
-        slidesToScroll: 1
-    });
+    /*Preloader*/
+    $(window).on('load', function() {
+        $('#status').fadeOut(); 
+        $('#preloader').delay(350).fadeOut('slow');
+    })
 
     /*[ Show header dropdown ]
     ===========================================================*/
@@ -321,6 +294,9 @@ window.addEventListener("click", function (event) {
 //Abrir y cerrar modales end.
 
 switch (window.location.href) {
+    case "https://macromautopartes.com/":
+        document.querySelector("#sidebar0").classList.add("sidebar__active");
+        break;
     case "https://macromautopartes.com/?mod=nosotros":
         document.querySelector("#sidebar4").classList.add("sidebar__active");
         break;

@@ -102,7 +102,7 @@
 									ng-style="{'background-color': producto.color}">
 									<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}">
 										<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}"
-											alt="{{producto.tag_alt}}" title = "{{producto.tag_title}}">
+											alt="{{producto.tag_alt}}" title = "{{producto.tag_title}}" width="285px">
 									</a>
 
 								</div>
