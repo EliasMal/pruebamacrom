@@ -303,7 +303,7 @@ img {
 }
 
 .main__theme--dark,
-.main__theme--dark #frmcompra .tablecompra h5 b {
+.main__theme--dark #frmcompra .tablecompra h5 b{
   background-color: var(--negro) !important;
 }
 
@@ -334,7 +334,13 @@ img {
 .main__theme--dark .pagos__sitio-seguro--info b,
 .main__theme--dark .p-l-40,
 .main__theme--dark small,
-.main__theme--dark .descripcion__texto h5 {
+.main__theme--dark .descripcion__texto h5,
+.body__theme--dark .contenedor__usuario .header-cart-total,
+.body__theme--dark .contenedor__usuario--carrito .header-cart-item-info,
+.body__theme--dark .contenedor__usuario--perfil .header-cart i,
+.body__theme--dark .contenedor__usuario--perfil .header-cart span,
+.body__theme--dark .contenedor__usuario--perfil .header-cart p,
+.body__theme--dark .contenedor__usuario--perfil .header-wrapicon1 p{
   color: var(--blanco) !important;
 }
 
@@ -361,6 +367,10 @@ img {
 
 .body__theme--light, .body__theme--light #preloader{
   background-color: #f1f1f1;
+}
+
+.body__theme--dark .contenedor__usuario--carrito #divcarri, .body__theme--dark .contenedor__usuario--carrito .header-cart, .body__theme--dark .contenedor__usuario--perfil .header-cart{
+  background-color: var(--gris);
 }
 
 .main__theme--dark #frmcompra .cliente__opciones span,

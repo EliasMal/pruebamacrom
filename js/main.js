@@ -28,7 +28,12 @@
     ===========================================================*/
     $('.js-show-header-dropdown').on('click', function () {
         $(this).parent().find('.header-dropdown');
-        $("#usercba").css("background-color", "#fff");
+        
+        if (localStorage.getItem('darkmode') == "dark") {
+            $("#usercba").css("background-color", "#7f7f7f");
+        }else{
+            $("#usercba").css("background-color", "#fff");
+        }
         $('.js-show-header-dropdown').css("color", "#000");
     });
 
@@ -84,10 +89,15 @@
     });
 
     //Show header dropdown carrito
+    $("#divcarri").css("background-color", "transparent");
     $('.js-show-header-dropdown1').on('click', function () {
         $(this).parent().find('.header-dropdown');
-        $("#carrisvg").css("filter", "brightness(2)");
-        $("#divcarri").css("background-color", "white");
+        if (localStorage.getItem('darkmode') == "dark") {
+            $("#divcarri").css("background-color", "#7f7f7f");
+        }else{
+            $("#divcarri").css("background-color", "white");
+            $("#carrisvg").css("filter", "brightness(2)");
+        }
     });
 
     //cambio contraseña
