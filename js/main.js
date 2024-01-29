@@ -42,7 +42,7 @@
 
 
        } else if($(this).parent()[0].matches(".header-wrapicon2")){
-        
+
         $("#usercba").css("background-color", "transparent");
         if (localStorage.getItem('darkmode') == "dark") {
             $("#divcarri").css("background-color", "#7f7f7f");
@@ -286,9 +286,6 @@ switch (window.location.href) {
     case "https://macromautopartes.com/?mod=home":
         document.querySelector("#sidebar0").classList.add("sidebar__active");
         break;
-    case "https://macromautopartes.com/?mod=Blog":
-        document.querySelector("#sidebar9").classList.add("sidebar__active");
-        break;
     case "https://macromautopartes.com/?mod=catalogo":
         document.querySelector("#sidebar1").classList.add("sidebar__active");
         break;
@@ -315,4 +312,7 @@ switch (window.location.href) {
 }
 if (window.location.href.includes("?mod=catalogo")) {
     document.querySelector("#sidebar1").classList.add("sidebar__active");
+}
+if(window.location.href.includes("?mod=Blog")){
+    document.querySelector("#sidebar9").classList.add("sidebar__active");
 }
