@@ -26,15 +26,34 @@
 
     /*[ Show header dropdown ]
     ===========================================================*/
+    $("#divcarri").css("background-color", "transparent");
     $('.js-show-header-dropdown').on('click', function () {
         $(this).parent().find('.header-dropdown');
+
+       if($(this).parent()[0].matches(".header-wrapicon1")){
         
+        $("#carrisvg").css("filter", "brightness(0) invert(1)");
+        $("#divcarri").css("background-color", "transparent");
         if (localStorage.getItem('darkmode') == "dark") {
             $("#usercba").css("background-color", "#7f7f7f");
         }else{
             $("#usercba").css("background-color", "#fff");
         }
-        $('.js-show-header-dropdown').css("color", "#000");
+
+
+       } else if($(this).parent()[0].matches(".header-wrapicon2")){
+        
+        $("#usercba").css("background-color", "transparent");
+        if (localStorage.getItem('darkmode') == "dark") {
+            $("#divcarri").css("background-color", "#7f7f7f");
+        }else{
+            $("#divcarri").css("background-color", "white");
+            $("#carrisvg").css("filter", "brightness(2)");
+        }
+       }
+
+       $('.js-show-header-dropdown').css("color", "#000");
+        
     });
 
     const navigation = document.querySelector(".contenedor__navegacion--mobile");
@@ -52,6 +71,8 @@
                 $(this).parent().find('.header-dropdown').toggleClass('show-header-dropdown');
                 sub_menu_is_showed = -1;
                 $("#usercba").css("background-color", "transparent");
+                $("#carrisvg").css("filter", "brightness(0) invert(1)");
+                $("#divcarri").css("background-color", "transparent");
                 $('.js-show-header-dropdown').css("color", "#fff");
             }
             else {
@@ -85,19 +106,9 @@
         }
         sub_menu_is_showed = -1;
         $("#usercba").css("background-color", "transparent");
+        $("#carrisvg").css("filter", "brightness(0) invert(1)");
+        $("#divcarri").css("background-color", "transparent");
         $('.js-show-header-dropdown').css("color", "#fff");
-    });
-
-    //Show header dropdown carrito
-    $("#divcarri").css("background-color", "transparent");
-    $('.js-show-header-dropdown1').on('click', function () {
-        $(this).parent().find('.header-dropdown');
-        if (localStorage.getItem('darkmode') == "dark") {
-            $("#divcarri").css("background-color", "#7f7f7f");
-        }else{
-            $("#divcarri").css("background-color", "white");
-            $("#carrisvg").css("filter", "brightness(2)");
-        }
     });
 
     //cambio contraseña
@@ -117,44 +128,6 @@
         $(this).removeClass('underline--link__none');
         $("#C__Contraseña").addClass('underline--link__none');
         $("#C__Contraseña").removeClass('underline--link');
-    });
-
-    var menu1 = $('.js-show-header-dropdown1');
-    var sub_menu_is_showed1 = -1;
-
-    for (var i = 0; i < menu1.length; i++) {
-        $(menu1[i]).on('click', function () {
-
-            if (jQuery.inArray(this, menu1) == sub_menu_is_showed1) {
-                $(this).parent().find('.header-dropdown').toggleClass('show-header-dropdown');
-                sub_menu_is_showed1 = -1;
-                $("#carrisvg").css("filter", "brightness(0) invert(1)");
-                $("#divcarri").css("background-color", "transparent");
-            }
-            else {
-                for (var i = 0; i < menu1.length; i++) {
-                    $(menu[i]).parent().find('.header-dropdown').removeClass("show-header-dropdown");
-
-                }
-
-                $(this).parent().find('.header-dropdown').toggleClass('show-header-dropdown');
-                sub_menu_is_showed1 = jQuery.inArray(this, menu1);
-
-            }
-        });
-    }
-
-    $(".js-show-header-dropdown1, .header-dropdown").click(function (event) {
-        event.stopPropagation();
-    });
-
-    $(window).on("click", function () {
-        for (var i = 0; i < menu1.length; i++) {
-            $(menu1[i]).parent().find('.header-dropdown').removeClass("show-header-dropdown");
-        }
-        sub_menu_is_showed1 = -1;
-        $("#carrisvg").css("filter", "brightness(0) invert(1)");
-        $("#divcarri").css("background-color", "transparent");
     });
 
     /*Darkmode*/
