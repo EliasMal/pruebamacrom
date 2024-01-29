@@ -144,7 +144,7 @@ a:focus {
 
 a:hover {
   text-decoration: none;
-  color: var(--primario);
+  color: var(--primario) !important;
 }
 
 ul,
@@ -340,10 +340,14 @@ img {
 .body__theme--dark .contenedor__usuario--perfil .header-cart i,
 .body__theme--dark .contenedor__usuario--perfil .header-cart span,
 .body__theme--dark .contenedor__usuario--perfil .header-cart p,
-.body__theme--dark .contenedor__usuario--perfil .header-wrapicon1 p{
+.body__theme--dark .contenedor__usuario--perfil .header-wrapicon1 p,
+.main__theme--dark .datos__compatibilidad th{
   color: var(--blanco) !important;
 }
-
+.main__theme--dark .productos__compatibilidad table{
+  --bs-table-striped-bg: rgba(0, 0, 0, 0.2);
+  --bs-table-bg: var(--gris);
+}
 .main__theme--dark #frmcompra .cliente__opciones img,
 .main__theme--dark #frmcompra .ventanaModal__contenido--opciones button img {
   filter: invert(1);
@@ -369,7 +373,10 @@ img {
   background-color: #f1f1f1;
 }
 
-.body__theme--dark .contenedor__usuario--carrito #divcarri, .body__theme--dark .contenedor__usuario--carrito .header-cart, .body__theme--dark .contenedor__usuario--perfil .header-cart{
+.body__theme--dark .contenedor__usuario--carrito #divcarri, 
+.body__theme--dark .contenedor__usuario--carrito .header-cart, 
+.body__theme--dark .contenedor__usuario--perfil .header-cart,
+.body__theme--dark .bread-crumb{
   background-color: var(--gris);
 }
 
@@ -558,7 +565,8 @@ img {
 }
 
 .sidebar__active a,
-.sidebar__logout i {
+.sidebar__logout i,
+.body__theme--dark .bread-crumb a{
   color: var(--blanco);
 }
 
@@ -1382,13 +1390,6 @@ img {
 }
 
 @media(max-height: 620px) {
-  .sidebar__mobil__menu--enlaces {
-    overflow: scroll;
-    height: 40rem;
-  }
-}
-
-@media(max-width: 380px) {
   .sidebar__mobil__menu--enlaces {
     overflow: scroll;
     height: 40rem;
@@ -3118,6 +3119,16 @@ iframe {
   .btn-back-to-top {
     bottom: 90px;
     right: 35px;
+  }
+}
+
+@media(max-width: 380px) {
+  .sidebar__mobil__menu--enlaces {
+    overflow: scroll;
+    height: 40rem;
+  }
+  .hero{
+    width: 30rem;
   }
 }
 
