@@ -9,30 +9,61 @@
   }
 
   $formulario = json_decode(file_get_contents('php://input'));
-  if(isset($formulario->modelo->id)){
-    $id = intval($formulario->modelo->id);
+  if($_SESSION["CarritoPrueba"].length == 0){
+    $iguales = 1;
+  }
+    foreach($_SESSION["CarritoPrueba"] as $key=> $value){
 
-    if(isset($_SESSION['cart'][$id])){
-      $_SESSION["cart"][$id]["cantidad"] = $formulario->modelo->cantidad;
-    }else{
-
-      $sql = "INSERT INTO Carrito (_clienteid, Clave, Producto, No_parte, Cantidad, Precio, Alto, Largo, Ancho, Peso, imagenid, Existencias) 
-      VALUES ('{$_SESSION["iduser"]}','{$formulario->modelo->datos->Clave}','{$formulario->modelo->datos->Producto}','{$formulario->modelo->datos->No_parte}','{$formulario->modelo->cantidad}','{$formulario->modelo->precio}','{$formulario->modelo->datos->Alto}',
-      '{$formulario->modelo->datos->Largo}','{$formulario->modelo->datos->Ancho}','{$formulario->modelo->datos->Peso}','{$id}','{$formulario->modelo->Existencias}')";
-
-      if (mysqli_query($conn, $sql)) {
-
-        echo "<h4>Data inserted successfully</h4>";
-
-      } else{
-
-      echo "Error inserting data: " . mysqli_error($conn);
+      if($value["Clave"] == $formulario->modelo->datos->Clave){
+        
+        $ncantidad = intval($value["Cantidad"] + $formulario->modelo->cantidad);
+        if ($ncantidad > $formulario->modelo->Existencias){
+          $ncantidad = $formulario->modelo->Existencias;
+        }
+        $iguales = 0;
 
       }
+    }
+    if($iguales !=0){
+      $iguales=1;
+    }
 
+    switch($iguales){
+      case 0:
+        $sql = "UPDATE Carrito SET Cantidad = $ncantidad, Existencias=".$formulario->modelo->Existencias." WHERE Clave =".$formulario->modelo->datos->Clave." AND _clienteid =".$_SESSION["iduser"];
+
+          if (mysqli_query($conn, $sql)) {
+
+          echo "<h4>Data inserted successfully</h4>";
+
+          } else{
+            echo "Error inserting data: " . mysqli_error($conn);
+
+          }
+
+      break;
+      case 1:
+        if(isset($formulario->modelo->id)){
+          $id = intval($formulario->modelo->id);
+      
+            $sql = "INSERT INTO Carrito (_clienteid, Clave, Producto, No_parte, Cantidad, Precio, Alto, Largo, Ancho, Peso, imagenid, Existencias) 
+            VALUES ('{$_SESSION["iduser"]}','{$formulario->modelo->datos->Clave}','{$formulario->modelo->datos->Producto}','{$formulario->modelo->datos->No_parte}','{$formulario->modelo->cantidad}','{$formulario->modelo->precio}','{$formulario->modelo->datos->Alto}',
+            '{$formulario->modelo->datos->Largo}','{$formulario->modelo->datos->Ancho}','{$formulario->modelo->datos->Peso}','{$id}','{$formulario->modelo->Existencias}')";
+      
+            if (mysqli_query($conn, $sql)) {
+      
+              echo "<h4>Data inserted successfully</h4>";
+      
+            } else{
+      
+            echo "Error inserting data: " . mysqli_error($conn);
+      
+          }
+          
+        }
+      break;
     }
     
-  }
 
   if(isset($formulario->modelo->erase) && $formulario->modelo->erase == 1 ){
     $id = intval($formulario->modelo->borrar);

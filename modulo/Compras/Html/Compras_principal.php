@@ -46,29 +46,29 @@
 						<div class="productos__contenedor">
 							<div class="productos__datos--contenedor" ng-repeat="product in session.CarritoPrueba">
 								<div class="productos__datos">
-									<div class="productos__datos--img">
-										<img ng-src="{{getImagen(product.imagenid)}}" width="90px" height="120px" alt="IMG" ng-click="btnEliminarRefaccion(product, true)" >
+									<div class="productos__datos--img" ng-click="btnEliminarRefaccion(product, true)">
+										<img ng-src="{{getImagen(product.imagenid)}}" width="90px" height="120px" alt="IMG">
 									</div>
 									<div class="productos__datos--info">
 										<a ng-click="RefaccionDetalles(product.imagenid)" class="productos__datos--info--articulo">{{product._producto}}</a>
 										<p>No.Parte: {{product.No_parte}}</p>
 										<p class="text-dark">{{product.Cantidad}} x {{product.Precio |currency}}</p>
 
-										<!-- <div class="productos__datos--contador">
+										<!-- <div class="productos__datos--contador"> 
 											<div class="agregarmas no-overflow">
 								
 												<button class="agregarmas__botones" ng-click="btnQuitar(product)">
 													<i class="fa fa-minus" aria-hidden="true"></i>
 												</button>
 												<div class="agregarmas__contador num-product center--text">
-													<span >{{product.Cantidad}}</span>
+													<span>{{product.Cantidad}}</span>
 												</div>
 												<button class="agregarmas__botones" ng-click="btnAgregar(product)">
 													<i class="fa fa-plus" aria-hidden="true"></i>
 												</button>
 
 											</div>
-										</div>  -->
+										</div> -->
 
 									</div>
 								</div>
@@ -123,7 +123,7 @@
 								<div class="pagos__cupon">
 									<div class="cuponcont">
 										<input type="text" class="inpcpn" placeholder="Ingresa tu cupón." id="inpCupon" autocomplete="off">
-										<button class="form-control" ng-click="cupon()" id="btncupon">Canjear</button>
+										<button class="form-control" ng-click="cupon()" id="btncupon" disabled>Canjear</button>
 									</div>
 									<span class="cupon--alert" id="alert--cupon"></span>
 								</div>

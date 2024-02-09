@@ -137,8 +137,10 @@ function ComprasCtrl($scope, $http, $sce) {
     tandcheck.addEventListener('click', function () {
         if (tandcheck.checked) {
             btnfacomp.disabled = false;
+            btncupon.disabled = false;
         } else {
             btnfacomp.disabled = true;
+            btncupon.disabled = true;
         }
     });
 
@@ -576,7 +578,7 @@ function ProfileCtrl($scope, $http) {
                 denyButtonText: "Cancelar"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Swal.fire({ title: "Guardado!", icon: "success" });
+                    Swal.fire({showConfirmButton: false, title: "¡Domicilio Guardado!", icon: "success" });
                     obj.SendDirecciones('add', obj.dataDireccion);
                 } else if (result.isDenied) {
                     Swal.fire("Domicilio no guardado", "", "error");
@@ -623,7 +625,7 @@ function ProfileCtrl($scope, $http) {
                 denyButtonText: "Cancelar"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Swal.fire({ title: "Datos Guardados!", icon: "success" });
+                    Swal.fire({showConfirmButton: false, title: "¡Datos Guardados!", icon: "success" });
                     obj.sendFacturacion('add', obj.dataFacturacion)
                 } else if (result.isDenied) {
                     Swal.fire("Los Datos No Fueron Guardados!", "", "error");
@@ -632,7 +634,6 @@ function ProfileCtrl($scope, $http) {
         }
 
     }//Termina Verificador de Agregar nueva Factura.
-
 
     obj.setWizard = (estatus) => { /*Seccion para el modulo de mis pedidos */
         switch (estatus) {
@@ -905,7 +906,7 @@ function ProfileCtrl($scope, $http) {
             denyButtonText: "Cancelar"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({ title: "Guardado!", icon: "success" });
+                Swal.fire({showConfirmButton: false, title: "¡Guardado!", icon: "success" });
                 obj.SendDirecciones(opc, obj.dataDireccion)
             } else if (result.isDenied) {
                 Swal.fire("Domicilio no guardado", "", "error");
@@ -921,7 +922,7 @@ function ProfileCtrl($scope, $http) {
             denyButtonText: "Cancelar"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({ title: "Eliminado!", icon: "success" });
+                Swal.fire({showConfirmButton: false, title: "Eliminado!", icon: "success" });
                 obj.SendDirecciones("delete", { id: id });
                 location.reload();
             }
@@ -1013,7 +1014,7 @@ function ProfileCtrl($scope, $http) {
             denyButtonText: "Cancelar"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({ title: "Guardado!", icon: "success" });
+                Swal.fire({showConfirmButton: false, title: "Guardado!", icon: "success" });
                 obj.sendFacturacion(opc, obj.dataFacturacion)
             } else if (result.isDenied) {
                 Swal.fire("Datos Facturación no guardados", "", "error");
@@ -1029,7 +1030,7 @@ function ProfileCtrl($scope, $http) {
             denyButtonText: "Cancelar"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({ title: "Eliminado!", icon: "success" });
+                Swal.fire({showConfirmButton: false, title: "Eliminado!", icon: "success" });
                 obj.sendFacturacion(opc, { _id: id })
                 location.reload();
             }
@@ -1044,10 +1045,10 @@ function ProfileCtrl($scope, $http) {
             denyButtonText: "Cancelar"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({ title: "Cambios Guardados!", icon: "success" });
+                Swal.fire({showConfirmButton: false, title: "¡Cambios Guardados!", icon: "success" });
                 obj.sendFacturacion(opc, obj.Facturacion.dataFacturacion);
             } else if (result.isDenied) {
-                Swal.fire("Cambios No Guardados!", "", "error");
+                Swal.fire("¡Cambios No Guardados!", "", "error");
             }
         });
     }
