@@ -163,7 +163,6 @@
             case 'Clientes':
             case 'Contacto':
             case 'Cenvios':
-            case 'Monedero':
                 echo "<script src='./Modulo/Control/{$_GET["mod"]}/Js/".$_GET["mod"].".js'></script>";
                 break;
             case 'webprincipal':

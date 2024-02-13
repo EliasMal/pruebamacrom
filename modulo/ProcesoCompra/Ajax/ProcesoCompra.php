@@ -140,9 +140,6 @@ class ProcesoCompra {
                                                 $this->formulario->Costumer->Cenvio->enviodias);
                             if($id){
                                 if($this->setPedidosDetalles($id)){
-                                    if($this->formulario->Costumer->descuento!=0){
-                                        $this->setMonedero($this->formulario->Costumer->profile->id, $this->formulario->Costumer->noPedido["folio"], $this->formulario->Costumer->descuento);
-                                    }
                                     unset($_SESSION["CarritoPrueba"]);
                                     $this->deleteCarrito();
                                     $this->jsonData["Bandera"] = 1;
@@ -190,9 +187,6 @@ class ProcesoCompra {
                                                 $this->formulario->Costumer->Cenvio->paqueteria,
                                                 $this->formulario->Costumer->Cenvio->enviodias);
                                 if($this->setPedidosDetalles($id)){
-                                    if($this->formulario->Costumer->descuento!=0){
-                                        $this->setMonedero($this->formulario->Costumer->profile->id, $this->formulario->Costumer->noPedido["folio"], $this->formulario->Costumer->descuento);
-                                    }
                                     $_SESSION["id_pedido"] = $id;
                                     $this->jsonData["Bandera"] = 1;
                                     $this->jsonData["mensaje"] = "";
@@ -224,7 +218,6 @@ class ProcesoCompra {
                             break;
                     }
                 }else{
-                    $this->formulario->Costumer->metodoPago = "Monedero"; //forma de pago.
                     $id = $this->setPedido2($this->formulario->Costumer->profile->id, $this->formulario->Costumer->Subtotal, 
                                                 $this->formulario->Costumer->metodoPago, $this->formulario->Costumer->noPedido["folio"],
                                                 $this->formulario->Costumer->Cenvio->Costo, $this->formulario->Costumer->Cenvio->Servicio,
@@ -236,16 +229,6 @@ class ProcesoCompra {
                                                 $this->formulario->Costumer->Cenvio->enviodias);
                     if($id){
                         if($this->setPedidosDetalles($id)){
-                            if($this->setMonedero($this->formulario->Costumer->profile->id, $this->formulario->Costumer->noPedido["folio"], $this->formulario->Costumer->descuento)){
-                                unset($_SESSION["CarritoPrueba"]);
-                                $this->deleteCarrito();
-                                $this->jsonData["Bandera"] = 1;
-                                $this->jsonData["mensaje"] = "Tu pedido se a generado satisfactoriamente";
-                                $this->jsonData["Data"] = $id;
-                            }else{
-                                $this->jsonData["Bandera"] = 0;
-                                $this->jsonData["Mensaje"] = "Error al intentar descontar el dinero en el monedero";
-                            }
                             
                         }else{
                             $this->jsonData["Bandera"] = 0;
@@ -448,13 +431,6 @@ class ProcesoCompra {
         
         $this->conn->query($sql);
         return $opc = "I"? $this->conn->last_id():true;
-    }
-
-    private function setMonedero ($_idCostumer, $NoPedido, $Importe){
-        $Importe *= (-1);
-        $sql = "INSERT INTO Monedero (_id_cliente, Descripcion, Importe, movimiento) values "
-        . "($_idCostumer, 'Compra con el pedido No. $NoPedido', $Importe, -1)";
-        return $this->conn->query($sql);
     }
 }
 

@@ -2,7 +2,6 @@
 
 const urlProfile = "./modulo/Profile/Ajax/Profile.php";
 const urlComprobante = "./modulo/Profile/Ajax/uploadfile.php";
-const urlMonedero = "./tv-admin/asset/Modulo/Control/Monedero/Ajax/Monedero.php";
 
 tsuruVolks.controller("ProfileCtrl", ["$scope", "$http", ProfileCtrl]);
 
@@ -20,7 +19,6 @@ function ProfileCtrl($scope, $http) {
     obj.comprobantefile = {};
     obj.paginador = { currentPage: 0, pages: [], pageSize: 5 }
     obj.paginador2 = { page: 0, limit: 15 }
-    obj.monedero = { Importe: 0, detalles: [], totalrecords: 0 }
 
     /* Paginacion */
     obj.configPages = () => {
@@ -562,47 +560,10 @@ function ProfileCtrl($scope, $http) {
     }
     /* Finaliza modulo de Datos de Facturacion */
 
-    /* Comienza modulo de monedero*/
-    obj.sendMonedero = async function (metodo, params = null) {
-        try {
-            const resultado = await $http({
-                method: metodo,
-                url: urlMonedero,
-                params: params
-            }).then(function successCallback(res) {
-                return res
-
-            }, function errorCallback(res) {
-                toastr.error("Error: no se realizo la conexion con el servidor");
-            });
-            console.log(resultado.data);
-            if (resultado.data.Bandera == 1) {
-                switch (params.opc) {
-                    case 'Detalles':
-                        obj.monedero.Importe = resultado.data.Data.Monedero;
-                        obj.monedero.detalles = resultado.data.Data.History;
-                        obj.monedero.totalrecords = resultado.data.Data.NoMonedero;
-                        break;
-                    case 'history':
-                        obj.monedero.detalles = resultado.data.Data.History;
-                        obj.monedero.totalrecords = resultado.data.Data.NoMonedero;
-                        break;
-                }
-
-                $scope.$apply();
-                console.log(obj.monedero);
-            } else {
-                toastr.error(resultado.data.mensaje);
-            }
-        } catch (error) {
-            toastr.error(error)
-        }
-    }
 
     obj.btnNext = () => {
         obj.paginador2.page += obj.paginador2.limit
         let params = { opc: "history", idCliente: localStorage.getItem("iduser"), page: obj.paginador2.page, limit: obj.paginador2.limit }
-        obj.sendMonedero('GET', params)
 
     }
 
@@ -612,7 +573,6 @@ function ProfileCtrl($scope, $http) {
             obj.paginador2.page = 0
         }
         let params = { opc: "history", idCliente: localStorage.getItem("iduser"), page: obj.paginador2.page, limit: obj.paginador2.limit }
-        obj.sendMonedero('GET', params)
 
     }
     /* */
@@ -656,12 +616,7 @@ function ProfileCtrl($scope, $http) {
                 break
             case 'Mispedidos_view':
                 obj.sendMispedidos("details", { _idpedido: localStorage.getItem("_idPedido") });
-                break;
-            case 'Monedero':
-
-                let $params = { opc: "Detalles", idCliente: localStorage.getItem("iduser") }
-                obj.sendMonedero('GET', $params);
-                break;
+            break;
         }
         $(".numero").numeric();
     });

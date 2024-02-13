@@ -32,9 +32,6 @@ function retorna_vista($vista,$data=array()){
                 $html = str_replace("{id}", $data["id"], $html);
             }
         break;
-        case 'Monedero':
-            $html = get_template($vista);
-        break;
         case 'Facturacion':
         case 'Facturacion_add':
         case 'Facturacion_edit':
@@ -70,10 +67,6 @@ function principal($array_principal){
             case 'Direcciones_add':
             case 'Direcciones_edit';
                 $data["id"] = isset($_GET['id'])? htmlspecialchars($_GET['id']):"";
-                retorna_vista($opc, $data);
-            break;
-            
-            case 'Monedero':
                 retorna_vista($opc, $data);
             break;
             case 'Facturacion':

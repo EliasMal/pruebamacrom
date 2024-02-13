@@ -5,7 +5,6 @@ const urlProfile = "./modulo/Profile/Ajax/Profile.php";
 var urlCostumer = "./modulo/ProcesoCompra/Ajax/ProcesoCompra.php";
 var url_session = "./modulo/home/Ajax/session.php";
 var urlhome = "./modulo/home/Ajax/home.php";
-const url_monedero = "./tv-admin/asset/Modulo/Control/Monedero/Ajax/Monedero.php";
 //const urlSkydropx = "https://api-demo.skydropx.com/v1/quotations"
 const urlSkydropx = "https://api.skydropx.com/v1/quotations";
 //const token = "Token token=SuOZQz5IrqceQbJmBqQfAo4PMQvNKMCh2PtXOKMfKM0t";
@@ -33,7 +32,6 @@ function ComprasCtrl($scope, $http, $sce) {
     obj.cenvio = 0
     obj.Numproducts = obj.session.CarritoPrueba ? Object.keys(obj.session.CarritoPrueba).length : 0;
     obj.factflag = false;
-    obj.monedero = { Importe: 0, aplicado: false };
     obj.cotizador = [];
     obj.flag = false;
     obj.dataflag = false;
@@ -97,18 +95,6 @@ function ComprasCtrl($scope, $http, $sce) {
         }
 
     }//fin de prueba cupon local
-
-    obj.aplicarMonedero = () => {
-        if (obj.monedero.Importe > 0) {
-            obj.Costumer.descuento = (obj.monedero.Importe - obj.total) >= 0 ? obj.total : obj.monedero.Importe
-            obj.monedero.aplicado = true
-            obj.monedero.Importe -= obj.total;
-            if (obj.monedero.Importe <= 0) {
-                obj.monedero.Importe = 0;
-            }
-        }
-
-    }
 
     obj.btnAgregar = (p) => {
 
@@ -250,7 +236,7 @@ function ComprasCtrl($scope, $http, $sce) {
             data: { Costumer: data }
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
-                if (obj.total === 0 && obj.monedero.aplicado) {
+                if (obj.total === 0) {
                     location.href = "?mod=ProcesoCompra&opc=paso3";
                 } else if (obj.Costumer.metodoPago === "Deposito" || obj.Costumer.metodoPago === "Transferencia") {
                     obj.openDeposito(res.data.Data);
@@ -317,31 +303,6 @@ function ComprasCtrl($scope, $http, $sce) {
 
             }
         });
-    }
-
-    obj.getMonedero = async (metodo, params) => {
-
-        try {
-            const resultado = await $http({
-                method: metodo,
-                url: url_monedero,
-                params: params
-            }).then(function successCallback(res) {
-                return res
-
-            }, function errorCallback(res) {
-                toastr.error("Error: no se realizo la conexion con el servidor");
-            });
-
-            if (resultado.data.Bandera == 1) {
-                obj.monedero.Importe = resultado.data.Data.Monedero;
-                $scope.$apply();
-            } else {
-                toastr.error(resultado.data.mensaje);
-            }
-        } catch (error) {
-            toastr.error(error)
-        }
     }
 
     obj.getFechaentrega = (dias) => {
@@ -453,9 +414,7 @@ function ComprasCtrl($scope, $http, $sce) {
         if (obj.session.autentificacion == undefined && obj.session.autentificacion != 1) {
             location.href = "?mod=login";
         } else {
-            let params = { opc: "Monedero", idCliente: localStorage.getItem("iduser") }
             obj.getDataUser({ opc: "get", username: obj.session.usr })
-            obj.getMonedero('GET', params)
             obj.empaquetar();
         }
     });
@@ -478,7 +437,6 @@ function ProfileCtrl($scope, $http) {
     obj.comprobantefile = {};
     obj.paginador = { currentPage: 0, pages: [], pageSize: 5 }
     obj.paginador2 = { page: 0, limit: 15 }
-    obj.monedero = { Importe: 0, detalles: [], totalrecords: 0 }
 
 
     obj.configPages = () => { /* Paginacion */
@@ -1058,45 +1016,10 @@ function ProfileCtrl($scope, $http) {
     }
     /* Finaliza modulo de Datos de Facturacion */
 
-    /* Comienza modulo de monedero*/
-    obj.sendMonedero = async function (metodo, params = null) {
-        try {
-            const resultado = await $http({
-                method: metodo,
-                url: urlMonedero,
-                params: params
-            }).then(function successCallback(res) {
-                return res
-
-            }, function errorCallback(res) {
-                toastr.error("Error: no se realizo la conexion con el servidor");
-            });
-            if (resultado.data.Bandera == 1) {
-                switch (params.opc) {
-                    case 'Detalles':
-                        obj.monedero.Importe = resultado.data.Data.Monedero;
-                        obj.monedero.detalles = resultado.data.Data.History;
-                        obj.monedero.totalrecords = resultado.data.Data.NoMonedero;
-                        break;
-                    case 'history':
-                        obj.monedero.detalles = resultado.data.Data.History;
-                        obj.monedero.totalrecords = resultado.data.Data.NoMonedero;
-                        break;
-                }
-
-                $scope.$apply();
-            } else {
-                toastr.error(resultado.data.mensaje);
-            }
-        } catch (error) {
-            toastr.error(error)
-        }
-    }
 
     obj.btnNext = () => {
         obj.paginador2.page += obj.paginador2.limit
         let params = { opc: "history", idCliente: localStorage.getItem("iduser"), page: obj.paginador2.page, limit: obj.paginador2.limit }
-        obj.sendMonedero('GET', params)
 
     }
 
@@ -1106,7 +1029,6 @@ function ProfileCtrl($scope, $http) {
             obj.paginador2.page = 0
         }
         let params = { opc: "history", idCliente: localStorage.getItem("iduser"), page: obj.paginador2.page, limit: obj.paginador2.limit }
-        obj.sendMonedero('GET', params)
 
     }
     /* */
@@ -1148,12 +1070,7 @@ function ProfileCtrl($scope, $http) {
                 break
             case 'Mispedidos_view':
                 obj.sendMispedidos("details", { _idpedido: localStorage.getItem("_idPedido") });
-                break;
-            case 'Monedero':
-
-                let $params = { opc: "Detalles", idCliente: localStorage.getItem("iduser") }
-                obj.sendMonedero('GET', $params);
-                break;
+            break;
         }
         $(".numero").numeric();
     });

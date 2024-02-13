@@ -285,12 +285,6 @@ class Profile{
         return unlink($url);
     }
 
-    private function setMonedero($data){
-        $sql = "INSERT INTO Monedero(_id_cliente, Descripcion, Importe, movimiento) 
-        values({$data["_idCliente"]},'Deposito monedero cancelacion pedido No. {$data["noPedido"]}', ". ($data["Importe"]+$data["cenvio"]) .", 1)";
-        return $this->conn->query($sql);
-    }
-
     private function setCancelarPedido($id){
         $sql = "UPDATE Pedidos SET Acreditado = 6 where _idPedidos = $id";
         return $this->conn->query($sql)? true:false;
@@ -483,24 +477,6 @@ class Profile{
                         }
                         
                     break;
-                    case 'CancelPedido':
-                        $data = $this->get_Mipedido($this->formulario->profile->data->_idpedido);
-                        if($data["Acreditado"]==1 || $data["Acreditado"]==2){
-                            //solo se agregara el monto del pedido si el pedido esta confirmado o en preparacion
-                           if($this->setMonedero($data)){
-                                if($this->setCancelarPedido($this->formulario->profile->data->_idpedido)){
-                                    $this->jsonData["Bandera"] = 1;
-                                    $this->jsonData["mensaje"] = "El pedido ha sido cancelado";
-                                }else{
-                                    $this->jsonData["Bandera"] = 0;
-                                    $this->jsonData["mensaje"] = "Error: al insertar los datos al monedero"; 
-                                }
-                           }else{
-                                $this->jsonData["Bandera"] = 0;
-                                $this->jsonData["mensaje"] = "Error: al insertar los datos al monedero";
-                           }
-                        }
-                        break;
                     default:
                         $this->jsonData["Bandera"] = 1;
                         $this->jsonData["Data"]["No_pedidos"] = $this->get_CountMisPedidos($this->formulario->profile->data->_id);

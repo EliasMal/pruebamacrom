@@ -23,14 +23,6 @@ class PedidosDetalles{
         $this->archivos =  isset($_FILES)? $_FILES:array();
         switch ($this->formulario["opc"]) {
             case 'save':
-                /**Reviso si estamos cancelando el pedido */
-                if($this->formulario["Acreditado"]==6){
-                    $data = $this->getPedidosDetalles($this->formulario["_idPedidos"]);
-                    if($data["Acreditado"]==1 || $data["Acreditado"]==2){
-                         //solo se agregara el monto del pedido si el pedido esta confirmado o en preparacion
-                        $this->setMonedero($data);
-                    }
-                }
                 $id = $this->setPedidosDetalles($this->formulario["Acreditado"], $this->formulario["GuiaEnvio"], $this->formulario["_idPedidos"]);
                 if($id){
                     if(count($this->archivos)!=0){
@@ -62,29 +54,6 @@ class PedidosDetalles{
                     $this->jsonData["Bandera"] = 0;
                     $this->jsonData["mensaje"] = "El archivo no existe en el servidor";
                 }
-                break;
-            case 'deleteArtic':
-                if($id = $this->getOneDetallePedido($this->formulario["idDetalle"])){
-                    if($this->setMonederoArticulo($id)){
-                        if($this->setOneDetallePedido($this->formulario["idDetalle"])){
-                            $this->setImportePedidosDetallesxArticulo($id["_idPedidos"], ($id["Importe"]*$id["cantidad"]));
-                            $this->jsonData["Bandera"] = 1;
-                            $this->jsonData["mensaje"] = "Articulo eliminado";
-                        }else{
-                            $this->jsonData["Bandera"] = 0;
-                            $this->jsonData["mensaje"] = "Error al eliminar el articulo";
-                        }
-                        $this->jsonData["Data"] = $id;
-                    }else{
-                        $this->jsonData["Bandera"] = 0;
-                        $this->jsonData["mensaje"] = "Error al insertar el articulo en el monedero";  
-                    }
-                }else{  
-                    
-                    $this->jsonData["Bandera"] = 0;
-                    $this->jsonData["mensaje"] = "Error al bucsar el articulo";
-                }
-                    
                 break;
         }
         print json_encode($this->jsonData);
@@ -168,18 +137,6 @@ class PedidosDetalles{
         return $this->conn->query($sql)? true: false;
     }
 
-    private function setMonedero($data){
-        $sql = "INSERT INTO Monedero(_id_cliente, Descripcion, Importe, movimiento) 
-        values({$data["_idCliente"]},'Deposito monedero cancelacion pedido No. {$data["noPedido"]}', ". ($data["Importe"]+$data["cenvio"]) .", 1)";
-        return $this->conn->query($sql);
-    }
-
-    private function setMonederoArticulo($data){
-        $sql = "INSERT INTO Monedero(_id_cliente, Descripcion, Importe, movimiento) 
-            values ({$data["_idCliente"]},'Deposito monedero cancalacion articulo codigo: {$data["_idProducto"]}',". 
-            ($data["cantidad"]*$data["Importe"]) .", 1)";
-        return $this->conn->query($sql);
-    }
 }
 
 $app = new PedidosDetalles($array_principal);

@@ -32,7 +32,6 @@ $conf['Refacciones'] = array('archivo'=>"Control/Refacciones/Controller.php",'pe
 $conf['Pedidos'] = array('archivo'=>"Control/Pedidos/Controller.php",'permisos'=>["root","Admin","venta"]);
 $conf['Clientes'] = array('archivo'=>"Control/Clientes/Controller.php",'permisos'=>["root","Admin"]);
 $conf['Contacto'] = array('archivo'=>"Control/Contacto/Controller.php","permisos"=>["root","Admin"]);
-$conf['Monedero'] = array('archivo'=>"Control/Monedero/Controller.php","permisos"=>["root","Admin"]);
 
 /*Menu Secciones */
 $conf['webprincipal'] = array("archivo"=>"Secciones/webprincipal/Controller.php","permisos"=>["root","Admin","Web"]);
