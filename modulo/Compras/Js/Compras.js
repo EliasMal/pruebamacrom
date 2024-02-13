@@ -124,9 +124,11 @@ function ComprasCtrl($scope, $http, $sce) {
         if (tandcheck.checked) {
             btnfacomp.disabled = false;
             btncupon.disabled = false;
+            inpCupon.disabled = false;
         } else {
             btnfacomp.disabled = true;
             btncupon.disabled = true;
+            inpCupon.disabled = true;
         }
     });
 

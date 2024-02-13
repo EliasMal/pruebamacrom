@@ -204,6 +204,13 @@
         $(this).parent().find('.dropdown-content').slideToggle('fast');
     });
 
+    $(document).ready(function() {
+        $("#inpCupon").keypress(function(e) {
+            if (e.which == 13) {
+                return false;
+            }
+        });
+    });
 })(jQuery);
 
 //Abrir y cerrar modales

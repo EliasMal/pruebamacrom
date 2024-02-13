@@ -123,7 +123,7 @@
 								</div>
 								<div class="pagos__cupon">
 									<div class="cuponcont">
-										<input type="text" class="inpcpn" placeholder="Ingresa tu cupón." id="inpCupon" autocomplete="off">
+										<input type="text" class="inpcpn" placeholder="Ingresa tu cupón." id="inpCupon" autocomplete="off" disabled>
 										<button class="form-control" ng-click="cupon()" id="btncupon" disabled>Canjear</button>
 									</div>
 									<span class="cupon--alert" id="alert--cupon"></span>
