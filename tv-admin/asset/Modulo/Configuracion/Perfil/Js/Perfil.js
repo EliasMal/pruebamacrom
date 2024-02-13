@@ -30,6 +30,9 @@ function PerfilCtrl($scope, $http){
         }
     }
 
+    obj.btnRegresar =() =>{
+        location.href = document.referrer;
+    }
 
     obj.getUsuario = () => {
         $http({

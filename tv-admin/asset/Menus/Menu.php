@@ -30,7 +30,7 @@ function menu(){
     $seccion = "";
     $icons = array("grupos"=>array("Control"=>"fa-fan", "Configuracion"=>"fa-cogs","Secciones"=>"fa-puzzle-piece", 
     "Respaldo"=>"fa-refresh", "Importar"=>"fa-upload", "Mantenimiento"=>"fa-cog", "Reportes"=>"fa-book"),
-                   "titulo"=>array("Refacciones"=>"fa-toolbox","Pedidos"=>"fa-shopping-cart", "Clientes"=>"fa-address-book","Categorias"=>"fa-object-group",
+                   "titulo"=>array("Refacciones"=>"fa-toolbox","Pedidos"=>"fa-shopping-cart", "Clientes"=>"fa-address-book","Categorias"=>"ion-settings",
                    "Agencias"=>"fa-warehouse", "Vehiculos" => "fa-car", "Usuarios"=>"fa-users", "Principal"=>"fa-columns", "Actualizar precios"=>"fa-dollar",
                    "Contacto"=>"fa-id-badge", "Codigos Postales"=>"", "Costos Envios"=>"fa-comment-dollar", "Proveedores"=>"fa-truck", "Blog"=>"fa-cubes", 
                    "Monedero"=>"fa-credit-card", "Correo"=>"fa-envelope", "Pruebas"=>"fa-file", "Refacciones capturadas"=>"fa-list")
@@ -64,7 +64,7 @@ function menu(){
         break;
         case 'Web':
             $opcMenu[$sum]["grupo"]="Secciones";            $opcMenu[$sum]["titulo"]= "Principal";              $opcMenu[$sum]["opc"]="?mod=webprincipal";      $sum++;
-            $opcMenu[$sum]["grupo"]="Secciones";            $opcMenu[$sum]["titulo"]= "Blog";                   $opcMenu[$sum]["opc"]="?mod=blog";              $sum++;
+            $opcMenu[$sum]["grupo"]="Secciones";            $opcMenu[$sum]["titulo"]= "Blog";                   $opcMenu[$sum]["opc"]="?mod=Blog";              $sum++;
         break;
         case 'Admin':
             $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Refacciones";            $opcMenu[$sum]["opc"]="?mod=Refacciones";       $sum++;
@@ -90,7 +90,7 @@ function menu(){
             $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Vehiculos";              $opcMenu[$sum]["opc"]="?mod=Modelos";           $sum++;
             $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Proveedores";            $opcMenu[$sum]["opc"]="?mod=Proveedores";       $sum++;
             $opcMenu[$sum]["grupo"]="Respaldo";             $opcMenu[$sum]["titulo"]= "Actualizar precios";     $opcMenu[$sum]["opc"]="?mod=Actualizarpre";     $sum++;
-            $opcMenu[$sum]["grupo"]="Secciones";            $opcMenu[$sum]["titulo"]= "Blog";                   $opcMenu[$sum]["opc"]="?mod=blog";              $sum++;
+            $opcMenu[$sum]["grupo"]="Secciones";            $opcMenu[$sum]["titulo"]= "Blog";                   $opcMenu[$sum]["opc"]="?mod=Blog";              $sum++;
         break;
             break;
     }

@@ -341,7 +341,6 @@ function ProfileCtrl($scope, $http) {
         });
     }
 
-
     obj.sendProfile = (opc) => {
         $http({
             method: 'POST',

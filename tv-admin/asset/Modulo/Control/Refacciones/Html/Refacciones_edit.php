@@ -48,7 +48,7 @@
                                         </div>
                                         <div class="col-md-12 col-lg-12">
                                             <label for="">Ultimo en modificar:</label>
-                                            <input type="text" class="form-control" ng-model="refaccion.userModify" disabled/>
+                                            <input type="text" class="form-control" value="{{refaccion.userModify}}, {{refaccion.dateModify}}" disabled/>
                                         </div>
                                     </div>
                                 </div>

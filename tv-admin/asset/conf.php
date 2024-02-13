@@ -36,7 +36,7 @@ $conf['Monedero'] = array('archivo'=>"Control/Monedero/Controller.php","permisos
 
 /*Menu Secciones */
 $conf['webprincipal'] = array("archivo"=>"Secciones/webprincipal/Controller.php","permisos"=>["root","Admin","Web"]);
-$conf['Blog'] = array("archivo"=>"Secciones/Blog/Controller.php","permisos"=>["root","Admin","Web"]);
+$conf['Blog'] = array("archivo"=>"Secciones/Blog/Controller.php","permisos"=>["root","Admin","Web","capturista"]);
 
 /*Menu Respaldo */
 $conf['Actualizarpre'] = array("archivo"=>"Respaldo/Precios/Controller.php","permisos"=>["root","Admin","capturista"]);

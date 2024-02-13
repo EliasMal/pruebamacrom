@@ -910,6 +910,6 @@ function RefaccionesEditCtrl($scope, $http){
         });
         obj.session = JSON.parse(localStorage.getItem('session'))
         obj.isAdmin = obj.session.rol === "Admin"? true:false;
-        console.log(obj.isAdmin)
+        //console.log(obj.isAdmin)
     });
 }

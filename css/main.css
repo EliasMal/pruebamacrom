@@ -1051,6 +1051,7 @@ img {
 .productos__datos--img {
   display: grid;
   justify-content: center;
+  height: 12rem;
 }
 
 .productos__datos--info--articulo {
@@ -1063,6 +1064,7 @@ img {
   grid-template-columns: repeat(2, 1fr);
   max-height: 30rem;
   overflow: auto;
+  row-gap: 1rem;
 }
 
 .contenedor-principal {
@@ -1427,7 +1429,7 @@ img {
 
 /*Contenido catalogo principal*/
 .catalogo__filtrado,
-.tabla__compatibilidad {
+.tabla__compatibilidad, .productos__datos--contenedor{
   display: grid;
 }
 
@@ -1841,7 +1843,9 @@ img {
   display: flex;
   justify-content: center;
 }
-
+.productos__datos--divisor{
+  align-self: flex-end;
+}
 @media(min-width: 800px) {
   .productos__datos--img::after{
     content: '\e870';
@@ -1854,7 +1858,8 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
+    position: relative;
+    top: -12rem;
     width: 9rem;
     height: 12rem;
     background-color: rgba(0, 0, 0, 0.5);
