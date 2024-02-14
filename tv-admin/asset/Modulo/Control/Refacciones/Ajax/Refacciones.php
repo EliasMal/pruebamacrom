@@ -179,7 +179,7 @@
                     . "'{$this->formulario["Vehiculo"]}','{$this->formulario["Modelo"]}',".bcdiv($this->formulario["Precio1"],'1',2).",".bcdiv($this->formulario["Precio2"],'2',1).",'{$this->formulario["Descripcion"]}',"
                     . "'{$this->formulario["Nuevo"]}','{$this->formulario["Oferta"]}','{$this->formulario["Color"]}',{$this->formulario["Estatus"]},{$this->formulario["Alto"]},{$this->formulario["Largo"]},"
                     . "{$this->formulario["Ancho"]},{$this->formulario["Peso"]},{$this->formulario["id_proveedor"]},'{$this->formulario["tag_title"]}','{$this->formulario["tag_alt"]}'
-                    ,'{$this->formulario["Enviogratis"]}','{$this->formulario["liquidacion"]}',0,'{$_SESSION["usr"]}','{$_SESSION["usr"]}')";
+                    ,'{$this->formulario["Enviogratis"]}','{$this->formulario["liquidacion"]}',0,'{$_SESSION["usr"]}','{$_SESSION["nombre"]}')";
                     break;
                     
                 case 'edit':

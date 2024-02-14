@@ -133,6 +133,8 @@ class Registro{
             $_SESSION["nombre"] = $this->formulario->Registro->Nombre.' '.$this->formulario->Registro->Apellidos;
             $_SESSION["iduser"] = $id;
             $_SESSION["usr"] = $this->formulario->Registro->username;
+            $_SESSION["cupon"] = "macrupon";
+            $_SESSION["acreditacion"] = $this->dataLogin["cuponacre"];
             return true;
         }else{
             return false;
