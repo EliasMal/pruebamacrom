@@ -33,7 +33,7 @@ function menu(){
                    "titulo"=>array("Refacciones"=>"fa-toolbox","Pedidos"=>"fa-shopping-cart", "Clientes"=>"fa-address-book","Categorias"=>"ion-settings",
                    "Agencias"=>"fa-warehouse", "Vehiculos" => "fa-car", "Usuarios"=>"fa-users", "Principal"=>"fa-columns", "Actualizar precios"=>"fa-dollar",
                    "Contacto"=>"fa-id-badge", "Codigos Postales"=>"", "Costos Envios"=>"fa-comment-dollar", "Proveedores"=>"fa-truck", "Blog"=>"fa-cubes", 
-                   "Monedero"=>"fa-credit-card", "Correo"=>"fa-envelope", "Pruebas"=>"fa-file", "Refacciones capturadas"=>"fa-list")
+                   "Correo"=>"fa-envelope", "Pruebas"=>"fa-file", "Refacciones capturadas"=>"fa-list")
     );
     $data["html"] = "";
     $data["usr"] = $_SESSION["usr"];

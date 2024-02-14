@@ -54,7 +54,7 @@
 										<p>No.Parte: {{product.No_parte}}</p>
 										<p class="text-dark">{{product.Cantidad}} x {{product.Precio |currency}}</p>
 
-										<div class="productos__datos--contador">
+										<!--<div class="productos__datos--contador">
 											<div class="agregarmas no-overflow">
 								
 												<button class="agregarmas__botones" ng-click="btnQuitar(product)">
@@ -68,7 +68,7 @@
 												</button>
 
 											</div>
-										</div> 
+										</div> -->
 
 									</div>
 								</div>
