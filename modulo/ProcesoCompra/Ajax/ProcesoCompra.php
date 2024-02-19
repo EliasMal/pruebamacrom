@@ -257,7 +257,7 @@ class ProcesoCompra {
     }
    // UPDATE macromau_database.Cseguridad set cuponacre = 1 where _id_cliente = 184;
     private function setcuponacre(){
-        $sql = "UPDATE Cseguridad SET cuponacre = 1 WHERE _id_cliente = '{$this->formulario->Costumer->profile->id}'";
+        $sql = "UPDATE Cseguridad SET cupon_nombre = '{$this->formulario->Costumer->usercpn}' WHERE _id_cliente = '{$this->formulario->Costumer->profile->id}'";
         return $this->conn->query($sql)? true: false;
     }
     

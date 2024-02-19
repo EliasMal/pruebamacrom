@@ -59,7 +59,19 @@ class Clientes {
                 $element = $this->getOneCliente();
                 $element["avisoprivacidad"] = $element["avisoprivacidad"]==0? false:true;
                 $this->jsonData["data"] = $element;
-                break;
+            break;
+            case 'cuponDelete':
+                $this->jsonData["Bandera"] = 1;
+                $this->cuponDelete();
+            break;
+            case 'cuponGuardar':
+                $this->jsonData["Bandera"] = 1;
+                $this->cuponGuardar();
+            break;
+            case 'cuponGuardarAll':
+                $this->jsonData["Bandera"] = 1;
+                $this->cuponGuardarAll();
+            break;
         }
         print json_encode($this->jsonData);
     }
@@ -77,7 +89,19 @@ class Clientes {
         }
         return $array;
     }
-    
+    private function cuponGuardarAll(){
+        $sql="update Cseguridad set cupon_nombre ='{$this->formulario->cliente->tagdata}'";
+        return $this->conn->query($sql);
+    }
+    private function cuponGuardar(){
+        $sql="update Cseguridad set cupon_nombre ='{$this->formulario->cliente->tagdata}' where _id_cliente= {$this->formulario->cliente->id}";
+        return $this->conn->query($sql);
+    }
+    private function cuponDelete(){
+        $sql="update Cseguridad set cupon_nombre ='' where _id_cliente= {$this->formulario->cliente->id}";
+        return $this->conn->query($sql);    
+    }
+
     private function getnewClientes($week_start){
         $array = array();
         $sql = "select C._id, Cs.username, concat(C.Apellidos, ' ', C.nombres) as nombre, 

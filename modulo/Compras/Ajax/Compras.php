@@ -25,7 +25,7 @@
         }
 
         private function getOneDatauser($username){
-            $sql = "select C._id as id, C.nombres, C.Apellidos, C.correo from Cseguridad as CS 
+            $sql = "select C._id as id, C.nombres, C.Apellidos, C.correo, CS.cupon_nombre from Cseguridad as CS 
                     inner join clientes as C on (C._id = CS._id_cliente) 
                     where CS.username = '$username'";
             return $this->conn->fetch($this->conn->query($sql));

@@ -65,8 +65,6 @@ class home {
                                 
                                 $_SESSION["iduser"] = $this->dataLogin["_id_cliente"];
                                 $_SESSION["Cenvio"] = $this->getCenvio();
-                                $_SESSION["cupon"] = "macrupon";
-                                $_SESSION["acreditacion"] = $this->dataLogin["cuponacre"];
                             }
                         }
                     break;

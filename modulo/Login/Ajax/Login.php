@@ -152,9 +152,8 @@ class Login{
             $_SESSION["iduser"] = $this->dataLogin["_id_cliente"];
             $_SESSION["Cenvio"] = $this->getCenvio();
             $_SESSION["usr"] = $this->formulario->Login->user;
-            $_SESSION["cupon"] = "macrupon";
-            $_SESSION["acreditacion"] = $this->dataLogin["cuponacre"];
-            return true;
+            $sql ="UPDATE clientes SET ultimoacceso = '{$_SESSION["ultimoAcceso"]}'";
+            return $this->conn->query($sql);
         }else{
             return false;
         }

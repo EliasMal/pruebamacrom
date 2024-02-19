@@ -116,9 +116,9 @@ class Registro{
     }
     
     private function setCSeguridad ($id){
-        $sql = "INSERT INTO Cseguridad(username, password, FechaCreacion, FechaModificacion, Estatus, _id_cliente, cuponacre) values "
+        $sql = "INSERT INTO Cseguridad(username, password, FechaCreacion, FechaModificacion, Estatus, _id_cliente, cuponacre, cupon_nombre) values "
                 . "('{$this->formulario->Registro->username}',SHA('{$this->formulario->Registro->pass}'),'"
-                . date("Y-m-d", strtotime($this->formulario->Registro->FechaCreacion))."','".date("Y-m-d", strtotime($this->formulario->Registro->FechaModificacion))."',1,'$id',0)";
+                . date("Y-m-d", strtotime($this->formulario->Registro->FechaCreacion))."','".date("Y-m-d", strtotime($this->formulario->Registro->FechaModificacion))."',1,'$id',0,null)";
         return $this->conn->query($sql) ? true: false;
          
     }
@@ -133,8 +133,6 @@ class Registro{
             $_SESSION["nombre"] = $this->formulario->Registro->Nombre.' '.$this->formulario->Registro->Apellidos;
             $_SESSION["iduser"] = $id;
             $_SESSION["usr"] = $this->formulario->Registro->username;
-            $_SESSION["cupon"] = "macrupon";
-            $_SESSION["acreditacion"] = $this->dataLogin["cuponacre"];
             return true;
         }else{
             return false;

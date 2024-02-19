@@ -23,7 +23,6 @@ function LoginCtrl($scope, $http) {
             if (res.data.Bandera == 1) {
                 localStorage.setItem('session', JSON.stringify(res.data.session))
                 localStorage.setItem('iduser', res.data.session.iduser)
-                localStorage.setItem("acrcupon", 0);
                 location.href = "?mod=home";
             } else {
                 toastr.error(res.data.mensaje);

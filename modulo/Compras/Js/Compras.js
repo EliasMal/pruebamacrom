@@ -68,33 +68,39 @@ function ComprasCtrl($scope, $http, $sce) {
         return obj.total;
     }
 
-    obj.cupon = () => { //prueba cupon local
+    obj.cupon = () => {
+        const cpn = obj.Costumer.profile.cupon_nombre.split(",");
         let inpCupon = document.getElementById("inpCupon").value;
         var incpn = document.getElementById("inpCupon");
-        var acrcupo = localStorage.getItem("acrcupon");
         var cupon__alert = document.getElementById('alert--cupon');
-        if (inpCupon == obj.session.cupon && obj.session.acreditacion == 0 && acrcupo != 1) {
-            obj.Costumer.Subtotal = (obj.Costumer.Subtotal * (10 / 100));
-            obj.Costumer.descuento = obj.Costumer.Subtotal;
-            btncupon.disabled = true;
-            incpn.disabled = true;
-            btncupon.style.borderColor = "#00ff00";
-            btncupon.style.backgroundColor = "#ccc";
-            cupon__alert.innerHTML = "";
-        } else if (inpCupon == "" || inpCupon != obj.session.cupon) {
-            cupon__alert.className += " cupon--alert-active";
-            cupon__alert.innerHTML = "Ingresa un cupón valido";
 
-        } else {
-            btncupon.style.backgroundColor = "#ccc";
-            btncupon.style.cursor = "default";
-            btncupon.disabled = true;
-            cupon__alert.innerHTML = "Este cupón YA ha sido utilizado"
-            cupon__alert.className += " cupon--alert-active";
-            incpn.disabled = true;
-        }
+        cpn.forEach(function (element) {
+            //console.log(element);
+            if (inpCupon == element) {
+                obj.Costumer.Subtotal = (obj.Costumer.Subtotal * (10 / 100));
+                obj.Costumer.descuento = obj.Costumer.Subtotal;
+                btncupon.disabled = true;
+                incpn.disabled = true;
+                btncupon.style.borderColor = "#00ff00";
+                btncupon.style.backgroundColor = "#ccc";
+                cupon__alert.innerHTML = "";
+                obj.Costumer.usercpn = element;
+            } else if (inpCupon == "" || inpCupon != element) {
+                cupon__alert.className += " cupon--alert-active";
+                if (incpn.disabled != true) {
+                    cupon__alert.innerHTML = "Ingresa un cupón valido";
+                }
+            } else {
+                btncupon.style.backgroundColor = "#ccc";
+                btncupon.style.cursor = "default";
+                btncupon.disabled = true;
+                cupon__alert.innerHTML = "Este cupón YA ha sido utilizado"
+                cupon__alert.className += " cupon--alert-active";
+                incpn.disabled = true;
+            }
 
-    }//fin de prueba cupon local
+        });
+    }
 
     obj.btnAgregar = (p) => {
 
@@ -193,6 +199,9 @@ function ComprasCtrl($scope, $http, $sce) {
                 if (obj.requiredEnvio) {
                     obj.Costumer.opc = "buy2";
                     obj.Costumer.Cenvio.Servicio = obj.dataCotizador.parcel.weight == 0 ? "ENVIO GRATIS" : obj.Costumer.Cenvio.Servicio;
+                    const cpn = obj.Costumer.profile.cupon_nombre.split(",");
+                    obj.Costumer.usercpn = cpn.filter(Discpn => Discpn != obj.Costumer.usercpn);
+                    obj.Costumer.usercpn = obj.Costumer.usercpn.toString();
                     obj.ProcesarCompra(obj.Costumer);
                 } else {
                     toastr.error("Error: Debes de seleccionar el costo del envio");
@@ -203,11 +212,6 @@ function ComprasCtrl($scope, $http, $sce) {
 
         } else {
             toastr.error("Error no tienes una direccion de envio predeterminada");
-        }
-        let inpCupon = document.getElementById("inpCupon").value;
-        var acrcupo = localStorage.getItem("acrcupon");
-        if (inpCupon == obj.session.cupon && obj.session.acreditacion == 0 && acrcupo != 1) {
-            localStorage.setItem("acrcupon", 1);
         }
     }
 
@@ -538,7 +542,7 @@ function ProfileCtrl($scope, $http) {
                 denyButtonText: "Cancelar"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Swal.fire({showConfirmButton: false, title: "¡Domicilio Guardado!", icon: "success" });
+                    Swal.fire({ showConfirmButton: false, title: "¡Domicilio Guardado!", icon: "success" });
                     obj.SendDirecciones('add', obj.dataDireccion);
                 } else if (result.isDenied) {
                     Swal.fire("Domicilio no guardado", "", "error");
@@ -585,7 +589,7 @@ function ProfileCtrl($scope, $http) {
                 denyButtonText: "Cancelar"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Swal.fire({showConfirmButton: false, title: "¡Datos Guardados!", icon: "success" });
+                    Swal.fire({ showConfirmButton: false, title: "¡Datos Guardados!", icon: "success" });
                     obj.sendFacturacion('add', obj.dataFacturacion)
                 } else if (result.isDenied) {
                     Swal.fire("Los Datos No Fueron Guardados!", "", "error");
@@ -866,7 +870,7 @@ function ProfileCtrl($scope, $http) {
             denyButtonText: "Cancelar"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({showConfirmButton: false, title: "¡Guardado!", icon: "success" });
+                Swal.fire({ showConfirmButton: false, title: "¡Guardado!", icon: "success" });
                 obj.SendDirecciones(opc, obj.dataDireccion)
             } else if (result.isDenied) {
                 Swal.fire("Domicilio no guardado", "", "error");
@@ -882,7 +886,7 @@ function ProfileCtrl($scope, $http) {
             denyButtonText: "Cancelar"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({showConfirmButton: false, title: "Eliminado!", icon: "success" });
+                Swal.fire({ showConfirmButton: false, title: "Eliminado!", icon: "success" });
                 obj.SendDirecciones("delete", { id: id });
                 location.reload();
             }
@@ -974,7 +978,7 @@ function ProfileCtrl($scope, $http) {
             denyButtonText: "Cancelar"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({showConfirmButton: false, title: "Guardado!", icon: "success" });
+                Swal.fire({ showConfirmButton: false, title: "Guardado!", icon: "success" });
                 obj.sendFacturacion(opc, obj.dataFacturacion)
             } else if (result.isDenied) {
                 Swal.fire("Datos Facturación no guardados", "", "error");
@@ -990,7 +994,7 @@ function ProfileCtrl($scope, $http) {
             denyButtonText: "Cancelar"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({showConfirmButton: false, title: "Eliminado!", icon: "success" });
+                Swal.fire({ showConfirmButton: false, title: "Eliminado!", icon: "success" });
                 obj.sendFacturacion(opc, { _id: id })
                 location.reload();
             }
@@ -1005,7 +1009,7 @@ function ProfileCtrl($scope, $http) {
             denyButtonText: "Cancelar"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({showConfirmButton: false, title: "¡Cambios Guardados!", icon: "success" });
+                Swal.fire({ showConfirmButton: false, title: "¡Cambios Guardados!", icon: "success" });
                 obj.sendFacturacion(opc, obj.Facturacion.dataFacturacion);
             } else if (result.isDenied) {
                 Swal.fire("¡Cambios No Guardados!", "", "error");
@@ -1072,7 +1076,7 @@ function ProfileCtrl($scope, $http) {
                 break
             case 'Mispedidos_view':
                 obj.sendMispedidos("details", { _idpedido: localStorage.getItem("_idPedido") });
-            break;
+                break;
         }
         $(".numero").numeric();
     });

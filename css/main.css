@@ -1959,7 +1959,12 @@ img {
     z-index: 2;
     height: 5.2rem;
     width: 14rem;
-    display: block;
+    display: grid;
+    justify-items: center;
+  }
+  
+  .contenedor__usuario--perfil .header-wrapicon1{
+    position: absolute;
   }
 
   .contenedor__usuario--carrito {
