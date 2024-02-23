@@ -152,7 +152,7 @@ class Login{
             $_SESSION["iduser"] = $this->dataLogin["_id_cliente"];
             $_SESSION["Cenvio"] = $this->getCenvio();
             $_SESSION["usr"] = $this->formulario->Login->user;
-            $sql ="UPDATE clientes SET ultimoacceso = '{$_SESSION["ultimoAcceso"]}'";
+            $sql ="UPDATE clientes SET ultimoacceso = '{$_SESSION["ultimoAcceso"]}' where _id = '{$this->dataLogin["_id_cliente"]}'";
             return $this->conn->query($sql);
         }else{
             return false;

@@ -69,37 +69,46 @@ function ComprasCtrl($scope, $http, $sce) {
     }
 
     obj.cupon = () => {
-        const cpn = obj.Costumer.profile.cupon_nombre.split(",");
         let inpCupon = document.getElementById("inpCupon").value;
         var incpn = document.getElementById("inpCupon");
         var cupon__alert = document.getElementById('alert--cupon');
 
-        cpn.forEach(function (element) {
-            //console.log(element);
-            if (inpCupon == element) {
-                obj.Costumer.Subtotal = (obj.Costumer.Subtotal * (10 / 100));
-                obj.Costumer.descuento = obj.Costumer.Subtotal;
-                btncupon.disabled = true;
-                incpn.disabled = true;
-                btncupon.style.borderColor = "#00ff00";
-                btncupon.style.backgroundColor = "#ccc";
-                cupon__alert.innerHTML = "";
-                obj.Costumer.usercpn = element;
-            } else if (inpCupon == "" || inpCupon != element) {
-                cupon__alert.className += " cupon--alert-active";
-                if (incpn.disabled != true) {
-                    cupon__alert.innerHTML = "Ingresa un cupón valido";
-                }
-            } else {
-                btncupon.style.backgroundColor = "#ccc";
-                btncupon.style.cursor = "default";
-                btncupon.disabled = true;
-                cupon__alert.innerHTML = "Este cupón YA ha sido utilizado"
-                cupon__alert.className += " cupon--alert-active";
-                incpn.disabled = true;
-            }
+        if (obj.Costumer.profile.cupon_nombre != null && obj.Costumer.profile.cupon_nombre != "") {
+            const cpn = obj.Costumer.profile.cupon_nombre.split(",");
 
-        });
+
+            cpn.forEach(function (element) {
+                //console.log(element);
+                if (inpCupon == element) {
+                    obj.Costumer.Subtotal = (obj.Costumer.Subtotal * (10 / 100));
+                    obj.Costumer.descuento = obj.Costumer.Subtotal;
+                    btncupon.disabled = true;
+                    incpn.disabled = true;
+                    btncupon.style.borderColor = "#00ff00";
+                    btncupon.style.backgroundColor = "#ccc";
+                    cupon__alert.innerHTML = "";
+                    obj.Costumer.usercpn = element;
+                } else if (inpCupon == "" || inpCupon != element) {
+                    cupon__alert.className += " cupon--alert-active";
+                    if (incpn.disabled != true) {
+                        cupon__alert.innerHTML = "Ingresa un cupón valido";
+                    }
+                } else {
+                    btncupon.style.backgroundColor = "#ccc";
+                    btncupon.style.cursor = "default";
+                    btncupon.disabled = true;
+                    cupon__alert.innerHTML = "Este cupón YA ha sido utilizado"
+                    cupon__alert.className += " cupon--alert-active";
+                    incpn.disabled = true;
+                }
+
+            });
+        } else {
+            cupon__alert.className += " cupon--alert-active";
+            if (incpn.disabled != true) {
+                cupon__alert.innerHTML = "Ingresa un cupón valido";
+            }
+        }
     }
 
     obj.btnAgregar = (p) => {
@@ -199,9 +208,11 @@ function ComprasCtrl($scope, $http, $sce) {
                 if (obj.requiredEnvio) {
                     obj.Costumer.opc = "buy2";
                     obj.Costumer.Cenvio.Servicio = obj.dataCotizador.parcel.weight == 0 ? "ENVIO GRATIS" : obj.Costumer.Cenvio.Servicio;
-                    const cpn = obj.Costumer.profile.cupon_nombre.split(",");
-                    obj.Costumer.usercpn = cpn.filter(Discpn => Discpn != obj.Costumer.usercpn);
-                    obj.Costumer.usercpn = obj.Costumer.usercpn.toString();
+                    if (obj.Costumer.profile.cupon_nombre != null && obj.Costumer.profile.cupon_nombre != "") {
+                        const cpn = obj.Costumer.profile.cupon_nombre.split(",");
+                        obj.Costumer.usercpn = cpn.filter(Discpn => Discpn != obj.Costumer.usercpn);
+                        obj.Costumer.usercpn = obj.Costumer.usercpn.toString();
+                    }
                     obj.ProcesarCompra(obj.Costumer);
                 } else {
                     toastr.error("Error: Debes de seleccionar el costo del envio");

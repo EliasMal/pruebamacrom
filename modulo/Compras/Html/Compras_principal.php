@@ -185,9 +185,9 @@
 									<div class="metodo__pago--contenedor">
 										<div class="metodo__pago--metodos">
 											<div class="metodo__pago--metodo">
-												<button class="metodopago bo18 h-120" id="btncredito" ng-click="metarjeta()">
+												<button class="metodopago bo18 h-120" id="btncredito" ng-click="metarjeta()" disabled>
 													<label class="radio2">Tarjeta de crédito / debito</label>
-													<img src="images/icons/VISA MASTERCARD.svg" alt="tarjeta credito" class ="img-fluid mx-auto d-block" width="150px" height="31px">
+													<img src="images/icons/VISA MASTERCARD.svg" alt="tarjeta credito" class ="img-fluid mx-auto d-block" width="150px" height="31px" style="opacity:0.1">
 												</button>	
 											</div>
 
