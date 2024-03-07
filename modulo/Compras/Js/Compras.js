@@ -54,7 +54,12 @@ function ComprasCtrl($scope, $http, $sce) {
     obj.subtotal = () => {
         obj.Costumer.Subtotal = 0
         for (let e in obj.session.CarritoPrueba) {
-            obj.Costumer.Subtotal += (obj.session.CarritoPrueba[e].Cantidad * obj.session.CarritoPrueba[e].Precio);
+            if(obj.session.CarritoPrueba[e].RefaccionOferta =='1'){
+                obj.Costumer.Subtotal += (obj.session.CarritoPrueba[e].Cantidad * obj.session.CarritoPrueba[e].Precio2);
+            }else{
+                obj.Costumer.Subtotal += (obj.session.CarritoPrueba[e].Cantidad * obj.session.CarritoPrueba[e].Precio);
+            }
+            
         }
         return obj.Costumer.Subtotal;
     }
@@ -153,7 +158,8 @@ function ComprasCtrl($scope, $http, $sce) {
     });
 
     obj.getImagen = (id) => {
-        var url = "images/refacciones/";
+        var url = "https://macromautopartes.com/images/refacciones/";
+        // var url = "images/refacciones/"; Activar solo en la pagina principal
         return url + id + ".webp";
     }
 

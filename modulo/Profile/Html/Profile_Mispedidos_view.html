@@ -45,9 +45,11 @@
                                             <p class="m-b-10">{{Mispedidos.Totalpedido | currency}}</p>
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                            <img src="./images/icons/icono-impresion.png" alt="Impresora" class="img-50 enlace" ng-show="Mispedidos.Acreditado != 0" ng-click="btnComprobanteCompra(Mispedidos._idPedidos)">
+                                            <img src="https://macromautopartes.com/images/icons/icono-impresion.png" alt="Impresora" class="img-50 enlace" ng-show="Mispedidos.Acreditado != 0" ng-click="btnComprobanteCompra(Mispedidos._idPedidos)">
+                                            <!-- <img src="./images/icons/icono-impresion.png" alt="Impresora" class="img-50 enlace" ng-show="Mispedidos.Acreditado != 0" ng-click="btnComprobanteCompra(Mispedidos._idPedidos)"> Acivar solo en la pagina principal-->
                                             <!-- <img src="./images/icons/icono-correo.png" alt="Impresora" class="img-50"> -->
-                                            <img src="./images/icons/icono-facturacion-2.png" alt="Impresora" class="img-150" ng-show="Mispedidos.Facturacion==1">
+                                            <img src="https://macromautopartes.com/images/icons/icono-facturacion-2.png" alt="Impresora" class="img-150" ng-show="Mispedidos.Facturacion==1">
+                                            <!-- <img src="./images/icons/icono-facturacion-2.png" alt="Impresora" class="img-150" ng-show="Mispedidos.Facturacion==1"> Activar solo en la pagina principal -->
                                             
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -61,28 +63,32 @@
                                         <ul>
                                             <li>
                                                 <div class="proceso {{wizard.preparacion? 'active':''}}">
-                                                    <img src="./images/icons/Preparacion.png" alt="Preparación">
+                                                    <img src="https://macromautopartes.com/images/icons/Preparacion.png" alt="Preparación">
+                                                    <!-- <img src="./images/icons/Preparacion.png" alt="Preparación"> Activar solo en la pagina principal -->
                                                     <span>&nbsp;</span>
                                                     <p>En preparación</p>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="proceso {{wizard.transito? 'active':''}}">
-                                                    <img src="./images/icons/Transito.png" alt="transito">
+                                                    <img src="https://macromautopartes.com/images/icons/Transito.png" alt="transito">
+                                                    <!-- <img src="./images/icons/Transito.png" alt="transito"> Activar solo en la pagina principal-->
                                                     <span>&nbsp;</span>
                                                     <p>En tránsito</p>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="proceso {{wizard.proceso? 'active':''}}">
-                                                    <img src="./images/icons/Reparto.png" alt="Reparto">
+                                                    <img src="https://macromautopartes.com/images/icons/Reparto.png" alt="Reparto">
+                                                    <!-- <img src="./images/icons/Reparto.png" alt="Reparto"> Activar solo en la pagina principal -->
                                                     <span>&nbsp;</span>
                                                     <p>En proceso de Entrega</p>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="proceso {{wizard.entregado? 'active':''}}">
-                                                    <img src="./images/icons/Entrega.png" alt="Entrega">
+                                                    <img src="https://macromautopartes.com/images/icons/Entrega.png" alt="Entrega">
+                                                    <!-- <img src="./images/icons/Entrega.png" alt="Entrega"> Activar solo en la pagina principal -->
                                                     <span>&nbsp;</span>
                                                     <p>Entregado</p>
                                                 </div>
@@ -123,7 +129,8 @@
                                                         <tbody>
                                                             <tr ng-repeat="a in Mispedidos.Detalles">
                                                                 <td>{{$index+1}}</td>
-                                                                <td><img ng-src="./images/refacciones/{{a._idProducto}}.webp" alt="{{a._idProducto}}.webp" class="rounded img-80"></td>
+                                                                <td><img ng-src="https://macromautopartes.com/images/refacciones/{{a._idProducto}}.webp" alt="{{a._idProducto}}.webp" class="rounded img-80"></td>
+                                                                <!-- <td><img ng-src="./images/refacciones/{{a._idProducto}}.webp" alt="{{a._idProducto}}.webp" class="rounded img-80"></td> Activar solo en la pagina principal -->
                                                                 <td><p class="s-text18"> {{a.cantidad}} x {{a.Producto}}</p>
                                                                     <p class="s-text17">SKU: {{a.No_parte}}</p></td>
                                                                 <td>{{a.Importe | currency}}</td>

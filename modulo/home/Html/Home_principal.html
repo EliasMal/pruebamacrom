@@ -4,7 +4,8 @@
 		<div class="header__contenido">
 			<div class="header__contenido--banner" ng-repeat="banner in databannerPrincipal.Escritorio">
 				<picture class="header__picture">
-					<img decoding="sync" src="images/Banners/{{banner.imagen}}" alt="banner" class="header__picture--img" width="100%" height="350px">
+					<img decoding="sync" ng-src="https://macromautopartes.com/images/Banners/{{banner.imagen}}" alt="banner" class="header__picture--img" width="100%" height="350px">
+					<!-- <img decoding="sync" src="images/Banners/{{banner.imagen}}" alt="banner" class="header__picture--img" width="100%" height="350px"> Activar solo en la pagina principal-->
 				</picture>
 			</div>
 		</div>
@@ -63,21 +64,26 @@
 											ng-class="{'ribboagotado': producto.agotado ,'pos-relative': !producto.agotado}">
 
 											<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="enlace">
-												<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}">
+												<img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/'+producto._id+'.png':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}">
+												<!-- <img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}"> Activar solo en la pagina principal-->
 											</a>
 											</div>
 
 											<div class="block2-txt">
 												<section class="descripcion-producto">
 													<div class="avisos__productos">
-														<!-- <span class="promocion__aviso">promoción</span> -->
+														<span class="promocion__aviso" ng-show="producto.RefaccionOferta">promoción</span>
 														<span class="enviogratis__aviso" ng-show="producto.Enviogratis">envío gratis</span>
 													</div>
 													<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
-													<div class="precio__imgprove">	
-														<p class="precio__producto">{{producto.Precio1 | currency}}</p>
-														<img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.idProveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
+													<div class="precio__imgprove">
+														<p class="precio__producto" ng-hide="producto.RefaccionOferta">{{producto.Precio1 | currency}}</p>	
+														<p class="precio__producto" ng-show="producto.RefaccionOferta"><small class="line_through-red">{{producto.Precio1 | currency}}</small>
+															{{producto.Precio2 | currency}}</p>
+														<img ng-src="{{producto.imagenproveedor? 'https://macromautopartes.com/images/Marcasrefacciones/boxed-bg.jpg':'https://macromautopartes.com/images/Marcasrefacciones/' + producto.idProveedor + '.png'}}" 
 														alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}" class="proovedor__img">
+														<!-- <img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.idProveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
+														alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}" class="proovedor__img"> Acivar solo en la pagina principal-->
 													</div>
 												</section>
 											</div>
@@ -97,7 +103,8 @@
 											<div class="wrap-pic-w of-hidden cursorpnt" 
 											ng-class="{'ribbonliquidacion': producto.RefaccionLiquidacion ,'pos-relative': !producto.agotado}">
 											<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="enlace">
-												<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}">
+												<img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/'+producto._id+'.png':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}">
+												<!-- <img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}"> Activar solo la pagina principal-->
 											</a>
 											</div>
 
@@ -106,16 +113,20 @@
 
 													<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
 													<div class="precio__imgprove">	
-														<p class="precio__producto">{{producto.Precio1 | currency}}</p>
-														<img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.idProveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
+														<p class="precio__producto" ng-hide="producto.RefaccionOferta">{{producto.Precio1 | currency}}</p>	
+														<p class="precio__producto" ng-show="producto.RefaccionOferta"><small class="line_through-red">{{producto.Precio1 | currency}}</small>
+														<img ng-src="{{producto.imagenproveedor? 'https://macromautopartes.com/images/Marcasrefacciones/boxed-bg.jpg':'https://macromautopartes.com/images/Marcasrefacciones/' + producto.idProveedor + '.png'}}" 
 														alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}" class="proovedor__img">
+														<!-- <img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.idProveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
+														alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}" class="proovedor__img"> Activar solo en la pagina principal-->
 													</div>
 
 												</section>
 												
 
 												<div class="enviogratis"  ng-show="producto.Enviogratis">
-													<img src="/images/icons/Icono-camion.png" loading="lazy" alt="">
+													<img src="https://macromautopartes.com/images/icons/Icono-camion.png" loading="lazy" alt="">
+													<!-- <img src="/images/icons/Icono-camion.png" loading="lazy" alt=""> Activar solo en la pagina principal -->
 													<p> <strong>Envío Gratis </strong> </p> 
 												</div>
 											</div>
@@ -194,20 +205,3 @@
 			</div>
 		</main>
 </div>
- <!-- Facebook Metas -->
- <script>
-	window.fbAsyncInit = function() {
-		FB.init({
-			xfbml            : true,
-			version          : 'v3.3'
-		});
-	};
-	(function(d, s, id) {
-		var js, fjs = d.getElementsByTagName(s)[0];
-		if (d.getElementById(id)) return;
-		js = d.createElement(s); js.id = id;
-		js.src = 'https://connect.facebook.net/es_LA/sdk/xfbml.customerchat.js';
-		fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));
-
-</script>

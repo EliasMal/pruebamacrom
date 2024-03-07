@@ -130,7 +130,9 @@ class home {
 
     private function get_Carrito(){
         $array = array();
-        $sql = "SELECT _clienteid, Clave, No_parte, Cantidad, Precio, Producto as _producto, Alto, Largo, Ancho, Peso, imagenid, Existencias FROM Carrito where _clienteid='{$_SESSION["iduser"]}'";
+        $sql = "SELECT DISTINCT _clienteid, CR.Clave, CR.No_parte, CR.Cantidad, CR.Precio, CR.Precio2, P.RefaccionOferta, 
+        CR.Producto as _producto, CR.Alto, CR.Largo, CR.Ancho, CR.Peso, CR.imagenid, CR.Existencias 
+        FROM Carrito CR left JOIN Producto as P on P.Clave = CR.Clave where _clienteid='{$_SESSION["iduser"]}'";
         $id = $this->conn->query($sql);
         while ($row = $this->conn->fetch($id)){
             array_push($array, $row);
@@ -140,7 +142,7 @@ class home {
 
     private function getmasVendidos (){
         $sql = "select PROV._id as idProveedor, DP._idProducto as _id, P.Clave, P.Producto, P._idMarca, P.color, 
-        M.Marca, P.Precio1, P.Enviogratis from DetallesPedidos as DP
+        M.Marca, P.Precio1, P.Precio2, P.RefaccionOferta, P.Enviogratis from DetallesPedidos as DP
         inner join Producto as P on (P._id = DP._idProducto) 
         left join Proveedor as PROV on (P.id_proveedor = PROV._id)
         inner join Marcas as M on (P._idMarca = M._id)
@@ -182,6 +184,7 @@ class home {
     private function getImageProductos ($array = array()){
         foreach ($array as $key => $value) {
             $array[$key]["Enviogratis"] = $array[$key]["Enviogratis"] == 1? true: false;
+            $array[$key]["RefaccionOferta"] = $array[$key]["RefaccionOferta"] == 1? true: false;
             $array[$key]["imagen"] = file_exists("../../../images/refacciones/{$value["_id"]}.png");
             $array[$key]["imagenproveedor"] = $value["idProveedor"]!= null? file_exists("../../../images/Marcasrefacciones/{$value["idProveedor"]}.png"):false;
         }

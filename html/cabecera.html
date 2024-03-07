@@ -4,13 +4,21 @@
 	<header class="header2">
 
 		<div class="contenedor__header pd-1">
+			<div class="header__topbar" style="display: block;padding: 0 1rem;text-align: center;background-color: var(--gris-light);">
+				<h5>Les informamos que esta es una página no oficial de 
+					<a href="https://macromautopartes.com/">Macromautopartes</a>. Cualquier actividad aquí podría causar errores. 
+					Recomendamos al público evitar su uso y, para realizar cualquier operación, por favor acceda a la página oficial de 
+					<a href="https://macromautopartes.com/">Macromautopartes</a>.
+				</h5>
+			</div>
 			<div class="header__topbar">
 				<div class="contenedor__navegacion--mobile">
 					<i id="abrirModal6" class="fas fa-bars click filwhite"></i>
 				</div>
 
 				<a href="?mod=home" class="header__topbar--logo clicksidebar">
-					<img src="images/icons/logomacromb.webp" alt="IMG-LOGO">
+					<img src="https://macromautopartes.com/images/icons/logomacromb.webp" alt="IMG-LOGO">
+					<!-- <img src="images/icons/logomacromb.webp" alt="IMG-LOGO"> Activar solo en la pagina principal-->
 				</a>
 
 				<div class="contenedor__usuario">
@@ -23,7 +31,8 @@
 							<p class="text-dark t-center">¡Hola {{session.nombrecorto}}!</p>
 							<p class="js-show-header-dropdown t-center" style="cursor:pointer; color:var(--blanco);">Mi Cuenta</p>
 							<div class="header-cart header-dropdown header__cart--usuario">
-										<img src="../images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="perfil__usuario--img" loading="lazy" alt="ICON">
+										<img src="https://macromautopartes.com/images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="perfil__usuario--img" loading="lazy" alt="ICON">
+										<!-- <img src="../images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="perfil__usuario--img" loading="lazy" alt="ICON"> Activar solo en la pagina principal-->
 														
 									<div class="vinculos">
 										<div class="vinculos--contenedor" onclick="location.href = '?mod=Profile&opc=Session'">
@@ -61,7 +70,7 @@
 					<!--Termina de Usuario-->
 
 					<div class="contenedor__usuario--carrito">
-											
+						
 						<div id="divcarri">
 							<div class="header-wrapicon2 m-r-13">
 								<i class="fas fa-shopping-cart header-icon1 js-show-header-dropdown filwhite" id="carrisvg"></i>
@@ -84,9 +93,11 @@
 													No.parte: {{product.No_parte}}
 												</span>
 
-												<span class="header-cart-item-info">
+												<span class="header-cart-item-info" ng-hide="product.RefaccionOferta == '1'">
 													{{product.Cantidad}} x {{product.Precio | currency}}
-											
+												</span>
+												<span class="header-cart-item-info" ng-show="product.RefaccionOferta == '1'">
+													{{product.Cantidad}} x {{product.Precio2 | currency}}
 												</span>
 
 											</div>
@@ -202,7 +213,8 @@
 			<article class="sidebar__mobil__menu">
 					<span class="cerrar6 closem">&times;</span>
 					<div class="menu__cliente__informacion">
-						<img src="../images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="menu__cliente__informacion--img" alt="ICON">
+						<img src="https://macromautopartes.com/images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="menu__cliente__informacion--img" alt="ICON">
+						<!-- <img src="../images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="menu__cliente__informacion--img" alt="ICON"> Activar solo en la pagina principal-->
 						<div class="cliente__informacion--datos">
 							<p class="txtred">¡Hola!</p>
 							<p class="text-dark">{{session.nombre}}</p>

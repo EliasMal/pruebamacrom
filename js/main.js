@@ -93,7 +93,13 @@
         [hero.src, e.target.src] = [e.target.src, hero.src];
     }
 
-    window.addEventListener('click', activate, false);
+    if(window.innerWidth>800){
+        window.addEventListener('mouseover', activate, false);
+    }else{
+        window.addEventListener('click', activate, false);
+    }
+    
+    
 
     $(".js-show-header-dropdown, .header-dropdown").click(function (event) {
         event.stopPropagation();

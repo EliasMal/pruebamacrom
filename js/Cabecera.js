@@ -45,7 +45,8 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
     }
 
     obj.getImagen = (id) => {
-        var url = "images/refacciones/";
+        var url = "https://macromautopartes.com/images/refacciones/";
+        // var url = "images/refacciones/"; Activar solo en la pagina principal
         return url + id + ".webp";
     }
     obj.recapchatKey = "6Le-C64UAAAAAMlSQyH3lu6aXLIkzgewZlVRgEam";
@@ -53,9 +54,14 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
 
 
     obj.subtotal = () => {
-        obj.Costumer.Subtotal = 0
+        obj.Costumer.Subtotal = 0;
         for (let e in obj.Data.Carrito) {
-            obj.Costumer.Subtotal += (obj.Data.Carrito[e].Cantidad * obj.Data.Carrito[e].Precio);
+            if(obj.session.CarritoPrueba[e].RefaccionOferta =='1'){
+                obj.Costumer.Subtotal += (obj.Data.Carrito[e].Cantidad * obj.Data.Carrito[e].Precio2);
+            }else{
+                obj.Costumer.Subtotal += (obj.Data.Carrito[e].Cantidad * obj.Data.Carrito[e].Precio);
+            }
+            
         }
         return obj.Costumer.Subtotal;
     }
@@ -139,7 +145,12 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
 
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
-                location.href = "?mod=home";
+                if(window.location.href.includes("?mod=Compras") || window.location.href.includes("?mod=Profile")){
+                    location.href = "?mod=home";
+                }else{
+                    location.reload();
+                }
+                
                 localStorage.clear();
             } else {
                 toastr.error(res.data.mensaje);

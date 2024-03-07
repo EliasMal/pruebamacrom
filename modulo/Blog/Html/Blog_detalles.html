@@ -1,7 +1,8 @@
 <section ng-controller="BlogDetallesCtrl" ng-init="id='{id}'">
     <section class="bgwhite contenedor detalles__blog" id="MainDark">
         <section class="contenedor" ng-show="entrada.Estatus && entrada.Publicar">
-            <img ng-src="./images/Blog/{{entrada.Imagen}}" alt="Banner Blog">
+            <img ng-src="https://macromautopartes.com/images/Blog/{{entrada.Imagen}}" alt="Banner Blog">
+            <!-- <img ng-src="./images/Blog/{{entrada.Imagen}}" alt="Banner Blog"> Activar solo en la pagina principal -->
         </section>
         <div class="container">
             <div class="row" ng-show="entrada.Estatus && entrada.Publicar">
@@ -14,7 +15,8 @@
                     </section>
                     <section class="BDfooter">
                         <div>
-                            <img src="./images/icons/lobo_resenas.png" alt="avatar" class="img-responsive">
+                            <img src="https://macromautopartes.com/images/icons/lobo_resenas.png" alt="avatar" class="img-responsive">
+                            <!-- <img src="./images/icons/lobo_resenas.png" alt="avatar" class="img-responsive"> Activar solo en la pagina principal -->
                         </div>
                         <div>
                             <p>Por <b>Macrom Autopartes</b></p>
@@ -41,7 +43,8 @@
                 <div class="col-md-4 blog__entradas" ng-click="btnBlodDetalles(post._id)" ng-repeat="post in posts">
                     <section class="blog-main">
                         <div class="hov-img-zoom blog-head">
-                            <img ng-src="./images/Blog/{{post.imagendestacada}}" alt="IMG-ABOUT">
+                            <img ng-src="https://macromautopartes.com/images/Blog/{{post.imagendestacada}}" alt="IMG-ABOUT">
+                            <!-- <img ng-src="./images/Blog/{{post.imagendestacada}}" alt="IMG-ABOUT"> Activar solo en la pagina principal -->
                         </div>
                         <div class="blog-body">
                             <h4 class="text-center"><b> {{post.Title}}</b></h4>

@@ -3,8 +3,8 @@
 	<header class="header">
 		<section class="header__contenido" ng-repeat="cat in catalogos.Escritorio">
 		<picture class="header__picture">
-						<source srcset="images/Banners/CATALOOG.webp" type="image/webp" class="header__picture--img">
-						<img loading="lazy" src="images/Banners/{{banner.imagen}}" alt="banner">
+						<source srcset="https://macromautopartes.com/images/Banners/CATALOOG.webp" type="image/webp" class="header__picture--img">
+						<img loading="lazy" src="https://macromautopartes.com/images/Banners/{{banner.imagen}}" alt="banner">
 				</picture>
 		</section>
 	</header>
@@ -101,17 +101,20 @@
 										}"
 									ng-style="{'background-color': producto.color}">
 									<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}">
-										<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}"
+										<img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/motor.webp':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}"
 											alt="{{producto.tag_alt}}" title = "{{producto.tag_title}}" width="285px">
+											<!-- <img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}"
+											alt="{{producto.tag_alt}}" title = "{{producto.tag_title}}" width="285px"> Activar solo en la pagina principal-->
 									</a>
-
 								</div>
 								
 								<div class="block2-txt">
 
 									<section class="descripcion-producto-refa">
-										<img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.id_proveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
+										<img ng-src="{{producto.imagenproveedor? 'https://macromautopartes.com/images/Marcasrefacciones/boxed-bg.jpg':'https://macromautopartes.com/images/Marcasrefacciones/' + producto.id_proveedor + '.png'}}" 
 										alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}">
+										<!-- <img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.id_proveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
+										alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}"> Activar solo en la pagina principal-->
 										<p class="block2-name dis-block s-text3 text-white">
 											{{producto.Producto}}
 										</p>
@@ -122,7 +125,8 @@
 									</span>
 
 									<div class="enviogratis" ng-show="producto.Enviogratis">
-										<img src="/images/icons/Icono-camion.png" alt="" >
+										<img src="https://macromautopartes.com/images/icons/Icono-camion.png" alt="" >
+										<!-- <img src="/images/icons/Icono-camion.png" alt="" > Activar solo en la pagina principal-->
 										<p class="text-white"> <strong>Envío Gratis </strong> </p> 
 									</div>
 

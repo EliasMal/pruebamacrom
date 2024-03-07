@@ -535,13 +535,15 @@ function catalogosDetallesCtrl($scope, $http) {
     }
 
     obj.getImagen = (status, id) => {
-        var url = "images/refacciones/";
+        var url = "https://macromautopartes.com/images/refacciones/";
+        // var url = "images/refacciones/" Activar solo en la pagina principal;
         return status ? url + id + ".webp" : url + id + ".webp";
     }
 
     obj.getGaleria = (id) => {
         if (id != undefined) {
-            url = "images/galeria/" + id;
+            url = "https://macromautopartes.com/images/galeria/" + id;
+            // url = "images/galeria/" + id; Activar solo en la pagina principal;
             return url;
         }
     }

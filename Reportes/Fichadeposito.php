@@ -38,7 +38,7 @@ function principal(){
     $id = isset($_GET['_id'])? htmlspecialchars($_GET['_id']):"";
     $arraytemp = $conn->getImportecompra($id);
     //var_dump($arraytemp);
-    $logo = "../images/icons/logomacrom.png";
+    $logo = "https://macromautopartes.com/images/icons/logomacrom.png";
     require_once "Fichapdf.php";
 }
     

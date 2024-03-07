@@ -101,7 +101,8 @@ function homeCtrl($scope, $http) {
     }
 
     obj.getImagen = (e) => {
-        return "images/Categorias/" + e._id + ".png";
+        return "https://macromautopartes.com/images/Categorias/" + e._id + ".png";
+        // return "images/Categorias/" + e._id + ".png"; Activar solo en la pagina principal
     }
 
     obj.RefaccionDetalles = (_id) => {

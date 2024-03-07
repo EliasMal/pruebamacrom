@@ -189,13 +189,14 @@
         private function getOneRefaccion(){
             $sql = "select P._id, P.Clave, P.Producto, C.Categoria, M.Marca, P.Precio1, P.Precio2,
                 P.No_parte, P.Descripcion, V.Modelo, A.Anio, P.RefaccionNueva, P.RefaccionOferta,
-                P.Alto, P.Ancho, P.Largo, P.Peso, P._idCategoria, P._idMarca, P.Anios, P.Modelo as _idModelo,
-                P.Enviogratis
+                P.Alto, P.Ancho, P.Largo, P.Peso, P._idCategoria, P._idMarca, P.Anios, P.Modelo as _idModelo, P.id_proveedor,
+                P.Enviogratis, PR.Proveedor
                 from Producto as P 
                 inner join Categorias as C on (C._id = P._idCategoria)
                 inner join Marcas as M on (M._id = P._idMarca)
                 inner join Modelos as V on (V._id = P.Modelo)
                 inner join Anios as A on (A._id = P.Anios)
+                inner join Proveedor as  PR on (PR._id = P.id_proveedor)
                 where P._id = {$this->formulario["id"]}";
             $row = $this->conn->fetch($this->conn->query($sql));
             $row["imagen"] = file_exists("../../../images/refacciones/{$row["_id"]}.png");

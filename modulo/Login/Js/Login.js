@@ -23,7 +23,11 @@ function LoginCtrl($scope, $http) {
             if (res.data.Bandera == 1) {
                 localStorage.setItem('session', JSON.stringify(res.data.session))
                 localStorage.setItem('iduser', res.data.session.iduser)
-                location.href = "?mod=home";
+                if(document.referrer.includes("?mod=catalogo")){
+                    location.href = document.referrer;
+                }else{
+                    location.href = "?mod=home";
+                }
             } else {
                 toastr.error(res.data.mensaje);
                 alertvali.style.display = "block";
