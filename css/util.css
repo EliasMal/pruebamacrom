@@ -1,5 +1,9 @@
 .p-t-30 {padding-top: 30px;}
 .p-l-40 {padding-left: 40px;}
+.p-b-125 {
+	/* padding-bottom: 12.5rem; Activa en pagina principal  */
+	padding-bottom: 20rem;  /* Activa en pagina prueba */
+}
 /*[ MARGIN ]*/
 .m-t-15 {margin-top: 15px;}
 .m-b-10 {margin-bottom: 10px;}

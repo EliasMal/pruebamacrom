@@ -158,8 +158,8 @@ function ComprasCtrl($scope, $http, $sce) {
     });
 
     obj.getImagen = (id) => {
-        var url = "https://macromautopartes.com/images/refacciones/";
-        // var url = "images/refacciones/"; Activar solo en la pagina principal
+        // var url = "https://macromautopartes.com/images/refacciones/";
+        var url = "images/refacciones/";
         return url + id + ".webp";
     }
 

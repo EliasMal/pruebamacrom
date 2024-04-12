@@ -1,7 +1,7 @@
 <section ng-controller="BlogCtrl" ng-init="mod='{mod}'" class="global__content">
     <section class="contenedor" ng-repeat="nost in Banner.Escritorio">
-        <img src="https://macromautopartes.com/images/Banners/{{nost.imagen}}" alt="Banner Blog">
-        <!-- <img src="images/Banners/{{nost.imagen}}" alt="Banner Blog"> Activar solo en la pagina principal-->
+        <!-- <img src="https://macromautopartes.com/images/Banners/{{nost.imagen}}" alt="Banner Blog"> -->
+        <img src="images/Banners/{{nost.imagen}}" alt="Banner Blog">
         <h2 class="l-text2 t-center">Blog</h2>
     </section>
 
@@ -17,8 +17,8 @@
                 <div class="col-md-4 blog__entradas" ng-click="btnBlodDetalles(ent._id)" ng-repeat="ent in entradas">
                     <section class="blog-main">
                         <div class="hov-img-zoom blog-head">
-                            <img ng-src="https://macromautopartes.com/images/Blog/{{ent.imagendestacada}}" alt="IMG-ABOUT">
-                            <!-- <img ng-src="../images/Blog/{{ent.imagendestacada}}" alt="IMG-ABOUT"> Activar solo en la pagina principal-->
+                            <!-- <img ng-src="https://macromautopartes.com/images/Blog/{{ent.imagendestacada}}" alt="IMG-ABOUT"> -->
+                            <img ng-src="../images/Blog/{{ent.imagendestacada}}" alt="IMG-ABOUT">
                         </div>
                         <div class="blog-body">
                             <h4 class="text-center"><b> {{ent.Title}}</b></h4>

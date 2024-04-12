@@ -25,18 +25,31 @@ function homeCtrl($scope, $http) {
 
     const vistamasvendidos = document.querySelector("#vistamasvendidos");
     const vistaliquidacion = document.querySelector("#vistaliquidacion");
+    const vistanuevos = document.querySelector("#vistanuevos");
 
     document.querySelector(".toolbar_click").addEventListener("click", function () {
         vistaliquidacion.style.display = "none";
         vistamasvendidos.style.display = "block";
+        vistanuevos.style.display = "none";
         this.classList.add("toolbar__activada");
         document.querySelector(".toolbar_click0").classList.remove("toolbar__activada");
+        document.querySelector(".toolbar_click1").classList.remove("toolbar__activada");
     });
     document.querySelector(".toolbar_click0").addEventListener("click", function () {
         vistamasvendidos.style.display = "none";
         vistaliquidacion.style.display = "block";
+        vistanuevos.style.display = "none";
         this.classList.add("toolbar__activada");
         document.querySelector(".toolbar_click").classList.remove("toolbar__activada");
+        document.querySelector(".toolbar_click1").classList.remove("toolbar__activada");
+    });
+    document.querySelector(".toolbar_click1").addEventListener("click", function () {
+        vistamasvendidos.style.display = "none";
+        vistaliquidacion.style.display = "none";
+        vistanuevos.style.display = "block";
+        this.classList.add("toolbar__activada");
+        document.querySelector(".toolbar_click").classList.remove("toolbar__activada");
+        document.querySelector(".toolbar_click0").classList.remove("toolbar__activada");
     });
 
 
@@ -101,8 +114,8 @@ function homeCtrl($scope, $http) {
     }
 
     obj.getImagen = (e) => {
-        return "https://macromautopartes.com/images/Categorias/" + e._id + ".png";
-        // return "images/Categorias/" + e._id + ".png"; Activar solo en la pagina principal
+        // return "https://macromautopartes.com/images/Categorias/" + e._id + ".png";
+        return "images/Categorias/" + e._id + ".png";
     }
 
     obj.RefaccionDetalles = (_id) => {

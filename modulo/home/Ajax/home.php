@@ -86,7 +86,7 @@ class home {
     
     private function getCategorias (){
         $array = array();
-        $sql = "SELECT _id, Categoria FROM Categorias where status = 1 order by Categoria";
+        $sql = "SELECT _id, Categoria, MenuOPC FROM Categorias where status = 1 order by Categoria";
         $id = $this->conn->query($sql);
         while($row = $this->conn->fetch($id)){
             $row["logo"] = file_exists("../../../images/Categorias/{$row["_id"]}.png");

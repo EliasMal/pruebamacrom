@@ -116,8 +116,8 @@
 							<div class="pagos__sitio-seguro">
 								<div class="pagos__sitio-seguro--contenedor">
 									<div class="pagos__sitio-seguro--info center--text">
-										<img src="https://macromautopartes.com/images/icons/Icono-seguridad.png" alt="seguridad" style="width:5rem;">
-										<!-- <img src="images/icons/Icono-seguridad.png" alt="seguridad" style="width:5rem;"> Activar solo en la pagina principal-->
+										<!-- <img src="https://macromautopartes.com/images/icons/Icono-seguridad.png" alt="seguridad" style="width:5rem;"> -->
+										<img src="images/icons/Icono-seguridad.png" alt="seguridad" style="width:5rem;">
 										<b>Sitio seguro</b>
 										<p class="text-center txtblack">Nuestro sitio cuenta con certificaciones de seguridad por parte del MIT y Santander</p>
 									</div>
@@ -189,24 +189,24 @@
 											<div class="metodo__pago--metodo">
 												<button class="metodopago bo18 h-120" id="btncredito" ng-click="metarjeta()" disabled>
 													<label class="radio2">Tarjeta de crédito / debito</label>
-													<img src="https://macromautopartes.com/images/icons/VISA MASTERCARD.svg" alt="tarjeta credito" class ="img-fluid mx-auto d-block" width="150px" height="31px" style="opacity:0.1">
-													<!-- <img src="images/icons/VISA MASTERCARD.svg" alt="tarjeta credito" class ="img-fluid mx-auto d-block" width="150px" height="31px" style="opacity:0.1"> Activar solo en la pagina principal-->
+													<!-- <img src="https://macromautopartes.com/images/icons/VISA MASTERCARD.svg" alt="tarjeta credito" class ="img-fluid mx-auto d-block" width="150px" height="31px" style="opacity:0.1"> -->
+													<img src="images/icons/VISA MASTERCARD.svg" alt="tarjeta credito" class ="img-fluid mx-auto d-block" width="150px" height="31px" style="opacity:0.1">
 												</button>	
 											</div>
 
 											<div class="metodo__pago--metodo">
 												<button class="metodopago bo18 h-120" id="btnefectivo" ng-click="medeposito()">
 													<label class="radio2">Deposito en efectivo</label>
-													<img src="https://macromautopartes.com/images/icons/OXXO.svg" alt="deposito efectivo"  class ="img-fluid mx-auto d-block" width="150px" height="31px">
-													<!-- <img src="images/icons/OXXO.svg" alt="deposito efectivo"  class ="img-fluid mx-auto d-block" width="150px" height="31px"> Activar solo en la pagina principal-->
+													<!-- <img src="https://macromautopartes.com/images/icons/OXXO.svg" alt="deposito efectivo"  class ="img-fluid mx-auto d-block" width="150px" height="31px"> -->
+													<img src="images/icons/OXXO.svg" alt="deposito efectivo"  class ="img-fluid mx-auto d-block" width="150px" height="31px">
 												</button>
 											</div>
 
 											<div class="metodo__pago--metodo">
 												<button class="metodopago bo18 h-120" ng-click="metransfe()" id="btntransfe">
 													<label class="radio2">Tranferencia bancaria</label>
-													<img src="https://macromautopartes.com/images/icons/SPEI.svg" alt="transferencia bancaria" class ="img-fluid mx-auto d-block" width="150px" height="31px">	
-													<!-- <img src="images/icons/SPEI.svg" alt="transferencia bancaria" class ="img-fluid mx-auto d-block" width="150px" height="31px"> Activar solo en la pagina principal-->
+													<!-- <img src="https://macromautopartes.com/images/icons/SPEI.svg" alt="transferencia bancaria" class ="img-fluid mx-auto d-block" width="150px" height="31px">	 -->
+													<img src="images/icons/SPEI.svg" alt="transferencia bancaria" class ="img-fluid mx-auto d-block" width="150px" height="31px">
 												</button>
 											</div>
 										</div>
@@ -587,8 +587,8 @@
 										</div>
 									</div>
 
-									<span id="alertvalid1" class="ventanaModal__contenido--alerta"><img src="https://macromautopartes.com/images/icono notificacion.svg" alt="icon-user" style="width: 3.2rem; padding-right: 2px;">Completa todos los datos para poder continuar</span>
-									<!-- <span id="alertvalid1" class="ventanaModal__contenido--alerta"><img src="images/icono notificacion.svg" alt="icon-user" style="width: 3.2rem; padding-right: 2px;">Completa todos los datos para poder continuar</span> Activar solo en la pagina principal-->
+									<!-- <span id="alertvalid1" class="ventanaModal__contenido--alerta"><img src="https://macromautopartes.com/images/icono notificacion.svg" alt="icon-user" style="width: 3.2rem; padding-right: 2px;">Completa todos los datos para poder continuar</span> -->
+									<span id="alertvalid1" class="ventanaModal__contenido--alerta"><img src="images/icono notificacion.svg" alt="icon-user" style="width: 3.2rem; padding-right: 2px;">Completa todos los datos para poder continuar</span>
 									<button class="btn btn-danger ventanaModal__contenido--botonguardar" ng-click="inputvalidfactura()" id="btngfact">Guardar</button>
 								</div>
 							</form>
@@ -632,8 +632,8 @@
 													<tbody>
 														<tr ng-repeat="paq in cotizador" ng-cloak ng-click="selectenvio(paq)" class="bdl-a-r enlace">
 															<td><input type="radio"></td>
-															<td class="text-center"><img class="bdl-c-itm" ng-src="https://macromautopartes.com/images/paqueterias/{{paq.provider}}.svg" alt="{{paq.provider}}"></td>
-															<!-- <td class="text-center"><img class="bdl-c-itm" ng-src="images/paqueterias/{{paq.provider}}.svg" alt="{{paq.provider}}"></td> Activar solo en la pagina principal-->
+															<!-- <td class="text-center"><img class="bdl-c-itm" ng-src="https://macromautopartes.com/images/paqueterias/{{paq.provider}}.svg" alt="{{paq.provider}}"></td> -->
+															<td class="text-center"><img class="bdl-c-itm" ng-src="images/paqueterias/{{paq.provider}}.svg" alt="{{paq.provider}}"></td>
 															<td>{{getFechaentrega(paq.days)}}</td>
 															<!-- <td ng-show="paq.days<=3"><i class="fas fa-dollar-sign"></i></td>
 															<td ng-show="paq.days<=3"><i class="fas fa-bolt"></i></td> -->

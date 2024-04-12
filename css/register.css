@@ -6,6 +6,9 @@
 .ft0{
   display: none;
 }
+.p-b-125{
+  padding: 0;
+}
 #frmReg{
   margin-top: -120px;
 }

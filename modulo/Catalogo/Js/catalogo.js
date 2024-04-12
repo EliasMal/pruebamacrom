@@ -283,6 +283,15 @@ function catalogosCtrl($scope, $http) {
         }
 
     }
+    
+    var catalogo_buscador = document.querySelector("#prod_input");
+    catalogo_buscador.addEventListener("keydown", e=>{
+        if(catalogo_buscador.value != "" && e.keyCode === 13){
+            window.location.href = "?mod=catalogo&pag=" + 1 + "&prod=" + catalogo_buscador.value + "&cate=" + next_cate + "&armadora=" + obj.refaccion.marca + "&mdl=" + obj.refaccion.vehiculo + "&[a]=" + obj.refaccion.anio;
+        }else if(catalogo_buscador.value == "" && e.keyCode === 13){
+            window.location.href="?mod=catalogo&pag=1&prod=&cate=T&armadora=&mdl=&[a]=";
+        }
+    });
 
     obj.getPaginador = async (x = 0, y = obj.pageSize) => {
         obj.refaccion.tipo = "Paginacion";
@@ -535,15 +544,15 @@ function catalogosDetallesCtrl($scope, $http) {
     }
 
     obj.getImagen = (status, id) => {
-        var url = "https://macromautopartes.com/images/refacciones/";
-        // var url = "images/refacciones/" Activar solo en la pagina principal;
+        // var url = "https://macromautopartes.com/images/refacciones/";
+        var url = "images/refacciones/";
         return status ? url + id + ".webp" : url + id + ".webp";
     }
 
     obj.getGaleria = (id) => {
         if (id != undefined) {
-            url = "https://macromautopartes.com/images/galeria/" + id;
-            // url = "images/galeria/" + id; Activar solo en la pagina principal;
+            // url = "https://macromautopartes.com/images/galeria/" + id;
+            url = "images/galeria/" + id;
             return url;
         }
     }

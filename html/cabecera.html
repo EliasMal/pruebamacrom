@@ -1,10 +1,10 @@
 
-<div ng-controller="CabeceraCtrl">
+<div ng-controller="CabeceraCtrl" class="p-b-125">
 	<!-- Header -->
 	<header class="header2">
 
 		<div class="contenedor__header pd-1">
-			<div class="header__topbar" style="display: block;padding: 0 1rem;text-align: center;background-color: var(--gris-light);">
+			<div class="header__topbar" style="position: relative; display: block;padding: 0 1rem;text-align: justify;background-color: var(--gris-light);">
 				<h5>Les informamos que esta es una página no oficial de 
 					<a href="https://macromautopartes.com/">Macromautopartes</a>. Cualquier actividad aquí podría causar errores. 
 					Recomendamos al público evitar su uso y, para realizar cualquier operación, por favor acceda a la página oficial de 
@@ -17,9 +17,80 @@
 				</div>
 
 				<a href="?mod=home" class="header__topbar--logo clicksidebar">
-					<img src="https://macromautopartes.com/images/icons/logomacromb.webp" alt="IMG-LOGO">
-					<!-- <img src="images/icons/logomacromb.webp" alt="IMG-LOGO"> Activar solo en la pagina principal-->
+					<!-- <img src="https://macromautopartes.com/images/icons/logomacromb.webp" alt="IMG-LOGO"> -->
+					<img src="images/icons/logomacromb.webp" alt="IMG-LOGO">
 				</a>
+
+				<div class="modo__oscuro__pc">
+					<i class="fa fa-sun" aria-hidden="true"></i>
+					<label class="switch btn-color-mode-switch">
+						<input type="checkbox" name="switch__darkmode" class="switch__darkmode">
+						<label for="switch__darkmode" data-on="Oscuro" data-off="Claro" class="btn-color-mode-switch-inner enlace"></label>
+					</label>
+					  <i class="fa fa-moon" aria-hidden="true"></i>
+				</div>
+
+				<div class="buscador__general">
+					<i class="fas fa-search js-show-header-dropdown" id="btn-search">
+						<input class="buscador__general__txt" type="text" autocomplete="off" placeholder="Busca tu refacción">
+						<button class="buscador__general__boton" ng-click="general_search()">Buscar</button>
+					</i>
+
+					<!-- <div class="contenedor__menu__header header-dropdown header-cart">
+
+						<div class="menu__categoria__contenedor">
+							<div class="menu__categoria">
+								<div class="menu__header--buscador">
+
+									<a href="?mod=catalogo&pag=1&prod=&cate=T&armadora=&mdl=&[a]=">
+										<img ng-src="https://macromautopartes.com/images/Categorias/7.png" alt="IMG-BENNER" class="menucatego">
+									</a>
+
+									<div class="menu__header--categorias">
+										<a href="?mod=catalogo&pag=1&prod=&cate=T&armadora=&mdl=&[a]=">
+											Refacciones
+										</a>
+									</div>
+									
+									<div class="menu__opciones__contenedor">
+										<div class="menu__categoria--sub" ng-repeat="menus in Menu.Accesorios">
+											<div class="menu__header--buscador">
+												<div class="menu__header--categoriasopc">
+													<a href="?mod=catalogo&pag=1&prod=&cate={{categoria._id}}&armadora=&mdl=&[a]=">
+														{{menus}}
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+							<div class="menu__categoria" ng-repeat="categoria in Data.Categorias">
+								
+								<div class="menu__header--buscador">
+									<a href="?mod=catalogo&pag=1&prod=&cate={{categoria._id}}&armadora=&mdl=&[a]=">
+										<img ng-src="{{getImagenCate(categoria)}}" alt="IMG-BENNER" class="menucatego">
+									</a>
+									<div class="menu__header--categorias">
+										<a href="?mod=catalogo&pag=1&prod=&cate={{categoria._id}}&armadora=&mdl=&[a]=">
+											{{categoria.Categoria}}
+										</a>
+									</div>
+								</div>
+								
+							</div>
+
+						</div>
+
+						<div class="menu__promocion__contenedor">
+							<img src="https://prueba.macromautopartes.com/images/filapref.png" alt="">
+						</div>
+						
+					</div> -->
+
+				</div>
 
 				<div class="contenedor__usuario">
 					<div class="header-wrapicon1 login__text" ng-show="!user">
@@ -31,8 +102,8 @@
 							<p class="text-dark t-center">¡Hola {{session.nombrecorto}}!</p>
 							<p class="js-show-header-dropdown t-center" style="cursor:pointer; color:var(--blanco);">Mi Cuenta</p>
 							<div class="header-cart header-dropdown header__cart--usuario">
-										<img src="https://macromautopartes.com/images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="perfil__usuario--img" loading="lazy" alt="ICON">
-										<!-- <img src="../images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="perfil__usuario--img" loading="lazy" alt="ICON"> Activar solo en la pagina principal-->
+										<!-- <img src="https://macromautopartes.com/images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="perfil__usuario--img" loading="lazy" alt="ICON"> -->
+										<img src="../images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="perfil__usuario--img" loading="lazy" alt="ICON">
 														
 									<div class="vinculos">
 										<div class="vinculos--contenedor" onclick="location.href = '?mod=Profile&opc=Session'">
@@ -77,6 +148,8 @@
 								<span class="header-icons-noti">{{Data.Carrito.length}}</span>
 
 								<div class="header-cart header-dropdown carrito__contenedor">
+									<p class="carrito__articulos__length txtred" ng-show="user">Tienes {{Data.Carrito.length}} articulos en tu carrito</p>
+									<p class="carrito__articulos__length txtred" ng-show="!user">Inicia sesión para acceder a tu carrito</p>
 									<ul class="header-cart-wrapitem">
 										<li class="header-cart-item" ng-repeat="product in Data.Carrito" ng-show="user">
 
@@ -112,8 +185,8 @@
 				
 										<div class="header-cart-buttons">
 											<div class="header-cart-wrapbtn">
-
-												<button class="btn btn-danger form-control clicksidebarshop" onclick="location.href='?mod=Compras'">Ver Carrito</button>
+												<button class="btn btn-danger form-control clicksidebarshop" onclick="location.href='?mod=Compras'" ng-show="user">Pagar</button>
+												<button class="btn btn-danger form-control clicksidebarshop" onclick="location.href='?mod=login'" ng-show="!user">Iniciar Sesión</button>
 											</div>
 										</div>
 								</div>
@@ -121,22 +194,7 @@
 						</div>
 					</div>
 				</div>
-				
-				<div class="modo__oscuro__pc">
-					<i class="fa fa-sun" aria-hidden="true"></i>
-					<label class="switch btn-color-mode-switch">
-						<input type="checkbox" name="switch__darkmode" class="switch__darkmode">
-						<label for="switch__darkmode" data-on="Oscuro" data-off="Claro" class="btn-color-mode-switch-inner enlace"></label>
-					</label>
-					  <i class="fa fa-moon" aria-hidden="true"></i>
-				</div>
 
-			</div>
-
-			<div class="buscador__general">
-				<i class="fas fa-search">
-					<input type="text" autocomplete="off" placeholder="Busca tu refacción">
-				</i>
 			</div>
 			
 			<div class="contenedor__navegacion">
@@ -213,8 +271,8 @@
 			<article class="sidebar__mobil__menu">
 					<span class="cerrar6 closem">&times;</span>
 					<div class="menu__cliente__informacion">
-						<img src="https://macromautopartes.com/images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="menu__cliente__informacion--img" alt="ICON">
-						<!-- <img src="../images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="menu__cliente__informacion--img" alt="ICON"> Activar solo en la pagina principal-->
+						<!-- <img src="https://macromautopartes.com/images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="menu__cliente__informacion--img" alt="ICON"> -->
+						<img src="../images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="menu__cliente__informacion--img" alt="ICON">
 						<div class="cliente__informacion--datos">
 							<p class="txtred">¡Hola!</p>
 							<p class="text-dark">{{session.nombre}}</p>

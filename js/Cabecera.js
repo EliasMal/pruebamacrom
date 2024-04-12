@@ -33,6 +33,7 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
         estatus: false
     };
     obj.Banner = [];
+    obj.Menu = {};
     obj.mod;
     obj.url = "";
     obj.msgContacto = false;
@@ -45,10 +46,15 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
     }
 
     obj.getImagen = (id) => {
-        var url = "https://macromautopartes.com/images/refacciones/";
-        // var url = "images/refacciones/"; Activar solo en la pagina principal
+        // var url = "https://macromautopartes.com/images/refacciones/";
+        var url = "images/refacciones/";
         return url + id + ".webp";
     }
+    obj.getImagenCate = (e) => {
+        return "https://macromautopartes.com/images/Categorias/" + e._id + ".png";
+        //return "images/Categorias/" + e._id + ".png";
+    }
+
     obj.recapchatKey = "6Le-C64UAAAAAMlSQyH3lu6aXLIkzgewZlVRgEam";
     obj.Contacto = {};
 
@@ -56,17 +62,30 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
     obj.subtotal = () => {
         obj.Costumer.Subtotal = 0;
         for (let e in obj.Data.Carrito) {
-            if(obj.session.CarritoPrueba[e].RefaccionOferta =='1'){
+            if (obj.Data.Carrito[e].RefaccionOferta == '1') {
                 obj.Costumer.Subtotal += (obj.Data.Carrito[e].Cantidad * obj.Data.Carrito[e].Precio2);
-            }else{
+            } else {
                 obj.Costumer.Subtotal += (obj.Data.Carrito[e].Cantidad * obj.Data.Carrito[e].Precio);
             }
-            
+
         }
         return obj.Costumer.Subtotal;
     }
 
     //eliminar refaccion.
+    var txt = document.querySelector(".buscador__general__txt");
+    txt.addEventListener("keydown", e => {
+        if (txt.value != "" && e.keyCode === 13) {
+            txt = txt.value.split(/\s+/).join("%20");
+            window.location.href = "https://prueba.macromautopartes.com/?mod=catalogo&pag=1&prod=" + txt + "&cate=T&armadora=&mdl=&[a]="
+        }
+    });
+    obj.general_search = () => {
+        if (txt.value != "") {
+            txt = txt.value.split(/\s+/).join("%20");
+            window.location.href = "https://prueba.macromautopartes.com/?mod=catalogo&pag=1&prod=" + txt + "&cate=T&armadora=&mdl=&[a]="
+        }
+    }
 
     obj.actualizarSession = (Refaccion, opc) => {
         /*opc? true = elimina la variable de la session, false= no aplica nada*/
@@ -122,6 +141,15 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
             if (result) {
                 if (result.data.Bandera == 1) {
                     obj.Data = result.data.Data;
+
+                    console.log(obj.Data.Categorias);
+                    for (var i = 0; i <= obj.Data.Categorias.length; i++) {
+                        if (obj.Data.Categorias[i] != undefined) {
+                            obj.Menu[obj.Data.Categorias[i].Categoria] = obj.Data.Categorias[i].MenuOPC.split(",");
+                        }
+                    }
+                    console.log(obj.Menu);
+                    console.log(obj.Menu.Accesorios);
                 }
             }
             $scope.$apply();
@@ -145,12 +173,12 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
 
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
-                if(window.location.href.includes("?mod=Compras") || window.location.href.includes("?mod=Profile")){
+                if (window.location.href.includes("?mod=Compras") || window.location.href.includes("?mod=Profile")) {
                     location.href = "?mod=home";
-                }else{
+                } else {
                     location.reload();
                 }
-                
+
                 localStorage.clear();
             } else {
                 toastr.error(res.data.mensaje);

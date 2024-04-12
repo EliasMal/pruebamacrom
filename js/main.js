@@ -52,6 +52,7 @@
         }
 
         $('.js-show-header-dropdown').css("color", "#000");
+        $('#btn-search').css('color','#000');
 
     });
 
@@ -73,6 +74,7 @@
                 $("#carrisvg").css("filter", "brightness(0) invert(1)");
                 $("#divcarri").css("background-color", "transparent");
                 $('.js-show-header-dropdown').css("color", "#fff");
+                $('#btn-search').css('color','#000');
             }
             else {
                 for (var i = 0; i < menu.length; i++) {
@@ -97,10 +99,9 @@
         window.addEventListener('mouseover', activate, false);
     }else{
         window.addEventListener('click', activate, false);
+        $('#btn-search').removeClass('js-show-header-dropdown');
     }
     
-    
-
     $(".js-show-header-dropdown, .header-dropdown").click(function (event) {
         event.stopPropagation();
     });
@@ -114,6 +115,7 @@
         $("#carrisvg").css("filter", "brightness(0) invert(1)");
         $("#divcarri").css("background-color", "transparent");
         $('.js-show-header-dropdown').css("color", "#fff");
+        $('#btn-search').css('color','#000');
     });
 
     //cambio contraseña

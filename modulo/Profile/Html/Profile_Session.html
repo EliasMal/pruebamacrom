@@ -2,45 +2,35 @@
     <div class="banner Direc__perfil" id="PerfilDark">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 perfil__navegador">
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 perfil__navegador">
                     <div class="list-group">
                         <a id="sidebar6" class="list-group-item list-group-item-action sidebar__click" ng-click="btnMenulinks('Mispedidos')"> <i alt="logo-mispedidos" class="fa fa-shopping-cart"></i>Mis pedidos</a>
-                        <a id="sidebar5" class="list-group-item list-group-item-action active sidebar__click" ng-click="btnMenulinks('Session')"><i alt="logo-sesion-seguridad" class="fa fa-shield-alt"></i>Sessi&oacute;n y Seg&uacute;ridad</a>
+                        <a id="sidebar5" class="list-group-item list-group-item-action active sidebar__click" ng-click="btnMenulinks('Session')"><i alt="logo-sesion-seguridad" class="fa fa-shield-alt"></i>Sesi&oacute;n y Seg&uacute;ridad</a>
                         <a id="sidebar7" class="list-group-item list-group-item-action sidebar__click" ng-click="btnMenulinks('Direcciones')"> <i alt="logo-direcciones" class="fa fa-map-marked-alt"></i>Direcciones</a>
                         <a id="sidebar8" class="list-group-item list-group-item-action sidebar__click" ng-click="btnMenulinks('Facturacion')"><i alt="logo-facturacion" class="fa fa-file-invoice-dollar"></i> Datos de Facturación</a>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 perfil__sesion">
+
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb gris">
                           <li class="breadcrumb-item"><a href="?mod=Profile&opc=Session">Mi Cuenta</a></li>
-                          <li class="breadcrumb-item active" aria-current="page">Sessi&oacute;n y Seg&uacute;ridad</li>
+                          <li class="breadcrumb-item active" aria-current="page">Sesi&oacute;n y Seg&uacute;ridad</li>
                         </ol>
                     </nav>
-
-                    <div class="SS__contenedor--titulo">
-                        <div class="SS__titulo">
-                            <h1>Session y Seguridad</h1>
-                        </div> 
-                    </div>
 
                     <div class="SS__perfil--contenedor">
                         <div class="SS__perfil">
                             <div class="">
-                                <ul class="SS__perfil--opciones" role="tablist">
-                                    <li class="">
-                                        <a class="underline--link" data-toggle="tab" id="D__Generales" role="tab">Datos Generales</a>
-                                    </li>
-                                    <li class="">
-                                        <a class="underline--link__none" data-toggle="tab" id="C__Contraseña" role="tab">Cambio de contraseña</a>
-                                    </li>
-                                </ul>
     
                                 <div class="SS__perfil--vistas">
 
                                     <div class="SS__perfil--dgenerales" id="DatosGenerales" role="tabpanel">
+                                        <div class="SS__perfil--contxt">
+                                            <h1 class="SS__perfil--txt">Información Personal</h1>
+                                        </div>
                                         <div>
-                                            <label for="nombre" >Nombre(s):</label>
+                                            <label for="nombre">Nombre(s):</label>
                                             <div class="">
                                                 <input class="" name="nombre" type="text" placeholder="Nombre(s)" ng-model="profile.nombres" required>
                                             </div>
@@ -68,9 +58,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="SS__perfil--ccontraseña non-active" id="CambioContraseña" role="tabpanel">
+                                    <div class="SS__perfil--ccontraseña" id="CambioContraseña" role="tabpanel">
 
                                         <form class="SS__perfil--datos" name="frmpassword" novalidate>
+                                            <div class="SS__perfil--contxt">
+                                                <h1 class="SS__perfil--txt">Contraseña</h1>
+                                            </div>
                                             <div>
                                                 <label for="example-text-input" >Nueva Contraseña</label>
                                                 <div class="">
@@ -106,12 +99,12 @@
                             
                         </div>
 
-                        <div class="SS__perfil--imagen">
+                        <!-- <div class="SS__perfil--imagen">
                             <div class="icon-center">
                                 <img src="https://macromautopartes.com/images/icons/icono_inicio_de_sesión.png" alt="logo-inicio_session" class="img icon-logos-grande">
-                                <!-- <img src="images/icons/icono_inicio_de_sesión.png" alt="logo-inicio_session" class="img icon-logos-grande"> Activar solo en la pagina principal -->
+                                <img src="images/icons/icono_inicio_de_sesión.png" alt="logo-inicio_session" class="img icon-logos-grande">
                             </div>
-                        </div>
+                        </div> -->
 
                     </div>
                 </div>

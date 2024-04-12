@@ -28,8 +28,8 @@
 					<div class="detalles__visual--opciones">
 						<div ng-repeat="gal in Refaccion.galeria" data-thumb="{{getGaleria(gal._id)}}">
 							<div class="detalles__visual--miniatura">
+								<!-- <img ng-src="{{getGaleria(gal._id)+'.webp'}}" alt="miniatura" class="secundaria"> -->
 								<img ng-src="{{getGaleria(gal._id)+'.webp'}}" alt="miniatura" class="secundaria">
-								<!-- <img src="{{getGaleria(gal._id)+'.webp'}}" alt="miniatura" class="secundaria"> Activar solo en la pagina principal -->
 							</div>
 						</div>
 					</div>
@@ -37,8 +37,8 @@
 					<div class="detalles__visual--imagen">
 						<div class="" data-thumb="{{getImagen(Refaccion.datos.imagen, Refaccion.datos._id)}}">
 							<div class="detalles__visual--producto">
+								<!-- <img ng-src="{{getImagen(Refaccion.datos.imagen, Refaccion.datos._id)}}" alt="IMG-PRODUCT" class="hero"> -->
 								<img ng-src="{{getImagen(Refaccion.datos.imagen, Refaccion.datos._id)}}" alt="IMG-PRODUCT" class="hero">
-								<!-- <img src="{{getImagen(Refaccion.datos.imagen, Refaccion.datos._id)}}" alt="IMG-PRODUCT" class="hero"> Activar solo en la pagina principal -->
 							</div>
 						</div>
 					</div>
@@ -195,7 +195,7 @@
 			</div>
 		</section>
 
-		<!-- Relate Product -->
+		<!-- Related Product -->
 		<section class="contenedor productos__relacionados">
 			<div class="contenedor-contenido">
 				<div class="sec-title">
@@ -211,37 +211,31 @@
 								<div class="block2-img wrap-pic-w of-hidden pos-relative cursorpnt" ng-class="{
 									'ribboagotado': producto.agotado ,
 									'ribbonnuevo': producto.RefaccionNueva==1,
-									'ribbonoferta': producto.RefaccionOferta==1,
 									'pos-relative': !producto.agotado || producto.RefaccionNueva==0
 
 									}">
 									<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}">
 										<img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/motor.webp':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}" alt="IMG-PRODUCT">
-										<!-- <img ng-src="{{producto.imagen? 'images/refacciones/motor.webp':'images/refacciones/'+producto._id+'.webp'}}" alt="IMG-PRODUCT"> Activar solo en la pagina principal -->
+										<!-- <img ng-src="{{producto.imagen? 'images/refacciones/motor.webp':'images/refacciones/'+producto._id+'.webp'}}" alt="IMG-PRODUCT"> -->
 									</a>
-
 								</div>
-								
 								<div class="block2-txt">
+									<div class="avisos__productos">
+										<span class="promocion__aviso" ng-show="producto.RefaccionOferta =='1'">promoción</span>
+										<span class="enviogratis__aviso" ng-show="producto.Enviogratis">envío gratis</span>
+									</div>
+									<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
 									<section class="descripcion-producto-refa">
+										<p class="precio__producto" ng-hide="producto.RefaccionOferta=='1'">{{producto.Precio1 | currency}}</p>	
+										<p class="precio__producto" ng-show="producto.RefaccionOferta=='1'"><small class="line_through-red">{{producto.Precio1 | currency}}</small>
+										{{producto.Precio2 | currency}}</p>
 										<img ng-src="{{producto.imagenproveedor? 'https://macromautopartes.com/images/Marcasrefacciones/boxed-bg.jpg':'https://macromautopartes.com/images/Marcasrefacciones/' + producto.id_proveedor + '.png'}}" 
 										alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}">
 										<!-- <img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.id_proveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
-										alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}"> Activar solo en la pagina principal -->
-										<p class="block2-name dis-block s-text3">
-											{{producto.Producto}}
-										</p>
+										alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}"> -->
 
 									</section>
-
-
-									<span class="block2-price m-text6 text-white text-center">
-										<h3 class="precio">{{producto.Precio1 | currency}}</h3>
-									</span>
-									<div class="enviogratis"  ng-show="producto.Enviogratis">
-										<img src="/images/icons/Icono-camion.png" alt="">
-										<p > <strong>Envío Gratis </strong> </p> 
-									</div>
+									
 								</div>
 								
 							</div>
