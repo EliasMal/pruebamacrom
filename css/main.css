@@ -518,7 +518,7 @@ img {
 }
 
 .header__picture--img {
-  height: 50%;
+  height: 100%;
 }
 
 .modal-backdrop {
@@ -1305,7 +1305,7 @@ i.fa.fa-sun {
 }
 
 .ventanaModal__contenido {
-  margin-top: -5rem;
+  margin-top: 3rem;
   position: relative;
   background-color: var(--blanco);
   width: 100%;

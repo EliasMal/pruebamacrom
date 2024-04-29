@@ -240,16 +240,12 @@ document.querySelectorAll(".click").forEach(el => {
                 modales[m].style.display = "block";
                 noflow.classList.add("no-overflow");
                 dom.classList.add("no-overflow");
-                sidebar_menu.classList.remove("fa-bars");
-                sidebar_menu.classList.add("fa-reply");
                 cont_h.classList.remove("pd-1");
             }
             if (e.target == cerrar[m]) {
                 modales[m].style.display = 'none';
                 noflow.classList.remove("no-overflow");
                 dom.classList.remove("no-overflow");
-                sidebar_menu.classList.add("fa-bars");
-                sidebar_menu.classList.remove("fa-reply");
                 cont_h.classList.add("pd-1");
             }
 
