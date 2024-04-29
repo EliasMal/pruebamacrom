@@ -18,6 +18,26 @@
             unset($this->conn);
         }
 
+        public function main(){
+            $this->formulario = json_decode(file_get_contents('php://input'));
+
+            switch ($this->formulario->matenimiento->opc) {
+                case "activarUS":
+                    $this->jsonData["Bandera"] = 1;
+                    $this->jsonData["Mensaje"] = "Usuarios Desbloqueados";
+                    $this->actUS();
+                break;
+                case "desactivarUS":
+                    $this->jsonData["Bandera"] = 1;
+                    $this->jsonData["Mensaje"] = "Usuarios Bloqueados";
+                    $this->bloqUS();
+                break;
+            }
+            // $this->jsonData["Data"] = $this->setRefacciones($this->getRefacciones());
+           
+            print json_encode($this->jsonData);
+        }
+
         private function getRefacciones(){
             $sql="SELECT group_concat(_id) as id from Producto where Publicar=0";
             $row = $this->conn->fetch($this->conn->query($sql));
@@ -31,14 +51,16 @@
             return $this->conn->query($sql);
         }
 
-        public function main(){
-            
-            $this->jsonData["Bandera"] = 1;
-            $this->jsonData["Mensaje"] = "Registros Actualizados";
-            $this->jsonData["Data"] = $this->setRefacciones($this->getRefacciones());
-           
-            print json_encode($this->jsonData);
+        private function bloqUS(){
+            $sql ="UPDATE Seguridad SET Estatus = 0 where Tipo_usuario != 'root'";
+            return $this->conn->query($sql);
         }
+
+        private function actUS(){
+            $sql ="UPDATE Seguridad SET Estatus = 1";
+            return $this->conn->query($sql);
+        }
+
     }
 
     $app = new repRefacciones($array_principal);

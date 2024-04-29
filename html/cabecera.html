@@ -4,13 +4,13 @@
 	<header class="header2">
 
 		<div class="contenedor__header pd-1">
-			<div class="header__topbar" style="position: relative; display: block;padding: 0 1rem;text-align: justify;background-color: var(--gris-light);">
+			<!-- <div class="header__topbar" style="position: relative; display: block;padding: 0 1rem;text-align: justify;background-color: var(--gris-light);">
 				<h5>Les informamos que esta es una página no oficial de 
 					<a href="https://macromautopartes.com/">Macromautopartes</a>. Cualquier actividad aquí podría causar errores. 
 					Recomendamos al público evitar su uso y, para realizar cualquier operación, por favor acceda a la página oficial de 
 					<a href="https://macromautopartes.com/">Macromautopartes</a>.
 				</h5>
-			</div>
+			</div> -->
 			<div class="header__topbar">
 				<div class="contenedor__navegacion--mobile">
 					<i id="abrirModal6" class="fas fa-bars click filwhite"></i>
@@ -21,17 +21,9 @@
 					<img src="images/icons/logomacromb.webp" alt="IMG-LOGO">
 				</a>
 
-				<div class="modo__oscuro__pc">
-					<i class="fa fa-sun" aria-hidden="true"></i>
-					<label class="switch btn-color-mode-switch">
-						<input type="checkbox" name="switch__darkmode" class="switch__darkmode">
-						<label for="switch__darkmode" data-on="Oscuro" data-off="Claro" class="btn-color-mode-switch-inner enlace"></label>
-					</label>
-					  <i class="fa fa-moon" aria-hidden="true"></i>
-				</div>
-
 				<div class="buscador__general">
-					<i class="fas fa-search js-show-header-dropdown" id="btn-search">
+					<!-- <i class="fas fa-search js-show-header-dropdown" id="btn-search"> -->
+					<i class="fas fa-search" id="btn-search">
 						<input class="buscador__general__txt" type="text" autocomplete="off" placeholder="Busca tu refacción">
 						<button class="buscador__general__boton" ng-click="general_search()">Buscar</button>
 					</i>
@@ -102,8 +94,9 @@
 							<p class="text-dark t-center">¡Hola {{session.nombrecorto}}!</p>
 							<p class="js-show-header-dropdown t-center" style="cursor:pointer; color:var(--blanco);">Mi Cuenta</p>
 							<div class="header-cart header-dropdown header__cart--usuario">
-										<!-- <img src="https://macromautopartes.com/images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="perfil__usuario--img" loading="lazy" alt="ICON"> -->
-										<img src="../images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="perfil__usuario--img" loading="lazy" alt="ICON">
+								<div class="sesion__vinculos">	
+									<!-- <img src="https://macromautopartes.com/images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="perfil__usuario--img" loading="lazy" alt="ICON"> -->
+									<img src="../images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="perfil__usuario--img" loading="lazy" alt="ICON">
 														
 									<div class="vinculos">
 										<div class="vinculos--contenedor" onclick="location.href = '?mod=Profile&opc=Session'">
@@ -127,11 +120,19 @@
 										</div>
 
 									</div> 
-															
+								</div>							
 									<p class="sesionombre s-text3a">{{session.nombre}}</p>
-									<div>
+									<div class="sesion__opciones">
+										<div class="modo__oscuro__pc">
+											<i class="fa fa-sun" aria-hidden="true"></i>
+											<label class="switch btn-color-mode-switch">
+												<input type="checkbox" name="switch__darkmode" class="switch__darkmode">
+												<label for="switch__darkmode" data-on="Oscuro" data-off="Claro" class="btn-color-mode-switch-inner enlace"></label>
+											</label>
+											  <i class="fa fa-moon" aria-hidden="true"></i>
+										</div>
 										<div>
-												<button class="btn btn-danger usuario__cerrarsesion" ng-click="btnLogout()">Cerrar Sesión</button>
+												<button class="usuario__cerrarsesion btn_CPrimarios" ng-click="btnLogout()">Cerrar Sesión</button>
 										</div>
 									</div>
 						
@@ -143,7 +144,7 @@
 					<div class="contenedor__usuario--carrito">
 						
 						<div id="divcarri">
-							<div class="header-wrapicon2 m-r-13">
+							<div class="header-wrapicon2">
 								<i class="fas fa-shopping-cart header-icon1 js-show-header-dropdown filwhite" id="carrisvg"></i>
 								<span class="header-icons-noti">{{Data.Carrito.length}}</span>
 
@@ -183,13 +184,15 @@
 										Total: {{subtotal() | currency}}
 									</div>
 				
-										<div class="header-cart-buttons">
-											<div class="header-cart-wrapbtn">
-												<button class="btn btn-danger form-control clicksidebarshop" onclick="location.href='?mod=Compras'" ng-show="user">Pagar</button>
-												<button class="btn btn-danger form-control clicksidebarshop" onclick="location.href='?mod=login'" ng-show="!user">Iniciar Sesión</button>
-											</div>
+									<div class="header-cart-buttons">
+										<div class="header-cart-wrapbtn">
+											<button class="form-control clicksidebarshop btn_CPrimarios" onclick="location.href='?mod=Compras'" ng-show="user">Pagar</button>
+											<button class="form-control clicksidebarshop btn_CPrimarios" onclick="location.href='?mod=login'" ng-show="!user">Iniciar Sesión</button>
 										</div>
+									</div>
+
 								</div>
+								
 							</div>
 						</div>
 					</div>

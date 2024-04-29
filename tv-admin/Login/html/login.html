@@ -21,10 +21,16 @@
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     </head>
     <body class="hold-transition login-page" ng-app="tsuruVolks">
-        
+
+        <div class="alerta-mantenimiento ng-scope" ng-controller="loginCtrl" style="width: 100%;background-color: #de0007;color: white;display: none;font-family: Poppins;align-items: center;flex-wrap: wrap;justify-content: center;position: absolute;top: 0;">
+            <div class="alerta">
+                <h2 style="max-width: 600px;text-align: center;">Actualizando Admin Macrom auto partes. Podra iniciar sesión cuando acabe.</h2>
+            </div>
+        </div>
+
         <div class="login-box" ng-controller="loginCtrl">
             <div class="login-logo">
-                <img src="./../asset/Images/logoVolks.png" alt="LOGO IMAGE" />
+                <img src="./../asset/Images/logomacrom.png" alt="LOGO IMAGE" />
 <!--                <a href="#"><b>RZ</b>Education</a>-->
             </div>
             <!-- /.login-logo -->

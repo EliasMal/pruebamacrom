@@ -25,6 +25,10 @@ function RefaccionesCtrl($scope, $http) {
     obj.pageSize = 20;
     obj.pages = [];
     
+    if(localStorage.getItem("Datos")){
+        localStorage.removeItem("Datos");
+    }
+    
     obj.eachRefacciones = (array)=>{
         array.forEach(e=>{
             obj.getSeicom(e.Clave).then(token => {
@@ -91,7 +95,6 @@ function RefaccionesCtrl($scope, $http) {
                 obj.Numreg = res.data.data.totalrefacciones;
                 obj.configPages();
                 obj.eachRefacciones(obj.refacciones);
-                console.log(obj.refacciones);
             }
 
 
@@ -99,7 +102,6 @@ function RefaccionesCtrl($scope, $http) {
             toastr.error("Error: no se realizo la conexion con el servidor");
         });
     }
-    
     
     
     obj.configPages = function() {
@@ -519,6 +521,31 @@ function RefaccionesEditCtrl($scope, $http){
         });
     }
 
+    obj.getActividad = () => {
+        $http({
+            method: 'POST',
+            url: url,
+            data: {modelo: {opc: "buscar", tipo: "Actividad"}},
+            headers: {
+                'Content-Type': undefined
+            },
+            transformRequest: function (data) {
+                var formData = new FormData();
+                for (var m in data.modelo) {
+                    formData.append(m, data.modelo[m]);
+                }
+                return formData;
+            }
+        }).then(function successCallback(res) {
+            if (res.data.Bandera == 1) {
+                obj.actividad = res.data.data;
+            }
+
+        }, function errorCallback(res) {
+            toastr.error("Error: no se realizo la conexion con el servidor");
+        });
+    }
+
     obj.btnBorrarRvehiculo = (RV=null) =>{  //Prueba Eliminar Vehiculo de Compatibilidad
         if(confirm("¿Esta seguro de eliminar la refaccion del carrito?")){
             $http({
@@ -596,7 +623,15 @@ function RefaccionesEditCtrl($scope, $http){
             toastr.error("Error: no se realizo la conexion con el servidor");
         });
     }
-    
+
+    function trunc (x, posiciones = 0) { /*Funcion para truncar numeros decimales a solo 2 digitos despus del punto*/
+        var s = x.toString()
+        var l = s.length
+        var decimalLength = s.indexOf('.') + 1
+        var numStr = s.substr(0, decimalLength + posiciones)
+        return Number(numStr)
+    }
+
     obj.getArticulovolks = ()=>{
         $http({
             method: 'POST',
@@ -617,7 +652,7 @@ function RefaccionesEditCtrl($scope, $http){
                      obj.exisTotales += parseInt(e.existencia);
                      
                      obj.refaccion.Precio1 = parseFloat(e.precio_5 * 1.16);
-                     
+                     obj.refaccion.Precio1 = trunc(obj.refaccion.Precio1, 2);
                 })
 
 
@@ -672,6 +707,7 @@ function RefaccionesEditCtrl($scope, $http){
                 obj.dominio = res.data.dominio;
                 obj.refaccion = res.data.data.Refaccion;
                 obj.categorias = res.data.data.Categorias;
+                obj.actividad = res.data.data.Actividad;
                 obj.Marcas = res.data.data.Marcas;
                 obj.Compatibilidad = res.data.data.Compatibilidad;
                 obj.Proveedor  = res.data.data.Proveedores;
@@ -679,14 +715,31 @@ function RefaccionesEditCtrl($scope, $http){
                 obj.backgroudimg ={"background-color":obj.refaccion.color}
                 obj.img = obj.refaccion.imagen? obj.dominio+'/images/refacciones/'+obj.refaccion._id+'.png':obj.dominio+'/images/refacciones/'+obj.refaccion._id+'.webp';
                 obj.getArticulovolks();
+                localStorage.setItem("Datos",JSON.stringify(obj.refaccion));
+                var datos = JSON.parse(localStorage.getItem('Datos'));
                 obj.getGaleria();
-              
+
+                let actividadKeys = Object.keys(obj.actividad);
+                for (var i = 0; i < actividadKeys.length; i++) {
+                    obj.actividad[actividadKeys[i]].datosdiff = obj.actividad[actividadKeys[i]].datosdiff.replaceAll(/&quot;|{|}/g,"");
+                    obj.actividad[actividadKeys[i]].datosdiff = obj.actividad[actividadKeys[i]].datosdiff.replaceAll(":",": ");
+                    
+                    
+                    setTimeout(function() {
+                        let textoejemplo = document.querySelectorAll(".datosdiff_txt");
+                        for(let i=0;i<textoejemplo.length;i++){
+                            textoejemplo[i].innerHTML ="<b>"+textoejemplo[i].innerHTML;
+                            textoejemplo[i].innerHTML = textoejemplo[i].innerHTML.replaceAll(",","<br><b>");
+                            textoejemplo[i].innerHTML = textoejemplo[i].innerHTML.replaceAll(":","</b>: ");
+                        }
+                    }, 1);
+                }
             }
         }, function errorCallback(res) {
             toastr.error("Error: no se realizo la conexion con el servidor");
         });
     }
-    
+
     obj.btnRegresar = () => {
         window.location.href = "?mod=Refacciones";
     }
@@ -699,8 +752,21 @@ function RefaccionesEditCtrl($scope, $http){
         obj.getColorMarca();
        
         if(confirm("¿Estas seguro de guardar los cambios?")){
-            obj.refaccion.Rvehiculo = JSON.stringify(obj.Rvehiculo)
-            console.log(obj.refaccion.Rvehiculo);
+            obj.refaccion.Rvehiculo = JSON.stringify(obj.Rvehiculo);
+            var datos = JSON.parse(localStorage.getItem('Datos'));
+            let keys = Object.keys(obj.refaccion);let datoskeys = Object.keys(datos);let datosdiff = {};
+            for(let i=0;i<keys.length;i++){
+                if(keys[i] == datoskeys[i]){
+                    if(obj.refaccion[keys[i]]  != datos[keys[i]]){
+                       datosdiff[keys[i]] = obj.refaccion[keys[i]];
+                       if(keys[i] == 'Descripcion' || keys[i] == 'Producto'){
+                        datosdiff[keys[i]] = obj.refaccion[keys[i]].replaceAll(",","");
+                       }
+                    }
+                }
+            }
+            obj.refaccion.diferencias = JSON.stringify(datosdiff);
+
             $http({
                 method: 'POST',
                 url: url,
@@ -718,7 +784,7 @@ function RefaccionesEditCtrl($scope, $http){
             }).then(function successCallback(res) {
                     obj.habilitado = true;
                     toastr.success('Completado');
-
+                    location.reload();
             }, function errorCallback(res) {
                 toastr.error("Error: no se realizo la conexion con el servidor");
             });

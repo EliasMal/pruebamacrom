@@ -45,6 +45,10 @@
                             $this->jsonData["data"] = $this->getCompatibilidad();
                             $this->jsonData["Bandera"] = 1;
                             break;
+                        case 'Actividad':
+                            $this->jsonData["data"] = $this->getActividad();
+                            $this->jsonData["Bandera"] = 1;
+                            break;
                         case 'Vehiculos':
                                 $this->jsonData["data"] = $this->getModelos();
                                 $this->jsonData["Bandera"] = 1;
@@ -66,6 +70,7 @@
                                 $this->jsonData["data"]["Compatibilidad"] = $this->getCompatibilidad();
                                 $this->jsonData["data"]["Marcas"] = $this->getMarcas();
                                 $this->jsonData["data"]["Proveedores"] = $this->getProveedores();
+                                $this->jsonData["data"]["Actividad"] = $this->getActividad();
                                 /*Especificar la funcion que ontendra los vehiculos que le quedan a la refaccion*/
 
                                 $this->jsonData["data"]["RVehiculo"] = array();
@@ -142,6 +147,17 @@
             }
             return $array;
         }
+
+        private function getActividad(){
+            $array = array();
+            $sql = "SELECT * FROM actividad where clavepr='{$this->formulario["id"]}' order by fecha_modificacion desc";
+            $id = $this->conn->query($sql);
+            while($row= $this->conn->fetch($id)){
+                array_push($array, $row);
+            }
+            return $array;
+        }
+
         private function getModelos(){
             $array = array();
             $sql = "SELECT * FROM Modelos where Estatus = 1 and _idMarca= ".$this->formulario["_idMarca"]. " order by Modelo";
@@ -199,9 +215,17 @@
                     . " Enviogratis = '{$this->formulario["Enviogratis"]}', Publicar={$this->formulario["Publicar"]},"
                     . " userModify='{$_SESSION["nombre"]}', dateModify='".date("Y-m-d H:i:s")."'"
                     . " where _id = {$this->formulario["_id"]}";
+                    if($this->formulario["diferencias"] != "{}"){
+                        $this->setActividad();
+                    }
                     break;
             }
             return $this->conn->query($sql) or $this->jsonData["error"] = $this->conn->error;
+        }
+
+        private function setActividad(){
+            $sql = "INSERT INTO actividad (clavepr, usuario, datosdiff, fecha_modificacion) VALUES ('{$this->formulario["_id"]}', '{$_SESSION["nombre"]}', '{$this->formulario["diferencias"]}', '".date("Y-m-d H:i:s")."');";
+            return $this->conn->query($sql);
         }
 
         private function getexplode($string){
@@ -253,8 +277,6 @@
             return $row["total"];
         }
         
-        
-
         private function getRefaccion($arrayLikes, $skip=0, $limit=20){
             $this->formulario["historico"] = $this->formulario["historico"]=="false"? 1:0;
             $this->formulario["publicados"] = $this->formulario["publicados"]=="true"? 1:0;

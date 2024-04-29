@@ -32,11 +32,30 @@
                     $this->jsonData["NoPublicados"] = $this->getNumProductos(0);
 
                 break;
+                case 'usrCON':
+                    $this->jsonData["Bandera"] = 1;
+                    $this->jsonData["Usuarios"] = $this->getusrCON();
+                break;
+                case 'loginM':
+                    $this->jsonData["Bandera"] = 1;
+                    $this->jsonData["Usuarios"] = $this->loginM();
+                break;
             }
 
             print json_encode($this->jsonData);
         }
 
+        private function loginM(){
+            $sql = "select count(Estatus) as NEstatus from Seguridad where Estatus = 1";
+            $row = $this->conn->fetch($this->conn->query($sql));
+            return $row["NEstatus"];
+        }
+
+        private function getusrCON(){
+            $sql = "select * FROM Seguridad where username = '{$_SESSION['usr']}'";
+            return $this->conn->fetch($this->conn->query($sql));
+        }
+        
         private function getNumProductos($publicados){
             $sql = "select count(*) as total from Producto where Estatus = 1 and Publicar = $publicados";
             $row = $this->conn->fetch($this->conn->query($sql));

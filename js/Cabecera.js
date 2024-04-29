@@ -51,8 +51,8 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
         return url + id + ".webp";
     }
     obj.getImagenCate = (e) => {
-        return "https://macromautopartes.com/images/Categorias/" + e._id + ".png";
-        //return "images/Categorias/" + e._id + ".png";
+        //return "https://macromautopartes.com/images/Categorias/" + e._id + ".png";
+        return "images/Categorias/" + e._id + ".png";
     }
 
     obj.recapchatKey = "6Le-C64UAAAAAMlSQyH3lu6aXLIkzgewZlVRgEam";
@@ -77,13 +77,13 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
     txt.addEventListener("keydown", e => {
         if (txt.value != "" && e.keyCode === 13) {
             txt = txt.value.split(/\s+/).join("%20");
-            window.location.href = "https://prueba.macromautopartes.com/?mod=catalogo&pag=1&prod=" + txt + "&cate=T&armadora=&mdl=&[a]="
+            window.location.href = "https://macromautopartes.com/?mod=catalogo&pag=1&prod=" + txt + "&cate=T&armadora=&mdl=&[a]="
         }
     });
     obj.general_search = () => {
         if (txt.value != "") {
             txt = txt.value.split(/\s+/).join("%20");
-            window.location.href = "https://prueba.macromautopartes.com/?mod=catalogo&pag=1&prod=" + txt + "&cate=T&armadora=&mdl=&[a]="
+            window.location.href = "https://macromautopartes.com/?mod=catalogo&pag=1&prod=" + txt + "&cate=T&armadora=&mdl=&[a]="
         }
     }
 
@@ -142,14 +142,14 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
                 if (result.data.Bandera == 1) {
                     obj.Data = result.data.Data;
 
-                    console.log(obj.Data.Categorias);
+                    // console.log(obj.Data.Categorias);
                     for (var i = 0; i <= obj.Data.Categorias.length; i++) {
                         if (obj.Data.Categorias[i] != undefined) {
                             obj.Menu[obj.Data.Categorias[i].Categoria] = obj.Data.Categorias[i].MenuOPC.split(",");
                         }
                     }
-                    console.log(obj.Menu);
-                    console.log(obj.Menu.Accesorios);
+                    // console.log(obj.Menu);
+                    // console.log(obj.Menu.Accesorios);
                 }
             }
             $scope.$apply();

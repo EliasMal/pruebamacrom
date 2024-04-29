@@ -110,7 +110,7 @@ class Registro{
                 . "'{$this->formulario->Registro->Domicilio}','{$this->formulario->Registro->Colonia}','{$this->formulario->Registro->Codigopostal}',"
                 . "'{$this->formulario->Registro->Ciudad}','{$this->formulario->Registro->Estado}','{$this->formulario->Registro->Telefono}',"
                 . "'".date("Y-m-d", strtotime($this->formulario->Registro->FechaCreacion))."','".date("Y-m-d", strtotime($this->formulario->Registro->FechaModificacion))."',"
-                . "'".date("Y-m-d", strtotime($this->formulario->Registro->ultimoaccesso))."','".date("Y-m-d", strtotime($this->formulario->Registro->ultimoaccesso))."',1,"
+                . "'".date("Y-m-d", strtotime($this->formulario->Registro->ultimoaccesso))."','".date("Y-m-d", strtotime($this->formulario->Registro->inicioacceso))."',1,"
                 . "'{$this->formulario->Registro->Aviso}')";
         return $this->conn->query($sql)? $this->conn->last_id():false;
     }

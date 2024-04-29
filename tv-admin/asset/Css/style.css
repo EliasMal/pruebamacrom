@@ -91,7 +91,9 @@
 .center--text {
   text-align: center;
 }
-
+.datosdiff_txt{
+  text-align: start;
+}
 @media(min-width: 768px) {
   .compatibilidad__agregar {
     position: absolute;

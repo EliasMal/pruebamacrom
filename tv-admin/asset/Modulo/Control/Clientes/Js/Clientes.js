@@ -148,7 +148,6 @@ function ClientesPerfilCtrl($scope, $http) {
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
                 obj.cliente = res.data.data;
-                console.log(obj.cliente);
             } else {
 
             }

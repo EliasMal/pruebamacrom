@@ -66,6 +66,10 @@
                                             <a class="nav-link" id="Galeria-tab" data-toggle="tab" href="#Vehiculo" 
                                             role="tab" aria-controls="Galeria" aria-selected="true">Vehiculos</a>
                                         </li>
+                                        <li class="nav-item" role="presentation" ng-show="isAdmin">
+                                            <a class="nav-link" id="Galeria-tab" data-toggle="tab" href="#Actividad" 
+                                            role="tab" aria-controls="Galeria" aria-selected="true">Actividad <i class="fas fa-chart-line"></i></a>
+                                        </li>
                                     </ul>
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade show active" id="Datosgenerales" role="tabpanel" aria-labelledby="Datosgenerales-tab">
@@ -79,6 +83,7 @@
                                                             <div class="col-md-4 col-lg-4">
                                                                 <label>Clave: <span class="text-danger">*</span></label>
                                                                 <input type="text" name="txtclave" id="txtclave" class="form-control" ng-model="refaccion.Clave" ng-disabled="habilitado" required/>
+                                                                <!-- <input type="text" name="txtclave" id="txtclave" class="form-control" ng-model="refaccion.Clave" ng-disabled="habilitado" ng-model-options="{debounce:1000}" ng-change="refaccionModificada()" required/> -->
                                                                 <!--<button class="btn btn-primary" ng-disabled="habilitado" ng-click="Buscarproducto">Buscar</button>-->
                                                             </div>
                                                             <div class="col-md-8 col-lg-8">
@@ -326,6 +331,32 @@
                                             </div>
                                             
                                         </div>
+
+                                        <div class="tab-pane fade " id="Actividad" role="tabpanel" aria-labelledby="Galeria-tab" ng-show="isAdmin">
+                                            <div class="col-md-12 col-lg-12 mt-2">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th width="15%" class="text-center">Usuario</th>
+                                                                <th width="15%" class="text-center">Modificó</th>
+                                                                <th width="15%" class="text-center">Fecha</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                            <tr ng-repeat="act in actividad" class="center--text">
+                                                                <td>{{act.usuario}}</td>
+                                                                <td><p class="datosdiff_txt">{{act.datosdiff}}</p></td>
+                                                                <td>{{act.fecha_modificacion}}</td>
+                                                            </tr>
+                                        
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
                                         
                                     </div>
                                     

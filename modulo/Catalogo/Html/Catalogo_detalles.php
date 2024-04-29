@@ -90,7 +90,7 @@
 						<div class="botones__sesion--noiniciada">
 							<div class="btn-addcart-product-detail iniciarsesion__contenedor">
 								<!-- Button -->
-								<button class="btn btn-danger iniciarsesion__contenedor--boton form-control"
+								<button class="iniciarsesion__contenedor--boton form-control btn_CPrimarios"
 									ng-show="btnEnabled" onclick="location.href='?mod=login'">
 									Iniciar sesion
 								</button>
@@ -123,7 +123,7 @@
 						</div>
 						<div class="btn-addcart-product-detail agregarcarrito__contenedor" ng-show="!btnEnabled">
 								<!-- Button -->
-								<button class="btn btn-danger form-control agregarcarrito__contenedor--boton"
+								<button class="form-control agregarcarrito__contenedor--boton btn_CPrimarios"
 									ng-click="Agregarcarrito()">
 									Agregar al carrito
 								</button>
@@ -215,8 +215,8 @@
 
 									}">
 									<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}">
-										<img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/motor.webp':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}" alt="IMG-PRODUCT">
-										<!-- <img ng-src="{{producto.imagen? 'images/refacciones/motor.webp':'images/refacciones/'+producto._id+'.webp'}}" alt="IMG-PRODUCT"> -->
+										<!-- <img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/motor.webp':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}" alt="IMG-PRODUCT"> -->
+										<img ng-src="{{producto.imagen? 'images/refacciones/motor.webp':'images/refacciones/'+producto._id+'.webp'}}" alt="IMG-PRODUCT">
 									</a>
 								</div>
 								<div class="block2-txt">
@@ -229,10 +229,10 @@
 										<p class="precio__producto" ng-hide="producto.RefaccionOferta=='1'">{{producto.Precio1 | currency}}</p>	
 										<p class="precio__producto" ng-show="producto.RefaccionOferta=='1'"><small class="line_through-red">{{producto.Precio1 | currency}}</small>
 										{{producto.Precio2 | currency}}</p>
-										<img ng-src="{{producto.imagenproveedor? 'https://macromautopartes.com/images/Marcasrefacciones/boxed-bg.jpg':'https://macromautopartes.com/images/Marcasrefacciones/' + producto.id_proveedor + '.png'}}" 
-										alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}">
-										<!-- <img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.id_proveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
+										<!-- <img ng-src="{{producto.imagenproveedor? 'https://macromautopartes.com/images/Marcasrefacciones/boxed-bg.jpg':'https://macromautopartes.com/images/Marcasrefacciones/' + producto.id_proveedor + '.png'}}" 
 										alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}"> -->
+										<img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.id_proveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
+										alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}">
 
 									</section>
 									

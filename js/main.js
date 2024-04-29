@@ -185,6 +185,7 @@
             $("#FooterDark").addClass('main__theme--dark');
             $("#BodyDark").addClass('body__theme--dark');
             $(".switch__darkmode").addClass('fa-moon');
+            $("#usercba").css("background-color", "#7f7f7f");
         } else {
             localStorage.setItem('darkmode', "light");
             $(".switch__darkmode").removeClass('fa-moon');
@@ -199,6 +200,7 @@
             $("#FooterDark").addClass('main__theme--light');
             $("#BodyDark").addClass('body__theme--light');
             $(".switch__darkmode").addClass('fa-sun');
+            $("#usercba").css("background-color", "#fff");
         }
     });
 
@@ -329,4 +331,8 @@ if (window.location.href.includes("?mod=catalogo")) {
 }
 if (window.location.href.includes("?mod=Blog")) {
     document.querySelector("#sidebar9").classList.add("sidebar__active");
+}
+
+if(window.location.href.includes("?mod=login") || window.location.href.includes("?mod=register")){
+    console.log("entro");
 }

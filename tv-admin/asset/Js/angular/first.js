@@ -136,12 +136,38 @@ tsuruVolks
 
 function asideCtrl($scope,$http){
     var obj = $scope;
+    obj.data = {
+        opc:""
+   }
     obj.username;
     obj.srcimagen ="Images/boxed-bg.jpg";
     
     obj.btnPrueba = function(){
         confirm("Esta es una prueba");
     }
+
+    obj.usrCON =()=>{
+        obj.data.opc= "usrCON";
+        $http({
+            method: 'POST',
+                url: "././Modulo/Home/Ajax/Home.php",
+                data: {home:obj.data}
+            }).then(function successCallback(res){
+                if(res.data.Bandera == 1){
+                    obj.datos = res.data;
+                    
+                    if(obj.datos.Usuarios.Estatus == '0'){
+                        location.href="../terminar.php";
+                    }
+                }else{
+                    toastr.error(res.data.mensaje);
+                }
+            
+            }, function errorCallback(res){
+                toastr.error("Error: no se realizo la conexion con el servidor");
+        });
+    }
+    obj.usrCON();
 }
 
 mensaje = function(title,tipo,txtmsg){

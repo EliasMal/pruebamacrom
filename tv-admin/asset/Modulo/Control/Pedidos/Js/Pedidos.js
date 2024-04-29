@@ -37,7 +37,6 @@ function PedidosCtrl($scope,$http){
                 no: i, p: (obj.paginador.pageSize * i) - obj.paginador.pageSize
             });
         }
-        console.log(obj.paginador, ini, fin,obj.No_Pedidos)
     }
 
     obj.nextPage = ()=>{
@@ -66,13 +65,11 @@ function PedidosCtrl($scope,$http){
                 data: {pedidos:{opc:"get", Acreditados: obj.Acreditados? 1:0, x: x, y: y, find: obj.find, Historico: obj.historico }}
             }).then(function successCallback(res){
                 if(res.data.Bandera == 1){
-                    console.log(res.data)
                     obj.No_Pedidos = res.data.No_pedidos;
                     obj.Pedidos = res.data.Pedidos;
                     obj.Pedidos.forEach( (e) => {
                         e.class = obj.getcolorEstatus(e.Acreditado)
                     })
-                    console.log(obj.Pedidos);
                     obj.configPages();
                 }else{
                     toastr.error(res.data.mensaje);

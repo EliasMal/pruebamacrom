@@ -89,8 +89,8 @@
 									<div class="wrap-pic-w of-hidden cursorpnt" 
 									ng-class="{'pos-relative': !producto.agotado}">
 									<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="enlace">
-										<img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/'+producto._id+'.png':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}">
-										<!-- <img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}"> -->
+										<!-- <img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/'+producto._id+'.png':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}"> -->
+										<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}">
 									</a>
 									</div>
 
@@ -101,10 +101,10 @@
 											<div class="precio__imgprove">	
 												<p class="precio__producto" ng-hide="producto.RefaccionOferta"> {{producto.Precio1 | currency}} </p>	
 												<p class="precio__producto" ng-show="producto.RefaccionOferta"> <small class="line_through-red">{{producto.Precio1 | currency}}</small> </p>
-												<img ng-src="{{producto.imagenproveedor? 'https://macromautopartes.com/images/Marcasrefacciones/boxed-bg.jpg':'https://macromautopartes.com/images/Marcasrefacciones/' + producto.idProveedor + '.png'}}" 
+												<!-- <img ng-src="{{producto.imagenproveedor? 'https://macromautopartes.com/images/Marcasrefacciones/boxed-bg.jpg':'https://macromautopartes.com/images/Marcasrefacciones/' + producto.idProveedor + '.png'}}" 
+												alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}" class="proovedor__img"> -->
+												<img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.idProveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
 												alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}" class="proovedor__img">
-												<!--<img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.idProveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
-												alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}" class="proovedor__img">-->
 												
 											</div>
 

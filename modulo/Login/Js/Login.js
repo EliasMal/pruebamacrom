@@ -6,7 +6,11 @@
 var urlLogin = "./modulo/Login/Ajax/Login.php";
 var urlRegistro = "./modulo/Login/Ajax/Registro.php";
 tsuruVolks.controller('LoginCtrl', ["$scope", "$http", LoginCtrl]);
-
+if(window.location.href.includes("?mod=login") || window.location.href.includes("?mod=register")){
+    if($_SESSION.iduser != null){
+        location.href = "?mod=home";
+    }
+}
 function LoginCtrl($scope, $http) {
     var obj = $scope;
     obj.login = {};
