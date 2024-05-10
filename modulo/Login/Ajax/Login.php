@@ -145,6 +145,7 @@ class Login{
         if($flag){
             session_name("loginCliente");
             session_start();
+            $_SESSION["padlock"] = "lock";
             $_SESSION["autentificacion"]=1;
             $_SESSION["ultimoAcceso"]= date("Y-n-j H:i:s");
             $_SESSION["nombrecorto"] = $this->dataLogin["nombres"];

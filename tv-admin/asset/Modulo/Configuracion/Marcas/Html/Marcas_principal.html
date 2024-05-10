@@ -58,19 +58,23 @@
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
                                         <thead>
-                                            <th width="5%">#</th>
-                                            <th width="10%">Logo</th>
-                                            <th width="55%">Marcas</th>
-                                            <th width="10%">Color</th>
-                                            <th width="10%">Estatus</th>
-                                            <th width="10%">Acciones</th>
+                                            <th class="text-center" width="5%">#</th>
+                                            <th class="text-center" width="10%">Logo</th>
+                                            <th class="text-center" width="15%">Marcas</th>
+                                            <th class="text-center" width="20%">Fecha Modificación</th>
+                                            <th class="text-center" width="20%">Usuario Modificador</th>
+                                            <th class="text-center" width="10%">Color</th>
+                                            <th class="text-center" width="10%">Estatus</th>
+                                            <th class="text-center" width="10%">Acciones</th>
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="marca in marcas">
-                                                <td>{{$index +1}}</td>
+                                                <td class="text-center">{{$index +1}}</td>
                                                 <td class="text-center"><img ng-src="{{getImagen(marca.foto, marca._id)}}" class="img img-responsive img-circle" alt="logoimagen" style="width: 40px;"/></td>
-                                                <td>{{marca.Marca}}</td>
-                                                <td><span class="form-control" ng-style="{'background-color': marca.Color}">&nbsp;</span></td>
+                                                <td class="text-center">{{marca.Marca}}</td>
+                                                <td class="text-center">{{marca.FechaModificacion}}</td>
+                                                <td class="text-center">{{marca.USRModificacion}}</td>
+                                                <td class="text-center"><span class="form-control" ng-style="{'background-color': marca.Color}">&nbsp;</span></td>
                                                 <td class="text-center"><span class="badge {{marca.Estatus == 1? 'badge-success':'badge-danger'}}">{{marca.Estatus == 1? "Activo":"Baja"}}</span>{{}}</td>
                                                 <td class="text-center">
                                                     <div class="btn-group" role="group">

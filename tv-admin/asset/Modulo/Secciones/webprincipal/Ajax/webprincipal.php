@@ -53,11 +53,11 @@ class WebPrincipal{
             case 'off':
                 if($this->setImagen()){
                     $this->jsonData["Bandera"] = 1;
-                    $this->jsonData["mensaje"] = "Imagen desactivada";
+                    $this->jsonData["mensaje"] = "Imagen Eliminada";
                     $this->jsonData["categoria"] = $this->formulario["Categoria"];
                 }else{
                     $this->jsonData["Bandera"] = 0;
-                    $this->jsonData["mensaje"] = "Error al intentar desactivar la Imagen";
+                    $this->jsonData["mensaje"] = "Error al intentar eliminar la Imagen";
                 }
             break;
         }
@@ -74,7 +74,8 @@ class WebPrincipal{
                    '{$this->formulario["Disenio"]}')";
             break;
             case 'off':
-                $sql = "UPDATE Imagenes SET Estatus = 0 Where _id='{$this->formulario["_id"]}'";
+                $sql = "DELETE FROM Imagenes Where _id='{$this->formulario["_id"]}'";
+                $this->BorrarImagen();
             break;
         }
         return $this->conn->query($sql)? true: false;
@@ -95,7 +96,7 @@ class WebPrincipal{
                 array_push($array[$value], $row);
             }
         }
-        
+
         
         return $array;
     }
@@ -110,6 +111,26 @@ class WebPrincipal{
                 mkdir($subdir.$dir,0755);
             }
             if($archivo && move_uploaded_file($this->foto["file"]["tmp_name"], $subdir.$dir.$archivo)){
+                //$this->rutaimagen= $dir.$archivo;
+                return true;
+            }else{
+                echo "no se subio la imagen";
+            }
+        }else{
+            return false;
+        }
+    }
+
+    private function BorrarImagen(){
+        
+        if($this->foto["file"]["name"]!="" and $this->foto["file"]["size"]!=0){
+            $subdir ="../../../../../../"; 
+            $dir = "images/Banners/";
+            $archivo = $this->foto["file"]["name"];
+            if(!is_dir($subdir.$dir)){
+                mkdir($subdir.$dir,0755);
+            }
+            if($archivo && unlink($this->foto["file"]["tmp_name"], $subdir.$dir.$archivo)){
                 //$this->rutaimagen= $dir.$archivo;
                 return true;
             }else{

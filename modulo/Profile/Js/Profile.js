@@ -43,7 +43,6 @@ function ProfileCtrl($scope, $http) {
                 no: i, p: (obj.paginador.pageSize * i) - obj.paginador.pageSize
             });
         }
-        console.log(obj.paginador, ini, fin, obj.No_Pedidos)
     }
 
     obj.nextPage = () => {
@@ -133,7 +132,6 @@ function ProfileCtrl($scope, $http) {
                     }
 
                 }
-                console.log(obj.Mispedidos);
             } else {
                 toastr.error(res.data.mensaje);
             }
@@ -365,8 +363,6 @@ function ProfileCtrl($scope, $http) {
                 obj.profile = res.data.Data;
                 if (!localStorage.getItem("iduser")) {
                     localStorage.setItem("iduser", obj.profile._id)
-                } else {
-                    console.log(localStorage.getItem("iduser"));
                 }
             } else {
                 toastr.error("Error: ");

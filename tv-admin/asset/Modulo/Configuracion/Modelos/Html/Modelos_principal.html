@@ -60,10 +60,10 @@
                                         <thead>
                                             <th class="text-center" width="5%">#</th>
                                             <th class="text-center" width="10%">Logo</th>
-                                            <th class="text-center" width="25%">Vehiculo</th>
-                                            <th class="text-center" width="10%">Primer año de fabricación</th>
-                                            <th class="text-center" width="10%">Ultimo año de fabricación</th>
-                                            <th class="text-center" width="20%">Marca</th>
+                                            <th class="text-center" width="10%">Vehiculo</th>
+                                            <th class="text-center" width="20%">Fecha Modificación</th>
+                                            <th class="text-center" width="20%">Usuario Modificador</th>
+                                            <th class="text-center" width="15%">Marca</th>
                                             <th class="text-center" width="10%">Estatus</th>
                                             <th class="text-center" width="10%">Acciones</th>
                                         </thead>
@@ -72,8 +72,8 @@
                                                 <td>{{$index +1}}</td>
                                                 <td class="text-center"><img ng-src="{{getImagen(modelo)}}" class="img img-responsive img-circle" alt="logoimagen" style="width: 40px;"/></td>
                                                 <td ><a ng-click="btnAnios(modelo)" style="cursor: pointer; ">{{modelo.Modelo}}</a></td>
-                                                <td class="text-center">{{modelo.Primer_anio_fabricacion}}</td>
-                                                <td class="text-center">{{modelo.Ultimo_anio_fabricacion}}</td>
+                                                <td class="text-center">{{modelo.FechaModificacion}}</td>
+                                                <td class="text-center">{{modelo.USRModificacion}}</td>
                                                 <td class="text-center">{{modelo.Marca}}</td>
                                                 <td class="text-center"><span class="badge {{modelo.Estatus == 1? 'badge-success':'badge-danger'}}">{{modelo.Estatus == 1? "Activo":"Baja"}}</span></td>
                                                 <td class="text-center">

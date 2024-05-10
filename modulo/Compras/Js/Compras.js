@@ -54,12 +54,12 @@ function ComprasCtrl($scope, $http, $sce) {
     obj.subtotal = () => {
         obj.Costumer.Subtotal = 0
         for (let e in obj.session.CarritoPrueba) {
-            if(obj.session.CarritoPrueba[e].RefaccionOferta =='1'){
+            if (obj.session.CarritoPrueba[e].RefaccionOferta == '1') {
                 obj.Costumer.Subtotal += (obj.session.CarritoPrueba[e].Cantidad * obj.session.CarritoPrueba[e].Precio2);
-            }else{
+            } else {
                 obj.Costumer.Subtotal += (obj.session.CarritoPrueba[e].Cantidad * obj.session.CarritoPrueba[e].Precio);
             }
-            
+
         }
         return obj.Costumer.Subtotal;
     }
@@ -77,16 +77,24 @@ function ComprasCtrl($scope, $http, $sce) {
         let inpCupon = document.getElementById("inpCupon").value;
         var incpn = document.getElementById("inpCupon");
         var cupon__alert = document.getElementById('alert--cupon');
+        var valor_cpn = 10;
 
         if (obj.Costumer.profile.cupon_nombre != null && obj.Costumer.profile.cupon_nombre != "") {
             const cpn = obj.Costumer.profile.cupon_nombre.split(",");
 
-
             cpn.forEach(function (element) {
-                //console.log(element);
+
+                if (element.includes("=")) {
+                    const cpn_valor = element.split("=");
+                    if (inpCupon == cpn_valor[0]) {
+                        valor_cpn = cpn_valor[1];
+                        inpCupon = element;
+                    }
+                }
+
                 if (inpCupon == element) {
-                    obj.Costumer.Subtotal = (obj.Costumer.Subtotal * (10 / 100));
-                    obj.Costumer.descuento = obj.Costumer.Subtotal;
+                    obj.Costumer.Subtotal = (obj.Costumer.Subtotal * (valor_cpn / 100));
+                    obj.Costumer.descuento = obj.Costumer.Subtotal; //Descuento envio para prueba credito
                     btncupon.disabled = true;
                     incpn.disabled = true;
                     btncupon.style.borderColor = "#00ff00";
@@ -143,12 +151,8 @@ function ComprasCtrl($scope, $http, $sce) {
     tandcheck.addEventListener('click', function () {
         if (tandcheck.checked) {
             btnfacomp.disabled = false;
-            btncupon.disabled = false;
-            inpCupon.disabled = false;
         } else {
             btnfacomp.disabled = true;
-            btncupon.disabled = true;
-            inpCupon.disabled = true;
         }
     });
 
@@ -158,7 +162,7 @@ function ComprasCtrl($scope, $http, $sce) {
     });
 
     obj.getImagen = (id) => {
-        // var url = "https://macromautopartes.com/images/refacciones/";
+        //var url = "https://macromautopartes.com/images/refacciones/";
         var url = "images/refacciones/";
         return url + id + ".webp";
     }
@@ -267,7 +271,7 @@ function ComprasCtrl($scope, $http, $sce) {
                 } else if (obj.Costumer.metodoPago === "Tarjeta") {
                     obj.seturl(res.data.data[0]);
                 }
-                /*  */
+
             } else {
                 toastr.error("ERROR");
             }

@@ -3,8 +3,8 @@
 	<header class="header">
 		<section class="header__contenido" ng-repeat="cat in catalogos.Escritorio">
 		<picture class="header__picture">
-						<source srcset="https://macromautopartes.com/images/Banners/CATALOOG.webp" type="image/webp" class="header__picture--img">
-						<img loading="lazy" src="https://macromautopartes.com/images/Banners/{{banner.imagen}}" alt="banner">
+						<!-- <source srcset="https://macromautopartes.com/images/Banners/{{cat.imagen}}" type="image/webp" class="header__picture--img"> -->
+						<img loading="lazy" ng-src="https://macromautopartes.com/images/Banners/{{cat.imagen}}" alt="banner">
 				</picture>
 		</section>
 	</header>

@@ -114,7 +114,7 @@ function homeCtrl($scope, $http) {
     }
 
     obj.getImagen = (e) => {
-        // return "https://macromautopartes.com/images/Categorias/" + e._id + ".png";
+        //return "https://macromautopartes.com/images/Categorias/" + e._id + ".png";
         return "images/Categorias/" + e._id + ".png";
     }
 

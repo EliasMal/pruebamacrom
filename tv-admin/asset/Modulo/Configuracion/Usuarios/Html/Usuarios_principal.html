@@ -49,21 +49,23 @@
                             <div class="col-lg-12">
                                 <table class="table table-bordered">
                                     <thead>
-                                        <th width="5%">#</th>
-                                        <th width="10">USR</th>
-                                        <th width="55%">Usuario</th>
-                                        <th width="10%">Privilegio</th>
-                                        <th width="10%">Estatus</th>
-                                        <th width="10%">Acciones</th>
+                                        <th class="text-center" width="5%">#</th>
+                                        <th class="text-center" width="10">USR</th>
+                                        <th class="text-center" width="30%">Usuario</th>
+                                        <th class="text-center" width="20%">Ultimo Acceso</th>
+                                        <th class="text-center" width="10%">Privilegio</th>
+                                        <th class="text-center" width="10%">Estatus</th>
+                                        <th class="text-center" width="10%">Acciones</th>
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="user in usuarios">
-                                            <td>{{$index +1}}</td>
-                                            <td>{{user.Username}}</td>
-                                            <td>{{user.Nombre}} {{user.ApPaterno}} {{user.ApMaterno}}</td>
-                                            <td>{{user.Tipo_usuario}}</td>
+                                            <td class="text-center">{{$index +1}}</td>
+                                            <td class="text-center">{{user.Username}}</td>
+                                            <td class="text-center">{{user.Nombre}} {{user.ApPaterno}} {{user.ApMaterno}}</td>
+                                            <td class="text-center">{{user.ultimoAcceso}}</td>
+                                            <td class="text-center">{{user.Tipo_usuario}}</td>
                                             <td class="text-center"><span class="badge {{user.Estatus == 1? 'badge-success':'badge-danger'}}">{{user.Estatus == 1? "Activo":"Baja"}}</span>{{}}</td>
-                                            <td>
+                                            <td class="text-center">
                                                 <div class="btn-group" role="group">
                                                     <button id="btnGroupDrop1" type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         

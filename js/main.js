@@ -328,7 +328,3 @@ if (window.location.href.includes("?mod=catalogo")) {
 if (window.location.href.includes("?mod=Blog")) {
     document.querySelector("#sidebar9").classList.add("sidebar__active");
 }
-
-if(window.location.href.includes("?mod=login") || window.location.href.includes("?mod=register")){
-    console.log("entro");
-}

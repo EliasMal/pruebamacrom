@@ -66,9 +66,9 @@ class login{
             $_SESSION["rol"] = $user["Tipo_usuario"];
             $_SESSION["usr"] = $user["username"];
             $_SESSION["_id"] = $user["_id"];
-            // $sql = "UPDATE Usuarios SET ultimoAcceso = '{$_SESSION["ultimoAcceso"]}' where _idUsuarios = '{$_SESSION["_id"]}' and Username = '{$_SESSION["usr"]}'";
-            // return $this->conn->query($sql);
-            return true;
+            $sql = "UPDATE Usuarios SET ultimoAcceso = '{$_SESSION["ultimoAcceso"]}' where _id = '{$_SESSION["_id"]}' and Username = '{$_SESSION["usr"]}'";
+            return $this->conn->query($sql);
+            //return true;
         }else{
             return false;
         }

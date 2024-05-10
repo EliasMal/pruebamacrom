@@ -73,6 +73,7 @@ class ProcesoCompra {
                     $id = $this->setPedido();
                     if($this->setPedidosDetalles($id)){
                         unset($_SESSION["CarritoPrueba"]);
+                        unset($_SESSION["padlock"]);
                         $this->deleteCarrito();
                         $this->jsonData["Bandera"] = 1;
                         $this->jsonData["mensaje"] = "Tu pedido se a generado satisfactoriamente";
@@ -80,15 +81,15 @@ class ProcesoCompra {
                         if($this->formulario->Costumer->descuento > 0){
                             $this->setcuponacre(); 
                         }  
-                    //Envio de registro satisfactorio al Correo del usuario.
-                    $destinatario ="web.tsuruvolks@gmail.com, webmaster@macromautopartes.com";
-                    $asunto='Compra en Macromautopartes';
-                    $mensaje= "Nueva compra registrada en la pagina Macromautopartes, revisar el pedido para su envio. (Deposito)";
-                    $email = "webmaster@macromautopartes.com";
-                    $header ="Enviado desde Macromautopartes";
-                    $mensajeCompleto = $mensaje."\nAtentamente: Macromautopartes";
-                    mail($destinatario, $asunto, $mensajeCompleto, $header);
-                    //Fin Envio de registro satisfactorio al Correo del usuario.
+                        //Envio de registro satisfactorio al Correo del usuario.
+                        $destinatario ="web.tsuruvolks@gmail.com, webmaster@macromautopartes.com";
+                        $asunto='Compra en Macromautopartes';
+                        $mensaje= "Nueva compra registrada en la pagina Macromautopartes, revisar el pedido para su envio. (Deposito)";
+                        $email = "webmaster@macromautopartes.com";
+                        $header ="Enviado desde Macromautopartes";
+                        $mensajeCompleto = $mensaje."\nAtentamente: Macromautopartes";
+                        mail($destinatario, $asunto, $mensajeCompleto, $header);
+                        //Fin Envio de registro satisfactorio al Correo del usuario.
                     }else{
                         $this->jsonData["Bandera"] = 0;
                         $this->jsonData["mensaje"] = "Error al generar tu pedido por favor contactarse con la refaccionaria";
@@ -130,18 +131,20 @@ class ProcesoCompra {
                         case 'Deposito':
                         case 'Transferencia':
                             $id = $this->setPedido2($this->formulario->Costumer->profile->id, $this->formulario->Costumer->Subtotal, 
-                                                $this->formulario->Costumer->metodoPago, $this->formulario->Costumer->noPedido["folio"],
-                                                $this->formulario->Costumer->Cenvio->Costo, $this->formulario->Costumer->Cenvio->Servicio,
-                                                intval($this->formulario->Costumer->facturacion), isset($this->formulario->Costumer->dataFacturacion->data->_id)? 
-                                                $this->formulario->Costumer->dataFacturacion->data->_id:0,
-                                                $this->formulario->Costumer->dataDomicilio->data->_id,0,
-                                                $this->formulario->Costumer->descuento,
-                                                $this->formulario->Costumer->Cenvio->paqueteria,
-                                                $this->formulario->Costumer->Cenvio->enviodias);
+                            $this->formulario->Costumer->metodoPago, $this->formulario->Costumer->noPedido["folio"],
+                            $this->formulario->Costumer->Cenvio->Costo, $this->formulario->Costumer->Cenvio->Servicio,
+                            intval($this->formulario->Costumer->facturacion), isset($this->formulario->Costumer->dataFacturacion->data->_id)? 
+                            $this->formulario->Costumer->dataFacturacion->data->_id:0,
+                            $this->formulario->Costumer->dataDomicilio->data->_id,0,
+                            $this->formulario->Costumer->descuento,
+                            $this->formulario->Costumer->Cenvio->paqueteria,
+                            $this->formulario->Costumer->Cenvio->enviodias);
                             if($id){
                                 if($this->setPedidosDetalles($id)){
                                     unset($_SESSION["CarritoPrueba"]);
+                                    unset($_SESSION["padlock"]);
                                     $this->deleteCarrito();
+                                    $_SESSION["id_pedido"] = $id;
                                     $this->jsonData["Bandera"] = 1;
                                     $this->jsonData["mensaje"] = "Tu pedido se a generado satisfactoriamente";
                                     $this->jsonData["Data"] = $id;
@@ -149,15 +152,15 @@ class ProcesoCompra {
                                     if($this->formulario->Costumer->descuento > 0){
                                         $this->setcuponacre(); 
                                     }            
-                    //Envio de registro satisfactorio al Correo del usuario.
-                    $destinatario ="web.tsuruvolks@gmail.com, webmaster@macromautopartes.com";
-                    $asunto='Compra en Macromautopartes';
-                    $mensaje= "Nueva compra registrada en la pagina Macromautopartes, revisar el pedido para su envio. (Metodopago: Deposito/transferencia)";
-                    $email = "webmaster@macromautopartes.com";
-                    $header ="Enviado desde Macromautopartes";
-                    $mensajeCompleto = $mensaje."\nAtentamente: Macromautopartes";
-                    mail($destinatario, $asunto, $mensajeCompleto, $header);
-                    //Fin Envio de registro satisfactorio al Correo del usuario.
+                                    //Envio de registro satisfactorio al Correo del usuario.
+                                    $destinatario ="webmaster@macromautopartes.com";
+                                    $asunto='Compra en Macromautopartes';
+                                    $mensaje= "Nueva compra registrada en la pagina Macromautopartes, revisar el pedido para su envio. (Metodopago: Deposito/transferencia)";
+                                    $email = "webmaster@macromautopartes.com";
+                                    $header ="Enviado desde Macromautopartes";
+                                    $mensajeCompleto = $mensaje."\nAtentamente: Macromautopartes";
+                                    mail($destinatario, $asunto, $mensajeCompleto, $header);
+                                    //Fin Envio de registro satisfactorio al Correo del usuario.
                                 }else{
                                     $this->jsonData["Bandera"] = 0;
                                     $this->jsonData["Mensaje"] = "Error no se genero el pedido";
@@ -178,31 +181,24 @@ class ProcesoCompra {
                             $tempgetXml = $this->getXML();
                             if($tempgetXml["res"]){
                                 $id = $this->setPedido2($this->formulario->Costumer->profile->id, $this->formulario->Costumer->Subtotal, 
-                                                $this->formulario->Costumer->metodoPago, $this->formulario->Costumer->noPedido["folio"],
-                                                $this->formulario->Costumer->Cenvio->Costo, $this->formulario->Costumer->Cenvio->Servicio,
-                                                intval($this->formulario->Costumer->facturacion), isset($this->formulario->Costumer->dataFacturacion->data->_id)? 
-                                                $this->formulario->Costumer->dataFacturacion->data->_id:0,
-                                                $this->formulario->Costumer->dataDomicilio->data->_id,0,
-                                                $this->formulario->Costumer->descuento,
-                                                $this->formulario->Costumer->Cenvio->paqueteria,
-                                                $this->formulario->Costumer->Cenvio->enviodias);
+                                $this->formulario->Costumer->metodoPago, $this->formulario->Costumer->noPedido["folio"],
+                                $this->formulario->Costumer->Cenvio->Costo, $this->formulario->Costumer->Cenvio->Servicio,
+                                intval($this->formulario->Costumer->facturacion), isset($this->formulario->Costumer->dataFacturacion->data->_id)? 
+                                $this->formulario->Costumer->dataFacturacion->data->_id:0,
+                                $this->formulario->Costumer->dataDomicilio->data->_id,0,
+                                $this->formulario->Costumer->descuento,
+                                $this->formulario->Costumer->Cenvio->paqueteria,
+                                $this->formulario->Costumer->Cenvio->enviodias);
+
                                 if($this->setPedidosDetalles($id)){
                                     $_SESSION["id_pedido"] = $id;
+                                    unset($_SESSION["padlock"]);
                                     $this->jsonData["Bandera"] = 1;
                                     $this->jsonData["mensaje"] = "";
                                     $this->jsonData["data"] = $tempgetXml["url"];
                                     if($this->formulario->Costumer->descuento > 0){
                                         $this->setcuponacre(); 
                                     }  
-                    //Envio de registro satisfactorio al Correo del usuario.
-                    $destinatario ="web.tsuruvolks@gmail.com, webmaster@macromautopartes.com";
-                    $asunto='Compra en Macromautopartes';
-                    $mensaje= "Nueva compra registrada en la pagina Macromautopartes, revisar el pedido para su envio.(Metodopago: Tarjeta cred/deb)";
-                    $email = "webmaster@macromautopartes.com";
-                    $header ="Enviado desde Macromautopartes";
-                    $mensajeCompleto = $mensaje."\nAtentamente: Macromautopartes";
-                    mail($destinatario, $asunto, $mensajeCompleto, $header);
-                    //Fin Envio de registro satisfactorio al Correo del usuario.
                                 }else{
                                     $this->jsonData["Bandera"] = 0;
                                     $this->jsonData["Mensaje"] = "Error no se genero el pedido";
@@ -215,18 +211,18 @@ class ProcesoCompra {
                             $_SESSION["Cenvio"]["Servicio"]= "";
                             //Aqui incrementamos el folio del numero de orden el no de pedido
                             $this->setnoPedido();
-                            break;
+                        break;
                     }
                 }else{
                     $id = $this->setPedido2($this->formulario->Costumer->profile->id, $this->formulario->Costumer->Subtotal, 
-                                                $this->formulario->Costumer->metodoPago, $this->formulario->Costumer->noPedido["folio"],
-                                                $this->formulario->Costumer->Cenvio->Costo, $this->formulario->Costumer->Cenvio->Servicio,
-                                                intval($this->formulario->Costumer->facturacion), isset($this->formulario->Costumer->dataFacturacion->data->_id)? 
-                                                $this->formulario->Costumer->dataFacturacion->data->_id:0,
-                                                $this->formulario->Costumer->dataDomicilio->data->_id,1,
-                                                $this->formulario->Costumer->descuento,
-                                                $this->formulario->Costumer->Cenvio->paqueteria,
-                                                $this->formulario->Costumer->Cenvio->enviodias);
+                    $this->formulario->Costumer->metodoPago, $this->formulario->Costumer->noPedido["folio"],
+                    $this->formulario->Costumer->Cenvio->Costo, $this->formulario->Costumer->Cenvio->Servicio,
+                    intval($this->formulario->Costumer->facturacion), isset($this->formulario->Costumer->dataFacturacion->data->_id)? 
+                    $this->formulario->Costumer->dataFacturacion->data->_id:0,
+                    $this->formulario->Costumer->dataDomicilio->data->_id,1,
+                    $this->formulario->Costumer->descuento,
+                    $this->formulario->Costumer->Cenvio->paqueteria,
+                    $this->formulario->Costumer->Cenvio->enviodias);
                     if($id){
                         if($this->setPedidosDetalles($id)){
                             
@@ -250,7 +246,7 @@ class ProcesoCompra {
         print json_encode($this->jsonData);
     }
     
-     private function getOneCostumer (){
+    private function getOneCostumer (){
         $sql = "SELECT * FROM clientes where Estatus = 1 and correo='{$this->formulario->Costumer->usr}'";
         return $this->conn->fetch($this->conn->query($sql));
         
@@ -265,7 +261,7 @@ class ProcesoCompra {
     $sql = "UPDATE clientes SET Codigo_postal='{$this->formulario->Costumer->Codigo_postal}', Colonia= '{$this->formulario->Costumer->Colonia}',
         Domicilio = '{$this->formulario->Costumer->Domicilio}', ciudad = '{$this->formulario->Costumer->ciudad}', estado='{$this->formulario->Costumer->estado}'
         WHERE _id = '{$this->formulario->Costumer->_id}'";
-    return $this->conn->query($sql)? true: false;
+        return $this->conn->query($sql)? true: false;
     }
 
     private function getImporte(){
@@ -426,7 +422,7 @@ class ProcesoCompra {
         }else{
             $this->formulario->Costumer->noPedido["folio"]++;
             $sql = "Update Folios SET folio = " .  $this->formulario->Costumer->noPedido["folio"]
-                . " where _id = ".$this->formulario->Costumer->noPedido["_id"];
+            . " where _id = ".$this->formulario->Costumer->noPedido["_id"];
         }
         
         $this->conn->query($sql);

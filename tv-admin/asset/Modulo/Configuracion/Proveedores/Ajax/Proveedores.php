@@ -60,11 +60,11 @@ Class Proveedores{
         switch($this->formulario["opc"]){
             case 'new':
                 $sql = "INSERT INTO Proveedor (Proveedor, Estatus, tag_title, tag_alt, USRCreacion, USRModificacion, FechaCreacion, fechaModificacion) values 
-                ('{$this->formulario["Proveedor"]}',1,'{$this->formulario["tag_title"]}','{$this->formulario["tag_alt"]}', '{$_SESSION["usr"]}','{$_SESSION["usr"]}','{$this->fecha}','{$this->fecha}')";
+                ('{$this->formulario["Proveedor"]}',1,'{$this->formulario["tag_title"]}','{$this->formulario["tag_alt"]}', '{$_SESSION["nombre"]}','{$_SESSION["nombre"]}','{$this->fecha}','{$this->fecha}')";
             break;
             case 'edit':
                 $sql = "UPDATE Proveedor set Proveedor = '{$this->formulario["Proveedor"]}', 
-                USRModificacion='{$_SESSION["usr"]}', fechaModificacion='{$this->fecha}', 
+                USRModificacion='{$_SESSION["nombre"]}', fechaModificacion='{$this->fecha}', 
                 tag_title = '{$this->formulario["tag_title"]}', tag_alt = '{$this->formulario["tag_alt"]}' 
                 WHERE _id='{$this->formulario["_id"]}'";
             break;

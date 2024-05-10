@@ -126,19 +126,19 @@
             switch($this->formulario["opc"]){
                 case 'new':
                     $sql = "INSERT INTO Marcas(Marca, Estatus, USRCreacion, USRModificacion, FechaCreacion, FechaModificacion, Color) values "
-                        . "('{$this->formulario["Marca"]}','1','{$_SESSION["usr"]}','{$_SESSION["usr"]}','".date("Y-m-d H:i:s")."','".date("Y-m-d H:i:s")."','{$this->formulario["Color"]}')";
+                        . "('{$this->formulario["Marca"]}','1','{$_SESSION["nombre"]}','{$_SESSION["nombre"]}','".date("Y-m-d H:i:s")."','".date("Y-m-d H:i:s")."','{$this->formulario["Color"]}')";
                     break;
                 case 'edit':
-                    $sql = "UPDATE Marcas SET Marca = '{$this->formulario["Marca"]}', USRModificacion='{$_SESSION["usr"]}', FechaModificacion='".date("Y-m-d H:i:s")."', Color='{$this->formulario["Color"]}' "
+                    $sql = "UPDATE Marcas SET Marca = '{$this->formulario["Marca"]}', USRModificacion='{$_SESSION["nombre"]}', FechaModificacion='".date("Y-m-d H:i:s")."', Color='{$this->formulario["Color"]}' "
                             . "WHERE _id = ".$this->formulario["_id"];
                     
                     break;
                 case 'disabled':
-                    $sql = "UPDATE Marcas SET Estatus = 0 , USRModificacion='{$_SESSION["usr"]}', FechaModificacion='".date("Y-m-d H:i:s")."' "
+                    $sql = "UPDATE Marcas SET Estatus = 0 , USRModificacion='{$_SESSION["nombre"]}', FechaModificacion='".date("Y-m-d H:i:s")."' "
                             . "WHERE _id = ".$this->formulario["_id"]; 
                     break;
                 case 'enabled':
-                    $sql = "UPDATE Marcas SET Estatus = 1 , USRModificacion='{$_SESSION["usr"]}', FechaModificacion='".date("Y-m-d H:i:s")."' "
+                    $sql = "UPDATE Marcas SET Estatus = 1 , USRModificacion='{$_SESSION["nombre"]}', FechaModificacion='".date("Y-m-d H:i:s")."' "
                             . "WHERE _id = ".$this->formulario["_id"]; 
                     break;
             }

@@ -61,6 +61,60 @@
 
                 <li class="nav-item"><a class="nav-link active" href="#timeline" data-toggle="tab">Cupones</a></li>
                 <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Configuracion</a></li>
+                <li class="nav-item-help enlace"><a class="nav-help">Ayuda <i class="fas fa-question-circle"></i></a></li>
+                
+                <div class="talk-bubble tri-right left-top none">
+
+                  <div class="talktext">
+                    <section class="help1">
+                      <p>
+                        <b>Ingresar cupones:</b> Coloca el nombre del cupon, pulsa la tecla "Enter" o la tecla coma ",".<br>
+                        Si deseas agregar un valor diferente al 10%, coloca el nombre del cupon más un signo de igual(=) y el valor del cupon sin epacios.<br>
+                        <b>Ejemplo:</b> Cupon=50 (El nombre del cupon sera "Cupon" y su valor es del 50% de descuento.)<br>
+                        Se iran agregando los cupones en color azul.<br>
+                        <b>Ejemplo:</b>
+                      </p>
+
+                      <div style="display: flex;">
+                        <li style="background-color: rgb(8, 113, 194);padding: 5px;border-radius: 5px;font-size: 14px;color: white;font-weight: bold;list-style: none;margin:0 5px;">Cupon=50</li>
+                        <li style="background-color: rgb(8, 113, 194);padding: 5px;border-radius: 5px;font-size: 14px;color: white;font-weight: bold;list-style: none;margin:0 5px">macrupon</li>
+                      </div>
+
+                      <p>Al terminar de agregar cupones dar click en "Guardar para este usuario" o "Guardar para todos los usuarios".</p>
+                    </section>
+
+                    <section class="help2" style="display: none;">
+                      <p>
+                        <b>Eliminar Cupones:</b> Al ingresar cupones, apareceran en la parte inferior en color azul.
+                        <b>Ejemplo:</b>
+                      </p>
+
+                      <div style="display: flex;">
+                        <li style="background-color: rgb(8, 113, 194);padding: 5px;border-radius: 5px;font-size: 14px;color: white;font-weight: bold;list-style: none;margin:0 5px;">Cupon=50</li>
+                        <li style="background-color: rgb(8, 113, 194);padding: 5px;border-radius: 5px;font-size: 14px;color: white;font-weight: bold;list-style: none;margin:0 5px">macrupon</li>
+                      </div>
+
+                      <p>Para eliminar cupones que no quieras agregar, solo debes dar "Doble click" sobre el cupon que quieres eliminar.</p>
+                      <hr>
+                      <p>
+                        <b>Eliminar Cupones Activos:</b> Si el usuario tiene cupones activos, apareceran en la sección "Cupones activos".<br>
+                        <b>Ejemplo:</b>
+                      </p>
+
+                      <div style="display: flex;">
+                        <li style="background-color: rgb(0, 128, 0, 1);padding: 5px;border-radius: 5px;font-size: 14px;color: white;font-weight: bold;list-style: none;margin:0 5px;">Cupon=50</li>
+                        <li style="background-color: rgb(0, 128, 0, 1);padding: 5px;border-radius: 5px;font-size: 14px;color: white;font-weight: bold;list-style: none;margin:0 5px">macrupon</li>
+                      </div>
+                      <p>Para eliminar cupones que el usuario tenga activos, solo debes dar "Doble click" sobre el cupon que quieras eliminar, la pagina se actualizara y el cupon se habra eliminado del usuario.</p>
+                      <p>Pulsa el boton "Borrar Cupones" para borrar <b>TODOS</b> los cupones activos del usuario.</p>
+                    </section>
+
+                    <i class="fas fa-angle-double-right enlace" style="display: flex;justify-content: flex-end;font-size: 25px;"></i>
+                    <i class="fas fa-angle-double-left enlace" style="display: none;font-size: 25px;"></i>
+                  </div>
+
+                </div>
+
               </ul>
             </div>
             <div class="card-body">
@@ -81,7 +135,7 @@
                   <span><b>Cupones activos del usuario:</b></span>
                   <div class="cupones__disponibles">
                     <div class="cupones__disponibles__listado" ng-if="cliente.cupon_nombre != null" ng-repeat="cupones in cliente.miscupones">
-                      <li class="cupones__tag">{{cupones}}</li>
+                      <li class="cupones__tag enlace">{{cupones}}</li>
                     </div>
                     <li class="cupones__tag--ninguno" ng-if="cliente.cupon_nombre == null || cliente.cupon_nombre ==''">Ningun Cupon Activo</li>
                   </div>
@@ -161,24 +215,23 @@
 
                     <div class="col-sm-12 col-md-offset-2 col-md-10">
 
-
-
-
                       <span class="switch switch-sm">
                         <input type="checkbox" class="switch" id="switch-id" ng-model="data.avisoprivacidad"
                           ng-disabled="disabled">
                         <label for="switch-id">Acepto el <a href="#">Aviso de privacidad</a></label>
                       </span>
 
-
                     </div>
 
                     <div class="form-group">
+
                       <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-danger" ng-click="btnEditar()"><i
                             class="fa {{disabled? 'fa-edit':'fa-save'}}"></i> {{disabled? "Editar":"Guardar"}}</button>
                       </div>
+
                     </div>
+                    
                   </form>
                 </div>
               </div>

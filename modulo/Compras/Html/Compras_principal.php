@@ -125,8 +125,8 @@
 								</div>
 								<div class="pagos__cupon">
 									<div class="cuponcont">
-										<input type="text" class="inpcpn" placeholder="Ingresa tu cupón." id="inpCupon" autocomplete="off" disabled>
-										<button class="form-control" ng-click="cupon()" id="btncupon" disabled>Canjear</button>
+										<input type="text" class="inpcpn" placeholder="Ingresa tu cupón." id="inpCupon" autocomplete="off">
+										<button class="form-control" ng-click="cupon()" id="btncupon">Canjear</button>
 									</div>
 									<span class="cupon--alert" id="alert--cupon"></span>
 								</div>
@@ -187,26 +187,26 @@
 									<div class="metodo__pago--contenedor">
 										<div class="metodo__pago--metodos">
 											<div class="metodo__pago--metodo">
-												<button class="metodopago bo18 h-120" id="btncredito" ng-click="metarjeta()" disabled>
+												<button class="metodopago bo18 h-120" id="btncredito" ng-click="metarjeta()">
 													<label class="radio2">Tarjeta de crédito / debito</label>
-													<!-- <img src="https://macromautopartes.com/images/icons/VISA MASTERCARD.svg" alt="tarjeta credito" class ="img-fluid mx-auto d-block" width="150px" height="31px" style="opacity:0.1"> -->
-													<img src="images/icons/VISA MASTERCARD.svg" alt="tarjeta credito" class ="img-fluid mx-auto d-block" width="150px" height="31px" style="opacity:0.1">
+													<img ng-src="https://macromautopartes.com/images/icons/VISA MASTERCARD.svg" alt="tarjeta credito" class ="img-fluid mx-auto d-block" width="150px" height="31px">
+													<!-- <img ng-src="images/icons/VISA MASTERCARD.svg" alt="tarjeta credito" class ="img-fluid mx-auto d-block" width="150px" height="31px" style="opacity:0.1"> -->
 												</button>	
 											</div>
 
 											<div class="metodo__pago--metodo">
 												<button class="metodopago bo18 h-120" id="btnefectivo" ng-click="medeposito()">
 													<label class="radio2">Deposito en efectivo</label>
-													<!-- <img src="https://macromautopartes.com/images/icons/OXXO.svg" alt="deposito efectivo"  class ="img-fluid mx-auto d-block" width="150px" height="31px"> -->
-													<img src="images/icons/OXXO.svg" alt="deposito efectivo"  class ="img-fluid mx-auto d-block" width="150px" height="31px">
+													<img ng-src="https://macromautopartes.com/images/icons/OXXO.svg" alt="deposito efectivo"  class ="img-fluid mx-auto d-block" width="150px" height="31px">
+													<!-- <img ng-src="images/icons/OXXO.svg" alt="deposito efectivo"  class ="img-fluid mx-auto d-block" width="150px" height="31px"> -->
 												</button>
 											</div>
 
 											<div class="metodo__pago--metodo">
 												<button class="metodopago bo18 h-120" ng-click="metransfe()" id="btntransfe">
 													<label class="radio2">Tranferencia bancaria</label>
-													<!-- <img src="https://macromautopartes.com/images/icons/SPEI.svg" alt="transferencia bancaria" class ="img-fluid mx-auto d-block" width="150px" height="31px">	 -->
-													<img src="images/icons/SPEI.svg" alt="transferencia bancaria" class ="img-fluid mx-auto d-block" width="150px" height="31px">
+													<img ng-src="https://macromautopartes.com/images/icons/SPEI.svg" alt="transferencia bancaria" class ="img-fluid mx-auto d-block" width="150px" height="31px">	
+													<!-- <img ng-src="images/icons/SPEI.svg" alt="transferencia bancaria" class ="img-fluid mx-auto d-block" width="150px" height="31px"> -->
 												</button>
 											</div>
 										</div>

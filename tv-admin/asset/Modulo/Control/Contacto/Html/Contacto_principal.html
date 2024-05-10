@@ -95,7 +95,7 @@
                             <th>Fecha</th>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="dato in datos.Data" class="{{dato.leido==0? 'table-danger':''}}" ng-click="viewMsg(dato._id);">
+                        <tr ng-repeat="dato in datos.Data" class="{{dato.leido==0? 'table-danger':''}} enlace" ng-click="viewMsg(dato._id);">
                             <td>{{$index+1}}</td>
                             <td class="mailbox-name">{{dato.Nombre}}</td>
                             <td class="mailbox-subject">{{dato.Email}}</td>

@@ -113,7 +113,8 @@
             $row = $this->conn->fetch($this->conn->query($sql));
             $array["codigoPostal"]=(int)$row["Codigo_postal"];
             return $array;
-        }   
+        }
+           
         private function get_OneDomicilio($id){
             $sql = "SELECT * from Cdirecciones where _id = $id";
             return $this->conn->fetch($this->conn->query($sql));

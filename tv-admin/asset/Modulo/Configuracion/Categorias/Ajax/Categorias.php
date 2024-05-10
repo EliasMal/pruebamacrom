@@ -102,13 +102,13 @@
         private function setCategorias (){
             if($this->formulario["opc"]=="new"){
                 $sql = "INSERT INTO Categorias (Categoria, Status, USRCreacion,USREdicion, FechaCreacion, FechaModificacion ) values "
-                        . "('{$this->formulario["Categoria"]}','1','{$_SESSION["usr"]}','{$_SESSION["usr"]}','".date("Y-m-d H:i:s")."','".date("Y-m-d H:i:s")."')";
+                        . "('{$this->formulario["Categoria"]}','1','{$_SESSION["nombre"]}','{$_SESSION["nombre"]}','".date("Y-m-d H:i:s")."','".date("Y-m-d H:i:s")."')";
             }else if($this->formulario["opc"]=="edit"){
-                $sql = "UPDATE Categorias SET Categoria='{$this->formulario["Categoria"]}', USREdicion='{$_SESSION["usr"]}', FechaModificacion='".date("Y-m-d H:i:s")."' where _id= ".$this->formulario["_id"];
+                $sql = "UPDATE Categorias SET Categoria='{$this->formulario["Categoria"]}', USREdicion='{$_SESSION["nombre"]}', FechaModificacion='".date("Y-m-d H:i:s")."' where _id= ".$this->formulario["_id"];
             }else if($this->formulario["opc"]=="disabled"){
-                $sql = "UPDATE Categorias SET Status=0, USREdicion='{$_SESSION["usr"]}', FechaModificacion='".date("Y-m-d H:i:s")."' where _id= ".$this->formulario["_id"];
+                $sql = "UPDATE Categorias SET Status=0, USREdicion='{$_SESSION["nombre"]}', FechaModificacion='".date("Y-m-d H:i:s")."' where _id= ".$this->formulario["_id"];
             }else if($this->formulario["opc"]=="enabled"){
-                $sql = "UPDATE Categorias SET Status=1, USREdicion='{$_SESSION["usr"]}', FechaModificacion='".date("Y-m-d H:i:s")."' where _id= ".$this->formulario["_id"];
+                $sql = "UPDATE Categorias SET Status=1, USREdicion='{$_SESSION["nombre"]}', FechaModificacion='".date("Y-m-d H:i:s")."' where _id= ".$this->formulario["_id"];
             }
         return $this->conn->query($sql) or $this->jsonData["error"] = $this->conn->error;
         }

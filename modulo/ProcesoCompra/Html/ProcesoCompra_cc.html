@@ -1,38 +1,32 @@
-<section>
-    <section class="contenedor">
-        <img src="images/Banners/Compras.png" alt="Banner compras">
-        <h2 class="l-text2 t-center">
-            Acreditar compra
-        </h2>
-    </section>
-
-    <section class="contenedor-responsive">
-        <img src="images/Banners/Compras-movil.png" alt="Banner compras">
-        <h2 class="l-text2 t-center">
-            Acreditar compra
-        </h2>
-    </section>
-    <section class="p-t-66 p-b-60" ng-controller="CabeceraCtrl" ng-init="mod='{mod}'">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 p-b-30">
-                    <h4 class="m-text26 p-b-36 p-t-15"><i class="fa  fa-map-marker"></i>Formas de pago</h4>
-                    <hr />
-                    <div class="row">
-                        <div class="col-md-12 m-text26 p-b-36 p-t-15">
-                            {mensaje}
+<style>
+    .contenedor__navegacion, .header__topbar--abrir{
+        display: none;
+    }
+    </style>
+    <section ng-controller="ProcesoCompraCtrl">
+        <section class="titular__banner">
+            <img src="https://macromautopartes.com/images/Banners/Compras.png" alt="Banner compras">
+            <!-- <img src="images/Banners/Compras.png" alt="Banner compras"> Activar solo en la pagina bien -->
+            <h2 class="l-text2 t-center" style="color: var(--primario)">
+                {acreditada}
+            </h2>
+        </section>
+    
+        <section class="contenedor" ng-controller="CabeceraCtrl" ng-init="mod='{mod}'">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 Proceso__Compra">
+                        <div class="row">
+                            <div class="col-md-12 m-text26 Proceso__Compra2 center--text">
+                                {mensaje}
+                            </div>
                         </div>
-                        
+                        <div class="acreditar__contenedor--links">
+                                <button class="acreditar__boton" onclick="location.href = '?mod=Profile&opc=Mispedidos'">Ver Mis Pedidos</button>
+                        </div>
                     </div>
-                    <div class="w-size25">
-                        <!-- Button -->
-                        <button class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4" ng-click="btnHome()">
-                                Inicio
-                        </button>
-                        </div>
+                    
                 </div>
-                
             </div>
-        </div>
+        </section>
     </section>
-</section>

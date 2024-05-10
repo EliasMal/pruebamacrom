@@ -47,6 +47,10 @@
                                             <input type="text" class="form-control" name="tagalt" id="tagalt" ng-model="refaccion.tag_alt" ng-disabled="habilitado">
                                         </div>
                                         <div class="col-md-12 col-lg-12">
+                                            <label for="">Producto Creado:</label>
+                                            <input type="text" class="form-control" value="{{refaccion.userCreated}}, {{refaccion.dateCreated}}" disabled/>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12">
                                             <label for="">Ultimo en modificar:</label>
                                             <input type="text" class="form-control" value="{{refaccion.userModify}}, {{refaccion.dateModify}}" disabled/>
                                         </div>

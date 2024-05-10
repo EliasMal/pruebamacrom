@@ -6,6 +6,47 @@
 .precio {
   font-size: 20px;
 }
+.none{
+  display: none;
+}
+.block{
+  display: block;
+}
+.white_c{
+  color: #007bff;
+}
+.talk-bubble {
+  margin: 40px;
+  position: absolute;
+  width: 300px;
+  left: 300px;
+  top: 0px;
+  z-index: 1;
+  height: auto;
+  background-color: lightblue;
+}
+
+.talktext {
+  padding: 1em;
+  text-align: justify;
+  line-height: 1.5em;
+}
+
+.tri-right.left-top:after {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: -20px;
+  right: auto;
+  top: 0px;
+  bottom: auto;
+  border: 22px solid;
+  border-color: lightblue transparent transparent transparent;
+}
+.nav-item-help{
+  padding: 0.5rem;
+}
 
 .enviogratis {
   display: flex;
@@ -26,7 +67,10 @@
 .enlace {
   cursor: pointer;
 }
-
+.table-hover tbody tr:hover{
+  background-color: #de0007;
+  color: #fff;
+}
 /*Css para highchart*/
 
 .highcharts-figure,

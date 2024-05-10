@@ -197,17 +197,17 @@ session_name("loginUsuario");
                 case 'new':
                 $sql = "INSERT INTO Modelos(Modelo, Estatus, _idMarca, USRCreacion,USRModificacion, FechaCreacion, FechaModificacion) VALUES "
                         . "('{$this->formulario["Modelo"]}','1','{$this->formulario["_idMarca"]}',"
-                        ."'{$_SESSION["usr"]}','{$_SESSION["usr"]}','".date("Y-m-d H:i:s")."','".date("Y-m-d H:i:s")."')";
+                        ."'{$_SESSION["nombre"]}','{$_SESSION["nombre"]}','".date("Y-m-d H:i:s")."','".date("Y-m-d H:i:s")."')";
                         break;
             case 'edit':
-                $sql = "UPDATE Modelos SET Modelo='{$this->formulario["Modelo"]}', _idMarca='{$this->formulario["_idMarca"]}', USRModificacion='{$_SESSION["usr"]}', FechaModificacion='"
+                $sql = "UPDATE Modelos SET Modelo='{$this->formulario["Modelo"]}', _idMarca='{$this->formulario["_idMarca"]}', USRModificacion='{$_SESSION["nombre"]}', FechaModificacion='"
                        .date("Y-m-d H:i:s")."', Primer_anio_fabricacion = {$this->formulario["Primer_anio_fabricacion"]}, Ultimo_anio_fabricacion = {$this->formulario["Ultimo_anio_fabricacion"]} where _id= ".$this->formulario["_id"];
                        break;
             case 'disabled':
-                $sql = "UPDATE Modelos SET Estatus=0, USRModificacion='{$_SESSION["usr"]}', FechaModificacion='".date("Y-m-d H:i:s")."' where _id= ".$this->formulario["_id"];
+                $sql = "UPDATE Modelos SET Estatus=0, USRModificacion='{$_SESSION["nombre"]}', FechaModificacion='".date("Y-m-d H:i:s")."' where _id= ".$this->formulario["_id"];
                 break;
             case 'enabled':
-                $sql = "UPDATE Modelos SET Estatus=1, USRModificacion='{$_SESSION["usr"]}', FechaModificacion='".date("Y-m-d H:i:s")."' where _id= ".$this->formulario["_id"];
+                $sql = "UPDATE Modelos SET Estatus=1, USRModificacion='{$_SESSION["nombre"]}', FechaModificacion='".date("Y-m-d H:i:s")."' where _id= ".$this->formulario["_id"];
             break;
         }
         return $this->conn->query($sql) or $this->jsonData["error"] = $this->conn->error;
@@ -217,10 +217,10 @@ session_name("loginUsuario");
             switch ($this->formulario["opc"]){
                 case 'newanios':
                     $sql = "INSERT INTO Anios (Anio,  _idModelo, USRCreacion,USREdicion, FechaCreacion, FechaModificacion ) values "
-                        . "('{$this->formulario["Anio"]}','{$this->formulario["_idModelo"]}','{$_SESSION["usr"]}','{$_SESSION["usr"]}','".date("Y-m-d H:i:s")."','".date("Y-m-d H:i:s")."')";
+                        . "('{$this->formulario["Anio"]}','{$this->formulario["_idModelo"]}','{$_SESSION["nombre"]}','{$_SESSION["nombre"]}','".date("Y-m-d H:i:s")."','".date("Y-m-d H:i:s")."')";
                     break;
                 case 'editanio':
-                   $sql = "UPDATE Anios SET Anio = '{$this->formulario["Anio"]}', USREdicion='{$_SESSION["usr"]}', FechaModificacion='".
+                   $sql = "UPDATE Anios SET Anio = '{$this->formulario["Anio"]}', USREdicion='{$_SESSION["nombre"]}', FechaModificacion='".
                         date("Y-m-d H:i:s")."' where _id=". $this->formulario["_id"];
                     break;
                 case 'deleteanio':

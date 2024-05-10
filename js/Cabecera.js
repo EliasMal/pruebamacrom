@@ -46,7 +46,7 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
     }
 
     obj.getImagen = (id) => {
-        // var url = "https://macromautopartes.com/images/refacciones/";
+        //var url = "https://macromautopartes.com/images/refacciones/";
         var url = "images/refacciones/";
         return url + id + ".webp";
     }
