@@ -911,7 +911,7 @@ i.fa.fa-sun {
   border-radius: 0.5rem;
   width:19rem;
   margin-left: 1.5rem;
-  height: 4rem;
+  height: 3rem;
   font-family: Poppins;
   color: var(--blanco);
   font-size: 1.4rem;
@@ -1016,6 +1016,7 @@ i.fa.fa-sun {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  padding-top: 0.5rem;
 }
 
 .promocion__aviso {
@@ -2175,8 +2176,8 @@ i.fa.fa-sun {
     grid-row: 1;
     grid-column: 1;
     justify-self: flex-end;
-    top:0.5rem;
     width: 15rem;
+    margin-bottom: 0;
   }
 
   .login__text {
@@ -2553,6 +2554,8 @@ i.fa.fa-sun {
 .vinculos div {
   height: 2.5rem;
   margin-bottom: -2rem;
+  width: 20rem;
+  border-radius: 0.5rem;
 }
 
 .vinculos div img {
