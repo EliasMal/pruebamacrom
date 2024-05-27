@@ -170,6 +170,15 @@ function asideCtrl($scope,$http){
     obj.usrCON();
 }
 
+if(window.location.href.includes("?mod=RepProductos")){
+    console.log("Reportes");
+}else{
+    if(localStorage.getItem("dateNew")){
+        localStorage.removeItem("dateNew");
+        localStorage.removeItem("dateOld");
+    }
+}
+
 mensaje = function(title,tipo,txtmsg){
     new PNotify({
         title: title,

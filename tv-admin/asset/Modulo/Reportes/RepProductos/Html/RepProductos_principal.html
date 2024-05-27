@@ -24,6 +24,26 @@
                         </div>
                     </div>
                     <div class="card-body">
+
+                        <div class="contenedor__calendario" style="width: 300px; margin: auto;">    
+                            <div class="input-group" >
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                  </div>
+                                <input type="text" name="dateNew" class="form-control calendario" id="CalendardateOld" placeholder="0000-00-00"> 
+                            </div>
+                            <div class="input-group" >
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                  </div>
+                                <input type="text" name="dateOld" class="form-control calendario" id="CalendardateNew" placeholder="0000-00-00"> 
+                            </div>
+                            <button class="form-control" id="calendarioGraph" ng-click="getNewCreated()">Visualizar Grafica</button>
+                        </div>
                         <div class="row">
                             <div class="col-12">
                                 <figure class="highcharts-figure">
@@ -33,12 +53,9 @@
                             </div>
                             <div class="col-12">
                                 <div class="float-right">
-                                    1-15/200
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
-                                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
+                                        <button type="button" class="btn btn-default btn-sm" ng-click="CalRestablecer()">Restablecer</button>
                                     </div>
-                                    <!-- /.btn-group -->
                                 </div>
                             </div>
                             <div class="col-12">
@@ -47,35 +64,21 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Clave</th>
-                                                <th>Descripcion</th>
-                                                <th>Vehiculo</th>
-                                                <th>Marca</th>
-                                                <th>Usuario</th>
-                                                <th>Fecha</th>
+                                                <th width="10%">Clave</th>
+                                                <th width="35%">Producto</th>
+                                                <th width="20%">Usuario</th>
+                                                <th width="20%">Fecha</th>
                                                 <th>Acciones</th>
 
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr >
-                                                <td>1</td>
-                                                <td>1502</td>
-                                                <td>Bobina de encendido electronico vocho</td>
-                                                <td>Vocho 1998-2001</td>
-                                                <td>Voltmax</td>
-                                                <td>Saul</td>
-                                                <td>2022-08-08</td>
-                                                <td class="text-center"><button class="btn btn-danger"><i class="fa fa-eye"></i></button></td>
-                                            </tr>
-                                            <tr >
-                                                <td>1</td>
-                                                <td>1502</td>
-                                                <td>Bobina de encendido electronico vocho</td>
-                                                <td>Vocho 1998-2001</td>
-                                                <td>Voltmax</td>
-                                                <td>Saul</td>
-                                                <td>2022-08-08</td>
+                                            <tr ng-repeat="productos in reportes">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{productos.Clave}}</td>
+                                                <td>{{productos.Producto}}</td>
+                                                <td>{{productos.userCreated}}</td>
+                                                <td>{{productos.dateCreated}}</td>
                                                 <td class="text-center"><button class="btn btn-danger"><i class="fa fa-eye"></i></button></td>
                                             </tr>
                                         </tbody>

@@ -548,7 +548,7 @@ img {
 .contenedor__usuario {
   display: grid;
   grid-template-columns: repeat(1fr);
-  justify-items: end;
+  justify-items: center;
   align-items: center;
   grid-column: 3;
   grid-row: 1;
@@ -881,10 +881,10 @@ i.fa.fa-sun {
 }
 
 .header__cart--usuario {
-  right: -10rem;
+  right: -3rem;
   width: 40rem;
   top: 5rem;
-  border-radius: 0.5rem;
+  border-radius: 0.5rem 0 0.5rem 0.5rem;
 
 }
 

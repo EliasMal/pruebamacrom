@@ -5,15 +5,15 @@ tsuruVolks
 
 function repRefaccionesCtrl($scope, $http){
     const obj = $scope;
-    obj.matenimiento= {};
+    obj.mantenimiento= {};
 
     obj.btnBloqUS = ()=>{
-        obj.matenimiento.opc = "desactivarUS";
+        obj.mantenimiento.opc = "desactivarUS";
         if(confirm("Esta acción desactivara a todo los usuarios, menos root, para poder modificar el codigo de la pagina")){
             $http({
                 method: 'POST',
                 url: url,
-                data: { matenimiento: obj.matenimiento }
+                data: { mantenimiento: obj.mantenimiento }
     
             }).then(function successCallback(res){
                     if(res.data.Bandera == 1){
@@ -32,12 +32,12 @@ function repRefaccionesCtrl($scope, $http){
     }
 
     obj.btnActUS = ()=>{
-        obj.matenimiento.opc = "activarUS";
+        obj.mantenimiento.opc = "activarUS";
         if(confirm("Esta acción activara a todo los usuarios, para trabajar de manera normal")){
             $http({
                 method: 'POST',
                 url: url,
-                data: { matenimiento: obj.matenimiento }
+                data: { mantenimiento: obj.mantenimiento }
     
             }).then(function successCallback(res){
                     if(res.data.Bandera == 1){

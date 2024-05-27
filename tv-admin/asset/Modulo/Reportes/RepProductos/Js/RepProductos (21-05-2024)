@@ -1,0 +1,809 @@
+const url = "./Modulo/Mantenimiento/repRefacciones/Ajax/repRefacciones.php";
+
+tsuruVolks
+    .controller('RepProductosCtrl', ["$scope", "$http", RepProductosCtrl]);
+
+function RepProductosCtrl($scope, $http) {
+    const obj = $scope;
+    obj.reportes = {};
+    obj.mantenimiento = {};
+    obj.daysCount = {};
+    obj.Semana1 = {}; obj.Semana2 = {}; obj.Semana3 = {}; obj.Semana4 = {}; obj.Semana5 = {};
+    const d = new Date();
+    const dia = d.getDate();
+    const mes = d.getMonth() + 1;
+    if (localStorage.getItem("dateNew")) {
+        obj.mantenimiento.dateNew = localStorage.getItem("dateNew");
+        let modDate = new Date(localStorage.getItem("dateOld"));
+        obj.mantenimiento.dateOld = modDate.getFullYear() + '/' + (modDate.getMonth() + 1) + '/' + (modDate.getDate() + 1);
+    } else {
+        obj.mantenimiento.dateNew = d.getFullYear() + '/' + mes + '/' + dia;
+        obj.mantenimiento.dateOld = d.getFullYear() + '/' + (mes - 1) + '/' + (dia + 1);
+    }
+
+    obj.CalRestablecer = () => {
+        if (localStorage.getItem("dateNew")) {
+            localStorage.removeItem("dateNew");
+            localStorage.removeItem("dateOld");
+            location.reload();
+        }
+    }
+
+    obj.getNewCreated = () => {
+        if (document.querySelector("#CalendardateNew").value != "" && document.querySelector("#CalendardateOld").value != "") {
+            localStorage.setItem("dateNew", document.querySelector("#CalendardateNew").value);
+            localStorage.setItem("dateOld", document.querySelector("#CalendardateOld").value);
+            location.reload();
+        }
+        obj.mantenimiento.opc = "newCreated";
+        $http({
+            method: 'POST',
+            url: url,
+            data: { mantenimiento: obj.mantenimiento }
+        }).then(function successCallback(res) {
+            if (res.data.Bandera == 1) {
+                obj.reportes = res.data.data;
+                toastr.success(res.data.Mensaje);
+                var dold = new Date(obj.mantenimiento.dateOld);
+                let doldDM = new Date(dold.getFullYear(), (dold.getMonth() + 1), 0).getDate();
+                let smn1, smn1F, smn2, smn2F, smn3, smn3F, smn4, smn4F, smn5, smn5F;
+                let semanas  = {smn1:"",smn2:"",smn3:"",smn4:"",smn5:""};
+                let doldMES = dold.getMonth() + 1;
+
+                switch (dold.getDay()) {
+                    case 0:
+                        let count = 0;
+                        let s=0;
+                        let d=0;
+                        for(var property in semanas){
+                            semanas[property] = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate());
+                            dold.setDate(dold.getDate() + 7);
+                            
+                        }
+                        smn1 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate());
+                        smn1F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 6);
+
+                        smn2 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 7);
+                        smn2F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 13);
+
+                        smn3 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 14);
+                        smn3F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 20);
+
+                        smn4 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 21);
+                        smn4F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 27);
+
+                        smn5 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 28);
+                        smn5F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 34);
+
+                        break;
+                    case 1:
+                        smn1 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() - 1);
+                        smn1F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 5);
+
+                        smn2 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 6);
+                        smn2F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 12);
+
+                        smn3 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 13);
+                        smn3F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 19);
+
+                        smn4 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 20);
+                        smn4F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 26);
+
+                        smn5 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 27);
+                        smn5F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 33);
+
+                        break;
+                    case 2:
+                        smn1 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() - 2);
+                        smn1F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 4);
+
+                        smn2 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 5);
+                        smn2F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 11);
+
+                        smn3 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 12);
+                        smn3F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 18);
+
+                        smn4 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 19);
+                        smn4F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 25);
+
+                        smn5 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 26);
+                        smn5F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 32);
+
+                        break;
+                    case 3:
+                        smn1 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() - 3);
+                        smn1F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 3);
+
+                        smn2 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 4);
+                        smn2F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 10);
+
+                        smn3 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 11);
+                        smn3F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 17);
+
+                        smn4 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 18);
+                        smn4F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 24);
+
+                        smn5 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 25);
+                        smn5F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 31);
+
+                        break;
+                    case 4:
+                        smn1 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() - 4);
+                        smn1F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 2);
+
+                        smn2 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 3);
+                        smn2F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 9);
+
+                        smn3 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 10);
+                        smn3F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 16);
+
+                        smn4 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 17);
+                        smn4F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 23);
+
+                        smn5 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 24);
+                        smn5F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 30);
+                        break;
+                    case 5:
+                        smn1 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() - 5);
+                        smn1F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 1);
+
+                        smn2 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 2);
+                        smn2F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate()) + 8;
+
+                        smn3 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 9);
+                        smn3F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 15);
+
+                        smn4 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 16);
+                        smn4F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 22);
+
+                        smn5 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 23);
+                        smn5F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 29);
+
+                        break;
+                    case 6:
+                        smn1 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() - 6);
+                        smn1F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate());
+
+                        smn2 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 1);
+                        smn2F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 7);
+
+                        smn3 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 8);
+                        smn3F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 14);
+
+                        smn4 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 15);
+                        smn4F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 21);
+
+                        smn5 = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 2);
+                        smn5F = dold.getFullYear() + '/' + doldMES + '/' + (dold.getDate() + 28);
+
+                        break;
+                }
+
+                if (smn1.split("/")[2] > doldDM) {
+                    smn1 = dold.getFullYear() + '/' + (dold.getMonth() + 2) + '/' + (smn1.split("/")[2] - doldDM);
+                } if (smn2.split("/")[2] > doldDM) {
+                    smn2 = dold.getFullYear() + '/' + (dold.getMonth() + 2) + '/' + (smn2.split("/")[2] - doldDM);
+                } if (smn3.split("/")[2] > doldDM) {
+                    smn3 = dold.getFullYear() + '/' + (dold.getMonth() + 2) + '/' + (smn3.split("/")[2] - doldDM);
+                } if (smn4.split("/")[2] > doldDM) {
+                    smn4 = dold.getFullYear() + '/' + (dold.getMonth() + 2) + '/' + (smn4.split("/")[2] - doldDM);
+                } if (smn5.split("/")[2] > doldDM) {
+                    smn5 = dold.getFullYear() + '/' + (dold.getMonth() + 2) + '/' + (smn5.split("/")[2] - doldDM);
+                }
+                if (smn1F.split("/")[2] > doldDM) {
+                    smn1F = dold.getFullYear() + '/' + (dold.getMonth() + 2) + '/' + (smn1F.split("/")[2] - doldDM);
+                } if (smn2F.split("/")[2] > doldDM) {
+                    smn2F = dold.getFullYear() + '/' + (dold.getMonth() + 2) + '/' + (smn2F.split("/")[2] - doldDM);
+                } if (smn3F.split("/")[2] > doldDM) {
+                    smn3F = dold.getFullYear() + '/' + (dold.getMonth() + 2) + '/' + (smn3F.split("/")[2] - doldDM);
+                } if (smn4F.split("/")[2] > doldDM) {
+                    smn4F = dold.getFullYear() + '/' + (dold.getMonth() + 2) + '/' + (smn4F.split("/")[2] - doldDM);
+                } if (smn5F.split("/")[2] > doldDM) {
+                    smn5F = dold.getFullYear() + '/' + (dold.getMonth() + 2) + '/' + (smn5F.split("/")[2] - doldDM);
+                }
+                console.log("Semana1: ", smn1, " hasta ", smn1F);
+                console.log("Semana2: ", smn2, " hasta ", smn2F);
+                console.log("Semana3: ", smn3, " hasta ", smn3F);
+                console.log("Semana4: ", smn4, " hasta ", smn4F);
+                console.log("Semana5: ", smn5, " hasta ", smn5F);
+
+                let SmM1 = smn1.split("/")[1]; let SmM2 = smn2.split("/")[1]; let SmM3 = smn3.split("/")[1]; let SmM4 = smn4.split("/")[1]; let SmM5 = smn5.split("/")[1];
+                let SmMF1 = smn1F.split("/")[1]; let SmMF2 = smn2F.split("/")[1]; let SmMF3 = smn3F.split("/")[1]; let SmMF4 = smn4F.split("/")[1]; let SmMF5 = smn5F.split("/")[1];
+                let SmD1 = smn1.split("/")[2]; let SmD2 = smn2.split("/")[2]; let SmD3 = smn3.split("/")[2]; let SmD4 = smn4.split("/")[2]; let SmD5 = smn5.split("/")[2];
+                let SmDF1 = smn1F.split("/")[2]; let SmDF2 = smn2F.split("/")[2]; let SmDF3 = smn3F.split("/")[2]; let SmDF4 = smn4F.split("/")[2]; let SmDF5 = smn5F.split("/")[2];
+
+                obj.Semana1.Lunes = 0; obj.Semana1.Martes = 0; obj.Semana1.Miercoles = 0; obj.Semana1.Jueves = 0; obj.Semana1.Viernes = 0; obj.Semana1.Sabado = 0;
+                obj.Semana2.Lunes = 0; obj.Semana2.Martes = 0; obj.Semana2.Miercoles = 0; obj.Semana2.Jueves = 0; obj.Semana2.Viernes = 0; obj.Semana2.Sabado = 0;
+                obj.Semana3.Lunes = 0; obj.Semana3.Martes = 0; obj.Semana3.Miercoles = 0; obj.Semana3.Jueves = 0; obj.Semana3.Viernes = 0; obj.Semana3.Sabado = 0;
+                obj.Semana4.Lunes = 0; obj.Semana4.Martes = 0; obj.Semana4.Miercoles = 0; obj.Semana4.Jueves = 0; obj.Semana4.Viernes = 0; obj.Semana4.Sabado = 0;
+                obj.Semana5.Lunes = 0; obj.Semana5.Martes = 0; obj.Semana5.Miercoles = 0; obj.Semana5.Jueves = 0; obj.Semana5.Viernes = 0; obj.Semana5.Sabado = 0;
+                obj.reportes.forEach(element => {
+                    var day = new Date(element.dateCreated);
+                    let Mday = day.getMonth() + 1;
+                    let Dday = day.getDate();
+                    switch (day.getDay()) {
+                        case 1:
+
+                            element.day = "Lunes";
+                            if (Mday == SmM1 && Dday >= SmD1 && Dday <= SmDF1) {
+                                if (obj.Semana1.Lunes >= 1) {
+                                    obj.Semana1.Lunes = obj.Semana1.Lunes + 1;
+
+                                } else {
+                                    obj.Semana1.Lunes = 1;
+                                }
+                            } else if (Mday == SmM1 && Dday >= SmD1 && Mday != SmMF1) {
+                                if (obj.Semana1.Lunes >= 1) {
+                                    obj.Semana1.Lunes = obj.Semana1.Lunes + 1;
+
+                                } else {
+                                    obj.Semana1.Lunes = 1;
+                                }
+                            }
+                            if (Mday == SmM2 && Dday >= SmD2 && Dday <= SmDF2) {
+                                if (obj.Semana2.Lunes >= 1) {
+                                    obj.Semana2.Lunes = obj.Semana2.Lunes + 1;
+
+                                } else {
+                                    obj.Semana2.Lunes = 1;
+                                }
+                            } else if (Mday == SmM2 && Dday >= SmD2 && Mday != SmMF2) {
+                                if (obj.Semana2.Lunes >= 1) {
+                                    obj.Semana2.Lunes = obj.Semana2.Lunes + 1;
+
+                                } else {
+                                    obj.Semana2.Lunes = 1;
+                                }
+                            }
+
+                            if (Mday == SmM3 && Dday >= SmD3 && Dday <= SmDF3) {
+                                if (obj.Semana3.Lunes >= 1) {
+                                    obj.Semana3.Lunes = obj.Semana3.Lunes + 1;
+
+                                } else {
+                                    obj.Semana3.Lunes = 1;
+                                }
+                            } else if (Mday == SmM3 && Dday >= SmD3 && Mday != SmMF3) {
+                                if (obj.Semana3.Lunes >= 1) {
+                                    obj.Semana3.Lunes = obj.Semana3.Lunes + 1;
+
+                                } else {
+                                    obj.Semana3.Lunes = 1;
+                                }
+                            }
+
+                            if (Mday == SmM4 && Dday >= SmD4 && Dday <= SmDF4) {
+                                if (obj.Semana4.Lunes >= 1) {
+                                    obj.Semana4.Lunes = obj.Semana4.Lunes + 1;
+
+                                } else {
+                                    obj.Semana4.Lunes = 1;
+                                }
+                            } else if (Mday == SmM4 && Dday >= SmD4 && Mday != SmMF4) {
+                                if (obj.Semana4.Lunes >= 1) {
+                                    obj.Semana4.Lunes = obj.Semana4.Lunes + 1;
+
+                                } else {
+                                    obj.Semana4.Lunes = 1;
+                                }
+                            }
+
+                            if (Mday == SmM5 && Dday >= SmD5 && Dday <= SmDF5) {
+                                if (obj.Semana5.Lunes >= 1) {
+                                    obj.Semana5.Lunes = obj.Semana5.Lunes + 1;
+
+                                } else {
+                                    obj.Semana5.Lunes = 1;
+                                }
+                            } else if (Mday == SmM5 && Dday >= SmD5 && Mday != SmMF5) {
+                                if (obj.Semana5.Lunes >= 1) {
+                                    obj.Semana5.Lunes = obj.Semana5.Lunes + 1;
+
+                                } else {
+                                    obj.Semana5.Lunes = 1;
+                                }
+                            }
+
+                            break;
+                        case 2:
+
+                            element.day = "Martes";
+                            if (Mday == SmM1 && Dday >= SmD1 && Dday <= SmDF1) {
+                                if (obj.Semana1.Martes >= 1) {
+                                    obj.Semana1.Martes = obj.Semana1.Martes + 1;
+
+                                } else {
+                                    obj.Semana1.Martes = 1;
+                                }
+                            } else if (Mday == SmM1 && Dday >= SmD1 && Mday != SmMF1) {
+                                if (obj.Semana1.Martes >= 1) {
+                                    obj.Semana1.Martes = obj.Semana1.Martes + 1;
+
+                                } else {
+                                    obj.Semana1.Martes = 1;
+                                }
+                            }
+
+                            if (Mday == SmM2 && Dday >= SmD2 && Dday <= SmDF2) {
+                                if (obj.Semana2.Martes >= 1) {
+                                    obj.Semana2.Martes = obj.Semana2.Martes + 1;
+
+                                } else {
+                                    obj.Semana2.Martes = 1;
+                                }
+                            } else if (Mday == SmM2 && Dday >= SmD2 && Mday != SmMF2) {
+                                if (obj.Semana2.Martes >= 1) {
+                                    obj.Semana2.Martes = obj.Semana2.Martes + 1;
+
+                                } else {
+                                    obj.Semana2.Martes = 1;
+                                }
+                            }
+
+                            if (Mday == SmM3 && Dday >= SmD3 && Dday <= SmDF3) {
+                                if (obj.Semana3.Martes >= 1) {
+                                    obj.Semana3.Martes = obj.Semana3.Martes + 1;
+
+                                } else {
+                                    obj.Semana3.Martes = 1;
+                                }
+                            } else if (Mday == SmM3 && Dday >= SmD3 && Mday != SmMF3) {
+                                if (obj.Semana3.Martes >= 1) {
+                                    obj.Semana3.Martes = obj.Semana3.Martes + 1;
+
+                                } else {
+                                    obj.Semana3.Martes = 1;
+                                }
+                            }
+
+                            if (Mday == SmM4 && Dday >= SmD4 && Dday <= SmDF4) {
+                                if (obj.Semana4.Martes >= 1) {
+                                    obj.Semana4.Martes = obj.Semana4.Martes + 1;
+
+                                } else {
+                                    obj.Semana4.Martes = 1;
+                                }
+                            } else if (Mday == SmM4 && Dday >= SmD4 && Mday != SmMF4) {
+                                if (obj.Semana4.Martes >= 1) {
+                                    obj.Semana4.Martes = obj.Semana4.Martes + 1;
+
+                                } else {
+                                    obj.Semana4.Martes = 1;
+                                }
+                            }
+
+                            if (Mday == SmM5 && Dday >= SmD5 && Dday <= SmDF5) {
+                                if (obj.Semana5.Martes >= 1) {
+                                    obj.Semana5.Martes = obj.Semana5.Martes + 1;
+
+                                } else {
+                                    obj.Semana5.Martes = 1;
+                                }
+                            } else if (Mday == SmM5 && Dday >= SmD5 && Mday != SmMF5) {
+                                if (obj.Semana5.Martes >= 1) {
+                                    obj.Semana5.Martes = obj.Semana5.Martes + 1;
+
+                                } else {
+                                    obj.Semana5.Martes = 1;
+                                }
+                            }
+                            break;
+                        case 3:
+                            element.day = "Miercoles";
+
+                            if (Mday == SmM1 && Dday >= SmD1 && Dday <= SmDF1) {
+                                if (obj.Semana1.Miercoles >= 1) {
+                                    obj.Semana1.Miercoles = obj.Semana1.Miercoles + 1;
+
+                                } else {
+                                    obj.Semana1.Miercoles = 1;
+                                }
+                            } else if (Mday == SmM1 && Dday >= SmD1 && Mday != SmMF1) {
+                                if (obj.Semana1.Miercoles >= 1) {
+                                    obj.Semana1.Miercoles = obj.Semana1.Miercoles + 1;
+
+                                } else {
+                                    obj.Semana1.Miercoles = 1;
+                                }
+                            }
+
+                            if (Mday == SmM2 && Dday >= SmD2 && Dday <= SmDF2) {
+                                if (obj.Semana2.Miercoles >= 1) {
+                                    obj.Semana2.Miercoles = obj.Semana2.Miercoles + 1;
+
+                                } else {
+                                    obj.Semana2.Miercoles = 1;
+                                }
+                            } else if (Mday == SmM2 && Dday >= SmD2 && Mday != SmMF2) {
+                                if (obj.Semana2.Miercoles >= 1) {
+                                    obj.Semana2.Miercoles = obj.Semana2.Miercoles + 1;
+
+                                } else {
+                                    obj.Semana2.Miercoles = 1;
+                                }
+                            }
+
+                            if (Mday == SmM3 && Dday >= SmD3 && Dday <= SmDF3) {
+                                if (obj.Semana3.Miercoles >= 1) {
+                                    obj.Semana3.Miercoles = obj.Semana3.Miercoles + 1;
+
+                                } else {
+                                    obj.Semana3.Miercoles = 1;
+                                }
+                            } else if (Mday == SmM3 && Dday >= SmD3 && Mday != SmMF3) {
+                                if (obj.Semana3.Miercoles >= 1) {
+                                    obj.Semana3.Miercoles = obj.Semana3.Miercoles + 1;
+
+                                } else {
+                                    obj.Semana3.Miercoles = 1;
+                                }
+                            }
+
+                            if (Mday == SmM4 && Dday >= SmD4 && Dday <= SmDF4) {
+                                if (obj.Semana4.Miercoles >= 1) {
+                                    obj.Semana4.Miercoles = obj.Semana4.Miercoles + 1;
+
+                                } else {
+                                    obj.Semana4.Miercoles = 1;
+                                }
+                            } else if (Mday == SmM4 && Dday >= SmD4 && Mday != SmMF4) {
+                                if (obj.Semana4.Miercoles >= 1) {
+                                    obj.Semana4.Miercoles = obj.Semana4.Miercoles + 1;
+
+                                } else {
+                                    obj.Semana4.Miercoles = 1;
+                                }
+                            }
+
+                            if (Mday == SmM5 && Dday >= SmD5 && Dday <= SmDF5) {
+                                if (obj.Semana5.Miercoles >= 1) {
+                                    obj.Semana5.Miercoles = obj.Semana5.Miercoles + 1;
+
+                                } else {
+                                    obj.Semana5.Miercoles = 1;
+                                }
+                            } else if (Mday == SmM5 && Dday >= SmD5 && Mday != SmMF5) {
+                                if (obj.Semana5.Miercoles >= 1) {
+                                    obj.Semana5.Miercoles = obj.Semana5.Miercoles + 1;
+
+                                } else {
+                                    obj.Semana5.Miercoles = 1;
+                                }
+                            }
+                            break;
+                        case 4:
+                            element.day = "Jueves";
+
+                            if (Mday == SmM1 && Dday >= SmD1 && Dday <= SmDF1) {
+                                if (obj.Semana1.Jueves >= 1) {
+                                    obj.Semana1.Jueves = obj.Semana1.Jueves + 1;
+
+                                } else {
+                                    obj.Semana1.Jueves = 1;
+                                }
+                            } else if (Mday == SmM1 && Dday >= SmD1 && Mday != SmMF1) {
+                                if (obj.Semana1.Jueves >= 1) {
+                                    obj.Semana1.Jueves = obj.Semana1.Jueves + 1;
+
+                                } else {
+                                    obj.Semana1.Jueves = 1;
+                                }
+                            }
+
+                            if (Mday == SmM2 && Dday >= SmD2 && Dday <= SmDF2) {
+                                if (obj.Semana2.Jueves >= 1) {
+                                    obj.Semana2.Jueves = obj.Semana2.Jueves + 1;
+
+                                } else {
+                                    obj.Semana2.Jueves = 1;
+                                }
+                            } else if (Mday == SmM2 && Dday >= SmD2 && Mday != SmMF2) {
+                                if (obj.Semana2.Jueves >= 1) {
+                                    obj.Semana2.Jueves = obj.Semana2.Jueves + 1;
+
+                                } else {
+                                    obj.Semana2.Jueves = 1;
+                                }
+                            }
+
+                            if (Mday == SmM3 && Dday >= SmD3 && Dday <= SmDF3) {
+                                if (obj.Semana3.Jueves >= 1) {
+                                    obj.Semana3.Jueves = obj.Semana3.Jueves + 1;
+
+                                } else {
+                                    obj.Semana3.Jueves = 1;
+                                }
+                            } else if (Mday == SmM3 && Dday >= SmD3 && Mday != SmMF3) {
+                                if (obj.Semana3.Jueves >= 1) {
+                                    obj.Semana3.Jueves = obj.Semana3.Jueves + 1;
+
+                                } else {
+                                    obj.Semana3.Jueves = 1;
+                                }
+                            }
+
+                            if (Mday == SmM4 && Dday >= SmD4 && Dday <= SmDF4) {
+                                if (obj.Semana4.Jueves >= 1) {
+                                    obj.Semana4.Jueves = obj.Semana4.Jueves + 1;
+
+                                } else {
+                                    obj.Semana4.Jueves = 1;
+                                }
+                            } else if (Mday == SmM4 && Dday >= SmD4 && Mday != SmMF4) {
+                                if (obj.Semana4.Jueves >= 1) {
+                                    obj.Semana4.Jueves = obj.Semana4.Jueves + 1;
+
+                                } else {
+                                    obj.Semana4.Jueves = 1;
+                                }
+                            }
+
+                            if (Mday == SmM5 && Dday >= SmD5 && Dday <= SmDF5) {
+                                if (obj.Semana5.Jueves >= 1) {
+                                    obj.Semana5.Jueves = obj.Semana5.Jueves + 1;
+
+                                } else {
+                                    obj.Semana5.Jueves = 1;
+                                }
+                            } else if (Mday == SmM5 && Dday >= SmD5 && Mday != SmMF5) {
+                                if (obj.Semana5.Jueves >= 1) {
+                                    obj.Semana5.Jueves = obj.Semana5.Jueves + 1;
+
+                                } else {
+                                    obj.Semana5.Jueves = 1;
+                                }
+                            }
+
+                            break;
+
+                        case 5:
+                            element.day = "Viernes";
+
+                            if (Mday == SmM1 && Dday >= SmD1 && Dday <= SmDF1) {
+                                if (obj.Semana1.Viernes >= 1) {
+                                    obj.Semana1.Viernes = obj.Semana1.Viernes + 1;
+
+                                } else {
+                                    obj.Semana1.Viernes = 1;
+                                }
+                            } else if (Mday == SmM1 && Dday >= SmD1 && Mday != SmMF1) {
+                                if (obj.Semana1.Viernes >= 1) {
+                                    obj.Semana1.Viernes = obj.Semana1.Viernes + 1;
+
+                                } else {
+                                    obj.Semana1.Viernes = 1;
+                                }
+                            }
+
+                            if (Mday == SmM2 && Dday >= SmD2 && Dday <= SmDF2) {
+                                if (obj.Semana2.Viernes >= 1) {
+                                    obj.Semana2.Viernes = obj.Semana2.Viernes + 1;
+
+                                } else {
+                                    obj.Semana2.Viernes = 1;
+                                }
+                            } else if (Mday == SmM2 && Dday >= SmD2 && Mday != SmMF2) {
+                                if (obj.Semana2.Viernes >= 1) {
+                                    obj.Semana2.Viernes = obj.Semana2.Viernes + 1;
+
+                                } else {
+                                    obj.Semana2.Viernes = 1;
+                                }
+                            }
+
+                            if (Mday == SmM3 && Dday >= SmD3 && Dday <= SmDF3) {
+                                if (obj.Semana3.Viernes >= 1) {
+                                    obj.Semana3.Viernes = obj.Semana3.Viernes + 1;
+
+                                } else {
+                                    obj.Semana3.Viernes = 1;
+                                }
+                            } else if (Mday == SmM3 && Dday >= SmD3 && Mday != SmMF3) {
+                                if (obj.Semana3.Viernes >= 1) {
+                                    obj.Semana3.Viernes = obj.Semana3.Viernes + 1;
+
+                                } else {
+                                    obj.Semana3.Viernes = 1;
+                                }
+                            }
+
+                            if (Mday == SmM4 && Dday >= SmD4 && Dday <= SmDF4) {
+                                if (obj.Semana4.Viernes >= 1) {
+                                    obj.Semana4.Viernes = obj.Semana4.Viernes + 1;
+
+                                } else {
+                                    obj.Semana4.Viernes = 1;
+                                }
+                            } else if (Mday == SmM4 && Dday >= SmD4 && Mday != SmMF4) {
+                                if (obj.Semana4.Viernes >= 1) {
+                                    obj.Semana4.Viernes = obj.Semana4.Viernes + 1;
+
+                                } else {
+                                    obj.Semana4.Viernes = 1;
+                                }
+                            }
+
+                            if (Mday == SmM5 && Dday >= SmD5 && Dday <= SmDF5) {
+                                if (obj.Semana5.Viernes >= 1) {
+                                    obj.Semana5.Viernes = obj.Semana5.Viernes + 1;
+
+                                } else {
+                                    obj.Semana5.Viernes = 1;
+                                }
+                            } else if (Mday == SmM5 && Dday >= SmD5 && Mday != SmMF5) {
+                                if (obj.Semana5.Viernes >= 1) {
+                                    obj.Semana5.Viernes = obj.Semana5.Viernes + 1;
+
+                                } else {
+                                    obj.Semana5.Viernes = 1;
+                                }
+                            }
+
+                            break;
+                        case 6:
+                            element.day = "Sabado";
+
+                            if (Mday == SmM1 && Dday >= SmD1 && Dday <= SmDF1) {
+                                if (obj.Semana1.Sabado >= 1) {
+                                    obj.Semana1.Sabado = obj.Semana1.Sabado + 1;
+
+                                } else {
+                                    obj.Semana1.Sabado = 1;
+                                }
+                            } else if (Mday == SmM1 && Dday >= SmD1 && Mday != SmMF1) {
+                                if (obj.Semana1.Sabado >= 1) {
+                                    obj.Semana1.Sabado = obj.Semana1.Sabado + 1;
+
+                                } else {
+                                    obj.Semana1.Sabado = 1;
+                                }
+                            }
+
+                            if (Mday == SmM2 && Dday >= SmD2 && Dday <= SmDF2) {
+                                if (obj.Semana2.Sabado >= 1) {
+                                    obj.Semana2.Sabado = obj.Semana2.Sabado + 1;
+
+                                } else {
+                                    obj.Semana2.Sabado = 1;
+                                }
+                            } else if (Mday == SmM2 && Dday >= SmD2 && Mday != SmMF2) {
+                                if (obj.Semana2.Sabado >= 1) {
+                                    obj.Semana2.Sabado = obj.Semana2.Sabado + 1;
+
+                                } else {
+                                    obj.Semana2.Sabado = 1;
+                                }
+                            }
+
+                            if (Mday == SmM3 && Dday >= SmD3 && Dday <= SmDF3) {
+                                if (obj.Semana3.Sabado >= 1) {
+                                    obj.Semana3.Sabado = obj.Semana3.Sabado + 1;
+
+                                } else {
+                                    obj.Semana3.Sabado = 1;
+                                }
+                            } else if (Mday == SmM3 && Dday >= SmD3 && Mday != SmMF3) {
+                                if (obj.Semana3.Sabado >= 1) {
+                                    obj.Semana3.Sabado = obj.Semana3.Sabado + 1;
+
+                                } else {
+                                    obj.Semana3.Sabado = 1;
+                                }
+                            }
+
+                            if (Mday == SmM4 && Dday >= SmD4 && Dday <= SmDF4) {
+                                if (obj.Semana4.Sabado >= 1) {
+                                    obj.Semana4.Sabado = obj.Semana4.Sabado + 1;
+
+                                } else {
+                                    obj.Semana4.Sabado = 1;
+                                }
+                            } else if (Mday == SmM4 && Dday >= SmD4 && Mday != SmMF4) {
+                                if (obj.Semana4.Sabado >= 1) {
+                                    obj.Semana4.Sabado = obj.Semana4.Sabado + 1;
+
+                                } else {
+                                    obj.Semana4.Sabado = 1;
+                                }
+                            }
+
+                            if (Mday == SmM5 && Dday >= SmD5 && Dday <= SmDF5) {
+                                if (obj.Semana5.Sabado >= 1) {
+                                    obj.Semana5.Sabado = obj.Semana5.Sabado + 1;
+
+                                } else {
+                                    obj.Semana5.Sabado = 1;
+                                }
+                            } else if (Mday == SmM5 && Dday >= SmD5 && Mday != SmMF5) {
+                                if (obj.Semana5.Sabado >= 1) {
+                                    obj.Semana5.Sabado = obj.Semana5.Sabado + 1;
+
+                                } else {
+                                    obj.Semana5.Sabado = 1;
+                                }
+                            }
+
+                            break;
+                    }
+                });
+                console.log("SEMANA1: ", obj.Semana1);
+                console.log("SEMANA2: ", obj.Semana2);
+                console.log("SEMANA3: ", obj.Semana3);
+                console.log("SEMANA4: ", obj.Semana4);
+                console.log("SEMANA5: ", obj.Semana5);
+
+                //console.log(JSON.stringify(obj.daysCount));
+                obj.showGrafica(obj.reportes, obj.Semana1, obj.Semana2, obj.Semana3, obj.Semana4, obj.Semana5);
+            }
+
+        }, function errorCallback(res) {
+            toastr.error("Error: no se realizo la conexion con el servidor");
+        });
+    }
+
+    obj.showGrafica = () => {
+        let mesOld = new Date(obj.mantenimiento.dateOld);
+        Highcharts.chart('grafica', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Nuevas Refacciones'
+            },
+            subtitle: {
+                text: mesOld.toLocaleString('default', { month: 'long' }).toUpperCase() + ' (' + obj.mantenimiento.dateOld + ') - ' + d.toLocaleString('default', { month: 'long' }).toUpperCase() + ' (' + obj.mantenimiento.dateNew + ')'
+            },
+            xAxis: {
+                categories: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4', 'Semana 5'],
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: obj.reportes.length + ' Piezas (pz)'
+                }
+            },
+            tooltip: {
+                valueSuffix: ' (pz)'
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'Lunes',
+                data: [obj.Semana1.Lunes, obj.Semana2.Lunes, obj.Semana3.Lunes, obj.Semana4.Lunes, obj.Semana5.Lunes]
+
+            }, {
+                name: 'Martes',
+                data: [obj.Semana1.Martes, obj.Semana2.Martes, obj.Semana3.Martes, obj.Semana4.Martes, obj.Semana5.Martes]
+
+            }, {
+                name: 'Miercoles',
+                data: [obj.Semana1.Miercoles, obj.Semana2.Miercoles, obj.Semana3.Miercoles, obj.Semana4.Miercoles, obj.Semana5.Miercoles]
+
+            }, {
+                name: 'Jueves',
+                data: [obj.Semana1.Jueves, obj.Semana2.Jueves, obj.Semana3.Jueves, obj.Semana4.Jueves, obj.Semana5.Jueves]
+
+            }, {
+                name: 'Viernes',
+                data: [obj.Semana1.Viernes, obj.Semana2.Viernes, obj.Semana3.Viernes, obj.Semana4.Viernes, obj.Semana5.Viernes]
+
+            }, {
+                name: 'Sabado',
+                data: [obj.Semana1.Sabado, obj.Semana2.Sabado, obj.Semana3.Sabado, obj.Semana4.Sabado, obj.Semana5.Sabado]
+
+            }]
+        });
+    }
+
+    angular.element(document).ready(function () {
+        obj.getNewCreated();
+        $('.calendario').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+    });
+}

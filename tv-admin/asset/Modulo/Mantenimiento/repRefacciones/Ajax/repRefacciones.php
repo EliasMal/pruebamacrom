@@ -21,7 +21,7 @@
         public function main(){
             $this->formulario = json_decode(file_get_contents('php://input'));
 
-            switch ($this->formulario->matenimiento->opc) {
+            switch ($this->formulario->mantenimiento->opc) {
                 case "activarUS":
                     $this->jsonData["Bandera"] = 1;
                     $this->jsonData["Mensaje"] = "Usuarios Desbloqueados";
@@ -32,10 +32,25 @@
                     $this->jsonData["Mensaje"] = "Usuarios Bloqueados";
                     $this->bloqUS();
                 break;
+                case "newCreated":
+                    $this->jsonData["Bandera"] = 1;
+                    $this->jsonData["data"] = $this->getNewCreated();
+                    $this->jsonData["Mensaje"] = $this->formulario->mantenimiento->dateNew;
+                break;
             }
             // $this->jsonData["Data"] = $this->setRefacciones($this->getRefacciones());
            
             print json_encode($this->jsonData);
+        }
+
+        private function getNewCreated(){
+            $array = array();
+            $sql="SELECT * From Producto where dateCreated BETWEEN '{$this->formulario->mantenimiento->dateOld} 00:00:00' and '{$this->formulario->mantenimiento->dateNew} 23:59:59' order by dateCreated desc";
+            $id = $this->conn->query($sql);
+            while($row = $this->conn->fetch($id)){
+                array_push($array, $row);
+            }
+            return $array;
         }
 
         private function getRefacciones(){
