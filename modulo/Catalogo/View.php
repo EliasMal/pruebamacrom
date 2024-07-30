@@ -18,11 +18,11 @@ function retorna_vista($vista,$data=array()){
         case 'principal':
             $html = get_template($vista);
             $html = str_replace("{categoria}", $data["categoria"], $html);
-            break;
+        break;
         case 'detalles':
             $html = get_template($vista);
             $html = str_replace("{id}", $data["id"], $html);
-            break;
+        break;
     }
     print $html;
 }

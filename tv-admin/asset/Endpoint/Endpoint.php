@@ -25,17 +25,18 @@ Class Endpoint{
     public function main (){
         if($_POST){
     
-            /* Genero un log para saber si la recepcion es correcta del Endpoint */
             $filelog = fopen("log.txt","a+") or die("Error al crear el log");
+            $originalString = $_REQUEST["strResponse"];
             fwrite($filelog, "--------------------------\n");
-            fwrite($filelog, $_REQUEST["strResponse"]);
+            fwrite($filelog, $originalString);
             fwrite($filelog, "Respuesta en claro--------\n");
-            $this->respuesta = $this->AES->desencriptar($_REQUEST["strResponse"],$this->key);
-            $this->xml = simplexml_load_string($this->respuesta);
-            fwrite($filelog, $this->respuesta);
+            $respuesta = $this->AES::desencriptar($originalString, $key);
+            $this->xml = simplexml_load_string($respuesta);
+            fwrite($filelog, $respuesta."\nDESENCRIPTADO");
+            fwrite($filelog, $this->xml."\nXML");
             fwrite($filelog, "--------------------------\n");
             fwrite($filelog, $this->xml->response);
-            //$this->xml->reference = "29"; // ese valor solo sera para el desarrollo se tiene que eliminar cuando este en produccion
+            //$this->xml->reference = "459"; // ese valor solo sera para el desarrollo se tiene que eliminar cuando este en produccion
             $id = $this->getPedidoId();
             if($this->xml->response == "approved"){
                 fwrite($filelog, "Obtengo el id del pedido-----------------\n");
@@ -69,9 +70,9 @@ Class Endpoint{
     private function setLogTerminal($id){
         $array = explode("/",$this->xml->date);
         $fecha = $this->xml->date != ""? "{$array[2]}-{$array[1]}-{$array[0]}":date("Y-m-d");
-        $sql = "INSERT INTO LogTerminal(_idPedidos, Reference, Responce, folioCpagos, auth, cd_response, time, date, nb_company, cc_type, cc_number, cc_mask)
-                value($id, '{$this->xml->reference}','{$this->xml->response}','{$this->xml->foliocpagos}','{$this->xml->auth}','{$this->xml->cd_response}',
-                '{$this->xml->time}','{$fecha}','{$this->xml->nb_company}','{$this->xml->cc_type}','{$this->xml->cc_number}','{$this->xml->cc_mask}')";
+        $sql = "INSERT INTO LogTerminal(_idPedidos, Reference, Responce, folioCpagos, auth, cd_response, fecha, nb_company, cc_type, cc_number, cc_mask)
+        value($id, '{$this->xml->reference}','{$this->xml->response}','{$this->xml->foliocpagos}','{$this->xml->auth}','{$this->xml->cd_response}',
+        '{$fecha}','{$this->xml->nb_company}','{$this->xml->cc_type}','{$this->xml->cc_number}','{$this->xml->cc_mask}')";
         return $this->conn->query($sql)? "Datos Ingresados":"Error en la insercion $sql";
     }
 

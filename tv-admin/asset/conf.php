@@ -47,6 +47,6 @@ $conf['IRefacciones'] = array("archivo"=>"Importar/IRefacciones/Controller.php",
 
 /**Menu Mantenimiento */
 $conf["repRefacciones"] = array("archivo"=>"Mantenimiento/repRefacciones/Controller.php","permisos"=>["root"]);
-
-$conf["RepProductos"] = array("archivo"=>"Reportes/RepProductos/Controller.php","permisos"=>["root","Admin"]);
+// $conf["RepProductos"] = array("archivo"=>"Reportes/RepProductos/Controller.php","permisos"=>["root","Admin"]);
+$conf["RepProductos"] = array("archivo"=>"Reportes/RepProductos/Controller.php","permisos"=>["root"]);
 

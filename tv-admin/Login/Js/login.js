@@ -53,8 +53,32 @@ function loginCtrl($scope,$http){
                 toastr.error("Error: no se realizo la conexion con el servidor");
         });
     }
-    obj.usrCON();
+
+    obj.isonline =()=>{
+        obj.data.opc= "isonline";
+        $http({
+            method: 'POST',
+                url: "../asset/Modulo/Home/Ajax/Home.php",
+                data: {home:obj.data}
+            }).then(function successCallback(res){
+                if(res.data.Bandera == 1){
+                    localStorage.clear();
+                }else{
+                    toastr.error(res.data.mensaje);
+                }
+                
+                
+            }, function errorCallback(res){
+                toastr.error("Error: no se realizo la conexion con el servidor");
+        });
+    }
     
+    angular.element(document).ready(function(){
+        obj.usrCON();
+        if(localStorage){
+            obj.isonline();
+        }
+    });
 }
 
 

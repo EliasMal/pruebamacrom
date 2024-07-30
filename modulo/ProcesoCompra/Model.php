@@ -27,26 +27,29 @@
                 case 'tarjeta':
                     $this->jsonData["Bandera"] = 1;
                     $this->DeleteCarrito();
-                    $this->getallPedidos();
+                    //$this->getallPedidos();
+                    //$this->setLogcontrol();
                     $_SESSION["padlock"] = "lock";
                 break;
             }
             print json_encode($this->jsonData);
-        }
-        
-        private function actusr(){
-            $sql = "UPDATE Pedidos set Acreditado = 1 WHERE _idPedidos =".$_SESSION["id_pedido"];
-            return $this->conn->query($sql);
         }
 
         private function getallPedidos(){
             $sql = "UPDATE Pedidos set Acreditado = 1 WHERE _idPedidos =".$_SESSION["id_pedido"];
             return $this->conn->query($sql);
         }
-    
+        
+        private function setLogcontrol(){
+            $sql = "INSERT INTO LogTerminal(_idPedidos, Reference, Responce, folioCpagos, auth, cd_response, fecha, nb_company, cc_type, cc_number, cc_mask) values "
+            ."('{$_SESSION["id_pedido"]}','{$_SESSION["datacc"]["referencia"]}','{$_SESSION["datacc"]["nbResponse"]}','{$_SESSION["datacc"]["operacion"]}','{$_SESSION["datacc"]["nuAut"]}','{$_SESSION["datacc"]["cdEmpresa"]}',"
+            ."'{$_SESSION["datacc"]["fecha"]}','{$_SESSION["datacc"]["empresa"]}','{$_SESSION["datacc"]["tpTdc"]}','{$_SESSION["datacc"]["sucursal"]}','{$_SESSION["datacc"]["nb_merchant"]}')";
+            return $this->conn->query($sql);
+        }
+
         private function DeleteCarrito(){
             //Envio de registro satisfactorio al Correo del usuario.
-            $destinatario ="web.tsuruvolks@gmail.com, webmaster@macromautopartes.com";
+            $destinatario ="webmaster@macromautopartes.com";
             $asunto='Compra en Macromautopartes';
             $mensaje= "Nueva compra registrada en la pagina Macromautopartes, revisar el pedido para su envio.(Metodopago: Tarjeta cred/deb)";
             $email = "webmaster@macromautopartes.com";
@@ -64,34 +67,19 @@
             <head>
             </head>
                 <body>
-                    <style>
-                    .contmenubus, footer, .copyseccion, #myBtn, .carritoshop, .menudesinsreg, .header2, .ft0{display: none;visibility: collapse;height:-100%;width:-100%;}
-                    .dpitm{display: flex;justify-content: space-evenly;}
-                    .pofam{font-family: Poppins;}
-                    </style>
-                        <div>
-                            <section style="padding-bottom:60px;>
-                                <div class="container1" style="width:1000px;">
-                                    <div class="row">
-                                        <div class="col-md-6 insmob" style="padding-bottom:30px;">
-                                            <form name="frmReg" id="frmReg"  novalidate>
-                                                <h4><img src="https://macromautopartes.com/images/icons/CRcabecera.png" style="width:100%;"></h4>
-                                                    <div style="color:#de0007;text-align:center;">
-                                                        <h4 class="pofam" style="font-size:25px;line-height:32px;margin-bottom:0px;">Compra realizada</h4>
-                                                        <h4 class="pofam" style="font-size:25px;margin-top:0px">exitosamente.</h4>
-                                                    </div>
-                                                    <h4 style="text-align:center;"><img src="https://macromautopartes.com/images/icons/CR-caja.png" style="height: 250px;"></h4>
-                                                    <div>
-                                                        <h4 class="pofam" style="color:#757575;text-align:center;font-size:22px;margin-bottom:0px;">¡Gracias por tu preferencia '.$nombre.'!</h4>
-                                                        <h4 class="pofam" style="color:#9e9e9e;text-align:center;font-size:20px;margin-top:0px;">Tu pedido esta siendo revisado, para salir hacia tu destino.</h4>
-                                                    </div>
-                                                <h4 class="m-text26 prueba3" style="padding-bottom:42px;"><img src="https://macromautopartes.com/images/icons/CRPie-pagina.png" style="width:100%;"></h4>
-                                            </form>
-                                        </div>
+                    <div style="width:100%;">
+                        <section>
+                            <div>
+                                <img style="width:100%;" src="https://macromautopartes.com/images/icons/CRcabecera.png">
+                                    <div style="display: grid;text-align: center;">
+                                        <h1 style="color:#de0007;font-size:30px;">¡Compra realizada exitosamente!</h4>
+                                        <h4><img style="height:250px" src="https://macromautopartes.com/images/icons/CR-caja.png"></h4>
+                                        <h3 style="color:#000;">¡Gracias por tu preferencia '.$nombre.'!<br>Tu pedido esta siendo revisado, para salir hacia tu destino.</h4>
                                     </div>
-                                </div>
-                            </section>
-                        </div>
+                                <img style="width:100%;" src="https://macromautopartes.com/images/icons/CRPie-pagina.png">
+                            </div>
+                        </section>
+                    </div>
                 </body>
             </html>';
             $email = "webmaster@macromautopartes.com";

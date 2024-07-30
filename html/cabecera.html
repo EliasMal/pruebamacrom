@@ -154,8 +154,12 @@
 									<ul class="header-cart-wrapitem">
 										<li class="header-cart-item" ng-repeat="product in Data.Carrito" ng-show="user">
 
-											<div class="header-cart-item-img" ng-click="btnEliminarRefaccion(product, true)">
-												<img ng-src="{{getImagen(product.imagenid)}}" alt="IMG">
+											<div class="header-cart-item-times" ng-click="btnEliminarRefaccion(product, true)">
+												<i class="fas fa-times cursorpnt"></i>
+											</div>
+
+											<div class="header-cart-item-img">
+												<img ng-src="{{getImagen(product.imagenid)}}" class="cursorpnt" ng-click="RefaccionDetalles(product.imagenid)" alt="IMG">
 											</div>
 
 											<div class="header-cart-item-txt">

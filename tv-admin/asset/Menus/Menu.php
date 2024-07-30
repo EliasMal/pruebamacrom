@@ -78,7 +78,7 @@ function menu(){
             $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Costos Envios";          $opcMenu[$sum]["opc"]="?mod=Cenvios";           $sum++;
             $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Proveedores";            $opcMenu[$sum]["opc"]="?mod=Proveedores";       $sum++;
             $opcMenu[$sum]["grupo"]="Respaldo";             $opcMenu[$sum]["titulo"]= "Actualizar precios";     $opcMenu[$sum]["opc"]="?mod=Actualizarpre";     $sum++;
-            $opcMenu[$sum]["grupo"]="Reportes";             $opcMenu[$sum]["titulo"]= "Refacciones capturadas"; $opcMenu[$sum]["opc"]="?mod=RepProductos";      $sum++;
+            // $opcMenu[$sum]["grupo"]="Reportes";             $opcMenu[$sum]["titulo"]= "Refacciones capturadas"; $opcMenu[$sum]["opc"]="?mod=RepProductos";      $sum++;
         break;
         case 'user':
             $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Refacciones";            $opcMenu[$sum]["opc"]="?mod=Refacciones";       $sum++;

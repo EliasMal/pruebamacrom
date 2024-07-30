@@ -89,24 +89,32 @@
                         
                     </div>
                     <div class="col-sm-4 invoice-col">
-                        <b>No. orden:</b>
-                        <h4 class="text-right">#{{Pedido.noPedido}}</h4>
-                        <br>
+                        <div style="display: flex;justify-content: space-between;">
+                            <h4><b>No. orden:</b></h4>
+                            <h4>#{{Pedido.noPedido}}</h4>
+                        </div><br>
+
                         <div>
                             <b>Forma de pago:</b>
-                        {{Pedido.FormaPago}}
+                            {{Pedido.FormaPago}}
                         </div>
+
                         <div ng-if="Pedido.FormaPago == 'Tarjeta'">
-                            <b>Tipo de Tarjeta</b>
+                            <b>Tipo de Tarjeta:</b>
                             {{Tarjeta.cc_type}}
                         </div>
+
+                        
                         <div ng-if="Pedido.FormaPago == 'Tarjeta'">
                             <b>Ultimos digitos:</b>
                             {{Tarjeta.cc_number}}
                         </div>
-                       
                         
-                        <br>
+                        <div ng-if="Pedido.FormaPago == 'Tarjeta'">
+                            <b>Folio:</b>
+                            {{Tarjeta.auth}}
+                        </div><br>
+                        
                         <b>Estatus:</b>
                         <span class="pull-right badge {{getcolorEstatus(Pedido.Acreditado)}}">{{estatus[Pedido.Acreditado]}}</span>
                         <select name="slcEstatus" id="slcEstatus" class="form-control" ng-model="Pedido.Acreditado" ng-show = "flagCancelado">

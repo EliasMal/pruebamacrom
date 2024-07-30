@@ -10,7 +10,6 @@ var url_session = "./modulo/home/Ajax/session.php";
 const urlSkydropx = "https://api.skydropx.com/v1/quotations";
 const token = "Token token=fInE1ArT8CJfaR2wkznA5hXSNCMSXs7vitsCFeM98Pct";
 
-
 var url = "./modulo/home/Ajax/home.php";
 const url_seicom = "https://volks.dyndns.info:444/service.asmx/consulta_art";
 
@@ -98,13 +97,16 @@ function homeCtrl($scope, $http) {
                 return res
             }, function errorCallback(res) {
                 toastr.error("Error: no se realizo la conexion con el servidor");
+                console.log("RES ERROR: ",res);
             });
+            console.log("RESULTADO DE XHR: ",result);
             if (result) {
                 if (result.data.Bandera == 1) {
                     obj.Data = result.data.Data;
-                    obj.eachRefacciones(obj.Data.masVendidos);
-                    obj.eachRefacciones(obj.Data.liquidacion);
+                   // obj.eachRefacciones(obj.Data.masVendidos);
+                   // obj.eachRefacciones(obj.Data.liquidacion);
                 }
+                
             }
             $scope.$apply();
         } catch (error) {

@@ -1,9 +1,20 @@
 <style>
-.contenedor__navegacion, .header__topbar--abrir{
-    display: none;
-}
+    .contenedor__navegacion, 
+    .header__topbar--abrir{
+        display: none;
+    }
+    canvas {
+        background-color: transparent;
+        height: 100vh;
+        pointer-events: none;
+        position: fixed;
+        width: 100%;
+        z-index: 3;
+    }
 </style>
-<section ng-controller="ProcesoCompraCtrl">
+<span id="button"></span>
+<canvas id="canvas"></canvas>
+<section ng-controller="ProcesoCompraCtrl" class="p-res">
     <section class="titular__banner">
         <img src="https://macromautopartes.com/images/Banners/Compras.png" alt="Banner compras">
         <!-- <img src="images/Banners/Compras.png" alt="Banner compras"> Activar solo en la pagina bien -->
@@ -18,15 +29,14 @@
                 <div class="col-md-12 Proceso__Compra">
                     <div class="row">
                         <div class="col-md-12 m-text26 Proceso__Compra2">
-                            ¡Gracias por realizar su compra!, en cuanto se acredite tu deposito se te enviara via correo tu codigo de envio de paqueteria para que pueda ser rastreado 
+                            ¡Gracias por realizar su compra!, en cuanto se acredite tu depósito se te enviara vía correo tu código de envío de paquetería para que pueda ser rastreado.
                         </div>
                     </div>
                     <div class="acreditar__contenedor--links">
-                            <button class="acreditar__boton" onclick="location.href = '?mod=Profile&opc=Mispedidos'">Ver Mis Pedidos</button>
-                            <a href="https://macromautopartes.com/Reportes/fichaDeposito/Controller.php" class="acreditar__boton">Ver Referencia de pago</a>
+                        <button class="acreditar__boton" onclick="location.href = '?mod=Profile&opc=Mispedidos'">Ver Mis Pedidos</button>
+                        <a href="https://macromautopartes.com/Reportes/fichaDeposito/Controller.php" class="acreditar__boton">Ver Referencia de pago</a>
                     </div>
                 </div>
-                
             </div>
         </div>
     </section>

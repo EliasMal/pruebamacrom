@@ -40,7 +40,7 @@ class login{
         }
         print json_encode($this->jsonData);
     }
-    
+
     private function getUser(){
         $obj = json_decode($this->formulario);
         if($obj->login->password === "@{Macrom+Default}"){
@@ -54,7 +54,7 @@ class login{
         }
         return $this->conn->fetch($this->conn->query($sql));
     }
-    
+
     private function accessUser($user = array()){
         if(count($user)>0){
             session_name("loginUsuario");
@@ -66,7 +66,7 @@ class login{
             $_SESSION["rol"] = $user["Tipo_usuario"];
             $_SESSION["usr"] = $user["username"];
             $_SESSION["_id"] = $user["_id"];
-            $sql = "UPDATE Usuarios SET ultimoAcceso = '{$_SESSION["ultimoAcceso"]}' where _id = '{$_SESSION["_id"]}' and Username = '{$_SESSION["usr"]}'";
+            $sql = "UPDATE Usuarios SET ultimoAcceso = '{$_SESSION["ultimoAcceso"]}',OnlineNow = 1 where _id = '{$_SESSION["_id"]}' and Username = '{$_SESSION["usr"]}'";
             return $this->conn->query($sql);
             //return true;
         }else{

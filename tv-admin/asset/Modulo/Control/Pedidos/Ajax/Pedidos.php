@@ -83,7 +83,7 @@ class Pedidos{
     }
 
     private function getTarjeta($idPedido){
-        $sql = "Select cc_type, cc_number from LogTerminal where _idPedidos = $idPedido";
+        $sql = "Select cc_type, cc_number, auth from LogTerminal where _idPedidos = $idPedido";
         return $this->conn->fetch($this->conn->query($sql));
     }
 

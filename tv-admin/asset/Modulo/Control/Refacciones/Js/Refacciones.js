@@ -797,6 +797,7 @@ function RefaccionesEditCtrl($scope, $http){
         obj.refaccion.color = id.Color;
     }
 
+    
     /*Inicia seccioin de la galeria */
     obj.setImagenes = (Galeria) => {
         $http({
@@ -833,7 +834,7 @@ function RefaccionesEditCtrl($scope, $http){
 
     obj.btnEliminarImagen = (_id) => {
         if(confirm("¿Estas seguro de eliminar la imagen de la galeria?")){
-            obj.setImagenes({opc:"erase", id: _id});
+            obj.setImagenes({opc:"erase", id: _id,id_refaccion: obj.refaccion._id});
         }
     }
 

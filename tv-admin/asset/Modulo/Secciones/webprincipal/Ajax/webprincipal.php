@@ -122,20 +122,11 @@ class WebPrincipal{
     }
 
     private function BorrarImagen(){
-        
-        if($this->foto["file"]["name"]!="" and $this->foto["file"]["size"]!=0){
-            $subdir ="../../../../../../"; 
-            $dir = "images/Banners/";
-            $archivo = $this->foto["file"]["name"];
-            if(!is_dir($subdir.$dir)){
-                mkdir($subdir.$dir,0755);
-            }
-            if($archivo && unlink($this->foto["file"]["tmp_name"], $subdir.$dir.$archivo)){
-                //$this->rutaimagen= $dir.$archivo;
-                return true;
-            }else{
-                echo "no se subio la imagen";
-            }
+        $sql = "SELECT imagen FROM Imagenes Where _id='{$this->formulario["_id"]}'";
+        $result = $this->conn->query($sql);
+        $imagen = $result->fetch_array()[0];
+        if(file_exists("../../../../../../images/Banners/{$imagen}")){
+            return unlink("../../../../../../images/Banners/{$imagen}");
         }else{
             return false;
         }

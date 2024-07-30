@@ -55,13 +55,13 @@
 										<p class="text-dark" ng-hide="product.RefaccionOferta == '1'">{{product.Cantidad}} x {{product.Precio |currency}}</p>
 										<p class="text-dark" ng-show="product.RefaccionOferta == '1'">{{product.Cantidad}} x {{product.Precio2 | currency}}</p>
 
-										<!--<div class="productos__datos--contador">
+										<div class="productos__datos--contador">
 											<div class="agregarmas no-overflow">
 								
 												<button class="agregarmas__botones" ng-click="btnQuitar(product)">
 													<i class="fa fa-minus" aria-hidden="true"></i>
 												</button>
-												<div class="agregarmas__contador num-product center--text">
+												<div class="agregarmas__contador--compras num-product center--text">
 													<span>{{product.Cantidad}}</span>
 												</div>
 												<button class="agregarmas__botones" ng-click="btnAgregar(product)">
@@ -69,7 +69,7 @@
 												</button>
 
 											</div>
-										</div> -->
+										</div> 
 
 									</div>
 								</div>

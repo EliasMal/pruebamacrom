@@ -106,7 +106,19 @@
                             <td width="80%" class="text-right">16% IVA:</td>
                             <td width="20%" class="text-right"><b>{{Comprobante.Totalpedido - (Comprobante.Totalpedido/1.16) | currency}}</b></td>
                         </tr>
-                        <tr>
+                        <tr ng-show="Comprobante.descuento > 0">
+                            <td width="80%" class="text-right">SubTotal:</td>
+                            <td width="20%" class="text-right"><b>{{Comprobante.Totalpedido | currency}}</b></td>
+                        </tr>
+                        <tr ng-show="Comprobante.descuento > 0">
+                            <td width="80%" class="text-right txtred">Descuento:</td>
+                            <td width="20%" class="text-right txtred"><b>{{Comprobante.descuento | currency}}</b></td>
+                        </tr>
+                        <tr ng-show="Comprobante.descuento > 0">
+                            <td width="80%" class="text-right">Total:</td>
+                            <td width="20%" class="text-right"><b>{{Comprobante.Totalpedido - Comprobante.descuento | currency}}</b></td>
+                        </tr>
+                        <tr ng-hide="Comprobante.descuento > 0">
                             <td width="80%" class="text-right">Total:</td>
                             <td width="20%" class="text-right"><b>{{Comprobante.Totalpedido | currency}}</b></td>
                         </tr>

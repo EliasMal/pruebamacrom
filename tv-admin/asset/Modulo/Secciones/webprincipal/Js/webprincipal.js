@@ -49,6 +49,7 @@ function WebCtrl($scope, $http){
                     }
                 }).then(function successCallback(res){
                     if(res.data.Bandera == 1){
+                        toastr.success('Imagen eliminada correctamente');
                         obj.getImagenes({opc:"get", Categoria: res.data.categoria, Estatus:1})
                     }else{
                         toastr.error(res.data.mensaje);
@@ -80,6 +81,7 @@ function WebCtrl($scope, $http){
                 }
             }).then(function successCallback(res){
                 if(res.data.Bandera == 1){
+                    toastr.success('Imagen subida correctamente');
                     obj.imagen = {placeholder:"Agregar una imagen",Categoria: "",Estatus: 1,opc:"set"};
                     delete(obj.imagen.name);
                     obj.getImagenes({opc:"get", Categoria: res.data.categoria, Estatus:1})

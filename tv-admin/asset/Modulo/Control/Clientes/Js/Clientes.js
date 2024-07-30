@@ -113,6 +113,7 @@ function ClientesPerfilCtrl($scope, $http) {
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
                 obj.cliente = res.data.data;
+                obj.cliente.count = res.data.count;
             }
 
             if (obj.cliente.cupon_nombre != null && obj.cliente.cupon_nombre != '') {

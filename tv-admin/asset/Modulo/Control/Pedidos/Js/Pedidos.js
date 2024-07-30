@@ -146,6 +146,11 @@ function PedidosDetallesCtrl($scope,$http){
                     obj.flagCancelado = obj.Pedido.Acreditado != 6? true:false;
                     obj.Detalles = res.data.Detalles;
                     obj.Tarjeta = res.data.Tarjeta;
+                    if(obj.Tarjeta.cc_type == "D"){
+                        obj.Tarjeta.cc_type = "Debito";
+                    }else if(obj.Tarjeta.cc_type =="C"){
+                        obj.Tarjeta.cc_type = "Credito";
+                    }
                 }else{
                     toastr.error(res.data.mensaje);
                 }

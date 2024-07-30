@@ -46,6 +46,8 @@ class Galeria{
                     $this->formulario["lastid"] = $this->formulario["opc"]=="edit"? $this->formulario["_id"]:$this->conn->last_id();
                     if(count($this->foto)!=0){
                         $this->subirImagen();
+                        $this->Setimgactividad();
+                        $this->LastMod();
                     }
                     $this->jsonData["mensaje"] = "La imagen se agrego a la galeria";
                     $this->jsonData["Bandera"] = 1;
@@ -62,6 +64,8 @@ class Galeria{
             case 'erase':
                 if($this->eraseImagen()){
                     if($this->setGaleria()){
+                        $this->LastMod();
+                        $this->Delimgactividad();
                         $this->jsonData["Bandera"] = 1;
                         $this->jsonData["mansaje"] = "La Imagen seleccionada ha sido eliminada de la galeria";
                     }else{
@@ -103,6 +107,20 @@ class Galeria{
         return $this->conn->query($sql) or $this->jsonData["error"] = $this->conn->error;
     }
 
+    private function Setimgactividad(){
+        $sql = "INSERT INTO actividad (clavepr, usuario, datosdiff, fecha_modificacion) VALUES ('{$this->formulario["id_refaccion"]}', '{$_SESSION["nombre"]}', 'Agrego nueva imagen a galeria.', '".date("Y-m-d H:i:s")."');";
+        return $this->conn->query($sql);
+    }
+
+    private function Delimgactividad(){
+        $sql = "INSERT INTO actividad (clavepr, usuario, datosdiff, fecha_modificacion) VALUES ('{$this->formulario["id_refaccion"]}', '{$_SESSION["nombre"]}', '&quot;Elimino la imagen:&quot;{$this->formulario["id"]},&quot;de la galeria&quot;', '".date("Y-m-d H:i:s")."');";
+        return $this->conn->query($sql);
+    }
+    private function LastMod(){
+        $sql = "UPDATE Producto SET userModify='{$_SESSION["nombre"]}',dateModify='".date("Y-m-d H:i:s")."' WHERE _id = {$this->formulario["id_refaccion"]}";
+        return $this->conn->query($sql);
+    }
+    
     private function subirImagen(){
         //print_r($this->foto);
         if($this->foto["file"]["name"]!="" and $this->foto["file"]["size"]!=0){

@@ -59,11 +59,11 @@
             break;
         }
         if(strpos($opc,'cc?') !==false){
-
-            if($formulario["nbResponse"]=="Aprobado"){  
+            if($formulario["nbResponse"]=="Aprobado"){
+                $_SESSION["datacc"]= $formulario;
                 unset($_SESSION["CarritoPrueba"]);
                 $data["acreditada"] = "¡Compra Acreditada!";
-                $data["mensaje"] = "Gracias por su preferencia";
+                $data["mensaje"] = "Gracias por su preferencia.";
             }else if ($formulario["nbResponse"]=="Rechazado"){
                 $data["mensaje"] = "¡{$formulario["cdResponse"]}!, {$formulario["nb_error"]}";
             }

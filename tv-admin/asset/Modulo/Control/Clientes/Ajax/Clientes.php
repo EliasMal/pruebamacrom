@@ -23,6 +23,7 @@ class Clientes {
     private $conn;
     private $jsonData = array("Bandera"=>0,"mensaje"=>"");
     private $formulario = array();
+    
     public function __construct($array) {
         $this->conn = new HelperMySql($array["server"], $array["user"], $array["pass"], $array["db"]);
     }
@@ -59,6 +60,7 @@ class Clientes {
                 $element = $this->getOneCliente();
                 $element["avisoprivacidad"] = $element["avisoprivacidad"]==0? false:true;
                 $this->jsonData["data"] = $element;
+                $this->jsonData["count"] = $this->getCount();
             break;
             case 'cuponDelete':
                 $this->jsonData["Bandera"] = 1;
@@ -129,7 +131,10 @@ class Clientes {
          where C._id = ". $this->formulario->cliente->id;
         return $this->conn->fetch($this->conn->query($sql));
     }
-
+    private function getCount(){
+       $sql = "SELECT COUNT(_idPedidos) as NPedidos from macromau_database.Pedidos where (Acreditado = 5 or Acreditado = 1) and _idCliente = ".$this->formulario->cliente->id;
+       return $this->conn->fetch($this->conn->query($sql));
+    }
     private function getIdCseguridad(){
         $sql = "select _id from Cseguridad where _id_cliente = ".$this->formulario->cliente->id;
         $row = $this->conn->fetch($this->conn->query($sql));

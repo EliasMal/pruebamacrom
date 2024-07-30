@@ -196,7 +196,7 @@
                     . "'{$this->formulario["Nuevo"]}','{$this->formulario["Oferta"]}','{$this->formulario["Color"]}',{$this->formulario["Estatus"]},{$this->formulario["Alto"]},{$this->formulario["Largo"]},"
                     . "{$this->formulario["Ancho"]},{$this->formulario["Peso"]},{$this->formulario["id_proveedor"]},'{$this->formulario["tag_title"]}','{$this->formulario["tag_alt"]}'
                     ,'{$this->formulario["Enviogratis"]}','{$this->formulario["liquidacion"]}',0,'{$_SESSION["nombre"]}','{$_SESSION["nombre"]}')";
-                    break;
+                break;
                     
                 case 'edit':
                     $this->formulario["RefaccionNueva"] = $this->formulario["RefaccionNueva"]=="true"? 1:0;
@@ -218,7 +218,7 @@
                     if($this->formulario["diferencias"] != "{}"){
                         $this->setActividad();
                     }
-                    break;
+                break;
             }
             return $this->conn->query($sql) or $this->jsonData["error"] = $this->conn->error;
         }

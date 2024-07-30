@@ -124,24 +124,31 @@ function ComprasCtrl($scope, $http, $sce) {
         }
     }
 
-    obj.btnAgregar = (p) => {
-
-        if (p.Cantidad < p.Existencias) {
-            p.Cantidad++;
+    obj.btnAgregar = (Refaccion) => {
+        if (Refaccion.Cantidad < Refaccion.Existencias) {   
+            Refaccion.Cantidad++;
             obj.Ttotal();
-            obj.actualizarSession(p, false);
+            Refaccion.upd = 1;
+            Refaccion.updCLV = Refaccion.Clave;
+            Refaccion.n = $_SESSION["CarritoPrueba"]["length"];
+            obj.actualizarSession(Refaccion, true);
         }
 
     }
 
-    obj.btnQuitar = (p) => {
-
-        p.Cantidad--;
+    obj.btnQuitar = (Refaccion) => {
+        Refaccion.Cantidad--;
         obj.Ttotal();
-        obj.actualizarSession(p);
-        if (p.Cantidad <= 1) {
-            p.Cantidad = 1;
+        Refaccion.upd = 1;
+        Refaccion.updCLV = Refaccion.Clave;
+        Refaccion.n = $_SESSION["CarritoPrueba"]["length"];
+        if (Refaccion.Cantidad < 1) {
+            obj.btnEliminarRefaccion(Refaccion);
+            Refaccion.Cantidad = 1;
+        }else{
+            obj.actualizarSession(Refaccion, true);
         }
+        
     }
 
     var btnfacomp = document.querySelector(".pagar--button");
@@ -291,7 +298,6 @@ function ComprasCtrl($scope, $http, $sce) {
             method: 'POST',
             url: url_session,
             data: { modelo: Refaccion }
-
         }).then(function successCallback(res) {
             if (opc) {
                 location.reload();
@@ -311,6 +317,7 @@ function ComprasCtrl($scope, $http, $sce) {
     }
 
     obj.btnEliminarRefaccion = (Refaccion) => {
+        console.log(Refaccion);
         Swal.fire({
             title: "¿Deseas Eliminar la Refaccion del carrito?",
             showCancelButton: true,
@@ -327,7 +334,6 @@ function ComprasCtrl($scope, $http, $sce) {
                 Refaccion.borrar = Refaccion.Clave;
                 Refaccion.n = $_SESSION["CarritoPrueba"]["length"];
                 obj.actualizarSession(Refaccion, true);
-
             }
         });
     }

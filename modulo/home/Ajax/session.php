@@ -3,7 +3,7 @@
   session_start();
 
   // Connect to the database
-  $conn = mysqli_connect('tsuruvolks.com.mx', 'macromau_admin','8nd$^&4m,Xjn','macromau_database');
+  $conn = mysqli_connect('macromautopartes.com', 'u619477378_root','jSJLK6AqN%fwUOskf5@R','u619477378_macromau');
   if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
   }
@@ -78,6 +78,30 @@
     }
 
     $sql = "DELETE FROM Carrito WHERE Clave =".$id." AND _clienteid =".$_SESSION["iduser"];
+    if (mysqli_query($conn, $sql)) {
+      echo "<h4>Data inserted successfully</h4>";
+
+    } else{
+      echo "Error inserting data: " . mysqli_error($conn);
+
+    }
+
+  }
+
+  if(isset($formulario->modelo->upd) && $formulario->modelo->upd == 1 ){
+    $id = intval($formulario->modelo->updCLV);
+    $n = intval($formulario->modelo->n);
+
+    for($i=0; $i <= $n; $i++){
+      $CL = intval($_SESSION["CarritoPrueba"][$i]["Clave"]);
+
+      if ($CL == $id){
+        $_SESSION["CarritoPrueba"][$i]["Cantidad"] = $formulario->modelo->Cantidad;
+      }
+
+    }
+
+    $sql = "UPDATE Carrito SET Cantidad =".$formulario->modelo->Cantidad." WHERE Clave =".$id." AND _clienteid =".$_SESSION["iduser"];
     if (mysqli_query($conn, $sql)) {
       echo "<h4>Data inserted successfully</h4>";
 

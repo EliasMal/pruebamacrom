@@ -10,6 +10,7 @@
         private $jsonData = array("Bandera"=>0,"Mensaje"=>"");
         private $formulario = array();
         private $archivoCSV;
+        
         public function __construct($array) {
             $this->conn = new HelperMySql($array["server"], $array["user"], $array["pass"], $array["db"]);
         }

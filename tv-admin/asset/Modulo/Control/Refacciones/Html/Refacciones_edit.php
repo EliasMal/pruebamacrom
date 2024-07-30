@@ -254,7 +254,7 @@
                                                     </form>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row" ng-if="session.rol != 'user'">
                                                 <div class="col-md-12 col-lg-12 mt-3">
                                                     <button type="button" class="btn btn-primary float-right" 
                                                     ng-disabled="frmrefaccion.$invalid" ng-click="habilitado? btnEditarRefaccion() : btnSaveRefaccion()">
@@ -275,14 +275,14 @@
                                                             
                                                             <button class="btn btn-sm btn-outline-danger pull-right"
                                                                 type="button"
-                                                                ng-click="btnEliminarImagen(gal._id)">Desactivar</button>
+                                                                ng-click="btnEliminarImagen(gal._id)" ng-if="session.rol != 'user'">Eliminar</button>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 
                                             </div>
                                             <hr>
-                                            <div class="row">
+                                            <div class="row" ng-if="session.rol != 'user'">
                                                 <div class="col-xs-12 col-sm-12 col-xl-12 col-md-12 col-lg-12">
                                                     <button name="btnNuevaCategoria" ng-click="btnNuevaCategoria()" class="btn btn-danger">Nueva Galeria</button>
                                                 </div>
@@ -291,7 +291,7 @@
                                         
                                         <div class="tab-pane fade " id="Vehiculo" role="tabpanel" aria-labelledby="Galeria-tab">
                                             <div class="col-md-12 col-lg-12 mt-2">
-                                                <button class="btn btn-outline-danger mb-2" ng-click="btnNuevoVehiculo()"><i class="fa fa-car"></i> Nuevo Vehiculo</button>
+                                                <button class="btn btn-outline-danger mb-2" ng-click="btnNuevoVehiculo()" ng-if="session.rol != 'user'"><i class="fa fa-car"></i> Nuevo Vehiculo</button>
                                                 <div class="table-responsive">
                                                     <table class="table table-striped">
                                                         <thead>
@@ -301,7 +301,7 @@
                                                                 <th width="15%" class="text-center">Desde</th>
                                                                 <th width="15%" class="text-center">Hasta</th>
                                                                 <th width="15%" class="text-center">Transmision</th>
-                                                                <th width="15%" class="text-center">Accion</th>
+                                                                <th width="15%" class="text-center" ng-if="session.rol != 'user'">Accion</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -311,17 +311,7 @@
                                                                 <td>{{RV.ainicial}}</td>
                                                                 <td class="text-center">{{RV.afinal}}</td>
                                                                 <td class="text-center">{{RV.transmision}}</td>
-                                                                <td class="text-center">
-                                                                    <div class="dropdown d-block d-sm-none">
-                                                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
-                                                                          Dropdown button
-                                                                        </button>
-                                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                          <a class="dropdown-item" href="#">Action</a>
-                                                                          <a class="dropdown-item" href="#">Another action</a>
-                                                                          <a class="dropdown-item" href="#">Something else here</a>
-                                                                        </div>
-                                                                      </div>
+                                                                <td class="text-center" ng-if="session.rol != 'user'">
                                                                     <section class="d-none d-sm-block">
                                                                         <button  class="btn btn-danger" ng-click="btnBorrarRvehiculo(RV)"> <i class="fa fa-close"></i></button>  
                                                                     </section>
@@ -425,6 +415,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
                 <div class="modal-body">
                     <div class="subir__vehiculo">
                         <form action="Modulo/Control/Refacciones/Ajax/Vehiculos.php" method="POST" >
@@ -465,6 +456,7 @@
                         </form>
                     </div>
                 </div>
+                
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 </div>

@@ -157,6 +157,7 @@ function asideCtrl($scope,$http){
                     obj.datos = res.data;
                     
                     if(obj.datos.Usuarios.Estatus == '0'){
+                        localStorage.clear();
                         location.href="../terminar.php";
                     }
                 }else{

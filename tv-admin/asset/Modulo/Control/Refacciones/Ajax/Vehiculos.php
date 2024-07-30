@@ -3,7 +3,7 @@
     session_start();
 
     // Connect to the database
-    $conn = mysqli_connect('tsuruvolks.com.mx', 'macromau_admin','8nd$^&4m,Xjn','macromau_database');
+    $conn = mysqli_connect('macromautopartes.com', 'u619477378_root','jSJLK6AqN%fwUOskf5@R','u619477378_macromau');
     if (!$conn) {
       die("Connection failed: " . mysqli_connect_error());
     }
@@ -21,6 +21,8 @@
     } else {
       echo "Error inserting data: " . mysqli_error($conn);
     }
+
     
+
     // Close the connection
     mysqli_close($conn);

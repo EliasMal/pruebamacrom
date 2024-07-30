@@ -31,7 +31,8 @@
             if(localStorage.getItem("mantenimiento") == '1'){
                 alert("Usuarios bloqueados por mantenimiento, desbloquear para que puedan iniciar sesion");
             } else{
-               location.href="../terminar.php";
+                localStorage.clear();
+                location.href="../terminar.php";
             }
         }
     </script>

@@ -1,9 +1,8 @@
 <?php
-
-    session_name("loginUsuario");
-    session_start();
     require_once "../../../Clases/dbconectar.php";
     require_once "../../../Clases/ConexionMySQL.php";
+    session_name("loginUsuario");
+    session_start();
     date_default_timezone_set('America/Mexico_City');
 
     class Home{
@@ -40,9 +39,28 @@
                     $this->jsonData["Bandera"] = 1;
                     $this->jsonData["Usuarios"] = $this->loginM();
                 break;
+                case 'isonline':
+                    $this->jsonData["Bandera"] = 1;
+                    $this->jsonData["isonline"] = $this->isonline();
+                break;
             }
 
             print json_encode($this->jsonData);
+        }
+
+        private function isonline(){
+            $sql = "SELECT OnlineNow FROM Usuarios WHERE _id = '{$_SESSION["_id"]}' and Username = '{$_SESSION["usr"]}'";
+            $result = $this->conn->query($sql);
+            $isonline = $result->fetch_array()[0];
+            if($isonline == 1){
+                $this->isonlineKill();
+                session_destroy();
+            }
+        }
+    
+        private function isonlineKill(){
+            $sql = "UPDATE Usuarios SET OnlineNow = 0 where _id = '{$_SESSION["_id"]}' and Username = '{$_SESSION["usr"]}'";
+            return $this->conn->query($sql);
         }
 
         private function loginM(){
@@ -83,7 +101,7 @@
         }
 
         private function getNumNewPedidos(){
-            $sql = "SELECT count(*) as pedidos from Pedidos where  Acreditado in (0,1)";
+            $sql = "SELECT count(*) as pedidos from Pedidos where Acreditado in (0,1)";
             $row = $this->conn->fetch($this->conn->query($sql));
             return $row["pedidos"];
         }

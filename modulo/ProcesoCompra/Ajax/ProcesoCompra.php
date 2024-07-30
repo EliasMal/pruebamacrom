@@ -30,11 +30,11 @@ class ProcesoCompra {
     private $jsonData = array("Bandera"=>0,"mensaje"=>"");
     private $formulario = array();
     private $cadenaOriginal = "";
-    //private $key = "5dcc67393750523cd165f17e1efadd21"; //semilla para pruebas
+    // private $key = "5DCC67393750523CD165F17E1EFADD21"; //semilla para pruebas
     private $key = "DA6DAC61810C99C5017DE457560134C6"; //semilla para produccion
     private $encryptedString = "";
     //Datos para desarrollo
-    //private $dataEmpresa = array("id_company"=>"SNBX", "id_branch"=>"01SNBXBRNCH", "user"=>"SNBXUSR01", "pwd"=>"SECRETO");
+    // private $dataEmpresa = array("id_company"=>"SNBX", "id_branch"=>"01SNBXBRNCH", "user"=>"SNBXUSR0123", "pwd"=>"SECRETO");
     //Datos para produccion
     private $dataEmpresa = array("id_company"=>"JGCA", "id_branch"=>"0001", "user"=>"JGCASIUS0", "pwd"=>"1S6VTAHKL");
 
@@ -56,73 +56,13 @@ class ProcesoCompra {
             case 'getC':
                 $this->jsonData["Data"] = $this->getOneCostumer();
                 $this->jsonData["Bandera"] = 1;
-                break;
+            break;
+
             case 'setC':
                 $this->jsonData["Bandera"] = $this->setOneCostumer()? 1:0;
                 $this->jsonData["mensaje"] = $this->setOneCostumer()? "Los datos del envío han sido cambiados":"Error al interntar cambiar los datos de envío";
                 $this->jsonData["Data"] = $this->formulario->Costumer;
-                break;
-            case 'buy':
-                $this->formulario->Costumer->usr = $_SESSION["usr"];
-                $this->formulario->Costumer->Importe = $this->getImporte();
-                $this->formulario->Costumer->Data = $this->getOneCostumer();
-                $this->formulario->Costumer->noPedido = $this->getnoPedido();
-                $this->formulario->Costumer->Cenvio = $_SESSION["Cenvio"]["costo"];
-                $this->formulario->Costumer->Servicio = $_SESSION["Cenvio"]["Servicio"];
-                if($this->formulario->Costumer->value==="Deposito"){
-                    $id = $this->setPedido();
-                    if($this->setPedidosDetalles($id)){
-                        unset($_SESSION["CarritoPrueba"]);
-                        unset($_SESSION["padlock"]);
-                        $this->deleteCarrito();
-                        $this->jsonData["Bandera"] = 1;
-                        $this->jsonData["mensaje"] = "Tu pedido se a generado satisfactoriamente";
-                        $this->jsonData["Data"] = $id;
-                        if($this->formulario->Costumer->descuento > 0){
-                            $this->setcuponacre(); 
-                        }  
-                        //Envio de registro satisfactorio al Correo del usuario.
-                        $destinatario ="web.tsuruvolks@gmail.com, webmaster@macromautopartes.com";
-                        $asunto='Compra en Macromautopartes';
-                        $mensaje= "Nueva compra registrada en la pagina Macromautopartes, revisar el pedido para su envio. (Deposito)";
-                        $email = "webmaster@macromautopartes.com";
-                        $header ="Enviado desde Macromautopartes";
-                        $mensajeCompleto = $mensaje."\nAtentamente: Macromautopartes";
-                        mail($destinatario, $asunto, $mensajeCompleto, $header);
-                        //Fin Envio de registro satisfactorio al Correo del usuario.
-                    }else{
-                        $this->jsonData["Bandera"] = 0;
-                        $this->jsonData["mensaje"] = "Error al generar tu pedido por favor contactarse con la refaccionaria";
-                    } 
-                }else if($this->formulario->Costumer->value==="Tarjeta"){
-                                        
-                    $this->cadenaOriginal = $this->setXML();
-                    $this->encryptedString = $this->AES->encriptar($this->cadenaOriginal, $this->key);
-                    $this->response = $this->AES->desencriptar($this->sendPost(),$this->key);
-                    $tempgetXml = $this->getXML();
-                    if($tempgetXml["res"]){
-                        $id = $this->setPedido();
-                        if($this->setPedidosDetalles($id)){
-                            $_SESSION["id_pedido"] = $id;
-                            $this->jsonData["Bandera"] = 1;
-                            $this->jsonData["mensaje"] = "";
-                            $this->jsonData["data"] = $tempgetXml["url"];
-                        }else{
-                            $this->jsonData["Bandera"] = 0;
-                            $this->jsonData["Mensaje"] = "Error no se genero el pedido";
-                        }
-                    }else{
-                        $this->jsonData["Bandera"] = 0;
-                        $this->jsonData["mensaje"]="Error no se genero la liga para el cobro por la tarjeta de credito";
-                    }
-                     
-
-                }
-                $_SESSION["Cenvio"]["costo"] = 0;
-                $_SESSION["Cenvio"]["Servicio"]= "";
-                //Aqui incrementamos el folio del numero de orden el no de pedido
-                $this->setnoPedido();
-                break;
+            break;
             case 'buy2':
                 $this->formulario->Costumer->noPedido = $this->getnoPedido();
                 $this->formulario->Costumer->Importe = ($this->formulario->Costumer->Subtotal + $this->formulario->Costumer->Cenvio->Costo) - $this->formulario->Costumer->descuento;
@@ -171,34 +111,19 @@ class ProcesoCompra {
                                     <head>
                                     </head>
                                         <body>
-                                            <style>
-                                            .contmenubus, footer, .copyseccion, #myBtn, .carritoshop, .menudesinsreg, .header2, .ft0{display: none;visibility: collapse;height:-100%;width:-100%;}
-                                            .dpitm{display: flex;justify-content: space-evenly;}
-                                            .pofam{font-family: Poppins;}
-                                            </style>
-                                                <div>
-                                                    <section style="padding-bottom:60px;>
-                                                        <div class="container1" style="width:1000px;">
-                                                            <div class="row">
-                                                                <div class="col-md-6 insmob" style="padding-bottom:30px;">
-                                                                    <form name="frmReg" id="frmReg"  novalidate>
-                                                                        <h4><img src="https://macromautopartes.com/images/icons/CRcabecera.png" style="width:100%;"></h4>
-                                                                            <div style="color:#de0007;text-align:center;">
-                                                                                <h4 class="pofam" style="font-size:25px;line-height:32px;margin-bottom:0px;">Compra realizada</h4>
-                                                                                <h4 class="pofam" style="font-size:25px;margin-top:0px">exitosamente.</h4>
-                                                                            </div>
-                                                                            <h4 style="text-align:center;"><img src="https://macromautopartes.com/images/icons/CR-caja.png" style="height: 250px;"></h4>
-                                                                            <div>
-                                                                                <h4 class="pofam" style="color:#757575;text-align:center;font-size:22px;margin-bottom:0px;">¡Gracias por tu preferencia '.$nombre.'!</h4>
-                                                                                <h4 class="pofam" style="color:#9e9e9e;text-align:center;font-size:20px;margin-top:0px;">Tu pedido esta siendo revisado, para salir hacia tu destino.</h4>
-                                                                            </div>
-                                                                        <h4 class="m-text26 prueba3" style="padding-bottom:42px;"><img src="https://macromautopartes.com/images/icons/CRPie-pagina.png" style="width:100%;"></h4>
-                                                                    </form>
-                                                                </div>
+                                            <div style="width:100%;">
+                                                <section>
+                                                    <div>
+                                                        <img style="width:100%;" src="https://macromautopartes.com/images/icons/CRcabecera.png">
+                                                            <div style="display: grid;text-align: center;">
+                                                                <h1 style="color:#de0007;font-size:30px;">¡Compra realizada exitosamente!</h4>
+                                                                <h4><img style="height:250px" src="https://macromautopartes.com/images/icons/CR-caja.png"></h4>
+                                                                <h3 style="color:#000;">¡Gracias por tu preferencia '.$nombre.'!<br>Tu pedido esta siendo revisado, para salir hacia tu destino.</h4>
                                                             </div>
-                                                        </div>
-                                                    </section>
-                                                </div>
+                                                        <img style="width:100%;" src="https://macromautopartes.com/images/icons/CRPie-pagina.png">
+                                                    </div>
+                                                </section>
+                                            </div>
                                         </body>
                                     </html>';
                                     $email = "webmaster@macromautopartes.com";
@@ -218,7 +143,8 @@ class ProcesoCompra {
                             $_SESSION["Cenvio"]["Servicio"]= "";
                             //Aqui incrementamos el folio del numero de orden el no de pedido
                             $this->setnoPedido();
-                            break;
+                        break;
+
                         case 'Tarjeta':
                             $this->cadenaOriginal = $this->setXML();
                             $this->encryptedString = $this->AES->encriptar($this->cadenaOriginal, $this->key);
@@ -358,76 +284,66 @@ class ProcesoCompra {
         // Estructura básica del XML
         //$objetoXML->openURI("../../../XML/certificado_prueba.xml");
         $objetoXML->openMemory();
-        $objetoXML->setIndent(true);
-        $objetoXML->setIndentString("\t");
-        $objetoXML->startDocument('1.0', 'utf-8','yes');
-        $objetoXML->startElement("P");
-            $objetoXML->startElement("business");
-                $objetoXML->startElement("id_company");
-                    $objetoXML->text($this->dataEmpresa["id_company"]);
-                $objetoXML->endElement(); // Final del nodo raíz, "id_company"        
-                $objetoXML->startElement("id_branch");
-                    $objetoXML->text($this->dataEmpresa["id_branch"]);
-                $objetoXML->endElement(); // Final del nodo raíz, "id_branch"        
-                $objetoXML->startElement("user");
-                    $objetoXML->text($this->dataEmpresa["user"]);
-                $objetoXML->endElement(); // Final del nodo raíz, "user"        
-                $objetoXML->startElement("pwd");
-                    $objetoXML->text($this->dataEmpresa["pwd"]);
-                $objetoXML->endElement(); // Final del nodo raíz, "id_company"        
-            $objetoXML->endElement(); // Final del nodo raíz, "business"  
-            $objetoXML->startElement("url");
-                $objetoXML->startElement("reference");
-                    $objetoXML->text($this->formulario->Costumer->noPedido["folio"]); //aqui va el numero de orden como referencia
-                $objetoXML->endElement(); // Final del nodo raíz, "reference"        
-                $objetoXML->startElement("amount");
-                    $objetoXML->text($this->formulario->Costumer->Importe); //ingresamos el pago con dos decimales
-                $objetoXML->endElement(); // Final del nodo raíz, "amount"        
-                $objetoXML->startElement("moneda");
-                    $objetoXML->text("MXN"); //se especifica el tipo de moneda sin son pesos (MXN) o dolares (USD)
-                $objetoXML->endElement(); // Final del nodo raíz, "user"        
-                $objetoXML->startElement("canal");
-                    $objetoXML->text("W"); //Este debe de ser siempre W
-                $objetoXML->endElement(); // Final del nodo raíz, "canal"        
-                $objetoXML->startElement("omitir_notif_default");
-                    $objetoXML->text("1"); //0: Envia notificacion de cobro, 1: no envia notificacion de cobro
-                $objetoXML->endElement(); // Final del nodo raíz, "omitir_notif_default"
-                $objetoXML->startElement("st_correo");
-                    $objetoXML->text("1"); //0: no se especifica el correo del cuenta habiente, 1: se especifica el correo del cuetna habiente
-                $objetoXML->endElement(); // Final del nodo raíz, "st_correo"
-                $objetoXML->startElement("mail_cliente");
-                    //$objetoXML->text($this->formulario->Costumer->Data["correo"]); //0: no se especifica el correo del cuenta habiente, 1: se especifica el correo del cuetna habiente
-                    $objetoXML->text($this->formulario->Costumer->profile->correo);
-                $objetoXML->endElement(); // Final del nodo raíz, "st_correo"
-                
-            $objetoXML->endElement(); // Final del nodo raíz, "url"    
-        $objetoXML->endElement(); // Final del nodo raíz, "P"
+            $objetoXML->setIndent(true);
+            $objetoXML->setIndentString("\t");
+            $objetoXML->startDocument('1.0', 'utf-8','yes');
+            $objetoXML->startElement("P");
+
+                $objetoXML->startElement("business");
+                    $objetoXML->startElement("id_company");
+                        $objetoXML->text($this->dataEmpresa["id_company"]);
+                    $objetoXML->endElement(); // Final del nodo raíz, "id_company"        
+                    $objetoXML->startElement("id_branch");
+                        $objetoXML->text($this->dataEmpresa["id_branch"]);
+                    $objetoXML->endElement(); // Final del nodo raíz, "id_branch"        
+                    $objetoXML->startElement("user");
+                        $objetoXML->text($this->dataEmpresa["user"]);
+                    $objetoXML->endElement(); // Final del nodo raíz, "user"        
+                    $objetoXML->startElement("pwd");
+                        $objetoXML->text($this->dataEmpresa["pwd"]);
+                    $objetoXML->endElement(); // Final del nodo raíz, "id_company"        
+                $objetoXML->endElement(); // Final del nodo raíz, "business"
+
+                $objetoXML->startElement("url");
+                    $objetoXML->startElement("reference");
+                        $objetoXML->text($this->formulario->Costumer->noPedido["folio"]); //aqui va el numero de orden como referencia
+                    $objetoXML->endElement(); // Final del nodo raíz, "reference"        
+                    $objetoXML->startElement("amount");
+                        $objetoXML->text($this->formulario->Costumer->Importe); //ingresamos el pago con dos decimales
+                    $objetoXML->endElement(); // Final del nodo raíz, "amount"        
+                    $objetoXML->startElement("moneda");
+                        $objetoXML->text("MXN"); //se especifica el tipo de moneda sin son pesos (MXN) o dolares (USD)
+                    $objetoXML->endElement(); // Final del nodo raíz, "user"        
+                    $objetoXML->startElement("canal");
+                        $objetoXML->text("W"); //Este debe de ser siempre W
+                    $objetoXML->endElement(); // Final del nodo raíz, "canal"        
+                    $objetoXML->startElement("omitir_notif_default");
+                        $objetoXML->text("1"); //0: Envia notificacion de cobro, 1: no envia notificacion de cobro
+                    $objetoXML->endElement(); // Final del nodo raíz, "omitir_notif_default"
+                    $objetoXML->startElement("st_correo");
+                        $objetoXML->text("1"); //0: no se especifica el correo del cuenta habiente, 1: se especifica el correo del cuetna habiente
+                    $objetoXML->endElement(); // Final del nodo raíz, "st_correo"
+                    $objetoXML->startElement("mail_cliente");
+                        //$objetoXML->text($this->formulario->Costumer->Data["correo"]); //0: no se especifica el correo del cuenta habiente, 1: se especifica el correo del cuetna habiente
+                        $objetoXML->text($this->formulario->Costumer->profile->correo);
+                    $objetoXML->endElement(); // Final del nodo raíz, "st_correo"
+                $objetoXML->endElement(); // Final del nodo raíz, "url"
+
+            $objetoXML->endElement(); // Final del nodo raíz, "P"
+
         $objetoXML->endDocument(); // Final del documento
         return $objetoXML->outputMemory(TRUE);
     }
 
     private function sendPost(){
-        /* $url = "https://wppsandbox.mit.com.mx/gen"; //esta es url es para pruebas
-        $Data0 = "SNDBX123"; */
+        /*$url = "https://sandboxpo.mit.com.mx/gen"; //esta es url es para pruebas
+        $Data0 = "SNDBX123";*/
         
         $url = "https://bc.mitec.com.mx/p/gen";
         $Data0 = "9265655359";
         $curl = curl_init();
         $encodedString = urlencode("<pgs><data0>$Data0</data0><data>$this->encryptedString</data></pgs>");
-        /* curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://wppsandbox.mit.com.mx/gen",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_0,
-            CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => "xml=$encodedString",
-            CURLOPT_HTTPHEADER => array(
-                "Content-Type : application/x-www-form-urlencoded"
-            )
-        )); */
+        
         curl_setopt($curl,CURLOPT_URL,$url);
         curl_setopt($curl,CURLOPT_RETURNTRANSFER,true);
         curl_setopt($curl,CURLOPT_POST,true);

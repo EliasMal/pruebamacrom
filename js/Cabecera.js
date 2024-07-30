@@ -77,13 +77,15 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
     txt.addEventListener("keydown", e => {
         if (txt.value != "" && e.keyCode === 13) {
             txt = txt.value.split(/\s+/).join("%20");
-            window.location.href = "https://macromautopartes.com/?mod=catalogo&pag=1&prod=" + txt + "&cate=T&armadora=&mdl=&[a]="
+            // window.location.href = "https://macromautopartes.com/?mod=catalogo&pag=1&prod=" + txt + "&cate=T&armadora=&mdl=&[a]="
+            window.location.href = "https://prueba.macromautopartes.com/?mod=catalogo&pag=1&prod=" + txt + "&cate=T&armadora=&mdl=&[a]=" //pagina prueba
         }
     });
     obj.general_search = () => {
         if (txt.value != "") {
             txt = txt.value.split(/\s+/).join("%20");
-            window.location.href = "https://macromautopartes.com/?mod=catalogo&pag=1&prod=" + txt + "&cate=T&armadora=&mdl=&[a]="
+            // window.location.href = "https://macromautopartes.com/?mod=catalogo&pag=1&prod=" + txt + "&cate=T&armadora=&mdl=&[a]="
+            window.location.href = "https://prueba.macromautopartes.com/?mod=catalogo&pag=1&prod=" + txt + "&cate=T&armadora=&mdl=&[a]=" //pagina prueba
         }
     }
 
@@ -143,11 +145,11 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
                     obj.Data = result.data.Data;
 
                     // console.log(obj.Data.Categorias);
-                    for (var i = 0; i <= obj.Data.Categorias.length; i++) {
-                        if (obj.Data.Categorias[i] != undefined) {
-                            obj.Menu[obj.Data.Categorias[i].Categoria] = obj.Data.Categorias[i].MenuOPC.split(",");
-                        }
-                    }
+                    // for (var i = 0; i <= obj.Data.Categorias.length; i++) {
+                    //     if (obj.Data.Categorias[i] != undefined) {
+                    //         obj.Menu[obj.Data.Categorias[i].Categoria] = obj.Data.Categorias[i].MenuOPC.split(",");
+                    //     }
+                    // }
                     // console.log(obj.Menu);
                     // console.log(obj.Menu.Accesorios);
                 }
