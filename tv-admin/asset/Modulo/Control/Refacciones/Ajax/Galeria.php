@@ -94,7 +94,7 @@ class Galeria{
     }
 
     private function setGaleria(){
-        switch($this->formulario[opc]){
+        switch($this->formulario["opc"]){
             case 'new':
                 $fecha = date("Y-m-d");
                 $sql = "INSERT INTO galeriarefacciones (tag_alt, tag_title, id_producto, USRCreacion, USRModificacion, FechaCreacion, FechaModificacion) " 

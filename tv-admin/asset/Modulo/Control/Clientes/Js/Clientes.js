@@ -122,6 +122,7 @@ function ClientesPerfilCtrl($scope, $http) {
             }
             obj.cupones();
         }, function errorCallback(res) {
+            console.log("Entra a sendData error: ", res);
             toastr.error("Error: no se realizo la conexion con el servidor");
         });
     }

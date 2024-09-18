@@ -537,7 +537,6 @@ function catalogosDetallesCtrl($scope, $http) {
         }).then(function successCallback(res) {
 
             location.reload();
-
         }, function errorCallback(res) {
             toastr.error("Error: no se realizo la conexion con el servidor");
         });

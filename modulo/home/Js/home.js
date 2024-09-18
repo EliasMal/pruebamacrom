@@ -14,7 +14,9 @@ var url = "./modulo/home/Ajax/home.php";
 const url_seicom = "https://volks.dyndns.info:444/service.asmx/consulta_art";
 
 tsuruVolks.controller('homeCtrl', homeCtrl);
-
+if ($_SESSION.iduser == null) {
+    localStorage.clear();
+}
 function homeCtrl($scope, $http) {
     var obj = $scope;
     obj.Data = {};
@@ -55,7 +57,7 @@ function homeCtrl($scope, $http) {
     obj.eachRefacciones = (array) => {
         array.forEach(e => {
             obj.getSeicom(e.Clave).then(token => {
-                e.agotado = token
+                e.agotado = token;
             })
         })
     }
@@ -88,30 +90,21 @@ function homeCtrl($scope, $http) {
     }
 
     obj.getCategorias = async () => {
-        try {
-            const result = await $http({
-                method: 'POST',
-                url: url,
-                data: { modelo: { opc: "buscar", tipo: "Categorias", home: true } },
-            }).then(function successCallback(res) {
-                return res
-            }, function errorCallback(res) {
-                toastr.error("Error: no se realizo la conexion con el servidor");
-                console.log("RES ERROR: ",res);
-            });
-            console.log("RESULTADO DE XHR: ",result);
-            if (result) {
-                if (result.data.Bandera == 1) {
-                    obj.Data = result.data.Data;
-                   // obj.eachRefacciones(obj.Data.masVendidos);
-                   // obj.eachRefacciones(obj.Data.liquidacion);
-                }
-                
+        $http({
+            method: 'POST',
+            url: url,
+            data: { modelo: { opc: "buscar", tipo: "Categorias", home: true } },
+        }).then(function successCallback(res) {
+            if (res.data.Bandera == 1) {
+                obj.Data = res.data.Data;
+                obj.eachRefacciones(obj.Data.masVendidos);
+                obj.eachRefacciones(obj.Data.liquidacion);
+            } else {
+                toastr.error("Error: Condición Incumplida");
             }
-            $scope.$apply();
-        } catch (error) {
-            toastr.error(error)
-        }
+        }, function errorCallback(res) {
+            toastr.error("Error: no se realizo la conexion con el servidor");
+        });
 
     }
 

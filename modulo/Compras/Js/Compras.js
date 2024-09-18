@@ -125,7 +125,7 @@ function ComprasCtrl($scope, $http, $sce) {
     }
 
     obj.btnAgregar = (Refaccion) => {
-        if (Refaccion.Cantidad < Refaccion.Existencias) {   
+        if (Refaccion.Cantidad < Refaccion.Existencias) {
             Refaccion.Cantidad++;
             obj.Ttotal();
             Refaccion.upd = 1;
@@ -145,10 +145,10 @@ function ComprasCtrl($scope, $http, $sce) {
         if (Refaccion.Cantidad < 1) {
             obj.btnEliminarRefaccion(Refaccion);
             Refaccion.Cantidad = 1;
-        }else{
+        } else {
             obj.actualizarSession(Refaccion, true);
         }
-        
+
     }
 
     var btnfacomp = document.querySelector(".pagar--button");
@@ -192,7 +192,6 @@ function ComprasCtrl($scope, $http, $sce) {
             url: url_getusercampras,
             data: { Compras: data }
         }).then(function successCallback(res) {
-
             if (res.data.Bandera == 1) {
                 obj.Costumer.profile = res.data.Data.datauser;
                 obj.Costumer.dataDomicilio = res.data.Data.datadomicilio
@@ -207,7 +206,7 @@ function ComprasCtrl($scope, $http, $sce) {
                 toastr.error(res.data.mensaje)
             }
         }, function errorCallback(res) {
-            res.data.Data.Cenvio
+            res.data.Data.Cenvio;
             toastr.error("Error: no se realizo la conexion con el servidor");
         });
     }
@@ -317,7 +316,6 @@ function ComprasCtrl($scope, $http, $sce) {
     }
 
     obj.btnEliminarRefaccion = (Refaccion) => {
-        console.log(Refaccion);
         Swal.fire({
             title: "¿Deseas Eliminar la Refaccion del carrito?",
             showCancelButton: true,
@@ -835,6 +833,11 @@ function ProfileCtrl($scope, $http) {
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
                 obj.profile = res.data.Data;
+                obj.profile.arrayDomicilios.forEach(function (el) {
+                    if (el.Predeterminado == 1) {
+                        localStorage.setItem("_id_domicilio", el._id);
+                    }
+                });
                 if (!localStorage.getItem("iduser")) {
                     localStorage.setItem("iduser", obj.profile._id)
                 }
@@ -858,15 +861,15 @@ function ProfileCtrl($scope, $http) {
             url: urlProfile,
             data: { profile: { opc: opc, tipo: obj.pag, data: data } }
         }).then(function successCallback(res) {
+            console.log("datosCliente succes: ", res);
             if (res.data.Bandera == 1) {
-
                 switch (opc) {
                     case 'add':
                     case 'save':
                         toastr.success(res.data.mensaje);
                         setTimeout(() => {
                             obj.btnMenulinks("Direcciones")
-                        }, 500);
+                        }, 100);
                         break;
                     case 'delete':
                     case 'set':
@@ -880,11 +883,12 @@ function ProfileCtrl($scope, $http) {
                         break;
                 }
 
-
             } else {
+                console.log("res dentro de sendirecciones: ", res);
                 toastr.error(res.data.mensaje);
             }
         }, function errorCallback(res) {
+            console.log("datosCliente error: ", res);
             toastr.error("Error: no se realizo la conexion con el servidor");
         });
     }
@@ -1086,7 +1090,9 @@ function ProfileCtrl($scope, $http) {
                 break;
             case 'Direcciones_edit':
                 obj.dataDireccion.id_domicilio = localStorage.getItem('_id_domicilio');
-                obj.SendDirecciones('edit', obj.dataDireccion);
+                setTimeout(() => {
+                    obj.SendDirecciones('edit', obj.dataDireccion);
+                }, 100);
                 break;
             case 'Facturacion':
                 obj.sendFacturacion("buscar", { _id_cliente: localStorage.getItem("iduser") });

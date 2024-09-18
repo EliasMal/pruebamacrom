@@ -149,7 +149,7 @@ class Profile{
     
     private function get_Carrito(){
         $array = array();
-        $sql = "SELECT _clienteid, Clave, No_parte, Cantidad, Precio, Producto as _producto FROM Carrito";
+        $sql = "SELECT _clienteid, Clave, No_parte, Cantidad, Precio, Producto as _producto FROM Carrito WHERE _clienteid = '{$_SESSION["iduser"]}'";
         $id = $this->conn->query($sql);
         while ($row = $this->conn->fetch($id)){
             array_push($array, $row);

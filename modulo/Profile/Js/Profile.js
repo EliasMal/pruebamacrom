@@ -4,7 +4,11 @@ const urlProfile = "./modulo/Profile/Ajax/Profile.php";
 const urlComprobante = "./modulo/Profile/Ajax/uploadfile.php";
 
 tsuruVolks.controller("ProfileCtrl", ["$scope", "$http", ProfileCtrl]);
-
+if(window.location.href.includes("?mod=Profile")){
+    if(localStorage.getItem('iduser') == undefined){
+        location.href = "?mod=home";
+    }
+}
 function ProfileCtrl($scope, $http) {
     var obj = $scope;
     obj.No_Pedidos = 0;

@@ -38,8 +38,7 @@ function ContactoCtrl($scope, $http){
                 data: {contacto:obj.data}
             }).then(function successCallback(res){
                 if(res.data.Bandera == 1){
-                    obj.datos = res.data;
-                    console.log(obj.datos);   
+                    obj.datos = res.data; 
                 }else{
                     toastr.error(res.data.mensaje);
                 }

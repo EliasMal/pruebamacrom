@@ -132,7 +132,7 @@ class Clientes {
         return $this->conn->fetch($this->conn->query($sql));
     }
     private function getCount(){
-       $sql = "SELECT COUNT(_idPedidos) as NPedidos from macromau_database.Pedidos where (Acreditado = 5 or Acreditado = 1) and _idCliente = ".$this->formulario->cliente->id;
+       $sql = "SELECT COUNT(_idPedidos) as NPedidos from Pedidos where (Acreditado = 5 or Acreditado = 1) and _idCliente = ".$this->formulario->cliente->id;
        return $this->conn->fetch($this->conn->query($sql));
     }
     private function getIdCseguridad(){

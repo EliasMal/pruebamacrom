@@ -91,6 +91,7 @@ function menu(){
             $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Proveedores";            $opcMenu[$sum]["opc"]="?mod=Proveedores";       $sum++;
             $opcMenu[$sum]["grupo"]="Respaldo";             $opcMenu[$sum]["titulo"]= "Actualizar precios";     $opcMenu[$sum]["opc"]="?mod=Actualizarpre";     $sum++;
             $opcMenu[$sum]["grupo"]="Secciones";            $opcMenu[$sum]["titulo"]= "Blog";                   $opcMenu[$sum]["opc"]="?mod=Blog";              $sum++;
+            $opcMenu[$sum]["grupo"]="Secciones";            $opcMenu[$sum]["titulo"]= "Principal";              $opcMenu[$sum]["opc"]="?mod=webprincipal";      $sum++;
         break;
             break;
     }

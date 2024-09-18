@@ -64,8 +64,12 @@
         private function getCenvio($cp = null){
             $Cenvio =  array("Envio"=>"","Costo"=>0, "Servicio"=>"", "paqueteria"=>"", "enviodias"=>0);
             $temp = $this->getCostoEnvioLocal($cp);
-            //var_dump($temp);
-            if(count($temp) > 0){
+
+            if($temp == NULL){
+                $Cenvio["Envio"] = "N";
+                $Cenvio["Costos"] = $this->getCotizarEnvio($cp);
+                $Cenvio["Servicio"] = "NACIONAL";
+            }else if(count($temp) > 0){
                 $Cenvio["Envio"] = "L";
                 $Cenvio["Costo"] = floatval($temp["precio"]);
                 $Cenvio["Servicio"] = "METROPOLITANO";
@@ -83,6 +87,7 @@
             $dataArray["datadomicilio"] = $this->dataDireccion($dataArray["datauser"]["id"]);
             $dataArray["datafacturacion"] = $this->dataFacturacion($dataArray["datauser"]["id"]);
             $dataArray["Cenvio"] = is_null($dataArray["datadomicilio"])? array():$this->getCenvio((int)$dataArray["datadomicilio"]["data"]["Codigo_postal"]);
+            //var_dump("antes de Cenvio");
             return $dataArray;
         }
 
@@ -90,10 +95,8 @@
             $this->formulario = json_decode(file_get_contents('php://input'));
             switch($this->formulario->Compras->opc){
                 case 'get':
-                
                     $this->jsonData["Bandera"] = 1;
                     $this->jsonData["Data"] = $this->getDataUser($this->formulario->Compras->username);
-                    
                 break;
 
                 case 'cotizar':

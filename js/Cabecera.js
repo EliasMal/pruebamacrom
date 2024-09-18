@@ -77,21 +77,20 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
     txt.addEventListener("keydown", e => {
         if (txt.value != "" && e.keyCode === 13) {
             txt = txt.value.split(/\s+/).join("%20");
-            // window.location.href = "https://macromautopartes.com/?mod=catalogo&pag=1&prod=" + txt + "&cate=T&armadora=&mdl=&[a]="
-            window.location.href = "https://prueba.macromautopartes.com/?mod=catalogo&pag=1&prod=" + txt + "&cate=T&armadora=&mdl=&[a]=" //pagina prueba
+            window.location.href = "https://macromautopartes.com/?mod=catalogo&pag=1&prod=" + txt + "&cate=T&armadora=&mdl=&[a]="
+            //window.location.href = "https://prueba.macromautopartes.com/?mod=catalogo&pag=1&prod=" + txt + "&cate=T&armadora=&mdl=&[a]=" //pagina prueba
         }
     });
     obj.general_search = () => {
         if (txt.value != "") {
             txt = txt.value.split(/\s+/).join("%20");
-            // window.location.href = "https://macromautopartes.com/?mod=catalogo&pag=1&prod=" + txt + "&cate=T&armadora=&mdl=&[a]="
-            window.location.href = "https://prueba.macromautopartes.com/?mod=catalogo&pag=1&prod=" + txt + "&cate=T&armadora=&mdl=&[a]=" //pagina prueba
+            window.location.href = "https://macromautopartes.com/?mod=catalogo&pag=1&prod=" + txt + "&cate=T&armadora=&mdl=&[a]="
+            //window.location.href = "https://prueba.macromautopartes.com/?mod=catalogo&pag=1&prod=" + txt + "&cate=T&armadora=&mdl=&[a]=" //pagina prueba
         }
     }
 
     obj.actualizarSession = (Refaccion, opc) => {
         /*opc? true = elimina la variable de la session, false= no aplica nada*/
-
         $http({
             method: 'POST',
             url: url_session,
@@ -102,6 +101,7 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
                 location.reload();
             }
         }, function errorCallback(res) {
+            console.log(res);
             toastr.error("Error: no se realizo la conexion con el servidor");
         });
     }

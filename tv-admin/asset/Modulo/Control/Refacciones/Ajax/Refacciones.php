@@ -89,8 +89,6 @@
                 case 'new':
                 case 'edit':
                     
-                    $json = json_decode(file_get_contents($_POST["Rvehiculo"]),true);
-                    echo $jsonError = json_last_error_msg();
                     
                     $id = $this->setRefaccion();
                     if($id){
@@ -190,7 +188,7 @@
                     $this->formulario["liquidacion"] = $this->formulario["liquidacion"]=="true"? 1:0;
                     
                     $sql = "INSERT INTO Producto (Clave, Producto, No_parte, _idCategoria,_idMarca, Modelo, Anios, Precio1, Precio2, Descripcion, RefaccionNueva, RefaccionOferta, Color, Estatus, Alto,"
-                            . "Largo, Ancho, Peso, id_proveedor, tag_title, tag_alt,Enviogratis, RefaccionLiquidacion, Publicar, userCreated, userModify ) value "
+                    . "Largo, Ancho, Peso, id_proveedor, tag_title, tag_alt,Enviogratis, RefaccionLiquidacion, Publicar, userCreated, userModify ) value "
                     . "('{$this->formulario["Clave"]}','{$this->formulario["refaccion"]}','{$this->formulario["noParte"]}','{$this->formulario["Categoria"]}','{$this->formulario["Marca"]}',"
                     . "'{$this->formulario["Vehiculo"]}','{$this->formulario["Modelo"]}',".bcdiv($this->formulario["Precio1"],'1',2).",".bcdiv($this->formulario["Precio2"],'2',1).",'{$this->formulario["Descripcion"]}',"
                     . "'{$this->formulario["Nuevo"]}','{$this->formulario["Oferta"]}','{$this->formulario["Color"]}',{$this->formulario["Estatus"]},{$this->formulario["Alto"]},{$this->formulario["Largo"]},"
@@ -262,8 +260,8 @@
         }
 
         private function getTotalRefacciones($arrayLikes){
-            $this->formulario["historico"] = $this->formulario["historico"]=="false"? 0:1;
-            $this->formulario["publicados"] = $this->formulario["publicados"]=="true"? 0:1;
+            //$this->formulario["historico"] = $this->formulario["historico"]=="false"? 0:1;
+            //$this->formulario["publicados"] = $this->formulario["publicados"]=="true"? 0:1;
             /**WHERE (P.Producto like '%{$this->formulario["buscar"]}%' OR P.clave like '%{$this->formulario["buscar"]}%')  */
             $sql = "SELECT count(*) as total FROM Producto as P
                     inner join Categorias as C on (C._id = P._idCategoria)
@@ -272,8 +270,7 @@
                     inner join Anios as A on (A._id = P.Anios)
                     WHERE ({$arrayLikes['Productos']} OR {$arrayLikes['Clave']}) 
                     and P.Estatus = {$this->formulario["historico"]} and Publicar = {$this->formulario["publicados"]} order by P.Producto";
-            $id = $this->conn->query($sql);
-            $row = $this->conn->fetch($id);
+            $row = $this->conn->fetch($this->conn->query($sql));
             return $row["total"];
         }
         

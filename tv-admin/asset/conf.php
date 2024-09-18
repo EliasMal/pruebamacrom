@@ -34,7 +34,7 @@ $conf['Clientes'] = array('archivo'=>"Control/Clientes/Controller.php",'permisos
 $conf['Contacto'] = array('archivo'=>"Control/Contacto/Controller.php","permisos"=>["root","Admin"]);
 
 /*Menu Secciones */
-$conf['webprincipal'] = array("archivo"=>"Secciones/webprincipal/Controller.php","permisos"=>["root","Admin","Web"]);
+$conf['webprincipal'] = array("archivo"=>"Secciones/webprincipal/Controller.php","permisos"=>["root","Admin","Web","capturista"]);
 $conf['Blog'] = array("archivo"=>"Secciones/Blog/Controller.php","permisos"=>["root","Admin","Web","capturista"]);
 
 /*Menu Respaldo */

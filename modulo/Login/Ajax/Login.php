@@ -151,7 +151,9 @@ class Login{
             $_SESSION["nombrecorto"] = $this->dataLogin["nombres"];
             $_SESSION["nombre"] = $this->dataLogin["nombres"].' '.$this->dataLogin["apellidos"];
             $_SESSION["iduser"] = $this->dataLogin["_id_cliente"];
+            $_SESSION["CarritoPrueba"] = $this->get_Carrito();
             $_SESSION["Cenvio"] = $this->getCenvio();
+            $_SESSION["id_domicilio"] = $this->DomIn();
             $_SESSION["usr"] = $this->formulario->Login->user;
             $sql ="UPDATE clientes SET ultimoacceso = '{$_SESSION["ultimoAcceso"]}' where _id = '{$this->dataLogin["_id_cliente"]}' and correo = '{$this->formulario->Login->user}'";
             return $this->conn->query($sql);
@@ -160,6 +162,23 @@ class Login{
         }
     }
     
+    private function get_Carrito(){
+        $array = array();
+        $sql = "SELECT DISTINCT _clienteid, CR.Clave, CR.No_parte, CR.Cantidad, CR.Precio, CR.Precio2, P.RefaccionOferta, 
+        CR.Producto as _producto, CR.Alto, CR.Largo, CR.Ancho, CR.Peso, CR.imagenid, CR.Existencias 
+        FROM Carrito CR left JOIN Producto as P on P.Clave = CR.Clave where _clienteid='{$this->dataLogin["_id_cliente"]}' and _clienteid != 0";
+        $id = $this->conn->query($sql);
+        while ($row = $this->conn->fetch($id)){
+            array_push($array, $row);
+        }
+        return $array;
+    }
+
+    private function DomIn(){
+        $sql = "SELECT _id FROM Cdirecciones where _id_cliente = '{$this->dataLogin["_id_cliente"]}' and Predeterminado = 1";
+        return $this->conn->fetch($this->conn->query($sql));
+    }
+
     private function getCenvio(){
         $array = array("Envio"=>"","costo"=>0, "Servicio"=>"") ;
         $sql = "select CE.precio from Cenvios as CE 

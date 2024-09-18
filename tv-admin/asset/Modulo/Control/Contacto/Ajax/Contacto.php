@@ -20,7 +20,7 @@ class Contacto{
 
     private function getContactos (){
         $array = array();
-        $sql = "select * from Contacto";
+        $sql = "select * from Contacto order by fecha desc";
         $id = $this->conn->query($sql);
         while ($row = $this->conn->fetch($id)){
             array_push($array,$row);

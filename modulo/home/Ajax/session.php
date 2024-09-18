@@ -9,11 +9,13 @@
   }
 
   $formulario = json_decode(file_get_contents('php://input'));
-  if($_SESSION["CarritoPrueba"].length == 0){
+  $iguales = 1;
+  if(count($_SESSION["CarritoPrueba"]) == 0){
     $iguales = 1;
   }
 
   foreach($_SESSION["CarritoPrueba"] as $key=> $value){
+
     if($value["Clave"] == $formulario->modelo->datos->Clave){
       
       $ncantidad = intval($value["Cantidad"] + $formulario->modelo->cantidad);
@@ -26,8 +28,8 @@
     }
     
   }
-
-  if($iguales !=0){
+  
+  if($iguales != 0){
     $iguales=1;
   }
 
@@ -37,7 +39,7 @@
 
       if (mysqli_query($conn, $sql)) {
 
-        echo "<h4>Data inserted successfully</h4>";
+        echo "<h4>Data updated successfully</h4>";
       } else{
         echo "Error inserting data: " . mysqli_error($conn);
       }
@@ -64,6 +66,7 @@
     break;
   }
   
+  /*Eliminar una pieza del carrito*/
   if(isset($formulario->modelo->erase) && $formulario->modelo->erase == 1 ){
     $id = intval($formulario->modelo->borrar);
     $n = intval($formulario->modelo->n);
@@ -76,10 +79,9 @@
       }
 
     }
-
     $sql = "DELETE FROM Carrito WHERE Clave =".$id." AND _clienteid =".$_SESSION["iduser"];
     if (mysqli_query($conn, $sql)) {
-      echo "<h4>Data inserted successfully</h4>";
+      echo "<h4>Data deleted successfully</h4>";
 
     } else{
       echo "Error inserting data: " . mysqli_error($conn);
@@ -88,6 +90,7 @@
 
   }
 
+  /*Agregar o quitar 1 pieza del carrito*/
   if(isset($formulario->modelo->upd) && $formulario->modelo->upd == 1 ){
     $id = intval($formulario->modelo->updCLV);
     $n = intval($formulario->modelo->n);
@@ -103,7 +106,7 @@
 
     $sql = "UPDATE Carrito SET Cantidad =".$formulario->modelo->Cantidad." WHERE Clave =".$id." AND _clienteid =".$_SESSION["iduser"];
     if (mysqli_query($conn, $sql)) {
-      echo "<h4>Data inserted successfully</h4>";
+      echo "<h4>Data updated 1 successfully</h4>";
 
     } else{
       echo "Error inserting data: " . mysqli_error($conn);

@@ -43,16 +43,12 @@
                                 $this->jsonData["Data"]["liquidacion"] = $this->getImageProductos($this->getProductosliquidacion());
                                 $this->jsonData["Data"]["oferta"] = $this->getImageProductos($this->getProductosOferta());
                                 $this->getUser();
+                                $_SESSION["iduser"] = $this->dataLogin["_id_cliente"];
+                                $_SESSION["Cenvio"] = $this->getCenvio();
                                 if($this->get_Facturacion()==true){
                                     $_SESSION["facturacion"] = $this->dataFacturacion["Predeterminado"];
                                 }else{
                                     $_SESSION["facturacion"] = 0;
-                                }
-
-                                if($_SESSION["iduser"] == null){
-
-                                    $_SESSION["iduser"] = $this->dataLogin["_id_cliente"];
-                                    $_SESSION["Cenvio"] = $this->getCenvio();
                                 }
                             }
                             
@@ -68,11 +64,19 @@
                     $this->jsonData["Data"] = $this->getOneCostumer();
                     $this->jsonData["Bandera"] = 1;
                 break;
-                
+                case 'ActExistencias':
+                    $this->jsonData["Bandera"] = 1;
+                    $this->ActExistencias();
+                break;
             }
             print json_encode($this->jsonData);
         }
-    
+        
+        private function ActExistencias(){
+            $sql = "UPDATE Carrito set Existencias = '{$this->formulario->modelo->NewExistencia}' where _clienteid = '{$_SESSION["iduser"]}' and Clave = '{$this->formulario->modelo->refaccion}'";
+            return $this->conn->query($sql);
+        }
+
         private function getCategorias (){
             $array = array();
             $sql = "SELECT _id, Categoria FROM Categorias where status = 1 order by Categoria";
@@ -88,13 +92,13 @@
         private function get_Facturacion(){
             $sql = "SELECT * FROM Facturacion where _id_cliente = '{$_SESSION["iduser"]}' and Predeterminado = 1";
             $this->dataFacturacion = $this->conn->fetch($this->conn->query($sql));
-            return count($this->dataFacturacion)!=0? true:false;
+            return $this->dataFacturacion == NULL? false:true;
         }
     
         private function getUser(){
             $sql = "SELECT _id_cliente FROM Cseguridad where username='{$_SESSION["usr"]}'";
             $this->dataLogin = $this->conn->fetch($this->conn->query($sql));
-            return count($this->dataLogin)!=0? true:false;
+            return $this->dataLogin == NULL? false:true;
         }
 
         private function getCenvio(){
@@ -119,7 +123,7 @@
             $array = array();
             $sql = "SELECT DISTINCT _clienteid, CR.Clave, CR.No_parte, CR.Cantidad, CR.Precio, CR.Precio2, P.RefaccionOferta, 
             CR.Producto as _producto, CR.Alto, CR.Largo, CR.Ancho, CR.Peso, CR.imagenid, CR.Existencias 
-            FROM Carrito CR left JOIN Producto as P on P.Clave = CR.Clave where _clienteid='{$_SESSION["iduser"]}'";
+            FROM Carrito CR left JOIN Producto as P on P.Clave = CR.Clave where _clienteid='{$_SESSION["iduser"]}' and _clienteid != 0";
             $id = $this->conn->query($sql);
             while ($row = $this->conn->fetch($id)){
                 array_push($array, $row);
@@ -176,92 +180,6 @@
                 $array[$key]["imagenproveedor"] = $value["idProveedor"]!= null? file_exists("../../../images/Marcasrefacciones/{$value["idProveedor"]}.png"):false;
             }
             return $array;
-        }
-     
-        private function getRefacciones($x=0, $y = 21 ){
-            $array = array();
-
-                if(isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0){
-                    $condicion = $this->formulario["categoria"]!= "T"? " and P._idCategoria = {$this->formulario["categoria"]}":"";
-                }
-            
-                if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
-                    if(isset($this->formulario["marca"]) and (isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0)){
-                        if(isset($this->formulario["marca"]) and isset($this->formulario["vehiculo"]) and (isset($this->formulario["anio"]) and strlen($this->formulario["anio"])!=0)){
-                            if(isset($this->formulario["marca"]) and isset($this->formulario["vehiculo"]) and isset($this->formulario["anio"]) and (isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0)){
-                                    $condicion .= " and P._idMarca = {$this->formulario["marca"]} and P.Modelo = {$this->formulario["vehiculo"]} and P.Anios = {$this->formulario["anio"]}"; 
-                            }else{
-                               $condicion .= " and P._idMarca = {$this->formulario["marca"]} and P.Modelo = {$this->formulario["vehiculo"]} and P.Anios = {$this->formulario["anio"]}"; 
-                            }
-                        }else{
-                           $condicion .= " and P._idMarca = {$this->formulario["marca"]} and P.Modelo = {$this->formulario["vehiculo"]}"; 
-                        }
-                    }else{
-                        $condicion .= " and P._idMarca = {$this->formulario["marca"]} ";
-
-                    }
-                }
-            
-
-            $sql = "SELECT P.*, PROV._id as idProveedor, PROV.tag_alt as tag_altproveedor, PROV.tag_title as tag_titleproveedor FROM Producto AS P "
-            . "left join Proveedor as PROV on (P.id_proveedor = PROV._id) "
-            ."where P.Estatus = 1 and (P.Producto like '%{$this->formulario["producto"]}%' "
-            . "or P.No_parte like '%{$this->formulario["producto"]}%') $condicion order by P.Producto LIMIT $x, $y";
-
-            $id = $this->conn->query($sql);
-            while ($row = $this->conn->fetch($id)){
-                $row["imagen"] = file_exists("../../../images/refacciones/{$row["_id"]}.png");
-                $row["imagenproveedor"] = $row["idProveedor"]!= null? file_exists("../../../images/Marcasrefacciones/{$row["idProveedor"]}.png"):false;
-                array_push($array, $row);
-            }
-            return $array;
-        }
-    
-        private function getTrefacciones(){
-            if(isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0){
-                $condicion = $this->formulario["categoria"]!= "T"? " and P._idCategoria = {$this->formulario["categoria"]}":"";
-            }
-        
-            if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
-                if(isset($this->formulario["marca"]) and (isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0)){
-                    if(isset($this->formulario["marca"]) and isset($this->formulario["vehiculo"]) and (isset($this->formulario["anio"]) and strlen($this->formulario["anio"])!=0)){
-                        if(isset($this->formulario["marca"]) and isset($this->formulario["vehiculo"]) and isset($this->formulario["anio"]) and (isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0)){
-                                $condicion .= " and P._idMarca = {$this->formulario["marca"]} and P.Modelo = {$this->formulario["vehiculo"]} and P.Anios = {$this->formulario["anio"]}"; 
-                        }else{
-                           $condicion .= " and P._idMarca = {$this->formulario["marca"]} and P.Modelo = {$this->formulario["vehiculo"]} and P.Anios = {$this->formulario["anio"]}"; 
-                        }
-                    }else{
-                       $condicion .= " and P._idMarca = {$this->formulario["marca"]} and P.Modelo = {$this->formulario["vehiculo"]}"; 
-                    }
-                }else{
-                    $condicion .= " and P._idMarca = {$this->formulario["marca"]} ";
-
-                }
-            }
-        
-
-            $sql = "SELECT count(*) as Trefacciones FROM Producto AS P "
-            . "left join Proveedor as PROV on (P.id_proveedor = PROV._id) "
-            ."where P.Estatus = 1 and (P.Producto like '%{$this->formulario["producto"]}%' "
-            . "or P.No_parte like '%{$this->formulario["producto"]}%') $condicion order by P.Producto ";
-
-            $row = $this->conn->fetch($this->conn->query($sql));
-            return $row["Trefacciones"];
-        }
-
-        private function getOneRefaccion(){
-            $sql = "select P._id, P.Clave, P.Producto, C.Categoria, M.Marca, P.Precio1, P.Precio2,
-                P.No_parte, P.Descripcion, V.Modelo, A.Anio, P.RefaccionNueva, P.RefaccionOferta,
-                P.Alto, P.Ancho, P.Largo, P.Peso
-                from Producto as P 
-                inner join Categorias as C on (C._id = P._idcategoria)
-                inner join Marcas as M on (M._id = P._idMarca)
-                inner join Modelos as V on (V._id = P.Modelo)
-                inner join Anios as A on (A._id = P.Anios)
-                where P._id = {$this->formulario["id"]}";
-            $row = $this->conn->fetch($this->conn->query($sql));
-            $row["imagen"] = file_exists("../../../images/refacciones/{$row["_id"]}.png");
-            return $row;
         }
 
         private function getGeleria ($id){
