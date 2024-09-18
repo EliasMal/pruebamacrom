@@ -73,8 +73,8 @@ function LoginCtrl($scope, $http) {
                         toastr.error("Error: no se realizo la conexion con el servidor");
                     });
                 }
-                
-                if(count_prod == 0){
+
+                if (count_prod == 0) {
                     Refaccion.erase = 1;
                     Refaccion.borrar = el.Clave;
                     Refaccion.n = res.data.session.CarritoPrueba["length"];
@@ -88,7 +88,7 @@ function LoginCtrl($scope, $http) {
                     });
                 }
             });
-            
+
         });
 
     }

@@ -53,7 +53,6 @@ function homeCtrl($scope, $http) {
         document.querySelector(".toolbar_click0").classList.remove("toolbar__activada");
     });
 
-
     obj.eachRefacciones = (array) => {
         array.forEach(e => {
             obj.getSeicom(e.Clave).then(token => {
