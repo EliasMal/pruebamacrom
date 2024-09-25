@@ -115,9 +115,10 @@ class Login{
                     </div>
             </body>
         </html>';
-        $email = "webmaster@macromautopartes.com";
+        $email = "soporte@macromautopartes.com";
         $headers ="MIME.Version: 1.0". "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-8". "\r\n";
+        $headers .="From: ".$email;
         mail($destinatario, $asunto, $mensaje, $headers);
         //Fin Envio de registro satisfactorio al Correo del usuario.
         

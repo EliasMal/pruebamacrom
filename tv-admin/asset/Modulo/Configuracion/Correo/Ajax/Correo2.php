@@ -11,8 +11,8 @@
 
         public function main(){
             $correos = array();
-            array_push($correos, array("email"=>"webmaster@macromautopartes.com", "nombre"=>"webmaster macromautopartes")); 
-            $this->correo->Send("Bienvenido Francisco Ivan",$correos,"<h1></h1>");
+            array_push($correos, array("email"=>"ventasweb@macromautopartes.com", "nombre"=>"ventasweb macromautopartes")); 
+            $this->correo->Send("Bienvenido Ventas Macrom",$correos,"<h1></h1>");
         }
     }
 

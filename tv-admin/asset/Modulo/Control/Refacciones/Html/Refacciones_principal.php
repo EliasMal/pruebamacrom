@@ -17,7 +17,9 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
+
                 <div class="col lg 12">
+
                     <button type="button" class="btn btn-danger float-left" ng-click="btnAgregarRefaccion()"><i class="fa fa-plus-square"></i> Agregar Refaccion</button>
                     <span class="switch switch-sm float-left" style="margin-left:10px; margin-top:5px;">
                         <input type="checkbox" class="switch" id="swpublicados" ng-model="publicados" ng-click="getRefacciones()">
@@ -25,10 +27,9 @@
                         <input type="checkbox" class="switch" id="swhistorico" ng-model="historico" ng-click="getRefacciones()">
                         <label for="swhistorico">Historico</label>
                     </span>
-                    
-                        
-                    
+
                 </div>
+
             </div>
             <hr />
             <div class="row">
@@ -58,7 +59,7 @@
             </nav>
             <div class="row ng-cloak" >
                 <div class="col-md-3" ng-repeat="refaccion in refacciones " >
-                    <div class="card card-danger card-outline" ng-click="btnEditarRefaccion(refaccion._id)">
+                    <div class="card card-danger card-outline enlace" ng-click="btnEditarRefaccion(refaccion._id)">
                         <div class="ribbon-wrapper ribbon-lg" ng-show="refaccion.RefaccionNueva || refaccion.RefaccionOferta 
                         || refaccion.RefaccionLiquidacion || refaccion.agotado">
                             <div class="ribbon bg-danger text-lg">{{

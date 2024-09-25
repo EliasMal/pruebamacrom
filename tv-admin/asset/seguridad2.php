@@ -7,7 +7,7 @@ if($_SESSION["autentificacion"]!=1){
     header("Location: ../../../../redireccionar.php");
 }else{
 //        print_r($_SESSION);
-    $duracionsession = 15; //duracion en minutos
+    $duracionsession = 10; //duracion en minutos
     $fechaGuarda = $_SESSION["ultimoAcceso"];
     $ahora = date("Y-n-j H:i:s");
     $tiempotranscurrido = (strtotime($ahora)-strtotime($fechaGuarda));

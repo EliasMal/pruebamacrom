@@ -2,10 +2,10 @@
 	<!-- Title Page -->
 	<header class="header">
 		<section class="header__contenido" ng-repeat="cat in catalogos.Escritorio">
-		<picture class="header__picture">
-						<!-- <source srcset="https://macromautopartes.com/images/Banners/{{cat.imagen}}" type="image/webp" class="header__picture--img"> -->
-						<img loading="lazy" ng-src="https://macromautopartes.com/images/Banners/{{cat.imagen}}" alt="banner">
-				</picture>
+			<picture class="header__picture">
+				<!-- <source srcset="https://macromautopartes.com/images/Banners/{{cat.imagen}}" type="image/webp" class="header__picture--img"> -->
+				<img loading="lazy" ng-src="https://macromautopartes.com/images/Banners/{{cat.imagen}}" alt="banner">
+			</picture>
 		</section>
 	</header>
 	<!-- Content page -->
@@ -41,8 +41,7 @@
 								ng-model="refaccion.anio">
 								<optgroup label="Selecciona el Modelo">
 									<option value="">--Todas--</option>
-									<option ng-repeat="modelo in Modelos" value="{{modelo._id}}">{{modelo.Anio}}
-									</option>
+									<option ng-repeat="modelo in Modelos" value="{{modelo._id}}">{{modelo.Anio}}</option>
 								</optgroup>
 							</select>
 
@@ -67,8 +66,8 @@
 
 						<div class="search-product pos-relative catalogo__filtrado--buscador form-control">
 							<input type="text" name="search-product"
-								placeholder="Buscar Producto..." ng-model="refaccion.producto"
-								ng-model-options="{debounce:1500}" id="prod_input">
+							placeholder="Buscar Producto..." ng-model="refaccion.producto"
+							ng-model-options="{debounce:1500}" id="prod_input">
 								
 							<button class="ab-r-m" ng-click="getRefaccion()">
 								<i class="fa fa-search" aria-hidden="true"></i>
@@ -82,50 +81,50 @@
 						</div>
 
 					</div>
+					
 					<div class="nuestrosproductos__masvendidos">
-							<div class="home__pr" ng-repeat="producto in Refacciones">
-								<!-- Block2 -->
-								<div class="productos__informacion">
-									<div class="wrap-pic-w of-hidden cursorpnt" 
-									ng-class="{'pos-relative': !producto.agotado}">
+						<div class="home__pr" ng-repeat="producto in Refacciones">
+							<!-- Block2 -->
+							<div class="productos__informacion">
+
+								<div class="wrap-pic-w of-hidden cursorpnt" 
+								ng-class="{'pos-relative': !producto.agotado}">
 									<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="enlace">
 										<!-- <img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/'+producto._id+'.png':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}"> -->
 										<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}">
 									</a>
-									</div>
+								</div>
 
-									<div class="block2-txt">
-										<section class="descripcion-producto">
-
-											<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
-											<div class="precio__imgprove">	
-												<p class="precio__producto" ng-hide="producto.RefaccionOferta"> {{producto.Precio1 | currency}} </p>	
-												<p class="precio__producto" ng-show="producto.RefaccionOferta"> <small class="line_through-red">{{producto.Precio1 | currency}}</small> </p>
-												<!-- <img ng-src="{{producto.imagenproveedor? 'https://macromautopartes.com/images/Marcasrefacciones/boxed-bg.jpg':'https://macromautopartes.com/images/Marcasrefacciones/' + producto.idProveedor + '.png'}}" 
-												alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}" class="proovedor__img"> -->
-												<img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.idProveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
-												alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}" class="proovedor__img">
-												
-											</div>
-
-										</section>
-
-										<div class="enviogratis"  ng-show="producto.Enviogratis">
-											<!-- <img src="https://macromautopartes.com/images/icons/Icono-camion.png" loading="lazy" alt=""> -->
-											<img src="/images/icons/Icono-camion.png" loading="lazy" alt="">
-											<p> <strong>Envío Gratis </strong> </p> 
+								<div class="block2-txt">
+									<section class="descripcion-producto">
+										<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
+										<div class="precio__imgprove">	
+											<p class="precio__producto" ng-hide="producto.RefaccionOferta"> {{producto.Precio1 | currency}} </p>	
+											<p class="precio__producto" ng-show="producto.RefaccionOferta"> <small class="line_through-red">{{producto.Precio1 | currency}}</small> </p>
+											<!-- <img ng-src="{{producto.imagenproveedor? 'https://macromautopartes.com/images/Marcasrefacciones/boxed-bg.jpg':'https://macromautopartes.com/images/Marcasrefacciones/' + producto.idProveedor + '.png'}}" 
+											alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}" class="proovedor__img"> -->
+											<img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.idProveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
+											alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}" class="proovedor__img">
 										</div>
 
+									</section>
+
+									<div class="enviogratis"  ng-show="producto.Enviogratis">
+										<!-- <img src="https://macromautopartes.com/images/icons/Icono-camion.png" loading="lazy" alt=""> -->
+										<img src="/images/icons/Icono-camion.png" loading="lazy" alt="">
+										<p> <strong>Envío Gratis </strong> </p> 
 									</div>
+
 								</div>
 							</div>
+						</div>
 					</div>
 
 					<script type="text/javascript">function toTop() {window.scrollTo(0, 0)} </script>
 					<!-- Pagination -->
 					<div class="pagination">
 						<a class="item-pagination flex-c-m trans-0-4 {{currentPage == (pag.no - 1)? 'active-pagination':''}}"
-							ng-repeat='pag in pages' ng-click='setPage(pag.no)'>{{pag.no}}</a>                                                                                                                                                                                                                               
+						ng-repeat='pag in pages' ng-click='setPage(pag.no)'>{{pag.no}}</a>                                                                                                                                                                                                                               
 					</div>
 
 				</div>
@@ -133,4 +132,4 @@
 		</div>
 	</main>
 
- </div>
+</div>

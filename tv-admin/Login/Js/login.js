@@ -41,6 +41,9 @@ function loginCtrl($scope,$http){
             }).then(function successCallback(res){
                 if(res.data.Bandera == 1){
                     mantenimiento = res.data.Usuarios;
+                    console.log(mantenimiento);
+                    console.log(res.data.Usuarios);
+                    console.log(res);
                     if(mantenimiento == 1){
                         document.querySelector(".alerta-mantenimiento").style.display = "flex";
                     }
@@ -75,9 +78,11 @@ function loginCtrl($scope,$http){
     
     angular.element(document).ready(function(){
         obj.usrCON();
-        if(localStorage){
-            obj.isonline();
-        }
+        setTimeout(() => {
+            if(localStorage){
+                obj.isonline();
+            }
+        }, 100);
     });
 }
 

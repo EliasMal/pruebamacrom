@@ -73,7 +73,7 @@
 
         public function main(){
             $correos = array();
-            array_push($correos, array("email"=>"webmaster@macromautopartes.com", "nombre"=>"webmaster macromautopartes"));
+            array_push($correos, array("email"=>"ventasweb@macromautopartes.com", "nombre"=>"ventasweb macromautopartes"));
             $this->jsonData["Bandera"] = true;
             $this->jsonData["Mensaje"] = $this->sendmail("",$correos,"");
             print json_encode($this->jsonData);
