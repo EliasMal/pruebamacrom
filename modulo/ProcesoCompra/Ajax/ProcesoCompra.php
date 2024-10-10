@@ -97,7 +97,7 @@ class ProcesoCompra {
                                     $asunto='Compra en Macromautopartes';
                                     $mensaje= "Nueva compra registrada en la pagina Macromautopartes, revisar el pedido para su envio. (Metodopago: Deposito/transferencia)";
                                     $email = "ventasweb@macromautopartes.com";
-                                    $header .="From: ".$email;
+                                    $header ="From: ".$email;
                                     $mensajeCompleto = $mensaje."\nAtentamente: Macromautopartes";
                                     mail($destinatario, $asunto, $mensajeCompleto, $header);
                                     //Fin Envio de registro satisfactorio al Correo del usuario.
@@ -185,31 +185,6 @@ class ProcesoCompra {
                             $this->setnoPedido();
                         break;
                     }
-                }else{
-                    $id = $this->setPedido2($this->formulario->Costumer->profile->id, $this->formulario->Costumer->Subtotal, 
-                    $this->formulario->Costumer->metodoPago, $this->formulario->Costumer->noPedido["folio"],
-                    $this->formulario->Costumer->Cenvio->Costo, $this->formulario->Costumer->Cenvio->Servicio,
-                    intval($this->formulario->Costumer->facturacion), isset($this->formulario->Costumer->dataFacturacion->data->_id)? 
-                    $this->formulario->Costumer->dataFacturacion->data->_id:0,
-                    $this->formulario->Costumer->dataDomicilio->data->_id,1,
-                    $this->formulario->Costumer->descuento,
-                    $this->formulario->Costumer->Cenvio->paqueteria,
-                    $this->formulario->Costumer->Cenvio->enviodias);
-                    if($id){
-                        if($this->setPedidosDetalles($id)){
-                            
-                        }else{
-                            $this->jsonData["Bandera"] = 0;
-                            $this->jsonData["Mensaje"] = "Error no se genero el pedido";
-                        }
-                    }else{
-                        $this->jsonData["Bandera"] = 0;
-                        $this->jsonData["mensaje"] = "Error al generar tu pedido por favor contactarse con la refaccionaria";
-                    }
-                    $_SESSION["Cenvio"]["costo"] = 0;
-                    $_SESSION["Cenvio"]["Servicio"]= "";
-                    //Aqui incrementamos el folio del numero de orden el no de pedido
-                    $this->setnoPedido();
                 }
                 
             break;

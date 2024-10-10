@@ -41,16 +41,12 @@ function loginCtrl($scope,$http){
             }).then(function successCallback(res){
                 if(res.data.Bandera == 1){
                     mantenimiento = res.data.Usuarios;
-                    console.log(mantenimiento);
-                    console.log(res.data.Usuarios);
-                    console.log(res);
                     if(mantenimiento == 1){
                         document.querySelector(".alerta-mantenimiento").style.display = "flex";
                     }
                 }else{
                     toastr.error(res.data.mensaje);
                 }
-                
                 
             }, function errorCallback(res){
                 toastr.error("Error: no se realizo la conexion con el servidor");

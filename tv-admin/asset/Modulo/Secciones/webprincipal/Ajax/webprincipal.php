@@ -32,6 +32,7 @@ class WebPrincipal{
                 $this->jsonData["Data"] = $this->getImagen();
                 $this->jsonData["Bandera"] = 1;
                 $this->jsonData["categoria"] = $this->formulario["Categoria"];
+                $this->jsonData["Disabled"] = $this->getDisabledImg();
             break;
             case 'set':
                 if(count($this->foto) !=0){
@@ -60,11 +61,31 @@ class WebPrincipal{
                     $this->jsonData["mensaje"] = "Error al intentar eliminar la Imagen";
                 }
             break;
+            case 'act':
+                if($this->actimagen()){
+                    $this->jsonData["Bandera"] = 1;
+                    $this->jsonData["mensaje"] = "Imagen Reemplazada";
+                    $this->jsonData["categoria"] = $this->formulario["Categoria"];
+                    $this->PredImagen();
+                }else{
+                    $this->jsonData["Bandera"] = 0;
+                    $this->jsonData["mensaje"] = "Error al intentar reemplazar la Imagen";
+                }
+            break;
         }
         $this->jsonData["dominio"]=$this->url;
         print json_encode($this->jsonData);
     }
 
+    private function actimagen(){
+        $sql = "UPDATE Imagenes SET Estatus = 0 WHERE Estatus = 1 and Categoria = '{$this->formulario["Categoria"]}'";
+        return $this->conn->query($sql)? true: false;
+    }
+
+    private function PredImagen(){
+        $sql = "UPDATE Imagenes SET Estatus = 1 WHERE _id = '{$this->formulario["_id"]}'";
+        return $this->conn->query($sql)? true: false;
+    }
 
     private function setImagen(){
         switch($this->formulario["opc"]){
@@ -79,6 +100,22 @@ class WebPrincipal{
             break;
         }
         return $this->conn->query($sql)? true: false;
+    }
+
+    private function getDisabledImg(){
+        $array = array("Escritorio"=>array(), "Movil"=>array());
+        $limit = "";
+        $diseño = array("Escritorio","Movil");
+        $categoria = array("Principal","Catalogos","Compras","Nosotros","Contacto","Session");
+
+        foreach($diseño as $key => $value){
+            $sql = "Select * from Imagenes where Categoria='{$this->formulario["Categoria"]}' and Estatus = 0 and Diseño='$value' $limit";
+            $id = $this->conn->query($sql);
+            while($row = $this->conn->fetch($id)){
+                array_push($array[$value], $row);
+            }
+        }
+        return $array;
     }
 
     private function getImagen(){

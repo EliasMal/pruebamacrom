@@ -262,7 +262,6 @@ function ComprasCtrl($scope, $http, $sce) {
     }
 
     obj.ProcesarCompra = (data) => {
-
         $http({
             method: 'POST',
             url: urlCostumer,

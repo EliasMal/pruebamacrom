@@ -104,17 +104,17 @@ function catalogosCtrl($scope, $http) {
             obj.currentPage = next_url - 1;
             obj.configPages();
             obj.getPaginador(obj.currentPage * obj.pageSize, obj.pageSize);
-
+            
             if (window.location.href.includes("%20")) {
                 obj.refaccion.producto = next_prod.replaceAll("%20", " ");
             } else {
                 obj.refaccion.producto = next_prod;
             }
-            if(obj.refaccion.producto.includes("%C3%B1")){
-                obj.refaccion.producto = obj.refaccion.producto.replaceAll("%C3%B1","ñ");
+            if (obj.refaccion.producto.includes("%C3%B1")) {
+                obj.refaccion.producto = obj.refaccion.producto.replaceAll("%C3%B1", "ñ");
             }
-            if(obj.refaccion.producto.includes("%C3%BC")){
-                obj.refaccion.producto = obj.refaccion.producto.replaceAll("%C3%BC","ü");
+            if (obj.refaccion.producto.includes("%C3%BC")) {
+                obj.refaccion.producto = obj.refaccion.producto.replaceAll("%C3%BC", "ü");
             }
             if (next_marca.includes("?%20string:")) {
                 obj.refaccion.marca = "";
@@ -270,6 +270,7 @@ function catalogosCtrl($scope, $http) {
                     obj.currentPage = next_url - 1;
                     obj.configPages();
                     obj.eachRefacciones(obj.Refacciones);
+                    console.log(obj.Refacciones);
                     window.location.href = "?mod=catalogo&pag=" + 1 + "&prod=" + obj.refaccion.producto + "&cate=" + next_cate + "&armadora=" + obj.refaccion.marca + "&mdl=" + obj.refaccion.vehiculo + "&[a]=" + obj.refaccion.anio;
 
                 } else {
@@ -283,13 +284,13 @@ function catalogosCtrl($scope, $http) {
         }
 
     }
-    
+
     var catalogo_buscador = document.querySelector("#prod_input");
-    catalogo_buscador.addEventListener("keydown", e=>{
-        if(catalogo_buscador.value != "" && e.keyCode === 13){
+    catalogo_buscador.addEventListener("keydown", e => {
+        if (catalogo_buscador.value != "" && e.keyCode === 13) {
             window.location.href = "?mod=catalogo&pag=" + 1 + "&prod=" + catalogo_buscador.value + "&cate=" + next_cate + "&armadora=" + obj.refaccion.marca + "&mdl=" + obj.refaccion.vehiculo + "&[a]=" + obj.refaccion.anio;
-        }else if(catalogo_buscador.value == "" && e.keyCode === 13){
-            window.location.href="?mod=catalogo&pag=1&prod=&cate=T&armadora=&mdl=&[a]=";
+        } else if (catalogo_buscador.value == "" && e.keyCode === 13) {
+            window.location.href = "?mod=catalogo&pag=1&prod=&cate=T&armadora=&mdl=&[a]=";
         }
     });
 

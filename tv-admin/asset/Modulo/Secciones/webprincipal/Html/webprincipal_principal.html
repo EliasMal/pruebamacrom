@@ -32,6 +32,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
+
                                     <ul class="nav nav-tabs" id="TabHeader" role="tablist">
                                         <li class="nav-item" role="presentation">
                                             <a class="nav-link active" id="desktop-tab" data-toggle="tab"
@@ -43,24 +44,35 @@
                                                 role="tab" aria-controls="Movil" aria-selected="true">Movil</a>
                                         </li>
                                     </ul>
+
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade show active" id="headerdesktop" role="tabpanel"
                                             aria-labelledby="desktop-tab">
                                             <br>
                                             <div class="row">
-                                                <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12"
-                                                    ng-repeat="principal in databannerPrincipal.Escritorio">
+                                                <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12" ng-repeat="principal in databannerPrincipal.Escritorio">
                                                     <img src="{{dominio}}/images/Banners/{{principal.imagen}}"
-                                                        alt="Imagen principal" class="img-fluid">
-                                                    <small>Dimensiones de la imagen: 1970px x 570px</small>
-                                                    <hr>
+                                                        alt="Imagen principal" class="img-fluid" style="margin-bottom: 10px;">
                                                     <small>Fecha de subida: {{principal.FechaCreacion}}</small>
                                                     <button class="btn btn-sm btn-outline-danger pull-right"
-                                                        ng-click="btnDesactivar(principal._id, principal.Categoria)">Desactivar</button>
+                                                        ng-click="btnDesactivar(principal._id, principal.Categoria)">Eliminar</button>
                                                     <hr>
                                                 </div>
                                             </div>
+                                            
+                                            <div class="available__images__cont">
+                                                <div class="cont__datos" ng-repeat="principal in databannerPrincipal.disabled.Escritorio">
+                                                    <img src="{{dominio}}/images/Banners/{{principal.imagen}}"
+                                                    alt="Imagen principal" class="img-fluid enlace" style="margin-bottom: 10px;" ng-click="changePred(principal._id, principal.Categoria)">
+                                                    <div class="info__imagen">
+                                                        <small>Fecha de subida: {{principal.FechaCreacion}}</small>
+                                                        <button class="btn btn-sm btn-outline-danger pull-right"
+                                                        ng-click="btnDesactivar(principal._id, principal.Categoria)">Eliminar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
+
                                         <div class="tab-pane fade" id="headermovil" role="tabpanel"
                                             aria-labelledby="movil-tab">
                                             <br>
@@ -83,7 +95,7 @@
                                                             <hr>
                                                             <button class="btn btn-sm btn-outline-danger pull-right"
                                                                 type="button"
-                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Desactivar</button>
+                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Eliminar</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -110,7 +122,8 @@
                                         <input class="custom-file-input archivos" id="Principal" type="file"
                                             uploader-model="imagen.file">
                                         <label for="imagenprincipal"
-                                            class="custom-file-label">{{imagen.Categoria==="Principal"? imagen.name:imagen.placeholder}}</label>
+                                            class="custom-file-label">{{imagen.Categoria==="Principal"?
+                                            imagen.name:imagen.placeholder}}</label>
                                     </div>
                                     <div class="input-group-apped">
                                         <button class="btn btn-primary pull-right" ng-click="btnsubirimagen()"><i
@@ -173,7 +186,7 @@
                                                             <hr>
                                                             <button class="btn btn-sm btn-outline-danger pull-right"
                                                                 type="button"
-                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Desactivar</button>
+                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Eliminar</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -201,7 +214,7 @@
                                                             <hr>
                                                             <button class="btn btn-sm btn-outline-danger pull-right"
                                                                 type="button"
-                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Desactivar</button>
+                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Eliminar</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -230,7 +243,8 @@
                                         <input class="custom-file-input archivos" id="Promociones" type="file"
                                             uploader-model="imagen.file">
                                         <label for="imagenprincipal"
-                                            class="custom-file-label">{{imagen.Categoria==="Promociones"? imagen.name:imagen.placeholder}}</label>
+                                            class="custom-file-label">{{imagen.Categoria==="Promociones"?
+                                            imagen.name:imagen.placeholder}}</label>
                                     </div>
                                     <div class="input-group-apped">
                                         <button class="btn btn-primary pull-right" ng-click="btnsubirimagen()"><i
@@ -243,6 +257,7 @@
                     </div>
                 </section>
             </div>
+            <!-- Sección Catalogo -->
             <div class="row">
                 <section class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="card card-danger">
@@ -258,6 +273,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
+
                                     <ul class="nav nav-tabs" id="TabHeader" role="tablist">
                                         <li class="nav-item" role="presentation">
                                             <a class="nav-link active" id="desktop-tab" data-toggle="tab"
@@ -269,9 +285,11 @@
                                                 role="tab" aria-controls="Movil" aria-selected="true">Movil</a>
                                         </li>
                                     </ul>
+
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade show active" id="Catalogosdesktop" role="tabpanel"
                                             aria-labelledby="desktop-tab">
+
                                             <div class="row">
                                                 <div class="col-xs-12 col-sm-12 col-xl-12 col-md-12 col-lg-12"
                                                     ng-repeat="promo in catalogos.Escritorio">
@@ -291,13 +309,25 @@
                                                             <hr>
                                                             <button class="btn btn-sm btn-outline-danger pull-right"
                                                                 type="button"
-                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Desactivar</button>
+                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Eliminar</button>
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
 
+                                            <div class="available__images__cont">
+                                                <div class="cont__datos" ng-repeat="catalogo in catalogos.disabled.Escritorio">
+                                                    <img src="{{dominio}}/images/Banners/{{catalogo.imagen}}"
+                                                    alt="Imagen principal" class="img-fluid enlace" style="margin-bottom: 10px;" ng-click="changePred(catalogo._id, catalogo.Categoria)">
+                                                    <div class="info__imagen">
+                                                        <small>Fecha de subida: {{catalogo.FechaCreacion}}</small>
+                                                        <button class="btn btn-sm btn-outline-danger pull-right"
+                                                        ng-click="btnDesactivar(catalogo._id, catalogo.Categoria)">Eliminar</button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+
                                         <div class="tab-pane fade" id="Catalogosmovil" role="tabpanel"
                                             aria-labelledby="movil-tab">
                                             <br>
@@ -320,7 +350,7 @@
                                                             <hr>
                                                             <button class="btn btn-sm btn-outline-danger pull-right"
                                                                 type="button"
-                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Desactivar</button>
+                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Eliminar</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -329,8 +359,8 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
+
                         <div class="card-footer">
                             <div class="input-group">
                                 <label for="imagenprincipal">Subir Catalogo</label>
@@ -348,7 +378,8 @@
                                         <input class="custom-file-input archivos" id="Catalogos" type="file"
                                             uploader-model="imagen.file">
                                         <label for="imagenprincipal"
-                                            class="custom-file-label">{{imagen.Categoria==="Catalogos"? imagen.name:imagen.placeholder}}</label>
+                                            class="custom-file-label">{{imagen.Categoria==="Catalogos"?
+                                            imagen.name:imagen.placeholder}}</label>
                                     </div>
                                     <div class="input-group-apped">
                                         <button class="btn btn-primary pull-right" ng-click="btnsubirimagen()"><i
@@ -361,6 +392,7 @@
                     </div>
                 </section>
             </div>
+            <!-- Sección Compras -->
             <div class="row">
                 <section class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="card card-danger">
@@ -373,9 +405,11 @@
                                 <button class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                             </div>
                         </div><!-- /.card-header -->
+
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
+
                                     <ul class="nav nav-tabs" id="TabHeader" role="tablist">
                                         <li class="nav-item" role="presentation">
                                             <a class="nav-link active" id="desktop-tab" data-toggle="tab"
@@ -387,6 +421,7 @@
                                                 role="tab" aria-controls="Movil" aria-selected="true">Movil</a>
                                         </li>
                                     </ul>
+
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade show active" id="Comprasdesktop" role="tabpanel"
                                             aria-labelledby="desktop-tab">
@@ -409,12 +444,26 @@
                                                             <hr>
                                                             <button class="btn btn-sm btn-outline-danger pull-right"
                                                                 type="button"
-                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Desactivar</button>
+                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Eliminar</button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="available__images__cont">
+                                                <div class="cont__datos" ng-repeat="compras in compras.disabled.Escritorio">
+                                                    <img src="{{dominio}}/images/Banners/{{compras.imagen}}"
+                                                    alt="Imagen compras" class="img-fluid enlace" style="margin-bottom: 10px;" ng-click="changePred(compras._id, compras.Categoria)">
+                                                    <div class="info__imagen">
+                                                        <small>Fecha de subida: {{compras.FechaCreacion}}</small>
+                                                        <button class="btn btn-sm btn-outline-danger pull-right"
+                                                        ng-click="btnDesactivar(compras._id, compras.Categoria)">Eliminar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>
+
                                         <div class="tab-pane fade" id="Comprasmovil" role="tabpanel"
                                             aria-labelledby="movil-tab">
                                             <br>
@@ -437,7 +486,7 @@
                                                             <hr>
                                                             <button class="btn btn-sm btn-outline-danger pull-right"
                                                                 type="button"
-                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Desactivar</button>
+                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Eliminar</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -465,7 +514,8 @@
                                         <input class="custom-file-input archivos" id="Compras" type="file"
                                             uploader-model="imagen.file">
                                         <label for="imagenprincipal"
-                                            class="custom-file-label">{{imagen.Categoria==="Compras"? imagen.name:imagen.placeholder}}</label>
+                                            class="custom-file-label">{{imagen.Categoria==="Compras"?
+                                            imagen.name:imagen.placeholder}}</label>
                                     </div>
                                     <div class="input-group-apped">
                                         <button class="btn btn-primary pull-right" ng-click="btnsubirimagen()"><i
@@ -478,6 +528,7 @@
                     </div>
                 </section>
             </div>
+            <!-- Sección Nosotros -->
             <div class="row">
                 <section class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="card card-danger">
@@ -493,6 +544,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
+
                                     <ul class="nav nav-tabs" id="TabHeader" role="tablist">
                                         <li class="nav-item" role="presentation">
                                             <a class="nav-link active" id="desktop-tab" data-toggle="tab"
@@ -504,6 +556,7 @@
                                                 role="tab" aria-controls="Movil" aria-selected="true">Movil</a>
                                         </li>
                                     </ul>
+
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade show active" id="Nosotrosdesktop" role="tabpanel"
                                             aria-labelledby="desktop-tab">
@@ -526,12 +579,26 @@
                                                             <hr>
                                                             <button class="btn btn-sm btn-outline-danger pull-right"
                                                                 type="button"
-                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Desactivar</button>
+                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Eliminar</button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="available__images__cont">
+                                                <div class="cont__datos" ng-repeat="nosotros in nosotros.disabled.Escritorio">
+                                                    <img src="{{dominio}}/images/Banners/{{nosotros.imagen}}"
+                                                    alt="Imagen nosotros" class="img-fluid enlace" style="margin-bottom: 10px;" ng-click="changePred(nosotros._id, nosotros.Categoria)">
+                                                    <div class="info__imagen">
+                                                        <small>Fecha de subida: {{nosotros.FechaCreacion}}</small>
+                                                        <button class="btn btn-sm btn-outline-danger pull-right"
+                                                        ng-click="btnDesactivar(nosotros._id, nosotros.Categoria)">Eliminar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>
+
                                         <div class="tab-pane fade" id="Nosotrosmovil" role="tabpanel"
                                             aria-labelledby="movil-tab">
                                             <br>
@@ -554,7 +621,7 @@
                                                             <hr>
                                                             <button class="btn btn-sm btn-outline-danger pull-right"
                                                                 type="button"
-                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Desactivar</button>
+                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Eliminar</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -563,7 +630,6 @@
                                     </div>
                                 </div>
                             </div>
-
 
                         </div>
                         <div class="card-footer">
@@ -583,7 +649,8 @@
                                         <input class="custom-file-input archivos" id="Nosotros" type="file"
                                             uploader-model="imagen.file">
                                         <label for="imagenprincipal"
-                                            class="custom-file-label">{{imagen.Categoria==="Nosotros"? imagen.name:imagen.placeholder}}</label>
+                                            class="custom-file-label">{{imagen.Categoria==="Nosotros"?
+                                            imagen.name:imagen.placeholder}}</label>
                                     </div>
                                     <div class="input-group-apped">
                                         <button class="btn btn-primary pull-right" ng-click="btnsubirimagen()"><i
@@ -596,6 +663,7 @@
                     </div>
                 </section>
             </div>
+            <!-- Sección Contacto -->
             <div class="row">
                 <section class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="card card-danger">
@@ -611,6 +679,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
+
                                     <ul class="nav nav-tabs" id="TabHeader" role="tablist">
                                         <li class="nav-item" role="presentation">
                                             <a class="nav-link active" id="desktop-tab" data-toggle="tab"
@@ -622,6 +691,7 @@
                                                 role="tab" aria-controls="Movil" aria-selected="true">Movil</a>
                                         </li>
                                     </ul>
+
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade show active" id="Contactodesktop" role="tabpanel"
                                             aria-labelledby="desktop-tab">
@@ -644,12 +714,26 @@
                                                             <hr>
                                                             <button class="btn btn-sm btn-outline-danger pull-right"
                                                                 type="button"
-                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Desactivar</button>
+                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Eliminar</button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="available__images__cont">
+                                                <div class="cont__datos" ng-repeat="contacto in contacto.disabled.Escritorio">
+                                                    <img src="{{dominio}}/images/Banners/{{contacto.imagen}}"
+                                                    alt="Imagen contacto" class="img-fluid enlace" style="margin-bottom: 10px;" ng-click="changePred(contacto._id, contacto.Categoria)">
+                                                    <div class="info__imagen">
+                                                        <small>Fecha de subida: {{contacto.FechaCreacion}}</small>
+                                                        <button class="btn btn-sm btn-outline-danger pull-right"
+                                                        ng-click="btnDesactivar(contacto._id, contacto.Categoria)">Eliminar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
                                         </div>
+
                                         <div class="tab-pane fade" id="Contactomovil" role="tabpanel"
                                             aria-labelledby="movil-tab">
                                             <br>
@@ -672,7 +756,7 @@
                                                             <hr>
                                                             <button class="btn btn-sm btn-outline-danger pull-right"
                                                                 type="button"
-                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Desactivar</button>
+                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Eliminar</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -700,7 +784,8 @@
                                         <input class="custom-file-input archivos" id="Contacto" type="file"
                                             uploader-model="imagen.file">
                                         <label for="imagenprincipal"
-                                            class="custom-file-label">{{imagen.Categoria==="Contacto"? imagen.name:imagen.placeholder}}</label>
+                                            class="custom-file-label">{{imagen.Categoria==="Contacto"?
+                                            imagen.name:imagen.placeholder}}</label>
                                     </div>
                                     <div class="input-group-apped">
                                         <button class="btn btn-primary pull-right" ng-click="btnsubirimagen()"><i
@@ -761,7 +846,7 @@
                                                             <hr>
                                                             <button class="btn btn-sm btn-outline-danger pull-right"
                                                                 type="button"
-                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Desactivar</button>
+                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Eliminar</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -789,7 +874,7 @@
                                                             <hr>
                                                             <button class="btn btn-sm btn-outline-danger pull-right"
                                                                 type="button"
-                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Desactivar</button>
+                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Eliminar</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -817,7 +902,8 @@
                                         <input class="custom-file-input archivos" id="Session" type="file"
                                             uploader-model="imagen.file">
                                         <label for="imagenprincipal"
-                                            class="custom-file-label">{{imagen.Categoria==="Session"? imagen.name:imagen.placeholder}}</label>
+                                            class="custom-file-label">{{imagen.Categoria==="Session"?
+                                            imagen.name:imagen.placeholder}}</label>
                                     </div>
                                     <div class="input-group-apped">
                                         <button class="btn btn-primary pull-right" ng-click="btnsubirimagen()"><i
@@ -878,7 +964,7 @@
                                                             <hr>
                                                             <button class="btn btn-sm btn-outline-danger pull-right"
                                                                 type="button"
-                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Desactivar</button>
+                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Eliminar</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -906,7 +992,7 @@
                                                             <hr>
                                                             <button class="btn btn-sm btn-outline-danger pull-right"
                                                                 type="button"
-                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Desactivar</button>
+                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Eliminar</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -934,7 +1020,8 @@
                                         <input class="custom-file-input archivos" id="Blog" type="file"
                                             uploader-model="imagen.file">
                                         <label for="imagenprincipal"
-                                            class="custom-file-label">{{imagen.Categoria==="Blog"? imagen.name:imagen.placeholder}}</label>
+                                            class="custom-file-label">{{imagen.Categoria==="Blog"?
+                                            imagen.name:imagen.placeholder}}</label>
                                     </div>
                                     <div class="input-group-apped">
                                         <button class="btn btn-primary pull-right" ng-click="btnsubirimagen()"><i

@@ -71,6 +71,15 @@
   background-color: #de0007;
   color: #fff;
 }
+.available__images__cont{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
+}
+.cont__datos{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2px;
+}
 /*Css para highchart*/
 
 .highcharts-figure,

@@ -83,7 +83,7 @@
 					</div>
 					
 					<div class="nuestrosproductos__masvendidos">
-						<div class="home__pr" ng-repeat="producto in Refacciones">
+						<div class="home__pr" ng-repeat="producto in Refacciones | orderBy:'Producto'">
 							<!-- Block2 -->
 							<div class="productos__informacion">
 
