@@ -48,6 +48,17 @@
   padding: 0.5rem;
 }
 
+.filtros__contenedor{
+  margin: 5px 0 5px 0;
+}
+.filtros__contenedor button {
+  border: 1px solid;
+  border-radius: 4px;
+}
+.filtros__contenedor button:hover, .filtro__activo{
+  background-color: #de0007;
+  color: #fff;
+}
 .enviogratis {
   display: flex;
   justify-content: center;

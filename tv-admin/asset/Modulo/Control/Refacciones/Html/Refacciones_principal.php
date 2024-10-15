@@ -57,8 +57,13 @@
                     </li>
                 </ul>
             </nav>
+            <div class="filtros__contenedor">
+                <button class="productoAZ" ng-click="DefaultRefacciones()">Producto A-Z</button>
+                <button class="dateCreated" ng-click="sortby('dateCreated')">Ultimo Creado</button>
+                <button class="dateModify" ng-click="sortby('dateModify')">Ultimo Modificado</button>
+            </div>
             <div class="row ng-cloak" >
-                <div class="col-md-3" ng-repeat="refaccion in refacciones " >
+                <div class="col-md-3" ng-repeat="refaccion in refacciones" >
                     <div class="card card-danger card-outline enlace" ng-click="btnEditarRefaccion(refaccion._id)">
                         <div class="ribbon-wrapper ribbon-lg" ng-show="refaccion.RefaccionNueva || refaccion.RefaccionOferta 
                         || refaccion.RefaccionLiquidacion || refaccion.agotado">

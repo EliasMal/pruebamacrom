@@ -24,6 +24,8 @@ function RefaccionesCtrl($scope, $http) {
     obj.publicados = true;
     obj.pageSize = 20;
     obj.pages = [];
+    obj.propertyName = 'Producto';
+    obj.ordentype = "asc";
 
     if (localStorage.getItem("Datos")) {
         localStorage.removeItem("Datos");
@@ -35,6 +37,24 @@ function RefaccionesCtrl($scope, $http) {
                 e.agotado = token
             })
         })
+    }
+
+    obj.sortby = (linkInfo) => {
+        window.location.href = "?mod=Refacciones&" + linkInfo;
+    }
+    obj.DefaultRefacciones = () =>{
+        window.location = "?mod=Refacciones";
+    }
+    if (window.location.href.includes("&")) {
+        const mylink = window.location.href.split("&");
+        const orden = mylink[1];
+        const mybutton = document.getElementsByClassName(orden)[0];
+        obj.propertyName = orden;
+        obj.ordentype = "desc";
+        mybutton.className += " filtro__activo";
+    } else{
+        const mybutton = document.getElementsByClassName("productoAZ")[0];
+        mybutton.className += " filtro__activo";
     }
 
     obj.getSeicom = async (clave) => {
@@ -64,7 +84,6 @@ function RefaccionesCtrl($scope, $http) {
 
     }
 
-
     obj.btnAgregarRefaccion = () => {
         window.location.href = "?mod=Refacciones&opc=new";
     }
@@ -78,7 +97,7 @@ function RefaccionesCtrl($scope, $http) {
             $http({
                 method: 'POST',
                 url: url,
-                data: { modelo: { opc: "buscar", tipo: "Refacciones", buscar: obj.buscar, publicados: obj.publicados, historico: obj.historico, skip: $skip, limit: $limit } },
+                data: { modelo: { opc: "buscar", tipo: "Refacciones", buscar: obj.buscar, publicados: obj.publicados, historico: obj.historico, skip: $skip, limit: $limit, orden: obj.propertyName, ordentype: obj.ordentype } },
                 headers: {
                     'Content-Type': undefined
                 },

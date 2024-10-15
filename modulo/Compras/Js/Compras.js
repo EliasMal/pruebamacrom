@@ -860,7 +860,6 @@ function ProfileCtrl($scope, $http) {
             url: urlProfile,
             data: { profile: { opc: opc, tipo: obj.pag, data: data } }
         }).then(function successCallback(res) {
-            console.log("datosCliente succes: ", res);
             if (res.data.Bandera == 1) {
                 switch (opc) {
                     case 'add':

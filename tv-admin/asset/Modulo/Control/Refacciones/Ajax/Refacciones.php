@@ -269,7 +269,7 @@
                     inner join Modelos as V on (V._id = P.Modelo)
                     inner join Anios as A on (A._id = P.Anios)
                     WHERE ({$arrayLikes['Productos']} OR {$arrayLikes['Clave']}) 
-                    and P.Estatus = {$this->formulario["historico"]} and Publicar = {$this->formulario["publicados"]} order by P.Producto";
+                    and P.Estatus = {$this->formulario["historico"]} and Publicar = {$this->formulario["publicados"]} order by {$this->formulario["orden"]}";
             $row = $this->conn->fetch($this->conn->query($sql));
             return $row["total"];
         }
@@ -281,14 +281,14 @@
             $array = array();
             $sql = "SELECT P._id, P.Clave, P.Producto, C.Categoria, M.Marca, V.Modelo,   
                     A.Anio, P.Precio1, P.Precio2, P.No_parte, P.Estatus, P.RefaccionNueva, P.RefaccionOferta, P.RefaccionLiquidacion,
-                    P.Enviogratis
+                    P.Enviogratis, P.dateCreated, P.dateModify
                     FROM Producto as P
                     inner join Categorias as C on (C._id = P._idCategoria)
                     inner join Marcas as M on (M._id = P._idMarca)
                     inner join Modelos as V on (V._id = P.Modelo)
                     inner join Anios as A on (A._id = P.Anios)
                     WHERE ({$arrayLikes['Productos']} OR {$arrayLikes['Clave']})
-                    and P.Estatus = {$this->formulario["historico"]} and Publicar = {$this->formulario["publicados"]} order by P.Producto LIMIT $skip, $limit";
+                    and P.Estatus = {$this->formulario["historico"]} and Publicar = {$this->formulario["publicados"]} order by {$this->formulario["orden"]} {$this->formulario["ordentype"]} LIMIT $skip, $limit";
             $id = $this->conn->query($sql);
             while($row = $this->conn->fetch($id)){
                 $row["imagen"] = file_exists("../../../../../../images/refacciones/{$row["_id"]}.png");

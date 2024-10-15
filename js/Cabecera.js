@@ -69,6 +69,11 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
             }
 
         }
+        setTimeout(function () {
+            if(window.location.href == "https://macromautopartes.com/?mod=Compras" && obj.Data.Carrito["length"] == 0 && $_SESSION["CarritoPrueba"]["length"] >0){
+                location.reload();
+            }
+        }, 300);
         return obj.Costumer.Subtotal;
     }
 
@@ -255,7 +260,6 @@ function FooterCtrl($scope, $http) {
 
     angular.element(document).ready(function () {
         obj.getCategorias();
-
 
     });
 }
