@@ -16,7 +16,9 @@
 <canvas id="canvas"></canvas>
 <section ng-controller="ProcesoCompraCtrl" class="p-res">
     <section class="titular__banner">
-        <img src="https://macromautopartes.com/images/Banners/Compras.png" alt="Banner compras">
+        <div ng-repeat="banner in compras.Escritorio">
+            <img loading="lazy" ng-src="https://macromautopartes.com/images/Banners/{{banner.imagen}}" alt="banner compras">
+        </div>
         <!-- <img src="images/Banners/Compras.png" alt="Banner compras"> Activar solo en la pagina bien -->
         <h2 class="l-text2 t-center" style="color: var(--primario)">
             Acreditar compra

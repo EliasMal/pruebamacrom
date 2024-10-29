@@ -9,6 +9,8 @@
         private $conn;
         private $jsonData = array("Bandera"=>0,"mensaje"=>"");
         private $formulario = array();
+        private $currentDateM = array();
+        private $DateBD = array();
         public function __construct($array) {
             $this->conn = new HelperMySql($array["server"], $array["user"], $array["pass"], $array["db"]);
         }
@@ -29,6 +31,7 @@
                     $this->jsonData["Nuevosclientes"] = $this->getNuevosClientes($this->getFirstWeekDay()) ;
                     $this->jsonData["Publicados"] = $this->getNumProductos(1);
                     $this->jsonData["NoPublicados"] = $this->getNumProductos(0);
+                    $this->jsonData["todos"] = $this->getUsers();
 
                 break;
                 case 'usrCON':
@@ -57,7 +60,36 @@
                 session_destroy();
             }
         }
-    
+
+        private function getUsers(){
+            $sql = "SELECT * FROM Usuarios where _id != '{$_SESSION["_id"]}'";
+            $result = $this->conn->fetch_all($this->conn->query($sql));
+            foreach ($result as $valor) {
+                $currentDateM[0] = $currentDate = date("Y-n-j H:i:s");
+                $DateBD[0] = date($valor["ultimoAcceso"]);
+                $currentDateM[1] = strtotime($currentDateM[0]);
+                $currentDateM[2] = date("m:d:H", $currentDateM[1]);
+                $DateBD[1] = strtotime($DateBD[0]);
+                $DateBD[2] = date("m:d:H", $DateBD[1]);
+
+                if($currentDateM[2] == $DateBD[2]){
+                    $DateBD[3] = strtotime('+15 minute', $DateBD[1]);
+                    $DateBD[3] = date('Y-n-j H:i:s', $DateBD[3]);
+                    if($currentDateM[0] >= $DateBD[3]){
+                        $this->actualizarOnlineNow($valor["_id"]);
+                    }
+                }else{
+                    $this->actualizarOnlineNow($valor["_id"]);
+                }
+            }
+            return $result;
+        }
+
+        private function actualizarOnlineNow($_id){
+            $sql = "UPDATE Usuarios SET OnlineNow = 0 where _id = $_id";
+            return $this->conn->query($sql);
+        }
+
         private function isonlineKill(){
             $sql = "UPDATE Usuarios SET OnlineNow = 0 where _id = '{$_SESSION["_id"]}' and Username = '{$_SESSION["usr"]}'";
             return $this->conn->query($sql);

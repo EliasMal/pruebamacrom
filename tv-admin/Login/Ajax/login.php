@@ -36,7 +36,7 @@ class login{
             }
         }else{
             $this->jsonData["Bandera"]=0;
-            $this->jsonData["mensaje"]="Error uno o mas campos estan vacios";
+            $this->jsonData["mensaje"]="Error uno o más campos estan vacios";
         }
         print json_encode($this->jsonData);
     }

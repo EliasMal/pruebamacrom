@@ -71,6 +71,7 @@ function menu(){
             $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Pedidos";                $opcMenu[$sum]["opc"]="?mod=Pedidos";           $sum++;
             $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Clientes";               $opcMenu[$sum]["opc"]="?mod=Clientes";          $sum++;
             $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Contacto";               $opcMenu[$sum]["opc"]="?mod=Contacto";          $sum++;
+            $opcMenu[$sum]["grupo"]="Secciones";            $opcMenu[$sum]["titulo"]= "Principal";              $opcMenu[$sum]["opc"]="?mod=webprincipal";      $sum++;
             $opcMenu[$sum]["grupo"]="Secciones";            $opcMenu[$sum]["titulo"]= "Blog";                   $opcMenu[$sum]["opc"]="?mod=Blog";              $sum++;
             $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Categorias";             $opcMenu[$sum]["opc"]="?mod=Categorias";        $sum++;
             $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Agencias";               $opcMenu[$sum]["opc"]="?mod=Marcas";            $sum++;

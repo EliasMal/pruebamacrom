@@ -25,10 +25,9 @@ function loginCtrl($scope,$http){
                     toastr.error(res.data.mensaje);
                 }
                 
-                
             }, function errorCallback(res){
                 toastr.error("Error: no se realizo la conexion con el servidor");
-        });
+            });
         
     }
 

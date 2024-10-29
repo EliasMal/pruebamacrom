@@ -95,6 +95,7 @@ function ComprasCtrl($scope, $http, $sce) {
                 if (inpCupon == element) {
                     obj.Costumer.Subtotal = (obj.Costumer.Subtotal * (valor_cpn / 100));
                     obj.Costumer.descuento = obj.Costumer.Subtotal; //Descuento envio para prueba credito
+                    obj.Costumer.valor_cpn = valor_cpn;
                     btncupon.disabled = true;
                     incpn.disabled = true;
                     btncupon.style.borderColor = "#00ff00";
@@ -882,12 +883,10 @@ function ProfileCtrl($scope, $http) {
                 }
 
             } else {
-                console.log("res dentro de sendirecciones: ", res);
                 toastr.error(res.data.mensaje);
             }
         }, function errorCallback(res) {
-            console.log("datosCliente error: ", res);
-            toastr.error("Error: no se realizo la conexion con el servidor");
+            toastr.info("No se encontro ningun Domicilio registrado");
         });
     }
 

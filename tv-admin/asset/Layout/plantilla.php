@@ -31,7 +31,7 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="./Plugins/select2/select2.min.css">
     <!--toastr-->
-    <link rel="stylesheet" href="./Plugins/toastr/build/toastr.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <!--pace-->
     <link rel="stylesheet" href="./Plugins/pace/pace.css">
     <!-- swictchery -->
@@ -129,7 +129,7 @@
 <!-- AdminLTE App -->
 <script src="./Js/adminlte.js"></script>
 <!--toastr-->
-<script type="text/javascript" src="./Plugins/toastr/toastr.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <!--pacejs-->
 <script type="text/javascript" src="./Plugins/pace/pace.js"></script>
 <!-- Switchery -->

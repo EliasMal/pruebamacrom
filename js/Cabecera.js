@@ -43,6 +43,7 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
 
     toastr.options = {
         "progressBar": true,
+        "closeButton": true
     }
 
     obj.getImagen = (id) => {
@@ -73,7 +74,7 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
             if(window.location.href == "https://macromautopartes.com/?mod=Compras" && obj.Data.Carrito["length"] == 0 && $_SESSION["CarritoPrueba"]["length"] >0){
                 location.reload();
             }
-        }, 300);
+        }, 400);
         return obj.Costumer.Subtotal;
     }
 

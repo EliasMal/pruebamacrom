@@ -139,7 +139,7 @@
 													<td  class="text-right">{{subtotal() | currency}}</td>
 												</tr>
 											<tr ng-show="Costumer.descuento > 0">
-												<td class="text-red">Descuento</td>
+												<td class="text-red">Descuento: <u>{{Costumer.valor_cpn}}%</u></td>
 												<td class="csmdesc text-right">- {{Costumer.descuento | currency}}</td>
 											</tr>
 											<tr>

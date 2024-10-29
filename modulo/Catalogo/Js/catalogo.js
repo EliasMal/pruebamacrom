@@ -104,7 +104,7 @@ function catalogosCtrl($scope, $http) {
             obj.currentPage = next_url - 1;
             obj.configPages();
             obj.getPaginador(obj.currentPage * obj.pageSize, obj.pageSize);
-            
+
             if (window.location.href.includes("%20")) {
                 obj.refaccion.producto = next_prod.replaceAll("%20", " ");
             } else {
@@ -392,8 +392,7 @@ function catalogosCtrl($scope, $http) {
                 switch (res.data.categoria) {
                     case 'Catalogos':
                         obj.catalogos = res.data.Data;
-                        //console.log(obj.catalogos);
-                        break;
+                    break;
 
                 }
 

@@ -18,6 +18,8 @@ ini_set('display_errors', '1');
 require_once "../../../tv-admin/asset/Clases/dbconectar.php";
 require_once "../../../tv-admin/asset/Clases/ConexionMySQL.php";
 require_once "../../../tv-admin/asset/Clases/AESCrypto.php";
+require_once '../../../vendor/autoload.php';
+use PHPMailer\PHPMailer\PHPMailer;
 
 date_default_timezone_set('America/Mexico_City');
 
@@ -93,44 +95,62 @@ class ProcesoCompra {
                                         $this->setcuponacre(); 
                                     }            
                                     //Envio de registro satisfactorio al Correo del usuario.
-                                    $destinatario ="web.tsuruvolks@gmail.com, ventasweb@macromautopartes.com";
-                                    $asunto='Compra en Macromautopartes';
-                                    $mensaje= "Nueva compra registrada en la pagina Macromautopartes, revisar el pedido para su envio. (Metodopago: Deposito/transferencia)";
-                                    $email = "ventasweb@macromautopartes.com";
-                                    $header ="From: ".$email;
-                                    $mensajeCompleto = $mensaje."\nAtentamente: Macromautopartes";
-                                    mail($destinatario, $asunto, $mensajeCompleto, $header);
+                                    $mail = new PHPMailer;
+                                    $mail->isSMTP();
+                                    $mail->SMTPDebug = 0;
+                                    $mail->Host = 'smtp.hostinger.com';
+                                    $mail->Port = 587;
+                                    $mail->SMTPAuth = true;
+                                    $mail->Username = 'ventasweb@macromautopartes.com';
+                                    $mail->Password = 'jSJLK6AqN%fwUOskf5@R';
+                                    $mail->setFrom('ventasweb@macromautopartes.com', 'Ventas Macrom');
+                                    $mail->addAddress('ventasweb@macromautopartes.com', 'Ventas');
+                                    $mail->Subject = 'Compra en Macromautopartes';
+                                    $mail->IsHTML(true);
+                                    $mail->CharSet = 'utf-8';
+                                    $mail->Body ='Nueva compra registrada en la pagina Macromautopartes, revisar el pedido para su envio. (Metodopago: Deposito/transferencia)';
+                                    if (!$mail->send()) {
+                                        echo 'Mailer Error: ' . $mail->ErrorInfo;
+                                    }
                                     //Fin Envio de registro satisfactorio al Correo del usuario.
 
                                     //Envio de compra satisfactoria al Correo del usuario.
                                     $destinatario = $_SESSION["usr"];
                                     $nombre = $_SESSION["nombrecorto"];
-                                    $asunto='Compra Macromautopartes';
-                                    $mensaje= '<!DOCTYPE html>
+                                    $mail = new PHPMailer;
+                                    $mail->isSMTP();
+                                    $mail->SMTPDebug = 0;
+                                    $mail->Host = 'smtp.hostinger.com';
+                                    $mail->Port = 587;
+                                    $mail->SMTPAuth = true;
+                                    $mail->Username = 'ventasweb@macromautopartes.com';
+                                    $mail->Password = 'jSJLK6AqN%fwUOskf5@R';
+                                    $mail->setFrom('ventasweb@macromautopartes.com', 'Ventas Macrom');
+                                    $mail->addAddress($destinatario, $nombre);
+                                    $mail->Subject = 'Compra Macromautopartes';
+                                    $mail->IsHTML(true);
+                                    $mail->CharSet = 'utf-8';
+                                    $mail->Body ='
                                     <html lang="es">
-                                    <head>
-                                    </head>
                                         <body>
                                             <div style="width:100%;">
                                                 <section>
                                                     <div>
                                                         <img style="width:100%;" src="https://macromautopartes.com/images/icons/CRcabecera.png">
-                                                            <div style="display: grid;text-align: center;">
-                                                                <h1 style="color:#de0007;font-size:30px;">¡Compra realizada exitosamente!</h4>
-                                                                <h4><img style="height:250px" src="https://macromautopartes.com/images/icons/CR-caja.png"></h4>
-                                                                <h3 style="color:#000;">¡Gracias por tu preferencia '.$nombre.'!<br>Tu pedido esta siendo revisado, para salir hacia tu destino.</h4>
-                                                            </div>
+                                                        <div style="display: grid;text-align: center;">
+                                                            <h1 style="color:#de0007;font-size:30px;">¡Compra realizada exitosamente!</h1>
+                                                            <h4><img style="height:250px" src="https://macromautopartes.com/images/icons/CR-caja.png"></h4>
+                                                            <h3 style="color:#000;">¡Gracias por tu preferencia '.$nombre.'!<br>Tu pedido esta siendo revisado, para salir hacia tu destino.</h3>
+                                                        </div>
                                                         <img style="width:100%;" src="https://macromautopartes.com/images/icons/CRPie-pagina.png">
                                                     </div>
                                                 </section>
                                             </div>
                                         </body>
                                     </html>';
-                                    $email = "ventasweb@macromautopartes.com";
-                                    $headers ="MIME.Version: 1.0". "\r\n";
-                                    $headers .= "Content-type:text/html;charset=UTF-8". "\r\n";
-                                    $headers .="From: ".$email;
-                                    mail($destinatario, $asunto, $mensaje, $headers);
+                                    if (!$mail->send()) {
+                                        echo 'Mailer Error: ' . $mail->ErrorInfo;
+                                    }
                                     //Fin Envio de compra satisfactoria al Correo del usuario.
                                 }else{
                                     $this->jsonData["Bandera"] = 0;

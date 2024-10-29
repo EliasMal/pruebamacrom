@@ -1,6 +1,8 @@
 <?php
     require_once "../../../tv-admin/asset/Clases/dbconectar.php";
     require_once "../../../tv-admin/asset/Clases/ConexionMySQL.php";
+    require_once '../../../vendor/autoload.php';
+    use PHPMailer\PHPMailer\PHPMailer;
     date_default_timezone_set('America/Mexico_City');
 
     Class Contacto{
@@ -54,14 +56,24 @@
                     $this->jsonData["Bandera"] = 1;
                     $this->jsonData["Mensaje"] = "Gracias por enviar tu mensaje, a la brevedad uno de nuestros ejecutivos se pondran en contacto con usted";
                     //Envio de registro satisfactorio al Correo del usuario.
-                    $destinatario ="omar.lara@macromautopartes.com, soporte@macromautopartes.com";
                     $nombre = $this->formulario->nombre;
-                    $asunto='Nuevo mensaje de Contacto';
-                    $mensaje= "Nuevo mensaje del cliente ".$nombre." enviado desde la pagina web.";
-                    $email = "soporte@macromautopartes.com";
-                    $header .="From: ".$email;
-                    $mensajeCompleto = $mensaje."\nAtentamente: Macromautopartes";
-                    mail($destinatario, $asunto, $mensajeCompleto, $header);
+                    $mail = new PHPMailer;
+                    $mail->isSMTP();
+                    $mail->SMTPDebug = 0;
+                    $mail->Host = 'smtp.hostinger.com';
+                    $mail->Port = 587;
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'soporte@macromautopartes.com';
+                    $mail->Password = '.Pm{d6+GxjZb';
+                    $mail->setFrom('soporte@macromautopartes.com', 'Soporte Macrom');
+                    $mail->addAddress('soporte@macromautopartes.com', 'Soporte');
+                    $mail->Subject = 'Nuevo mensaje de contacto';
+                    $mail->IsHTML(true);
+                    $mail->CharSet = 'utf-8';
+                    $mail->Body ='Nuevo mensaje del cliente '.$nombre.' enviado desde la pagina web.';
+                    if (!$mail->send()) {
+                        echo 'Mailer Error: ' . $mail->ErrorInfo;
+                    }
                     //Fin Envio de registro satisfactorio al Correo del usuario.
                 }else{
                     $this->jsonData["Bandera"] = 0;

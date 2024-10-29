@@ -21,6 +21,7 @@ function LoginCtrl($scope, $http) {
     obj.Registro = {};
     obj.Banner = [];
     obj.SeiData = {};
+    obj.dataflag = true;
     var Refaccion = {};
     var count_prod;
 
@@ -34,7 +35,6 @@ function LoginCtrl($scope, $http) {
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
                 obj.prodCarrito(res);
-                console.log(res);
                 localStorage.setItem('session', JSON.stringify(res.data.session));
                 localStorage.setItem('iduser', res.data.session.iduser);
                 localStorage.setItem('_id_domicilio', res.data.session.id_domicilio._id);
@@ -51,7 +51,7 @@ function LoginCtrl($scope, $http) {
                 alertvali.style.display = "block";
             }
         }, function errorCallback(res) {
-            toastr.error("Error: no se realizo la conexion con el servidor");
+            toastr.error("Error: el usuario no existe");
         });
     }
 
@@ -120,8 +120,10 @@ function LoginCtrl($scope, $http) {
         }
 
     }
-
+    var butonolv = document.querySelector(".btnolvide");
     obj.btnolvide = () => {
+        obj.dataflag = false;
+        butonolv.classList.add("non-active");
         obj.login.opc = "forgot";
         $http({
             method: 'POST',
@@ -131,16 +133,24 @@ function LoginCtrl($scope, $http) {
         }).then(function successCallback(res) {
             if (res.data.Olvidado == 1) {
                 toastr.success(res.data.mensaje);
+                obj.dataflag = true;
+                butonolv.classList.remove("non-active");
+    
             } else {
+                obj.dataflag = true;
                 toastr.error("Error: el usuario no existe");
+                butonolv.classList.remove("non-active");
             }
         }, function errorCallback(res) {
-            toastr.error("Error: no se realizo la conexion con el servidor");
+            obj.dataflag = true;
+            toastr.error("Error: el usuario no existe");
+            butonolv.classList.remove("non-active");
         });
     }
 
     obj.btnRegistrar = (form) => {
-
+        obj.dataflag = false;
+        butonolv.classList.add("non-active");
         obj.Registro.FechaCreacion = new Date();
         obj.Registro.FechaModificacion = new Date();
         obj.Registro.ultimoaccesso = new Date();
@@ -154,6 +164,8 @@ function LoginCtrl($scope, $http) {
 
             }).then(function successCallback(res) {
                 if (res.data.Bandera == 1) {
+                    obj.dataflag = true;
+                    butonolv.classList.remove("non-active");
                     location.href = "?mod=home";
                 } else {
                     toastr.error(res.data.mensaje);

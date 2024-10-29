@@ -9,6 +9,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', '0');
 require_once "../../../tv-admin/asset/Clases/dbconectar.php";
 require_once "../../../tv-admin/asset/Clases/ConexionMySQL.php";
+require_once '../../../vendor/autoload.php';
+use PHPMailer\PHPMailer\PHPMailer;
 date_default_timezone_set('America/Mexico_City');
 
 class Registro{
@@ -36,47 +38,51 @@ class Registro{
                         //Envio de registro satisfactorio al Correo del usuario.
                         $destinatario =$this->formulario->Registro->username;
                         $nombre = $this->formulario->Registro->Nombre;
-                        $asunto='Correo registrado en Macromautopartes';
-                        $mensaje= '<!DOCTYPE html>
+                        $mail = new PHPMailer;
+                        $mail->isSMTP();
+                        $mail->SMTPDebug = 0;
+                        $mail->Host = 'smtp.hostinger.com';
+                        $mail->Port = 587;
+                        $mail->SMTPAuth = true;
+                        $mail->Username = 'soporte@macromautopartes.com';
+                        $mail->Password = '.Pm{d6+GxjZb';
+                        $mail->setFrom('soporte@macromautopartes.com', 'Soporte Macrom');
+                        $mail->addAddress($destinatario, $nombre);
+                        $mail->Subject = 'Registro en Macromautopartes';
+                        $mail->IsHTML(true);
+                        $mail->CharSet = 'utf-8';
+                        $mail->Body ='
                         <html lang="es">
-                        <head>
-                        </head>
                             <body>
-                                <style>
-                                .contmenubus, footer, .copyseccion, #myBtn, .carritoshop, .menudesinsreg, .header2, .ft0{display: none;visibility: collapse;height:-100%;width:-100%;}
-                                .dpitm{display: flex;justify-content: space-evenly;}
-                                .pofam{font-family: Poppins;}
-                                </style>
-                                    <div>
-                                        <section style="padding-bottom:60px;>
-                                            <div class="container1" style="width:1000px;">
-                                                <div class="row">
-                                                    <div class="col-md-6 insmob" style="padding-bottom:30px;">
-                                                        <form name="frmReg" id="frmReg"  novalidate>
-                                                            <h4><img src="https://macromautopartes.com/images/icons/CRcabecera.png" style="width:100%;"></h4>
-                                                                <div style="color:#de0007;text-align:center;">
-                                                                    <h4 class="pofam" style="font-size:25px;line-height:32px;margin-bottom:0px;">Te has registrado de manera</h4>
-                                                                    <h4 class="pofam" style="font-size:25px;margin-top:0px">exitosa</h4>
-                                                                </div>
-                                                                <h4 style="text-align:center;"><img src="https://macromautopartes.com/images/icons/CR-caja.png" style="height: 250px;"></h4>
-                                                                <div>
-                                                                    <h4 class="pofam" style="color:#757575;text-align:center;font-size:22px;margin-bottom:0px;">Tu cuenta está lista para usarse</h4>
-                                                                    <h4 class="pofam" style="color:#9e9e9e;text-align:center;font-size:20px;margin-top:0px;">Comienza a comprar desde la comodidad de tu casa.</h4>
-                                                                </div>
-                                                            <h4 class="m-text26 prueba3" style="padding-bottom:42px;"><img src="https://macromautopartes.com/images/icons/CRPie-pagina.png" style="width:100%;"></h4>
-                                                        </form>
-                                                    </div>
+                                <style>.pofam{font-family: Poppins;}</style>
+                                <div>
+                                    <section style="padding-bottom:60px;>
+                                        <div style="width:1000px;">
+                                            <div>
+                                                <div style="padding-bottom:30px;background-color:#fff">
+                                                    <section>
+                                                        <h4><img src="https://macromautopartes.com/images/icons/CRcabecera.png" style="width:100%;"></h4>
+                                                        <div style="color:#de0007;text-align:center;">
+                                                            <h4 class="pofam" style="font-size:25px;line-height:32px;margin-bottom:0px;">Te has registrado de manera</h4>
+                                                            <h4 class="pofam" style="font-size:25px;margin-top:0px">exitosa</h4>
+                                                        </div>
+                                                        <h4 style="text-align:center;"><img src="https://macromautopartes.com/images/icons/CR-caja.png" style="height: 250px;"></h4>
+                                                        <div>
+                                                            <h4 class="pofam" style="color:#757575;text-align:center;font-size:22px;margin-bottom:0px;">Tu cuenta está lista para usarse</h4>
+                                                            <h4 class="pofam" style="color:#9e9e9e;text-align:center;font-size:20px;margin-top:0px;">Comienza a comprar desde la comodidad de tu casa.</h4>
+                                                        </div>
+                                                        <h4 style="padding-bottom:42px;"><img src="https://macromautopartes.com/images/icons/CRPie-pagina.png" style="width:100%;"></h4>
+                                                    </section>
                                                 </div>
                                             </div>
-                                        </section>
-                                    </div>
+                                        </div>
+                                    </section>
+                                </div>
                             </body>
                         </html>';
-                        $email = "soporte@macromautopartes.com";
-                        $headers ="MIME.Version: 1.0". "\r\n";
-                        $headers .= "Content-type:text/html;charset=UTF-8". "\r\n";
-                        $headers .="From: ".$email;
-                        mail($destinatario, $asunto, $mensaje, $headers);
+                        if (!$mail->send()) {
+                            echo 'Mailer Error: ' . $mail->ErrorInfo;
+                        }
                         //Fin Envio de registro satisfactorio al Correo del usuario.
                     }else{
                         $this->jsonData["Bandera"] = 0;
