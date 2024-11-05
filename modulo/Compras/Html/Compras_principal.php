@@ -212,7 +212,10 @@
 										</div>
 									</div>
 								</article>
-								<span class="btn btn-danger bg9 form-control confirmar--pago" ng-click="btnPagar()">Confirmar Pago</span>
+								<button class="btn btn-danger bg9 form-control confirmar--pago" ng-click="btnPagar()">Confirmar Pago</button>
+								<div class="clip">
+									<span class="form-control confirmando--pago"><b><i class="fa fa-sync-alt fa-spin"></i></b></span>
+								</div>
 							</div>
 					</div> <!--Fin Modal Metodo De Pago-->
 				</main>

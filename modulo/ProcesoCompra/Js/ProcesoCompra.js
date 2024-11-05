@@ -143,43 +143,7 @@ function ProcesoCompraCtrl($scope, $http) {
     });
     render();
 
-    obj.getBanners = (data) => {
-        $http({
-            method: 'POST',
-            url: "./tv-admin/asset/Modulo/Secciones/webprincipal/Ajax/webprincipal.php",
-            data: { imagen: data },
-            headers: {
-                'Content-Type': undefined
-            },
-            transformRequest: function (data) {
-                var formData = new FormData();
-                for (var m in data.imagen) {
-                    formData.append(m, data.imagen[m]);
-                }
-                //formData.append("file",data.file);
-
-                return formData;
-            }
-        }).then(function successCallback(res) {
-            if (res.data.Bandera == 1) {
-                switch (res.data.categoria) {
-                    case 'Compras':
-                        obj.compras = res.data.Data;
-                    break;
-
-                }
-
-            } else {
-                toastr.error(res.data.mensaje);
-            }
-
-        }, function errorCallback(res) {
-            toastr.error("Error: no se realizo la conexion con el servidor");
-        });
-    }
-
     angular.element(document).ready(function () {
-        obj.getBanners({ opc: "get", Categoria: "Compras", Estatus: 1 });
         if (window.location.href.includes("?mod=ProcesoCompra&opc=paso3")) {
             if($_SESSION["padlock"] != "lock"){
                 console.log("Pago Efectivo");

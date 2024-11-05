@@ -4,6 +4,12 @@
         display: none;
     }
 
+    @media(min-width: 768px) {
+        .p-res {
+            margin-top: -6rem;
+        }
+    }
+
     canvas {
         background-color: transparent;
         height: 100vh;
@@ -17,33 +23,39 @@
 <span id="button"></span>
 <canvas id="canvas"></canvas>
 <section ng-controller="ProcesoCompraCtrl" class="p-res">
-    <section class="titular__banner">
-        <div ng-repeat="banner in compras.Escritorio">
-            <img loading="lazy" ng-src="https://macromautopartes.com/images/Banners/{{banner.imagen}}" alt="banner compras">
-        </div>
-        <!-- <img src="images/Banners/Compras.png" alt="Banner compras"> Activar solo en la pagina bien -->
-    </section>
 
-    <section class="contenedor__CompraAcreditada" ng-controller="CabeceraCtrl" ng-init="mod='{mod}'">
-        <div class="container">
-            <div class="">
-                <div class="Proceso__Compra">
-                    <div class="d-grid">
-                        <h2 class="l-text2 t-center" style="color: var(--primario)">
-                            {acreditada}
-                        </h2>
-                        <img ng-src="https://macromautopartes.com/images/icons/CR-caja.png" class="Proceso__Compra--img"
-                            alt="">
-                        <div class="m-text26 Proceso__Compra2 center--text">
-                            {mensaje}
+    <div ng-controller="CabeceraCtrl" ng-init="mod='{mod}'">
+        <section class="titular__banner">
+            <div ng-repeat="banner in dataBanners.Escritorio">
+                <img loading="lazy" ng-src="https://macromautopartes.com/images/Banners/{{banner.imagen}}"
+                    alt="banner compras">
+            </div>
+            <!-- <img src="images/Banners/Compras.png" alt="Banner compras"> Activar solo en la pagina bien -->
+        </section>
+
+        <section class="contenedor__CompraAcreditada">
+            <div class="container">
+                <div class="">
+                    <div class="Proceso__Compra">
+                        <div class="d-grid">
+                            <h2 class="l-text2 t-center" style="color: var(--primario)">
+                                {acreditada}
+                            </h2>
+                            <img ng-src="https://macromautopartes.com/images/icons/CR-caja.png"
+                                class="Proceso__Compra--img" alt="">
+                            <div class="m-text26 Proceso__Compra2 center--text">
+                                {mensaje}
+                            </div>
                         </div>
-                    </div>
-                    <div class="acreditar__contenedor--links">
-                        <button class="acreditar__boton" onclick="location.href = '?mod=Profile&opc=Mispedidos'">Ver Mis
-                            Pedidos</button>
+                        <div class="acreditar__contenedor--links">
+                            <button class="acreditar__boton" onclick="location.href = '?mod=Profile&opc=Mispedidos'">Ver
+                                Mis
+                                Pedidos</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
+
 </section>

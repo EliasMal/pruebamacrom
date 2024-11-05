@@ -21,7 +21,6 @@ function homeCtrl($scope, $http) {
     var obj = $scope;
     obj.Data = {};
     obj.productos = [];
-    obj.databannerPrincipal;
     obj.promociones;
 
     const vistamasvendidos = document.querySelector("#vistamasvendidos");
@@ -116,48 +115,8 @@ function homeCtrl($scope, $http) {
         window.open("?mod=catalogo&opc=detalles&_id=" + _id, "_self");
     }
 
-    obj.getBanners = (data) => {
-        $http({
-            method: 'POST',
-            url: "./tv-admin/asset/Modulo/Secciones/webprincipal/Ajax/webprincipal.php",
-            data: { imagen: data },
-            headers: {
-                'Content-Type': undefined
-            },
-            transformRequest: function (data) {
-                var formData = new FormData();
-                for (var m in data.imagen) {
-                    formData.append(m, data.imagen[m]);
-                }
-                //formData.append("file",data.file);
-
-                return formData;
-            }
-        }).then(function successCallback(res) {
-            if (res.data.Bandera == 1) {
-                switch (res.data.categoria) {
-                    case 'Principal':
-                        obj.databannerPrincipal = res.data.Data;
-
-                        break;
-                    case 'Promociones':
-                        obj.promociones = res.data.Data;
-                        break;
-                }
-
-            } else {
-                toastr.error(res.data.mensaje);
-            }
-
-        }, function errorCallback(res) {
-            toastr.error("Error: no se realizo la conexion con el servidor");
-        });
-    }
-
     angular.element(document).ready(function () {
         obj.getCategorias();
-        obj.getBanners({ opc: "get", Categoria: "Principal", Estatus: 1 });
-        obj.getBanners({ opc: "get", Categoria: "Promociones", Estatus: 1 });
     });
 
 }

@@ -20,7 +20,7 @@ tsuruVolks.controller('CabeceraCtrl', ["$scope", "$http", "$sce", "vcRecaptchaSe
             }
         };
     });
-
+// var dataBanners = {};
 function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
     var obj = $scope;
     obj.session = $_SESSION;
@@ -40,7 +40,7 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
     obj.flagenvio = false;
     obj.cotizacion;
     obj.Data = {};
-
+    obj.dataBanners;
     toastr.options = {
         "progressBar": true,
         "closeButton": true
@@ -167,6 +167,46 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
 
     }
 
+    obj.getBanners = (data) => {
+        $http({
+            method: 'POST',
+            url: "./tv-admin/asset/Modulo/Secciones/webprincipal/Ajax/webprincipal.php",
+            data: { imagen: data },
+            headers: {
+                'Content-Type': undefined
+            },
+            transformRequest: function (data) {
+                var formData = new FormData();
+                for (var m in data.imagen) {
+                    formData.append(m, data.imagen[m]);
+                }
+                //formData.append("file",data.file);
+
+                return formData;
+            }
+        }).then(function successCallback(res) {
+            if (res.data.Bandera == 1) {
+                switch (res.data.categoria) {
+                    case 'Principal':
+                        obj.dataBanners = res.data.Data;
+                        break;
+                    case 'Catalogos':
+                        obj.dataBanners = res.data.Data;
+                        break;
+                    case 'Compras':
+                        obj.dataBanners = res.data.Data;
+                        break;
+                }
+
+            } else {
+                toastr.error(res.data.mensaje);
+            }
+
+        }, function errorCallback(res) {
+            toastr.error("Error: no se realizo la conexion con el servidor");
+        });
+    }
+
     obj.RefaccionDetalles = (_id) => {
         window.open("?mod=catalogo&opc=detalles&_id=" + _id, "_self");
     }
@@ -224,6 +264,20 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
 
     angular.element(document).ready(function () {
         obj.getCategorias();
+        switch(window.location.href){
+            case "https://macromautopartes.com/":
+                obj.getBanners({ opc: "get", Categoria: "Principal", Estatus: 1 });
+            break;
+            case "https://macromautopartes.com/?mod=home":
+                obj.getBanners({ opc: "get", Categoria: "Principal", Estatus: 1 });
+            break;
+        }
+        if (window.location.href.includes("?mod=catalogo")) {
+            obj.getBanners({ opc: "get", Categoria: "Catalogos", Estatus: 1 });
+        }
+        if (window.location.href.includes("?mod=ProcesoCompra")) {
+            obj.getBanners({ opc: "get", Categoria: "Compras", Estatus: 1 });
+        }
     });
 }
 

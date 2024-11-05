@@ -30,7 +30,6 @@ function catalogosCtrl($scope, $http) {
     obj.Vehiculos = [];
     obj.Modelos = [];
     obj.Refacciones = [];
-    obj.catalogos = [];
     /*variables del paginador*/
     obj.currentPage = 0;
     obj.pages = [];
@@ -370,43 +369,7 @@ function catalogosCtrl($scope, $http) {
         window.open("?mod=catalogo&opc=detalles&_id=" + _id, "_self");
     }
 
-    obj.getBanners = (data) => {
-        $http({
-            method: 'POST',
-            url: "./tv-admin/asset/Modulo/Secciones/webprincipal/Ajax/webprincipal.php",
-            data: { imagen: data },
-            headers: {
-                'Content-Type': undefined
-            },
-            transformRequest: function (data) {
-                var formData = new FormData();
-                for (var m in data.imagen) {
-                    formData.append(m, data.imagen[m]);
-                }
-                //formData.append("file",data.file);
-
-                return formData;
-            }
-        }).then(function successCallback(res) {
-            if (res.data.Bandera == 1) {
-                switch (res.data.categoria) {
-                    case 'Catalogos':
-                        obj.catalogos = res.data.Data;
-                    break;
-
-                }
-
-            } else {
-                toastr.error(res.data.mensaje);
-            }
-
-        }, function errorCallback(res) {
-            toastr.error("Error: no se realizo la conexion con el servidor");
-        });
-    }
-
     angular.element(document).ready(function () {
-        obj.getBanners({ opc: "get", Categoria: "Catalogos", Estatus: 1 });
         obj.getCategorias();
     });
 }

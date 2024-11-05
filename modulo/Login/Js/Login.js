@@ -19,7 +19,6 @@ function LoginCtrl($scope, $http) {
     var obj = $scope;
     obj.login = {};
     obj.Registro = {};
-    obj.Banner = [];
     obj.SeiData = {};
     obj.dataflag = true;
     var Refaccion = {};
@@ -207,42 +206,13 @@ function LoginCtrl($scope, $http) {
         });
     });
 
-    obj.getBanners = (data) => {
-        $http({
-            method: 'POST',
-            url: "./tv-admin/asset/Modulo/Secciones/webprincipal/Ajax/webprincipal.php",
-            data: { imagen: data },
-            headers: {
-                'Content-Type': undefined
-            },
-            transformRequest: function (data) {
-                var formData = new FormData();
-                for (var m in data.imagen) {
-                    formData.append(m, data.imagen[m]);
-                }
-                //formData.append("file",data.file);
-
-                return formData;
-            }
-        }).then(function successCallback(res) {
-            if (res.data.Bandera == 1) {
-                obj.Banner = res.data.Data;
-
-            } else {
-                toastr.error(res.data.mensaje);
-            }
-
-        }, function errorCallback(res) {
-            toastr.error("Error: no se realizo la conexion con el servidor");
-        });
-    }
-
     obj.btnAceptoAvisoPrivasidad = () => {
         $("#ModalAviso").modal("hide");
     }
 
-    angular.element(document).ready(function () {
-        obj.getBanners({ opc: "get", Categoria: obj.mod, Estatus: 1 });
-    });
+    // angular.element(document).ready(function () {
+        
+
+    // });
 
 }

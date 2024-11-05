@@ -217,8 +217,12 @@ function ComprasCtrl($scope, $http, $sce) {
     } else if ($_SESSION.facturacion == 1) {
         obj.Costumer.facturacion = 1;
     }
-
+    
+    var butccompra = document.querySelector(".clip");
+    var butcompra = document.querySelector(".confirmar--pago");
     obj.btnPagar = () => {
+        butcompra.disabled = true;
+        butccompra.classList.add("animationclip");
         let aut = false;
         if (obj.Costumer.dataDomicilio.Bandera) {
             if ((obj.Costumer.facturacion == "1" && obj.Costumer.dataFacturacion.Bandera) || obj.Costumer.facturacion == "0") {
@@ -269,17 +273,26 @@ function ComprasCtrl($scope, $http, $sce) {
             data: { Costumer: data }
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
-                if (obj.total === 0) {
-                    location.href = "?mod=ProcesoCompra&opc=paso3";
-                } else if (obj.Costumer.metodoPago === "Deposito" || obj.Costumer.metodoPago === "Transferencia") {
-                    obj.openDeposito(res.data.Data);
-                    //location.href="?mod=ProcesoCompra&opc=paso3";
-                } else if (obj.Costumer.metodoPago === "Tarjeta") {
-                    obj.seturl(res.data.data[0]);
-                }
-
+                    butccompra.classList.remove("animationclip");
+                    butcompra.disabled = false;
+                    if (obj.total === 0) {
+                        location.href = "?mod=ProcesoCompra&opc=paso3";
+                    } else if (obj.Costumer.metodoPago === "Deposito" || obj.Costumer.metodoPago === "Transferencia") {
+                        obj.openDeposito(res.data.Data);
+                        //location.href="?mod=ProcesoCompra&opc=paso3";
+                    } else if (obj.Costumer.metodoPago === "Tarjeta") {
+                        obj.seturl(res.data.data[0]);
+                    }
             } else {
-                toastr.error("ERROR");
+                setTimeout(() => {
+                    butccompra.classList.remove("animationclip");
+                    butcompra.innerText = "¡Elige metodo de pago!";
+                    toastr["info"]("Recuerda seleccionar un metodo de pago.");
+                    setTimeout(()=>{
+                        butcompra.disabled = false;
+                        butcompra.innerText = "Confirmar Pago";
+                    },1500);
+                }, 2000);
             }
         }, function errorCallback(res) {
             toastr.error("Error: no se realizo la conexion con el servidor");

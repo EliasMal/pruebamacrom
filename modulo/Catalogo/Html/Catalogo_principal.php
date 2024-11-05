@@ -1,7 +1,7 @@
 <div ng-controller="catalogosCtrl" ng-init="refaccion.categoria='{categoria}'" class="ctrlmain global__content">
 	<!-- Title Page -->
-	<header class="header">
-		<section class="header__contenido" ng-repeat="cat in catalogos.Escritorio">
+	<header class="header" ng-controller="CabeceraCtrl">
+		<section class="header__contenido" ng-repeat="cat in dataBanners.Escritorio">
 			<picture class="header__picture">
 				<!-- <source srcset="https://macromautopartes.com/images/Banners/{{cat.imagen}}" type="image/webp" class="header__picture--img"> -->
 				<img loading="lazy" ng-src="https://macromautopartes.com/images/Banners/{{cat.imagen}}" alt="banner">
