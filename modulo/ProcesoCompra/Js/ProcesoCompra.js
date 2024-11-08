@@ -25,9 +25,6 @@ function ProcesoCompraCtrl($scope, $http) {
             if (result) {
                 if (result.data.Bandera == 1) {
                     console.log("Compra Registrada");
-                    if($_SESSION["datacc"] == ""){
-                        location.reload();
-                    }
                 }
             }
             $scope.$apply();

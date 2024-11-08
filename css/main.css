@@ -85,6 +85,7 @@
   --trans-dur: 0.4s;
   --trans-timing1: cubic-bezier(0.65, 0, 0.35, 1);
   --trans-timing2: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  --warning: #ffc107;
 }
 
 /* Preloader */

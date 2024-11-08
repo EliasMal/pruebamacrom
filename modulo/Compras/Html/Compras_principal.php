@@ -186,8 +186,8 @@
 								<article class="metodo__pago">
 									<div class="metodo__pago--contenedor">
 										<div class="metodo__pago--metodos">
-											<div class="metodo__pago--metodo" disabled style="opacity:0.1">
-												<button class="metodopago bo18 h-120" id="btncredito" ng-click="metarjeta()" disabled>
+											<div class="metodo__pago--metodo">
+												<button class="metodopago bo18 h-120" id="btncredito" ng-click="metarjeta()">
 													<label class="radio2">Tarjeta de crédito / debito</label>
 													<img ng-src="https://macromautopartes.com/images/icons/VISA MASTERCARD.svg" alt="tarjeta credito" class ="img-fluid mx-auto d-block" width="150px" height="31px">
 													<!-- <img ng-src="images/icons/VISA MASTERCARD.svg" alt="tarjeta credito" class ="img-fluid mx-auto d-block" width="150px" height="31px" style="opacity:0.1"> -->

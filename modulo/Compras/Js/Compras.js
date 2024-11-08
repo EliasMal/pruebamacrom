@@ -91,7 +91,7 @@ function ComprasCtrl($scope, $http, $sce) {
                         inpCupon = element;
                     }
                 }
-
+                             
                 if (inpCupon == element) {
                     obj.Costumer.Subtotal = (obj.Costumer.Subtotal * (valor_cpn / 100));
                     obj.Costumer.descuento = obj.Costumer.Subtotal; //Descuento envio para prueba credito
@@ -286,12 +286,16 @@ function ComprasCtrl($scope, $http, $sce) {
             } else {
                 setTimeout(() => {
                     butccompra.classList.remove("animationclip");
-                    butcompra.innerText = "¡Elige metodo de pago!";
+                    butcompra.classList.remove("btn-danger");
+                    butcompra.classList.add("btn-warning");
+                    butcompra.innerHTML = '<i class="fas fa-exclamation-triangle">¡Elige metodo de pago!</i>';
                     toastr["info"]("Recuerda seleccionar un metodo de pago.");
                     setTimeout(()=>{
                         butcompra.disabled = false;
-                        butcompra.innerText = "Confirmar Pago";
-                    },1500);
+                        butcompra.innerHTML = "Confirmar Pago";
+                        butcompra.classList.remove("btn-warning");
+                        butcompra.classList.add("btn-danger");
+                    },3000);
                 }, 2000);
             }
         }, function errorCallback(res) {
