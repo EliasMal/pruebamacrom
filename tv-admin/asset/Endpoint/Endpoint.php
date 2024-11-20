@@ -45,7 +45,8 @@ Class Endpoint{
                 fwrite($filelog, "Obtengo el id del pedido-----------------\n");
                 fwrite($filelog, $id);
                 $this->setPedido( $id, 1);
-                $this->DeleteCarrito($datauser);
+                $fechacompleta = $this->xml->date." ".$this->xml->time;
+                $this->DeleteCarrito($datauser,$fechacompleta);
             }else{
                 $this->setPedido($id,6);
             }
@@ -88,7 +89,7 @@ Class Endpoint{
         return $this->conn->query($sql)? "Datos Ingresados":"Error en la insercion $sql";
     }
 
-    private function DeleteCarrito($user){
+    private function DeleteCarrito($user,$fechacompleta){
         //Envio de registro satisfactorio al Correo del usuario.
         $mail = new PHPMailer;
         $mail->isSMTP();
@@ -137,6 +138,7 @@ Class Endpoint{
                                 <h4><img style="height:250px" src="https://macromautopartes.com/images/icons/CR-caja.png"></h4>
                                 <h3 style="color:#000;">¡Gracias por tu preferencia '.$nombre.'!<br>Tu pedido esta siendo revisado, para salir hacia tu destino.</h3>
                             </div>
+                            <p style="text-align:right;margin:0;">Fecha Compra:'.$fechacompleta.'</p>
                             <img style="width:100%;" src="https://macromautopartes.com/images/icons/CRPie-pagina.png">
                         </div>
                     </section>

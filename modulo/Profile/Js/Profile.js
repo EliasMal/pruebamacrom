@@ -82,6 +82,7 @@ function ProfileCtrl($scope, $http) {
     /*Seccion para el modulo de mis pedidos */
     obj.setWizard = (estatus) => {
         switch (estatus) {
+            case 1:
             case 2:
                 obj.wizard.preparacion = true;
                 break;
@@ -189,16 +190,23 @@ function ProfileCtrl($scope, $http) {
         console.log(obj.dataFactura)
         $("#Mdlfiles").modal('show');
     }
+    obj.mdlclose = ()=>{
+        $("#Mdlfiles").modal('hide');
+    }
 
     obj.btnDownloadZip = () => {
         let zip = new JSZip();
         let promise = new Blob([$.get(obj.dataFactura.xml)], { type: "text/plain;charset=utf-8" });
-
-        zip.file(obj.dataFactura.xml, promise)
+        zip.file(obj.dataFactura.xml, promise);
         promise = new Blob([$.get(obj.dataFactura.pdf)], { type: "text/plain;charset=utf-8" });
-        console.log(promise)
-        zip.file(obj.dataFactura.pdf, promise)
+        console.log(promise);
+        zip.file("obj.dataFactura.pdf", promise);
+        console.log(zip);
 
+        // zip.generateAsync({ type: "blob" })
+        // .then(function (content) {
+        //     saveAs(content, "Factura.zip");
+        // });
     }
 
     obj.btnuploadComprobante = () => {

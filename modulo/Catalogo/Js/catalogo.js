@@ -75,60 +75,58 @@ function catalogosCtrl($scope, $http) {
         obj.refaccion.tipo = "Categorias";
         obj.refaccion.x = 0;
         obj.refaccion.y = obj.pageSize;
-        try {
-            const result = await $http({
-                method: 'GET',
-                url: url_catalogo,
-                params: obj.refaccion
-            }).then(function successCallback(res) {
-                return res
-            }, function errorCallback(res) {
-                toastr.error("Error: no se realizo la conexion con el servidor");
-            });
+        if (window.location.href.includes("%20")) {
+            obj.refaccion.producto = next_prod.replaceAll("%20", " ");
+        } else {
+            obj.refaccion.producto = next_prod;
+        }
+        if (obj.refaccion.producto.includes("%C3%B1")) {
+            obj.refaccion.producto = obj.refaccion.producto.replaceAll("%C3%B1", "ñ");
+        }
+        if (obj.refaccion.producto.includes("%C3%BC")) {
+            obj.refaccion.producto = obj.refaccion.producto.replaceAll("%C3%BC", "ü");
+        }
+        if (next_marca.includes("?%20string:")) {
+            obj.refaccion.marca = "";
+        } else {
+            obj.refaccion.marca = next_marca;
+        }
+        
+        if(obj.refaccion.producto != "" || obj.refaccion.marca != ""){
+            obj.refaccion.orden = "Producto";
+            obj.refaccion.tipodeorden = "ASC";
+        }else{
+            obj.refaccion.orden = "dateCreated";
+            obj.refaccion.tipodeorden = "DESC";
+        }
+        $http({
+            method: 'GET',
+            url: url_catalogo,
+            params: obj.refaccion
+        }).then(function successCallback(res) {
+            if (res.data.Bandera == 1) {
+                obj.categorias = res.data.Data.Categorias;
+                obj.Marcas = res.data.Data.Marcas;
 
-            if (result) {
-                if (result.data.Bandera == 1) {
-                    obj.categorias = result.data.Data.Categorias;
-                    obj.Marcas = result.data.Data.Marcas;
+                obj.Refacciones = res.data.Data.Refacciones;
+                obj.Trefacciones = res.data.Data.Trefacciones;
 
-                    obj.Refacciones = result.data.Data.Refacciones;
-                    obj.Trefacciones = result.data.Data.Trefacciones;
-
-                    obj.currentPage = next_url - 1;
-                    obj.configPages();
-                    obj.eachRefacciones(obj.Refacciones);
-                }
-                $scope.$apply();
+                obj.currentPage = next_url - 1;
+                obj.configPages();
+                obj.eachRefacciones(obj.Refacciones);
             }
+
             obj.currentPage = next_url - 1;
             obj.configPages();
             obj.getPaginador(obj.currentPage * obj.pageSize, obj.pageSize);
-
-            if (window.location.href.includes("%20")) {
-                obj.refaccion.producto = next_prod.replaceAll("%20", " ");
-            } else {
-                obj.refaccion.producto = next_prod;
-            }
-            if (obj.refaccion.producto.includes("%C3%B1")) {
-                obj.refaccion.producto = obj.refaccion.producto.replaceAll("%C3%B1", "ñ");
-            }
-            if (obj.refaccion.producto.includes("%C3%BC")) {
-                obj.refaccion.producto = obj.refaccion.producto.replaceAll("%C3%BC", "ü");
-            }
-            if (next_marca.includes("?%20string:")) {
-                obj.refaccion.marca = "";
-            } else {
-                obj.refaccion.marca = next_marca;
-            }
 
             if (next_marca != "") {
                 obj.refaccion.vehiculo = next_vehi;
                 obj.getVehiculos();
             }
-
-        } catch (error) {
-            toastr.error(error);
-        }
+        }, function errorCallback(res) {
+            toastr.error("Error: no se realizo la conexion con el servidor");
+        });
 
     }
 
@@ -210,78 +208,6 @@ function catalogosCtrl($scope, $http) {
         } catch (error) {
 
         }
-    }
-
-    obj.getAnios = async () => {
-        obj.refaccion.tipo = "Anios";
-        obj.refaccion.x = 0;
-        obj.refaccion.y = obj.pageSize;
-        try {
-            const result = await $http({
-                method: 'GET',
-                url: url_catalogo,
-                params: obj.refaccion
-            }).then(function successCallback(res) {
-                return res
-            }, function errorCallback(res) {
-                toastr.error("Error: no se realizo la conexion con el servidor");
-            });
-            if (result) {
-                if (result.data.Bandera == 1) {
-                    obj.Refacciones = result.data.Data.Refacciones;
-                    obj.Trefacciones = result.data.Data.Trefacciones;
-                    obj.currentPage = next_url - 1;
-                    obj.configPages();
-                    obj.eachRefacciones(obj.Refacciones)
-                } else {
-                    toastr.error(result.data.Mensaje);
-                }
-            }
-            $scope.$apply();
-            obj.currentPage = next_url - 1;
-            obj.configPages();
-            obj.getPaginador(obj.currentPage * obj.pageSize, obj.pageSize);
-
-        } catch (error) {
-            toastr.error(error);
-        }
-
-    }
-
-    obj.getRefaccion = async (x = 0, y = obj.pageSize) => {
-        obj.refaccion.tipo = "Refaccion";
-        obj.refaccion.x = 0;
-        obj.refaccion.y = obj.pageSize;
-        try {
-            const result = await $http({
-                method: 'GET',
-                url: url_catalogo,
-                params: obj.refaccion
-            }).then(function successCallback(res) {
-                return res
-            }, function errorCallback(res) {
-                toastr.error("Error: no se realizo la conexion con el servidor");
-            });
-            if (result) {
-                if (result.data.Bandera == 1) {
-                    obj.Refacciones = result.data.Data.Refacciones;
-                    obj.Trefacciones = result.data.Data.Trefacciones;
-                    obj.currentPage = next_url - 1;
-                    obj.configPages();
-                    obj.eachRefacciones(obj.Refacciones);
-                    console.log(obj.Refacciones);
-                    window.location.href = "?mod=catalogo&pag=" + 1 + "&prod=" + obj.refaccion.producto + "&cate=" + next_cate + "&armadora=" + obj.refaccion.marca + "&mdl=" + obj.refaccion.vehiculo + "&[a]=" + obj.refaccion.anio;
-
-                } else {
-                    toastr.error(result.data.Mensaje);
-                }
-            }
-
-            $scope.$apply();
-        } catch (error) {
-            toastr.error(error);
-        }
-
     }
 
     var catalogo_buscador = document.querySelector("#prod_input");

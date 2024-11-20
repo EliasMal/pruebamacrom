@@ -64,8 +64,8 @@
                 <li class="nav-item-help enlace"><a class="nav-help">Ayuda <i class="fas fa-question-circle"></i></a></li>
                 
                 <div class="talk-bubble tri-right left-top none">
-
                   <div class="talktext">
+                    <i class="far fa-times-circle enlace closeHelp"></i>
                     <section class="help1">
                       <p>
                         <b>Ingresar cupones:</b> Coloca el nombre del cupon, pulsa la tecla "Enter" o la tecla coma ",".<br>
@@ -128,7 +128,7 @@
                     <input type="hidden" name="tags" value="" ng-model="cliente.cupones">
                     <div class="contenedor__formulario__botones">
                       <button class="form-control btnF__cupones" ng-click="cuponGuardar()">Guardar para este usuario</button>
-                    <button class="form-control btnF__cupones" ng-click="cuponGuardarAll()">Guardar para todos los usuarios</button>
+                      <button class="form-control btnF__cupones" ng-click="cuponGuardarAll()">Guardar para todos los usuarios</button>
                     </div>
                   </div>
 
@@ -236,6 +236,7 @@
                 </div>
               </div>
             </div>
+            <button class="form-control btn-danger" ng-click="cuponDeleteAll()">Borrar cupones de todos los usuarios</button>
           </div>
         </section>
       </div>

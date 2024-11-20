@@ -149,7 +149,6 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
             if (result) {
                 if (result.data.Bandera == 1) {
                     obj.Data = result.data.Data;
-
                     // console.log(obj.Data.Categorias);
                     // for (var i = 0; i <= obj.Data.Categorias.length; i++) {
                     //     if (obj.Data.Categorias[i] != undefined) {

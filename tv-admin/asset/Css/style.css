@@ -12,7 +12,7 @@
 .block{
   display: block;
 }
-.white_c{
+.white_c,.fa-angle-double-right:hover,.fa-angle-double-left:hover{
   color: #007bff;
 }
 .talk-bubble {
@@ -30,8 +30,16 @@
   padding: 1em;
   text-align: justify;
   line-height: 1.5em;
+  display: grid;
 }
-
+.closeHelp{
+  display: grid;
+  justify-self: flex-end;
+  text-align: end;
+}
+.closeHelp:hover{
+  color: #de0007;
+}
 .tri-right.left-top:after {
   content: ' ';
   position: absolute;

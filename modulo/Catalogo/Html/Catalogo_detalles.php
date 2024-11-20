@@ -198,7 +198,7 @@
 		<!-- Related Product -->
 		<section class="contenedor productos__relacionados">
 			<div class="contenedor-contenido">
-				<div class="sec-title">
+				<div class="sec-title t-center">
 					<h3 class="m-text5">
 						Productos Relacionados
 					</h3>

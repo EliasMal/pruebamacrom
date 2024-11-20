@@ -83,15 +83,15 @@
 					</div>
 					
 					<div class="nuestrosproductos__masvendidos">
-						<div class="home__pr" ng-repeat="producto in Refacciones | orderBy:'Producto'">
+						<div class="home__pr" ng-repeat="producto in Refacciones">
 							<!-- Block2 -->
 							<div class="productos__informacion">
 
 								<div class="wrap-pic-w of-hidden cursorpnt" 
 								ng-class="{'pos-relative': !producto.agotado}">
 									<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="enlace">
-										<!-- <img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/'+producto._id+'.png':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}"> -->
-										<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}">
+										<img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/'+producto._id+'.png':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}">
+										<!-- <img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}"> -->
 									</a>
 								</div>
 

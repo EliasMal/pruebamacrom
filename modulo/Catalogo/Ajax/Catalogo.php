@@ -145,7 +145,8 @@
 
         private function getRefacciones($arrayLikes, $x=0, $y = 20 ){
             $array = array();
-              
+            $orden = $this->formulario["orden"];
+            $tipodeorden = $this->formulario["tipodeorden"];
             if(isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0){
                 $condicion = $this->formulario["categoria"]!= "T"? " and P._idCategoria = {$this->formulario["categoria"]}":"";
             }
@@ -173,7 +174,7 @@
             $sql = "SELECT P.*, PROV._id as idProveedor, PROV.tag_alt as tag_altproveedor, PROV.tag_title as tag_titleproveedor FROM Producto AS P "
             . "left join Proveedor as PROV on (P.id_proveedor = PROV._id) "
             ."where P.Estatus = 1 and P.Publicar = 1 and ({$arrayLikes['Productos']} OR {$arrayLikes['Clave']}) "
-            . "$condicion order by P.dateCreated DESC LIMIT $x, $y";
+            . "$condicion order by P.$orden $tipodeorden LIMIT $x, $y";
                 
             $id = $this->conn->query($sql);
             while ($row = $this->conn->fetch($id)){

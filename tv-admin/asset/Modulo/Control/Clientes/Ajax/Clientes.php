@@ -66,6 +66,10 @@ class Clientes {
                 $this->jsonData["Bandera"] = 1;
                 $this->cuponDelete();
             break;
+            case 'cuponDeleteAll':
+                $this->jsonData["Bandera"] = 1;
+                $this->cuponDeleteAll();
+            break;
             case 'cuponGuardar':
                 $this->jsonData["Bandera"] = 1;
                 $this->cuponGuardar();
@@ -103,7 +107,10 @@ class Clientes {
         $sql="update Cseguridad set cupon_nombre ='' where _id_cliente= {$this->formulario->cliente->id}";
         return $this->conn->query($sql);    
     }
-
+    private function cuponDeleteAll(){
+        $sql="update Cseguridad set cupon_nombre = null";
+        return $this->conn->query($sql); 
+    }
     private function getnewClientes($week_start){
         $array = array();
         $sql = "select C._id, Cs.username, concat(C.Apellidos, ' ', C.nombres) as nombre, 

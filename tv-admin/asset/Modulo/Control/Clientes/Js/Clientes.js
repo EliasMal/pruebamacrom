@@ -88,7 +88,10 @@ function ClientesPerfilCtrl($scope, $http) {
         document.querySelector('.talk-bubble').classList.toggle("block");
         this.classList.toggle("white_c");
     });
-
+    document.querySelector(".closeHelp").addEventListener('click',function(){
+        document.querySelector('.talk-bubble').classList.remove("block");
+        document.querySelector('.nav-item-help').classList.remove("white_c");
+    });
     document.querySelector(".fa-angle-double-right").addEventListener('click',function(){
         this.style.display="none";
         document.querySelector(".fa-angle-double-left").style.display="flex";
@@ -218,6 +221,24 @@ function ClientesPerfilCtrl($scope, $http) {
                 method: 'POST',
                 url: url,
                 data: { cliente: { opc: "cuponDelete", id: obj.id } }
+            }).then(function successCallback(res) {
+                if (res.data.Bandera == 1) {
+                    toastr.success("cupones eliminados");
+                    location.reload();
+                }
+
+            }, function errorCallback(res) {
+                toastr.error("Error: no se realizo la conexion con el servidor");
+            });
+        }
+    }
+
+    obj.cuponDeleteAll = () => {
+        if (confirm("¿Seguro de borrar los cupones de TODOS los usuario?")) {
+            $http({
+                method: 'POST',
+                url: url,
+                data: { cliente: { opc: "cuponDeleteAll", id: obj.id } }
             }).then(function successCallback(res) {
                 if (res.data.Bandera == 1) {
                     toastr.success("cupones eliminados");

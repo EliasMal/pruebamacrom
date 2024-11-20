@@ -1,4 +1,4 @@
-<div ng-controller="RefaccionesCtrl" ng-init="publicados={publicados}" >
+<div ng-controller="RefaccionesCtrl">
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
