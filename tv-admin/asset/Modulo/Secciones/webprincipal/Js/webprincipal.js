@@ -23,10 +23,21 @@ function WebCtrl($scope, $http) {
     obj.dominio = "";
 
     obj.btnsubirimagen = () => {
+        var info = document.querySelectorAll(".tab-pane");
+        info.forEach(element => {
+            if(element.classList.contains('active')){
+                obj.imagen["Categoria"] = element.id;
+            }
+        });
+        console.log(obj.imagen);
         if (obj.imagen.file != undefined) {
-            obj.setImagenes(obj.imagen);
+            if(obj.imagen.Disenio != ""){
+                obj.setImagenes(obj.imagen);
+            }else{
+                toastr.error("No has seleccionado si es Escritorio o Movil");
+            }
         } else {
-            toastr.error("No has seleccionado una imagen para subir")
+            toastr.error("No has seleccionado una imagen para subir");
         }
     }
 
@@ -155,7 +166,6 @@ function WebCtrl($scope, $http) {
                     case 'Principal':
                         obj.databannerPrincipal = res.data.Data;
                         obj.databannerPrincipal.disabled = res.data.Disabled;
-                        console.log(obj.databannerPrincipal);
                         break;
                     case 'Promociones':
                         obj.promociones = res.data.Data;
