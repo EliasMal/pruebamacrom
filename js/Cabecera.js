@@ -195,6 +195,9 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
                     case 'Compras':
                         obj.dataBanners = res.data.Data;
                         break;
+                    case 'Nosotros':
+                        obj.dataBanners = res.data.Data;
+                        break;
                 }
 
             } else {
@@ -276,6 +279,9 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
         }
         if (window.location.href.includes("?mod=ProcesoCompra")) {
             obj.getBanners({ opc: "get", Categoria: "Compras", Estatus: 1 });
+        }
+        if (window.location.href.includes("?mod=nosotros")) {
+            obj.getBanners({ opc: "get", Categoria: "Nosotros", Estatus: 1 });
         }
     });
 }
