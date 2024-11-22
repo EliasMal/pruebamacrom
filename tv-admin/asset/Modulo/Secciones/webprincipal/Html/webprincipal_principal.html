@@ -203,6 +203,20 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="available__images__cont">
+                                                    <div class="cont__datos"
+                                                        ng-repeat="promociones in promociones.disabled.Escritorio">
+                                                        <img src="{{dominio}}/images/Banners/{{promociones.imagen}}"
+                                                            alt="Imagen principal" class="img-fluid enlace"
+                                                            style="margin-bottom: 10px;"
+                                                            ng-click="changePred(promociones._id, promociones.Categoria)">
+                                                        <div class="info__imagen">
+                                                            <small>Fecha de subida: {{promociones.FechaCreacion}}</small>
+                                                            <button class="btn btn-sm btn-outline-danger pull-right"
+                                                                ng-click="btnDesactivar(promociones._id, promociones.Categoria)">Eliminar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="Nosotros" role="tabpanel"
@@ -254,7 +268,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="card-footer">
                             <div class="input-group">
                                 <label for="imagenprincipal">Subir Imagen</label>
