@@ -2,7 +2,9 @@
   text-decoration: line-through;
   font-size: 12px;
 }
-
+.presentation__img{
+  max-width: 40rem;
+}
 .precio {
   font-size: 20px;
 }

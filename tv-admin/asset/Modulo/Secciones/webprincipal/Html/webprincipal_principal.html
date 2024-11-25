@@ -65,10 +65,16 @@
                                             <div class="row">
                                                 <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12"
                                                     ng-repeat="principal in databannerPrincipal.Escritorio">
-                                                    <img src="{{dominio}}/images/Banners/{{principal.imagen}}"
-                                                        alt="Imagen principal" class="img-fluid"
+                                                    <img ng-src="{{dominio}}/images/Banners/{{principal.imagen}}"
+                                                        alt="Imagen principal" class="presentation__img"
                                                         style="margin-bottom: 10px;">
-                                                    <small>Fecha de subida: {{principal.FechaCreacion}}</small>
+                                                        <hr>
+                                                        <address>
+                                                            <small><b>Dimensiones de la imagen:</b> {{principal.width}} x {{principal.height}}</small><br>
+                                                            <small><b>Fecha de subida:</b> {{principal.FechaCreacion}}</small><br>
+                                                            <small><b>Formato:</b> {{principal.formato}}</small>
+                                                        </address>
+                                                        <hr>
                                                     <button class="btn btn-sm btn-outline-danger pull-right"
                                                         ng-click="btnDesactivar(principal._id, principal.Categoria)">Eliminar</button>
                                                     <hr>
@@ -78,7 +84,7 @@
                                             <div class="available__images__cont">
                                                 <div class="cont__datos"
                                                     ng-repeat="principal in databannerPrincipal.disabled.Escritorio">
-                                                    <img src="{{dominio}}/images/Banners/{{principal.imagen}}"
+                                                    <img ng-src="{{dominio}}/images/Banners/{{principal.imagen}}"
                                                         alt="Imagen principal" class="img-fluid enlace"
                                                         style="margin-bottom: 10px;"
                                                         ng-click="changePred(principal._id, principal.Categoria)">
@@ -98,15 +104,13 @@
                                                     ng-repeat="promo in catalogos.Escritorio">
                                                     <div class="card card-danger card-outline">
                                                         <div class="card-body">
-                                                            <img src="{{dominio}}/images/Banners/{{promo.imagen}}"
-                                                                alt="Imagen principal" class="img-fluid pad">
+                                                            <img ng-src="{{dominio}}/images/Banners/{{promo.imagen}}"
+                                                                alt="Imagen Catalogos" class="presentation__img">
                                                             <hr>
                                                             <address>
-                                                                <small>Dimensiones de la imagen: 1920px x
-                                                                    240px</small><br>
-                                                                <small>Fecha de subida:
-                                                                    {{promo.FechaCreacion}}</small><br>
-                                                                <small>Formato: png</small>
+                                                                <small><b>Dimensiones de la imagen:</b> {{promo.width}} x {{promo.height}}</small><br>
+                                                                <small><b>Fecha de subida:</b> {{promo.FechaCreacion}}</small><br>
+                                                                <small><b>Formato:</b> {{promo.formato}}</small>
                                                             </address>
 
                                                             <hr>
@@ -121,8 +125,8 @@
                                             <div class="available__images__cont">
                                                 <div class="cont__datos"
                                                     ng-repeat="catalogo in catalogos.disabled.Escritorio">
-                                                    <img src="{{dominio}}/images/Banners/{{catalogo.imagen}}"
-                                                        alt="Imagen principal" class="img-fluid enlace"
+                                                    <img ng-src="{{dominio}}/images/Banners/{{catalogo.imagen}}"
+                                                        alt="Imagen Catalogos" class="img-fluid enlace"
                                                         style="margin-bottom: 10px;"
                                                         ng-click="changePred(catalogo._id, catalogo.Categoria)">
                                                     <div class="info__imagen">
@@ -142,15 +146,13 @@
                                                     ng-repeat="promo in compras.Escritorio">
                                                     <div class="card card-danger card-outline">
                                                         <div class="card-body">
-                                                            <img src="{{dominio}}/images/Banners/{{promo.imagen}}"
-                                                                alt="Imagen principal" class="img-fluid pad">
+                                                            <img ng-src="{{dominio}}/images/Banners/{{promo.imagen}}"
+                                                                alt="Imagen compras" class="presentation__img">
                                                             <hr>
                                                             <address>
-                                                                <small>Dimensiones de la imagen: 1920px x
-                                                                    240px</small><br>
-                                                                <small>Fecha de subida:
-                                                                    {{promo.FechaCreacion}}</small><br>
-                                                                <small>Formato: png</small>
+                                                                <small><b>Dimensiones de la imagen:</b> {{promo.width}} x {{promo.height}}</small><br>
+                                                                <small><b>Fecha de subida:</b> {{promo.FechaCreacion}}</small><br>
+                                                                <small><b>Formato:</b> {{promo.formato}}</small>
                                                             </address>
 
                                                             <hr>
@@ -165,7 +167,7 @@
                                             <div class="available__images__cont">
                                                 <div class="cont__datos"
                                                     ng-repeat="compras in compras.disabled.Escritorio">
-                                                    <img src="{{dominio}}/images/Banners/{{compras.imagen}}"
+                                                    <img ng-src="{{dominio}}/images/Banners/{{compras.imagen}}"
                                                         alt="Imagen compras" class="img-fluid enlace"
                                                         style="margin-bottom: 10px;"
                                                         ng-click="changePred(compras._id, compras.Categoria)">
@@ -185,15 +187,13 @@
                                                     ng-repeat="promo in promociones.Escritorio">
                                                     <div class="card card-danger card-outline">
                                                         <div class="card-body">
-                                                            <img src="{{dominio}}/images/Banners/{{promo.imagen}}"
-                                                                alt="Imagen principal" class="img-fluid pad">
+                                                            <img ng-src="{{dominio}}/images/Banners/{{promo.imagen}}"
+                                                                alt="Imagen promociones" class="presentation__img">
                                                             <hr>
                                                             <address>
-                                                                <small>Dimensiones de la imagen: 1600px x
-                                                                    500px</small><br>
-                                                                <small>Fecha de subida:
-                                                                    {{promo.FechaCreacion}}</small><br>
-                                                                <small>Formato: png</small>
+                                                                <small><b>Dimensiones de la imagen:</b> {{promo.width}} x {{promo.height}}</small><br>
+                                                                <small><b>Fecha de subida:</b> {{promo.FechaCreacion}}</small><br>
+                                                                <small><b>Formato:</b> {{promo.formato}}</small>
                                                             </address>
 
                                                             <hr>
@@ -206,8 +206,8 @@
                                                 <div class="available__images__cont">
                                                     <div class="cont__datos"
                                                         ng-repeat="promociones in promociones.disabled.Escritorio">
-                                                        <img src="{{dominio}}/images/Banners/{{promociones.imagen}}"
-                                                            alt="Imagen principal" class="img-fluid enlace"
+                                                        <img ng-src="{{dominio}}/images/Banners/{{promociones.imagen}}"
+                                                            alt="Imagen promociones" class="img-fluid enlace"
                                                             style="margin-bottom: 10px;"
                                                             ng-click="changePred(promociones._id, promociones.Categoria)">
                                                         <div class="info__imagen">
@@ -227,15 +227,13 @@
                                                     ng-repeat="promo in nosotros.Escritorio">
                                                     <div class="card card-danger card-outline">
                                                         <div class="card-body">
-                                                            <img src="{{dominio}}/images/Banners/{{promo.imagen}}"
-                                                                alt="Imagen principal" class="img-fluid pad">
+                                                            <img ng-src="{{dominio}}/images/Banners/{{promo.imagen}}"
+                                                                alt="Imagen nosotros" class="presentation__img">
                                                             <hr>
                                                             <address>
-                                                                <small>Dimensiones de la imagen: 1920px x
-                                                                    240px</small><br>
-                                                                <small>Fecha de subida:
-                                                                    {{promo.FechaCreacion}}</small><br>
-                                                                <small>Formato: png</small>
+                                                                <small><b>Dimensiones de la imagen:</b> {{promo.width}} x {{promo.height}}</small><br>
+                                                                <small><b>Fecha de subida:</b> {{promo.FechaCreacion}}</small><br>
+                                                                <small><b>Formato:</b> {{promo.formato}}</small>
                                                             </address>
 
                                                             <hr>
@@ -250,7 +248,7 @@
                                             <div class="available__images__cont">
                                                 <div class="cont__datos"
                                                     ng-repeat="nosotros in nosotros.disabled.Escritorio">
-                                                    <img src="{{dominio}}/images/Banners/{{nosotros.imagen}}"
+                                                    <img ng-src="{{dominio}}/images/Banners/{{nosotros.imagen}}"
                                                         alt="Imagen nosotros" class="img-fluid enlace"
                                                         style="margin-bottom: 10px;"
                                                         ng-click="changePred(nosotros._id, nosotros.Categoria)">
@@ -285,8 +283,7 @@
                                         <input class="custom-file-input archivos" type="file"
                                             uploader-model="imagen.file">
                                         <label for="imagenprincipal"
-                                            class="custom-file-label">{{imagen.Categoria==="Principal"?
-                                            imagen.name:imagen.placeholder}}</label>
+                                            class="custom-file-label">{{imagen.name}}</label>
                                     </div>
                                     <div class="input-group-apped">
                                         <button class="btn btn-primary pull-right" ng-click="btnsubirimagen()"><i
