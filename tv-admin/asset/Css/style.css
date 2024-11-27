@@ -17,6 +17,9 @@
 .white_c,.fa-angle-double-right:hover,.fa-angle-double-left:hover{
   color: #007bff;
 }
+.b-shadow{
+  box-shadow: 0 10px 25px;
+}
 .talk-bubble {
   margin: 40px;
   position: absolute;

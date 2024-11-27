@@ -1648,6 +1648,11 @@ i.fa.fa-sun {
   grid-row: 2;
 }
 
+.QuieneSomos__main--contenedor__banner{
+  display: grid;
+  align-content: center;
+}
+
 .Trefacciones__cont span {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;

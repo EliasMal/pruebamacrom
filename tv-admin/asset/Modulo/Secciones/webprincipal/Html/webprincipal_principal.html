@@ -36,48 +36,45 @@
 
                                     <ul class="nav nav-tabs" id="TabHeader" role="tablist">
                                         <li class="nav-item" role="presentation">
-                                            <a class="nav-link active" id="desktop-tab" data-toggle="tab"
-                                                href="#Principal" role="tab" aria-controls="Escritorio"
-                                                aria-selected="true">Home</a>
+                                            <a class="nav-link" id="TabPrincipal" data-toggle="tab" href="#Principal" 
+                                                role="tab" aria-controls="Escritorio" aria-selected="true" onclick="localStorage.setItem('TabActive','Principal')">Home</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="movil-tab" data-toggle="tab" href="#Catalogos"
-                                                role="tab" aria-controls="Movil" aria-selected="true">Catalogo</a>
+                                            <a class="nav-link" id="TabCatalogos" data-toggle="tab" href="#Catalogos"
+                                                role="tab" aria-controls="Movil" aria-selected="true" onclick="localStorage.setItem('TabActive','Catalogos')">Catalogo</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="movil-tab" data-toggle="tab" href="#Compras"
-                                                role="tab" aria-controls="Movil" aria-selected="true">Compras</a>
+                                            <a class="nav-link" id="TabCompras" data-toggle="tab" href="#Compras"
+                                                role="tab" aria-controls="Movil" aria-selected="true" onclick="localStorage.setItem('TabActive','Compras')">Compras</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="movil-tab" data-toggle="tab" href="#Promociones"
-                                                role="tab" aria-controls="Movil" aria-selected="true">Promoción</a>
+                                            <a class="nav-link" id="TabPromociones" data-toggle="tab" href="#Promociones"
+                                                role="tab" aria-controls="Movil" aria-selected="true" onclick="localStorage.setItem('TabActive','Promociones')">Promoción</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="movil-tab" data-toggle="tab" href="#Nosotros"
-                                                role="tab" aria-controls="Movil" aria-selected="true">Nosotros</a>
+                                            <a class="nav-link" id="TabNosotros" data-toggle="tab" href="#Nosotros"
+                                                role="tab" aria-controls="Movil" aria-selected="true" onclick="localStorage.setItem('TabActive','Nosotros')">Nosotros</a>
                                         </li>
                                     </ul>
 
                                     <div class="tab-content" id="myTabContent">
-                                        <div class="tab-pane fade show active" id="Principal" role="tabpanel"
+                                        <div class="tab-pane fade" id="Principal" role="tabpanel"
                                             aria-labelledby="desktop-tab">
                                             <br>
-                                            <div class="row">
-                                                <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12"
+                                            <div class="row card card-danger card-outline b-shadow">
+                                                <div class="card-body col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12"
                                                     ng-repeat="principal in databannerPrincipal.Escritorio">
                                                     <img ng-src="{{dominio}}/images/Banners/{{principal.imagen}}"
                                                         alt="Imagen principal" class="presentation__img"
                                                         style="margin-bottom: 10px;">
-                                                        <hr>
                                                         <address>
                                                             <small><b>Dimensiones de la imagen:</b> {{principal.width}} x {{principal.height}}</small><br>
                                                             <small><b>Fecha de subida:</b> {{principal.FechaCreacion}}</small><br>
-                                                            <small><b>Formato:</b> {{principal.formato}}</small>
+                                                            <small><b>Formato:</b> {{principal.formato}}</small><br>
+                                                            <small><b>Estado:</b><b style="color: #28a745;"> Activa</b></small>
                                                         </address>
-                                                        <hr>
                                                     <button class="btn btn-sm btn-outline-danger pull-right"
                                                         ng-click="btnDesactivar(principal._id, principal.Categoria)">Eliminar</button>
-                                                    <hr>
                                                 </div>
                                             </div>
 
@@ -89,7 +86,8 @@
                                                         style="margin-bottom: 10px;"
                                                         ng-click="changePred(principal._id, principal.Categoria)">
                                                     <div class="info__imagen">
-                                                        <small>Fecha de subida: {{principal.FechaCreacion}}</small>
+                                                        <small>Fecha de subida: {{principal.FechaCreacion}}</small><br>
+                                                        <small><b>Estado:</b><b style="color: #de0007;"> Inactiva</b></small>
                                                         <button class="btn btn-sm btn-outline-danger pull-right"
                                                             ng-click="btnDesactivar(principal._id, principal.Categoria)">Eliminar</button>
                                                     </div>
@@ -102,18 +100,16 @@
                                             <div class="row">
                                                 <div class="col-xs-12 col-sm-12 col-xl-12 col-md-12 col-lg-12"
                                                     ng-repeat="promo in catalogos.Escritorio">
-                                                    <div class="card card-danger card-outline">
+                                                    <div class="card card-danger card-outline b-shadow">
                                                         <div class="card-body">
                                                             <img ng-src="{{dominio}}/images/Banners/{{promo.imagen}}"
                                                                 alt="Imagen Catalogos" class="presentation__img">
-                                                            <hr>
                                                             <address>
                                                                 <small><b>Dimensiones de la imagen:</b> {{promo.width}} x {{promo.height}}</small><br>
                                                                 <small><b>Fecha de subida:</b> {{promo.FechaCreacion}}</small><br>
-                                                                <small><b>Formato:</b> {{promo.formato}}</small>
+                                                                <small><b>Formato:</b> {{promo.formato}}</small><br>
+                                                                <small><b>Estado:</b><b style="color: #28a745;"> Activa</b></small>
                                                             </address>
-
-                                                            <hr>
                                                             <button class="btn btn-sm btn-outline-danger pull-right"
                                                                 type="button"
                                                                 ng-click="btnDesactivar(promo._id, promo.Categoria)">Eliminar</button>
@@ -130,7 +126,8 @@
                                                         style="margin-bottom: 10px;"
                                                         ng-click="changePred(catalogo._id, catalogo.Categoria)">
                                                     <div class="info__imagen">
-                                                        <small>Fecha de subida: {{catalogo.FechaCreacion}}</small>
+                                                        <small>Fecha de subida: {{catalogo.FechaCreacion}}</small><br>
+                                                        <small><b>Estado:</b><b style="color: #de0007;"> Inactiva</b></small>
                                                         <button class="btn btn-sm btn-outline-danger pull-right"
                                                             ng-click="btnDesactivar(catalogo._id, catalogo.Categoria)">Eliminar</button>
                                                     </div>
@@ -144,18 +141,16 @@
                                             <div class="row">
                                                 <div class="col-xs-12 col-sm-12 col-xl-12 col-md-12 col-lg-12"
                                                     ng-repeat="promo in compras.Escritorio">
-                                                    <div class="card card-danger card-outline">
+                                                    <div class="card card-danger card-outline b-shadow">
                                                         <div class="card-body">
                                                             <img ng-src="{{dominio}}/images/Banners/{{promo.imagen}}"
                                                                 alt="Imagen compras" class="presentation__img">
-                                                            <hr>
                                                             <address>
                                                                 <small><b>Dimensiones de la imagen:</b> {{promo.width}} x {{promo.height}}</small><br>
                                                                 <small><b>Fecha de subida:</b> {{promo.FechaCreacion}}</small><br>
-                                                                <small><b>Formato:</b> {{promo.formato}}</small>
+                                                                <small><b>Formato:</b> {{promo.formato}}</small><br>
+                                                                <small><b>Estado:</b><b style="color: #28a745;"> Activa</b></small>
                                                             </address>
-
-                                                            <hr>
                                                             <button class="btn btn-sm btn-outline-danger pull-right"
                                                                 type="button"
                                                                 ng-click="btnDesactivar(promo._id, promo.Categoria)">Eliminar</button>
@@ -172,7 +167,8 @@
                                                         style="margin-bottom: 10px;"
                                                         ng-click="changePred(compras._id, compras.Categoria)">
                                                     <div class="info__imagen">
-                                                        <small>Fecha de subida: {{compras.FechaCreacion}}</small>
+                                                        <small>Fecha de subida: {{compras.FechaCreacion}}</small><br>
+                                                        <small><b>Estado:</b><b style="color: #de0007;"> Inactiva</b></small>
                                                         <button class="btn btn-sm btn-outline-danger pull-right"
                                                             ng-click="btnDesactivar(compras._id, compras.Categoria)">Eliminar</button>
                                                     </div>
@@ -185,18 +181,16 @@
                                             <div class="row">
                                                 <div class="col-xs-12 col-sm-12 col-xl-4 col-md-4 col-lg-4"
                                                     ng-repeat="promo in promociones.Escritorio">
-                                                    <div class="card card-danger card-outline">
+                                                    <div class="card card-danger card-outline b-shadow">
                                                         <div class="card-body">
                                                             <img ng-src="{{dominio}}/images/Banners/{{promo.imagen}}"
                                                                 alt="Imagen promociones" class="presentation__img">
-                                                            <hr>
                                                             <address>
                                                                 <small><b>Dimensiones de la imagen:</b> {{promo.width}} x {{promo.height}}</small><br>
                                                                 <small><b>Fecha de subida:</b> {{promo.FechaCreacion}}</small><br>
-                                                                <small><b>Formato:</b> {{promo.formato}}</small>
+                                                                <small><b>Formato:</b> {{promo.formato}}</small><br>
+                                                                <small><b>Estado:</b><b style="color: #28a745;"> Activa</b></small>
                                                             </address>
-
-                                                            <hr>
                                                             <button class="btn btn-sm btn-outline-danger pull-right"
                                                                 type="button"
                                                                 ng-click="btnDesactivar(promo._id, promo.Categoria)">Eliminar</button>
@@ -211,7 +205,8 @@
                                                             style="margin-bottom: 10px;"
                                                             ng-click="changePred(promociones._id, promociones.Categoria)">
                                                         <div class="info__imagen">
-                                                            <small>Fecha de subida: {{promociones.FechaCreacion}}</small>
+                                                            <small>Fecha de subida: {{promociones.FechaCreacion}}</small><br>
+                                                            <small><b>Estado:</b><b style="color: #de0007;"> Inactiva</b></small>
                                                             <button class="btn btn-sm btn-outline-danger pull-right"
                                                                 ng-click="btnDesactivar(promociones._id, promociones.Categoria)">Eliminar</button>
                                                         </div>
@@ -225,18 +220,16 @@
                                             <div class="row">
                                                 <div class="col-xs-12 col-sm-12 col-xl-12 col-md-12 col-lg-12"
                                                     ng-repeat="promo in nosotros.Escritorio">
-                                                    <div class="card card-danger card-outline">
+                                                    <div class="card card-danger card-outline b-shadow">
                                                         <div class="card-body">
                                                             <img ng-src="{{dominio}}/images/Banners/{{promo.imagen}}"
                                                                 alt="Imagen nosotros" class="presentation__img">
-                                                            <hr>
                                                             <address>
                                                                 <small><b>Dimensiones de la imagen:</b> {{promo.width}} x {{promo.height}}</small><br>
                                                                 <small><b>Fecha de subida:</b> {{promo.FechaCreacion}}</small><br>
-                                                                <small><b>Formato:</b> {{promo.formato}}</small>
+                                                                <small><b>Formato:</b> {{promo.formato}}</small><br>
+                                                                <small><b>Estado:</b><b style="color: #28a745;"> Activa</b></small>
                                                             </address>
-
-                                                            <hr>
                                                             <button class="btn btn-sm btn-outline-danger pull-right"
                                                                 type="button"
                                                                 ng-click="btnDesactivar(promo._id, promo.Categoria)">Eliminar</button>
@@ -253,7 +246,8 @@
                                                         style="margin-bottom: 10px;"
                                                         ng-click="changePred(nosotros._id, nosotros.Categoria)">
                                                     <div class="info__imagen">
-                                                        <small>Fecha de subida: {{nosotros.FechaCreacion}}</small>
+                                                        <small>Fecha de subida: {{nosotros.FechaCreacion}}</small><br>
+                                                        <small><b>Estado:</b><b style="color: #de0007;"> Inactiva</b></small>
                                                         <button class="btn btn-sm btn-outline-danger pull-right"
                                                             ng-click="btnDesactivar(nosotros._id, nosotros.Categoria)">Eliminar</button>
                                                     </div>

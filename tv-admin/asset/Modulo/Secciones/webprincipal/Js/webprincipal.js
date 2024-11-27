@@ -22,6 +22,14 @@ function WebCtrl($scope, $http) {
     obj.blog = [];
     obj.dominio = "";
 
+    if (localStorage.getItem("TabActive")) {
+        var tabActive = document.getElementById(localStorage.getItem("TabActive"));
+        var TabpaneActive = document.getElementById("Tab" + localStorage.getItem("TabActive"));
+        TabpaneActive.classList.add("active");
+        tabActive.classList.add("active");
+        tabActive.classList.add("show");
+    }
+
     obj.btnsubirimagen = () => {
         var info = document.querySelectorAll(".tab-pane");
         info.forEach(element => {

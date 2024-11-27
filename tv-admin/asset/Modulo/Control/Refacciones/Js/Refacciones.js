@@ -117,13 +117,11 @@ function RefaccionesCtrl($scope, $http) {
                     obj.eachRefacciones(obj.refacciones);
                 }
 
-
             }, function errorCallback(res) {
                 toastr.error("Error: no se realizo la conexion con el servidor");
             });
         }, 100);
     }
-
 
     obj.configPages = function () {
         obj.pages.length = 0;

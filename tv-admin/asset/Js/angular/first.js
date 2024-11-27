@@ -180,6 +180,14 @@ if(window.location.href.includes("?mod=RepProductos")){
     }
 }
 
+if(window.location.href.includes("?mod=webprincipal")){
+    if(localStorage.getItem("TabActive") == null){
+        localStorage.setItem("TabActive","Principal");
+    }
+}else{
+    localStorage.removeItem("TabActive");
+}
+
 mensaje = function(title,tipo,txtmsg){
     new PNotify({
         title: title,
