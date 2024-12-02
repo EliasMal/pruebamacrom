@@ -5,12 +5,12 @@
 			<div class="QuieneSomos__main">
 				<div class="QuieneSomos__main--contenedor__banner" ng-repeat="nosotros in dataBanners.Escritorio">
 					<div class="contenedor__banner">
-						<img src="images/Banners/{{nosotros.imagen}}" alt="IMG-ABOUT">
+						<img ng-src="images/Banners/{{nosotros.imagen}}" alt="IMG-ABOUT">
 					</div>
 				</div>
 				<div class="QuieneSomos__main--contenedor__banner" ng-show="dataBanners.Escritorio.length == 0">
 					<div class="contenedor__banner">
-						<img src="images/Banners/motor.webp" alt="IMG-ABOUT">
+						<img ng-src="images/Banners/motor.webp" alt="IMG-ABOUT">
 					</div>
 				</div>
 

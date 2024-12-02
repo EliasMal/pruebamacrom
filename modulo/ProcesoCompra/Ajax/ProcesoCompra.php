@@ -80,7 +80,11 @@ class ProcesoCompra {
                             $this->formulario->Costumer->dataDomicilio->data->_id,0,
                             $this->formulario->Costumer->descuento,
                             $this->formulario->Costumer->Cenvio->paqueteria,
-                            $this->formulario->Costumer->Cenvio->enviodias);
+                            $this->formulario->Costumer->Cenvio->enviodias,
+                            $this->formulario->Costumer->Medidas->height,
+                            $this->formulario->Costumer->Medidas->length,
+                            $this->formulario->Costumer->Medidas->width,
+                            $this->formulario->Costumer->Medidas->weight);
                             if($id){
                                 if($this->setPedidosDetalles($id)){
                                     unset($_SESSION["CarritoPrueba"]);
@@ -180,7 +184,11 @@ class ProcesoCompra {
                                 $this->formulario->Costumer->dataDomicilio->data->_id,0,
                                 $this->formulario->Costumer->descuento,
                                 $this->formulario->Costumer->Cenvio->paqueteria,
-                                $this->formulario->Costumer->Cenvio->enviodias);
+                                $this->formulario->Costumer->Cenvio->enviodias,
+                                $this->formulario->Costumer->Medidas->height,
+                                $this->formulario->Costumer->Medidas->length,
+                                $this->formulario->Costumer->Medidas->width,
+                                $this->formulario->Costumer->Medidas->weight);
 
                                 if($this->setPedidosDetalles($id)){
                                     $_SESSION["id_pedido"] = $id;
@@ -255,12 +263,12 @@ class ProcesoCompra {
         return $this->conn->last_id();
     }
 
-    private function setPedido2($id_cliente, $Importe, $formaPago, $noPedido, $cenvio, $servicio, $facturacion, $_id_facturacion,$_id_domicilio, $acreditado=0, $descuento = 0, $paqueteria, $enviodias){
+    private function setPedido2($id_cliente, $Importe, $formaPago, $noPedido, $cenvio, $servicio, $facturacion, $_id_facturacion,$_id_domicilio, $acreditado=0, $descuento = 0, $paqueteria, $enviodias, $alto, $largo, $ancho, $peso){
         $_id_facturacion = $facturacion == 1? $_id_facturacion:0;
         $sql = "INSERT INTO Pedidos (_idCliente, Fecha, Importe, Acreditado, Enviado, GuiaEnvio, FormaPago, noPedido, cenvio, Servicio, Facturacion, 
-        _id_facturacion, _id_cdirecciones, archivoxml, archivopdf, comprobante, descuento, paqueteria, enviodias) values "
+        _id_facturacion, _id_cdirecciones, archivoxml, archivopdf, comprobante, descuento, paqueteria, enviodias, Largo, Alto, Ancho, Peso) values "
                 . "( '$id_cliente','". date("Y-m-d") ."','$Importe',$acreditado,0,'','$formaPago','$noPedido','$cenvio','$servicio',$facturacion,
-                $_id_facturacion, $_id_domicilio,'','','', $descuento, '$paqueteria', '$enviodias')";
+                $_id_facturacion, $_id_domicilio,'','','', $descuento, '$paqueteria', '$enviodias','$largo','$alto','$ancho','$peso')";
         $this->conn->query($sql);
         return $this->conn->last_id();
     }

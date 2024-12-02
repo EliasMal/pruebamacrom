@@ -44,6 +44,28 @@
                             {{Pedido.Ciudad}}, {{Pedido.Estado}}, CP. {{Pedido.Codigo_postal}}
                            
                         </address>
+                        <div>
+                            <table class="table__medidas">
+                                <caption class="caption__medidas"><b>Detalles envio:</b></caption>
+                                <tbody class="tbody__medidas">
+                                    <tr class="tr__medidas" ng-show="Pedido.SD"><th class="th__medidas">Sin datos registrados, consultar BD</th></tr>
+                                    <tr class="tr__medidas" ng-show="!Pedido.SD">
+                                        <th class="th__medidas">Largo</th>
+                                        <th class="th__medidas">Alto</th>
+                                        <th class="th__medidas">Ancho</th>
+                                        <th class="th__medidas">Peso</th>
+                                        <th class="th__medidas" ng-show="Pedido.paqueteria">Paqueteria</th>
+                                    </tr>
+                                    <tr class="tr__medidas" ng-show="!Pedido.SD">
+                                        <td class="td__medidas" data-th="Largo">{{Pedido.Largo}}</td>
+                                        <td class="td__medidas" data-th="Alto">{{Pedido.Alto}}</td>
+                                        <td class="td__medidas" data-th="Ancho">{{Pedido.Ancho}}</td>
+                                        <td class="td__medidas" data-th="Peso">{{Pedido.Peso}}</td>
+                                        <td class="td__medidas" data-th="Peso" ng-show="Pedido.paqueteria">{{Pedido.paqueteria}}</td>
+                                    </tr>
+                                </tbody>
+                              </table>
+                        </div>
                     </div>
                     <div class="col-sm-4 invoice-col">
                         Datos de facturacion:

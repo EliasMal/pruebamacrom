@@ -66,6 +66,7 @@
                             break;
                         case 'Refaccion':
                                 $this->jsonData["data"]["Refaccion"] = $this->getRefaccionOne();
+                                $this->jsonData["data"] ["ClaveUnica"]= $this->getRefaccionClave();
                                 $this->jsonData["data"]["Categorias"] = $this->getCategorias();
                                 $this->jsonData["data"]["Compatibilidad"] = $this->getCompatibilidad();
                                 $this->jsonData["data"]["Marcas"] = $this->getMarcas();
@@ -312,6 +313,11 @@
             $row["RefaccionLiquidacion"] = $row["RefaccionLiquidacion"] == 1 ? true: false;
             $row["Enviogratis"] = $row["Enviogratis"] == 1? true: false;
             $row["Publicar"] = $row["Publicar"] == 1? true:false; 
+            return $row;
+        }
+        private function getRefaccionClave (){
+            $sql = "SELECT P.* FROM Producto as P WHERE P.Clave = '{$this->formulario["id"]}'";
+            $row = $this->conn->fetch($this->conn->query($sql));
             return $row;
         }
         

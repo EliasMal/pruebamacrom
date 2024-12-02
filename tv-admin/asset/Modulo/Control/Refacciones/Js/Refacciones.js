@@ -92,7 +92,45 @@ function RefaccionesCtrl($scope, $http) {
         window.location.href = "?mod=Refacciones&opc=edit&id=" + _id;
     }
 
+    obj.clickRefaccionUnica = () =>{
+        window.location.href = "?mod=Refacciones&opc=edit&id=" + obj.OneRefaccion._id;
+    }
+
     obj.getRefacciones = ($skip = 0, $limit = obj.pageSize) => {
+        var valInp = document.getElementById("txtbuscar");
+        valInp = parseInt(valInp.value);
+        const regex = /^[0-9]*$/;
+        if (regex.test(valInp)) {
+            $http({
+                method: 'POST',
+                url: url,
+                data: { modelo: { opc: "buscar", tipo: "Refaccion", id: valInp } },
+                headers: {
+                    'Content-Type': undefined
+                },
+                transformRequest: function (data) {
+                    var formData = new FormData();
+                    for (var m in data.modelo) {
+                        formData.append(m, data.modelo[m]);
+                    }
+                    return formData;
+                }
+            }).then(function successCallback(res) {
+                if (res.data.Bandera == 1) {
+                    obj.OneRefaccion = res.data.data.ClaveUnica;
+                    if(obj.OneRefaccion == null){
+                        obj.SinRefaccion = valInp;
+                    }else{
+                        obj.SinRefaccion = null;
+                    }
+                }
+            }, function errorCallback(res) {
+                toastr.error("Error: no se realizo la conexion con el servidor");
+            });
+        }else{
+            obj.OneRefaccion = "";
+        }
+
         setTimeout(() => {
             $http({
                 method: 'POST',
@@ -741,8 +779,6 @@ function RefaccionesEditCtrl($scope, $http) {
                 for (var i = 0; i < actividadKeys.length; i++) {
                     obj.actividad[actividadKeys[i]].datosdiff = obj.actividad[actividadKeys[i]].datosdiff.replaceAll(/&quot;|{|}/g, "");
                     obj.actividad[actividadKeys[i]].datosdiff = obj.actividad[actividadKeys[i]].datosdiff.replaceAll(":", ": ");
-
-
                     setTimeout(function () {
                         let textoejemplo = document.querySelectorAll(".datosdiff_txt");
                         for (let i = 0; i < textoejemplo.length; i++) {

@@ -234,6 +234,7 @@ function ComprasCtrl($scope, $http, $sce) {
                         obj.Costumer.usercpn = cpn.filter(Discpn => Discpn != obj.Costumer.usercpn);
                         obj.Costumer.usercpn = obj.Costumer.usercpn.toString();
                     }
+                    obj.Costumer.Medidas = obj.dataCotizador.parcel;
                     obj.ProcesarCompra(obj.Costumer);
                 } else {
                     toastr.error("Error: Debes de seleccionar el costo del envio");

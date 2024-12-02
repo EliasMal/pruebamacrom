@@ -148,6 +148,10 @@ function PedidosDetallesCtrl($scope, $http) {
                 obj.flagCancelado = obj.Pedido.Acreditado != 6 ? true : false;
                 obj.Detalles = res.data.Detalles;
                 obj.Tarjeta = res.data.Tarjeta;
+                if((obj.Pedido.Largo == "" && obj.Pedido.Ancho == "") || ((obj.Pedido.Largo == null && obj.Pedido.Ancho == null))){
+                    obj.Pedido.SD = "sin datos";
+                }
+                console.log(obj.Pedido);
             } else {
                 toastr.error(res.data.mensaje);
             }

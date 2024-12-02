@@ -38,6 +38,8 @@
                     class="form-control" ng-model="buscar" ng-model-options="{debounce:500}" ng-change="getRefacciones()"/>
                 </div>
             </div>
+            <button ng-click="clickRefaccionUnica()" id="buttonClaveUnica" ng-show="OneRefaccion.Clave" class="form-control buttonClave">Ir a Refacción con Clave: <b>{{OneRefaccion.Clave}}</b></button>
+            <span ng-show="SinRefaccion" class="form-control spanClave">No hay refaccion con la clave: <b>{{SinRefaccion}}</b></span>
             <hr />
             <div class="row">
                 <div class="col-md-12 text-center">
