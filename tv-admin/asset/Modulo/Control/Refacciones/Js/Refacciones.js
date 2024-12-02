@@ -49,14 +49,17 @@ function RefaccionesCtrl($scope, $http) {
         const mylink = window.location.href.split("&");
         const orden = mylink[1];
         const mybutton = document.getElementsByClassName(orden)[0];
-        obj.propertyName = orden;
-        obj.ordentype = "desc";
-        mybutton.className += " filtro__activo";
+        if(orden == "pub"){
+            obj.publicados = false;
+        }else{
+            obj.propertyName = orden;
+            obj.ordentype = "desc";
+            mybutton.className += " filtro__activo";
+        }
     } else{
         const mybutton = document.getElementsByClassName("productoAZ")[0];
         mybutton.className += " filtro__activo";
     }
-
     obj.getSeicom = async (clave) => {
         try {
             const result = await $http({
