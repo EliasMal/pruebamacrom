@@ -147,7 +147,7 @@
                         <input type="text" class="form-control" name="txtguiaenvio" id="txtguiaenvio" ng-model ="Pedido.GuiaEnvio" ng-disabled="Pedido.Acreditado == 6">
                         <br>
                         <div class="pull-right" ng-show="Pedido.isFileComprobante && Pedido.Acreditado==0">
-                            <img src="../../images/icons/icono_facturacion.png" alt="Comprobante" width="32px">
+                            <img ng-src="../../images/icons/icono_facturacion.png" alt="Comprobante" width="32px">
                             <a href="../../Public/Comprobantes/{{Pedido.comprobante}}" download ><b> Ver Comprobante de pago</b></a>
                         </div>
                     </div>

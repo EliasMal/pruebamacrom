@@ -46,24 +46,25 @@ function ClientesCtrl($scope, $http) {
     }
 
     obj.sendData = () => {
+        setTimeout(() => {
+            $http({
+                method: 'POST',
+                url: url,
+                data: { cliente: obj.data }
+            }).then(function successCallback(res) {
+                if (res.data.Bandera == 1) {
+                    if (obj.data.opc == "pass") {
+                        $("#showpass").html(res.data.pass);
+                        $("#modalpass").modal("show");
+                    } else {
+                        obj.Clientes = res.data.Cliente;
+                    }
 
-        $http({
-            method: 'POST',
-            url: url,
-            data: { cliente: obj.data }
-        }).then(function successCallback(res) {
-            if (res.data.Bandera == 1) {
-                if (obj.data.opc == "pass") {
-                    $("#showpass").html(res.data.pass);
-                    $("#modalpass").modal("show");
-                } else {
-                    obj.Clientes = res.data.Cliente;
                 }
-
-            }
-        }, function errorCallback(res) {
-            toastr.error("Error: no se realizo la conexion con el servidor");
-        });
+            }, function errorCallback(res) {
+                toastr.error("Error: no se realizo la conexion con el servidor");
+            });
+        }, 100);
     }
 
     angular.element(document).ready(function () {
@@ -83,27 +84,27 @@ function ClientesPerfilCtrl($scope, $http) {
     obj.cliente = {};
     obj.disabled = true;
     let tagsactivos = [];
-    
-    document.querySelector(".nav-item-help").addEventListener('click',function(){
+
+    document.querySelector(".nav-item-help").addEventListener('click', function () {
         document.querySelector('.talk-bubble').classList.toggle("block");
         this.classList.toggle("white_c");
     });
-    document.querySelector(".closeHelp").addEventListener('click',function(){
+    document.querySelector(".closeHelp").addEventListener('click', function () {
         document.querySelector('.talk-bubble').classList.remove("block");
         document.querySelector('.nav-item-help').classList.remove("white_c");
     });
-    document.querySelector(".fa-angle-double-right").addEventListener('click',function(){
-        this.style.display="none";
-        document.querySelector(".fa-angle-double-left").style.display="flex";
-        document.querySelector(".help1").style.display="none";
-        document.querySelector(".help2").style.display="block";
+    document.querySelector(".fa-angle-double-right").addEventListener('click', function () {
+        this.style.display = "none";
+        document.querySelector(".fa-angle-double-left").style.display = "flex";
+        document.querySelector(".help1").style.display = "none";
+        document.querySelector(".help2").style.display = "block";
     });
 
-    document.querySelector(".fa-angle-double-left").addEventListener('click',function(){
-        this.style.display="none";
-        document.querySelector(".fa-angle-double-right").style.display="flex";
-        document.querySelector(".help1").style.display="block";
-        document.querySelector(".help2").style.display="none";
+    document.querySelector(".fa-angle-double-left").addEventListener('click', function () {
+        this.style.display = "none";
+        document.querySelector(".fa-angle-double-right").style.display = "flex";
+        document.querySelector(".help1").style.display = "block";
+        document.querySelector(".help2").style.display = "none";
     });
 
 
@@ -130,7 +131,7 @@ function ClientesPerfilCtrl($scope, $http) {
         });
     }
 
-    setTimeout(function() {
+    setTimeout(function () {
         let cupones = document.querySelectorAll(".cupones__tag");
         cupones.forEach((element) => element.addEventListener('dblclick', eliminarCupon));
     }, 500);
@@ -154,7 +155,7 @@ function ClientesPerfilCtrl($scope, $http) {
                     toastr.success("Cupon eliminado");
                     location.reload();
                 }
-                
+
             }, function errorCallback(res) {
                 toastr.error("Error: no se realizo la conexion con el servidor");
             });
@@ -169,8 +170,8 @@ function ClientesPerfilCtrl($scope, $http) {
             const tagsInputHidden = document.querySelector('[name="tags"]');
 
             let tags = [];
-            if(tagsactivos != ""){
-                tags=tagsactivos;   
+            if (tagsactivos != "") {
+                tags = tagsactivos;
             }
             //Escuchar cambios en el input
             tagsInput.addEventListener("keypress", guardarTag)
