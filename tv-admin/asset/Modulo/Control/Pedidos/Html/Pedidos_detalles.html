@@ -64,6 +64,9 @@
                                         <td class="td__medidas" data-th="Peso" ng-show="Pedido.paqueteria">{{Pedido.paqueteria}}</td>
                                     </tr>
                                 </tbody>
+                                <tfoot ng-show="Pedido.FechaEstimadaEnvio">
+                                    <tr class="tr__medidas center--text"><th class="th__medidas" colspan="5">Fecha Estimada: {{Pedido.FechaEstimadaEnvio}}</th></tr>
+                                </tfoot>
                               </table>
                         </div>
                     </div>
@@ -147,8 +150,8 @@
                         <input type="text" class="form-control" name="txtguiaenvio" id="txtguiaenvio" ng-model ="Pedido.GuiaEnvio" ng-disabled="Pedido.Acreditado == 6">
                         <br>
                         <div class="pull-right" ng-show="Pedido.isFileComprobante && Pedido.Acreditado==0">
-                            <img ng-src="../../images/icons/icono_facturacion.png" alt="Comprobante" width="32px">
-                            <a href="../../Public/Comprobantes/{{Pedido.comprobante}}" download ><b> Ver Comprobante de pago</b></a>
+                            <i class="fas fa-receipt"></i>
+                            <a href="https://macromautopartes.com/Public/Comprobantes/{{Pedido.comprobante}}" download ><b> Ver Comprobante de pago</b></a>
                         </div>
                     </div>
                 </div>

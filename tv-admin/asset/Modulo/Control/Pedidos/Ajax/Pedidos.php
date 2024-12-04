@@ -70,7 +70,7 @@ class Pedidos{
 
     private function getOnePedido(){
         $sql = "SELECT P._idPedidos, P.Fecha, P.cenvio, P.Servicio, P.Importe, P.Acreditado,  if(P.Acreditado=1, 'Acreditado','Por Acreditar') as Acreditadotxt,
-        P.Enviado, P.GuiaEnvio, P.FormaPago, P.paqueteria, P.Alto, P.Ancho, P.Peso, P.Largo, C.nombres, C.Apellidos, C.correo, P.Facturacion, P.archivoxml, P.archivopdf, P.noPedido, P.comprobante, 
+        P.Enviado, P.GuiaEnvio, P.FormaPago, P.paqueteria, P.Alto, P.Ancho, P.Peso, P.Largo, P.FechaEstimadaEnvio, C.nombres, C.Apellidos, C.correo, P.Facturacion, P.archivoxml, P.archivopdf, P.noPedido, P.comprobante, 
         CD.Domicilio, CD.Codigo_postal, CD.Telefono, CD.Colonia, CD.Ciudad, CD.Estado, CD.numExt, CD.numInt, CD.Referencia,
          CF.UsoCFDI, CF.Descripción as Descripcion, F.Rfc, F.Razonsocial, F.Domicilio as FDomicilio, P.descuento 
         from Pedidos as P 

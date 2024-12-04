@@ -371,6 +371,7 @@ function ComprasCtrl($scope, $http, $sce) {
         obj.Costumer.Cenvio.paqueteria = params.provider;
         obj.Costumer.Cenvio.Costo = params.total_pricing;
         obj.Costumer.Cenvio.enviodias = params.days;
+        obj.Costumer.DiaEstimado = obj.getFechaentrega(obj.Costumer.Cenvio.enviodias);
         obj.Costumer.Cenvio.Servicio = params.service_level_name;
         obj.requiredEnvio = true;
         $("#mdlcotizar").modal('hide');
@@ -401,7 +402,6 @@ function ComprasCtrl($scope, $http, $sce) {
             TotalVolumen2 = (obj.dataCotizador.parcel.length * obj.dataCotizador.parcel.width * obj.dataCotizador.parcel.height);
         }
         obj.requiredEnvio = obj.dataCotizador.parcel.weight != 0 ? false : true;
-
     }
 
     obj.eliminarPaqueterias = (data) => {

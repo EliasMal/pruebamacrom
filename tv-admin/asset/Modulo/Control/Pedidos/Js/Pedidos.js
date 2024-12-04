@@ -151,7 +151,6 @@ function PedidosDetallesCtrl($scope, $http) {
                 if((obj.Pedido.Largo == "" && obj.Pedido.Ancho == "") || ((obj.Pedido.Largo == null && obj.Pedido.Ancho == null))){
                     obj.Pedido.SD = "sin datos";
                 }
-                console.log(obj.Pedido);
             } else {
                 toastr.error(res.data.mensaje);
             }

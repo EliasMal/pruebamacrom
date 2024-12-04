@@ -81,6 +81,7 @@ class ProcesoCompra {
                             $this->formulario->Costumer->descuento,
                             $this->formulario->Costumer->Cenvio->paqueteria,
                             $this->formulario->Costumer->Cenvio->enviodias,
+                            $this->formulario->Costumer->DiaEstimado,
                             $this->formulario->Costumer->Medidas->height,
                             $this->formulario->Costumer->Medidas->length,
                             $this->formulario->Costumer->Medidas->width,
@@ -185,6 +186,7 @@ class ProcesoCompra {
                                 $this->formulario->Costumer->descuento,
                                 $this->formulario->Costumer->Cenvio->paqueteria,
                                 $this->formulario->Costumer->Cenvio->enviodias,
+                                $this->formulario->Costumer->DiaEstimado,
                                 $this->formulario->Costumer->Medidas->height,
                                 $this->formulario->Costumer->Medidas->length,
                                 $this->formulario->Costumer->Medidas->width,
@@ -263,12 +265,12 @@ class ProcesoCompra {
         return $this->conn->last_id();
     }
 
-    private function setPedido2($id_cliente, $Importe, $formaPago, $noPedido, $cenvio, $servicio, $facturacion, $_id_facturacion,$_id_domicilio, $acreditado=0, $descuento = 0, $paqueteria, $enviodias, $alto, $largo, $ancho, $peso){
+    private function setPedido2($id_cliente, $Importe, $formaPago, $noPedido, $cenvio, $servicio, $facturacion, $_id_facturacion,$_id_domicilio, $acreditado=0, $descuento = 0, $paqueteria, $enviodias, $envioestimado, $alto, $largo, $ancho, $peso){
         $_id_facturacion = $facturacion == 1? $_id_facturacion:0;
         $sql = "INSERT INTO Pedidos (_idCliente, Fecha, Importe, Acreditado, Enviado, GuiaEnvio, FormaPago, noPedido, cenvio, Servicio, Facturacion, 
-        _id_facturacion, _id_cdirecciones, archivoxml, archivopdf, comprobante, descuento, paqueteria, enviodias, Largo, Alto, Ancho, Peso) values "
+        _id_facturacion, _id_cdirecciones, archivoxml, archivopdf, comprobante, descuento, paqueteria, enviodias, Largo, Alto, Ancho, Peso, FechaEstimadaEnvio) values "
                 . "( '$id_cliente','". date("Y-m-d") ."','$Importe',$acreditado,0,'','$formaPago','$noPedido','$cenvio','$servicio',$facturacion,
-                $_id_facturacion, $_id_domicilio,'','','', $descuento, '$paqueteria', '$enviodias','$largo','$alto','$ancho','$peso')";
+                $_id_facturacion, $_id_domicilio,'','','', $descuento, '$paqueteria', '$enviodias','$largo','$alto','$ancho','$peso','$envioestimado')";
         $this->conn->query($sql);
         return $this->conn->last_id();
     }
