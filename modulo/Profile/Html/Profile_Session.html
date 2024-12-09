@@ -66,30 +66,39 @@
                                             </div>
                                             <div>
                                                 <label for="example-text-input" >Nueva Contraseña</label>
-                                                <div class="">
-                                                    <input class="" type="password"  placeholder="Nueva Contraseña" ng-model="profile.Nuevapass" required>
-                                                    
+                                                <div class="password__cont">
+                                                    <input class="" type="password"  id="inprpass" placeholder="Nueva Contraseña" ng-model="profile.Nuevapass" required>
+                                                    <span class="password__ver">
+                                                        <i class="pass_ver pss fa fa-eye" aria-hidden="true"></i>
+                                                    </span>
                                                 </div>
-                                                <small class="" ng-show="msjprofiledisplay">Las contraseñas nos son iguales*</small>
+                                                <small class="text-danger" ng-show="msjprofiledisplay">Las contraseñas nos son iguales*</small>
                                             </div>
                                             <div>
                                                 <label for="example-text-input" >Confirma Contraseña</label>
-                                                <div class="">
-                                                    <input class="" type="password"  placeholder="Confirmar contraseña" ng-model="profile.Confirmarpass" required>
+                                                <div class="password__cont">
+                                                    <input class="" type="password" id="inprcpass" placeholder="Confirmar contraseña" ng-model="profile.Confirmarpass" required>
+                                                    <span class="password__ver">
+                                                        <i class="pass_ver cpss fa fa-eye" aria-hidden="true"></i>
+                                                    </span>
                                                 </div>
                                                 <small class="text-danger" ng-show="msjprofiledisplay">Las contraseñas nos son iguales*</small>
                                             </div>
                                             <div>
                                                 <label for="example-text-input" >Contraseña Actual</label>
-                                                <div class="">
-                                                    <input class="" type="password" placeholder="Contraseña Actual" ng-model="profile.passActual" required>
+                                                <div class="password__cont">
+                                                    <input class="" type="password" id="inprapass" placeholder="Contraseña Actual" ng-model="profile.passActual" required>
+                                                    <span class="password__ver">
+                                                        <i class="pass_ver apss fa fa-eye" aria-hidden="true"></i>
+                                                    </span>
                                                 </div>
                                             </div>
 
                                         </form>
 
                                         <div class="SS__perfil--conbutton">
-                                            <button class="SS__perfil--button" ng-disabled="frmpassword.$invalid" ng-click="btnGuardarSession(2)">Guardar</button>
+                                            <button class="SS__perfil--button invalid" ng-show="frmpassword.$invalid">Guardar</button>
+                                            <button class="SS__perfil--button" ng-show="frmpassword.$valid" ng-click="btnGuardarSession(2)">Guardar</button>
                                         </div>
 
                                     </div>

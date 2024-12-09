@@ -1864,7 +1864,15 @@ i.fa.fa-sun {
 .SS__perfil--vistas {
   display: grid;
 }
-
+.password__cont{
+  display: flex;
+}
+.password__cont .password__ver{
+  position: relative;
+  left: -3rem;
+  align-content: center;
+  cursor: pointer;
+}
 .SS__perfil--button {
   background-color: var(--primario);
   height: 4rem;
@@ -1873,7 +1881,10 @@ i.fa.fa-sun {
   width: 100%;
   position: relative;
 }
-
+.invalid{
+  background-color: #c4b9b9;
+  border: 1px solid #000;
+}
 .SS__perfil--txt {
   border-radius: 0.5rem;
   width: 100%;

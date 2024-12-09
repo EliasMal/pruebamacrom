@@ -4,8 +4,8 @@ const urlProfile = "./modulo/Profile/Ajax/Profile.php";
 const urlComprobante = "./modulo/Profile/Ajax/uploadfile.php";
 
 tsuruVolks.controller("ProfileCtrl", ["$scope", "$http", ProfileCtrl]);
-if(window.location.href.includes("?mod=Profile")){
-    if(localStorage.getItem('iduser') == undefined){
+if (window.location.href.includes("?mod=Profile")) {
+    if (localStorage.getItem('iduser') == undefined) {
         location.href = "?mod=home";
     }
 }
@@ -190,7 +190,7 @@ function ProfileCtrl($scope, $http) {
         console.log(obj.dataFactura)
         $("#Mdlfiles").modal('show');
     }
-    obj.mdlclose = ()=>{
+    obj.mdlclose = () => {
         $("#Mdlfiles").modal('hide');
     }
 
@@ -267,49 +267,82 @@ function ProfileCtrl($scope, $http) {
             },
             buttonsStyling: false
         });
-        swalWithBootstrapButtons.fire({
-            title: "¿Guardar Cambios?",
-            text: "¿Deseas guardar los cambios?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Guardar",
-            cancelButtonText: "Cancelar!",
-            reverseButtons: true
-        }).then((result) => {
-            if (result.isConfirmed) {
-                switch (press) {
-                    case 1:
-                        obj.sendProfile("profile");
-                        obj.ConfirmacionSucces();
-                        break;
-                    case 2:
-                        if (obj.profile.Nuevapass === obj.profile.Confirmarpass) {
-                            obj.msjprofiledisplay = false;
-                            obj.sendProfile("password");
+        if (obj.profile.Nuevapass === obj.profile.Confirmarpass) {
+            swalWithBootstrapButtons.fire({
+                title: "¿Guardar Cambios?",
+                text: "¿Deseas guardar los cambios?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Guardar",
+                cancelButtonText: "Cancelar!",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    switch (press) {
+                        case 1:
+                            obj.sendProfile("profile");
                             obj.ConfirmacionSucces();
-                        } else {
-                            obj.msjprofiledisplay = true;
-                            toastr.error("Las contraseñas no coinciden");
-                            obj.ConfirmacionError();
-                        }
-                        break;
+                            break;
+                        case 2:
+                            if (obj.profile.Nuevapass === obj.profile.Confirmarpass) {
+                                obj.msjprofiledisplay = false;
+                                obj.sendProfile("password");
+                            } else {
+                                toastr.error("Las contraseñas no coinciden");
+                                obj.ConfirmacionError();
+                            }
+                            break;
+                    }
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithBootstrapButtons.fire({
+                        title: "Cancelado",
+                        text: "No sé realizo ningun cambio.",
+                        icon: "error"
+                    });
                 }
-            } else if (result.dismiss === Swal.DismissReason.cancel) {
-                swalWithBootstrapButtons.fire({
-                    title: "Cancelado",
-                    text: "No sé realizo ningun cambio.",
-                    icon: "error"
-                });
-            }
-        });
+            });
+        } else {
+            obj.msjprofiledisplay = true;
+        }
 
     }
+
+    var inprpass = document.querySelector("#inprpass");
+    var inprcpass = document.querySelector("#inprcpass");
+    var inprapass = document.querySelector("#inprapass");
+    document.querySelectorAll(".pass_ver").forEach(el => {
+        el.addEventListener("click", e => {
+            if (el.classList.contains('pss')) {
+                inprpass.toggleAttribute("type");
+                el.classList.toggle("fa-eye-slash");
+                if (inprpass.getAttribute("type") != null) {
+                    inprpass.setAttribute("type", "password");
+                }
+            } else if (el.classList.contains('cpss')) {
+                inprcpass.toggleAttribute("type");
+                el.classList.toggle("fa-eye-slash");
+                if (inprcpass.getAttribute("type") != null) {
+                    inprcpass.setAttribute("type", "password");
+                }
+            } else if (el.classList.contains('apss')) {
+                inprapass.toggleAttribute("type");
+                el.classList.toggle("fa-eye-slash");
+                if (inprapass.getAttribute("type") != null) {
+                    inprapass.setAttribute("type", "password");
+                }
+            }
+
+        });
+    });
     obj.ConfirmacionSucces = () => {
         Swal.fire({
             title: "Exitoso",
             text: "Se han realizado los cambios.",
             icon: "success"
         });
+        setTimeout(() => {
+            location.reload()
+        },1000);
     }
     obj.ConfirmacionError = () => {
         Swal.fire({
@@ -357,8 +390,10 @@ function ProfileCtrl($scope, $http) {
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
                 toastr.success(res.data.mensaje);
+                obj.ConfirmacionSucces();
             } else {
                 toastr.error(res.data.mensaje);
+                obj.ConfirmacionError();
             }
         }, function errorCallback(res) {
             toastr.error("Error: no se realizo la conexion con el servidor");
@@ -624,7 +659,7 @@ function ProfileCtrl($scope, $http) {
                 break
             case 'Mispedidos_view':
                 obj.sendMispedidos("details", { _idpedido: localStorage.getItem("_idPedido") });
-            break;
+                break;
         }
         $(".numero").numeric();
     });

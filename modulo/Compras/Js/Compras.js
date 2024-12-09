@@ -91,7 +91,7 @@ function ComprasCtrl($scope, $http, $sce) {
                         inpCupon = element;
                     }
                 }
-                             
+
                 if (inpCupon == element) {
                     obj.Costumer.Subtotal = (obj.Costumer.Subtotal * (valor_cpn / 100));
                     obj.Costumer.descuento = obj.Costumer.Subtotal; //Descuento envio para prueba credito
@@ -217,7 +217,7 @@ function ComprasCtrl($scope, $http, $sce) {
     } else if ($_SESSION.facturacion == 1) {
         obj.Costumer.facturacion = 1;
     }
-    
+
     var butccompra = document.querySelector(".clip");
     var butcompra = document.querySelector(".confirmar--pago");
     obj.btnPagar = () => {
@@ -274,16 +274,16 @@ function ComprasCtrl($scope, $http, $sce) {
             data: { Costumer: data }
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
-                    butccompra.classList.remove("animationclip");
-                    butcompra.disabled = false;
-                    if (obj.total === 0) {
-                        location.href = "?mod=ProcesoCompra&opc=paso3";
-                    } else if (obj.Costumer.metodoPago === "Deposito" || obj.Costumer.metodoPago === "Transferencia") {
-                        obj.openDeposito(res.data.Data);
-                        //location.href="?mod=ProcesoCompra&opc=paso3";
-                    } else if (obj.Costumer.metodoPago === "Tarjeta") {
-                        obj.seturl(res.data.data[0]);
-                    }
+                butccompra.classList.remove("animationclip");
+                butcompra.disabled = false;
+                if (obj.total === 0) {
+                    location.href = "?mod=ProcesoCompra&opc=paso3";
+                } else if (obj.Costumer.metodoPago === "Deposito" || obj.Costumer.metodoPago === "Transferencia") {
+                    obj.openDeposito(res.data.Data);
+                    //location.href="?mod=ProcesoCompra&opc=paso3";
+                } else if (obj.Costumer.metodoPago === "Tarjeta") {
+                    obj.seturl(res.data.data[0]);
+                }
             } else {
                 setTimeout(() => {
                     butccompra.classList.remove("animationclip");
@@ -291,12 +291,12 @@ function ComprasCtrl($scope, $http, $sce) {
                     butcompra.classList.add("btn-warning");
                     butcompra.innerHTML = '<i class="fas fa-exclamation-triangle">¡Elige metodo de pago!</i>';
                     toastr["info"]("Recuerda seleccionar un metodo de pago.");
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         butcompra.disabled = false;
                         butcompra.innerHTML = "Confirmar Pago";
                         butcompra.classList.remove("btn-warning");
                         butcompra.classList.add("btn-danger");
-                    },3000);
+                    }, 3000);
                 }, 2000);
             }
         }, function errorCallback(res) {

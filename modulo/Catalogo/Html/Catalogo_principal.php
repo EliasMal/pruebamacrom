@@ -97,6 +97,10 @@
 
 								<div class="block2-txt">
 									<section class="descripcion-producto">
+										<div class="avisos__productos">
+											<span class="promocion__aviso" ng-show="producto.RefaccionOferta">promoción</span>
+											<span class="enviogratis__aviso" ng-show="producto.Enviogratis">envío gratis</span>
+										</div>
 										<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
 										<div class="precio__imgprove">	
 											<p class="precio__producto" ng-hide="producto.RefaccionOferta"> {{producto.Precio1 | currency}} </p>	
@@ -108,12 +112,6 @@
 										</div>
 
 									</section>
-
-									<div class="enviogratis"  ng-show="producto.Enviogratis">
-										<!-- <img src="https://macromautopartes.com/images/icons/Icono-camion.png" loading="lazy" alt=""> -->
-										<img src="/images/icons/Icono-camion.png" loading="lazy" alt="">
-										<p> <strong>Envío Gratis </strong> </p> 
-									</div>
 
 								</div>
 							</div>
