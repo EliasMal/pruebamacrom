@@ -42,21 +42,21 @@ function RefaccionesCtrl($scope, $http) {
     obj.sortby = (linkInfo) => {
         window.location.href = "?mod=Refacciones&" + linkInfo;
     }
-    obj.DefaultRefacciones = () =>{
+    obj.DefaultRefacciones = () => {
         window.location = "?mod=Refacciones";
     }
     if (window.location.href.includes("&")) {
         const mylink = window.location.href.split("&");
         const orden = mylink[1];
         const mybutton = document.getElementsByClassName(orden)[0];
-        if(orden == "pub"){
+        if (orden == "pub") {
             obj.publicados = false;
-        }else{
+        } else {
             obj.propertyName = orden;
             obj.ordentype = "desc";
             mybutton.className += " filtro__activo";
         }
-    } else{
+    } else {
         const mybutton = document.getElementsByClassName("productoAZ")[0];
         mybutton.className += " filtro__activo";
     }
@@ -95,7 +95,7 @@ function RefaccionesCtrl($scope, $http) {
         window.location.href = "?mod=Refacciones&opc=edit&id=" + _id;
     }
 
-    obj.clickRefaccionUnica = () =>{
+    obj.clickRefaccionUnica = () => {
         window.location.href = "?mod=Refacciones&opc=edit&id=" + obj.OneRefaccion._id;
     }
 
@@ -121,16 +121,16 @@ function RefaccionesCtrl($scope, $http) {
             }).then(function successCallback(res) {
                 if (res.data.Bandera == 1) {
                     obj.OneRefaccion = res.data.data.ClaveUnica;
-                    if(obj.OneRefaccion == null){
+                    if (obj.OneRefaccion == null) {
                         obj.SinRefaccion = valInp;
-                    }else{
+                    } else {
                         obj.SinRefaccion = null;
                     }
                 }
             }, function errorCallback(res) {
                 toastr.error("Error: no se realizo la conexion con el servidor");
             });
-        }else{
+        } else {
             obj.OneRefaccion = "";
         }
 
@@ -606,11 +606,11 @@ function RefaccionesEditCtrl($scope, $http) {
     }
 
     obj.btnBorrarRvehiculo = (RV = null) => {  //Prueba Eliminar Vehiculo de Compatibilidad
-        if (confirm("¿Esta seguro de eliminar la refaccion del carrito?")) {
+        if (confirm("¿Esta seguro de eliminar la compatibilidad?")) {
             $http({
                 method: 'POST',
                 url: url,
-                data: { modelo: { opc: "buscar", tipo: "EliminarVehiculo", idcompatibilidad: RV.idcompatibilidad, clave: RV.clave } },
+                data: { modelo: { opc: "buscar", tipo: "EliminarVehiculo", idcompatibilidad: RV.idcompatibilidad, clave: RV.clave, _id: RV.id_imagen, diferencias:'Elimino vehiculo de compatibilidades'} },
                 headers: {
                     'Content-Type': undefined
                 },

@@ -84,6 +84,7 @@
 
                         case 'EliminarVehiculo':
                                 $this->EliminarComp();
+                                $this->setActividad();
                             break;
                     }
                     break;
