@@ -3640,10 +3640,6 @@ body {
   color: var(--blanco);
 }
 
-.mdl-new {
-  padding-top: 0px;
-}
-
 /*[ Input NumProduct ]*/
 input.num-product {
   -moz-appearance: textfield;

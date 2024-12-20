@@ -5,6 +5,7 @@ const urlProfile = "./modulo/Profile/Ajax/Profile.php";
 var urlCostumer = "./modulo/ProcesoCompra/Ajax/ProcesoCompra.php";
 var url_session = "./modulo/home/Ajax/session.php";
 var urlhome = "./modulo/home/Ajax/home.php";
+const url_seicom = "https://volks.dyndns.info:444/service.asmx/consulta_art";
 //const urlSkydropx = "https://api-demo.skydropx.com/v1/quotations"
 const urlSkydropx = "https://api.skydropx.com/v1/quotations";
 //const token = "Token token=SuOZQz5IrqceQbJmBqQfAo4PMQvNKMCh2PtXOKMfKM0t";
@@ -28,7 +29,7 @@ tsuruVolks.controller('ComprasCtrl', ["$scope", "$http", "$sce", ComprasCtrl])
 function ComprasCtrl($scope, $http, $sce) {
     var obj = $scope;
     obj.session = $_SESSION;
-    obj.Costumer = { Cenvio: { costo: 0 }, aviso: false, facturacion: 0, profile: {}, metodoPago: "", cart: $_SESSION.CarritoPrueba, dataFacturacion: {}, dataDomicilio: {}, descuento: 0 };
+    obj.Costumer = { Cenvio: { costo: 0 }, aviso: false, facturacion: 0, profile: {}, metodoPago: "", cart: $_SESSION.CarritoPrueba, dataFacturacion: {}, dataDomicilio: {}, descuento: 0, DiaEstimado: null};
     obj.cenvio = 0
     obj.Numproducts = obj.session.CarritoPrueba ? Object.keys(obj.session.CarritoPrueba).length : 0;
     obj.factflag = false;
@@ -36,6 +37,10 @@ function ComprasCtrl($scope, $http, $sce) {
     obj.flag = false;
     obj.dataflag = false;
     obj.requiredEnvio = false;
+    var count_prod;
+    var count_sucursales = "";
+    obj.sucursales = { Colima: 0, Manzanillo: 0, Tecoman: 0, VillaDeAlvarez: 0 };
+    obj.SeiData = {};
     obj.dataCotizador = {
         zip_from: "28000",
         zip_to: "60174",
@@ -46,6 +51,85 @@ function ComprasCtrl($scope, $http, $sce) {
             length: 0 //largo
         }
     }
+
+    //funcion en preparacion, Estado: En espera.
+    obj.prodCarrito = function () {
+        for (let el in $_SESSION.CarritoPrueba) {
+            obj.getSeicom($_SESSION.CarritoPrueba[el].Clave).then(token => {
+                count_prod = 0;
+                obj.SeiData.Table.forEach(prd => {
+                    prd.em_nombre = prd.em_nombre.replaceAll("(MACROM AUTOPARTES)", "");
+                    if (prd.em_nombre.includes("BODEGA") || prd.em_nombre.includes("VENTAS INTERNET")) {
+
+                    } else {
+
+                        if (parseInt(prd.existencia) >= parseInt($_SESSION.CarritoPrueba[el].Cantidad)) {
+
+                            count_sucursales += prd.em_nombre.trim() + ".";
+
+                        }
+                    }
+                    count_prod = count_prod + prd.existencia;
+                });
+
+                if (count_sucursales == "") {
+                    count_sucursales = "Sin sucursales con stock suficiente";
+                }
+                if (count_sucursales.includes("VILLA DE ALVAREZ")) {
+                    obj.sucursales.VillaDeAlvarez++;
+                }
+                if (count_sucursales.includes("MANZANILLO")) {
+                    obj.sucursales.Manzanillo++;
+                }
+                if (count_sucursales.includes("COLIMA")) {
+                    obj.sucursales.Colima++;
+                }
+                if (count_sucursales.includes("TECOMAN")) {
+                    obj.sucursales.Tecoman++;
+                }
+                console.log("Puede recoger en sucursales: ", count_sucursales);
+                console.log(el,"-----------------------------------");  
+                count_sucursales = "";
+            });
+            
+        }
+        console.log("Costumer: ",obj.sucursales);
+        for (let suc in obj.sucursales) {
+            if (obj.sucursales[suc] == obj.Numproducts) {
+                console.log(obj.sucursales[suc], " tiene stock disponible de las piezas");
+            }
+        }
+
+    }
+
+    obj.getSeicom = async (clave) => {
+        try {
+            const result = await $http({
+                method: 'GET',
+                url: url_seicom,
+                params: { articulo: clave },
+                headers: { 'Content-Type': "application/x-www-form-urlencoded" },
+                transformResponse: function (data) {
+                    return $.parseXML(data);
+                }
+
+            }).then(function successCallback(res) {
+                return res
+            }, function errorCallback(res) {
+                toastr.error(res);
+            });
+            if (result) {
+                const xml = $(result.data).find("string");
+                let json = JSON.parse(xml.text());
+                obj.SeiData = json;
+                return json.Table.map(e => e.existencia).reduce((a, b) => a + b, 0) == 0 ? true : false;
+            }
+        } catch (error) {
+            toastr.error(error)
+        }
+
+    }
+    //funcion en preparacion, Estado: En espera.
 
     obj.RefaccionDetalles = (_id) => {
         window.open("?mod=catalogo&opc=detalles&_id=" + _id, "_self");
@@ -126,7 +210,7 @@ function ComprasCtrl($scope, $http, $sce) {
     }
 
     obj.btnAgregar = (Refaccion) => {
-        if (Refaccion.Cantidad < Refaccion.Existencias) {
+        if (parseInt(Refaccion.Cantidad) < parseInt(Refaccion.Existencias)) {
             Refaccion.Cantidad++;
             obj.Ttotal();
             Refaccion.upd = 1;
@@ -203,6 +287,7 @@ function ComprasCtrl($scope, $http, $sce) {
                 localStorage.setItem("id_rfc", obj.Costumer.dataFacturacion._id)
                 obj.Ttotal();
                 obj.dataflag = true;
+                // obj.prodCarrito(); funcion en preparacion, Estado: En espera.
             } else {
                 toastr.error(res.data.mensaje)
             }
@@ -369,7 +454,8 @@ function ComprasCtrl($scope, $http, $sce) {
 
     obj.selectenvio = (params) => {
         obj.Costumer.Cenvio.paqueteria = params.provider;
-        obj.Costumer.Cenvio.Costo = params.total_pricing;
+        obj.Costumer.Cenvio.Costo = params.newtotal;
+        obj.Costumer.Cenvio.CostoSnIva = params.total_pricing;
         obj.Costumer.Cenvio.enviodias = params.days;
         obj.Costumer.DiaEstimado = obj.getFechaentrega(obj.Costumer.Cenvio.enviodias);
         obj.Costumer.Cenvio.Servicio = params.service_level_name;
@@ -408,7 +494,7 @@ function ComprasCtrl($scope, $http, $sce) {
         let arrayPaq = ["CARSSA", "SKYDROPX", "AMPM", "SANDEX", "QUIKEN", "SENDEX", "UPS", "TRACUSA", "TRESGUERRAS"];
         arrayPaq.forEach(e => {
             data = data.filter(paqueteria => paqueteria.provider != e)
-        })
+        });
         return data
     }
 
@@ -431,27 +517,10 @@ function ComprasCtrl($scope, $http, $sce) {
                 console.log("Error: no se realizo la conexion con el servidor");
             });
             obj.cotizador = obj.eliminarPaqueterias(result.data);
+            obj.cotizador.forEach(e => {
+                e.newtotal = (parseFloat(e.total_pricing)+4.64)+ parseFloat(e.total_pricing*(3.2/100));
+            });
             obj.flag = false;
-            // console.table(obj.cotizador);
-            //  let maxcont = [];
-            //  for(var i = 0; i <= obj.cotizador.length-1; i++){
-            //      var pqcont = 0;
-
-            //      for(var j = 0; j <= obj.cotizador.length-1; j++){
-
-            //          if(obj.cotizador[i].provider == obj.cotizador[j].provider && pqcont == 0){
-            //              pqcont++;
-
-            //          }else if(obj.cotizador[i].provider == obj.cotizador[j].provider && pqcont == 1){
-            //              maxcont[j] = j;
-            //          }
-
-            //      }
-            //  }
-
-            //   maxcont.forEach(function (maxcon){
-            //       console.log(obj.cotizador[maxcon]);
-            //   });
 
             $scope.$apply();
         } catch (error) {

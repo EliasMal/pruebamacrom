@@ -203,7 +203,7 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
             } else {
                 toastr.error(res.data.mensaje);
             }
-
+            console.log(obj.dataBanners);
         }, function errorCallback(res) {
             toastr.error("Error: no se realizo la conexion con el servidor");
         });
@@ -267,10 +267,10 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
     angular.element(document).ready(function () {
         obj.getCategorias();
         switch(window.location.href){
-            case "https://macromautopartes.com/":
+            case "https://prueba.macromautopartes.com/":
                 obj.getBanners({ opc: "get", Categoria: "Principal", Estatus: 1 });
             break;
-            case "https://macromautopartes.com/?mod=home":
+            case "https://prueba.macromautopartes.com/?mod=home":
                 obj.getBanners({ opc: "get", Categoria: "Principal", Estatus: 1 });
             break;
         }

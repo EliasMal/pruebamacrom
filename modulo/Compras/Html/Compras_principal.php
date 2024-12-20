@@ -640,7 +640,7 @@
 															<td>{{getFechaentrega(paq.days)}}</td>
 															<!-- <td ng-show="paq.days<=3"><i class="fas fa-dollar-sign"></i></td>
 															<td ng-show="paq.days<=3"><i class="fas fa-bolt"></i></td> -->
-															<td class="text-red">{{paq.total_pricing | currency}}</td>
+															<td class="text-red">{{paq.newtotal | currency}}</td>
 														</tr>
 													</tbody>
 												</table>

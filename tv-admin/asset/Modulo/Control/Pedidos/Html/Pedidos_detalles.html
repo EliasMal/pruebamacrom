@@ -61,13 +61,13 @@
                                         <td class="td__medidas" data-th="Alto">{{Pedido.Alto}}</td>
                                         <td class="td__medidas" data-th="Ancho">{{Pedido.Ancho}}</td>
                                         <td class="td__medidas" data-th="Peso">{{Pedido.Peso}}</td>
-                                        <td class="td__medidas" data-th="Peso" ng-show="Pedido.paqueteria">{{Pedido.paqueteria}}</td>
+                                        <td class="td__medidas" data-th="Paqueteria" ng-show="Pedido.paqueteria">{{Pedido.paqueteria}} ({{Pedido.Servicio}})</th>
                                     </tr>
                                 </tbody>
                                 <tfoot ng-show="Pedido.FechaEstimadaEnvio">
                                     <tr class="tr__medidas center--text"><th class="th__medidas" colspan="5">Fecha Estimada: {{Pedido.FechaEstimadaEnvio}}</th></tr>
                                 </tfoot>
-                              </table>
+                            </table>
                         </div>
                     </div>
                     <div class="col-sm-4 invoice-col">
