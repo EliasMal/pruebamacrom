@@ -61,6 +61,16 @@ class WebPrincipal{
                     $this->jsonData["mensaje"] = "Error al intentar eliminar la Imagen";
                 }
             break;
+            case 'offcarrousel':
+                if($this->offcarrousel()){
+                    $this->jsonData["Bandera"] = 1;
+                    $this->jsonData["mensaje"] = "Imagen Desactivada del carrousel";
+                    $this->jsonData["categoria"] = $this->formulario["Categoria"];
+                }else{
+                    $this->jsonData["Bandera"] = 0;
+                    $this->jsonData["mensaje"] = "Error al intentar desactivar la Imagen";
+                }
+            break;
             case 'act':
                 if($this->actimagen()){
                     $this->jsonData["Bandera"] = 1;
@@ -72,11 +82,29 @@ class WebPrincipal{
                     $this->jsonData["mensaje"] = "Error al intentar reemplazar la Imagen";
                 }
             break;
+            case 'carrouselPred':
+                if($this->carrouselPred()){
+                    $this->jsonData["Bandera"] = 1;
+                    $this->jsonData["mensaje"] = "Imagen agregada";
+                    $this->jsonData["categoria"] = $this->formulario["Categoria"];
+                }else{
+                    $this->jsonData["Bandera"] = 0;
+                    $this->jsonData["mensaje"] = "Error al intentar agregar la Imagen";
+                }
+            break;
         }
         $this->jsonData["dominio"]=$this->url;
         print json_encode($this->jsonData);
     }
-
+    private function offcarrousel(){
+        $sql = "UPDATE Imagenes SET Estatus = 0 WHERE _id = '{$this->formulario["_id"]}'";
+        return $this->conn->query($sql)? true: false;
+    }
+    
+    private function carrouselPred(){
+        $sql = "UPDATE Imagenes SET Estatus = 1 WHERE _id = '{$this->formulario["_id"]}'";
+        return $this->conn->query($sql)? true: false;
+    }
     private function actimagen(){
         $sql = "UPDATE Imagenes SET Estatus = 0 WHERE Estatus = 1 and Categoria = '{$this->formulario["Categoria"]}'";
         return $this->conn->query($sql)? true: false;
@@ -106,7 +134,7 @@ class WebPrincipal{
         $array = array("Escritorio"=>array(), "Movil"=>array());
         $limit = "";
         $diseño = array("Escritorio","Movil");
-        $categoria = array("Principal","Catalogos","Compras","Nosotros","Contacto","Session");
+        $categoria = array("Principal","Catalogos","Compras","Nosotros","Contacto","Session","Carrousel");
 
         foreach($diseño as $key => $value){
             $sql = "Select * from Imagenes where Categoria='{$this->formulario["Categoria"]}' and Estatus = 0 and Diseño='$value' $limit";
@@ -122,12 +150,12 @@ class WebPrincipal{
         $array = array("Escritorio"=>array(), "Movil"=>array());
         $limit = "";
         $diseño = array("Escritorio","Movil");
-        $categoria = array("Principal","Catalogos","Compras","Nosotros","Contacto","Session");
+        $categoria = array("Principal","Catalogos","Compras","Nosotros","Contacto","Session","Carrousel");
         if(count(array_keys($categoria,$this->formulario["Categoria"]))!=0){
             $limit = "limit 1";
         }
         foreach($diseño as $key => $value){
-            $sql = "Select * from Imagenes where Categoria='{$this->formulario["Categoria"]}' and Estatus = {$this->formulario["Estatus"]} and Diseño='$value' $limit";
+            $sql = "Select * from Imagenes where Categoria='{$this->formulario["Categoria"]}' and Estatus = {$this->formulario["Estatus"]} and Diseño='$value'";
             $id = $this->conn->query($sql);
             while($row = $this->conn->fetch($id)){
                 array_push($array[$value], $row);

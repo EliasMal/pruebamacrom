@@ -21,6 +21,10 @@
   box-shadow: 0 10px 25px;
 }
 
+.contenedor__slick2 img{
+  width: 100%;
+}
+
 .table__medidas {
   border-collapse: collapse;
   border: 4px solid rgb(200, 200, 200);

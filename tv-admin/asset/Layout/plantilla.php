@@ -42,11 +42,11 @@
     <link rel="stylesheet" href="./Plugins/colorpicker2/css/colorpicker.css" type="text/css" />
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 
     <link rel="stylesheet" href="./Css/select.min.css">   
     <!-- Estilos personalizados -->
     <link rel="stylesheet" href="./Css/style.css">   
-
 
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
@@ -85,7 +85,7 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="./Plugins/jquery/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <!-- select2 -->
 <script src="./Plugins/select2/select2.full.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -138,7 +138,7 @@
 <script type="text/javascript" src="./Plugins/colorpicker2/js/colorpicker.js"></script>
 <!-- Numeric -->
 <script type="text/javascript" src="./Plugins/numeric/jquery.numeric.js"></script>
-
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script type="text/javascript">
         $(document).ajaxStart(function() { Pace.restart(); });
 </script>

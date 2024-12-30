@@ -24,8 +24,10 @@ function ClientesCtrl($scope, $http) {
     }
 
     obj.getnewClientes = () => {
-        obj.data.opc = obj.data.new ? 'new' : 'get';
-        obj.sendData();
+        setTimeout(()=>{
+            obj.data.opc = obj.data.new ? 'new' : 'get';
+            obj.sendData();
+        },200);
     }
 
     obj.getEstatus = (id, estatus) => {

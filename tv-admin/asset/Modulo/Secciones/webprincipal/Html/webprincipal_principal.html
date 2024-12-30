@@ -55,8 +55,11 @@
                                             <a class="nav-link" id="TabNosotros" data-toggle="tab" href="#Nosotros"
                                                 role="tab" aria-controls="Movil" aria-selected="true" onclick="localStorage.setItem('TabActive','Nosotros')">Nosotros</a>
                                         </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="TabCarrousel" data-toggle="tab" href="#Carrousel"
+                                                role="tab" aria-controls="Movil" aria-selected="true" onclick="localStorage.setItem('TabActive','Carrousel')">Carrousel</a>
+                                        </li>
                                     </ul>
-
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade" id="Principal" role="tabpanel"
                                             aria-labelledby="desktop-tab">
@@ -66,7 +69,7 @@
                                                     ng-repeat="principal in databannerPrincipal.Escritorio">
                                                     <img ng-src="{{dominio}}/images/Banners/{{principal.imagen}}"
                                                         alt="Imagen principal" class="presentation__img"
-                                                        style="margin-bottom: 10px;">
+                                                        style="margin-bottom: 10px;" ng-dblclick="btnDesimgcarrousel(principal._id, principal.Categoria)">
                                                         <address>
                                                             <small><b>Dimensiones de la imagen:</b> {{principal.width}} x {{principal.height}}</small><br>
                                                             <small><b>Fecha de subida:</b> {{principal.FechaCreacion}}</small><br>
@@ -252,6 +255,44 @@
                                                             ng-click="btnDesactivar(nosotros._id, nosotros.Categoria)">Eliminar</button>
                                                     </div>
                                                 </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="tab-pane fade" id="Carrousel" role="tabpanel"
+                                            aria-labelledby="desktop-tab">
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-12 col-xl-12 col-md-12 col-lg-12">
+                                                    <div class="card card-danger card-outline b-shadow">
+                                                        <div class="card-body">
+                                                            <div class="wrap-slick2">
+                                                                <div class="slick2">
+                                                                    <div ng-repeat="carrousel in carrousel.Escritorio">
+                                                                        <div class="contenedor__slick2"><img ng-src="{{dominio}}/images/Banners/{{carrousel.imagen}}" ng-dblclick="btnDesimgcarrousel(carrousel._id, carrousel.Categoria)"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="available__images__cont">
+
+                                                <div class="cont__datos" ng-repeat="carrousel in carrousel.disabled.Escritorio">
+                                                    <img ng-src="{{dominio}}/images/Banners/{{carrousel.imagen}}"
+                                                        alt="Imagen carrousel" class="img-fluid enlace"
+                                                        style="margin-bottom: 10px;"
+                                                        ng-click="CarrouselPred(carrousel._id, carrousel.Categoria)">
+                                                    <div class="info__imagen">
+                                                        <small>Fecha de subida: {{carrousel.FechaCreacion}}</small><br>
+                                                        <small><b>Estado:</b><b style="color: #de0007;"> Inactiva</b></small>
+                                                        <button class="btn btn-sm btn-outline-danger pull-right"
+                                                            ng-click="btnDesactivar(carrousel._id, carrousel.Categoria)">Eliminar</button>
+                                                    </div>
+                                                </div>
+
                                             </div>
 
                                         </div>

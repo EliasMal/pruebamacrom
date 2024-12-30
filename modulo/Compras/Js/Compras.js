@@ -932,7 +932,10 @@ function ProfileCtrl($scope, $http) {
                 toastr.error("Error: ");
             }
         }, function errorCallback(res) {
-            toastr.error("Error: no se realizo la conexion con el servidor");
+            toastr.info("Info: No se actualizarón elementos necesarios, Actualizar pagina si está no se actualiza sola en los proximos 5segundos.");
+            setTimeout(() => {
+                location.reload();
+            }, 3000);
         });
     }
 

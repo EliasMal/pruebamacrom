@@ -17,6 +17,7 @@ class Registro{
     private $conn;
     private $formulario = array();
     private $jsonData = array("mensaje"=>"", "Bandera" => 0);
+    private $datausercupones;
     
     public function __construct($array) {
         $this->conn = new HelperMySql($array["server"], $array["user"], $array["pass"], $array["db"]);
@@ -28,6 +29,7 @@ class Registro{
     
     public function main(){
         $this->formulario = json_decode(file_get_contents('php://input'));
+        $this->jsonData["cupongeneral"] = $this->getCuponGeneral();
         if($this->FindCliente()){
             $id = $this->setCliente();
             if($id){
@@ -123,13 +125,27 @@ class Registro{
     }
     
     private function setCSeguridad ($id){
-        $sql = "INSERT INTO Cseguridad(username, password, FechaCreacion, FechaModificacion, Estatus, _id_cliente, cuponacre, cupon_nombre) values "
+        if(isset($this->jsonData["cupongeneral"])){
+            $sql = "INSERT INTO Cseguridad(username, password, FechaCreacion, FechaModificacion, Estatus, _id_cliente, cuponacre, cupon_nombre) values "
+                . "('{$this->formulario->Registro->username}',SHA('{$this->formulario->Registro->pass}'),'"
+                . date("Y-m-d", strtotime($this->formulario->Registro->FechaCreacion))."','".date("Y-m-d", strtotime($this->formulario->Registro->FechaModificacion))."',1,'$id',0,'{$this->jsonData["cupongeneral"]}')";
+        }else{
+            $sql = "INSERT INTO Cseguridad(username, password, FechaCreacion, FechaModificacion, Estatus, _id_cliente, cuponacre, cupon_nombre) values "
                 . "('{$this->formulario->Registro->username}',SHA('{$this->formulario->Registro->pass}'),'"
                 . date("Y-m-d", strtotime($this->formulario->Registro->FechaCreacion))."','".date("Y-m-d", strtotime($this->formulario->Registro->FechaModificacion))."',1,'$id',0,null)";
+        }
+        
         return $this->conn->query($sql) ? true: false;
          
     }
-    
+
+    private function getCuponGeneral(){
+        $sql = "SELECT cupon_nombre FROM Cseguridad where username = 'webmaster@macromautopartes.com'";
+        $datausercupones = $this->conn->fetch($this->conn->query($sql));
+        
+        return $datausercupones["cupon_nombre"];
+    }
+
     private function setSession($flag = false){
         if($flag){
             session_name("loginCliente");

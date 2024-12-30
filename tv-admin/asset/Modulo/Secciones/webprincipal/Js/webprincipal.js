@@ -18,6 +18,7 @@ function WebCtrl($scope, $http) {
     obj.compras = [];
     obj.nosotros = [];
     obj.contacto = [];
+    obj.carrousel = [];
     obj.session = [];
     obj.blog = [];
     obj.dominio = "";
@@ -81,6 +82,38 @@ function WebCtrl($scope, $http) {
         }
     }
 
+    obj.btnDesimgcarrousel = (id, categoria) => {
+        if (confirm("Estas seguro de desactivar la imagen")) {
+            $http({
+                method: 'POST',
+                url: url,
+                data: { imagen: { opc: "offcarrousel", _id: id, Categoria: categoria } },
+                headers: {
+                    'Content-Type': undefined
+                },
+                transformRequest: function (data) {
+                    var formData = new FormData();
+                    for (var m in data.imagen) {
+                        formData.append(m, data.imagen[m]);
+                    }
+                    return formData;
+                }
+            }).then(function successCallback(res) {
+                if (res.data.Bandera == 1) {
+                    toastr.success('Imagen eliminada correctamente');
+                    obj.getImagenes({ opc: "get", Categoria: res.data.categoria, Estatus: 1 })
+                    location.reload();
+                } else {
+                    toastr.error(res.data.mensaje);
+                }
+
+            }, function errorCallback(res) {
+                toastr.error("Error: no se realizo la conexion con el servidor");
+            });
+
+        }
+    }
+
     obj.changePred = (id, categoria) => {
         if (confirm("¿Deseas colocar esta imagen como la que se mostrara en la pagina?")) {
             $http({
@@ -100,6 +133,38 @@ function WebCtrl($scope, $http) {
             }).then(function successCallback(res) {
                 if (res.data.Bandera == 1) {
                     toastr.success('Imagen reemplazada correctamente');
+                    obj.getImagenes({ opc: "get", Categoria: res.data.categoria, Estatus: 1 })
+                    location.reload();
+                } else {
+                    toastr.error(res.data.mensaje);
+                }
+
+            }, function errorCallback(res) {
+                toastr.error("Error: no se realizo la conexion con el servidor");
+            });
+
+        }
+    }
+
+    obj.CarrouselPred = (id, categoria) => {
+        if (confirm("¿Deseas colocar esta imagen en el carrousel?")) {
+            $http({
+                method: 'POST',
+                url: url,
+                data: { imagen: { opc: "carrouselPred", _id: id, Categoria: categoria } },
+                headers: {
+                    'Content-Type': undefined
+                },
+                transformRequest: function (data) {
+                    var formData = new FormData();
+                    for (var m in data.imagen) {
+                        formData.append(m, data.imagen[m]);
+                    }
+                    return formData;
+                }
+            }).then(function successCallback(res) {
+                if (res.data.Bandera == 1) {
+                    toastr.success('Imagen agregada correctamente');
                     obj.getImagenes({ opc: "get", Categoria: res.data.categoria, Estatus: 1 })
                     location.reload();
                 } else {
@@ -231,6 +296,18 @@ function WebCtrl($scope, $http) {
                         }
 
                         break;
+                    case 'Carrousel':
+                        obj.carrousel = res.data.Data;
+                        obj.carrousel.disabled = res.data.Disabled;
+                        // if (obj.carrousel.Escritorio[0]) {
+                        //     var foto = new Image();
+                        //     foto.src = "https://macromautopartes.com/images/Banners/" + obj.carrousel.Escritorio[0].imagen;
+                        //     obj.carrousel.Escritorio[0].width = foto.width;
+                        //     obj.carrousel.Escritorio[0].height = foto.height;
+                        //     obj.carrousel.Escritorio[0].formato = foto["src"].split(".");
+                        //     obj.carrousel.Escritorio[0].formato = obj.carrousel.Escritorio[0].formato[2];
+                        // }
+                        break;
                 }
 
             } else {
@@ -262,11 +339,32 @@ function WebCtrl($scope, $http) {
             } else {
                 return;
             }
-        })
+        });
         obj.getImagenes({ opc: "get", Categoria: "Principal", Estatus: 1 });
         obj.getImagenes({ opc: "get", Categoria: "Promociones", Estatus: 1 });
         obj.getImagenes({ opc: "get", Categoria: "Catalogos", Estatus: 1 });
         obj.getImagenes({ opc: "get", Categoria: "Compras", Estatus: 1 });
         obj.getImagenes({ opc: "get", Categoria: "Nosotros", Estatus: 1 });
+        obj.getImagenes({ opc: "get", Categoria: "Carrousel", Estatus: 1 });
+        setTimeout(() => {
+            $('.slick2').slick({
+                arrows: false,
+                infinite: true,
+                autoplay:true,
+                autoplaySpeed: 5000,
+                slidesToShow: 1,
+                adaptiveHeight: true
+            });
+        }, 500);
+
+        $('.slick2').on('wheel', (function(e){
+            e.preventDefault();
+            if(e.originalEvent.deltaY < 0){
+                $(this).slick('slickNext');
+            } else {
+                $(this).slick('slickPrev');
+            }
+        }));
+
     });
 }

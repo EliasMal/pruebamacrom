@@ -145,6 +145,7 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
                 return res
             }, function errorCallback(res) {
                 toastr.error("Error: no se realizo la conexion con el servidor");
+                location.reload();
             });
             if (result) {
                 if (result.data.Bandera == 1) {

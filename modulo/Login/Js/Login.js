@@ -148,14 +148,14 @@ function LoginCtrl($scope, $http) {
     }
 
     obj.btnRegistrar = (form) => {
-        obj.dataflag = false;
-        butonolv.classList.add("non-active");
         obj.Registro.FechaCreacion = new Date();
         obj.Registro.FechaModificacion = new Date();
         obj.Registro.ultimoaccesso = new Date();
         obj.Registro.inicioacceso = new Date();
         obj.Registro.Estatus = 1;
         if (obj.Registro.pass === obj.Registro.Cpass) {
+            obj.dataflag = false;
+            butonolv.classList.add("non-active");
             $http({
                 method: 'POST',
                 url: urlRegistro,
