@@ -41,6 +41,7 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
     obj.cotizacion;
     obj.Data = {};
     obj.dataBanners;
+    obj.dataCarrousel;
     toastr.options = {
         "progressBar": true,
         "closeButton": true
@@ -199,12 +200,14 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
                     case 'Nosotros':
                         obj.dataBanners = res.data.Data;
                         break;
+                    case 'Carrousel':
+                        obj.dataCarrousel = res.data.Data;
+                        break;
                 }
 
             } else {
                 toastr.error(res.data.mensaje);
             }
-            console.log(obj.dataBanners);
         }, function errorCallback(res) {
             toastr.error("Error: no se realizo la conexion con el servidor");
         });
@@ -268,11 +271,13 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
     angular.element(document).ready(function () {
         obj.getCategorias();
         switch(window.location.href){
-            case "https://prueba.macromautopartes.com/":
+            case "https://macromautopartes.com/":
                 obj.getBanners({ opc: "get", Categoria: "Principal", Estatus: 1 });
+                obj.getBanners({ opc: "get", Categoria: "Carrousel", Estatus: 1 });
             break;
-            case "https://prueba.macromautopartes.com/?mod=home":
+            case "https://macromautopartes.com/?mod=home":
                 obj.getBanners({ opc: "get", Categoria: "Principal", Estatus: 1 });
+                obj.getBanners({ opc: "get", Categoria: "Carrousel", Estatus: 1 });
             break;
         }
         if (window.location.href.includes("?mod=catalogo")) {

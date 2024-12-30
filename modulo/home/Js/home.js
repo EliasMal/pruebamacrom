@@ -117,6 +117,26 @@ function homeCtrl($scope, $http) {
 
     angular.element(document).ready(function () {
         obj.getCategorias();
+        
+        setTimeout(() => {
+            $('.slick2').slick({
+                arrows: false,
+                infinite: true,
+                autoplay:true,
+                autoplaySpeed: 5000,
+                slidesToShow: 1,
+                adaptiveHeight: true
+            });
+        }, 500);
+
+        $('.slick2').on('wheel', (function(e){
+            e.preventDefault();
+            if(e.originalEvent.deltaY < 0){
+                $(this).slick('slickNext');
+            } else {
+                $(this).slick('slickPrev');
+            }
+        }));
     });
 
 }
