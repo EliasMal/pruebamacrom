@@ -48,10 +48,6 @@
                                                 role="tab" aria-controls="Movil" aria-selected="true" onclick="localStorage.setItem('TabActive','Compras')">Compras</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="TabPromociones" data-toggle="tab" href="#Promociones"
-                                                role="tab" aria-controls="Movil" aria-selected="true" onclick="localStorage.setItem('TabActive','Promociones')">Promoción</a>
-                                        </li>
-                                        <li class="nav-item">
                                             <a class="nav-link" id="TabNosotros" data-toggle="tab" href="#Nosotros"
                                                 role="tab" aria-controls="Movil" aria-selected="true" onclick="localStorage.setItem('TabActive','Nosotros')">Nosotros</a>
                                         </li>
@@ -174,45 +170,6 @@
                                                         <small><b>Estado:</b><b style="color: #de0007;"> Inactiva</b></small>
                                                         <button class="btn btn-sm btn-outline-danger pull-right"
                                                             ng-click="btnDesactivar(compras._id, compras.Categoria)">Eliminar</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="Promociones" role="tabpanel"
-                                            aria-labelledby="movil-tab">
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-12 col-xl-4 col-md-4 col-lg-4"
-                                                    ng-repeat="promo in promociones.Escritorio">
-                                                    <div class="card card-danger card-outline b-shadow">
-                                                        <div class="card-body">
-                                                            <img ng-src="{{dominio}}/images/Banners/{{promo.imagen}}"
-                                                                alt="Imagen promociones" class="presentation__img">
-                                                            <address>
-                                                                <small><b>Dimensiones de la imagen:</b> {{promo.width}} x {{promo.height}}</small><br>
-                                                                <small><b>Fecha de subida:</b> {{promo.FechaCreacion}}</small><br>
-                                                                <small><b>Formato:</b> {{promo.formato}}</small><br>
-                                                                <small><b>Estado:</b><b style="color: #28a745;"> Activa</b></small>
-                                                            </address>
-                                                            <button class="btn btn-sm btn-outline-danger pull-right"
-                                                                type="button"
-                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Eliminar</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="available__images__cont">
-                                                    <div class="cont__datos"
-                                                        ng-repeat="promociones in promociones.disabled.Escritorio">
-                                                        <img ng-src="{{dominio}}/images/Banners/{{promociones.imagen}}"
-                                                            alt="Imagen promociones" class="img-fluid enlace"
-                                                            style="margin-bottom: 10px;"
-                                                            ng-click="changePred(promociones._id, promociones.Categoria)">
-                                                        <div class="info__imagen">
-                                                            <small>Fecha de subida: {{promociones.FechaCreacion}}</small><br>
-                                                            <small><b>Estado:</b><b style="color: #de0007;"> Inactiva</b></small>
-                                                            <button class="btn btn-sm btn-outline-danger pull-right"
-                                                                ng-click="btnDesactivar(promociones._id, promociones.Categoria)">Eliminar</button>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

@@ -117,7 +117,7 @@ function homeCtrl($scope, $http) {
 
     angular.element(document).ready(function () {
         obj.getCategorias();
-        
+
         setTimeout(() => {
             $('.slick2').slick({
                 arrows: false,
@@ -132,9 +132,9 @@ function homeCtrl($scope, $http) {
         $('.slick2').on('wheel', (function(e){
             e.preventDefault();
             if(e.originalEvent.deltaY < 0){
-                $(this).slick('slickNext');
-            } else {
                 $(this).slick('slickPrev');
+            } else {
+                $(this).slick('slickNext');
             }
         }));
     });

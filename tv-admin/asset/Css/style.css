@@ -25,6 +25,13 @@
   width: 100%;
 }
 
+.cuponesgen a{
+  font-weight: bold;
+  color: #000;
+}
+.cuponesgen a:hover{
+  color: #de0007;
+}
 .table__medidas {
   border-collapse: collapse;
   border: 4px solid rgb(200, 200, 200);

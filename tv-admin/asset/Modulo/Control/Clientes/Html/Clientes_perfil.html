@@ -35,6 +35,9 @@
                   <small><b>Compras realizadas</b></small>
                   <a class="float-right"><small> {{cliente.count.NPedidos}} </small></a>
                 </li>
+                <li class="list-group-item" ng-show="cliente.username == 'webmaster@macromautopartes.com'">
+                  <small><b>Todos los cupones guardados en este usuario se guardaran automaticamente en los NUEVOS USUARIOS.</b></small>
+                </li>
               </ul>
             </div>
           </div>

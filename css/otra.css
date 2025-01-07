@@ -33,7 +33,7 @@
   }
 
   .box-pedidos .datos-entrega p{
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--negro);
     padding-left: 10px;
     font-family: Poppins-bold;
 
@@ -56,7 +56,7 @@
   }
 
   .orden p{
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--negro);
     padding-left: 10px;
     font-family: Poppins-bold;
   }
@@ -118,20 +118,20 @@
   }
 
   .list-group-item.active{
-    background-color: #AA0009 !important;
-    border-color: #AA0009;
+    background-color: var(--primario) !important;
+    border-color: var(--primario);
   }
 
   .box-facturas{
     cursor: pointer;
-    border: 1px dashed #000;
+    border: 1px dashed var(--negro);
     border-radius: 5px;
     height: auto;
   }
 
   .box-direcciones{
     cursor: pointer;
-    border: 1px dashed #000;
+    border: 1px dashed var(--negro);
     border-radius: 5px;
     height: auto;
   }
@@ -151,15 +151,15 @@
 
   .box-facturas .box-head, .box-direcciones .box-head{
     text-align: center;
-    border-bottom: 1px dashed #000;
+    border-bottom: 1px dashed var(--negro);
     padding-top: 10px;
     padding-bottom: 10px;
   }
 
   .box-facturas .box-head.predeterminado, .box-direcciones .box-head.predeterminado{
-    background-color: #AA0009 !important;
-    border-color: #AA0009;
-    color: #fff;
+    background-color: var(--primario) !important;
+    border-color: var(--primario);
+    color: var(--blanco);
   }
 
   .box-facturas .box-body, .box-direcciones .box-body, .box-footer{
@@ -173,13 +173,13 @@
   }
 
   .box-facturas .box-footer ul li a,.box-direcciones .box-footer ul li a{
-    color:#AA0009;
+    color:var(--primario);
     text-align: center;
     transition: all 500ms;
   }
 
   .box-facturas .box-footer ul li a:hover,.box-direcciones .box-footer ul li a:hover{
-    border-bottom: 2px solid #AA0009;
+    border-bottom: 2px solid var(--primario);
    
   }
 
@@ -201,16 +201,16 @@
   /*Termina css logos*/
 
   /*Backgrouds*/
-  .bg-red{background-color: #AA0009 !important}
-  .bg-dark{background-color: #000 !important;}
-  .bg-white{background-color: white;}
+  .bg-red{background-color: var(--primario) !important}
+  .bg-dark{background-color: var(--negro) !important;}
+  .bg-white{background-color: var(--blanco);}
 /*Tamaños de botones*/
 
   /*Hover*/
 
   .hov7:hover{
-    background-color: black;
-    color:white;
+    background-color: var(--negro);
+    color:var(--blanco);
   }
 
   /*Modulo compras*/

@@ -245,18 +245,6 @@ function WebCtrl($scope, $http) {
                             obj.databannerPrincipal.Escritorio[0].formato = obj.databannerPrincipal.Escritorio[0].formato[2];
                         }
                         break;
-                    case 'Promociones':
-                        obj.promociones = res.data.Data;
-                        obj.promociones.disabled = res.data.Disabled;
-                        if (obj.promociones.Escritorio[0]) {
-                            var foto = new Image();
-                            foto.src = "https://macromautopartes.com/images/Banners/" + obj.promociones.Escritorio[0].imagen;
-                            obj.promociones.Escritorio[0].width = foto.width;
-                            obj.promociones.Escritorio[0].height = foto.height;
-                            obj.promociones.Escritorio[0].formato = foto["src"].split(".");
-                            obj.promociones.Escritorio[0].formato = obj.promociones.Escritorio[0].formato[2];
-                        }
-                        break;
                     case 'Catalogos':
                         obj.catalogos = res.data.Data;
                         obj.catalogos.disabled = res.data.Disabled;
@@ -299,14 +287,6 @@ function WebCtrl($scope, $http) {
                     case 'Carrousel':
                         obj.carrousel = res.data.Data;
                         obj.carrousel.disabled = res.data.Disabled;
-                        // if (obj.carrousel.Escritorio[0]) {
-                        //     var foto = new Image();
-                        //     foto.src = "https://macromautopartes.com/images/Banners/" + obj.carrousel.Escritorio[0].imagen;
-                        //     obj.carrousel.Escritorio[0].width = foto.width;
-                        //     obj.carrousel.Escritorio[0].height = foto.height;
-                        //     obj.carrousel.Escritorio[0].formato = foto["src"].split(".");
-                        //     obj.carrousel.Escritorio[0].formato = obj.carrousel.Escritorio[0].formato[2];
-                        // }
                         break;
                 }
 
@@ -340,12 +320,11 @@ function WebCtrl($scope, $http) {
                 return;
             }
         });
+        obj.getImagenes({ opc: "get", Categoria: "Carrousel", Estatus: 1 });
         obj.getImagenes({ opc: "get", Categoria: "Principal", Estatus: 1 });
-        obj.getImagenes({ opc: "get", Categoria: "Promociones", Estatus: 1 });
         obj.getImagenes({ opc: "get", Categoria: "Catalogos", Estatus: 1 });
         obj.getImagenes({ opc: "get", Categoria: "Compras", Estatus: 1 });
         obj.getImagenes({ opc: "get", Categoria: "Nosotros", Estatus: 1 });
-        obj.getImagenes({ opc: "get", Categoria: "Carrousel", Estatus: 1 });
         setTimeout(() => {
             $('.slick2').slick({
                 arrows: false,
@@ -355,14 +334,14 @@ function WebCtrl($scope, $http) {
                 slidesToShow: 1,
                 adaptiveHeight: true
             });
-        }, 500);
+        }, 300);
 
         $('.slick2').on('wheel', (function(e){
             e.preventDefault();
             if(e.originalEvent.deltaY < 0){
-                $(this).slick('slickNext');
-            } else {
                 $(this).slick('slickPrev');
+            } else {
+                $(this).slick('slickNext');
             }
         }));
 
