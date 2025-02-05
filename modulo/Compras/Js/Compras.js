@@ -55,6 +55,7 @@ function ComprasCtrl($scope, $http, $sce) {
         array.forEach(e => {
             e.NewUrlName = e["_producto"].replaceAll(" ","-");
             e.NewUrlName = e.NewUrlName.replaceAll(",","");
+            e.NewUrlName = e.NewUrlName.normalize('NFD').replace(/[\u0300-\u036f]/g,"");
             e.NewAltName = e["_producto"].replaceAll(",","");
         });
     }

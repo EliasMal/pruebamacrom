@@ -64,6 +64,7 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
         array.forEach(e => {
             e.NewUrlName = e["_producto"].replaceAll(" ","-");
             e.NewUrlName = e.NewUrlName.replaceAll(",","");
+            e.NewUrlName = e.NewUrlName.normalize('NFD').replace(/[\u0300-\u036f]/g,"");
             e.NewAltName = e["_producto"].replaceAll(",","");
         })
     }
@@ -279,11 +280,11 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
     angular.element(document).ready(function () {
         obj.getCategorias();
         switch(window.location.href){
-            case "https://macromautopartes.com/":
+            case "https://prueba.macromautopartes.com/":
                 obj.getBanners({ opc: "get", Categoria: "Principal", Estatus: 1 });
                 obj.getBanners({ opc: "get", Categoria: "Carrousel", Estatus: 1 });
             break;
-            case "https://macromautopartes.com/?mod=home":
+            case "https://prueba.macromautopartes.com/?mod=home":
                 obj.getBanners({ opc: "get", Categoria: "Principal", Estatus: 1 });
                 obj.getBanners({ opc: "get", Categoria: "Carrousel", Estatus: 1 });
             break;

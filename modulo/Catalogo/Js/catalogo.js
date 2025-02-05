@@ -40,6 +40,7 @@ function catalogosCtrl($scope, $http) {
         array.forEach(e => {
             e.NewUrlName = e["Producto"].replaceAll(" ","-");
             e.NewUrlName = e.NewUrlName.replaceAll(",","");
+            e.NewUrlName = e.NewUrlName.normalize('NFD').replace(/[\u0300-\u036f]/g,"");
             e.NewAltName = e["Producto"].replaceAll(",","");
             obj.getSeicom(e.Clave).then(token => {
                 e.agotado = token
@@ -419,8 +420,8 @@ function catalogosDetallesCtrl($scope, $http) {
                 obj.Refaccion.datos.NewUrlName = obj.Refaccion.datos["Producto"].replaceAll(" ","-");
                 obj.Refaccion.datos.NewUrlName = obj.Refaccion.datos.NewUrlName.replaceAll(",","");
                 document.querySelector('title').textContent = newPageTitle;
+                obj.Refaccion.datos.NewUrlName = obj.Refaccion.datos.NewUrlName.normalize('NFD').replace(/[\u0300-\u036f]/g,"");
                 if(window.location.href.includes(obj.Refaccion.datos.NewUrlName)){
-                    
                 }else{
                     window.location.href = window.location.href+"-"+obj.Refaccion.datos.NewUrlName;
                 }
@@ -471,6 +472,7 @@ function catalogosDetallesCtrl($scope, $http) {
         array.forEach(e => {
             e.NewUrlName = e["Producto"].replaceAll(" ","-");
             e.NewUrlName = e.NewUrlName.replaceAll(",","");
+            e.NewUrlName = e.NewUrlName.normalize('NFD').replace(/[\u0300-\u036f]/g,"");
             e.NewAltName = e["Producto"].replaceAll(",","");
             obj.getSeicom(e.Clave).then(token => {
                 e.agotado = token

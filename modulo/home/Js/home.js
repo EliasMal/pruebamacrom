@@ -56,6 +56,7 @@ function homeCtrl($scope, $http) {
         array.forEach(e => {
             e.NewUrlName = e["Producto"].replaceAll(" ","-");
             e.NewUrlName = e.NewUrlName.replaceAll(",","");
+            e.NewUrlName = e.NewUrlName.normalize('NFD').replace(/[\u0300-\u036f]/g,"");
             e.NewAltName = e["Producto"].replaceAll(",","");
             obj.getSeicom(e.Clave).then(token => {
                 e.agotado = token;
