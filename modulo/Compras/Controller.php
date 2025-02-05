@@ -9,14 +9,14 @@
 //    require_once 'Model.php';
 //    include 'clases/dbconectar.php';
     
-    function principal(){
-         $opc = isset($_GET['opc'])? htmlspecialchars($_GET['opc']):"principal";
-         switch($opc){
-            case 'principal':
-               $data["mod"] = "Compras";
-               retorna_vista($opc, $data);
-               break;
-         }
+   function principal(){
+      $opc = isset($_GET['opc'])? htmlspecialchars($_GET['opc']):"principal";
+      switch($opc){
+         case 'principal':
+            $data["mod"] = "Compras";
+            retorna_vista($opc, $data);
+            break;
+      }
     }
     
-    principal();
+   principal();

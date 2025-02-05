@@ -38,6 +38,9 @@ function catalogosCtrl($scope, $http) {
 
     obj.eachRefacciones = (array) => {
         array.forEach(e => {
+            e.NewUrlName = e["Producto"].replaceAll(" ","-");
+            e.NewUrlName = e.NewUrlName.replaceAll(",","");
+            e.NewAltName = e["Producto"].replaceAll(",","");
             obj.getSeicom(e.Clave).then(token => {
                 e.agotado = token
             })
@@ -79,6 +82,9 @@ function catalogosCtrl($scope, $http) {
             obj.refaccion.producto = next_prod.replaceAll("%20", " ");
         } else {
             obj.refaccion.producto = next_prod;
+        }
+        if (window.location.href.includes("%2520")) {
+            obj.refaccion.producto = next_prod.replaceAll("%2520", " ");
         }
         if (obj.refaccion.producto.includes("%C3%B1")) {
             obj.refaccion.producto = obj.refaccion.producto.replaceAll("%C3%B1", "ñ");
@@ -297,6 +303,7 @@ function catalogosCtrl($scope, $http) {
 
     angular.element(document).ready(function () {
         obj.getCategorias();
+        document.querySelector('title').textContent = "Refacciones | MacromAutopartes";
     });
 }
 
@@ -407,6 +414,16 @@ function catalogosDetallesCtrl($scope, $http) {
                 obj.Refaccion.compatibilidad = res.data.Data.Compatibilidad;
                 obj.eachRefacciones(obj.productos);
                 obj.getArticulovolks();
+                obj.Refaccion.datos.NewAltName = obj.Refaccion.datos.Producto.replaceAll(",","");
+                newPageTitle = obj.Refaccion.datos.NewAltName;
+                obj.Refaccion.datos.NewUrlName = obj.Refaccion.datos["Producto"].replaceAll(" ","-");
+                obj.Refaccion.datos.NewUrlName = obj.Refaccion.datos.NewUrlName.replaceAll(",","");
+                document.querySelector('title').textContent = newPageTitle;
+                if(window.location.href.includes(obj.Refaccion.datos.NewUrlName)){
+                    
+                }else{
+                    window.location.href = window.location.href+"-"+obj.Refaccion.datos.NewUrlName;
+                }
             }
             if (obj.Refaccion.galeria.length > 4) {
                 document.querySelector(".detalles__visual--opciones").style.display = "grid";
@@ -452,6 +469,9 @@ function catalogosDetallesCtrl($scope, $http) {
 
     obj.eachRefacciones = (array) => {
         array.forEach(e => {
+            e.NewUrlName = e["Producto"].replaceAll(" ","-");
+            e.NewUrlName = e.NewUrlName.replaceAll(",","");
+            e.NewAltName = e["Producto"].replaceAll(",","");
             obj.getSeicom(e.Clave).then(token => {
                 e.agotado = token
             })
@@ -463,7 +483,6 @@ function catalogosDetallesCtrl($scope, $http) {
         obj.getRefaccion();
         setTimeout(() => {
             $('.slick2').slick({
-
                 slidesToShow: 4,
                 slidesToScroll: 4,
                 infinite: true,

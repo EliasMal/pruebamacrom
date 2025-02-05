@@ -51,7 +51,13 @@ function ComprasCtrl($scope, $http, $sce) {
             length: 0 //largo
         }
     }
-
+    obj.eachRefacciones = (array) => {
+        array.forEach(e => {
+            e.NewUrlName = e["_producto"].replaceAll(" ","-");
+            e.NewUrlName = e.NewUrlName.replaceAll(",","");
+            e.NewAltName = e["_producto"].replaceAll(",","");
+        });
+    }
     //funcion en preparacion, Estado: En espera.
     obj.prodCarrito = function () {
         for (let el in $_SESSION.CarritoPrueba) {
@@ -131,8 +137,8 @@ function ComprasCtrl($scope, $http, $sce) {
     }
     //funcion en preparacion, Estado: En espera.
 
-    obj.RefaccionDetalles = (_id) => {
-        window.open("?mod=catalogo&opc=detalles&_id=" + _id, "_self");
+    obj.RefaccionDetalles = (_id, newurl) => {
+        window.open("?mod=catalogo&opc=detalles&_id=" + _id + "-" + newurl, "_self");
     }
 
     obj.subtotal = () => {
@@ -491,7 +497,7 @@ function ComprasCtrl($scope, $http, $sce) {
     }
 
     obj.eliminarPaqueterias = (data) => {
-        let arrayPaq = ["CARSSA", "SKYDROPX", "AMPM", "SANDEX", "QUIKEN", "SENDEX", "UPS", "TRACUSA", "TRESGUERRAS"];
+        let arrayPaq = ["CARSSA", "SKYDROPX", "JTEXPRESS", "SANDEX", "QUIKEN", "SENDEX", "UPS", "TRACUSA", "TRESGUERRAS"];
         arrayPaq.forEach(e => {
             data = data.filter(paqueteria => paqueteria.provider != e)
         });
@@ -535,6 +541,7 @@ function ComprasCtrl($scope, $http, $sce) {
             obj.getDataUser({ opc: "get", username: obj.session.usr })
             obj.empaquetar();
         }
+        obj.eachRefacciones(obj.session.CarritoPrueba);
     });
 }
 
@@ -542,64 +549,11 @@ tsuruVolks.controller("ProfileCtrl", ["$scope", "$http", ProfileCtrl]);
 
 function ProfileCtrl($scope, $http) {
     var obj = $scope;
-    obj.No_Pedidos = 0;
     obj.session = $_SESSION;
     obj.pag = "";
     obj.profile = {};
-    obj.msjprofiledisplay = false;
     obj.Facturacion = { dataFacturacion: [], usocfdi: [], estados: [], Actividad: [{ valor: "Persona Fisica" }, { valor: "Persona Moral" }] };
-    obj.Carrito = { carrito: [] };
     obj.Mispedidos = [];
-    obj.dataFactura = {}
-    obj.wizard = { preparacion: false, transito: false, proceso: false, entregado: false }
-    obj.comprobantefile = {};
-    obj.paginador = { currentPage: 0, pages: [], pageSize: 5 }
-    obj.paginador2 = { page: 0, limit: 15 }
-
-
-    obj.configPages = () => { /* Paginacion */
-        obj.paginador.pages.length = 0;
-        var ini = obj.paginador.currentPage - 4;
-        var fin = obj.paginador.currentPage + 5;
-        if (ini < 1) {
-            ini = 1;
-            if (Math.ceil(obj.No_Pedidos / obj.paginador.pageSize) > 10)
-                fin = 10;
-            else
-                fin = Math.ceil(obj.No_Pedidos / obj.paginador.pageSize);
-        } else {
-            if (ini >= Math.ceil(obj.No_Pedidos / obj.paginador.pageSize) - 10) {
-                ini = Math.ceil(obj.No_Pedidos / obj.paginador.pageSize) - 10;
-                fin = Math.ceil(obj.No_Pedidos / obj.paginador.pageSize);
-            }
-        }
-        if (ini < 1) ini = 1;
-        for (var i = ini; i <= fin; i++) {
-            obj.paginador.pages.push({
-                no: i, p: (obj.paginador.pageSize * i) - obj.paginador.pageSize
-            });
-        }
-    }
-
-    obj.nextPage = () => {
-        obj.paginador.currentPage = obj.paginador.currentPage + 1;
-        obj.configPages();
-        obj.sendMispedidos("buscar", { _id: localStorage.getItem("iduser") }, obj.paginador.currentPage * obj.paginador.pageSize, obj.paginador.pageSize)
-    }
-
-    obj.lastPage = () => {
-        obj.paginador.currentPage = obj.paginador.currentPage - 1;
-        obj.configPages();
-        obj.sendMispedidos("buscar", { _id: localStorage.getItem("iduser") }, obj.paginador.currentPage * obj.paginador.pageSize, obj.paginador.pageSize)
-    }
-
-    obj.setPage = function (a) {
-        obj.paginador.currentPage = a.no - 1;
-        obj.configPages();
-        obj.sendMispedidos("buscar", { _id: localStorage.getItem("iduser") }, a.p, obj.paginador.pageSize)
-    }; /* Termina Paginacion */
-
-
 
     obj.btnMenulinks = (opc = '') => {
         if (opc != "") {
@@ -607,8 +561,6 @@ function ProfileCtrl($scope, $http) {
         } else {
             location.href = "?mod=Profile";
         }
-
-        //localStorage.setItem("pag",opc);
     }
 
     obj.facturaNo = () => {
@@ -711,190 +663,9 @@ function ProfileCtrl($scope, $http) {
 
     }//Termina Verificador de Agregar nueva Factura.
 
-    obj.setWizard = (estatus) => { /*Seccion para el modulo de mis pedidos */
-        switch (estatus) {
-            case 2:
-                obj.wizard.preparacion = true;
-                break;
-            case 3:
-                obj.wizard.preparacion = true;
-                obj.wizard.transito = true;
-                break;
-            case 4:
-                obj.wizard.preparacion = true;
-                obj.wizard.transito = true;
-                obj.wizard.proceso = true;
-                break;
-            case 5:
-                obj.wizard.preparacion = true;
-                obj.wizard.transito = true;
-                obj.wizard.proceso = true;
-                obj.wizard.entregado = true;
-                break;
-        }
-    }
-    obj.sendMispedidos = (opc = "buscar", data = null, x = 0, y = obj.paginador.pageSize) => {
-        $http({
-            method: 'POST',
-            url: urlProfile,
-            data: { profile: { opc: opc, tipo: obj.pag, data: data, x: x, y: y } }
-        }).then(function successCallback(res) {
-            if (res.data.Bandera == 1) {
-                if (opc == "buscar") {
-                    obj.No_Pedidos = res.data.Data.No_pedidos;
-                    res.data.Data.Pedidos.forEach(e => {
-                        e.Acreditado = parseInt(e.Acreditado);
-                        e.class = obj.getcolorEstatus(e.Acreditado);
-                    })
-                    obj.configPages();
-                    obj.Mispedidos = res.data.Data.Pedidos;
-
-                }
-
-                if (opc == "details") {
-                    obj.Mispedidos = res.data.Data;
-                    obj.Mispedidos.Acreditado = parseInt(obj.Mispedidos.Acreditado);
-                    obj.setWizard(obj.Mispedidos.Acreditado);
-
-                }
-                if (opc == "DeleteComp") {
-                    if (res.data.Bandera === 1) {
-                        obj.Mispedidos.isFileComprobante = false;
-                        angular.element('#comprobante').val(null)
-                        toastr.success(res.data.mensaje);
-                    } else {
-                        toastr.error(res.data.mensaje);
-                    }
-
-                }
-            } else {
-                toastr.error(res.data.mensaje);
-            }
-        }, function errorCallback(res) {
-            toastr.error("Error: no se realizo la conexion con el servidor");
-        });
-    }
-
-    obj.btnDeleteComp = (e) => {
-        e.preventDefault();
-        if (confirm("Estas seguro de eliminar el comprobante de pago")) {
-            obj.sendMispedidos("DeleteComp", { _idpedido: localStorage.getItem("_idPedido") });
-        }
-    }
-
-    obj.btnverMispedidos = (_idPedido) => {
-        localStorage.setItem("_idPedido", _idPedido);
-        obj.btnMenulinks("Mispedidos_view");
-    }
-
-    obj.getcolorEstatus = (estatus) => {
-        let classEstatus = "";
-        switch (estatus) {
-            case 0:
-                classEstatus = "badge-secondary";
-                break;
-            case 1:
-            case 5:
-                classEstatus = "badge-success";
-                break;
-            case 2:
-            case 3:
-            case 4:
-                classEstatus = "badge-warning";
-                break;
-            case 6:
-                classEstatus = "badge-danger";
-                break;
-        }
-        return classEstatus;
-    }
-
-    obj.showModalFile = (data) => {
-        obj.dataFactura = {
-            Rfc: data.Rfc,
-            Razon: data.Razonsocial,
-            usoCFDI: data.Descripcion,
-            xml: "Public/Facturas/" + data.archivoxml,
-            pdf: "Public/Facturas/" + data.archivopdf
-        }
-        $("#Mdlfiles").modal('show');
-    }
-
-    obj.btnDownloadZip = () => {
-        let zip = new JSZip();
-        let promise = new Blob([$.get(obj.dataFactura.xml)], { type: "text/plain;charset=utf-8" });
-
-        zip.file(obj.dataFactura.xml, promise)
-        promise = new Blob([$.get(obj.dataFactura.pdf)], { type: "text/plain;charset=utf-8" });
-        zip.file(obj.dataFactura.pdf, promise)
-
-    }
-
-    obj.btnuploadComprobante = () => {
-        $http({
-            method: 'POST',
-            url: urlComprobante,
-            data: { profile: { opc: "upload", _idpedido: localStorage.getItem("_idPedido"), file: obj.comprobantefile } },
-            headers: {
-                'Content-Type': undefined
-            },
-            transformRequest: function (data) {
-                var formData = new FormData();
-                for (var m in data.profile) {
-                    formData.append(m, data.profile[m]);
-                }
-                return formData;
-            }
-        }).then(function successCallback(res) {
-            if (res.data.Bandera === 1) {
-                obj.Mispedidos.isFileComprobante = true;
-                obj.Mispedidos.comprobante = res.data.Data.comprobante;
-                toastr.success(res.data.mensaje);
-            } else {
-                toastr.error(res.data.mensaje);
-            }
-        }, function errorCallback(res) {
-            toastr.error("Error: no se realizo la conexion con el servidor");
-        });
-    }
-
-    obj.btnComprobanteCompra = (_idPedido) => {
-        localStorage.setItem("_idPedido", _idPedido);
-        window.open("./Reportes/ComprobantePago/Controller.php");
-        // window.open("./Reportes/ComprobantePago/Html/ComproPago.php");
-    }
-
-    obj.btnRegresarviewPedidos = () => {
-        window.location.href = "?mod=Profile&opc=Mispedidos";
-    }
-
-    obj.btnCancelarPedido = () => {
-        if (confirm("¿Estas seguro de cancelar el pedido?")) {
-            obj.sendMispedidos("CancelPedido", { _idpedido: localStorage.getItem("_idPedido") })
-        }
-    }
-    /*Finaliza seccion mis pedidos */
-
     /* variables seccion direcciones */
     obj.dataDireccion = { Estatus: 1, Predeterminado: 0 }
     obj.dataFacturacion = { Estatus: 1, Predeterminado: 0 }
-
-    /* seccion para modulo Session y seguridad */
-    obj.btnGuardarSession = (press) => {
-        if (confirm("Estas seguro de Actualizar los datos")) {
-            if (press == 1) {
-                obj.sendProfile("profile");
-            } else if (press == 2) {
-                if (obj.profile.Nuevapass === obj.profile.Confirmarpass) {
-                    obj.msjprofiledisplay = false;
-                    obj.sendProfile("password")
-                } else {
-                    obj.msjprofiledisplay = true;
-                    toastr.error("Las contraseñas no coinciden");
-                }
-            }
-        }
-    }
 
     obj.sendProfile = (opc) => {
         $http({
@@ -968,7 +739,6 @@ function ProfileCtrl($scope, $http) {
                     case 'edit':
                         obj.dataDireccion = res.data.Data;
                         obj.Facturacion.estados = res.data.Data2;
-                        obj.Carrito.carrito = res.data.Data3;
                         break;
                 }
 
@@ -1071,7 +841,6 @@ function ProfileCtrl($scope, $http) {
                     case 'new':
                         obj.Facturacion.usocfdi = res.data.Data;
                         obj.Facturacion.estados = res.data.Data2;
-                        obj.Carrito.carrito = res.data.Data3;
                         break;
                     default:
                         obj.Facturacion.dataFacturacion = res.data.Data;
@@ -1140,21 +909,6 @@ function ProfileCtrl($scope, $http) {
     }
     /* Finaliza modulo de Datos de Facturacion */
 
-
-    obj.btnNext = () => {
-        obj.paginador2.page += obj.paginador2.limit
-        let params = { opc: "history", idCliente: localStorage.getItem("iduser"), page: obj.paginador2.page, limit: obj.paginador2.limit }
-
-    }
-
-    obj.bntPrevios = () => {
-        obj.paginador2.page -= obj.paginador2.limit
-        if (obj.paginador2.page < 0) {
-            obj.paginador2.page = 0
-        }
-        let params = { opc: "history", idCliente: localStorage.getItem("iduser"), page: obj.paginador2.page, limit: obj.paginador2.limit }
-
-    }
     /* */
 
     angular.element(document).ready(function () {

@@ -4,7 +4,7 @@
 		<section class="header__contenido" ng-repeat="cat in dataBanners.Escritorio">
 			<picture class="header__picture">
 				<!-- <source srcset="https://macromautopartes.com/images/Banners/{{cat.imagen}}" type="image/webp" class="header__picture--img"> -->
-				<img loading="lazy" ng-src="https://macromautopartes.com/images/Banners/{{cat.imagen}}" alt="banner">
+				<img loading="lazy" ng-src="https://macromautopartes.com/images/Banners/{{cat.imagen}}" alt="banner" draggable=false>
 			</picture>
 		</section>
 	</header>
@@ -89,9 +89,9 @@
 
 								<div class="wrap-pic-w of-hidden cursorpnt" 
 								ng-class="{'pos-relative': !producto.agotado}">
-									<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="enlace">
-										<img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/'+producto._id+'.png':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}">
-										<!-- <img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}"> -->
+									<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}" class="enlace">
+										<!-- <img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/'+producto._id+'.png':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.NewAltName}}"> -->
+										<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.NewAltName}}">
 									</a>
 								</div>
 
@@ -101,7 +101,7 @@
 											<span class="promocion__aviso" ng-show="producto.RefaccionOferta">promoción</span>
 											<span class="enviogratis__aviso" ng-show="producto.Enviogratis">envío gratis</span>
 										</div>
-										<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
+										<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
 										<div class="precio__imgprove">	
 											<p class="precio__producto" ng-hide="producto.RefaccionOferta"> {{producto.Precio1 | currency}} </p>	
 											<p class="precio__producto" ng-show="producto.RefaccionOferta"> <small class="line_through-red">{{producto.Precio1 | currency}}</small> </p>

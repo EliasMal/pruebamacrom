@@ -54,6 +54,9 @@ function homeCtrl($scope, $http) {
 
     obj.eachRefacciones = (array) => {
         array.forEach(e => {
+            e.NewUrlName = e["Producto"].replaceAll(" ","-");
+            e.NewUrlName = e.NewUrlName.replaceAll(",","");
+            e.NewAltName = e["Producto"].replaceAll(",","");
             obj.getSeicom(e.Clave).then(token => {
                 e.agotado = token;
             })
@@ -120,12 +123,22 @@ function homeCtrl($scope, $http) {
 
         setTimeout(() => {
             $('.slick2').slick({
-                arrows: false,
+                arrows: true,
+                dots:true,
                 infinite: true,
                 autoplay:true,
                 autoplaySpeed: 5000,
                 slidesToShow: 1,
-                adaptiveHeight: true
+                adaptiveHeight: true,
+                responsive: [
+                    {
+                        breakpoint: 1500,
+                        settings: {
+                            arrows: false,
+                            cssEase: 'linear'
+                        }
+                    }
+                ]
             });
         }, 500);
 

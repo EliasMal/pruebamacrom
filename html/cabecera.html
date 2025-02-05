@@ -159,11 +159,11 @@
 											</div>
 
 											<div class="header-cart-item-img">
-												<img ng-src="{{getImagen(product.imagenid)}}" class="cursorpnt" ng-click="RefaccionDetalles(product.imagenid)" alt="IMG">
+												<img ng-src="{{getImagen(product.imagenid)}}" class="cursorpnt" ng-click="RefaccionDetalles(product.imagenid,product.NewUrlName)" alt="{{product.NewAltName}}">
 											</div>
 
 											<div class="header-cart-item-txt">
-												<a ng-click="RefaccionDetalles(product.imagenid)" class="header-cart-item-name enlace">
+												<a ng-click="RefaccionDetalles(product.imagenid,product.NewUrlName)" class="header-cart-item-name enlace">
 													{{product._producto}}
 												</a>
 

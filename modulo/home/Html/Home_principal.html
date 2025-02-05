@@ -1,6 +1,17 @@
+<style>
+.slick-next{
+  z-index: 3;
+  right: 9rem;
+}
+.slick-prev{
+  z-index: 3;
+  left: 6rem;
+}
+</style>
 <div ng-controller="homeCtrl" class="global__content">
 
 	<header class="header" ng-controller="CabeceraCtrl">
+
 		<div class="header__contenido">
 			<div class="header__contenido--banner" ng-repeat="banner in dataBanners.Escritorio" ng-show="dataBanners.Escritorio != 0">
 				<picture class="header__picture d-grid">
@@ -8,6 +19,7 @@
 					<img decoding="sync" ng-src="images/Banners/{{banner.imagen}}" alt="banner" class="header__picture--img" width="100%" height="350px">
 				</picture>
 			</div>
+			
 			<div class="slick2" ng-show="dataBanners.Escritorio == 0">
 				<div class="header__contenido--banner" ng-repeat="banner in dataCarrousel.Escritorio">
 					<picture class="header__picture d-grid">
@@ -17,6 +29,7 @@
 				</div>
 			</div>
 		</div>
+
 	</header>
 	
 	<div class="contenedor contenido-principal">
@@ -72,9 +85,9 @@
 											<div class="wrap-pic-w of-hidden cursorpnt" 
 											ng-class="{'ribboagotado': producto.agotado ,'pos-relative': !producto.agotado}">
 
-											<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="enlace">
+											<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}" class="enlace">
 												<!-- <img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/'+producto._id+'.png':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}"> -->
-												<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}">
+												<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.NewAltName}}">
 											</a>
 											</div>
 
@@ -84,7 +97,7 @@
 														<span class="promocion__aviso" ng-show="producto.RefaccionOferta">promoción</span>
 														<span class="enviogratis__aviso" ng-show="producto.Enviogratis">envío gratis</span>
 													</div>
-													<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
+													<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
 													<div class="precio__imgprove">
 														<p class="precio__producto" ng-hide="producto.RefaccionOferta">{{producto.Precio1 | currency}}</p>	
 														<p class="precio__producto" ng-show="producto.RefaccionOferta"><small class="line_through-red">{{producto.Precio1 | currency}}</small>
@@ -113,9 +126,9 @@
 											<div class="wrap-pic-w of-hidden cursorpnt" 
 											ng-class="{'ribboagotado': producto.agotado,'ribbonnuevo': producto.RefaccionNueva==1,'pos-relative': !producto.agotado}">
 
-											<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="enlace">
+											<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}" class="enlace">
 												<!-- <img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/'+producto._id+'.png':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}"> -->
-												<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}">
+												<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.NewAltName}}">
 											</a>
 											</div>
 
@@ -125,7 +138,7 @@
 														<span class="promocion__aviso" ng-show="producto.RefaccionOferta">promoción</span>
 														<span class="enviogratis__aviso" ng-show="producto.Enviogratis">envío gratis</span>
 													</div>
-													<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
+													<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
 													<div class="precio__imgprove">
 														<p class="precio__producto" ng-hide="producto.RefaccionOferta">{{producto.Precio1 | currency}}</p>	
 														<p class="precio__producto" ng-show="producto.RefaccionOferta"><small class="line_through-red">{{producto.Precio1 | currency}}</small>
@@ -153,16 +166,16 @@
 										<div class="productos__informacion">
 											<div class="wrap-pic-w of-hidden cursorpnt" 
 											ng-class="{'ribbonliquidacion': producto.RefaccionLiquidacion ,'pos-relative': !producto.agotado}">
-											<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="enlace">
+											<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}" class="enlace">
 												<!-- <img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/'+producto._id+'.png':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}"> -->
-												<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.Producto}}">
+												<img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.NewAltName}}">
 											</a>
 											</div>
 
 											<div class="block2-txt">
 												<section class="descripcion-producto">
 
-													<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
+													<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
 													<div class="precio__imgprove">	
 														<p class="precio__producto" ng-hide="producto.RefaccionOferta">{{producto.Precio1 | currency}}</p>	
 														<p class="precio__producto" ng-show="producto.RefaccionOferta"><small class="line_through-red">{{producto.Precio1 | currency}}</small></p>
@@ -190,69 +203,62 @@
 				</div>
 			</section>
 			
-				<div class="redes__sociales">
-					<div class="redes__sociales--titulo">
-						<h3 class="center--text">
-							S&iacute;guenos en nuestras redes sociales
-						</h3>
-						<section class="ss-icon">
-							<a href="https://www.facebook.com/MacromAutopartes/" target="_blank"><article><span class="fab fa-facebook-f"></span></article></a>
-							<a href="https://www.instagram.com/macromautopartes/" target="_blank"><article><span class="fab fa-instagram"></span></article></a>
-							<a href="https://www.youtube.com/channel/UCbVJJH6AIZJ9lH7fE_2rtwA" target="_blank"><article><span class="fab fa-youtube"></span></article></a>
-							<a href="https://www.tiktok.com/@macromautopartes?lang=en" target="_blank"><article><span class="fab fa-tiktok"></span></article></a>
-						  </section>
-					</div>
+			<div class="redes__sociales">
+				<div class="redes__sociales--titulo">
+					<h3 class="center--text">
+						S&iacute;guenos en nuestras redes sociales
+					</h3>
+					<section class="ss-icon">
+						<a href="https://www.facebook.com/MacromAutopartes/" target="_blank"><article><span class="fab fa-facebook-f"></span></article></a>
+						<a href="https://www.instagram.com/macromautopartes/" target="_blank"><article><span class="fab fa-instagram"></span></article></a>
+						<a href="https://www.youtube.com/channel/UCbVJJH6AIZJ9lH7fE_2rtwA" target="_blank"><article><span class="fab fa-youtube"></span></article></a>
+						<a href="https://www.tiktok.com/@macromautopartes?lang=en" target="_blank"><article><span class="fab fa-tiktok"></span></article></a>
+					  </section>
+				</div>
 
-					<div class="contenedor__redsocial">
-						<div class="redsocial">
-							<div class="redsocial__facebook">
-								<div class="fb-page" data-href="https://www.facebook.com/MacromAutopartes/" data-tabs="timeline" data-width="" data-height="" data-small-header="false" 
+				<div class="contenedor__redsocial">
+					<div class="redsocial">
+						<div class="redsocial__facebook">
+							<div class="fb-page" data-href="https://www.facebook.com/MacromAutopartes/" data-tabs="timeline" data-width="" data-height="" data-small-header="false" 
 								data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/MacromAutopartes/" 
-								class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/MacromAutopartes/">Macrom Autopartes</a></blockquote></div>
+								class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/MacromAutopartes/">Macrom Autopartes</a></blockquote>
 							</div>
-
 						</div>
-
 					</div>
 				</div>
+
+			</div>
 			<!-- Instagram -->
 			
 			<!-- Shipping -->
-				<section class="informacion__extra">
-					<div class="informacion__extra--contenido">
+			<section class="informacion__extra">
+				<div class="informacion__extra--contenido">
 
-						<div class="contenido--envios">
-							<h4 class="center--text">
-								Env&iacute;os a toda la Republica
-							</h4>
-
-							<!-- <a href="#" class="center--text">
-								Click para mas informacion
-							</a> -->
-						</div>
-
-						<div class="contenido--garantias">
-							<h4 class="center--text">
-								Garant&iacute;as
-							</h4>
-
-							<!-- <a href="#" class="center--text">
-								Click para mas informacion
-							</a> -->
-						</div>
-
-						<div class="contenido--tiendabierta">
-							<h4 class="center--text">
-								Tienda Abierta
-							</h4>
-							<span class="center--text">
-								Te atendemos de Lunes a S&aacute;bado
-							</span>
-						</div>
-
+					<div class="contenido--envios">
+						<h4 class="center--text">
+							Env&iacute;os a toda la Republica
+						</h4>
 					</div>
-					
-				</section>
-			</div>
+
+					<div class="contenido--garantias">
+						<h4 class="center--text">
+							Garant&iacute;as
+						</h4>
+					</div>
+
+					<div class="contenido--tiendabierta">
+						<h4 class="center--text">
+							Tienda Abierta
+						</h4>
+						<span class="center--text">
+							Te atendemos de Lunes a S&aacute;bado
+						</span>
+					</div>
+
+				</div>
+	
+			</section>
 		</main>
+	</div>
+		
 </div>

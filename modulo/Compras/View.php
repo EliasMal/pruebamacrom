@@ -7,7 +7,7 @@
 (@__DIR__ == '__DIR__') && define('__DIR__',  realpath(dirname(__FILE__)));
 
 function get_template($form='principal'){
-    $file = __DIR__.'/Html/Compras_principal.php';
+    $file = __DIR__.'/Html/Compras_principal.html';
     $template = file_get_contents($file);
     return $template;
 }

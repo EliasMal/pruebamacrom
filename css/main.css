@@ -1096,8 +1096,12 @@ i.fa.fa-sun {
 
 .macrom__contenedor--categorias {
   padding-bottom: 5rem;
-}
+  min-height: 43rem;
 
+}
+.seccion__nuestrosproductos{
+  min-height: 503rem;
+}
 .contenedor__nuestrosproductos h3,
 .redes__sociales--titulo h3 {
   line-height: 1.2;
@@ -1591,6 +1595,7 @@ i.fa.fa-sun {
 
 .footer__contacto {
   display: none;
+  min-height: 52.5rem;
 }
 
 /*Comprobante pago*/
@@ -2061,24 +2066,9 @@ i.fa.fa-sun {
   width: 13rem;
 }
 
-.slick2 {
-  display: grid;
-}
-
-.slick2 button {
-  width: 10rem;
-  height: 4rem;
-  background-color: var(--gris);
-  z-index: 1;
-  top: 19.5rem;
-}
-
-.slick2 button:hover {
-  background-color: var(--primario-oscuro);
-}
-
-.slick2 button:focus {
-  background-color: var(--primario-oscuro);
+.slick-next:before, .slick-prev:before{
+  font-size: 5rem;
+  color: var(--primario);
 }
 
 .descripcion__producto--precio {
@@ -2137,7 +2127,9 @@ i.fa.fa-sun {
 .Proceso__Compra--img {
   justify-self: center;
 }
-
+.header__contenido{
+  min-height: 8.5rem;
+}
 @media(min-width: 800px) {
   .body__theme--dark .home__pr:hover {
     box-shadow: 5px 10px 20px var(--blanco);
@@ -2145,6 +2137,14 @@ i.fa.fa-sun {
 
   .Proceso__Compra--img {
     width: 50rem;
+  }
+
+  .header__contenido{
+    min-height: 25rem;
+  }
+
+  .seccion__nuestrosproductos{
+    min-height: 69rem;
   }
 
   .productos__datos--img::after {
@@ -3034,6 +3034,7 @@ input[type=number]::-webkit-inner-spin-button {
     grid-template-columns: repeat(2, 1fr);
     grid-column-gap: 1rem;
     max-height: 45rem;
+    min-width: 52rem;
   }
 
   .cliente__titulo {
@@ -3103,6 +3104,7 @@ input[type=number]::-webkit-inner-spin-button {
   .footer__contenedor {
     background-color: #f0f0f0;
     padding: 4.5rem;
+    min-height: 62rem;
   }
 
   .footer__contacto {

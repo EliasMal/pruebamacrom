@@ -60,6 +60,13 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
     obj.recapchatKey = "6Le-C64UAAAAAMlSQyH3lu6aXLIkzgewZlVRgEam";
     obj.Contacto = {};
 
+    obj.eachRefacciones = (array) => {
+        array.forEach(e => {
+            e.NewUrlName = e["_producto"].replaceAll(" ","-");
+            e.NewUrlName = e.NewUrlName.replaceAll(",","");
+            e.NewAltName = e["_producto"].replaceAll(",","");
+        })
+    }
 
     obj.subtotal = () => {
         obj.Costumer.Subtotal = 0;
@@ -151,6 +158,7 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
             if (result) {
                 if (result.data.Bandera == 1) {
                     obj.Data = result.data.Data;
+                    obj.eachRefacciones(obj.Data.Carrito);
                     // console.log(obj.Data.Categorias);
                     // for (var i = 0; i <= obj.Data.Categorias.length; i++) {
                     //     if (obj.Data.Categorias[i] != undefined) {
@@ -213,8 +221,8 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
         });
     }
 
-    obj.RefaccionDetalles = (_id) => {
-        window.open("?mod=catalogo&opc=detalles&_id=" + _id, "_self");
+    obj.RefaccionDetalles = (_id,newurl) => {
+        window.open("?mod=catalogo&opc=detalles&_id=" + _id + "-" + newurl, "_self");
     }
 
     obj.btnLogout = () => {

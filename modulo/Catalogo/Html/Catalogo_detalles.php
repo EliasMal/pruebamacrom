@@ -1,3 +1,9 @@
+<style>
+.slick-next, .slick-prev{
+  z-index: 3;
+  right: 0;
+}
+</style>
 <div ng-controller="catalogosDetallesCtrl" ng-init="Refaccion.id={id}" class="ctrlmain global__content contenedor">
 	<!-- breadcrumb -->
 	<div class="bread-crumb bgwhite flex-w categorias__link">
@@ -38,7 +44,7 @@
 						<div class="" data-thumb="{{getImagen(Refaccion.datos.imagen, Refaccion.datos._id)}}">
 							<div class="detalles__visual--producto">
 								<!-- <img ng-src="{{getImagen(Refaccion.datos.imagen, Refaccion.datos._id)}}" alt="IMG-PRODUCT" class="hero"> -->
-								<img ng-src="{{getImagen(Refaccion.datos.imagen, Refaccion.datos._id)}}" alt="IMG-PRODUCT" class="hero">
+								<img ng-src="{{getImagen(Refaccion.datos.imagen, Refaccion.datos._id)}}" alt="{{Refaccion.datos.NewAltName}}" class="hero image-zoom-available" draggable=false>
 							</div>
 						</div>
 					</div>
@@ -56,7 +62,6 @@
 					<h5 class="product-detail-SKU">SKU: {{Refaccion.datos.No_parte}}</h5>
 				</div>
 				
-
 				<!-- Descripciones mobile y desktop -->
 				<div class="descripcion">
 					<!-- {{Refaccion}} -->
@@ -214,9 +219,9 @@
 									'pos-relative': !producto.agotado || producto.RefaccionNueva==0
 
 									}">
-									<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}">
+									<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}">
 										<!-- <img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/motor.webp':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}" alt="IMG-PRODUCT"> -->
-										<img ng-src="{{producto.imagen? 'images/refacciones/motor.webp':'images/refacciones/'+producto._id+'.webp'}}" alt="IMG-PRODUCT">
+										<img ng-src="{{producto.imagen? 'images/refacciones/motor.webp':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.NewAltName}}">
 									</a>
 								</div>
 								<div class="block2-txt">
@@ -224,7 +229,7 @@
 										<span class="promocion__aviso" ng-show="producto.RefaccionOferta =='1'">promoción</span>
 										<span class="enviogratis__aviso" ng-show="producto.Enviogratis">envío gratis</span>
 									</div>
-									<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
+									<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
 									<section class="descripcion-producto-refa">
 										<p class="precio__producto" ng-hide="producto.RefaccionOferta=='1'">{{producto.Precio1 | currency}}</p>	
 										<p class="precio__producto" ng-show="producto.RefaccionOferta=='1'"><small class="line_through-red">{{producto.Precio1 | currency}}</small>
