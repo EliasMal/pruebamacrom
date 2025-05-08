@@ -42,37 +42,10 @@ function catalogosCtrl($scope, $http) {
             e.NewUrlName = e.NewUrlName.replaceAll(",","");
             e.NewUrlName = e.NewUrlName.normalize('NFD').replace(/[\u0300-\u036f]/g,"");
             e.NewAltName = e["Producto"].replaceAll(",","");
-            obj.getSeicom(e.Clave).then(token => {
-                e.agotado = token
-            })
-        })
-    }
-
-    obj.getSeicom = async (clave) => {
-        try {
-            const result = await $http({
-                method: 'GET',
-                url: url_seicom,
-                params: { articulo: clave },
-                headers: { 'Content-Type': "application/x-www-form-urlencoded" },
-                transformResponse: function (data) {
-                    return $.parseXML(data);
-                }
-
-            }).then(function successCallback(res) {
-                return res
-            }, function errorCallback(res) {
-                toastr.error(res);
-            });
-            if (result) {
-                const xml = $(result.data).find("string");
-                let json = JSON.parse(xml.text());
-                return json.Table.map(e => e.existencia).reduce((a, b) => a + b, 0) == 0 ? true : false;
+            if(e.stock == 0){
+                e.agotado = true;
             }
-        } catch (error) {
-            toastr.error(error)
-        }
-
+        })
     }
 
     obj.getCategorias = async () => {
@@ -245,7 +218,7 @@ function catalogosCtrl($scope, $http) {
                     obj.Refacciones = result.data.Data.Refacciones;
                     obj.Trefacciones = result.data.Data.Trefacciones;
                     obj.configPages();
-                    obj.eachRefacciones(obj.Refacciones)
+                    obj.eachRefacciones(obj.Refacciones);
                 } else {
                     toastr.error(result.data.Mensaje);
                 }
@@ -334,69 +307,13 @@ function catalogosDetallesCtrl($scope, $http) {
         var numStr = decimalLength > 0 ? s.substr(0, decimalLength + posiciones) : s
         return Number(numStr)
     }
-
-    obj.getSeicom = async (clave) => {
-        try {
-            const result = await $http({
-                method: 'GET',
-                url: url_seicom,
-                params: { articulo: clave },
-                headers: { 'Content-Type': "application/x-www-form-urlencoded" },
-                transformResponse: function (data) {
-                    return $.parseXML(data);
-                }
-
-            }).then(function successCallback(res) {
-                return res
-            }, function errorCallback(res) {
-                toastr.error(res);
-            });
-            if (result) {
-                const xml = $(result.data).find("string");
-                let json = JSON.parse(xml.text());
-                return json.Table.map(e => e.existencia).reduce((a, b) => a + b, 0) == 0 ? true : false;
-            }
-        } catch (error) {
-            toastr.error(error)
-        }
-
-    }
-
-    obj.getArticulovolks = () => {
-        $http({
-            method: 'POST',
-            url: "https://volks.dyndns.info:444/service.asmx/consulta_art",
-            data: "articulo=" + obj.Refaccion.datos.Clave,
-            headers: {
-                'Content-Type': "application/x-www-form-urlencoded"
-
-            },
-            transformResponse: function (data) {
-                return $.parseXML(data);
-            }
-        }).then(function successCallback(res) {
-            var xml = $(res.data);
-            var json = xml.find("string");
-            obj.existencias = JSON.parse(json.text());
-
-            obj.existencias.Table.forEach(function (e) {
-                obj.Refaccion.Existencias += parseInt(e.existencia);
-                obj.Refaccion.precio = obj.trunc((e.precio_5 * 1.16), 2);
-            })
-            obj.Activa = obj.Refaccion.Existencias != 0 ? true : false;
-
-        }, function errorCallback(res) {
-            console.log("Error: no se realizo la conexion con el servidor");
-
-        });
-    }
-
+    
     obj.btndisminuir = () => {
         obj.Refaccion.cantidad = obj.Refaccion.cantidad != 1 ? obj.Refaccion.cantidad - 1 : 1
     }
 
     obj.btnaumentar = () => {
-        if (obj.Refaccion.cantidad < obj.Refaccion.Existencias) {
+        if (obj.Refaccion.cantidad < obj.Refaccion.datos.stock) {
             obj.Refaccion.cantidad++
         }
     }
@@ -414,7 +331,6 @@ function catalogosDetallesCtrl($scope, $http) {
                 obj.productos = res.data.Data.Productos;
                 obj.Refaccion.compatibilidad = res.data.Data.Compatibilidad;
                 obj.eachRefacciones(obj.productos);
-                obj.getArticulovolks();
                 obj.Refaccion.datos.NewAltName = obj.Refaccion.datos.Producto.replaceAll(",","");
                 newPageTitle = obj.Refaccion.datos.NewAltName;
                 obj.Refaccion.datos.NewUrlName = obj.Refaccion.datos["Producto"].replaceAll(" ","-");
@@ -425,11 +341,11 @@ function catalogosDetallesCtrl($scope, $http) {
                 }else{
                     window.location.href = window.location.href+"-"+obj.Refaccion.datos.NewUrlName;
                 }
+                obj.Activa = obj.Refaccion.datos.stock != 0 ? true : false;
             }
             if (obj.Refaccion.galeria.length > 4) {
                 document.querySelector(".detalles__visual--opciones").style.display = "grid";
             }
-
         }, function errorCallback(res) {
             toastr.error("Error: no se realizo la conexion con el servidor");
         });
@@ -474,9 +390,9 @@ function catalogosDetallesCtrl($scope, $http) {
             e.NewUrlName = e.NewUrlName.replaceAll(",","");
             e.NewUrlName = e.NewUrlName.normalize('NFD').replace(/[\u0300-\u036f]/g,"");
             e.NewAltName = e["Producto"].replaceAll(",","");
-            obj.getSeicom(e.Clave).then(token => {
-                e.agotado = token
-            })
+            if(e.stock == 0){
+                e.agotado = true;
+            }
         })
 
     }

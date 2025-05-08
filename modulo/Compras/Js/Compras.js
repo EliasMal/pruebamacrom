@@ -330,13 +330,19 @@ function ComprasCtrl($scope, $http, $sce) {
                     obj.ProcesarCompra(obj.Costumer);
                 } else {
                     toastr.error("Error: Debes de seleccionar el costo del envio");
+                    butccompra.classList.remove("animationclip");
+                    butcompra.disabled = false;
                 }
             } else {
                 toastr.error("Error: no hay datos de facturacion predeterminados");
+                butccompra.classList.remove("animationclip");
+                butcompra.disabled = false;
             }
 
         } else {
             toastr.error("Error no tienes una direccion de envio predeterminada");
+            butccompra.classList.remove("animationclip");
+            butcompra.disabled = false;
         }
     }
 
@@ -393,6 +399,8 @@ function ComprasCtrl($scope, $http, $sce) {
             }
         }, function errorCallback(res) {
             toastr.error("Error: no se realizo la conexion con el servidor");
+            butccompra.classList.remove("animationclip");
+            butcompra.disabled = false;
         });
     }
 
@@ -490,10 +498,25 @@ function ComprasCtrl($scope, $http, $sce) {
         });
         obj.dataCotizador.parcel.length += parseFloat(2); obj.dataCotizador.parcel.width += parseFloat(2); obj.dataCotizador.parcel.height += parseFloat(2);
         TotalVolumen2 = (obj.dataCotizador.parcel.length * obj.dataCotizador.parcel.width * obj.dataCotizador.parcel.height);
-        if (TotalVolumen > TotalVolumen2) {
-            obj.dataCotizador.parcel.length += parseFloat(2); obj.dataCotizador.parcel.width += parseFloat(2); obj.dataCotizador.parcel.height += parseFloat(2);
-            TotalVolumen2 = (obj.dataCotizador.parcel.length * obj.dataCotizador.parcel.width * obj.dataCotizador.parcel.height);
+        
+        if(TotalVolumen >= 100000 && TotalVolumen < 150000){
+            obj.dataCotizador.parcel.length = parseFloat(80); obj.dataCotizador.parcel.width = parseFloat(40); obj.dataCotizador.parcel.height = parseFloat(45);
+        }else{
+            while(TotalVolumen > TotalVolumen2) {
+                if(obj.dataCotizador.parcel.width < 40){
+                    obj.dataCotizador.parcel.width += parseFloat(2);
+                }
+
+                if(obj.dataCotizador.parcel.width > 40 && obj.dataCotizador.parcel.length > 80 && obj.dataCotizador.parcel.height < 45){
+                    obj.dataCotizador.parcel.height += parseFloat(2);
+                }
+
+                obj.dataCotizador.parcel.length += parseFloat(2);
+
+                TotalVolumen2 = (obj.dataCotizador.parcel.length * obj.dataCotizador.parcel.width * obj.dataCotizador.parcel.height);
+            }
         }
+        
         obj.requiredEnvio = obj.dataCotizador.parcel.weight != 0 ? false : true;
     }
 

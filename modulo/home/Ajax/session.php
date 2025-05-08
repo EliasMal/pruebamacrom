@@ -20,8 +20,8 @@
       
       $ncantidad = intval($value["Cantidad"] + $formulario->modelo->cantidad);
 
-      if ($ncantidad > $formulario->modelo->Existencias){
-        $ncantidad = $formulario->modelo->Existencias;
+      if ($ncantidad > $formulario->modelo->datos->stock){
+        $ncantidad = $formulario->modelo->datos->stock;
       }
 
       $iguales = 0;
@@ -35,7 +35,7 @@
 
   switch($iguales){
     case 0:
-      $sql = "UPDATE Carrito SET Cantidad = $ncantidad, Existencias=".$formulario->modelo->Existencias." WHERE Clave =".$formulario->modelo->datos->Clave." AND _clienteid =".$_SESSION["iduser"];
+      $sql = "UPDATE Carrito SET Cantidad = $ncantidad, Existencias=".$formulario->modelo->datos->stock." WHERE Clave =".$formulario->modelo->datos->Clave." AND _clienteid =".$_SESSION["iduser"];
 
       if (mysqli_query($conn, $sql)) {
 
@@ -51,8 +51,8 @@
         $id = intval($formulario->modelo->id);
       
         $sql = "INSERT INTO Carrito (_clienteid, Clave, Producto, No_parte, Cantidad, Precio, Precio2, Alto, Largo, Ancho, Peso, imagenid, Existencias) 
-        VALUES ('{$_SESSION["iduser"]}','{$formulario->modelo->datos->Clave}','{$formulario->modelo->datos->Producto}','{$formulario->modelo->datos->No_parte}','{$formulario->modelo->cantidad}','{$formulario->modelo->precio}','{$formulario->modelo->datos->Precio2}','{$formulario->modelo->datos->Alto}',
-        '{$formulario->modelo->datos->Largo}','{$formulario->modelo->datos->Ancho}','{$formulario->modelo->datos->Peso}','{$id}','{$formulario->modelo->Existencias}')";
+        VALUES ('{$_SESSION["iduser"]}','{$formulario->modelo->datos->Clave}','{$formulario->modelo->datos->Producto}','{$formulario->modelo->datos->No_parte}','{$formulario->modelo->cantidad}','{$formulario->modelo->datos->Precio1}','{$formulario->modelo->datos->Precio2}','{$formulario->modelo->datos->Alto}',
+        '{$formulario->modelo->datos->Largo}','{$formulario->modelo->datos->Ancho}','{$formulario->modelo->datos->Peso}','{$id}','{$formulario->modelo->datos->stock}')";
       
         if (mysqli_query($conn, $sql)) {
           

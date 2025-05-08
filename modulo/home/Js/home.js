@@ -58,37 +58,10 @@ function homeCtrl($scope, $http) {
             e.NewUrlName = e.NewUrlName.replaceAll(",","");
             e.NewUrlName = e.NewUrlName.normalize('NFD').replace(/[\u0300-\u036f]/g,"");
             e.NewAltName = e["Producto"].replaceAll(",","");
-            obj.getSeicom(e.Clave).then(token => {
-                e.agotado = token;
-            })
-        })
-    }
-
-    obj.getSeicom = async (clave) => {
-        try {
-            const result = await $http({
-                method: 'GET',
-                url: url_seicom,
-                params: { articulo: clave },
-                headers: { 'Content-Type': "application/x-www-form-urlencoded" },
-                transformResponse: function (data) {
-                    return $.parseXML(data);
-                }
-
-            }).then(function successCallback(res) {
-                return res
-            }, function errorCallback(res) {
-                toastr.error(res);
-            });
-            if (result) {
-                const xml = $(result.data).find("string");
-                let json = JSON.parse(xml.text());
-                return json.Table.map(e => e.existencia).reduce((a, b) => a + b, 0) == 0 ? true : false;
+            if(e.stock == 0){
+                e.agotado = true;
             }
-        } catch (error) {
-            toastr.error(error)
-        }
-
+        })
     }
 
     obj.getCategorias = async () => {

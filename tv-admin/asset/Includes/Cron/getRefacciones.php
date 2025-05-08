@@ -91,7 +91,7 @@ class getRefacciones{
             $id = $this->conn->query($sql);
             if($this->conn->count_rows()!=0){
                 while($row = $this->conn->fetch($id)){
-                    $sql = "UPDATE Producto SET Precio1 = ".bcdiv($value["precio_5"]*1.16,'1',2)." WHERE _id = {$row["_id"]}";
+                    $sql = "UPDATE Producto SET Precio1 = ".bcdiv($value["precio_5"]*1.16,'1',2).", stock = ".$value["existencia"]." WHERE _id = {$row["_id"]}";
                     $this->conn->query($sql);
                     //fwrite($filelog, $value["id_articulo"]. " - ". $sql . " Se Actualizo\n");
                 }

@@ -50,7 +50,7 @@
 					</div>
 				</div>
 			</div>
-
+			
 			<div class="detalles__informacion justify--text">
 				<div class="avisos__productos">
 					<span class="promocion__aviso" ng-show="Refaccion.datos.RefaccionOferta">promoción</span>
@@ -58,8 +58,8 @@
 				</div>
 
 				<div class="detalles__informacion--titulares">
-					<h4 class="product-detail-name">{{Refaccion.datos.Producto}}</h4>
-					<h5 class="product-detail-SKU">SKU: {{Refaccion.datos.No_parte}}</h5>
+					<h1 class="product-detail-name">{{Refaccion.datos.Producto}}</h1>
+					<h2 class="product-detail-SKU">SKU: {{Refaccion.datos.No_parte}}</h2>
 				</div>
 				
 				<!-- Descripciones mobile y desktop -->
@@ -68,7 +68,7 @@
 					<p>Agencia: <strong>{{Refaccion.datos.Marca}}</strong></p>
 					<p>Vehiculo: <strong>{{Refaccion.datos.Modelo}}</strong></p>
 					<p>Modelo: <strong>{{Refaccion.datos.Anio}}</strong></p>
-					<p>Articulos en Existencia: <strong class="{{Refaccion.Existencias==0? 'text-danger':''}}">{{Refaccion.Existencias!=0?Refaccion.Existencias:"Agotado"}}</strong></p>
+					<p ng-show="Refaccion.datos.Publicar != 0">Articulos en Existencia: <strong class="{{Refaccion.datos.stock==0? 'text-danger':''}}">{{Refaccion.datos.stock!=0?Refaccion.datos.stock:"Agotado"}}</strong></p>
 					<p>Categoria: <strong>{{Refaccion.datos.Categoria}}</strong></p>
 					<p>Marca: <strong>{{Refaccion.datos.Proveedor}}</strong></p>
 					<p>Clave: <strong>{{Refaccion.datos.Clave}}</strong></p>
@@ -80,8 +80,8 @@
 					<p><strong>{{Refaccion.datos.Modelo}}</strong></p>
 					<p>Modelo: </p>
 					<p><strong>{{Refaccion.datos.Anio}}</strong></p>
-					<p>Articulos en Existencia: </p>
-					<p><strong class="{{Refaccion.Existencias==0? 'text-danger':''}}">{{Refaccion.Existencias!=0?Refaccion.Existencias:"Agotado"}}</strong></p>
+					<p ng-show="Refaccion.datos.Publicar != 0">Articulos en Existencia: </p>
+					<p><strong class="{{Refaccion.datos.stock==0? 'text-danger':''}}">{{Refaccion.datos.stock!=0?Refaccion.datos.stock:"Agotado"}}</strong></p>
 					<p>Categoria: </p>
 					<p><strong>{{Refaccion.datos.Categoria}}</strong></p>
 					<p>Marca: </p>
@@ -89,12 +89,15 @@
 					<p>Clave: </p>
 					<p><strong>{{Refaccion.datos.Clave}}</strong></p>
 				</div>
-				<div class="contenedor__botonesesion">
 
+				<span class="m-text18 price" ng-show="btnEnabled">
+					{{Refaccion.datos.Precio1 | currency}} <small class="m-text15"> IVA incluido</small>
+				</span>
+
+				<div class="contenedor__botonesesion" ng-show="Refaccion.datos.Publicar != 0">
 					<div class="botones__sesion" ng-show="Activa">
 						<div class="botones__sesion--noiniciada">
 							<div class="btn-addcart-product-detail iniciarsesion__contenedor">
-								<!-- Button -->
 								<button class="iniciarsesion__contenedor--boton form-control btn_CPrimarios"
 									ng-show="btnEnabled" onclick="location.href='?mod=login'">
 									Iniciar sesion
@@ -103,11 +106,11 @@
 						</div>
 
 						<div class="botones__sesion--iniciada" ng-show="!btnEnabled">
-							<span class="m-text17" ng-hide="Refaccion.datos.RefaccionOferta">
-								{{Refaccion.precio | currency}} <small class="m-text15"> IVA incluido</small>
+							<span class="m-text17 price" ng-hide="Refaccion.datos.RefaccionOferta">
+								{{Refaccion.datos.Precio1 | currency}} <small class="m-text15"> IVA incluido</small>
 							</span>
-							<span class="m-text17" ng-show="Refaccion.datos.RefaccionOferta">
-								<small class="line_through-red">{{Refaccion.precio | currency}}</small>
+							<span class="m-text17 price" ng-show="Refaccion.datos.RefaccionOferta">
+								<small class="line_through-red">{{Refaccion.datos.Precio1 | currency}}</small>
 								{{Refaccion.datos.Precio2 | currency}} <small class="m-text15"> IVA incluido</small>
 							</span>
 							<div class="agregarmas no-overflow">
@@ -141,6 +144,9 @@
 						</div> 
 					</div>
 
+				</div>
+				<div class="" ng-show="Refaccion.datos.Publicar != 1">
+					<h1 class="text-danger"><strong>Producto no disponible</strong></h1>
 				</div>
 
 				<!--  --> 

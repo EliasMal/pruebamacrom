@@ -60,6 +60,19 @@ function LoginCtrl($scope, $http) {
                 count_prod = 0;
                 obj.SeiData.Table.forEach(prd => {
                     count_prod = count_prod + prd.existencia;
+                    NewPrecio = parseFloat(prd.precio_5 * 1.16);
+                    NewPrecio = trunc(NewPrecio, 2);
+                    if(el.Precio != NewPrecio){
+                        $http({
+                            method: 'POST',
+                            url: url,
+                            data: { modelo: { opc: "ActPrecio", refaccion: el.Clave, NewPrecio: NewPrecio, home: true } },
+                        }).then(function successCallback(res) {
+                            console.log("Update Exitoso");
+                        }, function errorCallback(res) {
+                            toastr.error("Error: no se realizo la conexion con el servidor");
+                        });
+                    }
                 });
                 if (el.Existencias != count_prod) {
                     $http({
@@ -72,7 +85,6 @@ function LoginCtrl($scope, $http) {
                         toastr.error("Error: no se realizo la conexion con el servidor");
                     });
                 }
-
                 if (count_prod == 0) {
                     Refaccion.erase = 1;
                     Refaccion.borrar = el.Clave;
@@ -90,6 +102,14 @@ function LoginCtrl($scope, $http) {
 
         });
 
+    }
+
+    function trunc(x, posiciones = 0) { /*Funcion para truncar numeros decimales a solo 2 digitos despus del punto*/
+        var s = x.toString()
+        var l = s.length
+        var decimalLength = s.indexOf('.') + 1
+        var numStr = s.substr(0, decimalLength + posiciones)
+        return Number(numStr)
     }
 
     obj.getSeicom = async (clave) => {

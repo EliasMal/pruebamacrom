@@ -88,6 +88,7 @@ class ProcesoCompra {
                             $this->formulario->Costumer->Medidas->weight);
                             if($id){
                                 if($this->setPedidosDetalles($id)){
+                                    $this->actEXcompra();
                                     unset($_SESSION["CarritoPrueba"]);
                                     unset($_SESSION["padlock"]);
                                     $this->deleteCarrito();
@@ -223,6 +224,21 @@ class ProcesoCompra {
         print json_encode($this->jsonData);
     }
     
+    private function actEXcompra (){
+        foreach($_SESSION["CarritoPrueba"] as $key => $value){
+            $sql = "SELECT _id FROM Producto where Clave={$value["Clave"]}";
+            $id = $this->conn->query($sql);
+            $NewStock = $value["Existencias"] - $value["Cantidad"];
+            if($this->conn->count_rows()!=0){
+                while($row = $this->conn->fetch($id)){
+                    $sql = "UPDATE Producto SET stock = ".$NewStock." WHERE _id = {$row["_id"]}";
+                    $this->conn->query($sql);
+                }
+            }
+        }
+        return;
+    }
+
     private function getOneCostumer (){
         $sql = "SELECT * FROM clientes where Estatus = 1 and correo='{$this->formulario->Costumer->usr}'";
         return $this->conn->fetch($this->conn->query($sql));

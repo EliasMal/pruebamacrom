@@ -512,7 +512,7 @@ img {
   transform: translate(-50%, -50%);
 }
 
-.contenedor h2 {
+.ventanaModal__contenido h2 {
   width: 60rem;
   margin-top: 5px;
   border-radius: 0.5rem;
@@ -2093,13 +2093,14 @@ i.fa.fa-sun {
 
 .product-detail-name {
   font-family: Poppins;
-  font-size: 24px;
+  font-size: 2.4rem;
   color: var(--negro);
   line-height: 1.5;
   padding: 1rem;
 }
 
 .product-detail-SKU {
+  font-size: 2rem;
   font-family: Poppins;
   color: var(--gris-mid);
   padding: 0 1rem 1rem 1rem;

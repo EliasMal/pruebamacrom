@@ -191,7 +191,7 @@
             $sql = "select P._id, P.Clave, P.Producto, C.Categoria, M.Marca, P.Precio1, P.Precio2,
                 P.No_parte, P.Descripcion, V.Modelo, A.Anio, P.RefaccionNueva, P.RefaccionOferta,
                 P.Alto, P.Ancho, P.Largo, P.Peso, P._idCategoria, P._idMarca, P.Anios, P.Modelo as _idModelo, P.id_proveedor,
-                P.Enviogratis, PR.Proveedor
+                P.Enviogratis, PR.Proveedor, P.stock, P.Publicar
                 from Producto as P 
                 inner join Categorias as C on (C._id = P._idCategoria)
                 inner join Marcas as M on (M._id = P._idMarca)

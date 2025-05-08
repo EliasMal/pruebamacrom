@@ -68,12 +68,21 @@
                     $this->jsonData["Bandera"] = 1;
                     $this->ActExistencias();
                 break;
+                case 'ActPrecio':
+                    $this->jsonData["Bandera"] = 1;
+                    $this->ActPrecio();
+                break;
             }
             print json_encode($this->jsonData);
         }
         
         private function ActExistencias(){
             $sql = "UPDATE Carrito set Existencias = '{$this->formulario->modelo->NewExistencia}' where _clienteid = '{$_SESSION["iduser"]}' and Clave = '{$this->formulario->modelo->refaccion}'";
+            return $this->conn->query($sql);
+        }
+
+        private function ActPrecio(){
+            $sql = "UPDATE Carrito set Precio = '{$this->formulario->modelo->NewPrecio}' where _clienteid = '{$_SESSION["iduser"]}' and Clave = '{$this->formulario->modelo->refaccion}'";
             return $this->conn->query($sql);
         }
 
@@ -133,7 +142,7 @@
 
         private function getmasVendidos (){
             $sql = "select PROV._id as idProveedor, DP._idProducto as _id, P.Clave, P.Producto, P._idMarca, P.color, 
-            M.Marca, P.Precio1, P.Precio2, P.RefaccionOferta, P.Enviogratis from DetallesPedidos as DP
+            M.Marca, P.Precio1, P.Precio2, P.RefaccionOferta, P.Enviogratis, P.stock from DetallesPedidos as DP
             inner join Producto as P on (P._id = DP._idProducto) 
             left join Proveedor as PROV on (P.id_proveedor = PROV._id)
             inner join Marcas as M on (P._idMarca = M._id)
@@ -144,7 +153,7 @@
 
         private function getnuevosProductos (){
             $sql = "SELECT PROV._id as idProveedor, P._id, P.Clave, P.Producto, P._idMarca, P.color, M.Marca, P.Precio1, 
-                    P.RefaccionNueva, P.Enviogratis from Producto as P
+                    P.RefaccionNueva, P.Enviogratis, P.stock from Producto as P
                     left join Proveedor as PROV on (P.id_proveedor = PROV._id)
                     inner join Marcas as M on (P._idMarca = M._id)
                     where P.RefaccionNueva=1 and P.Estatus = 1
@@ -154,7 +163,7 @@
 
         private function getProductosOferta(){
             $sql = "SELECT PROV._id as idProveedor, P._id, P.Clave, P.Producto, P._idMarca, P.color, M.Marca, P.Precio2, 
-                    P.RefaccionOferta, P.Enviogratis from Producto as P
+                    P.RefaccionOferta, P.Enviogratis, P.stock from Producto as P
                     left join Proveedor as PROV on (P.id_proveedor = PROV._id)
                     inner join Marcas as M on (P._idMarca = M._id)
                     where P.RefaccionOferta=1 and P.Estatus = 1
@@ -164,7 +173,7 @@
 
         private function getProductosliquidacion(){
             $sql = "SELECT PROV._id as idProveedor, P._id, P.Clave, P.Producto, P._idMarca, P.color, M.Marca, P.Precio1,
-                P.RefaccionLiquidacion, P.Enviogratis from Producto as P
+                P.RefaccionLiquidacion, P.Enviogratis, P.stock from Producto as P
                 left join Proveedor as PROV on (P.id_proveedor = PROV._id)
                 inner join Marcas as M on (P._idMarca = M._id)
                 where P.RefaccionLiquidacion=1 and P.Estatus = 1
