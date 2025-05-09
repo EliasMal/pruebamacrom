@@ -1,0 +1,371 @@
+
+<div ng-controller="CabeceraCtrl" class="p-b-125">
+	<!-- Header -->
+	<header class="header2">
+
+		<div class="contenedor__header pd-1">
+			<!-- <div class="header__topbar" style="position: relative; display: block;padding: 0 1rem;text-align: justify;background-color: var(--gris-light);">
+				<h5>Les informamos que esta es una página no oficial de 
+					<a href="https://macromautopartes.com/">Macromautopartes</a>. Cualquier actividad aquí podría causar errores. 
+					Recomendamos al público evitar su uso y, para realizar cualquier operación, por favor acceda a la página oficial de 
+					<a href="https://macromautopartes.com/">Macromautopartes</a>.
+				</h5>
+			</div> -->
+			<div class="header__topbar">
+				<div class="contenedor__navegacion--mobile">
+					<i id="abrirModal6" class="fas fa-bars click filwhite"></i>
+				</div>
+
+				<a href="?mod=home" class="header__topbar--logo clicksidebar">
+					<!-- <img src="https://macromautopartes.com/images/icons/logomacromb.webp" alt="IMG-LOGO"> -->
+					<img src="images/icons/logomacromb.webp" alt="IMG-LOGO">
+				</a>
+
+				<div class="buscador__general">
+					<!-- <i class="fas fa-search js-show-header-dropdown" id="btn-search"> -->
+					<i class="fas fa-search" id="btn-search">
+						<input class="buscador__general__txt" type="text" autocomplete="off" placeholder="Busca tu refacción">
+						<button class="buscador__general__boton" ng-click="general_search()">Buscar</button>
+					</i>
+
+					<!-- <div class="contenedor__menu__header header-dropdown header-cart">
+
+						<div class="menu__categoria__contenedor">
+							<div class="menu__categoria">
+								<div class="menu__header--buscador">
+
+									<a href="?mod=catalogo&pag=1&prod=&cate=T&armadora=&mdl=&[a]=">
+										<img ng-src="https://macromautopartes.com/images/Categorias/7.png" alt="IMG-BENNER" class="menucatego">
+									</a>
+
+									<div class="menu__header--categorias">
+										<a href="?mod=catalogo&pag=1&prod=&cate=T&armadora=&mdl=&[a]=">
+											Refacciones
+										</a>
+									</div>
+									
+									<div class="menu__opciones__contenedor">
+										<div class="menu__categoria--sub" ng-repeat="menus in Menu.Accesorios">
+											<div class="menu__header--buscador">
+												<div class="menu__header--categoriasopc">
+													<a href="?mod=catalogo&pag=1&prod=&cate={{categoria._id}}&armadora=&mdl=&[a]=">
+														{{menus}}
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+							<div class="menu__categoria" ng-repeat="categoria in Data.Categorias">
+								
+								<div class="menu__header--buscador">
+									<a href="?mod=catalogo&pag=1&prod=&cate={{categoria._id}}&armadora=&mdl=&[a]=">
+										<img ng-src="{{getImagenCate(categoria)}}" alt="IMG-BENNER" class="menucatego">
+									</a>
+									<div class="menu__header--categorias">
+										<a href="?mod=catalogo&pag=1&prod=&cate={{categoria._id}}&armadora=&mdl=&[a]=">
+											{{categoria.Categoria}}
+										</a>
+									</div>
+								</div>
+								
+							</div>
+
+						</div>
+
+						<div class="menu__promocion__contenedor">
+							<img src="https://prueba.macromautopartes.com/images/filapref.png" alt="">
+						</div>
+						
+					</div> -->
+
+				</div>
+
+				<div class="contenedor__usuario">
+					<div class="header-wrapicon1 login__text" ng-show="!user">
+						<span class="topbar-email header-icon1" onclick="location.href='?mod=login'">Iniciar Sesion</span>
+					</div> 
+					<!--Inicio de Usuario-->
+					<div class="contenedor__usuario--perfil" id="usercba" ng-show="user">
+						<div class="header-wrapicon1">
+							<p class="text-dark t-center">¡Hola {{session.nombrecorto}}!</p>
+							<p class="js-show-header-dropdown t-center" style="cursor:pointer; color:var(--blanco);">Mi Cuenta</p>
+							<div class="header-cart header-dropdown header__cart--usuario">
+								<div class="sesion__vinculos">	
+									<!-- <img src="https://macromautopartes.com/images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="perfil__usuario--img" loading="lazy" alt="ICON"> -->
+									<img src="../images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="perfil__usuario--img" loading="lazy" alt="ICON">
+														
+									<div class="vinculos">
+										<div class="vinculos--contenedor" onclick="location.href = '?mod=Profile&opc=Session'">
+											<i loading="lazy" alt="icono seguridad" class="fa fa-shield-alt"> </i>
+											<span class="vinculos--opciones">Sesión y Seguridad</span>
+										</div><br>
+
+										<div class="vinculos--contenedor" onclick="location.href = '?mod=Profile&opc=Mispedidos'">
+											<i loading="lazy" alt="icono pedidos" class="fa fa-shopping-cart"></i>
+											<span class="vinculos--opciones">Mis pedidos</span>
+										</div><br>
+										
+										<div class="vinculos--contenedor" onclick="location.href = '?mod=Profile&opc=Direcciones'">
+											<i loading="lazy" alt="icono direcciones" class="fa fa-map-marked-alt"></i>
+											<span class="vinculos--opciones">Mis direcciones</span>
+										</div><br>
+
+										<div class="vinculos--contenedor" onclick="location.href = '?mod=Profile&opc=Facturacion'">
+											<i loading="lazy" alt="icono facturación" class="fa fa-file-invoice-dollar"></i>
+											<span class="vinculos--opciones">Datos de facturación</span>
+										</div>
+
+									</div> 
+								</div>							
+									<p class="sesionombre s-text3a">{{session.nombre}}</p>
+									<div class="sesion__opciones">
+										<div class="modo__oscuro__pc">
+											<i class="fa fa-sun" aria-hidden="true"></i>
+											<label class="switch btn-color-mode-switch">
+												<input type="checkbox" name="switch__darkmode" class="switch__darkmode">
+												<label for="switch__darkmode" data-on="Oscuro" data-off="Claro" class="btn-color-mode-switch-inner enlace"></label>
+											</label>
+											  <i class="fa fa-moon" aria-hidden="true"></i>
+										</div>
+										<div>
+												<button class="usuario__cerrarsesion btn_CPrimarios" ng-click="btnLogout()">Cerrar Sesión</button>
+										</div>
+									</div>
+						
+							</div>
+						</div>
+					</div>
+					<!--Termina de Usuario-->
+
+					<div class="contenedor__usuario--carrito">
+						
+						<div id="divcarri">
+							<div class="header-wrapicon2">
+								<i class="fas fa-shopping-cart header-icon1 js-show-header-dropdown filwhite" id="carrisvg"></i>
+								<span class="header-icons-noti">{{Data.Carrito.length}}</span>
+
+								<div class="header-cart header-dropdown carrito__contenedor">
+									<p class="carrito__articulos__length txtred" ng-show="user">Tienes {{Data.Carrito.length}} articulos en tu carrito</p>
+									<p class="carrito__articulos__length txtred" ng-show="!user">Inicia sesión para acceder a tu carrito</p>
+									<ul class="header-cart-wrapitem">
+										<li class="header-cart-item" ng-repeat="product in Data.Carrito" ng-show="user">
+
+											<div class="header-cart-item-times" ng-click="btnEliminarRefaccion(product, true)">
+												<i class="fas fa-times cursorpnt"></i>
+											</div>
+
+											<div class="header-cart-item-img">
+												<img ng-src="{{getImagen(product.imagenid)}}" class="cursorpnt" ng-click="RefaccionDetalles(product.imagenid,product.NewUrlName)" alt="{{product.NewAltName}}">
+											</div>
+
+											<div class="header-cart-item-txt">
+												<a ng-click="RefaccionDetalles(product.imagenid,product.NewUrlName)" class="header-cart-item-name enlace">
+													{{product._producto}}
+												</a>
+
+												<span class="header-cart-item-info">
+													No.parte: {{product.No_parte}}
+												</span>
+
+												<span class="header-cart-item-info" ng-hide="product.RefaccionOferta == '1'">
+													{{product.Cantidad}} x {{product.Precio | currency}}
+												</span>
+												<span class="header-cart-item-info" ng-show="product.RefaccionOferta == '1'">
+													{{product.Cantidad}} x {{product.Precio2 | currency}}
+												</span>
+
+											</div>
+
+										</li>
+
+									</ul>
+
+									<div class="header-cart-total">
+										Total: {{subtotal() | currency}}
+									</div>
+				
+									<div class="header-cart-buttons">
+										<div class="header-cart-wrapbtn">
+											<button class="form-control clicksidebarshop btn_CPrimarios" onclick="location.href='?mod=Compras'" ng-show="user">Pagar</button>
+											<button class="form-control clicksidebarshop btn_CPrimarios" onclick="location.href='?mod=login'" ng-show="!user">Iniciar Sesión</button>
+										</div>
+									</div>
+
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			
+			<div class="contenedor__navegacion">
+				<!-- Menu -->
+				<div class="contenedor__navegacion__menu">
+					<nav class="contenedor__navegacion__menu--principal">
+						<ul class="contenedor__navegacion__menu--opciones" data-animation="diagonal">
+                            <li>
+                            	<a href="?mod=home">Inicio
+									<span class="border border-top"></span>
+      								<span class="border border-right"></span>
+      								<span class="border border-bottom"></span>
+      								<span class="border border-left"></span>
+								</a>
+                            </li>
+                            <li>
+                            	<a href="?mod=catalogo&pag=1&prod=&cate=T&armadora=&mdl=&[a]=">Refacciones
+									<span class="border border-top"></span>
+									<span class="border border-right"></span>
+									<span class="border border-bottom"></span>
+									<span class="border border-left"></span>
+								</a>
+								
+                            </li>
+                            <li>
+                            	<a href="?mod=Compras" ng-show="user">Mis compras
+									<span class="border border-top"></span>
+									<span class="border border-right"></span>
+									<span class="border border-bottom"></span>
+									<span class="border border-left"></span>
+								</a>
+								<a href="?mod=login" ng-show="!user">Mis compras
+									<span class="border border-top"></span>
+									<span class="border border-right"></span>
+									<span class="border border-bottom"></span>
+									<span class="border border-left"></span>
+								</a>
+                            </li>
+            				<li>
+                                <a href="?mod=Blog">Blog
+									<span class="border border-top"></span>
+									<span class="border border-right"></span>
+									<span class="border border-bottom"></span>
+									<span class="border border-left"></span>
+								</a>
+                            </li>
+                            <li>
+                                <a href="?mod=nosotros">Nosotros
+									<span class="border border-top"></span>
+									<span class="border border-right"></span>
+									<span class="border border-bottom"></span>
+									<span class="border border-left"></span>
+								</a>
+                            </li>
+                            <li>
+                            	<a href="?mod=contacto">Contacto
+									<span class="border border-top"></span>
+									<span class="border border-right"></span>
+									<span class="border border-bottom"></span>
+									<span class="border border-left"></span>
+								</a>
+                            </li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+			  
+		</div>
+	</header>
+<!-- Ventana modal Metodo De Pago, por defecto no visiblel -->
+	<div id="ventanaModal6" class="sidebar__mobil" >
+		<div class="sidebar__mobil__contenido" id="CabeceraDark">
+
+			<article class="sidebar__mobil__menu">
+					<span class="cerrar6 closem">&times;</span>
+					<div class="menu__cliente__informacion">
+						<!-- <img src="https://macromautopartes.com/images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="menu__cliente__informacion--img" alt="ICON"> -->
+						<img src="../images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="menu__cliente__informacion--img" alt="ICON">
+						<div class="cliente__informacion--datos">
+							<p class="txtred">¡Hola!</p>
+							<p class="text-dark">{{session.nombre}}</p>
+						</div>
+					</div>
+					<div class="sidebar__mobil__menu--enlaces">
+
+						<div class="modo__oscuro">
+							<i class="fa fa-sun" aria-hidden="true"></i>
+							<label class="switch btn-color-mode-switch" for="switch__darkmode">
+								<input type="checkbox" name="switch__darkmode" class="switch__darkmode">
+								<label for="switch__darkmode" data-on="Oscuro" data-off="Claro" class="btn-color-mode-switch-inner"></label>
+							</label>
+							  <i class="fa fa-moon" aria-hidden="true"></i>
+						</div>
+
+						<div class="menu__enlaces__contenedor">
+							<div class="menu__enlaces">
+								<span id="sidebar0" class="sidebar__click" onclick="location.href ='?mod=home'">
+									<i class="fa fa-home" name="home-outline"></i>
+									Inicio
+								</span>
+								<span id="sidebar1" class="sidebar__click" onclick="location.href ='?mod=catalogo&pag=1&prod=&cate=T&armadora=&mdl=&[a]='">
+									<i class="fa fa-wrench" name="wrench-outline"></i>
+									Refacciones
+								</span>
+								<span id="sidebar2" class="sidebar__click" ng-show="user" onclick="location.href ='?mod=Compras'">
+									<i class="fa fa-shopping-cart" name="shopping-cart-outline"></i>
+									Carrito
+								</span>
+								<span id="sidebar3" class="sidebar__click" ng-show="!user" onclick="location.href ='?mod=login'"><!--Puede asignarse su id a otro modulo, no es necesario en este(Redirecciona a Login, por lo que jamas marcara este modulo)-->
+									<i class="fa fa-shopping-cart" name="shopping-cart-outline"></i>
+									<a class="menu__enlaces--links txtgris">Carrito</a>
+								</span>
+								<span id="sidebar4" class="sidebar__click" onclick="location.href ='?mod=nosotros'">
+									<i class="fa fa-question-circle" name="info-outline"></i>
+									Nosotros
+								</span>
+								<span id="sidebar9" class="sidebar__click" onclick="location.href ='?mod=Blog'">
+									<i class="fas fa-book"></i>
+									Blog
+								</span>
+							</div>
+							<hr>
+							<div class="menu__enlaces" ng-show="user">
+
+								<span id="sidebar5" class="sidebar__click" onclick="location.href ='?mod=Profile&opc=Session'">
+									<i loading="lazy" alt="icono seguridad" class="fa fa-shield-alt"></i>
+									Sesión y Seguridad
+								</span>
+								<span id="sidebar6" class="sidebar__click" onclick="location.href ='?mod=Profile&opc=Mispedidos'">
+									<i loading="lazy" alt="icono pedidos" class="fa fa-shopping-cart"></i>
+									Mis Pedidos
+								</span>
+								<span id="sidebar7" class="sidebar__click" onclick="location.href ='?mod=Profile&opc=Direcciones'">
+									<i loading="lazy" alt="icono direcciones" class="fa fa-map-marked-alt"></i>
+									Mis Direcciones
+								</span>
+								<span id="sidebar8" class="sidebar__click" onclick="location.href ='?mod=Profile&opc=Facturacion'">
+									<i loading="lazy" alt="icono facturación" class="fa fa-file-invoice-dollar"></i>
+									Datos Facturación
+								</span>
+								<span class="sidebar__logout center--text" ng-click="btnLogout()">
+									<i loading="lazy" alt="icono cerrar_sesión" class="fas fa-sign-out-alt"></i>
+									<a class="menu__enlaces--links text-white">Cerrar Sesión</a>
+								</span>
+
+							</div>
+						</div>
+
+						<div class="menu__sesion" ng-show="!user">
+							<div class="menu__sesion__inicio">
+								<p>¿Ya tienes cuenta?</p>
+								<span onclick="location.href ='?mod=login'">Iniciar Sesión</span>
+							</div>
+							<div class="menu__sesion__registrar">
+								<p>¿Aún no tienes cuenta?</p>
+								<span onclick="location.href ='?mod=register'">Registrarse</span>
+							</div>
+						</div>
+
+					</div>
+
+			</article>
+		</div>
+	</div>
+
+</div>
+	
