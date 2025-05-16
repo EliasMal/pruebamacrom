@@ -516,7 +516,7 @@ function ComprasCtrl($scope, $http, $sce) {
                 TotalVolumen2 = (obj.dataCotizador.parcel.length * obj.dataCotizador.parcel.width * obj.dataCotizador.parcel.height);
             }
         }
-        
+        console.log(obj.dataCotizador.parcel);
         obj.requiredEnvio = obj.dataCotizador.parcel.weight != 0 ? false : true;
     }
 
