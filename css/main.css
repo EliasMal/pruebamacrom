@@ -2777,9 +2777,7 @@ i.fa.fa-sun {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.5);
 }
-.pruebaparapull{
-  color: red;
-}
+
 /* Animación */
 @-webkit-keyframes animatetop {
   from {
