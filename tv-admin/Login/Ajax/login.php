@@ -50,7 +50,7 @@ class login{
         else{
            $sql = "Select SG.*, US.* from Seguridad as SG inner join Usuarios as US "
                     . "on (US._id = SG._idUsuarios) where SG.username= '". htmlspecialchars($obj->login->user) ."' "
-                   . "and SG.password = '" . sha1($obj->login->password)."' and SG.Estatus = 1";
+                   . "and SG.password = '" . sha1($obj->login->password)."' and US.Estatus = 1";
         }
         return $this->conn->fetch($this->conn->query($sql));
     }

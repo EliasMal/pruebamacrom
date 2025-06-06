@@ -64,56 +64,63 @@
 				
 				<!-- Descripciones mobile y desktop -->
 				<div class="descripcion">
-					<!-- {{Refaccion}} -->
-					<p>Agencia: <strong>{{Refaccion.datos.Marca}}</strong></p>
-					<p>Vehiculo: <strong>{{Refaccion.datos.Modelo}}</strong></p>
-					<p>Modelo: <strong>{{Refaccion.datos.Anio}}</strong></p>
-					<p ng-show="Refaccion.datos.Publicar != 0">Articulos en Existencia: <strong class="{{Refaccion.datos.stock==0? 'text-danger':''}}">{{Refaccion.datos.stock!=0?Refaccion.datos.stock:"Agotado"}}</strong></p>
-					<p>Categoria: <strong>{{Refaccion.datos.Categoria}}</strong></p>
-					<p>Marca: <strong>{{Refaccion.datos.Proveedor}}</strong></p>
-					<p>Clave: <strong>{{Refaccion.datos.Clave}}</strong></p>
+					<table class="des-table">
+						<tbody class="des-table__body">
+							<tr class="des-table__row striped-specs__row">
+								<th class="des-table__header striped-specs__row__column"><div class="des-table__header__container">Agencia</div></th>
+								<td class="des-table__column striped-specs__row__column"><span class="des-table__column--value">{{Refaccion.datos.Marca}}</span></td>
+							</tr>
+							<tr class="des-table__row striped-specs__row">
+								<th class="des-table__header striped-specs__row__column"><div class="des-table__header__container">Vehiculo</div></th>
+								<td class="des-table__column striped-specs__row__column"><span class="des-table__column--value">{{Refaccion.datos.Modelo}}</span></td>
+							</tr>
+							<tr class="des-table__row striped-specs__row">
+								<th class="des-table__header striped-specs__row__column"><div class="des-table__header__container">Modelo</div></th>
+								<td class="des-table__column striped-specs__row__column"><span class="des-table__column--value">{{Refaccion.datos.Anio}}</span></td>
+							</tr>
+							<tr class="des-table__row striped-specs__row">
+								<th class="des-table__header striped-specs__row__column"><div class="des-table__header__container">Articulos en existencia</div></th>
+								<td class="des-table__column striped-specs__row__column"><span class="des-table__column--value"><strong class="{{Refaccion.datos.stock==0? 'text-danger':''}}">{{Refaccion.datos.stock!=0?Refaccion.datos.stock:"Agotado"}}</strong></span></td>
+							</tr>
+							<tr class="des-table__row striped-specs__row">
+								<th class="des-table__header striped-specs__row__column"><div class="des-table__header__container">Categoria</div></th>
+								<td class="des-table__column striped-specs__row__column"><span class="des-table__column--value">{{Refaccion.datos.Categoria}}</span></td>
+							</tr>
+							<tr class="des-table__row striped-specs__row">
+								<th class="des-table__header striped-specs__row__column"><div class="des-table__header__container">Marca</div></th>
+								<td class="des-table__column striped-specs__row__column"><span class="des-table__column--value">{{Refaccion.datos.Proveedor}}</span></td>
+							</tr>
+							<tr class="des-table__row striped-specs__row">
+								<th class="des-table__header striped-specs__row__column"><div class="des-table__header__container">Clave</div></th>
+								<td class="des-table__column striped-specs__row__column"><span class="des-table__column--value">{{Refaccion.datos.Clave}}</span></td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-				<div class="descripcion__mobile">
-					<p>Agencia: </p>
-					<p><strong>{{Refaccion.datos.Marca}}</strong></p>
-					<p>Vehiculo: </p>
-					<p><strong>{{Refaccion.datos.Modelo}}</strong></p>
-					<p>Modelo: </p>
-					<p><strong>{{Refaccion.datos.Anio}}</strong></p>
-					<p ng-show="Refaccion.datos.Publicar != 0">Articulos en Existencia: </p>
-					<p><strong class="{{Refaccion.datos.stock==0? 'text-danger':''}}">{{Refaccion.datos.stock!=0?Refaccion.datos.stock:"Agotado"}}</strong></p>
-					<p>Categoria: </p>
-					<p><strong>{{Refaccion.datos.Categoria}}</strong></p>
-					<p>Marca: </p>
-					<p><strong>{{Refaccion.datos.Proveedor}}</strong></p>
-					<p>Clave: </p>
-					<p><strong>{{Refaccion.datos.Clave}}</strong></p>
-				</div>
-
-				<span class="m-text18 price" ng-show="btnEnabled">
+				<!-- <span class="m-text18 price" ng-show="btnEnabled">
 					{{Refaccion.datos.Precio1 | currency}} <small class="m-text15"> IVA incluido</small>
-				</span>
+				</span> -->
 
 				<div class="contenedor__botonesesion" ng-show="Refaccion.datos.Publicar != 0">
 					<div class="botones__sesion" ng-show="Activa">
-						<div class="botones__sesion--noiniciada">
-							<div class="btn-addcart-product-detail iniciarsesion__contenedor">
-								<button class="iniciarsesion__contenedor--boton form-control btn_CPrimarios"
-									ng-show="btnEnabled" onclick="location.href='?mod=login'">
-									Iniciar sesion
-								</button>
-							</div>
-						</div>
 
-						<div class="botones__sesion--iniciada" ng-show="!btnEnabled">
+						<div class="botones__sesion--iniciada">
 							<span class="m-text17 price" ng-hide="Refaccion.datos.RefaccionOferta">
-								{{Refaccion.datos.Precio1 | currency}} <small class="m-text15"> IVA incluido</small>
+								<meta itemprop="price" content="{{Refaccion.datos.Precio1 | currency}}">
+								<span class="money__amount">
+									{{Refaccion.datos.Precio1 | currency}}<small class="m-text15"> IVA incluido</small>
+								</span>
 							</span>
+
 							<span class="m-text17 price" ng-show="Refaccion.datos.RefaccionOferta">
 								<small class="line_through-red">{{Refaccion.datos.Precio1 | currency}}</small>
-								{{Refaccion.datos.Precio2 | currency}} <small class="m-text15"> IVA incluido</small>
+								<meta itemprop="price" content="{{Refaccion.datos.Precio2 | currency}}">
+								<span class="money__amount">
+									{{Refaccion.datos.Precio2 | currency}} <small class="m-text15"> IVA incluido</small>
+								</span>
 							</span>
-							<div class="agregarmas no-overflow">
+
+							<div class="agregarmas no-overflow" ng-show="!btnEnabled">
 								<button class="agregarmas__botones b-radius-left"
 									ng-click="btndisminuir()">
 									<i class="fa fa-minus" aria-hidden="true"></i>
@@ -130,12 +137,21 @@
 							</div>
 						</div>
 						<div class="btn-addcart-product-detail agregarcarrito__contenedor" ng-show="!btnEnabled">
-								<!-- Button -->
-								<button class="form-control agregarcarrito__contenedor--boton btn_CPrimarios"
-									ng-click="Agregarcarrito()">
-									Agregar al carrito
-								</button>
+							<button class="form-control agregarcarrito__contenedor--boton btn_CPrimarios"
+								ng-click="Agregarcarrito()">
+								Agregar al carrito
+							</button>
 						</div>
+						
+						<div class="botones__sesion--noiniciada">
+							<div class="btn-addcart-product-detail iniciarsesion__contenedor">
+								<button class="iniciarsesion__contenedor--boton form-control btn_CPrimarios"
+									ng-show="btnEnabled" onclick="location.href='?mod=login'">
+									Iniciar sesion
+								</button>
+							</div>
+						</div>
+
 					</div>
 
 					<div class="agotado__contenedor" ng-show="!Activa">
@@ -145,7 +161,7 @@
 					</div>
 
 				</div>
-				<div class="" ng-show="Refaccion.datos.Publicar != 1">
+				<div class="" ng-show="Refaccion.datos.Publicar == 0">
 					<h1 class="text-danger"><strong>Producto no disponible</strong></h1>
 				</div>
 
@@ -216,7 +232,7 @@
 
 				<div class="wrap-slick2">
 					<div class="slick2">
-						<div class="enlace m-1-r" ng-repeat="producto in productos">
+						<div class="enlace m-1-r" aria-hidden="true" ng-repeat="producto in productos">
 							<div class="block2 block2__contenedor">
 								<div class="block2-img wrap-pic-w of-hidden pos-relative cursorpnt" ng-class="{
 									'ribboagotado': producto.agotado ,
@@ -225,8 +241,8 @@
 
 									}">
 									<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}">
-										<!-- <img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/motor.webp':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}" alt="IMG-PRODUCT"> -->
-										<img ng-src="{{producto.imagen? 'images/refacciones/motor.webp':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.NewAltName}}">
+										<img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/motor.webp':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}" alt="IMG-PRODUCT">
+										<!-- <img ng-src="{{producto.imagen? 'images/refacciones/motor.webp':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.NewAltName}}"> -->
 									</a>
 								</div>
 								<div class="block2-txt">

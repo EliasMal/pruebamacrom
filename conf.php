@@ -13,6 +13,7 @@ define('LAYOUT_PATH',realpath('./layout/'));
 $conf['home'] = array(
 				'archivo' => 'home/Controller.php',
 				'layout' => LAYOUT_DEFECTO);
+
 $conf['catalogo'] = array('archivo'=>'Catalogo/Controller.php');
 $conf['Compras'] = array('archivo'=>'Compras/Controller.php');
 $conf["nosotros"] = array('archivo'=>'Nosotros/Controller.php');
@@ -27,3 +28,10 @@ $conf["Devoluciones"] = array('archivo'=>'Devoluciones/Controller.php');
 /* Estas rutas requiren inicio de session */
 $conf["ProcesoCompra"] = array('archivo'=>'ProcesoCompra/Controller.php');
 $conf["Profile"] = array('archivo'=>'Profile/Controller.php');
+
+// $cadena_url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+//  if(str_contains($cadena_url,'catalogo')){
+// 	var_dump($cadena_url);
+//  }else{
+// 	var_dump("no contiene la palabra");
+//  }

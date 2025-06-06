@@ -405,8 +405,6 @@ function catalogosDetallesCtrl($scope, $http) {
                 slidesToScroll: 4,
                 infinite: true,
                 dots: true,
-                autoplay: true,
-                autoplaySpeed: 5000,
                 arrows: true,
                 responsive: [
                     {
