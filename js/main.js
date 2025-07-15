@@ -228,6 +228,24 @@ const dom = document.querySelector(".Macrom_page");
 const noflow = document.querySelector("#BodyDark");
 const sidebar_menu = document.querySelector("#abrirModal6");
 const cont_h = document.querySelector(".contenedor__header");
+
+var isMobile = {
+  Android: function() { return navigator.userAgent.match(/Android/i); },
+  BlackBerry: function() { return navigator.userAgent.match(/BlackBerry/i); },
+  iOS: function() { return navigator.userAgent.match(/iPhone|iPad|iPod/i); },
+  Opera: function() { return navigator.userAgent.match(/Opera Mini/i); },
+  Windows: function() { return navigator.userAgent.match(/IEMobile/i); },
+  any: function() { return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows()); }
+};
+
+if (isMobile.any()) {
+  console.log("Dispositivo móvil");
+  noflow.classList.add("mobiledevice");
+} else {
+  console.log("Escritorio");
+  noflow.classList.add("desktop");
+}
+
 document.querySelectorAll(".click").forEach(el => {
     el.addEventListener("click", e => {
         const id = e.target.getAttribute("id").split("l");

@@ -234,12 +234,7 @@
 					<div class="slick2">
 						<div class="enlace m-1-r" aria-hidden="true" ng-repeat="producto in productos">
 							<div class="block2 block2__contenedor">
-								<div class="block2-img wrap-pic-w of-hidden pos-relative cursorpnt" ng-class="{
-									'ribboagotado': producto.agotado ,
-									'ribbonnuevo': producto.RefaccionNueva==1,
-									'pos-relative': !producto.agotado || producto.RefaccionNueva==0
-
-									}">
+								<div class="block2-img wrap-pic-w of-hidden pos-relative cursorpnt">
 									<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}">
 										<img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/motor.webp':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}" alt="IMG-PRODUCT">
 										<!-- <img ng-src="{{producto.imagen? 'images/refacciones/motor.webp':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.NewAltName}}"> -->
@@ -247,8 +242,10 @@
 								</div>
 								<div class="block2-txt">
 									<div class="avisos__productos">
-										<span class="promocion__aviso" ng-show="producto.RefaccionOferta =='1'">promoción</span>
-										<span class="enviogratis__aviso" ng-show="producto.Enviogratis">envío gratis</span>
+										<span class="nuevo__aviso bg-new" ng-show="producto.RefaccionNueva != 0">Nuevo</span>
+										<span class="agotado__aviso bg-advertencia" ng-show="producto.agotado">Agotado</span>
+										<span class="promocion__aviso bg-promo" ng-show="producto.RefaccionOferta != 0">Promoción</span>
+										<span class="enviogratis__aviso bg-promo" ng-show="producto.Enviogratis">Envío gratis</span>
 									</div>
 									<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
 									<section class="descripcion-producto-refa">
