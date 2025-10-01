@@ -1649,12 +1649,6 @@ i.fa.fa-sun {
   padding-bottom: 5rem;
 }
 
-.Trefacciones__cont {
-  display: grid;
-  align-content: center;
-  grid-row: 2;
-}
-
 .QuieneSomos__main--contenedor__banner {
   display: grid;
   align-content: center;
@@ -1682,6 +1676,145 @@ i.fa.fa-sun {
   height: 4rem;
 }
 
+.mobiledevice .contenedor__filtrado,
+.mobiledevice .name__seleccionados,
+.mobiledevice .catalogo__filtrado--buscador,
+.mobiledevice .disponibilidad__orden{
+  display: none;
+}
+
+.mobiledevice .open__opciones{
+  display: flex;
+  width: 100%;
+  text-align: center;
+  justify-content: space-around;
+  background-color: var(--blanco);
+  border-bottom: solid 1px;
+  height: 5rem;
+  align-items: center;
+  column-gap: 1rem;
+}
+
+.mobiledevice .open__opciones--Orden, .mobiledevice .open__opciones--Filtros{
+ width: 100%;
+ height: 100%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ z-index: 3; 
+}
+
+.mobiledevice .filtros__contenedor,
+.mobiledevice .contenedor__orden{
+  background-color: var(--blanco);
+  border-bottom: solid 1px;
+  padding: 1rem 2rem;
+}
+
+/* Filtro orden switch */
+.mobiledevice .contenedor__orden{
+  display: flex;
+  justify-content: space-between;
+}
+
+.mobiledevice .orden__subswitch{
+  display: flex;
+}
+
+.mobiledevice .switch__orden[type=checkbox]{
+	height: 0;
+	width: 0;
+	visibility: hidden;
+}
+
+.mobiledevice .switch__orden--label{
+	cursor: pointer;
+	text-indent: -9999px;
+	width: 7rem;
+	height: 3rem;
+	background: grey;
+	display: block;
+	border-radius: 10rem;
+	position: relative;
+}
+
+.mobiledevice .switch__orden--label:after {
+	content: '';
+	position: absolute;
+	top: 0.5rem;
+	left: 0.5rem;
+	width: 2rem;
+	height: 2rem;
+	background: #fff;
+	border-radius: 9rem;
+	transition: 0.3s;
+}
+
+.mobiledevice .switch__orden:checked + label {
+	background: #de0007;
+}
+
+.mobiledevice .switch__orden:checked + label:after {
+	left: calc(100% - 5px);
+	transform: translateX(-100%);
+}
+
+.mobiledevice .switch__orden--label:active:after {
+	width: 20px;
+}
+
+/* Filtro orden switch */
+
+.mobiledevice .contenido__opciones{
+  margin-top: 1rem;
+}
+
+.orden__input--precio{
+  border: 1px solid #000 !important;
+  width: 8rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.mobiledevice .guion__separador{
+  margin: 0.5rem;
+  font-weight: 700;
+}
+
+.mobiledevice .filtros__header,
+.filtros__subtitle .fa-angle-down,
+.Filtros__title,
+.Orden__title{
+  pointer-events: none;
+}
+
+.mobiledevice .filtros__subtitle{
+  display: flex;
+  justify-content: space-between;
+}
+
+.mobiledevice .filtro__aplicar{
+  display: flex;
+  justify-content: center;
+}
+
+.mobiledevice .filtro__aplicar--button{
+  height: 4rem;
+  width: 25rem;
+  font-size: 1.6rem;
+  font-family: 'Poppins';
+  background-color: var(--primario);
+  color: var(--blanco);
+  margin: 1rem;
+  border-radius: 1rem;
+}
+
+.mobiledevice .Trefacciones__cont{
+  background-color: var(--primario);
+  color: var(--blanco);
+  text-align: center;
+}
 /* Mobile catalogo detalles */
 .mobiledevice .detalles {
   display: grid;
@@ -2086,11 +2219,6 @@ i.fa.fa-sun {
   padding-bottom: 3rem;
 }
 
-.botones__sesion--iniciada {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-}
-
 .botones__sesion--iniciada span {
   text-align: center;
   font-family: Poppins;
@@ -2221,6 +2349,149 @@ i.fa.fa-sun {
 }
 
 /*desktop catalogo principal */
+
+/*Prueba checkBox filtros catalogo*/
+/* los checkboxes */
+.container input:checked ~ .checkmark {
+  background-color: red;
+}
+
+/* Contenedor */
+.Filtro_Seleccion{
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.container {
+  display: block;
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+/* escondemos el default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* creamos un custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1.5rem;
+  width: 1.5rem;
+  background-color: #eee;
+  border-radius: 0.3rem;
+}
+
+/* Al pasar el mouse encima, lo ponemos gris */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* creamos el marcador (escondido al no seleccionar) */
+.checkmark:after {
+  position: absolute;
+  display: none;
+}
+
+/* mostramos el marcador al seleccionar */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* estilo del marcador */
+.container .checkmark:after {
+  left: 0.5rem;
+  top: 0.1rem;
+  width: 0.5rem;
+  height: 1rem;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+/* Prueba checkBox filstros catalogo */
+.viewmorebtn{
+  color: var(--blanco);
+  background-color: var(--primario);
+}
+.viewmorebtn:focus{
+  border: solid 1px #000;
+  box-shadow: none;
+  color: var(--blanco);
+  background-color: var(--primario-oscuro);
+}
+
+.tags__contenedor{
+  display: flex;
+  gap: 0.5rem;
+}
+
+.desktop .Trefacciones__cont {
+  display: grid;
+  align-content: center;
+  grid-row: 2;
+}
+
+.desktop .filtros__subtitle i{
+  display: none;
+}
+
+.desktop .productos__refacciones{
+  padding: 2rem;
+  border-radius: 2rem;
+  margin: 0 auto;
+  width: 105rem;
+  height: fit-content;
+}
+.desktop .contenedor__filtrado{
+  margin: 0 auto;
+  width: 105rem;
+}
+
+.desktop .filtros__blank{
+  width: 18rem;
+}
+
+.desktop .menurefacciones__completo{
+  padding: 2rem;
+  border-radius: 2rem;
+  display: flex;
+  max-width: 146rem;
+  margin: 0 auto;
+}
+
+.desktop .filtros{
+  background-color: var(--blanco);
+  width: 18rem;
+  height: fit-content;
+  border-radius: 1rem;
+  align-content: flex-start;
+}
+.desktop .filtros__header{
+  width: 100%;
+  height: 3rem;
+  display: flex;
+}
+.desktop .filtros__contenedor{
+  width: 100%;
+  height: auto;
+  padding: 1rem 1rem;
+}
+
+.desktop .open__opciones{
+  display: none;
+}
+
 .desktop .catalogo{
   min-width: 150rem;
   max-width: 157rem;
@@ -2228,9 +2499,12 @@ i.fa.fa-sun {
 }
 
 .desktop .catalogo__filtrado--opciones {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  justify-items: center;
+  display: flex;
+  justify-content: space-around;
+}
+
+.desktop .filtro__aplicar{
+  display: none;
 }
 
 .desktop .contenedor__buscador__encontrados,
@@ -2243,8 +2517,7 @@ i.fa.fa-sun {
 }
 
 .desktop .catalogo__filtrado--opciones select {
-  grid-row: 2;
-  max-width: 30rem;
+  max-width: 15rem;
   height: 4rem;
 }
 
@@ -2281,6 +2554,11 @@ i.fa.fa-sun {
 
 .desktop .botones__sesion {
   width: 50rem;
+}
+
+.desktop .botones__sesion--iniciada {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .desktop .botones__sesion--iniciada span {
@@ -3077,7 +3355,7 @@ input[type=number]::-webkit-inner-spin-button {
 
 /* desktop home */
 .desktop .header__contenido {
-  min-height: 25rem;
+  min-height: 20rem;
 }
 
 .desktop .productos__informacion {
@@ -3085,7 +3363,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 .desktop .productos__informacion a img {
-  width: 70%;
+  width: 50%;
   justify-self: center;
   padding: 0;
 }
@@ -3155,7 +3433,7 @@ input[type=number]::-webkit-inner-spin-button {
   .nuestrosproductos__masvendidos,
   .nuestrosproductos__liquidacion {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(25rem, 100%), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
     grid-gap: 2rem;
     text-align: justify;
   }

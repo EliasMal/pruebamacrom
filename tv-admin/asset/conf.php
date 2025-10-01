@@ -30,15 +30,15 @@ $conf["Correo"] = array('archivo'=>'Configuracion/Correo/Controller.php',"permis
 /*Menu Control*/
 $conf['Refacciones'] = array('archivo'=>"Control/Refacciones/Controller.php",'permisos'=>["root","Admin","user","venta","web","capturista"]);
 $conf['Pedidos'] = array('archivo'=>"Control/Pedidos/Controller.php",'permisos'=>["root","Admin","venta"]);
-$conf['Clientes'] = array('archivo'=>"Control/Clientes/Controller.php",'permisos'=>["root","Admin"]);
-$conf['Contacto'] = array('archivo'=>"Control/Contacto/Controller.php","permisos"=>["root","Admin"]);
+$conf['Clientes'] = array('archivo'=>"Control/Clientes/Controller.php",'permisos'=>["root","Admin","venta"]);
+$conf['Contacto'] = array('archivo'=>"Control/Contacto/Controller.php","permisos"=>["root","Admin","venta"]);
 
 /*Menu Secciones */
 $conf['webprincipal'] = array("archivo"=>"Secciones/webprincipal/Controller.php","permisos"=>["root","Admin","Web","capturista"]);
 $conf['Blog'] = array("archivo"=>"Secciones/Blog/Controller.php","permisos"=>["root","Admin","Web","capturista"]);
 
 /*Menu Respaldo */
-$conf['Actualizarpre'] = array("archivo"=>"Respaldo/Precios/Controller.php","permisos"=>["root","Admin","capturista"]);
+$conf['Actualizarpre'] = array("archivo"=>"Respaldo/Precios/Controller.php","permisos"=>["root","Admin","capturista","venta"]);
 $conf['Pruebas'] = array("archivo"=>"Respaldo/Pruebas/Controller.php","permisos"=>["root"]);
 
 /*Menu Importar */

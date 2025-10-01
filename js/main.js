@@ -239,11 +239,27 @@ var isMobile = {
 };
 
 if (isMobile.any()) {
-  console.log("Dispositivo móvil");
-  noflow.classList.add("mobiledevice");
+    console.log("Dispositivo móvil");
+    noflow.classList.add("mobiledevice");
+    if (window.location.href.includes("?mod=catalogo")) {
+        document.querySelectorAll(".filtros__subtitle").forEach(el =>{
+            el.addEventListener("click", e =>{
+                var objetivo = e.target.className.replace("filtros__subtitle name__","");
+                const desplegar = document.querySelector(".opciones__"+objetivo);
+                desplegar.classList.toggle("dis-none");
+
+            });
+        });
+    }
 } else {
   console.log("Escritorio");
   noflow.classList.add("desktop");
+  if (window.location.href.includes("?mod=catalogo")){
+    document.querySelectorAll(".contenido__opciones").forEach(element =>{
+        element.classList.remove("dis-none");
+    });
+    document.querySelector(".filtros").classList.remove("dis-none");
+    }
 }
 
 document.querySelectorAll(".click").forEach(el => {

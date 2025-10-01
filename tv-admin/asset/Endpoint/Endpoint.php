@@ -101,10 +101,11 @@ Class Endpoint{
         $mail->Password = 'jSJLK6AqN%fwUOskf5@R';
         $mail->setFrom('ventasweb@macromautopartes.com', 'Ventas Macrom');
         $mail->addAddress('ventasweb@macromautopartes.com', 'Ventas');
+        $mail->addAddress('web.tsuruvolks@gmail.com', 'Ventas web');
         $mail->Subject = 'Compra en Macromautopartes';
         $mail->IsHTML(true);
         $mail->CharSet = 'utf-8';
-        $mail->Body ='Nueva compra registrada en la pagina Macromautopartes, revisar el pedido para su envio. (Metodopago: Deposito/transferencia)';
+        $mail->Body ='Nueva compra registrada en la pagina Macromautopartes, revisar el pedido para su envio. (Metodopago: Tarjeta)';
         if (!$mail->send()) {
             echo 'Mailer Error: ' . $mail->ErrorInfo;
         }

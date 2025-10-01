@@ -806,7 +806,7 @@ function RefaccionesEditCtrl($scope, $http) {
     }
 
     obj.btnSaveRefaccion = () => {
-        obj.getColorMarca();
+        //obj.getColorMarca();
 
         if (confirm("¿Estas seguro de guardar los cambios?")) {
             obj.refaccion.Rvehiculo = JSON.stringify(obj.Rvehiculo);

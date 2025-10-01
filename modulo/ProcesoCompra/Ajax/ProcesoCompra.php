@@ -100,7 +100,7 @@ class ProcesoCompra {
                                     if($this->formulario->Costumer->descuento > 0){
                                         $this->setcuponacre(); 
                                     }            
-                                    //Envio de registro satisfactorio al Correo del usuario.
+                                    //Envio de registro satisfactorio al Correo del usuario.e
                                     $mail = new PHPMailer;
                                     $mail->isSMTP();
                                     $mail->SMTPDebug = 0;
@@ -111,6 +111,7 @@ class ProcesoCompra {
                                     $mail->Password = 'jSJLK6AqN%fwUOskf5@R';
                                     $mail->setFrom('ventasweb@macromautopartes.com', 'Ventas Macrom');
                                     $mail->addAddress('ventasweb@macromautopartes.com', 'Ventas');
+                                    $mail->addAddress('web.tsuruvolks@gmail.com', 'Ventas web');
                                     $mail->Subject = 'Compra en Macromautopartes';
                                     $mail->IsHTML(true);
                                     $mail->CharSet = 'utf-8';

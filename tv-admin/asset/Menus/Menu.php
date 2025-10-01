@@ -81,6 +81,14 @@ function menu(){
             $opcMenu[$sum]["grupo"]="Respaldo";             $opcMenu[$sum]["titulo"]= "Actualizar precios";     $opcMenu[$sum]["opc"]="?mod=Actualizarpre";     $sum++;
             // $opcMenu[$sum]["grupo"]="Reportes";             $opcMenu[$sum]["titulo"]= "Refacciones capturadas"; $opcMenu[$sum]["opc"]="?mod=RepProductos";      $sum++;
         break;
+        case 'venta':
+            $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Refacciones";            $opcMenu[$sum]["opc"]="?mod=Refacciones";       $sum++;
+            $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Pedidos";                $opcMenu[$sum]["opc"]="?mod=Pedidos";           $sum++;
+            $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Clientes";               $opcMenu[$sum]["opc"]="?mod=Clientes";          $sum++;
+            $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Contacto";               $opcMenu[$sum]["opc"]="?mod=Contacto";          $sum++;
+            $opcMenu[$sum]["grupo"]="Respaldo";             $opcMenu[$sum]["titulo"]= "Actualizar precios";     $opcMenu[$sum]["opc"]="?mod=Actualizarpre";     $sum++;
+            // $opcMenu[$sum]["grupo"]="Reportes";             $opcMenu[$sum]["titulo"]= "Refacciones capturadas"; $opcMenu[$sum]["opc"]="?mod=RepProductos";      $sum++;
+        break;
         case 'user':
             $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Refacciones";            $opcMenu[$sum]["opc"]="?mod=Refacciones";       $sum++;
         break;

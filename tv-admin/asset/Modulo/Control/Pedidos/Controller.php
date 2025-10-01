@@ -38,7 +38,7 @@ function principal($func){
     /**
      * esta linea de codigo es solo para autorizar quien tiene acceso al modulo
      */
-    $data["autorizacion"] = $func::siAcceso("root,Admin,ventas");
+    $data["autorizacion"] = $func::siAcceso("root,Admin,venta");
     $opc = isset($_GET['opc'])? htmlspecialchars($_GET['opc']):"principal";
         switch($opc){
             case 'principal':
