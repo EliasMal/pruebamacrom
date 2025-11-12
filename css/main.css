@@ -1799,6 +1799,10 @@ i.fa.fa-sun {
   justify-content: center;
 }
 
+.mobiledevice .filtro__quitar{
+  display: none;
+}
+
 .mobiledevice .filtro__aplicar--button{
   height: 4rem;
   width: 25rem;
@@ -2507,6 +2511,17 @@ i.fa.fa-sun {
   display: none;
 }
 
+.desktop .filtro__quitar--button{
+  height: 2rem;
+  width: 100%;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  font-family: 'Poppins';
+  background-color: var(--primario);
+  color: var(--blanco);
+  border-radius: 0.5rem;
+}
+
 .desktop .contenedor__buscador__encontrados,
 .desktop .contenedor__usuario {
   grid-template-columns: repeat(2, 1fr);
@@ -2837,7 +2852,6 @@ i.fa.fa-sun {
     grid-template-columns: repeat(6, 1fr);
     list-style-type: none;
     margin: 0;
-    margin-top: -1rem;
     column-gap: 2rem;
   }
 

@@ -115,6 +115,10 @@
                                                     </optgroup>
                                                 </select>
                                             </div>
+                                            <div class="col-md-4 col-lg-4" ng-show="refaccion.Kit == true">
+                                                <label>Stock: <span class="text-danger">*</span></label>
+                                                <input type="number" name="txtstock" id="txtstock" class="form-control" ng-model="refaccion.Stock" ng-disabled="habilitado"/>
+                                            </div>
                                         </div>
                                         <br />
                                         <div class="row">
@@ -149,7 +153,13 @@
                                                             <input type="checkbox" class="switch" id="switch-envio" name="switch-envio" ng-model="refaccion.Enviogratis" ng-disabled="habilitado" >
                                                             <label for="switch-envio">Envio Gratis</label>
                                                         </span>
-                                                    </li>    
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <span class="switch switch-sm">
+                                                            <input type="checkbox" class="switch" id="switch-kit" name="switch-kit" ng-model="refaccion.Kit" ng-disabled="habilitado" >
+                                                            <label for="switch-kit">Kit</label>
+                                                        </span>
+                                                    </li>      
                                                 </ul>
                                             </div>
                                             <div class="col-md-3">

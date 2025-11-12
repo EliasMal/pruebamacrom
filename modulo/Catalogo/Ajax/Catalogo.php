@@ -31,11 +31,15 @@
                                     $this->jsonData["Data"]["Categorias"] = $this->getCategorias();
                                     $this->jsonData["Data"]["Marcas"] = $this->getMarcas();
                                     $this->jsonData["Data"]["Proveedores"] = $this->getProveedores();
-                                   
+                                    $this->jsonData["Data"]["Existencias"] = $this->getExistencias();
+                                    $this->jsonData["Data"]["Ofertas"] = $this->getOfertas();
+                                    $this->jsonData["Data"]["Nuevos"] = $this->getNuevos();
+                                    if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
+                                        $this->jsonData["Data"]["Vehiculos"] = $this->getModelos();
+                                    }
                                 break;
                                 case 'Vehiculos':
                                     $this->jsonData["Bandera"] = true;
-                                    $this->jsonData["Mensaje"] = "Entro a la seccion de categorias";
                                     $this->jsonData["Data"]["Vehiculos"] = $this->getModelos();
                                 break;
                                 case 'Modelos':
@@ -64,7 +68,7 @@
             }
             print json_encode($this->jsonData);
         }
-        
+
         private function getCompatibilidad($id){
             $array = array();
             $sql = "SELECT * FROM compatibilidad as comp 
@@ -77,46 +81,214 @@
             return $array;
         }
         private function getCategorias (){
-            $sql = "SELECT _id, Categoria FROM Categorias where status = 1 order by Categoria";
-            return $this->conn->fetch_all($this->conn->query($sql));
-        }
 
-        private function getMarcas (){
-            if(isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0){
-                $sql = "SELECT distinct p._idMarca, marca.Marca, p.Estatus
-                FROM u619477378_macromau.Producto p
-                inner join u619477378_macromau.Marcas marca on p._idMarca = marca._id 
-                where marca.Estatus = 1 and p.Estatus = 1 and p.id_proveedor IN(".$this->formulario["proveedor"].")";
-            }else{
-                $sql = "SELECT distinct p._idMarca, marca.Marca, p.Estatus
-                FROM u619477378_macromau.Producto p
-                inner join u619477378_macromau.Marcas marca on p._idMarca = marca._id 
-                where marca.Estatus = 1 and p.Estatus = 1";
+            if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
+                if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0) and (isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0) ){
+                    $condicion .= " and p._idMarca IN({$this->formulario["marca"]}) and p.id_proveedor IN({$this->formulario["proveedor"]}) and p.Modelo IN({$this->formulario["vehiculo"]})";
+                }else if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0)){
+                    $condicion .= " and p._idMarca IN({$this->formulario["marca"]}) and p.id_proveedor IN({$this->formulario["proveedor"]})";
+                } else if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0)){
+                    $condicion .= " and p._idMarca IN({$this->formulario["marca"]}) and p.Modelo IN({$this->formulario["vehiculo"]})";
+                }else{
+                    $condicion .= " and p._idMarca IN({$this->formulario["marca"]})";
+                }
+                
+            } else if(isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0){
+                $condicion .= " and p.id_proveedor IN({$this->formulario["proveedor"]})";
             }
+
+            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"xistencia")!== false){
+                $condicion .= " and p.stock >= 1";
+            }
+            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"ferta")!== false){
+                $condicion .= " and p.RefaccionOferta = 1";
+            }    
+            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"Articulos_Nuevos")!== false){
+                $condicion .= " and p.RefaccionNueva = 1";
+            }
+            $sql = "SELECT p._idCategoria as _id, cate.Categoria, p.Estatus, COUNT(*) as cantidad_repetida
+            FROM u619477378_macromau.Producto p
+            inner join u619477378_macromau.Categorias cate on p._idCategoria = cate._id 
+            where cate.Status = 1 and p.Estatus = 1 and p.Publicar = 1 $condicion 
+            group by cate.Categoria having count(*) > 1 order by cantidad_repetida desc;";
             
             return $this->conn->fetch_all($this->conn->query($sql));
         }
 
+        private function getMarcas (){
+            if(isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0){
+                $condicion = $this->formulario["categoria"]!= "T"? " and p._idCategoria IN({$this->formulario["categoria"]})":"";
+            }
+
+            if(isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0){
+                $condicion .= " and p.id_proveedor IN({$this->formulario["proveedor"]})";
+            }
+            
+            if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
+                if((isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0)){
+                    $condicion .= " and p.Modelo IN({$this->formulario["vehiculo"]})";
+                }
+            }
+            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"xistencia")!== false){
+                $condicion .= " and p.stock >= 1";
+            }
+            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"ferta")!== false){
+                $condicion .= " and p.RefaccionOferta = 1";
+            }    
+            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"Articulos_Nuevos")!== false){
+                $condicion .= " and p.RefaccionNueva = 1";
+            }
+
+            $sql = "SELECT p._idMarca, marca.Marca, p.Estatus, COUNT(*) as cantidad_repetida
+            FROM u619477378_macromau.Producto p
+            inner join u619477378_macromau.Marcas marca on p._idMarca = marca._id 
+            where marca.Estatus = 1 and p.Estatus = 1 and p.Publicar = 1 $condicion 
+            group by marca.Marca having count(*) > 1 order by cantidad_repetida desc;";
+            return $this->conn->fetch_all($this->conn->query($sql));
+        }
+
+        private function getExistencias(){
+            if(isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0){
+                $condicion = $this->formulario["categoria"]!= "T"? " and _idCategoria IN({$this->formulario["categoria"]})":"";
+            }
+
+            if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
+                
+                if(isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0){
+
+                    $condicion .= " and _idMarca IN({$this->formulario["marca"]}) and id_proveedor IN({$this->formulario["proveedor"]})";
+
+                }else if((isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0)){
+
+                    $condicion .= " and _idMarca IN({$this->formulario["marca"]}) and Modelo IN({$this->formulario["vehiculo"]})";
+                    
+                }else{
+                    $condicion .= " and _idMarca IN({$this->formulario["marca"]})";
+                }
+
+            } else if(isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0){
+                $condicion .= " and id_proveedor IN({$this->formulario["proveedor"]})";
+            }
+            if(isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0){
+                $condicion .= " and _idMarca IN({$this->formulario["marca"]}) and Modelo IN({$this->formulario["vehiculo"]})";
+            }
+            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"Articulos_Nuevos")!== false){
+                $condicion .= " and RefaccionNueva = 1";
+            }
+
+            $sql = "SELECT COUNT(*) as cantidad_repetida from u619477378_macromau.Producto where Estatus = 1 and Publicar = 1 and stock > 0 $condicion";
+            return $this->conn->fetch_all($this->conn->query($sql));
+        }
+
+        private function getOfertas(){     
+            $sql = "SELECT COUNT(*) as cantidad_repetida from u619477378_macromau.Producto where Estatus = 1 and Publicar = 1 and RefaccionOferta = 1";
+            return $this->conn->fetch_all($this->conn->query($sql));
+        }
+
+        private function getNuevos(){
+            if(isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0){
+                $condicion = $this->formulario["categoria"]!= "T"? " and _idCategoria IN({$this->formulario["categoria"]})":"";
+            }
+            
+            if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
+                
+                if(isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0){
+
+                    $condicion .= " and _idMarca IN({$this->formulario["marca"]}) and id_proveedor IN({$this->formulario["proveedor"]})";
+
+                }else if((isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0)){
+
+                    $condicion .= " and _idMarca IN({$this->formulario["marca"]}) and Modelo IN({$this->formulario["vehiculo"]})";
+                    
+                }else{
+                    $condicion .= " and _idMarca IN({$this->formulario["marca"]})";
+                }
+
+            } else if(isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0){
+                $condicion .= " and id_proveedor IN({$this->formulario["proveedor"]})";
+            }
+            if(isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0){
+                $condicion .= " and _idMarca IN({$this->formulario["marca"]}) and Modelo IN({$this->formulario["vehiculo"]})";
+            }
+            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"xistencia")!== false){
+                $condicion .= " and stock >= 1";
+            }
+
+            $sql="SELECT COUNT(*) as cantidad_repetida from u619477378_macromau.Producto where Estatus = 1 and Publicar = 1 and RefaccionNueva = 1 $condicion";
+            return $this->conn->fetch_all($this->conn->query($sql));
+        }
+
         private function getModelos(){
-            $sql = "Select _id, Modelo from Modelos where Estatus = 1 and _idMarca IN ("
-                    .$this->formulario["marca"] .") order by Modelo asc";
+            if(isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0){
+                $condicion = $this->formulario["categoria"]!= "T"? " and p._idCategoria IN({$this->formulario["categoria"]})":"";
+            }
+
+            if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
+                if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0)){
+                    $condicion .= " and p._idMarca IN({$this->formulario["marca"]}) and p.id_proveedor IN({$this->formulario["proveedor"]})";
+                }else if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0)){
+                    $condicion .= " and p._idMarca IN({$this->formulario["marca"]}) and p.id_proveedor IN({$this->formulario["proveedor"]})";
+                } else if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
+                    $condicion .= " and p._idMarca IN({$this->formulario["marca"]})";
+                }
+                
+            } else if(isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0){
+                $condicion .= " and p.id_proveedor IN({$this->formulario["proveedor"]})";
+            }
+            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"xistencia")!== false){
+                $condicion .= " and p.stock >= 1";
+            }
+            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"ferta")!== false){
+                $condicion .= " and p.RefaccionOferta = 1";
+            }    
+            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"Articulos_Nuevos")!== false){
+                $condicion .= " and p.RefaccionNueva = 1";
+            }
+
+            $sql = "SELECT p.Modelo as _id, model.Modelo, p._idMarca, p.Estatus, COUNT(*) as cantidad_repetida
+                FROM u619477378_macromau.Producto p
+                inner join u619477378_macromau.Modelos model on p.Modelo = model._id 
+                where model.Estatus = 1 and p.Estatus = 1 and Publicar = 1 $condicion  
+                group by model.Modelo having count(*) > 1 order by cantidad_repetida desc;";
             return $this->conn->fetch_all($this->conn->query($sql));
         }
 
         private function getProveedores(){
-            if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
-                $sql = "SELECT p.id_proveedor, prove.Proveedor, p.Estatus, COUNT(*) as cantidad_repetida
-                FROM u619477378_macromau.Producto p
-                inner join u619477378_macromau.Proveedor prove on p.id_proveedor = prove._id 
-                where prove.Estatus = 1 and p.Estatus = 1 and _idMarca IN(".$this->formulario["marca"].") 
-                group by prove.Proveedor having count(*) > 1 order by cantidad_repetida desc;";
-            }else{
-                $sql = "SELECT p.id_proveedor, prove.Proveedor, p.Estatus, COUNT(*) as cantidad_repetida
-                FROM u619477378_macromau.Producto p
-                inner join u619477378_macromau.Proveedor prove on p.id_proveedor = prove._id 
-                where prove.Estatus = 1 and p.Estatus = 1
-                group by prove.Proveedor having count(*) > 1 order by cantidad_repetida desc;";
+            if(isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0){
+                $condicion = $this->formulario["categoria"]!= "T"? " and p._idCategoria IN({$this->formulario["categoria"]})":"";
             }
+
+            if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
+                if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0) ){
+                    $condicion .= " and p._idMarca IN({$this->formulario["marca"]}) and p.Modelo IN({$this->formulario["vehiculo"]})";
+                }else if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
+                    $condicion .= " and p._idMarca IN({$this->formulario["marca"]})";
+                } else if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0)){
+                    $condicion .= " and p._idMarca IN({$this->formulario["marca"]}) and p.Modelo IN({$this->formulario["vehiculo"]})";
+                }else{
+                    $condicion .= " and p._idMarca IN({$this->formulario["marca"]})";
+                }
+                
+            } else if(isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0){
+                $condicion .= " and p.Modelo IN({$this->formulario["vehiculo"]})";
+            }
+
+            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"xistencia")!== false){
+                $condicion .= " and p.stock >= 1";
+            }
+            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"ferta")!== false){
+                $condicion .= " and p.RefaccionOferta = 1";
+            }    
+            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"Articulos_Nuevos")!== false){
+                $condicion .= " and p.RefaccionNueva = 1";
+            }
+
+            $sql = "SELECT p.id_proveedor, prove.Proveedor, p.Estatus, COUNT(*) as cantidad_repetida
+                FROM u619477378_macromau.Producto p
+                inner join u619477378_macromau.Proveedor prove on p.id_proveedor = prove._id 
+                where prove.Estatus = 1 and p.Estatus = 1 and p.Publicar = 1 $condicion 
+                group by prove.Proveedor having count(*) > 1 order by cantidad_repetida desc;";
+                
             return $this->conn->fetch_all($this->conn->query($sql));
         }
 
@@ -152,8 +324,57 @@
             }
 
             if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
-                if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0)){
-                     $condicion .= " and P._idMarca IN({$this->formulario["marca"]}) and P.id_proveedor IN({$this->formulario["proveedor"]})";
+                if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0) and (isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0) ){
+                    $condicion .= " and P._idMarca IN({$this->formulario["marca"]}) and P.id_proveedor IN({$this->formulario["proveedor"]}) and P.Modelo IN({$this->formulario["vehiculo"]})";
+                }else if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0)){
+                    $condicion .= " and P._idMarca IN({$this->formulario["marca"]}) and P.id_proveedor IN({$this->formulario["proveedor"]})";
+                } else if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0)){
+                    $condicion .= " and P._idMarca IN({$this->formulario["marca"]}) and P.Modelo IN({$this->formulario["vehiculo"]})";
+                }else{
+                    $condicion .= " and P._idMarca IN({$this->formulario["marca"]})";
+                }
+                
+            } else if(isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0){
+                $condicion .= " and P.id_proveedor IN({$this->formulario["proveedor"]})";
+            }
+
+            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"xistencia")!== false){
+                $condicion .= " and P.stock >= 1";
+            }
+            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"ferta")!== false){
+                $condicion .= " and P.RefaccionOferta = 1";
+            }    
+            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"Articulos_Nuevos")!== false){
+                $condicion .= " and P.RefaccionNueva = 1";
+            }
+            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"gratis")!== false){
+                $condicion .= " and P.Enviogratis = 1";
+            }
+            
+           $sql = "SELECT count(*) as Trefacciones FROM Producto AS P "
+            . "left join Proveedor as PROV on (P.id_proveedor = PROV._id) "
+            . "where P.Estatus = 1 and P.Publicar = 1 and ({$arrayLikes['Productos']} OR {$arrayLikes['Clave']})"
+            . "$condicion order by P.Producto ";
+            $this->jsonData["Mensaje"] = "sql: ".$sql;
+            $row = $this->conn->fetch($this->conn->query($sql));
+            return $row["Trefacciones"];
+        }
+
+        private function getRefacciones($arrayLikes, $x=0, $y = 20 ){
+            $array = array();
+            $orden = $this->formulario["orden"];
+            $tipodeorden = $this->formulario["tipodeorden"];
+            if(isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0){
+                $condicion = $this->formulario["categoria"]!= "T"? " and P._idCategoria IN({$this->formulario["categoria"]})":"";
+            }
+
+            if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
+                if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0) and (isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0) ){
+                    $condicion .= " and P._idMarca IN({$this->formulario["marca"]}) and P.id_proveedor IN({$this->formulario["proveedor"]}) and P.Modelo IN({$this->formulario["vehiculo"]})";
+                }else if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0)){
+                    $condicion .= " and P._idMarca IN({$this->formulario["marca"]}) and P.id_proveedor IN({$this->formulario["proveedor"]})";
+                } else if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0)){
+                    $condicion .= " and P._idMarca IN({$this->formulario["marca"]}) and P.Modelo IN({$this->formulario["vehiculo"]})";
                 }else{
                     $condicion .= " and P._idMarca IN({$this->formulario["marca"]})";
                 }
@@ -174,83 +395,6 @@
             if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"gratis")!== false){
                 $condicion .= " and P.Enviogratis = 1";
             }
-            
-            // if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
-            //     if(isset($this->formulario["marca"]) and (isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0)){
-            //         if(isset($this->formulario["marca"]) and isset($this->formulario["vehiculo"]) and (isset($this->formulario["anio"]) and strlen($this->formulario["anio"])!=0)){
-            //             if(isset($this->formulario["marca"]) and isset($this->formulario["vehiculo"]) and isset($this->formulario["anio"]) and (isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0)){
-            //                     $condicion .= " and P._idMarca IN ({$this->formulario["marca"]}) and P.Modelo IN({$this->formulario["vehiculo"]}) and P.Anios IN({$this->formulario["anio"]})"; 
-            //             }else{
-            //                $condicion .= " and P._idMarca IN ({$this->formulario["marca"]}) and P.Modelo IN({$this->formulario["vehiculo"]}) and P.Anios IN({$this->formulario["anio"]})"; 
-            //             }
-            //         }else{
-            //            $condicion .= " and P._idMarca IN ({$this->formulario["marca"]}) and P.Modelo IN({$this->formulario["vehiculo"]})"; 
-            //         }
-            //     }else{
-            //         $condicion .= " and P._idMarca IN ({$this->formulario["marca"]})";
-                    
-            //     }
-            // }
-            
-           $sql = "SELECT count(*) as Trefacciones FROM Producto AS P "
-            . "left join Proveedor as PROV on (P.id_proveedor = PROV._id) "
-            . "where P.Estatus = 1 and P.Publicar = 1 and ({$arrayLikes['Productos']} OR {$arrayLikes['Clave']})  "
-            . "$condicion order by P.Producto ";
-            
-            $row = $this->conn->fetch($this->conn->query($sql));
-            return $row["Trefacciones"];
-        }
-
-        private function getRefacciones($arrayLikes, $x=0, $y = 20 ){
-            $array = array();
-            $orden = $this->formulario["orden"];
-            $tipodeorden = $this->formulario["tipodeorden"];
-            if(isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0){
-                $condicion = $this->formulario["categoria"]!= "T"? " and P._idCategoria IN({$this->formulario["categoria"]})":"";
-            }
-
-            if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
-                if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0)){
-                     $condicion .= " and P._idMarca IN({$this->formulario["marca"]}) and P.id_proveedor IN({$this->formulario["proveedor"]})";
-                }else{
-                    $condicion .= " and P._idMarca IN({$this->formulario["marca"]})";
-                }
-                
-            }else if(isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0){
-                $condicion .= " and P.id_proveedor IN({$this->formulario["proveedor"]})";
-            }
-
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"xistencia")!== false){
-                $condicion .= " and P.stock >= 1";
-            }
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"ferta")!== false){
-                $condicion .= " and P.RefaccionOferta = 1";
-            }
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"Articulos_Nuevos")!== false){
-                $condicion .= " and P.RefaccionNueva = 1";
-            }
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"gratis")!== false){
-                $condicion .= " and P.Enviogratis = 1";
-            }
-            // if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
-
-            //     if(isset($this->formulario["marca"]) and (isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0)){
-            //         if(isset($this->formulario["marca"]) and isset($this->formulario["vehiculo"]) and (isset($this->formulario["anio"]) and strlen($this->formulario["anio"])!=0)){
-            //             if(isset($this->formulario["marca"]) and isset($this->formulario["vehiculo"]) and isset($this->formulario["anio"]) and (isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0)){
-            //                 $condicion .= " and P._idMarca IN ({$this->formulario["marca"]}) and P.Modelo IN({$this->formulario["vehiculo"]}) and P.Anios IN({$this->formulario["anio"]})"; 
-
-            //             }else{
-            //                 $condicion .= " and P._idMarca IN ({$this->formulario["marca"]}) and P.Modelo IN({$this->formulario["vehiculo"]}) and P.Anios IN({$this->formulario["anio"]})"; 
-            //             }
-
-            //         }else{
-            //             $condicion .= " and P._idMarca IN ({$this->formulario["marca"]}) and P.Modelo IN({$this->formulario["vehiculo"]})"; 
-            //         }
-
-            //     }else{
-            //         $condicion .= " and P._idMarca IN ({$this->formulario["marca"]}) ";
-            //     }
-            // }
             
             $sql = "SELECT P.*, PROV._id as idProveedor, PROV.tag_alt as tag_altproveedor, PROV.tag_title as tag_titleproveedor FROM Producto AS P "
             . "left join Proveedor as PROV on (P.id_proveedor = PROV._id) "

@@ -85,6 +85,7 @@
                             <span class="card-text">Vehiculo: </span><b>{{refaccion.Modelo}}</b><br />
                             <span class="card-text">Modelo :</span><b>{{refaccion.Anio}}</b><br />
                             <span class="card-text">No. Parte: </span> <b>{{refaccion.No_parte}}</b><br />
+                            <span class="card-text">Stock: </span> <b>{{refaccion.stock}}</b><br />
                             <section ng-hide="refaccion.RefaccionOferta">
                                 <p class="card-text">Precio: <b class="precio"> {{refaccion.Precio1 | currency}} </b></p>
                             </section>

@@ -33,6 +33,9 @@ function catalogosCtrl($scope, $http) {
     obj.Modelos = [];
     obj.Refacciones = [];
     obj.Proveedores = [];
+    obj.Existencias = [];
+    obj.Ofertas = [];
+    obj.Nuevos = [];
     /*variables del paginador*/
     obj.currentPage = 0;
     obj.pages = [];
@@ -43,7 +46,8 @@ function catalogosCtrl($scope, $http) {
         tagsDispo: "",
         tagsMarca: "",
         tagsCatego: "",
-        tagsProvee: ""
+        tagsProvee: "",
+        tagsVehiculo: ""
     };
 
     let url_actual = window.location.href;
@@ -52,6 +56,7 @@ function catalogosCtrl($scope, $http) {
     var next_prod="";var next_cate="";var next_marca="";
     var next_mdl="";var next_vehi="";var next_provee="";var next_dispo="";
     const aplicarbutton = document.querySelector(".filtro__aplicar--button");
+    const borrarbutton = document.querySelector(".filtro__quitar--button");
     const seleccionDiv = document.querySelector(".name__seleccionados");
     const miDiv = document.getElementById("tags__filtros");
 
@@ -70,7 +75,7 @@ function catalogosCtrl($scope, $http) {
             const tagsDiv = document.getElementById(contenedorTags.id);
 
             tagsDiv.setAttribute("onclick", "desmark(id)");
-            nuevoI.className = "fas fa-times cursorpnt";    
+            nuevoI.className = "fas fa-times cursorpnt";
             tagsDiv.appendChild(nuevoI);
 
             nuevoDiv.className = "Filtro_Seleccion " + checkbox.id;
@@ -79,7 +84,6 @@ function catalogosCtrl($scope, $http) {
             tagsDiv.appendChild(nuevoDiv);
             switch (name) {
                 case "Disponibilidad":
-                    console.log(obj.tagsFiltro.tagsDispo.length);
                     if(obj.tagsFiltro.tagsDispo.length >= 1){
                         obj.tagsFiltro.tagsDispo += ","+checkid;
                     }else{
@@ -109,7 +113,20 @@ function catalogosCtrl($scope, $http) {
                         url_actual = url_actual.replace("pag="+next_url,"pag=1");
                         window.location.href = url_actual;
                     }
-                    
+
+                    break;
+                case "Vehiculo":
+                    if(obj.tagsFiltro.tagsVehiculo.length >= 1){
+                        obj.tagsFiltro.tagsVehiculo += ","+value;
+                    }else{
+                        obj.tagsFiltro.tagsVehiculo += value;
+                    }
+                    if(mylink[5].includes(next_mdl) && mylink[5].includes(obj.tagsFiltro.tagsVehiculo)){
+                    }else{
+                        url_actual = url_actual.replace("mdl="+next_mdl,"mdl="+obj.tagsFiltro.tagsVehiculo);
+                        url_actual = url_actual.replace("pag="+next_url,"pag=1");
+                        window.location.href = url_actual;
+                    }
                     break;
                 case "Categoria":
                     if(obj.tagsFiltro.tagsCatego.length >= 1){
@@ -117,7 +134,7 @@ function catalogosCtrl($scope, $http) {
                     }else{
                         obj.tagsFiltro.tagsCatego += value;
                     }
-                    
+
                     if(next_cate=="T"){
                         next_cate="";
                     }
@@ -128,7 +145,7 @@ function catalogosCtrl($scope, $http) {
                         url_actual = url_actual.replace("pag="+next_url,"pag=1");
                         window.location.href = url_actual;
                     }
-                    
+
                     break;
                 case "Proveedor":
                     if(obj.tagsFiltro.tagsProvee.length >= 1){
@@ -167,6 +184,30 @@ function catalogosCtrl($scope, $http) {
                     }
                     break;
                 case "Marca":
+                    let valorEliminarMarca;
+                    let tagsArregloVehiculoMarca = obj.tagsFiltro.tagsVehiculo.split(",");
+                    let tagsArregloFiltroVehiculoMarca = tagsArregloVehiculoMarca;
+                    obj.Marcas.forEach(m =>{
+                        if(checkid == m.Marca){
+                            valorEliminarMarca = m._idMarca;
+                        }
+                    });
+
+                    if(obj.Vehiculos.length > 0){
+                        obj.Vehiculos.forEach(v =>{
+                            tagsArregloVehiculoMarca.forEach(md =>{
+                                if(md == v._id && v._idMarca == valorEliminarMarca){
+
+                                    tagsArregloFiltroVehiculoMarca = tagsArregloFiltroVehiculoMarca.filter(elemento => elemento !== md);
+                                }
+                            });
+                        });
+                        tagsArregloFiltroVehiculoMarca = tagsArregloFiltroVehiculoMarca.toString();
+                        obj.tagsFiltro.tagsVehiculo = tagsArregloFiltroVehiculoMarca;
+                        url_actual = url_actual.replace("mdl="+next_mdl,"mdl="+obj.tagsFiltro.tagsVehiculo);
+                    }
+
+                    console.log(url_actual);
                     let tagsArregloMarca = obj.tagsFiltro.tagsMarca.split(",");
                     let tagsArregloFiltroMarca = tagsArregloMarca.filter(elemento => elemento !== value);
                     tagsArregloFiltroMarca = tagsArregloFiltroMarca.toString();
@@ -174,6 +215,16 @@ function catalogosCtrl($scope, $http) {
                     url_actual = url_actual.replace("armadora="+next_marca,"armadora="+obj.tagsFiltro.tagsMarca);
                     url_actual = url_actual.replace("pag="+next_url,"pag=1");
                     window.location.href = url_actual;
+                    break;
+                case "Vehiculo":
+                    let tagsArregloVehiculo = obj.tagsFiltro.tagsVehiculo.split(",");
+                    let tagsArregloFiltroVehiculo = tagsArregloVehiculo.filter(elemento => elemento !== value);
+                    tagsArregloFiltroVehiculo = tagsArregloFiltroVehiculo.toString();
+                    obj.tagsFiltro.tagsVehiculo = tagsArregloFiltroVehiculo;
+                    url_actual = url_actual.replace("mdl="+next_mdl,"mdl="+obj.tagsFiltro.tagsVehiculo);
+                    url_actual = url_actual.replace("pag="+next_url,"pag=1");
+                    window.location.href = url_actual;
+
                     break;
                 case "Categoria":
                     let tagsArregloCatego = obj.tagsFiltro.tagsCatego.split(",");
@@ -206,11 +257,13 @@ function catalogosCtrl($scope, $http) {
 
         if (miDiv.childElementCount > 0) {
             aplicarbutton.classList.remove("dis-none");
+            borrarbutton.classList.remove("dis-none");
             if(document.getElementById("BodyDark").classList.contains("desktop")){
                 seleccionDiv.classList.remove("dis-none")
             }
         } else {
             aplicarbutton.classList.add("dis-none");
+            borrarbutton.classList.add("dis-none");
             if(document.getElementById("BodyDark").classList.contains("desktop")){
                 seleccionDiv.classList.add("dis-none")
             }
@@ -221,7 +274,10 @@ function catalogosCtrl($scope, $http) {
     aplicarbutton.addEventListener("click", clearfilter =>{
         window.location.href = "?mod=catalogo&pag=1&prod=&cate=&armadora=&mdl=&[a]=";
     });
-
+    borrarbutton.addEventListener("click", clearfilter =>{
+        window.location.href = "?mod=catalogo&pag=1&prod=&cate=&armadora=&mdl=&[a]=";
+    });
+    
     document.querySelector(".open__opciones--Filtros").addEventListener("click", openF => {
         const open__filtro = document.querySelector(".filtros");
         const open__orden = document.querySelector(".filtros__orden");
@@ -273,16 +329,52 @@ function catalogosCtrl($scope, $http) {
                 break;
             case "Marca":
                 let valorEliminarMarca;
+                let tagsArregloVehiculoMarca = obj.tagsFiltro.tagsVehiculo.split(",");
+                let tagsArregloFiltroVehiculoMarca = tagsArregloVehiculoMarca;
                 obj.Marcas.forEach(m =>{
                     if(idelete == m.Marca){
                         valorEliminarMarca = m._idMarca;
                     }
                 });
+
+                if(obj.Vehiculos.length > 0){
+                    obj.Vehiculos.forEach(v =>{
+                        tagsArregloVehiculoMarca.forEach(md =>{
+                            if(md == v._id && v._idMarca == valorEliminarMarca){
+
+                                tagsArregloFiltroVehiculoMarca = tagsArregloFiltroVehiculoMarca.filter(elemento => elemento !== md);
+                            }
+                        });
+                    });
+                    tagsArregloFiltroVehiculoMarca = tagsArregloFiltroVehiculoMarca.toString();
+                    obj.tagsFiltro.tagsVehiculo = tagsArregloFiltroVehiculoMarca;
+                    url_actual = url_actual.replace("mdl="+next_mdl,"mdl="+obj.tagsFiltro.tagsVehiculo);
+                }
+
                 let tagsArregloMarca = obj.tagsFiltro.tagsMarca.split(",");
                 let tagsArregloFiltroMarca = tagsArregloMarca.filter(elemento => elemento !== valorEliminarMarca);
                 tagsArregloFiltroMarca = tagsArregloFiltroMarca.toString();
                 obj.tagsFiltro.tagsMarca = tagsArregloFiltroMarca;
                 url_actual = url_actual.replace("armadora="+next_marca,"armadora="+obj.tagsFiltro.tagsMarca);
+                url_actual = url_actual.replace("pag="+next_url,"pag=1");
+                window.location.href = url_actual;
+
+                break;
+            case "Vehiculo":
+                let valorEliminarVehiculo;
+                obj.Vehiculos.forEach(m =>{
+                    if(idelete == m.Modelo){
+                        valorEliminarVehiculo = m._id;
+                    }
+                });
+                if(obj.Marcas.length == 1){
+                    url_actual = url_actual.replace("armadora="+next_marca,"armadora="+obj.Marcas[0]._idMarca);
+                }
+                let tagsArregloVehiculo = obj.tagsFiltro.tagsVehiculo.split(",");
+                let tagsArregloFiltroVehiculo = tagsArregloVehiculo.filter(elemento => elemento !== valorEliminarVehiculo);
+                tagsArregloFiltroVehiculo = tagsArregloFiltroVehiculo.toString();
+                obj.tagsFiltro.tagsVehiculo = tagsArregloFiltroVehiculo;
+                url_actual = url_actual.replace("mdl="+next_mdl,"mdl="+obj.tagsFiltro.tagsVehiculo);
                 url_actual = url_actual.replace("pag="+next_url,"pag=1");
                 window.location.href = url_actual;
 
@@ -329,22 +421,16 @@ function catalogosCtrl($scope, $http) {
 
         if (miDiv.childElementCount > 0) {
             aplicarbutton.classList.remove("dis-none");
+            borrarbutton.classList.remove("dis-none");
             if(document.getElementById("BodyDark").classList.contains("desktop")){
                 seleccionDiv.classList.remove("dis-none")
             }
         } else {
             aplicarbutton.classList.add("dis-none");
+            borrarbutton.classList.add("dis-none");
             if(document.getElementById("BodyDark").classList.contains("desktop")){
                 seleccionDiv.classList.add("dis-none")
             }
-        }
-    }
-
-    if(next_cate.length > 0 && next_dispo.length > 0 && next_marca.length > 0 && next_mdl.length > 0 && next_provee.length > 0){
-        if(miDiv.childElementCount > 0){
-
-        }else{
-            location.reload();
         }
     }
 
@@ -379,6 +465,7 @@ function catalogosCtrl($scope, $http) {
         obj.refaccion.y = obj.pageSize;
         obj.refaccion.producto = next_prod;
         obj.refaccion.proveedor = next_provee;
+        obj.refaccion.vehiculo = next_mdl;
         obj.refaccion.disponibilidad = next_dispo;
         if(obj.refaccion.categoria == ""){
             obj.refaccion.categoria = "T";
@@ -409,8 +496,11 @@ function catalogosCtrl($scope, $http) {
                 obj.categorias = res.data.Data.Categorias;
                 obj.Marcas = res.data.Data.Marcas;
                 obj.Proveedores = res.data.Data.Proveedores;
+                obj.Vehiculos = res.data.Data.Vehiculos;
                 obj.Proveedores.sort((a, b) => a._id - b._id);
-
+                obj.Existencias = res.data.Data.Existencias;
+                obj.Ofertas = res.data.Data.Ofertas;
+                obj.Nuevos = res.data.Data.Nuevos;
                 obj.Refacciones = res.data.Data.Refacciones;
                 obj.Trefacciones = res.data.Data.Trefacciones;
 
@@ -423,10 +513,6 @@ function catalogosCtrl($scope, $http) {
             obj.configPages();
             obj.getPaginador(obj.currentPage * obj.pageSize, obj.pageSize);
 
-            if (next_marca != "") {
-                obj.refaccion.vehiculo = next_vehi;
-                obj.getVehiculos();
-            }
             let steprovee;
             mylink.forEach(letprove =>{
                 if(letprove.includes("proveedor")){
@@ -452,50 +538,6 @@ function catalogosCtrl($scope, $http) {
         }, function errorCallback(res) {
             toastr.error("Error: no se realizo la conexion con el servidor");
         });
-    }
-
-    obj.getVehiculos = async () => {
-        obj.refaccion.tipo = "Vehiculos";
-        obj.refaccion.x = 0;
-        obj.refaccion.y = obj.pageSize;
-        try {
-            const result = await $http({
-                method: 'GET',
-                url: url_catalogo,
-                params: obj.refaccion
-            }).then(function successCallback(res) {
-                return res
-
-            }, function errorCallback(res) {
-                toastr.error("Error: no se realizo la conexion con el servidor");
-            });
-            if (result) {
-                if (result.data.Bandera == 1) {
-                    obj.Vehiculos = result.data.Data.Vehiculos;
-
-                    obj.Refacciones = result.data.Data.Refacciones;
-                    obj.Trefacciones = result.data.Data.Trefacciones;
-
-                    obj.currentPage = next_url - 1;
-                    obj.configPages();
-                    obj.eachRefacciones(obj.Refacciones);
-                } else {
-                    toastr.error(result.data.Mensaje);
-                }
-                $scope.$apply();
-            }
-            obj.currentPage = next_url - 1;
-            obj.configPages();
-            obj.getPaginador(obj.currentPage * obj.pageSize, obj.pageSize);
-
-            if (next_vehi != "") {
-                obj.refaccion.anio = next_mdl;
-                obj.getModelos();
-            }
-
-        } catch (error) {
-            toastr.error(error);
-        }
     }
 
     obj.getModelos = async () => {
@@ -580,7 +622,7 @@ function catalogosCtrl($scope, $http) {
             case myurl.includes("prod"):
                 next_prod = myurl.split("=")[1];
                 if(next_prod.includes("%20")){
-                   next_prod = next_prod.replaceAll("%20"," "); 
+                   next_prod = next_prod.replaceAll("%20"," ");
                 } else if(next_prod.includes("%2520")){
                     next_prod = next_prod.replaceAll("%2520"," ");
                 }
@@ -598,15 +640,15 @@ function catalogosCtrl($scope, $http) {
                 }
             break;
             case myurl.includes("mdl"):
-                next_vehi = myurl.split("=")[1];
-                if(next_vehi.includes("?%20string:")){
-                    next_vehi = next_vehi.replaceAll("?","");
-                    next_vehi = next_vehi.replaceAll("%20","");
-                    next_vehi = next_vehi.replaceAll("string:","");
+                next_mdl = myurl.split("=")[1];
+                if(next_mdl.includes("?%20string:")){
+                    next_mdl = next_mdl.replaceAll("?","");
+                    next_mdl = next_mdl.replaceAll("%20","");
+                    next_mdl = next_mdl.replaceAll("string:","");
                 }
             break;
             case myurl.includes("[a]"):
-                next_mdl = myurl.split("=")[1];
+                next_vehi = myurl.split("=")[1];
             break;
             case myurl.includes("Disponibilidad"):
                 next_dispo = myurl.split("=")[1];
@@ -633,6 +675,7 @@ function catalogosCtrl($scope, $http) {
                     }
                 });
             });
+
         }
         if(next_cate != "" || next_cate != "T"){
             const individualCatego = next_cate.split(",");
@@ -642,6 +685,18 @@ function catalogosCtrl($scope, $http) {
                         const truebox = document.querySelector('input[id="' + m.Categoria + '"]');
                         truebox.checked = true;
                         checkmark(m._id,m.Categoria);
+                    }
+                });
+            });
+        }
+        if(next_mdl != ""){
+            const individualMdl = next_mdl.split(",");
+            individualMdl.forEach(ind =>{
+                obj.Vehiculos.forEach(m =>{
+                    if(ind == m._id){
+                        const truebox = document.querySelector('input[id="' + m.Modelo + '"]');
+                        truebox.checked = true;
+                        checkmark(m._id,m.Modelo);
                     }
                 });
             });
@@ -660,7 +715,7 @@ function catalogosCtrl($scope, $http) {
         }
 
         if(next_dispo != ""){
-            var dispo = "Ofertas,En_Existencia,Articulos_Nuevos,switch__existencia,switch__oferta,switch__enviogratis";
+            var dispo = "Ofertas,En_Existencia,Articulos_Nuevos,switch__existencia,switch__oferta,switch__Articulos_Nuevos";
             dispo = dispo.split(",");
             console.log("Objeto Creado:",dispo);
             const individualDispo = next_dispo.split(",");
@@ -674,7 +729,7 @@ function catalogosCtrl($scope, $http) {
                 });
             });
         }
-            
+
     }, "500");
 
     obj.configPages = function () {

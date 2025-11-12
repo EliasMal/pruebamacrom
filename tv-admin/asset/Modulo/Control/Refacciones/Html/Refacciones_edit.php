@@ -94,6 +94,10 @@
                                                                 <label>Refacción: <span class="text-danger">*</span></label>
                                                                 <input type="text" name="txtrafaccion" id="txtrefaccion" class="form-control" ng-model="refaccion.Producto" ng-disabled="habilitado" required/>
                                                             </div>
+                                                            <div class="col-md-8 col-lg-6" ng-show="refaccion.Kit == true">
+                                                                <label>Stock: <span class="text-danger">*</span></label>
+                                                                <input type="text" name="txtstock" id="txtstock" class="form-control" ng-model="refaccion.stock" ng-disabled="habilitado"/>
+                                                            </div>
                                                             <div class="col-md-6 col-lg-6">
                                                                 <label>No. Parte: <span class="text-danger">*</span></label>
                                                                 <input type="text" name="txtnoparte" id = "txtnoparte" class="form-control" ng-model="refaccion.No_parte" ng-disabled="habilitado" required/>
@@ -134,7 +138,6 @@
                                                                     <span class="switch switch-sm">
                                                                         <input type="checkbox" class="switch" id="switch-nuevo" name="switch-nuevo" ng-model="refaccion.RefaccionNueva" ng-disabled="habilitado">
                                                                         <label for="switch-nuevo">Refaccion Nueva</label>
-                                                                        
                                                                     </span>
                                                                 </li>
                                                                 <li class="nav-item">
@@ -167,6 +170,12 @@
                                                                         <label for="switch-publicar">Publicar</label>
                                                                     </span>
                                                                 </li>
+                                                                <li class="nav-item">
+                                                                    <span class="switch switch-sm">
+                                                                        <input type="checkbox" class="switch" id="switch-kit" name="switch-kit" ng-model="refaccion.Kit" ng-disabled="habilitado" >
+                                                                        <label for="switch-kit">Kit</label>
+                                                                    </span>
+                                                                </li>   
                 
                                                             </ul>
                                                             </div>

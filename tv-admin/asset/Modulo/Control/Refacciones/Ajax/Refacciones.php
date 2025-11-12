@@ -188,14 +188,15 @@
                     $this->formulario["Estatus"] = $this->formulario["Estatus"] == "true"? 1:0;
                     $this->formulario["Enviogratis"] = $this->formulario["Enviogratis"]=="true"? 1:0;
                     $this->formulario["liquidacion"] = $this->formulario["liquidacion"]=="true"? 1:0;
+                    $this->formulario["Kit"] = $this->formulario["Kit"]=="true"? 1:0;
                     
                     $sql = "INSERT INTO Producto (Clave, Producto, No_parte, _idCategoria,_idMarca, Modelo, Anios, Precio1, Precio2, Descripcion, RefaccionNueva, RefaccionOferta, Color, Estatus, Alto,"
-                    . "Largo, Ancho, Peso, id_proveedor, tag_title, tag_alt,Enviogratis, RefaccionLiquidacion, Publicar, userCreated, userModify ) value "
+                    . "Largo, Ancho, Peso, id_proveedor, tag_title, tag_alt,Enviogratis, RefaccionLiquidacion, Publicar, userCreated, userModify, Kit, stock) value "
                     . "('{$this->formulario["Clave"]}','{$this->formulario["refaccion"]}','{$this->formulario["noParte"]}','{$this->formulario["Categoria"]}','{$this->formulario["Marca"]}',"
                     . "'{$this->formulario["Vehiculo"]}','{$this->formulario["Modelo"]}',".bcdiv($this->formulario["Precio1"],'1',2).",".bcdiv($this->formulario["Precio2"],'2',1).",'{$this->formulario["Descripcion"]}',"
                     . "'{$this->formulario["Nuevo"]}','{$this->formulario["Oferta"]}','{$this->formulario["Color"]}',{$this->formulario["Estatus"]},{$this->formulario["Alto"]},{$this->formulario["Largo"]},"
                     . "{$this->formulario["Ancho"]},{$this->formulario["Peso"]},{$this->formulario["id_proveedor"]},'{$this->formulario["tag_title"]}','{$this->formulario["tag_alt"]}'
-                    ,'{$this->formulario["Enviogratis"]}','{$this->formulario["liquidacion"]}',0,'{$_SESSION["nombre"]}','{$_SESSION["nombre"]}')";
+                    ,'{$this->formulario["Enviogratis"]}','{$this->formulario["liquidacion"]}',0,'{$_SESSION["nombre"]}','{$_SESSION["nombre"]}','{$this->formulario["Kit"]}',{$this->formulario["Stock"]})";
                 break;
                     
                 case 'edit':
@@ -204,6 +205,7 @@
                     $this->formulario["RefaccionLiquidacion"] = $this->formulario["RefaccionLiquidacion"] == "true"? 1:0;
                     $this->formulario["Enviogratis"] = $this->formulario["Enviogratis"]=="true"? 1:0;
                     $this->formulario["Publicar"] = $this->formulario["Publicar"]=="true"? 1:0;
+                    $this->formulario["Kit"] = $this->formulario["Kit"]=="true"? 1:0;
 
                     $sql = "UPDATE Producto SET Clave='{$this->formulario["Clave"]}', Producto = '{$this->formulario["Producto"]}', _idCategoria='{$this->formulario["_idCategoria"]}',"
                     . " _idMarca='{$this->formulario["_idMarca"]}', Precio1 = " . bcdiv($this->formulario["Precio1"],'1',2) . ", Precio2 = ". bcdiv($this->formulario["Precio2"],'1',2) .", No_parte = '{$this->formulario["No_parte"]}', "
@@ -213,7 +215,7 @@
                     . " Peso = {$this->formulario["Peso"]}, id_proveedor = {$this->formulario["id_proveedor"]}, tag_title='{$this->formulario["tag_title"]}'," 
                     . " tag_alt='{$this->formulario["tag_alt"]}', RefaccionLiquidacion = '{$this->formulario["RefaccionLiquidacion"]}', "
                     . " Enviogratis = '{$this->formulario["Enviogratis"]}', Publicar={$this->formulario["Publicar"]},"
-                    . " userModify='{$_SESSION["nombre"]}', dateModify='".date("Y-m-d H:i:s")."'"
+                    . " userModify='{$_SESSION["nombre"]}', dateModify='".date("Y-m-d H:i:s")."',Kit = {$this->formulario["Kit"]}, stock = {$this->formulario["stock"]}" //, Kit = {$this->formulario["Kit"]}, stock = {$this->formulario["Stock"]}
                     . " where _id = {$this->formulario["_id"]}";
                     if($this->formulario["diferencias"] != "{}"){
                         $this->setActividad();
@@ -283,7 +285,7 @@
             $array = array();
             $sql = "SELECT P._id, P.Clave, P.Producto, C.Categoria, M.Marca, V.Modelo,   
                     A.Anio, P.Precio1, P.Precio2, P.No_parte, P.Estatus, P.RefaccionNueva, P.RefaccionOferta, P.RefaccionLiquidacion,
-                    P.Enviogratis, P.dateCreated, P.dateModify
+                    P.Enviogratis, P.dateCreated, P.dateModify, P.Kit, P.stock
                     FROM Producto as P
                     inner join Categorias as C on (C._id = P._idCategoria)
                     inner join Marcas as M on (M._id = P._idMarca)
@@ -298,6 +300,7 @@
                 $row["RefaccionOferta"] = $row["RefaccionOferta"]==1? true:false;
                 $row["RefaccionLiquidacion"] = $row["RefaccionLiquidacion"]==1? true:false;
                 $row["Enviogratis"] = $row["Enviogratis"]==1? true:false;
+                $row["Kit"] = $row["Kit"]==1? true:false;
                 //$row["Stock"] = $this->getExistenciaSEICOM($row["Clave"]);
                 array_push($array, $row);
             }
@@ -314,6 +317,7 @@
             $row["RefaccionLiquidacion"] = $row["RefaccionLiquidacion"] == 1 ? true: false;
             $row["Enviogratis"] = $row["Enviogratis"] == 1? true: false;
             $row["Publicar"] = $row["Publicar"] == 1? true:false; 
+            $row["Kit"] = $row["Kit"] == 1? true:false;
             return $row;
         }
         private function getRefaccionClave (){

@@ -286,7 +286,7 @@ class ProcesoCompra {
         $_id_facturacion = $facturacion == 1? $_id_facturacion:0;
         $sql = "INSERT INTO Pedidos (_idCliente, Fecha, Importe, Acreditado, Enviado, GuiaEnvio, FormaPago, noPedido, cenvio, Servicio, Facturacion, 
         _id_facturacion, _id_cdirecciones, archivoxml, archivopdf, comprobante, descuento, paqueteria, enviodias, Largo, Alto, Ancho, Peso, FechaEstimadaEnvio) values "
-                . "( '$id_cliente','". date("Y-m-d") ."','$Importe',$acreditado,0,'','$formaPago','$noPedido','$cenvio','$servicio',$facturacion,
+                . "( '$id_cliente','". date("Y-m-d H:i:s") ."','$Importe',$acreditado,0,'','$formaPago','$noPedido','$cenvio','$servicio',$facturacion,
                 $_id_facturacion, $_id_domicilio,'','','', $descuento, '$paqueteria', '$enviodias','$largo','$alto','$ancho','$peso','$envioestimado')";
         $this->conn->query($sql);
         return $this->conn->last_id();

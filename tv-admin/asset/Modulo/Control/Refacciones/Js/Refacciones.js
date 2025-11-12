@@ -34,7 +34,10 @@ function RefaccionesCtrl($scope, $http) {
     obj.eachRefacciones = (array) => {
         array.forEach(e => {
             obj.getSeicom(e.Clave).then(token => {
-                e.agotado = token
+                e.agotado = token;
+                if(e.stock != 0){
+                    e.agotado = false;
+                }
             })
         })
     }
@@ -229,10 +232,12 @@ function RefaccionesNewCtrl($scope, $http) {
     obj.refaccion.Estatus = true;
     obj.refaccion.Nuevo = false;
     obj.refaccion.Oferta = false;
+    obj.refaccion.Kit = false;
     obj.refaccion.Alto = 0;
     obj.refaccion.Largo = 0;
     obj.refaccion.Ancho = 0;
     obj.refaccion.Peso = 0;
+    obj.refaccion.Stock = 0;
     obj.refaccion.Precio1 = 0.0;
     obj.refaccion.Precio2 = 0.0;
     obj.habilitado = false;
@@ -377,6 +382,7 @@ function RefaccionesNewCtrl($scope, $http) {
     }
 
     obj.btnGuardarRefaccion = () => {
+        console.log("Refaccion: ",obj.refaccion);
         if (confirm("¿Estas seguro de guardar la Refaccion?")) {
             obj.refaccion.opc = "new";
             $http({
@@ -412,10 +418,12 @@ function RefaccionesNewCtrl($scope, $http) {
         obj.refaccion.Estatus = true;
         obj.refaccion.Nuevo = false;
         obj.refaccion.Oferta = false;
+        obj.refaccion.Kit = false;
         obj.refaccion.Alto = 0;
         obj.refaccion.Largo = 0;
         obj.refaccion.Ancho = 0;
         obj.refaccion.Peso = 0;
+        obj.refaccion.Stock = 0;
         obj.refaccion.Precio1 = 0.0;
         obj.refaccion.Precio2 = 0.0;
         obj.habilitado = false;
@@ -692,32 +700,34 @@ function RefaccionesEditCtrl($scope, $http) {
     }
 
     obj.getArticulovolks = () => {
-        $http({
-            method: 'POST',
-            url: "https://volks.dyndns.info:444/service.asmx/consulta_art",
-            data: "articulo=" + obj.refaccion.Clave,
-            headers: {
-                'Content-Type': "application/x-www-form-urlencoded"
+        if(obj.refaccion.Kit != true){
+            $http({
+                method: 'POST',
+                url: "https://volks.dyndns.info:444/service.asmx/consulta_art",
+                data: "articulo=" + obj.refaccion.Clave,
+                headers: {
+                    'Content-Type': "application/x-www-form-urlencoded"
 
-            },
-            transformResponse: function (data) {
-                return $.parseXML(data);
-            }
-        }).then(function successCallback(res) {
-            var xml = $(res.data);
-            var json = xml.find("string");
-            obj.existencias = JSON.parse(json.text());
-            obj.existencias.Table.forEach(function (e) {
-                obj.exisTotales += parseInt(e.existencia);
+                },
+                transformResponse: function (data) {
+                    return $.parseXML(data);
+                }
+            }).then(function successCallback(res) {
+                var xml = $(res.data);
+                var json = xml.find("string");
+                obj.existencias = JSON.parse(json.text());
+                obj.existencias.Table.forEach(function (e) {
+                    obj.exisTotales += parseInt(e.existencia);
 
-                obj.refaccion.Precio1 = parseFloat(e.precio_5 * 1.16);
-                obj.refaccion.Precio1 = trunc(obj.refaccion.Precio1, 2);
-            })
+                    obj.refaccion.Precio1 = parseFloat(e.precio_5 * 1.16);
+                    obj.refaccion.Precio1 = trunc(obj.refaccion.Precio1, 2);
+                })
 
 
-        }, function errorCallback(res) {
-            toastr.error("Error: no se realizo la conexion con el servidor");
-        });
+            }, function errorCallback(res) {
+                toastr.error("Error: no se realizo la conexion con el servidor");
+            });
+        }
     }
 
     obj.getProveedores = () => {
@@ -823,7 +833,6 @@ function RefaccionesEditCtrl($scope, $http) {
                 }
             }
             obj.refaccion.diferencias = JSON.stringify(datosdiff);
-
             $http({
                 method: 'POST',
                 url: url,

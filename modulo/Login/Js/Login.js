@@ -74,11 +74,11 @@ function LoginCtrl($scope, $http) {
                         });
                     }
                 });
-                if (el.Existencias != count_prod) {
+                if (el.Existencias != count_prod || el.Cantidad > count_prod) {
                     $http({
                         method: 'POST',
                         url: url,
-                        data: { modelo: { opc: "ActExistencias", refaccion: el.Clave, NewExistencia: count_prod, home: true } },
+                        data: { modelo: { opc: "ActExistencias", refaccion: el.Clave, NewExistencia: count_prod, home: true, Cant: el.Cantidad } },
                     }).then(function successCallback(res) {
                         console.log("Update Exitoso");
                     }, function errorCallback(res) {

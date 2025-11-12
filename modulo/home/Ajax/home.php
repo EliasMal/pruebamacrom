@@ -77,7 +77,11 @@
         }
         
         private function ActExistencias(){
-            $sql = "UPDATE Carrito set Existencias = '{$this->formulario->modelo->NewExistencia}' where _clienteid = '{$_SESSION["iduser"]}' and Clave = '{$this->formulario->modelo->refaccion}'";
+            if($this->formulario->modelo->Cant > $this->formulario->modelo->NewExistencia){
+                $sql = "UPDATE Carrito set Existencias = '{$this->formulario->modelo->NewExistencia}', Cantidad = '{$this->formulario->modelo->NewExistencia}'  where _clienteid = '{$_SESSION["iduser"]}' and Clave = '{$this->formulario->modelo->refaccion}'";
+            }else{
+                $sql = "UPDATE Carrito set Existencias = '{$this->formulario->modelo->NewExistencia}' where _clienteid = '{$_SESSION["iduser"]}' and Clave = '{$this->formulario->modelo->refaccion}'";
+            }
             return $this->conn->query($sql);
         }
 
