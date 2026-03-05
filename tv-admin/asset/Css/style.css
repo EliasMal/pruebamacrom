@@ -25,13 +25,6 @@
   width: 100%;
 }
 
-.cuponesgen a{
-  font-weight: bold;
-  color: #000;
-}
-.cuponesgen a:hover{
-  color: #de0007;
-}
 .table__medidas {
   border-collapse: collapse;
   border: 4px solid rgb(200, 200, 200);
@@ -243,30 +236,34 @@
 .btnC__disponibles{
   width: 50%;
 }
-.formulario__listado, .cupones__disponibles, .cupones__disponibles__listado{
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin:10px 0 10px 0;
-}
-.formulario__listado > li, .cupones__disponibles > li, .cupones__disponibles__listado > li{
-  background-color: rgb(8, 113, 194);
-  padding: 5px;
-  border-radius: 5px;
-  font-size: 14px;
-  color: white;
-  font-weight: bold;
-}
 .formulario__listado .formulario__tag{
   list-style: none;
 }
-.cupones__disponibles .cupones__tag--ninguno{
-  list-style: none;
-  background-color: #de0007;
+
+/* BTN CUPON EN PRINCIPAL */
+.cuponesgen {
+  margin-left: 15px;
+  display: inline-flex;
+  align-items: center;
 }
-.cupones__disponibles .cupones__tag{
-  list-style: none;
-  background-color: green;
+
+.btn-cupones-nav {
+  background: #f5f5f5;
+  color: #333 !important;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  border: 1px solid #ddd;
+}
+
+.btn-cupones-nav:hover {
+  background: #e0e0e0;
+  color: #000 !important;
+  transform: translateY(-1px);
 }

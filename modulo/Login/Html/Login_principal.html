@@ -1,69 +1,97 @@
 <link rel="stylesheet" href="/css/login.css">
+
 <div ng-controller="LoginCtrl" ng-init="mod='{mod}'">
+<section>
+<div class="container1">
+<div class="login">
 
-    <section>
-        <div class="container1">
-            <div class="login">
-                <div class="login__contenedor__uno">
-                    <h4 class="contenedor__uno--texto">Calidad, Precio, Servicio</h4>
-                </div>
-                
-                <div class="login__contenedor__dos">
-                    <a href="?mod=home" class="fa fa-window-close closeinsregform"></a>
-
-                    <form name="frmReg" id="frmReg" novalidate class="form__login">
-
-                        <div class="contenedor__dos--logo">
-                            <!-- <img src="https://macromautopartes.com/images/icons/logo original.svg" alt=""> -->
-                            <img src="../../../images/icons/logo original.svg" alt="">
-                        </div>
-
-                        <h4 class="contenedor__dos--titulo">Iniciar Sesión</h4>
-                        <!-- <div id="alertvali" ng-if="login.password!=0"><img src="https://macromautopartes.com/images/icono notificacion.svg" alt="icon-user">Contraseña o Correo Incorrecto.</div> -->
-                        <div id="alertvali" ng-if="login.password!=0"><img src="images/icono notificacion.svg" alt="icon-user">Contraseña o Correo Incorrecto.</div>
-                        
-                        <div class="contenedor__dos--login">
-                            <div class="login__contenedor">
-                                <div class="login__contenedor--main">
-                                    <form name="frmlogin" id="frmlogin" novalidate>
-
-                                        <div class="form-group has-feedback main__login">
-                                            <input type="email" name="login" id="login" class="form-control" placeholder="Correo electronico" ng-model="login.user" required>
-                                        </div>
-
-                                        <div class="form-group has-feedback main__login" id="divcpass">
-                                            <input type="password" name="cpass" id="inprcpass" class="form-control" placeholder="Contraseña" ng-model="login.password" required>
-                                            <button class="password__ver">
-                                                <i class="pass_ver cpss fa fa-eye" aria-hidden="true"></i>
-                                            </button>
-                                        </div>
-
-                                        <div class="login__contenedor--secondary">
-                                            <div class="secondary__contenedor">
-                                                <div class="secondary__contenedor--boton">
-                                                    <span type="submit" class="flex-c-m bg9 hov1 m-text3 trans-0-4" ng-disabled="frmlogin.$invalid" ng-click="btnLogin()">Iniciar Sesión</span>
-                                                </div>
-
-                                                <div class="secondary__contenedor--forgot">
-                                                    <p><b ng-show="!dataflag"><i class="fa fa-sync-alt fa-spin"></i></b></p>
-                                                    <a href="" ng-click="btnolvide()" class="btnolvide"><p>¿Olvidaste tu contraseña?</p></a>
-                                                </div>
-
-                                                <div class="secondary__contenedor--register">
-                                                    <a href="?mod=register"><p>Registrate para crear una cuenta nueva</p></a>
-                                                </div>
-
-                                                <div class="w-100"></div>
-                                        
-                                            </div>
-                                        </div>
-                                    </form>
+    <!-- PANEL IZQUIERDO -->
+    <div class="login__contenedor__uno">
+        <h4 class="contenedor__uno--texto">Calidad, Precio, Servicio</h4>
+    </div>
     
-                                </div>
-                            </div>
-                        </div>
+    <!-- PANEL DERECHO -->
+    <div class="login__contenedor__dos">
+
+        <a href="?mod=home" class="fa fa-window-close closeinsregform"></a>
+
+        <!-- FORM ÚNICO -->
+        <form name="frmlogin" id="frmlogin" novalidate class="form__login">
+
+            <div class="contenedor__dos--logo">
+                <img src="../../../images/icons/logo original.svg" alt="">
+            </div>
+
+            <h4 class="contenedor__dos--titulo">Iniciar Sesión</h4>
+            <!-- MENSAJE DE ERROR GENERAL -->
+            <div class="mensaje-login error-general" ng-show="loginError && !cuentaBloqueada">
+              <i class="fa fa-exclamation-circle"></i>
+              Usuario o contraseña incorrectos
+            </div>
+            
+            <!-- INTENTOS RESTANTES -->
+            <div class="mensaje-login advertencia" 
+                 ng-show="loginError && !cuentaBloqueada && intentosRestantes !== null">
+            
+              <i class="fa fa-info-circle"></i>
+              Intentos restantes: <b>{{intentosRestantes}}</b>
+            </div>
+            
+            <!-- CUENTA BLOQUEADA -->
+            <div class="mensaje-login bloqueo" ng-show="cuentaBloqueada">
+              <i class="fa fa-lock"></i>
+              Tu cuenta está bloqueada temporalmente.
+              <div ng-if="tiempoRestante > 0">
+                Intenta nuevamente en <b>{{tiempoRestante}}</b> seg.
+              </div>
+            </div>
+
+            <!-- EMAIL -->
+            <div class="form-group main__login">
+                <input type="email" name="login" id="login" placeholder="Correo electrónico" ng-model="login.user" required>
+            </div>
+
+            <!-- PASSWORD -->
+            <div class="form-group main__login" id="divcpass">
+                <input type="password" name="cpass" id="inprcpass" placeholder="Contraseña" ng-model="login.password" required>
+                <button type="button" class="password__ver" onclick="togglePassword('inprcpass', this)">
+                    <i class="fa fa-eye"></i>
+                </button>
+            </div>
+
+            <!-- BOTÓN -->
+            <div class="login__contenedor--secondary">
+                <div class="secondary__contenedor">
+
+                    <div class="secondary__contenedor--boton">
+                        <span  ng-disabled="frmlogin.$invalid" ng-click="btnLogin()">Iniciar Sesión</span>
+                    </div>
+
+                    <div class="secondary__contenedor--forgot">
+                        <p>
+                            <b ng-show="!dataflag">
+                                <i class="fa fa-sync-alt fa-spin"></i>
+                            </b>
+                        </p>
+
+                        <a href="" ng-click="btnolvide()" class="btnolvide">
+                            <p>¿Olvidaste tu contraseña?</p>
+                        </a>
+                    </div>
+
+                    <div class="secondary__contenedor--register">
+                        <a href="?mod=register">
+                            <p>Regístrate para crear una cuenta nueva</p>
+                        </a>
+                    </div>
+
                 </div>
             </div>
-        </div>
-    </section>
+
+        </form>
+
+    </div>
+</div>
+</div>
+</section>
 </div>

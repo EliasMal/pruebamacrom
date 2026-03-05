@@ -1,27 +1,277 @@
 <?php
     session_name("loginCliente");
-    session_start();   
+    session_start();
+    require_once "../../../conf.php";
     require_once "../../../tv-admin/asset/Clases/dbconectar.php";
     require_once "../../../tv-admin/asset/Clases/ConexionMySQL.php";    
     date_default_timezone_set('America/Mexico_City');
 
     class Catalogo{
+        private $redis = null;
         private $conn;
+        private $stats = [
+            'cache_hits' => 0,
+            'cache_miss' => 0
+        ];
         private $jsonData = array("Bandera"=>false, "Mensaje"=>"", "Data"=>array());
 
         public function __construct($array) {
-            $this->conn = new HelperMySql($array["server"], $array["user"], $array["pass"], $array["db"]);    
+            $this->conn = new HelperMySql($array["server"], $array["user"], $array["pass"], $array["db"]);
+            if (USE_REDIS_CACHE && class_exists('Redis')) {
+                try {
+                    $this->redis = new Redis();
+                    $this->redis->connect(REDIS_HOST, REDIS_PORT, 1.5);
+                } catch (Exception $e) {
+                    $this->redis = null;
+                }
+            }  
         }
     
         public function __destruct() {
             unset($this->conn);
         }
 
+        private function getTTL(string $group): int
+        {
+            $map = [
+                'cache_existencias'   => 60,
+                'cache_refacciones'   => 300,// listado
+                'cache_trefacciones'  => 300,
+                'cache_ofertas'       => 600, 
+                'cache_nuevos'        => 900,
+                'cache_producto'      => 1800,// detalle producto
+                'cache_marcas'        => 86400,// 1 día
+                'cache_modelos'       => 86400,
+                'cache_categorias'    => 86400,
+            ];
+
+            return $map[$group] ?? CACHE_TTL; // fallback seguro
+        }
+
+        private function normalizarFiltros() {
+
+            // Limpieza básica
+            if (isset($this->formulario["marca"]) && $this->formulario["marca"] === "") {
+                unset($this->formulario["marca"]);
+            }
+
+            if (isset($this->formulario["vehiculo"]) && $this->formulario["vehiculo"] === "") {
+                unset($this->formulario["vehiculo"]);
+            }
+
+            // Si NO hay marca → NO puede haber vehículo
+            if (!isset($this->formulario["marca"])) {
+                unset($this->formulario["vehiculo"]);
+                return;
+            }
+
+            // Si hay vehículo, validamos que pertenezca a la marca
+            if (isset($this->formulario["vehiculo"])) {
+
+                // Normalizamos IDs
+                $vehiculos = array_filter(
+                    array_map('intval', explode(',', $this->formulario["vehiculo"]))
+                );
+
+                if (empty($vehiculos)) {
+                    unset($this->formulario["vehiculo"]);
+                    return;
+                }
+
+                $sql = "
+                    SELECT _id
+                    FROM u619477378_macromau.Modelos
+                    WHERE _idMarca IN ({$this->formulario["marca"]})
+                      AND _id IN (" . implode(',', $vehiculos) . ")
+                ";
+
+                $rows = $this->conn->fetch_all(
+                    $this->conn->query($sql)
+                );
+
+                // Si ningún modelo es válido para la marca → se descarta
+                if (empty($rows)) {
+                    unset($this->formulario["vehiculo"]);
+                    return;
+                }
+
+                // Se conservan SOLO los modelos válidos
+                $vehiculosValidos = array_column($rows, '_id');
+                $this->formulario["vehiculo"] = implode(',', $vehiculosValidos);
+            }
+        }
+
+
+        private function buildCacheKey(array $keys) {
+
+            $data = [];
+
+            foreach ($keys as $key) {
+
+                if (!isset($this->formulario[$key]) || $this->formulario[$key] === '') {
+                    $data[$key] = '';
+                    continue;
+                }
+                $parts = explode(',', $this->formulario[$key]);
+                $parts = array_filter($parts, 'strlen');
+                sort($parts, SORT_NUMERIC);
+
+                $data[$key] = implode(',', $parts);
+            }
+
+            return md5(json_encode($data));
+        }
+
+        private function getCache($group, $key) {
+            //REDIS
+            if ($this->redis) {
+
+                $redisKey = REDIS_PREFIX . $group . ':' . $key;
+                $data = $this->redis->get($redisKey);
+
+                if ($data !== false) {
+                    $this->stats['cache_hits']++;
+                    return unserialize($data);
+                }
+
+                $this->stats['cache_miss']++;
+                return null;
+            }
+
+            //FALLBACK SESSION
+            if (!isset($_SESSION[$group][$key])) {
+                $this->stats['cache_miss']++;
+                return null;
+            }
+
+            $item = $_SESSION[$group][$key];
+
+            if (!isset($item['time'], $item['data'])) {
+                $this->stats['cache_miss']++;
+                return null;
+            }
+
+            $ttl = $this->getTTL($group);
+            if ((time() - $item['time']) > $ttl) {
+                unset($_SESSION[$group][$key]);
+                $this->stats['cache_miss']++;
+                return null;
+            }
+
+            $this->stats['cache_hits']++;
+            return $item['data'];
+        }
+
+        private function setCache($group, $key, $data) {
+
+            //REDIS
+            if ($this->redis) {
+                $redisKey = REDIS_PREFIX . $group . ':' . $key;
+                $ttl = $this->getTTL($group);
+                $this->redis->setex($redisKey, $ttl, serialize($data) );
+                return;
+            }
+
+            //FALLBACK SESSION
+            if (!isset($_SESSION[$group])) {
+                $_SESSION[$group] = [];
+            }
+
+            $_SESSION[$group][$key] = [
+                'time' => time(),
+                'data' => $data
+            ];
+        }
+
+        private function setCacheWithTags($group, $key, $data, array $tags = []) {
+        
+            if (!$this->redis) {
+                // fallback al cache actual
+                $this->setCache($group, $key, $data);
+                return;
+            }
+        
+            $redisKey = REDIS_PREFIX . $group . ':' . $key;
+        
+            // guarda el cache principal
+            $ttl = $this->getTTL($group);
+            $this->redis->setex($redisKey, $ttl, serialize($data));
+
+            // registra tags
+            foreach ($tags as $tag) {
+                $tagKey = REDIS_PREFIX . 'tag:' . $tag;
+                $this->redis->sAdd($tagKey, $redisKey);
+                $this->redis->expire($tagKey, $ttl);
+            }
+        }
+
+        public function invalidateByTag(string $tag) {
+
+            if (!$this->redis) return;
+
+            $tagKey = REDIS_PREFIX . 'tag:' . $tag;
+            // obtiene todas las keys asociadas a este tag
+            $keys = $this->redis->sMembers($tagKey);
+
+            if (!empty($keys)) {
+                // borra SOLO esas keys
+                $this->redis->del($keys);
+            }
+            // borra el set del tag
+            $this->redis->del($tagKey);
+        }
+
+        private function buildCondicionesSQL(array $ignorar = []): string {
+            $f = $this->formulario;
+            $sql = "";
+
+            /* MARCA */
+            if (!in_array('marca', $ignorar) && !empty($f['marca'])) {
+                $sql .= " AND P._idMarca IN({$f['marca']})";
+
+                /* VEHÍCULO */
+                if (!in_array('vehiculo', $ignorar) && !empty($f['vehiculo'])) {
+                    $sql .= " AND P.Modelo IN({$f['vehiculo']})";
+                }
+            }
+
+            /* CATEGORÍA */
+            if (!in_array('categoria', $ignorar) && !empty($f['categoria']) && $f['categoria'] !== "T") {
+                $sql .= " AND P._idCategoria IN({$f['categoria']})";
+            }
+
+            /* PROVEEDOR */
+            if (!in_array('proveedor', $ignorar) && !empty($f['proveedor'])) {
+                $sql .= " AND P.id_proveedor IN({$f['proveedor']})";
+            }
+
+            /* DISPONIBILIDAD */
+            if (!in_array('disponibilidad', $ignorar) && !empty($f['disponibilidad'])) {
+                if (strpos($f['disponibilidad'], 'xistencia') !== false) {
+                    $sql .= " AND P.stock >= 1";
+                }
+                if (strpos($f['disponibilidad'], 'ferta') !== false) {
+                    $sql .= " AND P.RefaccionOferta = 1";
+                }
+                if (strpos($f['disponibilidad'], 'Articulos_Nuevos') !== false) {
+                    $sql .= " AND P.RefaccionNueva = 1";
+                }
+                if (strpos($f['disponibilidad'], 'gratis') !== false) {
+                    $sql .= " AND P.Enviogratis = 1";
+                }
+            }
+
+            $sql .= $this->buildWhereBusquedaSQL();
+            return $sql;
+        }
+
+
         public function principal(){
             $this->methodo = $_SERVER['REQUEST_METHOD'];
             switch($this->methodo){
                 case 'GET':
                     $this->formulario = array_map("htmlspecialchars", $_GET);
+                    $this->normalizarFiltros();
                     switch($this->formulario["opc"]){
                         case 'Buscar':
                             switch($this->formulario["tipo"]){
@@ -80,217 +330,340 @@
             }
             return $array;
         }
-        private function getCategorias (){
+        
+        private function getCategorias(){
 
-            if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
-                if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0) and (isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0) ){
-                    $condicion .= " and p._idMarca IN({$this->formulario["marca"]}) and p.id_proveedor IN({$this->formulario["proveedor"]}) and p.Modelo IN({$this->formulario["vehiculo"]})";
-                }else if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0)){
-                    $condicion .= " and p._idMarca IN({$this->formulario["marca"]}) and p.id_proveedor IN({$this->formulario["proveedor"]})";
-                } else if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0)){
-                    $condicion .= " and p._idMarca IN({$this->formulario["marca"]}) and p.Modelo IN({$this->formulario["vehiculo"]})";
-                }else{
-                    $condicion .= " and p._idMarca IN({$this->formulario["marca"]})";
+            $cacheKey = $this->buildCacheKey([
+                'categoria',        // aunque se ignore en SQL, afecta el contexto
+                'marca',
+                'vehiculo',
+                'proveedor',
+                'disponibilidad',
+                'producto'
+            ]);
+
+            $cache = $this->getCache('cache_categorias', $cacheKey);
+            if ($cache !== null) {
+                return $cache;
+            }
+
+            $condicion = $this->buildCondicionesSQL(['categoria']);
+
+            $sql = "
+                SELECT 
+                    P._idCategoria AS _id,
+                    cate.Categoria,
+                    COUNT(P._id) AS cantidad_repetida
+                FROM u619477378_macromau.Producto P
+                INNER JOIN u619477378_macromau.Categorias cate 
+                    ON cate._id = P._idCategoria
+                WHERE 
+                    cate.Status = 1
+                    AND P.Estatus = 1
+                    AND P.Publicar = 1
+                    $condicion
+                GROUP BY 
+                    P._idCategoria,
+                    cate.Categoria
+                HAVING COUNT(P._id) > 0
+                ORDER BY cantidad_repetida DESC
+            ";
+
+            $resultado = $this->conn->fetch_all(
+                $this->conn->query($sql)
+            );
+
+            $tags = [];
+
+            if (!empty($this->formulario['marca'])) {
+                foreach (explode(',', $this->formulario['marca']) as $idMarca) {
+                    $tags[] = "marca:$idMarca";
                 }
-                
-            } else if(isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0){
-                $condicion .= " and p.id_proveedor IN({$this->formulario["proveedor"]})";
             }
 
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"xistencia")!== false){
-                $condicion .= " and p.stock >= 1";
+            if (!empty($this->formulario['vehiculo'])) {
+                foreach (explode(',', $this->formulario['vehiculo']) as $idModelo) {
+                    $tags[] = "modelo:$idModelo";
+                }
             }
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"ferta")!== false){
-                $condicion .= " and p.RefaccionOferta = 1";
-            }    
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"Articulos_Nuevos")!== false){
-                $condicion .= " and p.RefaccionNueva = 1";
-            }
-            $sql = "SELECT p._idCategoria as _id, cate.Categoria, p.Estatus, COUNT(*) as cantidad_repetida
-            FROM u619477378_macromau.Producto p
-            inner join u619477378_macromau.Categorias cate on p._idCategoria = cate._id 
-            where cate.Status = 1 and p.Estatus = 1 and p.Publicar = 1 $condicion 
-            group by cate.Categoria having count(*) > 1 order by cantidad_repetida desc;";
-            
-            return $this->conn->fetch_all($this->conn->query($sql));
+
+            $this->setCacheWithTags('cache_categorias', $cacheKey, $resultado, $tags);
+
+            return $resultado;
         }
 
-        private function getMarcas (){
-            if(isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0){
-                $condicion = $this->formulario["categoria"]!= "T"? " and p._idCategoria IN({$this->formulario["categoria"]})":"";
+
+        private function getMarcas(){
+
+            $cacheKey = $this->buildCacheKey([
+                'categoria',
+                'marca',           // contexto (aunque se ignore en SQL)
+                'vehiculo',        // contexto
+                'proveedor',
+                'disponibilidad',
+                'producto'
+            ]);
+
+            $cache = $this->getCache('cache_marcas', $cacheKey);
+            if ($cache !== null) {
+                return $cache;
             }
 
-            if(isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0){
-                $condicion .= " and p.id_proveedor IN({$this->formulario["proveedor"]})";
-            }
-            
-            if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
-                if((isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0)){
-                    $condicion .= " and p.Modelo IN({$this->formulario["vehiculo"]})";
+            $condicion = $this->buildCondicionesSQL([
+                'marca',
+                'vehiculo'
+            ]);
+
+            $sql = "
+                SELECT 
+                    M._id AS _idMarca,
+                    M.Marca,
+                    COUNT(P._id) AS cantidad_repetida
+                FROM u619477378_macromau.Producto P
+                INNER JOIN u619477378_macromau.Marcas M
+                    ON M._id = P._idMarca
+                WHERE
+                    M.Estatus = 1
+                    AND P.Estatus = 1
+                    AND P.Publicar = 1
+                    $condicion
+                GROUP BY 
+                    M._id,
+                    M.Marca
+                HAVING COUNT(P._id) > 0
+                ORDER BY cantidad_repetida DESC
+            ";
+
+            $resultado = $this->conn->fetch_all(
+                $this->conn->query($sql)
+            );
+
+            $tags = [];
+
+            if (!empty($this->formulario['categoria'])) {
+                foreach (explode(',', $this->formulario['categoria']) as $idCategoria) {
+                    $tags[] = "categoria:$idCategoria";
                 }
             }
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"xistencia")!== false){
-                $condicion .= " and p.stock >= 1";
-            }
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"ferta")!== false){
-                $condicion .= " and p.RefaccionOferta = 1";
-            }    
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"Articulos_Nuevos")!== false){
-                $condicion .= " and p.RefaccionNueva = 1";
+
+            if (!empty($this->formulario['proveedor'])) {
+                foreach (explode(',', $this->formulario['proveedor']) as $idProveedor) {
+                    $tags[] = "proveedor:$idProveedor";
+                }
             }
 
-            $sql = "SELECT p._idMarca, marca.Marca, p.Estatus, COUNT(*) as cantidad_repetida
-            FROM u619477378_macromau.Producto p
-            inner join u619477378_macromau.Marcas marca on p._idMarca = marca._id 
-            where marca.Estatus = 1 and p.Estatus = 1 and p.Publicar = 1 $condicion 
-            group by marca.Marca having count(*) > 1 order by cantidad_repetida desc;";
-            return $this->conn->fetch_all($this->conn->query($sql));
+            if (!empty($this->formulario['vehiculo'])) {
+                foreach (explode(',', $this->formulario['vehiculo']) as $idModelo) {
+                    $tags[] = "modelo:$idModelo";
+                }
+            }
+
+            $this->setCacheWithTags('cache_marcas', $cacheKey, $resultado, $tags);
+
+            return $resultado;
         }
+
+
 
         private function getExistencias(){
-            if(isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0){
-                $condicion = $this->formulario["categoria"]!= "T"? " and _idCategoria IN({$this->formulario["categoria"]})":"";
+
+            $condicion = "";
+            $cacheKey = $this->buildCacheKey(['categoria','marca','vehiculo','proveedor','disponibilidad','producto']);
+
+            $cache = $this->getCache('cache_existencias', $cacheKey);
+            if ($cache !== null) {
+                return $cache;
             }
+            /* ===== CONDICIONES UNIFICADAS ===== */
+            $condicion = $this->buildCondicionesSQL(['disponibilidad']);
+            
+            $whereBusqueda = $this->buildWhereBusquedaSQL();                        
+            $sql = "SELECT COUNT(*) as cantidad_repetida FROM u619477378_macromau.Producto P WHERE P.Estatus = 1 AND P.Publicar = 1 AND P.stock > 0 $whereBusqueda $condicion";
+            $resultado = $this->conn->fetch_all($this->conn->query($sql));
 
-            if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
-                
-                if(isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0){
-
-                    $condicion .= " and _idMarca IN({$this->formulario["marca"]}) and id_proveedor IN({$this->formulario["proveedor"]})";
-
-                }else if((isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0)){
-
-                    $condicion .= " and _idMarca IN({$this->formulario["marca"]}) and Modelo IN({$this->formulario["vehiculo"]})";
-                    
-                }else{
-                    $condicion .= " and _idMarca IN({$this->formulario["marca"]})";
+            $tags = [];
+            // tag por marca
+            if (!empty($this->formulario['marca'])) {
+                foreach (explode(',', $this->formulario['marca']) as $idMarca) {
+                    $tags[] = "marca:$idMarca";
                 }
-
-            } else if(isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0){
-                $condicion .= " and id_proveedor IN({$this->formulario["proveedor"]})";
             }
-            if(isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0){
-                $condicion .= " and _idMarca IN({$this->formulario["marca"]}) and Modelo IN({$this->formulario["vehiculo"]})";
-            }
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"Articulos_Nuevos")!== false){
-                $condicion .= " and RefaccionNueva = 1";
+            // tag por modelo
+            if (!empty($this->formulario['vehiculo'])) {
+                foreach (explode(',', $this->formulario['vehiculo']) as $idModelo) {
+                    $tags[] = "modelo:$idModelo";
+                }
             }
 
-            $sql = "SELECT COUNT(*) as cantidad_repetida from u619477378_macromau.Producto where Estatus = 1 and Publicar = 1 and stock > 0 $condicion";
-            return $this->conn->fetch_all($this->conn->query($sql));
+            $this->setCacheWithTags('cache_existencias', $cacheKey, $resultado, $tags);
+            return $resultado;
         }
 
         private function getOfertas(){     
-            $sql = "SELECT COUNT(*) as cantidad_repetida from u619477378_macromau.Producto where Estatus = 1 and Publicar = 1 and RefaccionOferta = 1";
-            return $this->conn->fetch_all($this->conn->query($sql));
+
+            $cacheKey = 'ofertas_global';
+
+            $cache = $this->getCache('cache_ofertas', $cacheKey);
+            if ($cache !== null) {
+                return $cache;
+            }
+
+            $sql = "SELECT COUNT(*) as cantidad_repetida FROM u619477378_macromau.Producto WHERE Estatus = 1 AND Publicar = 1 AND RefaccionOferta = 1";
+
+            $resultado = $this->conn->fetch_all($this->conn->query($sql));
+            $this->setCacheWithTags('cache_ofertas', $cacheKey, $resultado, ['ofertas']);
+            return $resultado;
         }
 
         private function getNuevos(){
-            if(isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0){
-                $condicion = $this->formulario["categoria"]!= "T"? " and _idCategoria IN({$this->formulario["categoria"]})":"";
+
+            $cacheKey = $this->buildCacheKey([
+                'categoria',
+                'marca',
+                'vehiculo',
+                'proveedor',
+                'disponibilidad'
+            ]);
+
+            $cache = $this->getCache('cache_nuevos', $cacheKey);
+            if ($cache !== null) {
+                return $cache;
             }
-            
-            if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
-                
-                if(isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0){
 
-                    $condicion .= " and _idMarca IN({$this->formulario["marca"]}) and id_proveedor IN({$this->formulario["proveedor"]})";
+            $condicion = $this->buildCondicionesSQL(['disponibilidad']);
+            $sql = "
+                SELECT COUNT(*) AS cantidad_repetida
+                FROM u619477378_macromau.Producto P
+                WHERE
+                    P.Estatus = 1
+                    AND P.Publicar = 1
+                    AND P.RefaccionNueva = 1
+                    $condicion
+            ";
 
-                }else if((isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0)){
+            $resultado = $this->conn->fetch_all(
+                $this->conn->query($sql)
+            );
 
-                    $condicion .= " and _idMarca IN({$this->formulario["marca"]}) and Modelo IN({$this->formulario["vehiculo"]})";
-                    
-                }else{
-                    $condicion .= " and _idMarca IN({$this->formulario["marca"]})";
+            $tags = ['nuevos'];
+
+            if (!empty($this->formulario['marca'])) {
+                foreach (explode(',', $this->formulario['marca']) as $idMarca) {
+                    $tags[] = "marca:$idMarca";
                 }
-
-            } else if(isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0){
-                $condicion .= " and id_proveedor IN({$this->formulario["proveedor"]})";
-            }
-            if(isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0){
-                $condicion .= " and _idMarca IN({$this->formulario["marca"]}) and Modelo IN({$this->formulario["vehiculo"]})";
-            }
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"xistencia")!== false){
-                $condicion .= " and stock >= 1";
             }
 
-            $sql="SELECT COUNT(*) as cantidad_repetida from u619477378_macromau.Producto where Estatus = 1 and Publicar = 1 and RefaccionNueva = 1 $condicion";
-            return $this->conn->fetch_all($this->conn->query($sql));
+            if (!empty($this->formulario['vehiculo'])) {
+                foreach (explode(',', $this->formulario['vehiculo']) as $idModelo) {
+                    $tags[] = "modelo:$idModelo";
+                }
+            }
+
+            if (!empty($this->formulario['categoria'])) {
+                foreach (explode(',', $this->formulario['categoria']) as $idCategoria) {
+                    $tags[] = "categoria:$idCategoria";
+                }
+            }
+
+            $this->setCacheWithTags('cache_nuevos', $cacheKey, $resultado, $tags);
+
+            return $resultado;
         }
+
 
         private function getModelos(){
-            if(isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0){
-                $condicion = $this->formulario["categoria"]!= "T"? " and p._idCategoria IN({$this->formulario["categoria"]})":"";
+
+            if (empty($this->formulario['marca'])) {
+                return [];
             }
 
-            if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
-                if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0)){
-                    $condicion .= " and p._idMarca IN({$this->formulario["marca"]}) and p.id_proveedor IN({$this->formulario["proveedor"]})";
-                }else if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0)){
-                    $condicion .= " and p._idMarca IN({$this->formulario["marca"]}) and p.id_proveedor IN({$this->formulario["proveedor"]})";
-                } else if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
-                    $condicion .= " and p._idMarca IN({$this->formulario["marca"]})";
+            $cacheKey = $this->buildCacheKey([
+                'marca',            // 🔑 obligatorio
+                'categoria',
+                'proveedor',
+                'disponibilidad',
+                'producto'
+            ]);
+
+            $cache = $this->getCache('cache_modelos', $cacheKey);
+            if ($cache !== null) {
+                return $cache;
+            }
+
+            $condicion = $this->buildCondicionesSQL(['vehiculo']);
+
+            $sql = "
+                SELECT 
+                    M._id,
+                    M.Modelo,
+                    P._idMarca,
+                    COUNT(P._id) AS cantidad_repetida
+                FROM u619477378_macromau.Modelos M
+                INNER JOIN u619477378_macromau.Producto P
+                    ON P.Modelo = M._id
+                WHERE
+                    M.Estatus = 1
+                    AND P.Estatus = 1
+                    AND P.Publicar = 1
+                    $condicion
+                GROUP BY 
+                    M._id,
+                    M.Modelo,
+                    P._idMarca
+                HAVING COUNT(P._id) > 0
+                ORDER BY cantidad_repetida DESC
+            ";
+
+            $resultado = $this->conn->fetch_all(
+                $this->conn->query($sql)
+            );
+
+            $tags = [];
+
+            foreach (explode(',', $this->formulario['marca']) as $idMarca) {
+                $tags[] = "marca:$idMarca";
+            }
+
+            if (!empty($this->formulario['categoria'])) {
+                foreach (explode(',', $this->formulario['categoria']) as $idCategoria) {
+                    $tags[] = "categoria:$idCategoria";
                 }
-                
-            } else if(isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0){
-                $condicion .= " and p.id_proveedor IN({$this->formulario["proveedor"]})";
-            }
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"xistencia")!== false){
-                $condicion .= " and p.stock >= 1";
-            }
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"ferta")!== false){
-                $condicion .= " and p.RefaccionOferta = 1";
-            }    
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"Articulos_Nuevos")!== false){
-                $condicion .= " and p.RefaccionNueva = 1";
             }
 
-            $sql = "SELECT p.Modelo as _id, model.Modelo, p._idMarca, p.Estatus, COUNT(*) as cantidad_repetida
-                FROM u619477378_macromau.Producto p
-                inner join u619477378_macromau.Modelos model on p.Modelo = model._id 
-                where model.Estatus = 1 and p.Estatus = 1 and Publicar = 1 $condicion  
-                group by model.Modelo having count(*) > 1 order by cantidad_repetida desc;";
-            return $this->conn->fetch_all($this->conn->query($sql));
+            $this->setCacheWithTags('cache_modelos', $cacheKey, $resultado, $tags);
+
+            return $resultado;
         }
+
 
         private function getProveedores(){
-            if(isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0){
-                $condicion = $this->formulario["categoria"]!= "T"? " and p._idCategoria IN({$this->formulario["categoria"]})":"";
-            }
+            // 🔑 IGNORAR proveedor al calcular proveedores
+            $condicion = $this->buildCondicionesSQL(['proveedor']);
+            $whereBusqueda = $this->buildWhereBusquedaSQL();
 
-            if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
-                if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0) ){
-                    $condicion .= " and p._idMarca IN({$this->formulario["marca"]}) and p.Modelo IN({$this->formulario["vehiculo"]})";
-                }else if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
-                    $condicion .= " and p._idMarca IN({$this->formulario["marca"]})";
-                } else if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0)){
-                    $condicion .= " and p._idMarca IN({$this->formulario["marca"]}) and p.Modelo IN({$this->formulario["vehiculo"]})";
-                }else{
-                    $condicion .= " and p._idMarca IN({$this->formulario["marca"]})";
-                }
-                
-            } else if(isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0){
-                $condicion .= " and p.Modelo IN({$this->formulario["vehiculo"]})";
-            }
+            $sql = "SELECT 
+                        P.id_proveedor,
+                        prove.Proveedor,
+                        P.Estatus,
+                        COUNT(*) as cantidad_repetida
+                    FROM u619477378_macromau.Producto P
+                    INNER JOIN u619477378_macromau.Proveedor prove 
+                        ON P.id_proveedor = prove._id 
+                    WHERE 
+                        prove.Estatus = 1 
+                        AND P.Estatus = 1 
+                        AND P.Publicar = 1 
+                        $whereBusqueda 
+                        $condicion
+                    GROUP BY P.id_proveedor
+                    HAVING COUNT(*) > 0
+                    ORDER BY cantidad_repetida DESC";
 
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"xistencia")!== false){
-                $condicion .= " and p.stock >= 1";
-            }
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"ferta")!== false){
-                $condicion .= " and p.RefaccionOferta = 1";
-            }    
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"Articulos_Nuevos")!== false){
-                $condicion .= " and p.RefaccionNueva = 1";
-            }
-
-            $sql = "SELECT p.id_proveedor, prove.Proveedor, p.Estatus, COUNT(*) as cantidad_repetida
-                FROM u619477378_macromau.Producto p
-                inner join u619477378_macromau.Proveedor prove on p.id_proveedor = prove._id 
-                where prove.Estatus = 1 and p.Estatus = 1 and p.Publicar = 1 $condicion 
-                group by prove.Proveedor having count(*) > 1 order by cantidad_repetida desc;";
-                
-            return $this->conn->fetch_all($this->conn->query($sql));
+            return $this->conn->fetch_all(
+                $this->conn->query($sql)
+            );
         }
+
 
         private function getAnios(){
             if(str_contains($this->formulario["vehiculo"],",")){
@@ -303,104 +676,180 @@
         }
 
         private function getexplode($string){
-            $arrayLikes = array("Productos"=>"(", "Clave"=>"(");
-            $array = explode(" ",$string);
+
+            $arrayLikes = array(
+                "Productos" => "(",
+                "Clave"     => "(",
+                "No_parte"  => "("
+            );
+
+            $array = preg_split('/\s+/', trim($string));
             $limitarray = count($array);
+
             foreach ($array as $key => $value) {
-                if($key < ($limitarray-1)){
-                    $arrayLikes["Productos"] .= "P.Producto LIKE '%$value%' and ";
-                    $arrayLikes["Clave"] .= "P.Clave LIKE '%$value%' and ";
-                }else{
-                    $arrayLikes["Productos"] .= "P.Producto LIKE '%$value%') ";
-                    $arrayLikes["Clave"] .= "P.Clave LIKE '%$value%')";
+                //Solo números → Clave exacta
+                if (preg_match('/^\d+$/', $value)) {
+                    $likeProducto = "P.Producto LIKE '%$value%'";
+                    $likeClave    = "P.Clave = $value";
+                    $likeNoParte  = "P.No_parte LIKE '%$value%'";
+                }
+                //Alfanumérico (No_parte)
+                else if (preg_match('/^[A-Za-z0-9\-]+$/', $value)) {
+                    $likeProducto = "P.Producto LIKE '%$value%'";
+                    $likeClave    = "P.Clave LIKE '%$value%'";
+                    $likeNoParte  = "P.No_parte LIKE '%$value%'";
+                }
+                //Texto
+                else {
+                    $likeProducto = "P.Producto LIKE '%$value%'";
+                    $likeClave    = "P.Clave LIKE '%$value%'";
+                    $likeNoParte  = "P.No_parte LIKE '%$value%'";
+                }
+
+                if ($key < ($limitarray - 1)) {
+                    $arrayLikes["Productos"] .= "$likeProducto AND ";
+                    $arrayLikes["Clave"]     .= "$likeClave AND ";
+                    $arrayLikes["No_parte"]  .= "$likeNoParte AND ";
+                } else {
+                    $arrayLikes["Productos"] .= "$likeProducto)";
+                    $arrayLikes["Clave"]     .= "$likeClave)";
+                    $arrayLikes["No_parte"]  .= "$likeNoParte)";
                 }
             }
+
             return $arrayLikes;
         }
 
+        private function buildWhereBusqueda(array $arrayLikes) {
+
+            $busqueda = trim($this->formulario["producto"] ?? "");
+            $usarFulltext = false;
+            if (
+                strlen($busqueda) >= 6 &&
+                preg_match('/[a-zA-Z]{3,}/', $busqueda)
+            ) {
+                $usarFulltext = true;
+            }
+
+            $where = "(({$arrayLikes['Productos']} OR {$arrayLikes['Clave']} OR {$arrayLikes['No_parte']})
+            " . ($usarFulltext ? " OR (MATCH(P.Producto, P.Descripcion) AGAINST ('$busqueda' IN BOOLEAN MODE))": "") . ")";
+
+            return [
+                'where'        => $where,
+                'usarFulltext' => $usarFulltext,
+                'busqueda'     => $busqueda
+            ];
+        }
+
+        private function buildWhereBusquedaSQL() {
+
+            if (empty($this->formulario["producto"])) {
+                return "";
+            }
+
+            $arrayLikes = $this->getexplode($this->formulario["producto"]);
+            $whereData  = $this->buildWhereBusqueda($arrayLikes);
+
+            return " AND {$whereData['where']} ";
+        }
+
         private function getTrefacciones($arrayLikes){
-            if(isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0){
-                $condicion = $this->formulario["categoria"]!= "T"? " and P._idCategoria IN({$this->formulario["categoria"]})":"";
-            }
 
-            if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
-                if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0) and (isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0) ){
-                    $condicion .= " and P._idMarca IN({$this->formulario["marca"]}) and P.id_proveedor IN({$this->formulario["proveedor"]}) and P.Modelo IN({$this->formulario["vehiculo"]})";
-                }else if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0)){
-                    $condicion .= " and P._idMarca IN({$this->formulario["marca"]}) and P.id_proveedor IN({$this->formulario["proveedor"]})";
-                } else if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0)){
-                    $condicion .= " and P._idMarca IN({$this->formulario["marca"]}) and P.Modelo IN({$this->formulario["vehiculo"]})";
-                }else{
-                    $condicion .= " and P._idMarca IN({$this->formulario["marca"]})";
-                }
-                
-            } else if(isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0){
-                $condicion .= " and P.id_proveedor IN({$this->formulario["proveedor"]})";
-            }
+            $cacheKey = $this->buildCacheKey([
+                'producto','categoria','marca',
+                'vehiculo','proveedor','disponibilidad'
+            ]);
 
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"xistencia")!== false){
-                $condicion .= " and P.stock >= 1";
+            $cache = $this->getCache('cache_trefacciones', $cacheKey);
+            if ($cache !== null) {
+                return $cache;
             }
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"ferta")!== false){
-                $condicion .= " and P.RefaccionOferta = 1";
-            }    
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"Articulos_Nuevos")!== false){
-                $condicion .= " and P.RefaccionNueva = 1";
-            }
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"gratis")!== false){
-                $condicion .= " and P.Enviogratis = 1";
-            }
-            
-           $sql = "SELECT count(*) as Trefacciones FROM Producto AS P "
-            . "left join Proveedor as PROV on (P.id_proveedor = PROV._id) "
-            . "where P.Estatus = 1 and P.Publicar = 1 and ({$arrayLikes['Productos']} OR {$arrayLikes['Clave']})"
-            . "$condicion order by P.Producto ";
-            $this->jsonData["Mensaje"] = "sql: ".$sql;
+            $condicion = "";
+            $whereData = $this->buildWhereBusqueda($arrayLikes);
+
+            // --- Condiciones unificadas ---
+            $condicion = $this->buildCondicionesSQL();
+
+            $sql = "
+                SELECT COUNT(*) AS Trefacciones
+                FROM Producto AS P
+                LEFT JOIN Proveedor AS PROV ON (P.id_proveedor = PROV._id)
+                WHERE
+                    P.Estatus = 1
+                    AND P.Publicar = 1
+                    AND {$whereData['where']}
+                    $condicion
+            ";
+
             $row = $this->conn->fetch($this->conn->query($sql));
+            $this->setCache('cache_trefacciones', $cacheKey, $row["Trefacciones"]);
             return $row["Trefacciones"];
         }
+
 
         private function getRefacciones($arrayLikes, $x=0, $y = 20 ){
             $array = array();
             $orden = $this->formulario["orden"];
             $tipodeorden = $this->formulario["tipodeorden"];
-            if(isset($this->formulario["categoria"]) && strlen($this->formulario["categoria"])!=0){
-                $condicion = $this->formulario["categoria"]!= "T"? " and P._idCategoria IN({$this->formulario["categoria"]})":"";
-            }
 
-            if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0){
-                if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0) and (isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0) ){
-                    $condicion .= " and P._idMarca IN({$this->formulario["marca"]}) and P.id_proveedor IN({$this->formulario["proveedor"]}) and P.Modelo IN({$this->formulario["vehiculo"]})";
-                }else if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0)){
-                    $condicion .= " and P._idMarca IN({$this->formulario["marca"]}) and P.id_proveedor IN({$this->formulario["proveedor"]})";
-                } else if(isset($this->formulario["marca"]) and strlen($this->formulario["marca"])!=0 and (isset($this->formulario["vehiculo"]) and strlen($this->formulario["vehiculo"])!=0)){
-                    $condicion .= " and P._idMarca IN({$this->formulario["marca"]}) and P.Modelo IN({$this->formulario["vehiculo"]})";
-                }else{
-                    $condicion .= " and P._idMarca IN({$this->formulario["marca"]})";
-                }
-                
-            } else if(isset($this->formulario["proveedor"]) and strlen($this->formulario["proveedor"])!=0){
-                $condicion .= " and P.id_proveedor IN({$this->formulario["proveedor"]})";
-            }
-
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"xistencia")!== false){
-                $condicion .= " and P.stock >= 1";
-            }
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"ferta")!== false){
-                $condicion .= " and P.RefaccionOferta = 1";
-            }
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"Articulos_Nuevos")!== false){
-                $condicion .= " and P.RefaccionNueva = 1";
-            }
-            if(isset($this->formulario["disponibilidad"]) and strpos($this->formulario["disponibilidad"],"gratis")!== false){
-                $condicion .= " and P.Enviogratis = 1";
-            }
+            $whereData = $this->buildWhereBusqueda($arrayLikes);
+            $busqueda = $whereData['busqueda'];
             
-            $sql = "SELECT P.*, PROV._id as idProveedor, PROV.tag_alt as tag_altproveedor, PROV.tag_title as tag_titleproveedor FROM Producto AS P "
+            $cacheKey = $this->buildCacheKey([
+                'producto','categoria','marca','vehiculo',
+                'proveedor','disponibilidad','orden','tipodeorden','x','y'
+            ]);
+            $cache = $this->getCache('cache_refacciones', $cacheKey);
+            if ($cache !== null) {
+                return $cache;
+            }
+            /*DETECCIÓN FULLTEXT */
+            $usarFulltext = $whereData['usarFulltext'];
+            if (
+                strlen($busqueda) >= 6 &&
+                preg_match('/[a-zA-Z]{3,}/', $busqueda)
+            ) {
+                $usarFulltext = true;
+            }
+            $ordenPrioridad = "";
+            if (preg_match('/^\d+$/', $busqueda)) {
+
+                $ordenPrioridad = "
+                    CASE
+                        WHEN P.Clave = $busqueda THEN 100
+                        WHEN P.No_parte LIKE '%$busqueda%' THEN 60
+                        WHEN P.Producto LIKE '%$busqueda%' THEN 40
+                        " . ($usarFulltext ? "
+                        WHEN MATCH(P.Producto, P.Descripcion)
+                             AGAINST ('$busqueda' IN BOOLEAN MODE) THEN 30
+                        " : "") . "
+                        ELSE 0
+                    END DESC,
+                ";
+            } else {
+                                    
+                $ordenPrioridad = "
+                    CASE
+                        WHEN P.No_parte = '$busqueda' THEN 80
+                        WHEN P.No_parte LIKE '%$busqueda%' THEN 60
+                        WHEN P.Producto LIKE '%$busqueda%' THEN 40
+                        " . ($usarFulltext ? "
+                        WHEN MATCH(P.Producto, P.Descripcion)
+                             AGAINST ('$busqueda' IN BOOLEAN MODE) THEN 30
+                        " : "") . "
+                        ELSE 0
+                    END DESC,
+                ";
+            }
+
+            /* ===== CONDICIONES UNIFICADAS ===== */
+            $condicion = $this->buildCondicionesSQL();
+                            
+            $sql = "SELECT P.*, PROV._id as idProveedor,PROV.Proveedor as NombreProveedor, PROV.tag_alt as tag_altproveedor, PROV.tag_title as tag_titleproveedor FROM Producto AS P "
             . "left join Proveedor as PROV on (P.id_proveedor = PROV._id) "
-            ."where P.Estatus = 1 and P.Publicar = 1 and ({$arrayLikes['Productos']} OR {$arrayLikes['Clave']}) "
-            . "$condicion order by P.$orden $tipodeorden LIMIT $x, $y";
-                
+            ."where P.Estatus = 1 AND P.Publicar = 1 AND {$whereData['where']} "
+            . "$condicion ORDER BY $ordenPrioridad P.$orden $tipodeorden LIMIT $x, $y";
+
             $id = $this->conn->query($sql);
             while ($row = $this->conn->fetch($id)){
                 $row["imagen"] = file_exists("../../../images/refacciones/{$row["_id"]}.png");
@@ -409,6 +858,27 @@
                 $row["RefaccionOferta"] = $row["RefaccionOferta"] == 1? true: false;
                 array_push($array, $row);
             }
+            $productTags = [];
+
+            foreach ($array as $row) {
+                if (!empty($row['_id'])) {
+                    $productTags[] = "producto:{$row['_id']}";
+                }
+            }
+            $tags = $productTags;
+
+            if (!empty($this->formulario['marca'])) {
+                foreach (explode(',', $this->formulario['marca']) as $idMarca) {
+                    $tags[] = "marca:$idMarca";
+                }
+            }
+
+            if (!empty($this->formulario['vehiculo'])) {
+                foreach (explode(',', $this->formulario['vehiculo']) as $idModelo) {
+                    $tags[] = "modelo:$idModelo";
+                }
+            }
+            $this->setCacheWithTags('cache_refacciones', $cacheKey, $array, $tags);
             return $array;
         }
 
@@ -425,6 +895,12 @@
                 inner join Proveedor as  PR on (PR._id = P.id_proveedor)
                 where P._id = {$this->formulario["id"]}";
             $row = $this->conn->fetch($this->conn->query($sql));
+            $tags = [
+                "producto:{$row['_id']}",
+                "marca:{$row['_idMarca']}",
+                "modelo:{$row['_idModelo']}"
+            ];
+            $this->setCacheWithTags('cache_producto', "producto:{$row['_id']}", $row, $tags);
             $row["imagen"] = file_exists("../../../images/refacciones/{$row["_id"]}.png");
             $row["Enviogratis"] = $row["Enviogratis"]==1? true: false;
             $row["RefaccionOferta"] = $row["RefaccionOferta"] == 1? true: false;
@@ -438,18 +914,64 @@
         }
 
         private function getProductos($data){
-            $array = array();
-            $sql = "SELECT P.*, PROV._id as idProveedor FROM Producto as P "
-                    ."left join Proveedor as PROV on (P.id_proveedor = PROV._id)"
-                    ."where P.Modelo = {$data['_idModelo']} and P._idMarca = {$data['_idMarca']} "
-                    ."and P.Anios = {$data['Anios']} and P.Estatus = 1 ORDER BY rand() LIMIT 20";
+
+            $array = [];
+
+            $sqlRand = "
+                SELECT _id 
+                FROM Producto 
+                WHERE 
+                    Modelo = {$data['_idModelo']}
+                    AND _idMarca = {$data['_idMarca']}
+                    AND Anios = {$data['Anios']}
+                    AND Estatus = 1
+                ORDER BY _id DESC 
+                LIMIT 1
+            ";
+
+            $rowMax = $this->conn->fetch($this->conn->query($sqlRand));
+            $randId = $rowMax ? rand(1, (int)$rowMax['_id']) : 1;
+
+            $sql = "
+                SELECT 
+                    P.*, 
+                    PROV._id AS idProveedor
+                FROM Producto P
+                LEFT JOIN Proveedor PROV 
+                    ON P.id_proveedor = PROV._id
+                WHERE 
+                    P.Modelo = {$data['_idModelo']}
+                    AND P._idMarca = {$data['_idMarca']}
+                    AND P.Anios = {$data['Anios']}
+                    AND P.Estatus = 1
+                    AND P._id >= {$randId}
+                LIMIT 20
+            ";
+
             $id = $this->conn->query($sql);
-            while($row = $this->conn->fetch($id)){
+
+            while ($row = $this->conn->fetch($id)) {
                 $row["imagen"] = file_exists("../../../images/refacciones/{$row["_id"]}.png");
-                $row["imagenproveedor"] = $row["idProveedor"]!= null? file_exists("../../../images/Marcasrefacciones/{$row["idProveedor"]}.png"):false;
-                $row["Enviogratis"] = $row["Enviogratis"]==1? true: false;
-                array_push($array,$row);
+                $row["imagenproveedor"] = $row["idProveedor"] != null
+                    ? file_exists("../../../images/Marcasrefacciones/{$row["idProveedor"]}.png")
+                    : false;
+                $row["Enviogratis"] = $row["Enviogratis"] == 1;
+                $array[] = $row;
             }
+            $productTags = [];
+
+            foreach ($array as $row) {
+                if (!empty($row['_id'])) {
+                    $productTags[] = "producto:{$row['_id']}";
+                }
+            }
+            $tags = array_merge(
+                $productTags,
+                [
+                    "marca:{$data['_idMarca']}",
+                    "modelo:{$data['_idModelo']}"
+                ]
+            );
             return $array;
         }
 

@@ -1,4 +1,4 @@
-<div ng-controller="catalogosCtrl" ng-init="refaccion.categoria='{categoria}'" class="ctrlmain global__content">
+<div ng-controller="catalogosCtrl" ng-init="refaccion.categoria='{categoria}'" class="ctrlmain global__content" ng-cloak>
 	<!-- Title Page -->
 	<!-- Content page -->
 	<main class="main__catalogo--principal">
@@ -32,17 +32,17 @@
 							<div class="contenido__opciones opciones__disponibilidad dis-none">
 								<label ng-show="Existencias[0].cantidad_repetida > 0" class="container">En Existencia ({{Existencias[0].cantidad_repetida}})
 									<input type="checkbox" name="Disponibilidad" id="En_Existencia"
-										value="En Existencia" onclick="checkmark(value,id)">
+										value="En Existencia" onclick="checkmark(this)">
 									<span class="checkmark"></span>
 								</label>
-								<label ng-show="fertas[0].cantidad_repetida > 0" class="container">Ofertas ({{Ofertas[0].cantidad_repetida}})
+								<label ng-show="Ofertas[0].cantidad_repetida > 0" class="container">Ofertas ({{Ofertas[0].cantidad_repetida}})
 									<input type="checkbox" name="Disponibilidad" id="Ofertas" value="Ofertas"
-										onclick="checkmark(value,id)">
+										onclick="checkmark(this)">
 									<span class="checkmark"></span>
 								</label>
 								<label ng-show="Nuevos[0].cantidad_repetida > 0" class="container">Articulos Nuevos ({{Nuevos[0].cantidad_repetida}})
 									<input type="checkbox" name="Disponibilidad" id="Articulos_Nuevos"
-										value="Articulos Nuevos" onclick="checkmark(value,id)">
+										value="Articulos Nuevos" onclick="checkmark(this)">
 									<span class="checkmark"></span>
 								</label>
 							</div>
@@ -57,7 +57,7 @@
 								<div ng-repeat="marca in Marcas">
 									<label class="container">{{marca.Marca}} ({{marca.cantidad_repetida}})
 										<input type="checkbox" name="Marca" id="{{marca.Marca}}"
-											onclick="checkmark(value,id)" value="{{marca._idMarca}}">
+											onclick="checkmark(this)" value="{{marca._idMarca}}">
 										<span class="checkmark"></span>
 									</label>
 								</div>
@@ -73,7 +73,7 @@
 								<div ng-repeat="vehiculo in Vehiculos">
 									<label class="container">{{vehiculo.Modelo}} ({{vehiculo.cantidad_repetida}})
 										<input type="checkbox" name="Vehiculo" id="{{vehiculo.Modelo}}"
-											onclick="checkmark(value,id)" value="{{vehiculo._id}}">
+											onclick="checkmark(this)" value="{{vehiculo._id}}">
 										<span class="checkmark"></span>
 									</label>
 								</div>
@@ -89,7 +89,7 @@
 								<div ng-repeat="categoria in categorias">
 									<label class="container">{{categoria.Categoria}} ({{categoria.cantidad_repetida}})
 										<input type="checkbox" name="Categoria" id="{{categoria.Categoria}}"
-											onclick="checkmark(value,id)" value="{{categoria._id}}">
+											onclick="checkmark(this)" value="{{categoria._id}}">
 										<span class="checkmark"></span>
 									</label>
 								</div>
@@ -105,7 +105,7 @@
 								<div ng-repeat="proveedor in Proveedores | limitTo: view">
 									<label class="container">{{proveedor.Proveedor}} ({{proveedor.cantidad_repetida}})
 										<input type="checkbox" name="Proveedor" id="{{proveedor.Proveedor}}"
-											onclick="checkmark(value,id)" value="{{proveedor.id_proveedor}}">
+											onclick="checkmark(this)" value="{{proveedor.id_proveedor}}">
 										<span class="checkmark"></span>
 									</label>
 								</div>
@@ -116,15 +116,15 @@
 					<div class="filtros__orden dis-none">
 						<div class="contenedor__orden" ng-show="Existencias[0].cantidad_repetida > 0">
 							<div class="orden__subtitle"><label for="switch__existencia">En existencia ({{Existencias[0].cantidad_repetida}})</label></div>
-							<div class="orden__subswitch"><input type="checkbox" name="Disponibilidad" class="switch__orden" id="switch__existencia" value="En Existencia" onclick="checkmark(value,id)"/><label for="switch__existencia" class="switch__orden--label">Toggle</label></div>
+							<div class="orden__subswitch"><input type="checkbox" name="Disponibilidad" class="switch__orden" id="switch__existencia" value="En Existencia" onclick="checkmark(this)"/><label for="switch__existencia" class="switch__orden--label">Toggle</label></div>
 						</div>
 						<div class="contenedor__orden" ng-show="Ofertas[0].cantidad_repetida > 0">
 							<div class="orden__subtitle"><label for="switch__oferta">En oferta ({{Ofertas[0].cantidad_repetida}})</label></div>
-							<div class="orden__subswitch"><input type="checkbox" name="Disponibilidad" class="switch__orden" id="switch__oferta" value="Ofertas" onclick="checkmark(value,id)"/><label for="switch__oferta" class="switch__orden--label">Toggle</label></div>
+							<div class="orden__subswitch"><input type="checkbox" name="Disponibilidad" class="switch__orden" id="switch__oferta" value="Ofertas" onclick="checkmark(this)"/><label for="switch__oferta" class="switch__orden--label">Toggle</label></div>
 						</div>
 						<div class="contenedor__orden" ng-show="Nuevos[0].cantidad_repetida > 0">
 							<div class="orden__subtitle"><label for="switch__Articulos_Nuevos">Articulos Nuevos ({{Nuevos[0].cantidad_repetida}})</label></div>
-							<div class="orden__subswitch"><input type="checkbox" name="Disponibilidad" class="switch__orden" id="switch__Articulos_Nuevos" onclick="checkmark(value,id)"/><label for="switch__Articulos_Nuevos" class="switch__orden--label">Toggle</label></div>
+							<div class="orden__subswitch"><input type="checkbox" name="Disponibilidad" class="switch__orden" id="switch__Articulos_Nuevos" onclick="checkmark(this)"/><label for="switch__Articulos_Nuevos" class="switch__orden--label">Toggle</label></div>
 						</div>
 						<!-- <div class="contenedor__orden">
 							<div class="orden__subtitle"><span>Precio</span></div>

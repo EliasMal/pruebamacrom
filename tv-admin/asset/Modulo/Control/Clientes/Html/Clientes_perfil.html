@@ -35,9 +35,6 @@
                   <small><b>Compras realizadas</b></small>
                   <a class="float-right"><small> {{cliente.count.NPedidos}} </small></a>
                 </li>
-                <li class="list-group-item" ng-show="cliente.username == 'webmaster@macromautopartes.com'">
-                  <small><b>Todos los cupones guardados en este usuario se guardaran automaticamente en los NUEVOS USUARIOS.</b></small>
-                </li>
               </ul>
             </div>
           </div>
@@ -64,59 +61,6 @@
 
                 <li class="nav-item"><a class="nav-link active" href="#timeline" data-toggle="tab">Cupones</a></li>
                 <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Configuracion</a></li>
-                <li class="nav-item-help enlace"><a class="nav-help">Ayuda <i class="fas fa-question-circle"></i></a></li>
-                
-                <div class="talk-bubble tri-right left-top none">
-                  <div class="talktext">
-                    <i class="far fa-times-circle enlace closeHelp"></i>
-                    <section class="help1">
-                      <p>
-                        <b>Ingresar cupones:</b> Coloca el nombre del cupon, pulsa la tecla "Enter" o la tecla coma ",".<br>
-                        Si deseas agregar un valor diferente al 10%, coloca el nombre del cupon más un signo de igual(=) y el valor del cupon sin epacios.<br>
-                        <b>Ejemplo:</b> Cupon=50 (El nombre del cupon sera "Cupon" y su valor es del 50% de descuento.)<br>
-                        Se iran agregando los cupones en color azul.<br>
-                        <b>Ejemplo:</b>
-                      </p>
-
-                      <div style="display: flex;">
-                        <li style="background-color: rgb(8, 113, 194);padding: 5px;border-radius: 5px;font-size: 14px;color: white;font-weight: bold;list-style: none;margin:0 5px;">Cupon=50</li>
-                        <li style="background-color: rgb(8, 113, 194);padding: 5px;border-radius: 5px;font-size: 14px;color: white;font-weight: bold;list-style: none;margin:0 5px">macrupon</li>
-                      </div>
-
-                      <p>Al terminar de agregar cupones dar click en "Guardar para este usuario" o "Guardar para todos los usuarios".</p>
-                    </section>
-
-                    <section class="help2" style="display: none;">
-                      <p>
-                        <b>Eliminar Cupones:</b> Al ingresar cupones, apareceran en la parte inferior en color azul.
-                        <b>Ejemplo:</b>
-                      </p>
-
-                      <div style="display: flex;">
-                        <li style="background-color: rgb(8, 113, 194);padding: 5px;border-radius: 5px;font-size: 14px;color: white;font-weight: bold;list-style: none;margin:0 5px;">Cupon=50</li>
-                        <li style="background-color: rgb(8, 113, 194);padding: 5px;border-radius: 5px;font-size: 14px;color: white;font-weight: bold;list-style: none;margin:0 5px">macrupon</li>
-                      </div>
-
-                      <p>Para eliminar cupones que no quieras agregar, solo debes dar "Doble click" sobre el cupon que quieres eliminar.</p>
-                      <hr>
-                      <p>
-                        <b>Eliminar Cupones Activos:</b> Si el usuario tiene cupones activos, apareceran en la sección "Cupones activos".<br>
-                        <b>Ejemplo:</b>
-                      </p>
-
-                      <div style="display: flex;">
-                        <li style="background-color: rgb(0, 128, 0, 1);padding: 5px;border-radius: 5px;font-size: 14px;color: white;font-weight: bold;list-style: none;margin:0 5px;">Cupon=50</li>
-                        <li style="background-color: rgb(0, 128, 0, 1);padding: 5px;border-radius: 5px;font-size: 14px;color: white;font-weight: bold;list-style: none;margin:0 5px">macrupon</li>
-                      </div>
-                      <p>Para eliminar cupones que el usuario tenga activos, solo debes dar "Doble click" sobre el cupon que quieras eliminar, la pagina se actualizara y el cupon se habra eliminado del usuario.</p>
-                      <p>Pulsa el boton "Borrar Cupones" para borrar <b>TODOS</b> los cupones activos del usuario.</p>
-                    </section>
-
-                    <i class="fas fa-angle-double-right enlace" style="display: flex;justify-content: flex-end;font-size: 25px;"></i>
-                    <i class="fas fa-angle-double-left enlace" style="display: none;font-size: 25px;"></i>
-                  </div>
-
-                </div>
 
               </ul>
             </div>
@@ -124,26 +68,89 @@
               <div class="tab-content">
                 <div class="tab-pane active" id="timeline">
 
-                  <div class="formulario__cupones">
-                    <label for="cupones">Ingresar cupones:</label>
-                    <input type="text" class="formulario__input" name="cupones" id="tags_input" autocomplete="off">
-                    <div class="formulario__listado" id="tags"></div>
-                    <input type="hidden" name="tags" value="" ng-model="cliente.cupones">
-                    <div class="contenedor__formulario__botones">
-                      <button class="form-control btnF__cupones" ng-click="cuponGuardar()">Guardar para este usuario</button>
-                      <button class="form-control btnF__cupones" ng-click="cuponGuardarAll()">Guardar para todos los usuarios</button>
+                  <div class="card card-danger card-outline mb-3">
+                    <div class="card-header">
+                      <h5 class="mb-0">
+                        <i class="fa fa-ticket"></i> Cupones disponibles
+                      </h5>
+                    </div>
+                  
+                    <div class="card-body">
+                    
+                      <div
+                        class="d-flex justify-content-between align-items-center border-bottom py-2"
+                        ng-repeat="cupon in cuponesDisponibles">
+                    
+                        <div>
+                          <b>{{cupon.codigo}}</b>
+                          <span class="text-muted">
+                            — {{cupon.descuento}}%
+                          </span>
+                        
+                          <small
+                            class="badge badge-secondary ml-2"
+                            ng-if="cupon.uso_unico == 1">
+                            Uso único
+                          </small>
+                        
+                          <small
+                            class="badge badge-warning ml-1"
+                            ng-if="cupon.fecha_expiracion">
+                            Expira {{cupon.fecha_expiracion}}
+                          </small>
+                        </div>
+                      
+                        <button
+                          class="btn btn-sm btn-success"
+                          ng-click="asignarCupon(cupon.id)">
+                          <i class="fa fa-plus"></i> Asignar
+                        </button>
+                      
+                      </div>
+                    
+                      <div
+                        class="text-muted text-center py-3"
+                        ng-if="!cuponesDisponibles || cuponesDisponibles.length == 0">
+                        No hay cupones disponibles
+                      </div>
+                    
                     </div>
                   </div>
-
-                  <span><b>Cupones activos del usuario:</b></span>
-                  <div class="cupones__disponibles">
-                    <div class="cupones__disponibles__listado" ng-if="cliente.cupon_nombre != null" ng-repeat="cupones in cliente.miscupones">
-                      <li class="cupones__tag enlace">{{cupones}}</li>
+                  <div class="card card-success card-outline">
+                    <div class="card-header">
+                      <h5 class="mb-0">
+                        <i class="fa fa-user"></i> Cupones del cliente
+                      </h5>
                     </div>
-                    <li class="cupones__tag--ninguno" ng-if="cliente.cupon_nombre == null || cliente.cupon_nombre ==''">Ningun Cupon Activo</li>
-                  </div>
-                  <div ng-if="cliente.cupon_nombre != null && cliente.cupon_nombre !=''">
-                    <button ng-click="cuponDelete()" class="form-control btnC__disponibles">Borrar Cupones</button>
+                  
+                    <div class="card-body">
+                    
+                      <div
+                        class="d-flex justify-content-between align-items-center border-bottom py-2"
+                        ng-repeat="cupon in cuponesCliente">
+                    
+                        <div>
+                          <b>{{cupon.codigo}}</b>
+                          <span class="text-muted">
+                            — {{cupon.descuento}}%
+                          </span>
+                        </div>
+                      
+                        <button
+                          class="btn btn-sm btn-danger"
+                          ng-click="quitarCupon(cupon.id)">
+                          <i class="fa fa-trash"></i> Quitar
+                        </button>
+                      
+                      </div>
+                    
+                      <div
+                        class="text-muted text-center py-3"
+                        ng-if="!cuponesCliente || cuponesCliente.length == 0">
+                        El cliente no tiene cupones asignados
+                      </div>
+                    
+                    </div>
                   </div>
 
                 </div>
@@ -239,7 +246,7 @@
                 </div>
               </div>
             </div>
-            <button class="form-control btn-danger" ng-click="cuponDeleteAll()">Borrar cupones de todos los usuarios</button>
+            
           </div>
         </section>
       </div>

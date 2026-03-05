@@ -87,6 +87,10 @@
   --trans-timing2: cubic-bezier(0.68, -0.6, 0.32, 1.6);
   --warning: #ffc107;
 }
+
+[ng-cloak] {
+  display: none !important;
+}
 .bg-promo{
   background-color: royalblue;
 }
@@ -643,6 +647,10 @@ a:nth-child(3):hover article {
 
 .ss-icon a:nth-child(4):hover article {
   background-color: #2C4762;
+}
+
+.ss-icon a:nth-child(5):hover article {
+  background-color: #25D366;
 }
 
 .ss-icon span {
@@ -1220,6 +1228,28 @@ i.fa.fa-sun {
 .productos__datos--info--articulo {
   color: var(--negro);
   cursor: pointer;
+}
+
+.tooltip-sucursales-global {
+  position: fixed;
+  background: #2e2e2e;
+  color: #fff;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.4;
+  box-shadow: 0 8px 20px rgba(0,0,0,.25);
+  z-index: 9999;
+  pointer-events: none; /* 👈 evita glitches */
+}
+.tooltip-linea {
+  white-space: nowrap;
+}
+
+.envio-label {
+  cursor: pointer;
+  font-size: 13px;
+  color: #555;
 }
 
 .productos__contenedor {

@@ -1,10 +1,4 @@
 <?php
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 error_reporting(E_ALL);
 ini_set('display_errors', '0');
 require_once "../../../tv-admin/asset/Clases/dbconectar.php";
@@ -33,59 +27,88 @@ class Registro{
         if($this->FindCliente()){
             $id = $this->setCliente();
             if($id){
-                    if($this->setSession($this->setCSeguridad($id))){
+                    if($this->setSession($this->setCSeguridad($id), $id)){
                         $this->jsonData["Bandera"] = 1;
                         $this->jsonData["mensaje"] = "Bienvenido ". $this->formulario->Registro->Nombre;
                         $this->jsonData["Session"] = $_SESSION;
                         //Envio de registro satisfactorio al Correo del usuario.
-                        $destinatario =$this->formulario->Registro->username;
-                        $nombre = $this->formulario->Registro->Nombre;
-                        $mail = new PHPMailer;
-                        $mail->isSMTP();
-                        $mail->SMTPDebug = 0;
-                        $mail->Host = 'smtp.hostinger.com';
-                        $mail->Port = 587;
-                        $mail->SMTPAuth = true;
-                        $mail->Username = 'soporte@macromautopartes.com';
-                        $mail->Password = '.Pm{d6+GxjZb';
-                        $mail->setFrom('soporte@macromautopartes.com', 'Soporte Macrom');
-                        $mail->addAddress($destinatario, $nombre);
-                        $mail->Subject = 'Registro en Macromautopartes';
-                        $mail->IsHTML(true);
-                        $mail->CharSet = 'utf-8';
-                        $mail->Body ='
-                        <html lang="es">
-                            <body>
-                                <style>.pofam{font-family: Poppins;}</style>
-                                <div>
-                                    <section style="padding-bottom:60px;>
-                                        <div style="width:1000px;">
-                                            <div>
-                                                <div style="padding-bottom:30px;background-color:#fff">
-                                                    <section>
-                                                        <h4><img src="https://macromautopartes.com/images/icons/CRcabecera.png" style="width:100%;"></h4>
-                                                        <div style="color:#de0007;text-align:center;">
-                                                            <h4 class="pofam" style="font-size:25px;line-height:32px;margin-bottom:0px;">Te has registrado de manera</h4>
-                                                            <h4 class="pofam" style="font-size:25px;margin-top:0px">exitosa</h4>
-                                                        </div>
-                                                        <h4 style="text-align:center;"><img src="https://macromautopartes.com/images/icons/CR-caja.png" style="height: 250px;"></h4>
-                                                        <div>
-                                                            <h4 class="pofam" style="color:#757575;text-align:center;font-size:22px;margin-bottom:0px;">Tu cuenta está lista para usarse</h4>
-                                                            <h4 class="pofam" style="color:#9e9e9e;text-align:center;font-size:20px;margin-top:0px;">Comienza a comprar desde la comodidad de tu casa.</h4>
-                                                        </div>
-                                                        <h4 style="padding-bottom:42px;"><img src="https://macromautopartes.com/images/icons/CRPie-pagina.png" style="width:100%;"></h4>
-                                                    </section>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                            </body>
-                        </html>';
-                        if (!$mail->send()) {
-                            echo 'Mailer Error: ' . $mail->ErrorInfo;
+                        try {
+
+                            $destinatario = $this->formulario->Registro->username;
+                            $nombre = $this->formulario->Registro->Nombre;
+
+                            $mail = new PHPMailer(true);
+                            $mail->isSMTP();
+                            $mail->SMTPDebug = 0;
+                            $mail->Host = 'smtp.hostinger.com';
+                            $mail->Port = 587;
+                            $mail->SMTPAuth = true;
+                            $mail->SMTPSecure = 'tls';
+                            $mail->Username = 'soporte@macromautopartes.com';
+                            $mail->Password = SMTP_PASS;
+
+                            $mail->setFrom('soporte@macromautopartes.com', 'Soporte Macrom');
+                            $mail->addAddress($destinatario, $nombre);
+
+                            $mail->Subject = 'Registro en Macromautopartes';
+                            $mail->isHTML(true);
+                            $mail->CharSet = 'UTF-8';
+                            $mail->AltBody = "Tu cuenta ha sido creada exitosamente en Macromautopartes. Visita https://macromautopartes.com";
+
+                            $mail->Body = '
+                                <!DOCTYPE html>
+                                <html lang="es">
+                                    <head>
+                                        <meta charset="UTF-8">
+                                        <title>Registro exitoso</title>
+                                    </head>
+                                    <body style="margin:0;padding:0;background-color:#f4f4f4;">
+
+                                        <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f4f4;padding:20px 0;">
+                                            <tr>
+                                                <td align="center">
+                                                    <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:8px;overflow:hidden;font-family:Arial, sans-serif;">
+
+                                                        <tr>
+                                                            <td align="center">
+                                                                <img src="https://macromautopartes.com/images/icons/CRcabecera.png" width="600" style="display:block;">
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td align="center" style="padding:30px 20px;">
+                                                                <h2 style="color:#de0007;margin:0;">¡Bienvenido a Macromautopartes!</h2>
+                                                                <p style="color:#555;font-size:16px;margin-top:15px;">Tu cuenta ha sido creada exitosamente.</p>
+                                                                <p style="color:#777;font-size:14px;">Ya puedes comenzar a comprar desde la comodidad de tu casa.</p>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td align="center" style="padding-bottom:30px;">
+                                                                <a href="https://macromautopartes.com" style="background:#de0007;color:#ffffff;text-decoration:none; padding:12px 25px;border-radius:4px;font-size:14px;display:inline-block;"> Ir a la tienda </a>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td align="center" style="background:#fafafa;padding:15px;font-size:12px;color:#999;">Este correo fue enviado automáticamente por Macromautopartes.<br>Si no realizaste este registro, ignora este mensaje.</td>
+                                                        </tr>
+
+                                                    </table>
+
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </body>
+                                </html>';
+
+                            $mail->send();
+
+                        } catch (Exception $e) {
+                            // No rompemos el registro si falla el correo
+                            // Puedes guardar el error en log si quieres:
+                            // error_log("Error al enviar correo: " . $e->getMessage());
                         }
-                        //Fin Envio de registro satisfactorio al Correo del usuario.
                     }else{
                         $this->jsonData["Bandera"] = 0;
                         $this->jsonData["mensaje"] = "Error: al iniciar session";
@@ -124,20 +147,27 @@ class Registro{
         return $this->conn->query($sql)? $this->conn->last_id():false;
     }
     
-    private function setCSeguridad ($id){
-        if(isset($this->jsonData["cupongeneral"])){
-            $sql = "INSERT INTO Cseguridad(username, password, FechaCreacion, FechaModificacion, Estatus, _id_cliente, cuponacre, cupon_nombre) values "
-                . "('{$this->formulario->Registro->username}',SHA('{$this->formulario->Registro->pass}'),'"
-                . date("Y-m-d", strtotime($this->formulario->Registro->FechaCreacion))."','".date("Y-m-d", strtotime($this->formulario->Registro->FechaModificacion))."',1,'$id',0,'{$this->jsonData["cupongeneral"]}')";
-        }else{
-            $sql = "INSERT INTO Cseguridad(username, password, FechaCreacion, FechaModificacion, Estatus, _id_cliente, cuponacre, cupon_nombre) values "
-                . "('{$this->formulario->Registro->username}',SHA('{$this->formulario->Registro->pass}'),'"
-                . date("Y-m-d", strtotime($this->formulario->Registro->FechaCreacion))."','".date("Y-m-d", strtotime($this->formulario->Registro->FechaModificacion))."',1,'$id',0,null)";
-        }
-        
-        return $this->conn->query($sql) ? true: false;
-         
+private function setCSeguridad ($id){
+
+    $passwordPlano = $this->formulario->Registro->pass;
+
+    // 🔐 Hash moderno seguro
+    $passwordHash = password_hash($passwordPlano, PASSWORD_DEFAULT);
+
+    $fechaActual = date("Y-m-d H:i:s");
+
+    if(isset($this->jsonData["cupongeneral"])){
+        $sql = "INSERT INTO Cseguridad(username, password, FechaCreacion, FechaModificacion, Estatus, _id_cliente, cuponacre, cupon_nombre, password_changed_at)
+                VALUES('{$this->formulario->Registro->username}', '$passwordHash', '$fechaActual', '$fechaActual',
+                1, '$id', 0, '{$this->jsonData["cupongeneral"]}', '$fechaActual')";
+    }else{
+        $sql = "INSERT INTO Cseguridad(username, password, FechaCreacion, FechaModificacion, Estatus, _id_cliente, cuponacre, cupon_nombre, password_changed_at)
+            VALUES('{$this->formulario->Registro->username}', '$passwordHash', '$fechaActual', '$fechaActual',
+            1, '$id', 0, NULL, '$fechaActual')";
     }
+
+    return $this->conn->query($sql) ? true : false;
+}
 
     private function getCuponGeneral(){
         $sql = "SELECT cupon_nombre FROM Cseguridad where username = 'webmaster@macromautopartes.com'";
@@ -146,12 +176,14 @@ class Registro{
         return $datausercupones["cupon_nombre"];
     }
 
-    private function setSession($flag = false){
+    private function setSession($flag = false, $id = null){
         if($flag){
             session_name("loginCliente");
             session_start();
+            session_regenerate_id(true);
             $_SESSION["autentificacion"]=1;
             $_SESSION["ultimoAcceso"]= date("Y-n-j H:i:s");
+            $_SESSION["password_changed_at"] = date("Y-m-d H:i:s");
             $_SESSION["nombrecorto"] = $this->formulario->Registro->Nombre;
             $_SESSION["nombre"] = $this->formulario->Registro->Nombre.' '.$this->formulario->Registro->Apellidos;
             $_SESSION["iduser"] = $id;

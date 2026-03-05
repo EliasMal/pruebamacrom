@@ -1,8 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 var urlLogin = "./modulo/Login/Ajax/Login.php";
 var urlRegistro = "./modulo/Login/Ajax/Registro.php";
 const url_seicom = "https://volks.dyndns.info:444/service.asmx/consulta_art";
@@ -17,12 +12,18 @@ if (window.location.href.includes("?mod=login") || window.location.href.includes
 }
 function LoginCtrl($scope, $http) {
     var obj = $scope;
+    obj.intentosRestantes = null;
+    obj.cuentaBloqueada = false;    
     obj.login = {};
     obj.Registro = {};
     obj.SeiData = {};
     obj.dataflag = true;
     var Refaccion = {};
     var count_prod;
+    obj.loginError = false;
+    obj.intentosRestantes = null;
+    obj.cuentaBloqueada = false;
+    obj.tiempoRestante = 0;
 
     obj.btnLogin = function () {
         obj.login.opc = "in";
@@ -33,6 +34,7 @@ function LoginCtrl($scope, $http) {
 
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
+                $scope.loginError = false;
                 obj.prodCarrito(res);
                 localStorage.setItem('session', JSON.stringify(res.data.session));
                 localStorage.setItem('iduser', res.data.session.iduser);
@@ -46,11 +48,15 @@ function LoginCtrl($scope, $http) {
                 }, 100);
 
             } else {
-                toastr.error(res.data.mensaje);
-                alertvali.style.display = "block";
+                obj.loginError = true;
+
+                obj.cuentaBloqueada = res.data.bloqueado == 1 ? true : false;
+                obj.intentosRestantes = res.data.intentos_restantes ?? null;
+                obj.tiempoRestante = res.data.tiempo_restante ?? 0;
             }
         }, function errorCallback(res) {
-            toastr.error("Error: el usuario no existe");
+            console.log(res);
+            toastr.error("Error en el servidor");
         });
     }
 
@@ -157,12 +163,14 @@ function LoginCtrl($scope, $http) {
     
             } else {
                 obj.dataflag = true;
-                toastr.error("Error: el usuario no existe");
+                console.log(res);
+                toastr.error("Error en el servidor");
                 butonolv.classList.remove("non-active");
             }
         }, function errorCallback(res) {
             obj.dataflag = true;
-            toastr.error("Error: el usuario no existe");
+            console.log(res);
+            toastr.error("Error en el servidor");
             butonolv.classList.remove("non-active");
         });
     }
@@ -175,7 +183,6 @@ function LoginCtrl($scope, $http) {
         obj.Registro.Estatus = 1;
         if (obj.Registro.pass === obj.Registro.Cpass) {
             obj.dataflag = false;
-            butonolv.classList.add("non-active");
             $http({
                 method: 'POST',
                 url: urlRegistro,
@@ -184,7 +191,6 @@ function LoginCtrl($scope, $http) {
             }).then(function successCallback(res) {
                 if (res.data.Bandera == 1) {
                     obj.dataflag = true;
-                    butonolv.classList.remove("non-active");
                     location.href = "?mod=home";
                 } else {
                     toastr.error(res.data.mensaje);
@@ -206,26 +212,6 @@ function LoginCtrl($scope, $http) {
 
     }
 
-    var inprpass = document.querySelector("#inprpass");
-    var inprcpass = document.querySelector("#inprcpass");
-    document.querySelectorAll(".pass_ver").forEach(el => {
-        el.addEventListener("click", e => {
-            if (el.classList.contains('pss')) {
-                inprpass.toggleAttribute("type");
-                el.classList.toggle("fa-eye-slash");
-                if (inprpass.getAttribute("type") != null) {
-                    inprpass.setAttribute("type", "password");
-                }
-            } else if (el.classList.contains('cpss')) {
-                inprcpass.toggleAttribute("type");
-                el.classList.toggle("fa-eye-slash");
-                if (inprcpass.getAttribute("type") != null) {
-                    inprcpass.setAttribute("type", "password");
-                }
-            }
-        });
-    });
-
     obj.btnAceptoAvisoPrivasidad = () => {
         $("#ModalAviso").modal("hide");
     }
@@ -235,4 +221,89 @@ function LoginCtrl($scope, $http) {
 
     // });
 
+}
+
+function togglePassword(id, btn){
+    const input = document.getElementById(id);
+    const icon = btn.querySelector('i');
+
+    if(input.type === "password"){
+        input.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+    } else {
+        input.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+    }
+}
+
+const passInput = document.getElementById("inprpass");
+const confirmInput = document.getElementById("inprcpass");
+const strengthBar = document.getElementById("strength-bar");
+const matchStatus = document.getElementById("match-status");
+const iconPass = document.getElementById("icon-pass");
+const iconConfirm = document.getElementById("icon-confirm");
+
+if(passInput){
+
+    passInput.addEventListener("input", function(){
+        updateStrength();
+        checkMatch();
+    });
+
+    confirmInput.addEventListener("input", checkMatch);
+
+    function updateStrength(){
+        const val = passInput.value;
+        let strength = 0;
+
+        if(val.length >= 8) strength++;
+        if(val.match(/[a-z]/) && val.match(/[A-Z]/)) strength++;
+        if(val.match(/[0-9]/)) strength++;
+        if(val.match(/[\W]/)) strength++;
+
+        switch(strength){
+            case 0:
+            case 1:
+                strengthBar.style.width = "25%";
+                strengthBar.style.background = "#e74c3c";
+                iconPass.textContent = "❌";
+                iconPass.style.color = "#e74c3c";
+                break;
+            case 2:
+                strengthBar.style.width = "50%";
+                strengthBar.style.background = "#f1c40f";
+                iconPass.textContent = "⚠️";
+                iconPass.style.color = "#f1c40f";
+                break;
+            case 3:
+            case 4:
+                strengthBar.style.width = strength === 3 ? "75%" : "100%";
+                strengthBar.style.background = "#27ae60";
+                iconPass.textContent = "✔️";
+                iconPass.style.color = "#27ae60";
+                break;
+        }
+    }
+
+    function checkMatch(){
+        if(confirmInput.value.length === 0){
+            matchStatus.textContent = "";
+            iconConfirm.textContent = "";
+            return;
+        }
+
+        if(passInput.value === confirmInput.value){
+            matchStatus.textContent = "Las contraseñas coinciden";
+            matchStatus.className = "match-status match-yes";
+            iconConfirm.textContent = "✔️";
+            iconConfirm.style.color = "#27ae60";
+        } else {
+            matchStatus.textContent = "Las contraseñas no coinciden";
+            matchStatus.className = "match-status match-no";
+            iconConfirm.textContent = "❌";
+            iconConfirm.style.color = "#e74c3c";
+        }
+    }
 }

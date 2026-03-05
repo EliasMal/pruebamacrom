@@ -42,11 +42,30 @@ Class Endpoint{
             $userid = $this->getPedidoUserId();
             $datauser = $this->getUser($userid);
             if($this->xml->response == "approved"){
+
                 fwrite($filelog, "Obtengo el id del pedido-----------------\n");
                 fwrite($filelog, $id);
-                $this->setPedido( $id, 1);
+                //evitar procesamiento duplicado
+                if($this->pedidoYaAcreditado($id)){
+                    fwrite($filelog, "Pedido ya acreditado previamente\n");
+                    fclose($filelog);
+                    exit;
+                }
+                $this->conn->query("START TRANSACTION");
+                //Descontar inventario
+                if(!$this->descontarInventario($id)){
+                    $this->conn->query("ROLLBACK");
+                    fwrite($filelog, "Error al descontar inventario\n");
+                    fclose($filelog);
+                    exit;
+                }
+                //Marcar pedido como pagado
+                $this->setPedido($id, 1);
                 $fechacompleta = $this->xml->date." ".$this->xml->time;
+                //Vaciar carrito y enviar correos
                 $this->DeleteCarrito($datauser,$fechacompleta);
+
+                $this->conn->query("COMMIT");
             }else{
                 $this->setPedido($id,6);
             }
@@ -58,7 +77,29 @@ Class Endpoint{
             fwrite($filelog, "no se recibio ningun post");
             fclose($filelog);
         }
-    } 
+    }
+
+    private function descontarInventario($pedidoId){
+
+        $sql = "SELECT _idProducto, cantidad FROM DetallesPedidos WHERE _idPedidos = $pedidoId";
+        $result = $this->conn->query($sql);
+
+        while($row = $this->conn->fetch($result)){
+
+            $idProducto = intval($row["_idProducto"]);
+            $cantidad   = intval($row["cantidad"]);
+
+            $update = "UPDATE Producto SET stock = stock - $cantidad WHERE _id = $idProducto AND stock >= $cantidad";
+            $this->conn->query($update);
+
+            if($this->conn->affected_rows() == 0){
+                return false; // no había suficiente stock
+            }
+        }
+
+        return true;
+    }
+
     private function getUser($userid){
         $sql = "SELECT * FROM clientes WHERE _id = $userid";
         $result = $this->conn->fetch($this->conn->query($sql));
@@ -74,7 +115,11 @@ Class Endpoint{
         $res = $this->conn->fetch($this->conn->query($sql));
         return $res["_idPedidos"];
     }
-
+    private function pedidoYaAcreditado($id){
+        $sql = "SELECT Acreditado FROM Pedidos WHERE _idPedidos = $id";
+        $res = $this->conn->fetch($this->conn->query($sql));
+        return ($res && $res["Acreditado"] == 1);
+    }
     private function setPedido($id, $acreditado){
         $sql = "UPDATE Pedidos SET Acreditado = $acreditado where _idPedidos = $id";
         return $this->conn->query($sql)? true:false;

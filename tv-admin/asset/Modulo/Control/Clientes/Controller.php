@@ -1,10 +1,4 @@
 <?php
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 (@__DIR__ == '__DIR__') && define('__DIR__',  realpath(dirname(__FILE__)));
 
 function get_template($form='principal'){
@@ -24,6 +18,9 @@ function retorna_vista($vista,$data=array()){
             $html = get_template($vista);
             $html = str_replace("{id}", $data["id"], $html);
             break;
+        case 'cupones':
+            $html = get_template("cupones");
+            break;
     }
     print $html;
 }
@@ -39,6 +36,9 @@ function principal(){
             case 'perfil':
                 $data["id"] = htmlspecialchars($_GET["id"]);
                 retorna_vista($opc,$data);
+                break;
+            case 'cupones':
+                retorna_vista($opc);
                 break;
             
         }

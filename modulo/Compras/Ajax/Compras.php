@@ -1,6 +1,6 @@
 <?php
-    session_name("loginCliente");
-    session_start();
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/core/bootstrap.php";
+
     require_once "../../../tv-admin/asset/Clases/dbconectar.php";
     require_once "../../../tv-admin/asset/Clases/ConexionMySQL.php";
     require_once "../../../tv-admin/asset/Clases/redpack.php";
@@ -87,26 +87,136 @@
             $dataArray["datadomicilio"] = $this->dataDireccion($dataArray["datauser"]["id"]);
             $dataArray["datafacturacion"] = $this->dataFacturacion($dataArray["datauser"]["id"]);
             $dataArray["Cenvio"] = is_null($dataArray["datadomicilio"])? array():$this->getCenvio((int)$dataArray["datadomicilio"]["data"]["Codigo_postal"]);
+            $dataArray["dataCP"] = $this->getDataCP((int)$dataArray["datadomicilio"]["data"]["Codigo_postal"]);
             //var_dump("antes de Cenvio");
             return $dataArray;
         }
 
         public function main (){
             $this->formulario = json_decode(file_get_contents('php://input'));
-            switch($this->formulario->Compras->opc){
+            switch ($this->formulario->Compras->opc) {
+
                 case 'get':
                     $this->jsonData["Bandera"] = 1;
                     $this->jsonData["Data"] = $this->getDataUser($this->formulario->Compras->username);
                 break;
-
+                
                 case 'cotizar':
-                    default:
                     $this->jsonData["Bandera"] = 1;
                     $this->jsonData["Data"] = $this->getCotizarEnvio();
                 break;
-            }    
-
+                
+                case 'validarCupon':
+                    $this->jsonData = $this->validarCupon();
+                break;
+                
+                default:
+                    $this->jsonData = [
+                        "Bandera" => 0,
+                        "mensaje" => "Operación no válida"
+                    ];
+                break;
+            } 
             print json_encode($this->jsonData);
+        }
+
+        private function validarCupon(){
+            $codigo = trim($this->formulario->Compras->cupon);
+            $idCliente = (int)$this->formulario->Compras->id;
+
+            if ($codigo == "") {
+                return [
+                    "Bandera" => 0,
+                    "mensaje" => "Ingresa un cupón"
+                ];
+            }
+            //Buscar cupón activo
+            $sql = "
+                SELECT id, codigo, descuento, uso_unico, fecha_expiracion, es_global
+                FROM cupones
+                WHERE codigo = '$codigo'
+                AND activo = 1
+                LIMIT 1
+            ";
+
+            $cupon = $this->conn->fetch($this->conn->query($sql));
+
+            if (!$cupon) {
+                return [
+                    "Bandera" => 0,
+                    "mensaje" => "Cupón no válido"
+                ];
+            }
+            //Validar expiración
+            if (!empty($cupon["fecha_expiracion"])) {
+                if (strtotime($cupon["fecha_expiracion"]) < strtotime(date("Y-m-d"))) {
+                    return [
+                        "Bandera" => 0,
+                        "mensaje" => "Este cupón ha expirado"
+                    ];
+                }
+            }
+            //Validar asignación (global o cliente)
+            if (!$this->clientePuedeUsarCupon($idCliente, $cupon["id"], $cupon["es_global"])) {
+                return [
+                    "Bandera" => 0,
+                    "mensaje" => "Este cupón no está disponible para tu cuenta"
+                ];
+            }
+            //Validar uso único (SIN registrar)
+            if ((int)$cupon["uso_unico"] === 1) {
+
+                $sqlUso = "
+                    SELECT id
+                    FROM cupones_usados
+                    WHERE id_cupon = {$cupon["id"]}
+                    AND id_cliente = $idCliente
+                    LIMIT 1
+                ";
+
+                $usado = $this->conn->fetch($this->conn->query($sqlUso));
+
+                if ($usado) {
+                    return [
+                        "Bandera" => 0,
+                        "mensaje" => "Este cupón ya fue utilizado"
+                    ];
+                }
+            }
+            //Cupón válido (NO se guarda todavía)
+            return [
+                "Bandera" => 1,
+                "mensaje" => "Cupón aplicado correctamente",
+                "descuento" => (int)$cupon["descuento"],
+                "codigo" => $cupon["codigo"],
+                "id_cupon" => (int)$cupon["id"]
+            ];
+        }
+
+
+
+        private function clientePuedeUsarCupon($idCliente, $idCupon, $esGlobal){
+            if($esGlobal == 1){
+                return true;
+            }
+
+            $sql = "
+                SELECT id 
+                FROM clientes_cupones
+                WHERE id_cliente = $idCliente
+                AND id_cupon = $idCupon
+                AND activo = 1
+                LIMIT 1
+            ";
+
+            $row = $this->conn->fetch($this->conn->query($sql));
+            return $row ? true : false;
+        }
+
+        private function getDataCP($cp = null){
+            $sql = "select d_codigo, d_asenta, d_tipo_asenta, D_mnpio, d_estado, d_ciudad from CPmex where d_codigo = $cp";
+            $row = $this->conn->fetch_all($this->conn->query($sql));
+            return $row;
         }
 
         private function getDestinatario(){

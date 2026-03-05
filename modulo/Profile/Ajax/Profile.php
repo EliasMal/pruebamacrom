@@ -1,15 +1,4 @@
 <?php
-    /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of home
- *
- * @author francisco
- */
 session_name("loginCliente");
 session_start();
 require_once "../../../tv-admin/asset/Clases/dbconectar.php";
@@ -60,17 +49,11 @@ class Profile{
     }
 
     private function get_disabledDomicilioPredeterminado(){
-        $sql = "SELECT * FROM Cdirecciones where Predeterminado = 1";
-        $id = $this->conn->query($sql);
-        if($this->conn->count_rows() > 0){
-            while($row = $this->conn->fetch($id)){
-                if($row["_id_cliente"] == $_SESSION["iduser"]){
-                    $sql = "UPDATE Cdirecciones SET Predeterminado = 0 where _id = {$row["_id"]}";
-                    $this->conn->query($sql);
-                }
-            }
-            
-        }
+
+        $idCliente = $_SESSION["iduser"];
+
+        $sql = "UPDATE Cdirecciones SET Predeterminado = 0 WHERE _id_cliente = $idCliente";
+        $this->conn->query($sql);
     }
 
     private function get_OneDomicilio($id){
@@ -108,9 +91,18 @@ class Profile{
     }
 
     private function set_DomiciliopredeterminadoCliente($data, $Domicilio){
-        $sql = "UPDATE clientes SET Domicilio = '{$Domicilio["Domicilio"]}', Colonia = '{$Domicilio["Colonia"]}'," 
-            . "Codigo_postal = '{$Domicilio["Codigo_postal"]}',"
-            ."ciudad = '{$Domicilio["Ciudad"]}', estado = '{$Domicilio["Estado"]}', telefono = '{$Domicilio["Telefono"]}' where _id = $data->id";
+
+        $idCliente = $_SESSION["iduser"];
+
+        $sql = "UPDATE clientes SET 
+                Domicilio = '{$Domicilio["Domicilio"]}', 
+                Colonia = '{$Domicilio["Colonia"]}',
+                Codigo_postal = '{$Domicilio["Codigo_postal"]}',
+                ciudad = '{$Domicilio["Ciudad"]}', 
+                estado = '{$Domicilio["Estado"]}', 
+                telefono = '{$Domicilio["Telefono"]}' 
+                WHERE _id = $idCliente";
+
         return $this->conn->query($sql)? true: false;   
     }
 

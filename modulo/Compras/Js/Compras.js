@@ -27,20 +27,35 @@ tsuruVolks.controller('ComprasCtrl', ["$scope", "$http", "$sce", ComprasCtrl])
     });
 
 function ComprasCtrl($scope, $http, $sce) {
+    /* GUARD – evitar doble inicialización */
+    if (window.__COMPRAS_CTRL_INIT__) {
+        console.warn("ComprasCtrl duplicado evitado");
+        return;
+    }
+    window.__COMPRAS_CTRL_INIT__ = true;
+    
+    /* ALIAS / BASE */
     var obj = $scope;
+    const SESSION = $_SESSION;
+
+    /* VARIABLES DE ESTADO */
     obj.session = $_SESSION;
-    obj.Costumer = { Cenvio: { costo: 0 }, aviso: false, facturacion: 0, profile: {}, metodoPago: "", cart: $_SESSION.CarritoPrueba, dataFacturacion: {}, dataDomicilio: {}, descuento: 0, DiaEstimado: null};
-    obj.cenvio = 0
+    obj.avisoEnvioMultiple = false;
+
+    obj.Costumer = { Cenvio: { costo: 0 }, aviso: false, facturacion: 0, profile: {}, metodoPago: "", cart: $_SESSION.CarritoPrueba, dataFacturacion: {}, dataDomicilio: {}, descuento: 0, DiaEstimado: null, dataCP:{},DiaExtraEnvio:0};
+    obj.cenvio = 0;
     obj.Numproducts = obj.session.CarritoPrueba ? Object.keys(obj.session.CarritoPrueba).length : 0;
     obj.factflag = false;
     obj.cotizador = [];
     obj.flag = false;
     obj.dataflag = false;
     obj.requiredEnvio = false;
-    var count_prod;
-    var count_sucursales = "";
-    obj.sucursales = { Colima: 0, Manzanillo: 0, Tecoman: 0, VillaDeAlvarez: 0 };
+    obj.sucursales = { Colima: 0, Manzanillo: 0, Tecoman: 0, VillaDeAlvarez: 0, Bodega: 0, VentasInternet: 0};
     obj.SeiData = {};
+
+    $_SESSION.DiasenvioEXT = {};
+    $_SESSION.SinStock = {};
+
     obj.dataCotizador = {
         zip_from: "28000",
         zip_to: "60174",
@@ -51,6 +66,77 @@ function ComprasCtrl($scope, $http, $sce) {
             length: 0 //largo
         }
     }
+    /* CONSTANTES */
+    const hoy = new Date();
+    const diaDeLaSemana = hoy.getDay()+1;
+    const horaDelDia = hoy.getHours();
+
+    const MAPA_SUCURSALES = {
+        "VILLA DE ALVAREZ": "VillaDeAlvarez",
+        "VENTAS INTERNET": "VentasInternet",
+        "TECOMAN": "Tecoman",
+        "TECOMÁN": "Tecoman",
+        "COLIMA": "Colima",
+        "MANZANILLO": "Manzanillo",
+        "BODEGA": "Bodega"
+    };
+    const ORDEN_SUCURSALES = [
+        { key: "VentasInternet", dia: 0 },
+        { key: "VillaDeAlvarez", dia: 0 },
+        { key: "Colima", dia: 0 },
+        { key: "Tecoman", dia: 3 },
+        { key: "Manzanillo", dia: 5 },
+        { key: "Bodega", dia: 2 },
+    ];
+    const DIAS_CAMION = {
+        Tecoman: 3,      // Miercoles
+        Manzanillo: 1,  // Lunes
+    };
+
+    /* DOM / EVENTOS PUROS */
+
+
+    /* UTILIDADES */
+    $scope.tieneMultiplesSucursales = function(clave) {
+        if (!$scope.ProductosPorSucursal) return false;
+        if (!$scope.ProductosPorSucursal[clave]) return false;
+        return $scope.ProductosPorSucursal[clave].sucursales.length > 1;
+    };
+
+    function actualizarCarrito(ref) {
+        ref.upd = 1;
+        ref.updCLV = ref.Clave;
+        ref.n = $_SESSION["CarritoPrueba"]["length"];
+        obj.actualizarSession(ref, true);
+    }
+
+    function recalcularCupon() {
+
+        if (!obj.Costumer.valor_cpn) return;
+
+        //Si el subtotal ya es 0, eliminar cupón automáticamente
+        if (obj.Costumer.Subtotal <= 0) {
+
+            obj.Costumer.descuento = 0;
+            obj.Costumer.valor_cpn = null;
+            obj.Costumer.usercpn = null;
+            obj.Costumer.id_cupon = null;
+
+            const inpCupon = document.getElementById("inpCupon");
+            const btnCupon = document.getElementById("btncupon");
+
+            if (inpCupon) inpCupon.disabled = false;
+            if (btnCupon) btnCupon.disabled = false;
+
+            return;
+        }
+
+        const porcentaje = obj.Costumer.valor_cpn;
+        const nuevoMonto = obj.Costumer.Subtotal * (porcentaje / 100);
+
+        obj.Costumer.descuento = nuevoMonto;
+    }
+
     obj.eachRefacciones = (array) => {
         array.forEach(e => {
             e.NewUrlName = e["_producto"].replaceAll(" ","-");
@@ -59,206 +145,6 @@ function ComprasCtrl($scope, $http, $sce) {
             e.NewAltName = e["_producto"].replaceAll(",","");
         });
     }
-    //funcion en preparacion, Estado: En espera.
-    obj.prodCarrito = function () {
-        for (let el in $_SESSION.CarritoPrueba) {
-            obj.getSeicom($_SESSION.CarritoPrueba[el].Clave).then(token => {
-                count_prod = 0;
-                obj.SeiData.Table.forEach(prd => {
-                    prd.em_nombre = prd.em_nombre.replaceAll("(MACROM AUTOPARTES)", "");
-                    if (prd.em_nombre.includes("BODEGA") || prd.em_nombre.includes("VENTAS INTERNET")) {
-
-                    } else {
-
-                        if (parseInt(prd.existencia) >= parseInt($_SESSION.CarritoPrueba[el].Cantidad)) {
-
-                            count_sucursales += prd.em_nombre.trim() + ".";
-
-                        }
-                    }
-                    count_prod = count_prod + prd.existencia;
-                });
-
-                if (count_sucursales == "") {
-                    count_sucursales = "Sin sucursales con stock suficiente";
-                }
-                if (count_sucursales.includes("VILLA DE ALVAREZ")) {
-                    obj.sucursales.VillaDeAlvarez++;
-                }
-                if (count_sucursales.includes("MANZANILLO")) {
-                    obj.sucursales.Manzanillo++;
-                }
-                if (count_sucursales.includes("COLIMA")) {
-                    obj.sucursales.Colima++;
-                }
-                if (count_sucursales.includes("TECOMAN")) {
-                    obj.sucursales.Tecoman++;
-                }
-                console.log("Puede recoger en sucursales: ", count_sucursales);
-                console.log(el,"-----------------------------------");  
-                count_sucursales = "";
-            });
-            
-        }
-        console.log("Costumer: ",obj.sucursales);
-        for (let suc in obj.sucursales) {
-            if (obj.sucursales[suc] == obj.Numproducts) {
-                console.log(obj.sucursales[suc], " tiene stock disponible de las piezas");
-            }
-        }
-
-    }
-
-    obj.getSeicom = async (clave) => {
-        try {
-            const result = await $http({
-                method: 'GET',
-                url: url_seicom,
-                params: { articulo: clave },
-                headers: { 'Content-Type': "application/x-www-form-urlencoded" },
-                transformResponse: function (data) {
-                    return $.parseXML(data);
-                }
-
-            }).then(function successCallback(res) {
-                return res
-            }, function errorCallback(res) {
-                toastr.error(res);
-            });
-            if (result) {
-                const xml = $(result.data).find("string");
-                let json = JSON.parse(xml.text());
-                obj.SeiData = json;
-                return json.Table.map(e => e.existencia).reduce((a, b) => a + b, 0) == 0 ? true : false;
-            }
-        } catch (error) {
-            toastr.error(error)
-        }
-
-    }
-    //funcion en preparacion, Estado: En espera.
-
-    obj.RefaccionDetalles = (_id, newurl) => {
-        window.open("?mod=catalogo&opc=detalles&_id=" + _id + "-" + newurl, "_self");
-    }
-
-    obj.subtotal = () => {
-        obj.Costumer.Subtotal = 0
-        for (let e in obj.session.CarritoPrueba) {
-            if (obj.session.CarritoPrueba[e].RefaccionOferta == '1') {
-                obj.Costumer.Subtotal += (obj.session.CarritoPrueba[e].Cantidad * obj.session.CarritoPrueba[e].Precio2);
-            } else {
-                obj.Costumer.Subtotal += (obj.session.CarritoPrueba[e].Cantidad * obj.session.CarritoPrueba[e].Precio);
-            }
-
-        }
-        return obj.Costumer.Subtotal;
-    }
-
-    obj.Ttotal = () => {
-        if (obj.Costumer.Cenvio.Envio == 'L') {
-            obj.Costumer.Cenvio.Costo = obj.dataCotizador.parcel.weight == 0 ? 0 : obj.cenvio;
-            obj.requiredEnvio = true;
-        }
-        obj.total = obj.Costumer.Subtotal + parseFloat(obj.Costumer.Cenvio.Costo) - obj.Costumer.descuento;
-        return obj.total;
-    }
-
-    obj.cupon = () => {
-        let inpCupon = document.getElementById("inpCupon").value;
-        var incpn = document.getElementById("inpCupon");
-        var cupon__alert = document.getElementById('alert--cupon');
-        var valor_cpn = 10;
-
-        if (obj.Costumer.profile.cupon_nombre != null && obj.Costumer.profile.cupon_nombre != "") {
-            const cpn = obj.Costumer.profile.cupon_nombre.split(",");
-
-            cpn.forEach(function (element) {
-
-                if (element.includes("=")) {
-                    const cpn_valor = element.split("=");
-                    if (inpCupon == cpn_valor[0]) {
-                        valor_cpn = cpn_valor[1];
-                        inpCupon = element;
-                    }
-                }
-
-                if (inpCupon == element) {
-                    obj.Costumer.Subtotal = (obj.Costumer.Subtotal * (valor_cpn / 100));
-                    obj.Costumer.descuento = obj.Costumer.Subtotal; //Descuento envio para prueba credito
-                    obj.Costumer.valor_cpn = valor_cpn;
-                    btncupon.disabled = true;
-                    incpn.disabled = true;
-                    btncupon.style.borderColor = "#00ff00";
-                    btncupon.style.backgroundColor = "#ccc";
-                    cupon__alert.innerHTML = "";
-                    obj.Costumer.usercpn = element;
-                } else if (inpCupon == "" || inpCupon != element) {
-                    cupon__alert.className += " cupon--alert-active";
-                    if (incpn.disabled != true) {
-                        cupon__alert.innerHTML = "Ingresa un cupón valido";
-                    }
-                } else {
-                    btncupon.style.backgroundColor = "#ccc";
-                    btncupon.style.cursor = "default";
-                    btncupon.disabled = true;
-                    cupon__alert.innerHTML = "Este cupón YA ha sido utilizado"
-                    cupon__alert.className += " cupon--alert-active";
-                    incpn.disabled = true;
-                }
-
-            });
-        } else {
-            cupon__alert.className += " cupon--alert-active";
-            if (incpn.disabled != true) {
-                cupon__alert.innerHTML = "Ingresa un cupón valido";
-            }
-        }
-    }
-
-    obj.btnAgregar = (Refaccion) => {
-        if (parseInt(Refaccion.Cantidad) < parseInt(Refaccion.Existencias)) {
-            Refaccion.Cantidad++;
-            obj.Ttotal();
-            Refaccion.upd = 1;
-            Refaccion.updCLV = Refaccion.Clave;
-            Refaccion.n = $_SESSION["CarritoPrueba"]["length"];
-            obj.actualizarSession(Refaccion, true);
-        }
-
-    }
-
-    obj.btnQuitar = (Refaccion) => {
-        Refaccion.Cantidad--;
-        obj.Ttotal();
-        Refaccion.upd = 1;
-        Refaccion.updCLV = Refaccion.Clave;
-        Refaccion.n = $_SESSION["CarritoPrueba"]["length"];
-        if (Refaccion.Cantidad < 1) {
-            obj.btnEliminarRefaccion(Refaccion);
-            Refaccion.Cantidad = 1;
-        } else {
-            obj.actualizarSession(Refaccion, true);
-        }
-
-    }
-
-    var btnfacomp = document.querySelector(".pagar--button");
-    btnfacomp.disabled = true;
-    var tandcheck = document.getElementById('aviso');
-
-    tandcheck.addEventListener('click', function () {
-        if (tandcheck.checked) {
-            btnfacomp.disabled = false;
-        } else {
-            btnfacomp.disabled = true;
-        }
-    });
-
-    var closecotizar = document.getElementById("cotizarclose");
-    closecotizar.addEventListener("click", function () {
-        $("#mdlcotizar").modal('hide');
-    });
 
     obj.getImagen = (id) => {
         //var url = "https://macromautopartes.com/images/refacciones/";
@@ -266,18 +152,489 @@ function ComprasCtrl($scope, $http, $sce) {
         return url + id + ".webp";
     }
 
-    obj.comprobarDatosFacturacion = (value) => {
-        obj.factflag = value == 1 ? true : false;
+    /* CARRITO / STOCK */
+    async function prodCarrito() {
+
+        /*==LIMPIEZA PREVENTIVA==*/
+        $_SESSION.ProductosPorSucursal = {};
+        $_SESSION.DiasenvioEXT = {};
+        $_SESSION.ProdNOstock = 0;
+        $_SESSION.ProdInsufStock = 0;
+
+        /*===HELPERS LOCALES===*/
+        const normalizarStock = (table) => {
+            const stockPorSucursal = {
+                Colima: 0,
+                VentasInternet: 0,
+                Tecoman: 0,
+                VillaDeAlvarez: 0,
+                Manzanillo: 0,
+                Bodega: 0,
+            };
+
+            table.forEach(registro => {
+                const nombreLimpio = registro.em_nombre.replace("(MACROM AUTOPARTES)", "").trim().toUpperCase();
+                const sucursalKey = MAPA_SUCURSALES[nombreLimpio];
+
+                if (sucursalKey) {
+                    stockPorSucursal[sucursalKey] += parseInt(registro.existencia, 10) || 0;
+                } else {
+                    console.warn("Sucursal no mapeada:", nombreLimpio);
+                }
+            });
+
+            return stockPorSucursal;
+        };
+
+        const combinarSucursales = (stockPorSucursal, cantidadSolicitada) => {
+            let restante = cantidadSolicitada;
+            const usadas = [];
+
+            for (const suc of ORDEN_SUCURSALES) {
+
+                const disponible = stockPorSucursal[suc.key] || 0;
+                if (disponible <= 0) continue;
+
+                const tomar = Math.min(disponible, restante);
+
+                usadas.push({
+                    sucursal: suc.key,
+                    cantidad: tomar
+                });
+
+                restante -= tomar;
+
+                if (restante === 0) break;
+            }
+
+            return restante > 0 ? null : { usadas };
+        };
+
+        const calcularDiasPorSucursal = (diaCamion) => {
+            const hoy = diaDeLaSemana;
+            const pasoHoy = hoy === diaCamion && horaDelDia <= 16;
+
+            if (hoy < diaCamion) return diaCamion - hoy;
+            if (pasoHoy) return 0;
+
+            return 7 - hoy + diaCamion;
+        };
+
+        const calcularDiasEnvioReal = (usadas) => {
+            let maxDias = 0;
+
+            for (const s of usadas) {
+
+                const diaCamion = DIAS_CAMION[s.sucursal];
+                if (!diaCamion) continue;
+
+                const dias = calcularDiasPorSucursal(diaCamion);
+                maxDias = Math.max(maxDias, dias);
+            }
+
+            return maxDias;
+        };
+
+        /*===PROCESAMIENTO DEL CARRITO===*/
+        for (const item of $_SESSION.CarritoPrueba) {
+
+            if (!item?.Clave) {
+                console.warn("Item sin clave:", item);
+                continue;
+            }
+
+            const seiData = await obj.getSeicom(item.Clave);
+            if (!seiData || !seiData.Table) continue;
+
+            const stockPorSucursal = normalizarStock(seiData.Table);
+
+            const totalStock = Object.values(stockPorSucursal)
+                .reduce((a, b) => a + b, 0);
+
+
+            /* ----- SIN STOCK ----- */
+            if (totalStock === 0) {
+                $_SESSION.ProdNOstock = 1;
+                obj.btnEliminarRefaccion(item);
+                continue;
+            }
+
+            /* ----- STOCK INSUFICIENTE ----- */
+            if (totalStock < item.Cantidad) {
+                $_SESSION.ProdInsufStock = 1;
+                obj.btnAgregar(item);
+                continue;
+            }
+
+            /* ----- COMBINACIÓN DE SUCURSALES ----- */
+            const regla = combinarSucursales(stockPorSucursal, item.Cantidad);
+            if (!regla) continue;
+            $_SESSION.ProductosPorSucursal[item.Clave] = {
+                descripcion: item.Descripcion || '',
+                cantidadTotal: item.Cantidad,
+                sucursales: regla.usadas
+            };
+            $scope.ProductosPorSucursal = $_SESSION.ProductosPorSucursal;
+            /* ----- CÁLCULO DE DÍAS EXTRA ----- */
+            const diasExtra = calcularDiasEnvioReal(regla.usadas);
+
+            const keyEnvio = "AUTO_" + item.Clave;
+
+            if (diasExtra > 0) {
+                $_SESSION.DiasenvioEXT[keyEnvio] = diasExtra;
+            } else {
+                obj.Costumer.DiaExtraEnvio = 0;
+            }
+
+        }
+
+        /*===VALIDACIÓN DE ENVÍO MÚLTIPLE===*/
+
+        const diasExtras = Object.values($_SESSION.DiasenvioEXT || {});
+        const hayEnvioMultiple = diasExtras.some(d => d > 0);
+
+        if (hayEnvioMultiple && !obj.alertaEnvioMostrada) {
+
+            obj.alertaEnvioMostrada = true;
+
+            setTimeout(() => {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Tiempo de entrega',
+                    html: `
+                        <p>
+                            Tu pedido se surtirá desde <strong>diferentes sucursales</strong>,
+                            por lo que el tiempo de entrega podría
+                            <strong>extenderse un poco más de lo habitual</strong>.
+                        </p>
+                    `,
+                    confirmButtonText: 'Entendido',
+                    confirmButtonColor: '#3085d6'
+                });
+            }, 1000);
+        }
     }
 
-    obj.btndireccionguardadas = (pag) => {
-        localStorage.setItem("pag", pag);
-        location.href = "?mod=Profile&opc=" + pag;
-    }
-    obj.changeCenvio = (Tarifa) => {
-        id = obj.Costumer.Cenvio.Costos.find(e => e.Tarifa === Tarifa);
+    obj.btnAgregar = (Refaccion) => {
+
+        if ($_SESSION.ProdInsufStock == 1) {
+
+            Swal.fire({
+                title: "Piezas Insuficientes",
+                html: `¡Oops!, Parece que hay más piezas de las que tenemos en existencia,
+                       vamos actualizar tu pieza al maximo en existencia,
+                       las cuales son: <strong>${Refaccion.Existencias} Piezas en existencia</strong>.`,
+                imageUrl: "https://macromautopartes.com/images/refacciones/" + Refaccion.imagenid + ".webp",
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: Refaccion._producto,
+                confirmButtonText: "Ok"
+            }).then((result) => {
+                if (result.isConfirmed || result.dismiss == 'backdrop' || result.dismiss == 'esc') {
+                    Refaccion.Cantidad = Refaccion.Existencias;
+                    obj.Ttotal();
+                    actualizarCarrito(Refaccion);
+                }
+            });
+
+            return;
+        }
+
+        if (parseInt(Refaccion.Cantidad) < parseInt(Refaccion.Existencias)) {
+            Refaccion.Cantidad++;
+            obj.Ttotal();
+            actualizarCarrito(Refaccion);
+        }
+    };
+
+    obj.btnQuitar = (Refaccion) => {
+
+        Refaccion.Cantidad--;
+
+        if (Refaccion.Cantidad < 1) {
+            obj.btnEliminarRefaccion(Refaccion);
+            Refaccion.Cantidad = 1;
+            return;
+        }
+
+        obj.Ttotal();
+        actualizarCarrito(Refaccion);
+    };
+
+    obj.btnEliminarRefaccion = (Refaccion) => {
+        if($_SESSION.ProdNOstock == 1){
+            Swal.fire({
+                title: "Pieza sin Stock",
+                text: "¡Oops!, La pieza se quedo sin stock",
+                imageUrl: "https://macromautopartes.com/images/refacciones/"+Refaccion.imagenid+".webp",
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: Refaccion._producto,
+                confirmButtonText: "Ok"
+            }).then((result) =>{
+                if(result.isConfirmed || result.dismiss == 'backdrop' || result.dismiss == 'esc'){
+                    Refaccion.erase = 1;
+                    Refaccion.borrar = Refaccion.Clave;
+                    Refaccion.n = $_SESSION["CarritoPrueba"]["length"];
+                    obj.actualizarSession(Refaccion, true);
+                }
+            });
+        }else{
+            Swal.fire({
+            title: "¿Deseas Eliminar la Refaccion del carrito?",
+            showCancelButton: true,
+            confirmButtonText: "Eliminar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    showConfirmButton: false,
+                    title: "¡Eliminado!",
+                    text: "El articulo fue eliminado",
+                    icon: "success"
+                });
+                Refaccion.erase = 1;
+                Refaccion.borrar = Refaccion.Clave;
+                Refaccion.n = $_SESSION["CarritoPrueba"]["length"];
+                obj.actualizarSession(Refaccion, true);
+                // Eliminar visualmente del carrito (frontend inmediato)
+                obj.session.CarritoPrueba = obj.session.CarritoPrueba
+                    .filter(item => item.Clave !== Refaccion.Clave);
+
+                obj.Numproducts = obj.session.CarritoPrueba.length;
+                obj.subtotal();
+                obj.Ttotal();
+            }
+        });
+        }
     }
 
+    obj.subtotal = () => {
+
+        obj.Costumer.Subtotal = Object.values(obj.session.CarritoPrueba || [])
+            .reduce((total, item) => {
+
+                const precio = item.RefaccionOferta == '1'
+                    ? item.Precio2
+                    : item.Precio;
+
+                return total + (item.Cantidad * precio);
+
+            }, 0);
+        
+        recalcularCupon();
+        return obj.Costumer.Subtotal;
+    };
+
+    obj.Ttotal = () => {
+        if (obj.Costumer.Cenvio.Envio == 'L') {
+            obj.Costumer.Cenvio.Costo = obj.dataCotizador.parcel.weight == 0 ? 0 : obj.cenvio;
+            obj.requiredEnvio = true;
+        }
+        if(obj.dataCotizador.parcel.weight == 0 && obj.Costumer.Cenvio.Costo == 0 && obj.Numproducts != 0){
+            obj.Costumer.Cenvio.Costo = 120.00;
+        }
+        obj.total = obj.Costumer.Subtotal + parseFloat(obj.Costumer.Cenvio.Costo) - obj.Costumer.descuento;
+        return obj.total;
+    }
+
+    obj.actualizarSession = (Refaccion, opc) => {
+        $http({
+            method: 'POST',
+            url: url_session,
+            data: { modelo: Refaccion }
+        }).then(function successCallback(res) {
+            if (opc) {
+                obj.getDataUser({ opc: "get", username: obj.session.usr });
+            }
+        }, function errorCallback(res) {
+            toastr.error("Error: no se realizo la conexion con el servidor");
+        });
+    }
+    
+    /*=== TOOLTIP ===*/
+    $scope.tooltipSucursal = {
+        visible: false,
+        data: [],
+        style: {},
+        claveActiva: null
+    };
+
+    $scope.toggleTooltipSucursal = function(event, clave) {
+        if ($scope.tooltipSucursal.claveActiva === clave) {
+            $scope.tooltipSucursal.visible = false;
+            $scope.tooltipSucursal.claveActiva = null;
+            return;
+        }
+
+        const info = $scope.ProductosPorSucursal[clave];
+        if (!info) return;
+
+        const rect = event.currentTarget.getBoundingClientRect();
+
+        $scope.tooltipSucursal.data = info.sucursales;
+        $scope.tooltipSucursal.visible = true;
+        $scope.tooltipSucursal.claveActiva = clave;
+
+        $scope.tooltipSucursal.style = {
+            position: 'fixed',
+            top: (rect.bottom + 8) + 'px',
+            left: (rect.left + rect.width / 2) + 'px',
+            transform: 'translateX(-50%)',
+            zIndex: 9999
+        };
+    };
+
+    document.addEventListener("click", function(e){
+        if(!e.target.closest(".envio-label")){
+            $scope.$applyAsync(() => {
+                $scope.tooltipSucursal.visible = false;
+                $scope.tooltipSucursal.claveActiva = null;
+            });
+        }
+    });
+
+    obj.getSeicom = async (clave) => {
+        try {
+        
+            const response = await $http({
+                method: 'GET',
+                url: url_seicom,
+                params: { articulo: clave },
+                headers: { 'Content-Type': "application/x-www-form-urlencoded" },
+                transformResponse: data => $.parseXML(data)
+            });
+        
+            const xml = $(response.data).find("string");
+            const json = JSON.parse(xml.text());
+        
+            obj.SeiData = json;
+            return json;
+        
+        } catch (error) {
+            toastr.error(error);
+            return null;
+        }
+    };
+
+    /* EVÍO / COTIZADOR */
+    obj.empaquetar = () => {
+        const parcel = obj.dataCotizador.parcel;
+
+        let volumenTotal = 0;
+        let pesoTotal = 0;
+
+        let maxL = 0;
+        let maxW = 0;
+        let maxH = 0;
+
+        Object.values(obj.session.CarritoPrueba).forEach(e => {
+          const vol = e.Largo * e.Ancho * e.Alto * e.Cantidad;
+          volumenTotal += vol;
+        
+          maxL = Math.max(maxL, e.Largo);
+          maxW = Math.max(maxW, e.Ancho);
+          maxH = Math.max(maxH, e.Alto);
+        
+          if (!e.Enviogratis) {
+            pesoTotal += e.Peso * e.Cantidad;
+          }
+        });
+    
+        parcel.length = maxL + 2;
+        parcel.width  = maxW + 2;
+        parcel.height = maxH + 2;
+        parcel.weight = pesoTotal;
+    
+        let volumenCaja = parcel.length * parcel.width * parcel.height;
+    
+        if (volumenTotal >= 100000 && volumenTotal < 150000) {
+          parcel.length = 80;
+          parcel.width  = 40;
+          parcel.height = 45;
+        } 
+
+        else {
+          while (volumenCaja < volumenTotal) {
+            parcel.length += 2;
+
+            if (parcel.width < 40) parcel.width += 2;
+            if (parcel.height < 45) parcel.height += 2;
+
+            volumenCaja = parcel.length * parcel.width * parcel.height;
+          }
+        }
+    
+        obj.requiredEnvio = parcel.weight === 0;
+    };
+
+    obj.eliminarPaqueterias = (data) => {
+        let arrayPaq = ["CARSSA", "SKYDROPX", "JTEXPRESS", "SANDEX", "QUIKEN", "SENDEX", "UPS", "TRACUSA", "TRESGUERRAS"];
+        arrayPaq.forEach(e => {
+            data = data.filter(paqueteria => paqueteria.provider != e)
+        });
+        return data
+    }
+
+    obj.btnCotizacion = async () => {
+        if(obj.dataCotizador.parcel.weight < 1){
+            obj.dataCotizador.parcel.weight = 1;
+        }
+        try {
+            obj.dataCotizador.zip_to = obj.Costumer.dataDomicilio.data.Codigo_postal;
+            const result = await $http({
+                method: 'POST',
+                url: urlSkydropx,
+                data: obj.dataCotizador,
+                headers: {
+                    'Authorization': token,
+                    'Content-Type': "application/json"
+                }
+            }).then(function successCallback(res) {
+                return res
+
+            }, function errorCallback(res) {
+                console.error(res)
+                console.log("Error: no se realizo la conexion con el servidor");
+            });
+            obj.cotizador = obj.eliminarPaqueterias(result.data);
+            obj.cotizador.forEach(e => {
+                e.newtotal = (parseFloat(e.total_pricing)+4.64)+ parseFloat(e.total_pricing*(3.2/100));
+            });
+            obj.flag = false;
+
+            // $scope.$apply();
+        } catch (error) {
+            return false;
+        }
+    }
+
+    obj.btncotizar = () => {
+        obj.flag = true
+        obj.btnCotizacion();
+        $("#mdlcotizar").modal('show');
+    }
+
+    obj.selectenvio = (params) => {
+        obj.Costumer.Cenvio.paqueteria = params.provider;
+        obj.Costumer.Cenvio.Costo = params.newtotal;
+        obj.Costumer.Cenvio.CostoSnIva = params.total_pricing;
+        obj.Costumer.Cenvio.enviodias = params.days;
+        obj.Costumer.DiaEstimado = obj.getFechaentrega(obj.Costumer.Cenvio.enviodias);
+        obj.Costumer.Cenvio.Servicio = params.service_level_name;
+        obj.requiredEnvio = true;
+        $("#mdlcotizar").modal('hide');
+    }
+
+    obj.getFechaentrega = (dias) => {
+        const diasExtra = Math.max(0, ...Object.values($_SESSION.DiasenvioEXT || {}));
+        dias += diasExtra;
+        const arrayDias = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"];
+        const arrayMes = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+        const fecha = moment().add(dias, 'days')
+        return `${arrayDias[fecha.day()]} ${fecha.format("DD")} ${arrayMes[fecha.month()]}`;
+    }
+
+    /* CLIENTE / USUARIO */
     obj.getDataUser = (data) => {
         $http({
             method: 'POST',
@@ -286,7 +643,8 @@ function ComprasCtrl($scope, $http, $sce) {
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
                 obj.Costumer.profile = res.data.Data.datauser;
-                obj.Costumer.dataDomicilio = res.data.Data.datadomicilio
+                obj.Costumer.dataDomicilio = res.data.Data.datadomicilio;
+                obj.Costumer.dataCP = res.data.Data.dataCP;
                 obj.Costumer.dataFacturacion = res.data.Data.datafacturacion;
                 obj.Costumer.Cenvio = res.data.Data.Cenvio;
                 obj.cenvio = res.data.Data.Cenvio.Costo;
@@ -294,7 +652,8 @@ function ComprasCtrl($scope, $http, $sce) {
                 localStorage.setItem("id_rfc", obj.Costumer.dataFacturacion._id)
                 obj.Ttotal();
                 obj.dataflag = true;
-                // obj.prodCarrito(); funcion en preparacion, Estado: En espera.
+                prodCarrito(); //funcion en preparacion, Estado: En espera.
+                $scope.ProductosPorSucursal = $_SESSION.ProductosPorSucursal;
             } else {
                 toastr.error(res.data.mensaje)
             }
@@ -304,14 +663,16 @@ function ComprasCtrl($scope, $http, $sce) {
         });
     }
 
-    if ($_SESSION.facturacion == null) {
-        obj.Costumer.facturacion = 0;
-    } else if ($_SESSION.facturacion == 1) {
-        obj.Costumer.facturacion = 1;
+    obj.btndireccionguardadas = (pag) => {
+        localStorage.setItem("pag", pag);
+        location.href = "?mod=Profile&opc=" + pag;
     }
 
-    var butccompra = document.querySelector(".clip");
-    var butcompra = document.querySelector(".confirmar--pago");
+    obj.comprobarDatosFacturacion = (value) => {
+        obj.factflag = value == 1 ? true : false;
+    }
+
+    /* PAGO */
     obj.btnPagar = () => {
         butcompra.disabled = true;
         butccompra.classList.add("animationclip");
@@ -320,7 +681,7 @@ function ComprasCtrl($scope, $http, $sce) {
             if ((obj.Costumer.facturacion == "1" && obj.Costumer.dataFacturacion.Bandera) || obj.Costumer.facturacion == "0") {
                 if (obj.requiredEnvio) {
                     obj.Costumer.opc = "buy2";
-                    obj.Costumer.Cenvio.Servicio = obj.dataCotizador.parcel.weight == 0 ? "ENVIO GRATIS" : obj.Costumer.Cenvio.Servicio;
+                    //obj.Costumer.Cenvio.Servicio = obj.dataCotizador.parcel.weight == 0 ? "ENVIO GRATIS" : obj.Costumer.Cenvio.Servicio;
                     if (obj.Costumer.profile.cupon_nombre != null && obj.Costumer.profile.cupon_nombre != "") {
                         const cpn = obj.Costumer.profile.cupon_nombre.split(",");
                         obj.Costumer.usercpn = cpn.filter(Discpn => Discpn != obj.Costumer.usercpn);
@@ -404,26 +765,6 @@ function ComprasCtrl($scope, $http, $sce) {
         });
     }
 
-    obj.seturl = (url) => {
-        obj.url = $sce.trustAsResourceUrl(url);
-        location.href = obj.url;
-    }
-
-    obj.actualizarSession = (Refaccion, opc) => {
-        /*opc? true = elimina la variable de la session, false= no aplica nada*/
-        $http({
-            method: 'POST',
-            url: url_session,
-            data: { modelo: Refaccion }
-        }).then(function successCallback(res) {
-            if (opc) {
-                location.reload();
-            }
-        }, function errorCallback(res) {
-            toastr.error("Error: no se realizo la conexion con el servidor");
-        });
-    }
-
     obj.openDeposito = (id) => {
         localStorage.setItem("id_pedido", id)
         var popUp = window.open("./Reportes/fichaDeposito/Controller.php");
@@ -432,131 +773,89 @@ function ComprasCtrl($scope, $http, $sce) {
         }
         location.href = "?mod=ProcesoCompra&opc=paso3";
     }
+    
+    obj.seturl = (url) => {
+        obj.url = $sce.trustAsResourceUrl(url);
+        location.href = obj.url;
+    }
 
-    obj.btnEliminarRefaccion = (Refaccion) => {
-        Swal.fire({
-            title: "¿Deseas Eliminar la Refaccion del carrito?",
-            showCancelButton: true,
-            confirmButtonText: "Eliminar",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                    showConfirmButton: false,
-                    title: "¡Eliminado!",
-                    text: "El articulo fue eliminado",
-                    icon: "success"
-                });
-                Refaccion.erase = 1;
-                Refaccion.borrar = Refaccion.Clave;
-                Refaccion.n = $_SESSION["CarritoPrueba"]["length"];
-                obj.actualizarSession(Refaccion, true);
+    obj.RefaccionDetalles = (_id, newurl) => {
+        window.open("?mod=catalogo&opc=detalles&_id=" + _id + "-" + newurl, "_self");
+    }
+
+    obj.aplicarCupon = () => {
+
+        const inpCupon = document.getElementById("inpCupon");
+        const btnCupon = document.getElementById("btncupon");
+        const alertCupon = document.getElementById("alert--cupon");
+
+        const codigo = inpCupon.value.trim();
+        alertCupon.className = "";
+        alertCupon.innerHTML = "";
+
+        if (codigo === "") {
+            alertCupon.classList.add("cupon--alert-active");
+            alertCupon.innerHTML = "Ingresa un cupón";
+            return;
+        }
+
+        $http({
+            method: "POST",
+            url: url_getusercampras,
+            data: {
+                Compras: {
+                    opc: "validarCupon",
+                    cupon: codigo,
+                    id: obj.Costumer.profile.id
+                }
             }
+        }).then(res => {
+
+            if (res.data.Bandera === 1) {
+
+                const porcentaje = parseInt(res.data.descuento);
+                const monto = obj.Costumer.Subtotal * (porcentaje / 100);
+
+                obj.Costumer.descuento = monto;
+                obj.Costumer.valor_cpn = porcentaje;
+                obj.Costumer.usercpn = res.data.codigo;
+                obj.Costumer.id_cupon = res.data.id_cupon; //CLAVE
+
+                obj.Ttotal();
+
+                btnCupon.disabled = true;
+                inpCupon.disabled = true;
+
+                alertCupon.innerHTML = res.data.mensaje;
+
+            } else {
+                alertCupon.classList.add("cupon--alert-active");
+                alertCupon.innerHTML = res.data.mensaje;
+            }
+
+        }, () => {
+            alertCupon.classList.add("cupon--alert-active");
+            alertCupon.innerHTML = "Error al validar cupón";
         });
-    }
+    };
 
-    obj.getFechaentrega = (dias) => {
-        const arrayDias = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"];
-        const arrayMes = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
-        const fecha = moment().add(dias, 'days')
-        return `${arrayDias[fecha.day()]} ${fecha.format("DD")} ${arrayMes[fecha.month()]}`;
-    }
-
-    obj.btncotizar = () => {
-        obj.flag = true
-        obj.btnCotizacion();
-        $("#mdlcotizar").modal('show');
-    }
-
-    obj.selectenvio = (params) => {
-        obj.Costumer.Cenvio.paqueteria = params.provider;
-        obj.Costumer.Cenvio.Costo = params.newtotal;
-        obj.Costumer.Cenvio.CostoSnIva = params.total_pricing;
-        obj.Costumer.Cenvio.enviodias = params.days;
-        obj.Costumer.DiaEstimado = obj.getFechaentrega(obj.Costumer.Cenvio.enviodias);
-        obj.Costumer.Cenvio.Servicio = params.service_level_name;
-        obj.requiredEnvio = true;
+    var closecotizar = document.getElementById("cotizarclose");
+    closecotizar.addEventListener("click", function () {
         $("#mdlcotizar").modal('hide');
+    });
+
+    obj.changeCenvio = (Tarifa) => {
+        id = obj.Costumer.Cenvio.Costos.find(e => e.Tarifa === Tarifa);
     }
 
-    obj.empaquetar = () => {
-        var TotalVolumen = 0;
-        var TotalVolumen2 = 0;
-        Object.values(obj.session.CarritoPrueba).forEach(e => {
-            obj.dataCotizador.parcel.length = parseInt(e.Largo > obj.dataCotizador.parcel.length ? e.Largo : obj.dataCotizador.parcel.length);
-            obj.dataCotizador.parcel.width = parseInt(e.Ancho > obj.dataCotizador.parcel.width ? e.Ancho : obj.dataCotizador.parcel.width);
-            e.Volumen = (e.Largo * e.Ancho * e.Alto) * e.Cantidad;
-            TotalVolumen = e.Volumen + TotalVolumen;
-        });
-        Object.values(obj.session.CarritoPrueba).forEach(e => {
-            if (!e.Enviogratis) {
-                obj.dataCotizador.parcel.weight += parseFloat(e.Peso * e.Cantidad);
-                obj.dataCotizador.parcel.width = parseInt(e.Ancho > obj.dataCotizador.parcel.width ? e.Ancho : obj.dataCotizador.parcel.width);
-                obj.dataCotizador.parcel.height = parseInt(e.Alto > obj.dataCotizador.parcel.height ? e.Alto : obj.dataCotizador.parcel.height);
-                obj.dataCotizador.parcel.length = parseInt(e.Largo > obj.dataCotizador.parcel.length ? e.Largo : obj.dataCotizador.parcel.length);
-            }
-
-        });
-        obj.dataCotizador.parcel.length += parseFloat(2); obj.dataCotizador.parcel.width += parseFloat(2); obj.dataCotizador.parcel.height += parseFloat(2);
-        TotalVolumen2 = (obj.dataCotizador.parcel.length * obj.dataCotizador.parcel.width * obj.dataCotizador.parcel.height);
-        
-        if(TotalVolumen >= 100000 && TotalVolumen < 150000){
-            obj.dataCotizador.parcel.length = parseFloat(80); obj.dataCotizador.parcel.width = parseFloat(40); obj.dataCotizador.parcel.height = parseFloat(45);
-        }else{
-            while(TotalVolumen > TotalVolumen2) {
-                if(obj.dataCotizador.parcel.width < 40){
-                    obj.dataCotizador.parcel.width += parseFloat(2);
-                }
-
-                if(obj.dataCotizador.parcel.width > 40 && obj.dataCotizador.parcel.length > 80 && obj.dataCotizador.parcel.height < 45){
-                    obj.dataCotizador.parcel.height += parseFloat(2);
-                }
-
-                obj.dataCotizador.parcel.length += parseFloat(2);
-
-                TotalVolumen2 = (obj.dataCotizador.parcel.length * obj.dataCotizador.parcel.width * obj.dataCotizador.parcel.height);
-            }
-        }
-        console.log(obj.dataCotizador.parcel);
-        obj.requiredEnvio = obj.dataCotizador.parcel.weight != 0 ? false : true;
+    if ($_SESSION.facturacion == null) {
+        obj.Costumer.facturacion = 0;
+    } else if ($_SESSION.facturacion == 1) {
+        obj.Costumer.facturacion = 1;
     }
 
-    obj.eliminarPaqueterias = (data) => {
-        let arrayPaq = ["CARSSA", "SKYDROPX", "JTEXPRESS", "SANDEX", "QUIKEN", "SENDEX", "UPS", "TRACUSA", "TRESGUERRAS"];
-        arrayPaq.forEach(e => {
-            data = data.filter(paqueteria => paqueteria.provider != e)
-        });
-        return data
-    }
-
-    obj.btnCotizacion = async () => {
-        try {
-            obj.dataCotizador.zip_to = obj.Costumer.dataDomicilio.data.Codigo_postal;
-            const result = await $http({
-                method: 'POST',
-                url: urlSkydropx,
-                data: obj.dataCotizador,
-                headers: {
-                    'Authorization': token,
-                    'Content-Type': "application/json"
-                }
-            }).then(function successCallback(res) {
-                return res
-
-            }, function errorCallback(res) {
-                console.error(res)
-                console.log("Error: no se realizo la conexion con el servidor");
-            });
-            obj.cotizador = obj.eliminarPaqueterias(result.data);
-            obj.cotizador.forEach(e => {
-                e.newtotal = (parseFloat(e.total_pricing)+4.64)+ parseFloat(e.total_pricing*(3.2/100));
-            });
-            obj.flag = false;
-
-            $scope.$apply();
-        } catch (error) {
-            return false;
-        }
-    }
+    var butccompra = document.querySelector(".clip");
+    var butcompra = document.querySelector(".confirmar--pago");
 
     angular.element(document).ready(function () {
         if (obj.session.autentificacion == undefined && obj.session.autentificacion != 1) {

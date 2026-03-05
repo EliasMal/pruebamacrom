@@ -1,10 +1,10 @@
 <?php
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+define('USE_REDIS_CACHE', true);
+define('REDIS_HOST', '127.0.0.1');
+define('REDIS_PORT', 6379);
+define('REDIS_PREFIX', 'macrom:catalogo:');
+define('CACHE_TTL', 300); // 5 minutos
 
 define('MODULO_DEFECTO','home');
 define('LAYOUT_DEFECTO','plantilla.php');
@@ -28,10 +28,3 @@ $conf["Devoluciones"] = array('archivo'=>'Devoluciones/Controller.php');
 /* Estas rutas requiren inicio de session */
 $conf["ProcesoCompra"] = array('archivo'=>'ProcesoCompra/Controller.php');
 $conf["Profile"] = array('archivo'=>'Profile/Controller.php');
-
-// $cadena_url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-//  if(str_contains($cadena_url,'catalogo')){
-// 	var_dump($cadena_url);
-//  }else{
-// 	var_dump("no contiene la palabra");
-//  }

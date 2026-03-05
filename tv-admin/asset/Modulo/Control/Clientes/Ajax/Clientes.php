@@ -1,16 +1,4 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of Clientes
- *
- * @author francisco
- */
 session_name("loginUsuario");
 session_start();
 require_once "../../../../Clases/dbconectar.php";
@@ -62,32 +50,196 @@ class Clientes {
                 $this->jsonData["data"] = $element;
                 $this->jsonData["count"] = $this->getCount();
             break;
-            case 'cuponDelete':
+            case 'asignarCupon':
                 $this->jsonData["Bandera"] = 1;
-                $this->cuponDelete();
+                $this->asignarCuponCliente();
             break;
-            case 'cuponDeleteAll':
+            case 'quitarCupon':
                 $this->jsonData["Bandera"] = 1;
-                $this->cuponDeleteAll();
+                $this->quitarCuponCliente();
             break;
-            case 'cuponGuardar':
+            case 'getCuponesCliente':
                 $this->jsonData["Bandera"] = 1;
-                $this->cuponGuardar();
+                $this->jsonData["disponibles"] = $this->getCuponesDisponibles();
+                $this->jsonData["cliente"] = $this->getCuponesDelCliente();
             break;
-            case 'cuponGuardarAll':
+            case 'crearCupon':
                 $this->jsonData["Bandera"] = 1;
-                $this->cuponGuardarAll();
+                $this->crearCupon();
+            break;
+
+            case 'eliminarCupon':
+                $this->jsonData["Bandera"] = 1;
+                $this->eliminarCupon();
+            break;
+            
+            case 'toggleActivoCupon':
+                $this->jsonData["Bandera"] = 1;
+                $this->toggleActivoCupon();
+            break;
+            
+            case 'toggleGlobalCupon':
+                $this->jsonData["Bandera"] = 1;
+                $this->toggleGlobalCupon();
+            break;
+            
+            case 'listarCuponesAdmin':
+                $this->jsonData["Bandera"] = 1;
+                $this->jsonData["cupones"] = $this->listarCuponesAdmin();
             break;
         }
         print json_encode($this->jsonData);
     }
+
+    private function crearCupon(){
+
+        $codigo = strtoupper(trim($this->formulario->cliente->codigo));
+        $descuento = (int)$this->formulario->cliente->descuento;
+        $uso_unico = (int)$this->formulario->cliente->uso_unico;
+        $fecha = $this->formulario->cliente->fecha_expiracion ?: "NULL";
+        $es_global = (int)$this->formulario->cliente->es_global;
+
+        if($fecha != "NULL"){
+            $fecha = "'$fecha'";
+        }
+
+        $sql = "
+            INSERT INTO cupones 
+            (codigo, descuento, uso_unico, fecha_expiracion, activo, creado_en, es_global)
+            VALUES 
+            ('$codigo', $descuento, $uso_unico, $fecha, 1, NOW(), $es_global)
+        ";
+
+        return $this->conn->query($sql);
+    }
+
+    private function eliminarCupon(){
+
+        $id = (int)$this->formulario->cliente->id;
+
+        $sql = "DELETE FROM cupones WHERE id = $id";
+
+        return $this->conn->query($sql);
+    }
+
+    private function toggleActivoCupon(){
+
+        $id = (int)$this->formulario->cliente->id;
+
+        $sql = "
+            UPDATE cupones 
+            SET activo = IF(activo = 1, 0, 1)
+            WHERE id = $id
+        ";
+
+        return $this->conn->query($sql);
+    }
+
+    private function toggleGlobalCupon(){
+
+        $id = (int)$this->formulario->cliente->id;
+
+        $sql = "
+            UPDATE cupones 
+            SET es_global = IF(es_global = 1, 0, 1)
+            WHERE id = $id
+        ";
+
+        return $this->conn->query($sql);
+    }
+
+    private function listarCuponesAdmin(){
+                
+        $array = array();
+                
+        $sql = "
+            SELECT id, codigo, descuento, uso_unico, 
+                   fecha_expiracion, activo, creado_en, es_global
+            FROM cupones
+            ORDER BY creado_en DESC
+        ";
+                
+        $id = $this->conn->query($sql);
+                
+        while($row = $this->conn->fetch($id)){
+            array_push($array, $row);
+        }
+                
+        return $array;
+    }
+
+    private function getCuponesDisponibles(){
+        $array = array();
+
+        $sql = "
+            SELECT id, codigo, descuento, uso_unico, fecha_expiracion
+            FROM cupones
+            WHERE activo = 1
+            ORDER BY codigo ASC
+        ";
+
+        $id = $this->conn->query($sql);
+
+        while($row = $this->conn->fetch($id)){
+            array_push($array, $row);
+        }
+
+        return $array;
+    }
     
+    private function getCuponesDelCliente(){
+        $array = array();
+        $idCliente = (int)$this->formulario->cliente->id;
+
+        $sql = "
+            SELECT c.id, c.codigo, c.descuento
+            FROM clientes_cupones cc
+            INNER JOIN cupones c ON c.id = cc.id_cupon
+            WHERE cc.id_cliente = $idCliente
+            AND c.activo = 1
+            ORDER BY c.codigo ASC
+        ";
+
+        $id = $this->conn->query($sql);
+
+        while($row = $this->conn->fetch($id)){
+            array_push($array, $row);
+        }
+
+        return $array;
+    }
+
+    private function asignarCuponCliente(){
+        $idCliente = (int)$this->formulario->cliente->id;
+        $idCupon   = (int)$this->formulario->cliente->id_cupon;
+
+        $sql = "
+            INSERT IGNORE INTO clientes_cupones (id_cliente, id_cupon)
+            VALUES ($idCliente, $idCupon)
+        ";
+
+        return $this->conn->query($sql);
+    }
+
+    private function quitarCuponCliente(){
+        $idCliente = (int)$this->formulario->cliente->id;
+        $idCupon   = (int)$this->formulario->cliente->id_cupon;
+
+        $sql = "
+            DELETE FROM clientes_cupones
+            WHERE id_cliente = $idCliente
+            AND id_cupon = $idCupon
+        ";
+
+        return $this->conn->query($sql);
+    }
+
     private function getClientes(){
         $array = array();
         $historico = $this->formulario->cliente->historico =="true"? 0:1;
         $sql = "select C._id, Cs.username, concat(C.Apellidos, ' ', C.nombres) as nombre, 
-        C.correo, C.telefono, Cs.estatus  from clientes as C 
-        inner join Cseguridad as Cs on (Cs._id_cliente = C._id) where Cs.estatus = $historico order by C.Apellidos, C.nombres";
+        C.correo, C.telefono, Cs.Estatus  from clientes as C 
+        inner join Cseguridad as Cs on (Cs._id_cliente = C._id) where Cs.Estatus = $historico order by C.Apellidos, C.nombres";
         
         $id = $this->conn->query($sql);
         while($row = $this->conn->fetch($id)){
@@ -95,27 +247,12 @@ class Clientes {
         }
         return $array;
     }
-    private function cuponGuardarAll(){
-        $sql="update Cseguridad set cupon_nombre ='{$this->formulario->cliente->tagdata}'";
-        return $this->conn->query($sql);
-    }
-    private function cuponGuardar(){
-        $sql="update Cseguridad set cupon_nombre ='{$this->formulario->cliente->tagdata}' where _id_cliente= {$this->formulario->cliente->id}";
-        return $this->conn->query($sql);
-    }
-    private function cuponDelete(){
-        $sql="update Cseguridad set cupon_nombre ='' where _id_cliente= {$this->formulario->cliente->id}";
-        return $this->conn->query($sql);    
-    }
-    private function cuponDeleteAll(){
-        $sql="update Cseguridad set cupon_nombre = null";
-        return $this->conn->query($sql); 
-    }
+
     private function getnewClientes($week_start){
         $array = array();
         $sql = "select C._id, Cs.username, concat(C.Apellidos, ' ', C.nombres) as nombre, 
-        C.correo, C.telefono, Cs.estatus  from clientes as C 
-        inner join Cseguridad as Cs on (Cs._id_cliente = C._id) where C.FechaCreacion >= '$week_start' 
+        C.correo, C.telefono, Cs.Estatus  from clientes as C 
+        inner join Cseguridad as Cs on (Cs._id_cliente = C._id) where Cs.Estatus = 1 and C.FechaCreacion >= '$week_start' 
         order by C.Apellidos, C.nombres";
         $id = $this->conn->query($sql);
         while($row = $this->conn->fetch($id)){

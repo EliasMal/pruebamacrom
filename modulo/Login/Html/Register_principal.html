@@ -5,7 +5,9 @@
         <div class="container1">
             <div class="login">
                 <div class="login__contenedor__uno">
-                    <h4 class="contenedor__uno--texto">Calidad, Precio, Servicio</h4>
+                    <div class="brand-panel">
+                        <h2>CALIDAD,<br>PRECIO,<br>SERVICIO.</h2>
+                    </div>
                 </div>
                 
                 <div class="login__contenedor__dos">
@@ -19,10 +21,7 @@
 
                         <h4 class="contenedor__dos--titulo">Registrarme</h4>
 
-                            <!--<div ng-show="frmReg.correo.$dirty && frmReg.correo.$invalid"><img src="https://macromautopartes.com/images/icono notificacion.svg" alt="icon-user" style="width: 48px;padding-right: 2px;">Ingresa un correo valido.</div>
-                            <div ng-show="frmReg.cpass.$dirty && frmReg.cpass.$invalid || (Registro.Cpass != Registro.pass)"><img src="https://macromautopartes.com/images/icono notificacion.svg" alt="icon-user" style="width: 48px;padding-right: 2px;">Contraseñas no coinciden.</div>-->
                             <div ng-show="frmReg.correo.$dirty && frmReg.correo.$invalid"><img src="images/icono notificacion.svg" alt="icon-user" style="width: 48px;padding-right: 2px;">Ingresa un correo valido.</div>
-                            <div ng-show="frmReg.cpass.$dirty && frmReg.cpass.$invalid || (Registro.Cpass != Registro.pass)"><img src="images/icono notificacion.svg" alt="icon-user" style="width: 48px;padding-right: 2px;">Contraseñas no coinciden.</div>
 
                         <div class="contenedor__dos--registro">
 
@@ -42,19 +41,33 @@
                                 <input class="form-control" type="email" name="correo" id = "correo" placeholder="Correo Electronico *" ng-model = "Registro.username" required autocomplete="off" id="inprce">
                             </div>
 
-                            <div class="registro__datos" id="divpass">
+                            <!-- CONTRASEÑA -->
+                            <div class="registro__datos password-wrapper">
                                 <input class="form-control" type="password" name="pass" placeholder="Contraseña *" ng-model="Registro.pass" required id="inprpass">
-                                <button class="password__ver">
-                                    <i class="pass_ver pss fa fa-eye" aria-hidden="true"></i>
+                            
+                                <button type="button" class="toggle-eye" onclick="togglePassword('inprpass', this)">
+                                    <i class="fa fa-eye"></i>
                                 </button>
+                            
+                                <span id="icon-pass" class="validation-icon"></span>
                             </div>
                             
-                            <div class="registro__datos" id="divcpass">
-                                <input class="form-control" type="password" name="cpass" placeholder="Confirmar Contraseña *" ng-model="Registro.Cpass" required id="inprcpass">
-                                <button class="password__ver">
-                                    <i class="pass_ver cpss fa fa-eye" aria-hidden="true"></i>
-                                </button>
+                            <div class="strength">
+                                <div id="strength-bar" class="strength-bar"></div>
                             </div>
+                            
+                            <!-- CONFIRMAR -->
+                            <div class="registro__datos password-wrapper">
+                                <input class="form-control" type="password" name="cpass" placeholder="Confirmar Contraseña *" ng-model="Registro.Cpass" required id="inprcpass">
+                            
+                                <button type="button" class="toggle-eye" onclick="togglePassword('inprcpass', this)">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                            
+                                <span id="icon-confirm" class="validation-icon"></span>
+                            </div>
+                            
+                            <div id="match-status" class="match-status"></div>
 
                         </div>
 
@@ -66,7 +79,7 @@
 
                         <div class="secondary__contenedor--boton">
                             <p><b ng-show="!dataflag"><i class="fa fa-sync-alt fa-spin"></i></b></p>
-                            <span type="submit" class="flex-c-m bg9 hov1 m-text3 trans-0-4 btnolvide" ng-click="btnRegistrar()">Registrarme</span>
+                            <span ng-class="{'btn-disabled': !Registro.Aviso || frmReg.$invalid}" ng-click="Registro.Aviso && frmReg.$valid && btnRegistrar(frmReg)">Registrarme</span>
                         </div>
 
                         <p class="yatienes__cuenta">¿Ya tienes cuenta? <a href="?mod=login">Iniciar Sesión</a></p>

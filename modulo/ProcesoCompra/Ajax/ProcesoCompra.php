@@ -67,7 +67,56 @@ class ProcesoCompra {
             break;
             case 'buy2':
                 $this->formulario->Costumer->noPedido = $this->getnoPedido();
-                $this->formulario->Costumer->Importe = ($this->formulario->Costumer->Subtotal + $this->formulario->Costumer->Cenvio->Costo) - $this->formulario->Costumer->descuento;
+                //INICIAR TRANSACCIÓN
+                $this->conn->query("START TRANSACTION");
+                //Calcular subtotal REAL desde sesión
+                $subtotalReal = 0;
+                foreach($_SESSION["CarritoPrueba"] as $value){
+                    $subtotalReal += ($value["Cantidad"] * $value["Precio"]);
+                }
+                $idCupon = isset($this->formulario->Costumer->id_cupon) ? intval($this->formulario->Costumer->id_cupon) : 0;
+                $descuentoReal = 0;
+                $idCliente = intval($this->formulario->Costumer->profile->id);
+                if($idCupon > 0){
+
+                    $sql = "SELECT id, descuento, uso_unico, fecha_expiracion FROM cupones WHERE id = $idCupon AND activo = 1 LIMIT 1";
+                    $result = $this->conn->query($sql);
+
+                    if($this->conn->count_rows() == 0){
+                        $this->conn->query("ROLLBACK");
+                        $this->jsonData["mensaje"] = "Cupón inválido";
+                        print json_encode($this->jsonData);
+                        return;
+                    }
+                    $cupon = $this->conn->fetch($result);
+                    // Validar expiración
+                    if(!empty($cupon["fecha_expiracion"]) &&
+                       strtotime($cupon["fecha_expiracion"]) < time()){
+                        $this->conn->query("ROLLBACK");
+                        $this->jsonData["mensaje"] = "Cupón expirado";
+                        print json_encode($this->jsonData);
+                        return;
+                    }
+                    // Validar uso único por cliente
+                    if($cupon["uso_unico"] == 1){
+                        $sql = "SELECT id FROM cupones_usados WHERE id_cupon = $idCupon AND id_cliente = $idCliente LIMIT 1";
+                        $check = $this->conn->query($sql);
+
+                        if($this->conn->count_rows() > 0){
+                            $this->conn->query("ROLLBACK");
+                            $this->jsonData["mensaje"] = "Ya utilizaste este cupón";
+                            print json_encode($this->jsonData);
+                            return;
+                        }
+                    }
+                    //Recalcular descuento en backend
+                    $porcentaje = floatval($cupon["descuento"]);
+                    $descuentoReal = $subtotalReal * ($porcentaje / 100);
+                }
+                //obrescribir descuento enviado por frontend
+                $this->formulario->Costumer->descuento = $descuentoReal;
+                $this->formulario->Costumer->Importe =($subtotalReal + $this->formulario->Costumer->Cenvio->Costo)- $descuentoReal;
+
                 if($this->formulario->Costumer->Importe != 0){
                     switch($this->formulario->Costumer->metodoPago){
                         case 'Deposito':
@@ -93,13 +142,16 @@ class ProcesoCompra {
                                     unset($_SESSION["padlock"]);
                                     $this->deleteCarrito();
                                     $_SESSION["id_pedido"] = $id;
+                                    if($idCupon > 0){
+                                        $sql = "INSERT INTO cupones_usados (id_cupon, id_cliente, id_pedido) VALUES ($idCupon, $idCliente, $id)";
+                                        $this->conn->query($sql);
+                                    }
+                                    //Confirmar transacción
+                                    $this->conn->query("COMMIT");
+                                    
                                     $this->jsonData["Bandera"] = 1;
                                     $this->jsonData["mensaje"] = "Tu pedido se a generado satisfactoriamente";
-                                    $this->jsonData["Data"] = $id;
-
-                                    if($this->formulario->Costumer->descuento > 0){
-                                        $this->setcuponacre(); 
-                                    }            
+                                    $this->jsonData["Data"] = $id;       
                                     //Envio de registro satisfactorio al Correo del usuario.e
                                     $mail = new PHPMailer;
                                     $mail->isSMTP();
@@ -162,10 +214,12 @@ class ProcesoCompra {
                                 }else{
                                     $this->jsonData["Bandera"] = 0;
                                     $this->jsonData["Mensaje"] = "Error no se genero el pedido";
+                                    $this->conn->query("ROLLBACK");
                                 }
                             }else{
                                 $this->jsonData["Bandera"] = 0;
                                 $this->jsonData["mensaje"] = "Error al generar tu pedido por favor contactarse con la refaccionaria";
+                                $this->conn->query("ROLLBACK");
                             }
                             $_SESSION["Cenvio"]["costo"] = 0;
                             $_SESSION["Cenvio"]["Servicio"]= "";
@@ -174,47 +228,82 @@ class ProcesoCompra {
                         break;
 
                         case 'Tarjeta':
+                        
                             $this->cadenaOriginal = $this->setXML();
                             $this->encryptedString = $this->AES->encriptar($this->cadenaOriginal, $this->key);
                             $this->response = $this->AES->desencriptar($this->sendPost(),$this->key);
                             $tempgetXml = $this->getXML();
+                        
                             if($tempgetXml["res"]){
-                                $id = $this->setPedido2($this->formulario->Costumer->profile->id, $this->formulario->Costumer->Subtotal, 
-                                $this->formulario->Costumer->metodoPago, $this->formulario->Costumer->noPedido["folio"],
-                                $this->formulario->Costumer->Cenvio->Costo, $this->formulario->Costumer->Cenvio->Servicio,
-                                intval($this->formulario->Costumer->facturacion), isset($this->formulario->Costumer->dataFacturacion->data->_id)? 
-                                $this->formulario->Costumer->dataFacturacion->data->_id:0,
-                                $this->formulario->Costumer->dataDomicilio->data->_id,0,
-                                $this->formulario->Costumer->descuento,
-                                $this->formulario->Costumer->Cenvio->paqueteria,
-                                $this->formulario->Costumer->Cenvio->enviodias,
-                                $this->formulario->Costumer->DiaEstimado,
-                                $this->formulario->Costumer->Medidas->height,
-                                $this->formulario->Costumer->Medidas->length,
-                                $this->formulario->Costumer->Medidas->width,
-                                $this->formulario->Costumer->Medidas->weight);
-
-                                if($this->setPedidosDetalles($id)){
-                                    $_SESSION["id_pedido"] = $id;
-                                    unset($_SESSION["padlock"]);
-                                    $this->jsonData["Bandera"] = 1;
-                                    $this->jsonData["mensaje"] = "";
-                                    $this->jsonData["data"] = $tempgetXml["url"];
-                                    if($this->formulario->Costumer->descuento > 0){
-                                        $this->setcuponacre(); 
-                                    }  
+                        
+                                $id = $this->setPedido2(
+                                    $this->formulario->Costumer->profile->id, 
+                                    $this->formulario->Costumer->Subtotal, 
+                                    $this->formulario->Costumer->metodoPago, 
+                                    $this->formulario->Costumer->noPedido["folio"],
+                                    $this->formulario->Costumer->Cenvio->Costo, 
+                                    $this->formulario->Costumer->Cenvio->Servicio,
+                                    intval($this->formulario->Costumer->facturacion), 
+                                    isset($this->formulario->Costumer->dataFacturacion->data->_id)? 
+                                    $this->formulario->Costumer->dataFacturacion->data->_id:0,
+                                    $this->formulario->Costumer->dataDomicilio->data->_id,
+                                    0,
+                                    $this->formulario->Costumer->descuento,
+                                    $this->formulario->Costumer->Cenvio->paqueteria,
+                                    $this->formulario->Costumer->Cenvio->enviodias,
+                                    $this->formulario->Costumer->DiaEstimado,
+                                    $this->formulario->Costumer->Medidas->height,
+                                    $this->formulario->Costumer->Medidas->length,
+                                    $this->formulario->Costumer->Medidas->width,
+                                    $this->formulario->Costumer->Medidas->weight
+                                );
+                        
+                                if($id){
+                        
+                                    if($this->setPedidosDetalles($id)){
+                        
+                                        // MISMA LÓGICA QUE DEPÓSITO
+                        
+                                        unset($_SESSION["CarritoPrueba"]);
+                                        unset($_SESSION["padlock"]);
+                                        $this->deleteCarrito();
+                                        $_SESSION["id_pedido"] = $id;
+                        
+                                        if($idCupon > 0){
+                                            $sql = "INSERT INTO cupones_usados (id_cupon, id_cliente, id_pedido) 
+                                                    VALUES ($idCupon, $idCliente, $id)";
+                                            $this->conn->query($sql);
+                                        }
+                        
+                                        //MUY IMPORTANTE
+                                        $this->conn->query("COMMIT");
+                        
+                                        $this->jsonData["Bandera"] = 1;
+                                        $this->jsonData["mensaje"] = "Pedido generado, redirigiendo al pago con tarjeta";
+                                        $this->jsonData["data"] = $tempgetXml["url"];
+                        
+                                    }else{
+                                        $this->conn->query("ROLLBACK");
+                                        $this->jsonData["Bandera"] = 0;
+                                        $this->jsonData["mensaje"] = "Error al generar detalles del pedido";
+                                    }
+                        
                                 }else{
+                                    $this->conn->query("ROLLBACK");
                                     $this->jsonData["Bandera"] = 0;
-                                    $this->jsonData["Mensaje"] = "Error no se genero el pedido";
+                                    $this->jsonData["mensaje"] = "Error al generar el pedido";
                                 }
+                        
                             }else{
+                                $this->conn->query("ROLLBACK");
                                 $this->jsonData["Bandera"] = 0;
-                                $this->jsonData["mensaje"]="Error no se genero la liga para el cobro por la tarjeta de credito";
+                                $this->jsonData["mensaje"] = "Error no se genero la liga para el cobro por tarjeta";
                             }
+                        
                             $_SESSION["Cenvio"]["costo"] = 0;
                             $_SESSION["Cenvio"]["Servicio"]= "";
-                            //Aqui incrementamos el folio del numero de orden el no de pedido
                             $this->setnoPedido();
+                        
                         break;
                     }
                 }
@@ -225,30 +314,36 @@ class ProcesoCompra {
         print json_encode($this->jsonData);
     }
     
-    private function actEXcompra (){
-        foreach($_SESSION["CarritoPrueba"] as $key => $value){
-            $sql = "SELECT _id FROM Producto where Clave={$value["Clave"]}";
-            $id = $this->conn->query($sql);
-            $NewStock = $value["Existencias"] - $value["Cantidad"];
-            if($this->conn->count_rows()!=0){
-                while($row = $this->conn->fetch($id)){
-                    $sql = "UPDATE Producto SET stock = ".$NewStock." WHERE _id = {$row["_id"]}";
-                    $this->conn->query($sql);
-                }
+    private function actEXcompra(){
+
+        foreach($_SESSION["CarritoPrueba"] as $value){
+
+            $idProducto = intval($value["imagenid"]);
+            $cantidad = intval($value["Cantidad"]);
+
+            $sql = "UPDATE Producto SET stock = stock - $cantidad WHERE _id = $idProducto AND stock >= $cantidad";
+
+            $this->conn->query($sql);
+            if($this->conn->affected_rows() == 0){
+
+                // Cancelamos todo
+                $this->conn->query("ROLLBACK");
+
+                $this->jsonData["Bandera"] = 0;
+                $this->jsonData["mensaje"] = "Uno de los productos ya no tiene suficiente inventario.";
+
+                print json_encode($this->jsonData);
+                exit; // detenemos ejecución inmediatamente
             }
         }
-        return;
+
+        return true;
     }
 
     private function getOneCostumer (){
         $sql = "SELECT * FROM clientes where Estatus = 1 and correo='{$this->formulario->Costumer->usr}'";
         return $this->conn->fetch($this->conn->query($sql));
         
-    }
-   // UPDATE macromau_database.Cseguridad set cuponacre = 1 where _id_cliente = 184;
-    private function setcuponacre(){
-        $sql = "UPDATE Cseguridad SET cupon_nombre = '{$this->formulario->Costumer->usercpn}' WHERE _id_cliente = '{$this->formulario->Costumer->profile->id}'";
-        return $this->conn->query($sql)? true: false;
     }
     
     private function setOneCostumer(){

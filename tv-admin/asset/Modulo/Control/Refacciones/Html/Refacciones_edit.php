@@ -110,6 +110,30 @@
                                                                     </optgroup>
                                                                 </select>
                                                             </div>
+                                                            <!-- <div class="col-md-6 col-lg-6">
+                                                                <label>Marca del Vehiculo: <span class="text-danger">*</span></label>
+                                                                <select name="slcmarcav" id="slcmarcav" class="form-control" ng-model = "refaccion.Marca" ng-change="getVehiculos()" ng-disabled="habilitado" required>
+                                                                    <optgroup label="Selecciona la marca del vehiculo">
+                                                                        <option ng-repeat="marca in Marcas" value="{{marca._id}}">{{marca.Marca}}</option>
+                                                                    </optgroup>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-6">
+                                                                <label>Vehiculo: <span class="text-danger">*</span></label>
+                                                                <select name="slcvehiculo" id="slcvehiculo" class="form-control" ng-model = "refaccion.Vehiculo" ng-change="getModelos()" ng-disabled="habilitado" required>
+                                                                    <optgroup label="Selecciona el vehiculo">
+                                                                        <option ng-repeat="vehiculo in Vehiculos" value="{{vehiculo._id}}">{{vehiculo.Modelo}}</option>
+                                                                    </optgroup>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-6 col-lg-6">
+                                                                <label>Modelo: <span class="text-danger">*</span></label>
+                                                                <select name="slcmodelo" id="slcmodelo" class="form-control" ng-model="refaccion.Modelo" ng-disabled="habilitado" required>
+                                                                    <optgroup label="Selecciona el año del Vehiculo">
+                                                                        <option ng-repeat="modelo in Modelos" value="{{modelo._id}}">{{modelo.Anio}}</option>
+                                                                    </optgroup>
+                                                                </select>
+                                                            </div> -->
                                                             
                                                            <!--   -->
                                                             <div class="col-md-6 col-lg-6">

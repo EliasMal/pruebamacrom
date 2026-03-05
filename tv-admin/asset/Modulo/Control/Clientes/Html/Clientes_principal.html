@@ -41,8 +41,10 @@
                                             ng-click="getClientes()">
                                         <label for="switch-id">Historico</label>
                                     </span>
-                                    <span class="switch switch-sm pull-right cuponesgen">
-                                        <a href="?mod=Clientes&opc=perfil&id=286">Cupones Generales</a>
+                                    <span class="pull-right cuponesgen">
+                                        <a href="?mod=Clientes&opc=cupones" class="btn-cupones-nav">
+                                            <i class="fas fa-ticket-alt"></i> Cupones Generales
+                                        </a>
                                     </span>
                                 </div>
                                 <div class="col-lg-12">
@@ -76,10 +78,10 @@
                                                                     ng-click="btnPerfil(user._id)"><i
                                                                         class="fa fa-edit"> Perfil</i></a>
                                                                 <a class="dropdown-item enlace"
-                                                                    ng-click="user.estatus == 1? getEstatus(user._id, 0):getEstatus(user._id,1)">
+                                                                    ng-click="user.Estatus == 1? getEstatus(user._id, 0):getEstatus(user._id,1)">
                                                                     <i
-                                                                        class="fas {{user.estatus == 1? ' fa-user-slash':'fa-user-plus'}}"></i>
-                                                                    {{user.estatus == 1? "Desactivar":"Activar"}}
+                                                                        class="fas {{user.Estatus == 1? ' fa-user-slash':'fa-user-plus'}}"></i>
+                                                                    {{user.Estatus == 1? "Desactivar":"Activar"}}
                                                                 </a>
                                                                 <a class="dropdown-item enlace"
                                                                     ng-click="changepass(user._id)"> <i

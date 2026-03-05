@@ -1,6 +1,5 @@
 const url_catalogo = "./modulo/Catalogo/Ajax/Catalogo.php";
 var url_session = "./modulo/home/Ajax/session.php";
-const url_seicom = "https://volks.dyndns.info:444/service.asmx/consulta_art";
 
 tsuruVolks
     .controller('catalogosCtrl', ["$scope", "$http", catalogosCtrl])
@@ -12,8 +11,28 @@ tsuruVolks
         }
     });
 
+    const getParams = () => {
+        const params = {};
+        window.location.search.replace("?", "").split("&").forEach(p => {
+            if (!p) return;
+            const [key, val] = p.split("=");
+            params[key] = decodeURIComponent(val || "");
+        });
+        return params;
+    };
+    
+    const URL_PARAMS = getParams();
+
 function catalogosCtrl($scope, $http) {
     var obj = $scope;
+    let next_url    = parseInt(URL_PARAMS.pag || 1);
+    let next_prod   = decodeURIComponent(URL_PARAMS.prod || "");
+    let next_cate   = decodeURIComponent(URL_PARAMS.cate || "");
+    let next_marca  = decodeURIComponent(URL_PARAMS.armadora || "");
+    let next_mdl    = decodeURIComponent(URL_PARAMS.mdl || "");
+    let next_provee = decodeURIComponent(URL_PARAMS.proveedor || "");
+    let next_dispo  = decodeURIComponent(URL_PARAMS.Disponibilidad || "");
+
     obj.refaccion = {
         opc: "Buscar",
         tipo: "",
@@ -42,242 +61,286 @@ function catalogosCtrl($scope, $http) {
     obj.pageSize = 20;
     obj.Trefacciones = 0;
     obj.view = 20;
-    obj.tagsFiltro = {
-        tagsDispo: "",
-        tagsMarca: "",
-        tagsCatego: "",
-        tagsProvee: "",
-        tagsVehiculo: ""
+
+    const updateURL = (params = {}, resetPage = true) => {
+        const query = new URLSearchParams(window.location.search);
+
+        Object.keys(params).forEach(k => {
+            if (!params[k]) {
+                query.delete(k);
+            } else {
+                query.set(k, params[k]);
+            }
+        });
+
+        if (resetPage) query.set("pag", 1);
+
+        window.location.search = query.toString();
     };
 
-    let url_actual = window.location.href;
-    const mylink = window.location.href.split("&");
-    const next_url = mylink[1].split("=")[1];
-    var next_prod="";var next_cate="";var next_marca="";
-    var next_mdl="";var next_vehi="";var next_provee="";var next_dispo="";
+    obj.tagsFiltro = {
+        tagsDispo: next_dispo ? next_dispo.split(",") : [],
+        tagsMarca: next_marca ? next_marca.split(",") : [],
+        tagsCatego: next_cate ? next_cate.split(",") : [],
+        tagsProvee: next_provee ? next_provee.split(",") : [],
+        tagsVehiculo: next_mdl ? next_mdl.split(",") : []
+    };
+
     const aplicarbutton = document.querySelector(".filtro__aplicar--button");
     const borrarbutton = document.querySelector(".filtro__quitar--button");
     const seleccionDiv = document.querySelector(".name__seleccionados");
     const miDiv = document.getElementById("tags__filtros");
-
-    checkmark = async (value, checkid) => {
-        const checkbox = document.querySelector('input[id="' + checkid + '"]');
-        const name = checkbox.getAttribute("name");
-        if (checkbox.checked) {
-            const contenedorTags = document.createElement("div");
-            const nuevoDiv = document.createElement("div");
-            const nuevoI = document.createElement("i");
-
-            contenedorTags.className = "tags__contenedor";
-            contenedorTags.setAttribute("name", name + "__tags");
-            contenedorTags.id = "tags__contendor__" + checkbox.id;
-            miDiv.appendChild(contenedorTags);
-            const tagsDiv = document.getElementById(contenedorTags.id);
-
-            tagsDiv.setAttribute("onclick", "desmark(id)");
-            nuevoI.className = "fas fa-times cursorpnt";
-            tagsDiv.appendChild(nuevoI);
-
-            nuevoDiv.className = "Filtro_Seleccion " + checkbox.id;
-            nuevoDiv.id = checkbox.id + "_" + name;
-            nuevoDiv.innerHTML = checkbox.id;
-            tagsDiv.appendChild(nuevoDiv);
-            switch (name) {
-                case "Disponibilidad":
-                    if(obj.tagsFiltro.tagsDispo.length >= 1){
-                        obj.tagsFiltro.tagsDispo += ","+checkid;
-                    }else{
-                        obj.tagsFiltro.tagsDispo += checkid;
-                    }
-                    if(url_actual.includes("Disponibilidad=")){
-                        if(next_dispo.length < obj.tagsFiltro.tagsDispo.length){
-                            url_actual = url_actual.replace("Disponibilidad="+next_dispo,"Disponibilidad="+obj.tagsFiltro.tagsDispo);
-                            url_actual = url_actual.replace("pag="+next_url,"pag=1");
-                            window.location.href = url_actual;
-                        }
-                    }else{
-                        url_actual +="&Disponibilidad="+obj.tagsFiltro.tagsDispo;
-                        url_actual = url_actual.replace("pag="+next_url,"pag=1");
-                        window.location.href = url_actual;
-                    }
-                    break;
-                case "Marca":
-                    if(obj.tagsFiltro.tagsMarca.length >= 1){
-                        obj.tagsFiltro.tagsMarca += ","+value;
-                    }else{
-                        obj.tagsFiltro.tagsMarca += value;
-                    }
-                    if(mylink[4].includes(next_marca) && mylink[4].includes(obj.tagsFiltro.tagsMarca)){
-                    }else{
-                        url_actual = url_actual.replace("armadora="+next_marca,"armadora="+obj.tagsFiltro.tagsMarca);
-                        url_actual = url_actual.replace("pag="+next_url,"pag=1");
-                        window.location.href = url_actual;
-                    }
-
-                    break;
-                case "Vehiculo":
-                    if(obj.tagsFiltro.tagsVehiculo.length >= 1){
-                        obj.tagsFiltro.tagsVehiculo += ","+value;
-                    }else{
-                        obj.tagsFiltro.tagsVehiculo += value;
-                    }
-                    if(mylink[5].includes(next_mdl) && mylink[5].includes(obj.tagsFiltro.tagsVehiculo)){
-                    }else{
-                        url_actual = url_actual.replace("mdl="+next_mdl,"mdl="+obj.tagsFiltro.tagsVehiculo);
-                        url_actual = url_actual.replace("pag="+next_url,"pag=1");
-                        window.location.href = url_actual;
-                    }
-                    break;
-                case "Categoria":
-                    if(obj.tagsFiltro.tagsCatego.length >= 1){
-                        obj.tagsFiltro.tagsCatego += ","+value;
-                    }else{
-                        obj.tagsFiltro.tagsCatego += value;
-                    }
-
-                    if(next_cate=="T"){
-                        next_cate="";
-                    }
-
-                    if(mylink[3].includes(next_cate) && mylink[3].includes(obj.tagsFiltro.tagsCatego)){
-                    }else{
-                        url_actual = url_actual.replace("cate="+next_cate,"cate="+obj.tagsFiltro.tagsCatego);
-                        url_actual = url_actual.replace("pag="+next_url,"pag=1");
-                        window.location.href = url_actual;
-                    }
-
-                    break;
-                case "Proveedor":
-                    if(obj.tagsFiltro.tagsProvee.length >= 1){
-                        obj.tagsFiltro.tagsProvee += ","+value;
-                    }else{
-                        obj.tagsFiltro.tagsProvee += value;
-                    }
-                    if(url_actual.includes("proveedor=")){
-                        if(next_provee.length < obj.tagsFiltro.tagsProvee.length){
-                            url_actual = url_actual.replace("proveedor="+next_provee,"proveedor="+obj.tagsFiltro.tagsProvee);
-                            url_actual = url_actual.replace("pag="+next_url,"pag=1");
-                            window.location.href = url_actual;
-                        }
-                    }else{
-                        url_actual +="&proveedor="+obj.tagsFiltro.tagsProvee;
-                        url_actual = url_actual.replace("pag="+next_url,"pag=1");
-                        window.location.href = url_actual;
-                    }
-                    break;
-            }
-        } else {
-            switch (name) {
-                case "Disponibilidad":
-                    let tagsArregloDispo = obj.tagsFiltro.tagsDispo.split(",");
-                    let tagsArregloFiltroDispo = tagsArregloDispo.filter(elemento => elemento !== checkid);
-                    tagsArregloFiltroDispo = tagsArregloFiltroDispo.toString();
-                    obj.tagsFiltro.tagsDispo = tagsArregloFiltroDispo;
-                    if(obj.tagsFiltro.tagsDispo == ""){
-                        url_actual = url_actual.replace("&Disponibilidad="+next_dispo,"");
-                        url_actual = url_actual.replace("pag="+next_url,"pag=1");
-                        window.location.href = url_actual;
-                    }else{
-                        url_actual = url_actual.replace("Disponibilidad="+next_dispo,"Disponibilidad="+obj.tagsFiltro.tagsDispo);
-                        url_actual = url_actual.replace("pag="+next_url,"pag=1");
-                        window.location.href = url_actual;
-                    }
-                    break;
-                case "Marca":
-                    let valorEliminarMarca;
-                    let tagsArregloVehiculoMarca = obj.tagsFiltro.tagsVehiculo.split(",");
-                    let tagsArregloFiltroVehiculoMarca = tagsArregloVehiculoMarca;
-                    obj.Marcas.forEach(m =>{
-                        if(checkid == m.Marca){
-                            valorEliminarMarca = m._idMarca;
-                        }
-                    });
-
-                    if(obj.Vehiculos.length > 0){
-                        obj.Vehiculos.forEach(v =>{
-                            tagsArregloVehiculoMarca.forEach(md =>{
-                                if(md == v._id && v._idMarca == valorEliminarMarca){
-
-                                    tagsArregloFiltroVehiculoMarca = tagsArregloFiltroVehiculoMarca.filter(elemento => elemento !== md);
-                                }
-                            });
-                        });
-                        tagsArregloFiltroVehiculoMarca = tagsArregloFiltroVehiculoMarca.toString();
-                        obj.tagsFiltro.tagsVehiculo = tagsArregloFiltroVehiculoMarca;
-                        url_actual = url_actual.replace("mdl="+next_mdl,"mdl="+obj.tagsFiltro.tagsVehiculo);
-                    }
-
-                    console.log(url_actual);
-                    let tagsArregloMarca = obj.tagsFiltro.tagsMarca.split(",");
-                    let tagsArregloFiltroMarca = tagsArregloMarca.filter(elemento => elemento !== value);
-                    tagsArregloFiltroMarca = tagsArregloFiltroMarca.toString();
-                    obj.tagsFiltro.tagsMarca = tagsArregloFiltroMarca;
-                    url_actual = url_actual.replace("armadora="+next_marca,"armadora="+obj.tagsFiltro.tagsMarca);
-                    url_actual = url_actual.replace("pag="+next_url,"pag=1");
-                    window.location.href = url_actual;
-                    break;
-                case "Vehiculo":
-                    let tagsArregloVehiculo = obj.tagsFiltro.tagsVehiculo.split(",");
-                    let tagsArregloFiltroVehiculo = tagsArregloVehiculo.filter(elemento => elemento !== value);
-                    tagsArregloFiltroVehiculo = tagsArregloFiltroVehiculo.toString();
-                    obj.tagsFiltro.tagsVehiculo = tagsArregloFiltroVehiculo;
-                    url_actual = url_actual.replace("mdl="+next_mdl,"mdl="+obj.tagsFiltro.tagsVehiculo);
-                    url_actual = url_actual.replace("pag="+next_url,"pag=1");
-                    window.location.href = url_actual;
-
-                    break;
-                case "Categoria":
-                    let tagsArregloCatego = obj.tagsFiltro.tagsCatego.split(",");
-                    let tagsArregloFiltroCatego = tagsArregloCatego.filter(elemento => elemento !== value);
-                    tagsArregloFiltroCatego = tagsArregloFiltroCatego.toString();
-                    obj.tagsFiltro.tagsCatego = tagsArregloFiltroCatego;
-                    url_actual = url_actual.replace("cate="+next_cate,"cate="+obj.tagsFiltro.tagsCatego);
-                    url_actual = url_actual.replace("pag="+next_url,"pag=1");
-                    window.location.href = url_actual;
-                    break;
-                case "Proveedor":
-                    let tagsArregloProvee = obj.tagsFiltro.tagsProvee.split(",");
-                    let tagsArregloFiltroProvee = tagsArregloProvee.filter(elemento => elemento !== value);
-                    tagsArregloFiltroProvee = tagsArregloFiltroProvee.toString();
-                    obj.tagsFiltro.tagsProvee = tagsArregloFiltroProvee;
-                    if(obj.tagsFiltro.tagsProvee == ""){
-                        url_actual = url_actual.replace("&proveedor="+next_provee,"");
-                        url_actual = url_actual.replace("pag="+next_url,"pag=1");
-                        window.location.href = url_actual;
-                    }else{
-                        url_actual = url_actual.replace("proveedor="+next_provee,"proveedor="+obj.tagsFiltro.tagsProvee);
-                        url_actual = url_actual.replace("pag="+next_url,"pag=1");
-                        window.location.href = url_actual;
-                    }
-                    break;
-            }
-            const borrarDiv = document.getElementById("tags__contendor__" + checkbox.id);
-            borrarDiv.remove();
-        }
-
-        if (miDiv.childElementCount > 0) {
-            aplicarbutton.classList.remove("dis-none");
-            borrarbutton.classList.remove("dis-none");
-            if(document.getElementById("BodyDark").classList.contains("desktop")){
-                seleccionDiv.classList.remove("dis-none")
-            }
-        } else {
-            aplicarbutton.classList.add("dis-none");
-            borrarbutton.classList.add("dis-none");
-            if(document.getElementById("BodyDark").classList.contains("desktop")){
-                seleccionDiv.classList.add("dis-none")
-            }
-        }
-
+    
+    /* HELPERS DE FILTROS */
+    
+    function getDisponibilidadValue(label) {
+        return label.replace(/\s+/g, "+");
     }
 
-    aplicarbutton.addEventListener("click", clearfilter =>{
-        window.location.href = "?mod=catalogo&pag=1&prod=&cate=&armadora=&mdl=&[a]=";
+    function hasAnyFilter() {
+        return Object.values(obj.tagsFiltro).some(v => v);
+    }
+
+    function toggleApplyIfNeeded() {
+        if (hasAnyFilter()) toggleActionButtons();
+    }
+
+    function renderTag({ name, value, label }) {
+
+        // evitar duplicados
+        const tagId = `tags__${name}_${value}`;
+        if (document.getElementById(tagId)) return;
+
+        const contenedorTags = document.createElement("div");
+        const nuevoDiv = document.createElement("div");
+        const nuevoI = document.createElement("i");
+
+        contenedorTags.className = "tags__contenedor";
+        contenedorTags.id = tagId;
+        contenedorTags.setAttribute("name", name + "__tags");
+        contenedorTags.setAttribute("onclick", `desmark('${tagId}')`);
+
+        nuevoI.className = "fas fa-times cursorpnt";
+        nuevoDiv.className = "Filtro_Seleccion " + value;
+        nuevoDiv.id = value + "_" + name;
+        nuevoDiv.innerHTML = label;
+
+        contenedorTags.appendChild(nuevoI);
+        contenedorTags.appendChild(nuevoDiv);
+
+        miDiv.appendChild(contenedorTags);
+    }
+
+    function checkByValue(name, value) {
+
+        const inputs = document.querySelectorAll(
+            `input[type="checkbox"][name="${name}"]`
+        );
+
+        inputs.forEach(input => {
+            const domValue = input.value.replace(/\+/g, " ");
+            const tagValue = value.replace(/\+/g, " ");
+
+            if (domValue === tagValue) {
+                input.checked = true;
+            }
+        });
+    }
+    
+    function normalizeDisponibilidad(val = "") {
+        return val
+            .replace(/\+/g, " ")
+            .trim();
+    }
+
+    function hydrateFiltersFromURL() {
+        setTimeout(() => {
+            // MARCA
+            if (next_marca) {
+                next_marca.split(",").forEach(id => {
+                    checkByValue("Marca", id);
+
+                    const marca = obj.Marcas.find(m => m._idMarca == id);
+                    if (!marca) return;
+
+                    renderTag({name: "Marca",value: id,label: marca.Marca});
+                });
+            }
+            // CATEGORIA
+            if (next_cate) {
+                next_cate.split(",").forEach(id => {
+                    checkByValue("Categoria", id);
+
+                    const cat = obj.categorias.find(c => c._id == id);
+                    if (!cat) return;
+
+                    renderTag({name: "Categoria",value: id,label: cat.Categoria});
+                });
+            }
+            // VEHICULO
+            if (next_mdl) {
+                next_mdl.split(",").forEach(id => {
+                    checkByValue("Vehiculo", id);
+
+                    const veh = obj.Vehiculos.find(v => v._id == id);
+                    if (!veh) return;
+
+                    renderTag({name: "Vehiculo",value: id,label: veh.Modelo});
+                });
+            }
+            // PROVEEDOR
+            if (next_provee) {
+                next_provee.split(",").forEach(id => {
+                    checkByValue("Proveedor", id);
+
+                    const prov = obj.Proveedores.find(p => p.id_proveedor == id);
+                    if (!prov) return;
+
+                    renderTag({name: "Proveedor",value: id,label: prov.Proveedor});
+                });
+            }
+            // DISPONIBILIDAD
+            if (next_dispo) {
+                next_dispo.split(",").forEach(raw => {
+                    const label = normalizeDisponibilidad(raw);
+                    const value = getDisponibilidadValue(label);
+
+                    checkByValue("Disponibilidad", value);
+                    renderTag({name: "Disponibilidad",value: value,label: label});
+                });
+            }
+
+            toggleApplyIfNeeded();
+        }, 0);
+    }
+
+    function filterVehiculosByMarca() {
+
+        if (!Array.isArray(obj.Vehiculos)) return;
+
+        const marcasActivas = obj.tagsFiltro.tagsMarca;
+
+        // vehículos que sí siguen siendo válidos
+        const vehiculosValidos = obj.tagsFiltro.tagsVehiculo.filter(idVehiculo => {
+            const veh = obj.Vehiculos.find(v => v._id == idVehiculo);
+            return veh && marcasActivas.includes(String(veh._idMarca));
+        });
+
+        // detectar los que se van a eliminar
+        const eliminados = obj.tagsFiltro.tagsVehiculo.filter(v => !vehiculosValidos.includes(v));
+
+        // actualizar estado interno
+        obj.tagsFiltro.tagsVehiculo = vehiculosValidos;
+
+        // desmarcar checkboxes y eliminar tags
+        eliminados.forEach(id => {
+            const cb = document.querySelector(`input[name="Vehiculo"][value="${id}"]`);
+            if (cb) cb.checked = false;
+
+            const tag = document.getElementById(`tags__Vehiculo_${id}`);
+            if (tag) tag.remove();
+        });
+    }
+
+    function refreshURL() {
+        obj.tagsFiltro.tagsDispo = [...new Set(obj.tagsFiltro.tagsDispo)];
+        updateURL({
+            armadora: (obj.tagsFiltro.tagsMarca || []).join(","),
+            cate: (obj.tagsFiltro.tagsCatego || []).join(","),
+            proveedor: (obj.tagsFiltro.tagsProvee || []).join(","),
+            Disponibilidad: (obj.tagsFiltro.tagsDispo || []).join(","),
+            mdl: (obj.tagsFiltro.tagsVehiculo || []).join(",")
+        });
+    }
+
+    function applyCurrentFilters() {
+        updateURL({
+            armadora: obj.tagsFiltro.tagsMarca.join(","),
+            cate: obj.tagsFiltro.tagsCatego.join(","),
+            proveedor: obj.tagsFiltro.tagsProvee.join(","),
+            Disponibilidad: obj.tagsFiltro.tagsDispo.join(","),
+            mdl: obj.tagsFiltro.tagsVehiculo.join(",")
+        });
+    }
+
+    const hasFilters = Object.values(obj.tagsFiltro).some(v => v);
+    function toggleActionButtons() {
+        const visible = miDiv.childElementCount > 0 || hasAnyFilter();
+
+        aplicarbutton.classList.toggle("dis-none", !visible);
+        borrarbutton.classList.toggle("dis-none", !visible);
+
+        if (document.getElementById("BodyDark").classList.contains("desktop")) {
+            seleccionDiv.classList.toggle("dis-none", !visible);
+        }
+    }
+    if (hasFilters) toggleActionButtons();
+    
+    function lockMarcas(lock = true) {
+        document.querySelectorAll('input[name="Marca"]').forEach(cb => {
+            cb.disabled = lock;
+            cb.closest("label").classList.toggle("disabled", lock);
+        });
+    }
+
+    function applyFilter({ name, value, checked }) {
+        const MULTISELECT = ["Marca", "Proveedor", "Vehiculo", "Disponibilidad", "Categoria"];
+        const map = {
+            "Disponibilidad": "tagsDispo",
+            "Categoria": "tagsCatego",
+            "Proveedor": "tagsProvee",
+            "Marca": "tagsMarca",
+            "Vehiculo": "tagsVehiculo"
+        };
+
+        const prop = map[name];
+        if (!prop) return;
+
+        if (MULTISELECT.includes(name)) {
+        
+            const finalValue = name === "Disponibilidad"
+                ? getDisponibilidadValue(value)
+                : value;
+
+            if (checked) {
+                if (!obj.tagsFiltro[prop].includes(finalValue)) {
+                    obj.tagsFiltro[prop].push(finalValue);
+                }
+            } else {
+                obj.tagsFiltro[prop] = obj.tagsFiltro[prop].filter(v => v !== finalValue);
+            }
+        
+        }
+        // dependencia crítica Marca → Vehiculo
+        if (name === "Marca") {
+            filterVehiculosByMarca();
+            lockMarcas(obj.tagsFiltro.tagsMarca.length > 0);
+        }
+
+        if (checked) {
+            renderTag({ name, value, label: value });
+        } else {
+            const tagId = `tags__${name}_${value}`;
+            const tag = document.getElementById(tagId);
+            if (tag) tag.remove();
+        }
+
+        refreshURL();
+        toggleApplyIfNeeded();
+    }
+
+    checkmark = (el) => {
+        if (!el || !el.name) return;
+        applyFilter({name: el.name.trim(),value: el.value,checked: el.checked});
+    };
+
+    aplicarbutton.addEventListener("click", () => {
+        applyCurrentFilters();
     });
     borrarbutton.addEventListener("click", clearfilter =>{
-        window.location.href = "?mod=catalogo&pag=1&prod=&cate=&armadora=&mdl=&[a]=";
+        window.location.href = "?mod=catalogo&pag=1";
     });
-    
+
     document.querySelector(".open__opciones--Filtros").addEventListener("click", openF => {
         const open__filtro = document.querySelector(".filtros");
         const open__orden = document.querySelector(".filtros__orden");
@@ -300,139 +363,22 @@ function catalogosCtrl($scope, $http) {
         open__filtro.classList.add("dis-none");
     });
 
-    desmark = async (desmarkid) => {
-        var idelete = desmarkid.replace("tags__contendor__", "");
-        const divdelete = document.getElementById(desmarkid);
-        const checkdelete = document.getElementById(idelete);
-        nametag = divdelete.getAttribute("name");
-        const Newnametag = nametag.replace("__tags", "");
-        console.log(Newnametag);
-        if (idelete.includes("_") && Newnametag != "Disponibilidad") {
-            idelete = idelete.replace("_", " ");
-        }
+    desmark = (tagId) => {
 
-        switch (Newnametag) {
-            case "Disponibilidad":
-                let tagsArregloDispo = obj.tagsFiltro.tagsDispo.split(",");
-                let tagsArregloFiltroDispo = tagsArregloDispo.filter(elemento => elemento !== idelete);
-                tagsArregloFiltroDispo = tagsArregloFiltroDispo.toString();
-                obj.tagsFiltro.tagsDispo = tagsArregloFiltroDispo;
-                if(obj.tagsFiltro.tagsDispo == ""){
-                    url_actual = url_actual.replace("&Disponibilidad="+next_dispo,"");
-                    url_actual = url_actual.replace("pag="+next_url,"pag=1");
-                    window.location.href = url_actual;
-                }else{
-                    url_actual = url_actual.replace("Disponibilidad="+next_dispo,"Disponibilidad="+obj.tagsFiltro.tagsDispo);
-                    url_actual = url_actual.replace("pag="+next_url,"pag=1");
-                    window.location.href = url_actual;
-                }
-                break;
-            case "Marca":
-                let valorEliminarMarca;
-                let tagsArregloVehiculoMarca = obj.tagsFiltro.tagsVehiculo.split(",");
-                let tagsArregloFiltroVehiculoMarca = tagsArregloVehiculoMarca;
-                obj.Marcas.forEach(m =>{
-                    if(idelete == m.Marca){
-                        valorEliminarMarca = m._idMarca;
-                    }
-                });
+        const tag = document.getElementById(tagId);
+        if (!tag) return;
 
-                if(obj.Vehiculos.length > 0){
-                    obj.Vehiculos.forEach(v =>{
-                        tagsArregloVehiculoMarca.forEach(md =>{
-                            if(md == v._id && v._idMarca == valorEliminarMarca){
+        const label = tag.querySelector(".Filtro_Seleccion");
+        if (!label) return;
 
-                                tagsArregloFiltroVehiculoMarca = tagsArregloFiltroVehiculoMarca.filter(elemento => elemento !== md);
-                            }
-                        });
-                    });
-                    tagsArregloFiltroVehiculoMarca = tagsArregloFiltroVehiculoMarca.toString();
-                    obj.tagsFiltro.tagsVehiculo = tagsArregloFiltroVehiculoMarca;
-                    url_actual = url_actual.replace("mdl="+next_mdl,"mdl="+obj.tagsFiltro.tagsVehiculo);
-                }
+        const lastUnderscore = label.id.lastIndexOf("_");
+        const value = label.id.slice(0, lastUnderscore);
+        const name  = label.id.slice(lastUnderscore + 1);
+        const checkbox = document.querySelector(`input[type="checkbox"][name="${name}"][value="${value}"]`);
+        if (checkbox) checkbox.checked = false;
 
-                let tagsArregloMarca = obj.tagsFiltro.tagsMarca.split(",");
-                let tagsArregloFiltroMarca = tagsArregloMarca.filter(elemento => elemento !== valorEliminarMarca);
-                tagsArregloFiltroMarca = tagsArregloFiltroMarca.toString();
-                obj.tagsFiltro.tagsMarca = tagsArregloFiltroMarca;
-                url_actual = url_actual.replace("armadora="+next_marca,"armadora="+obj.tagsFiltro.tagsMarca);
-                url_actual = url_actual.replace("pag="+next_url,"pag=1");
-                window.location.href = url_actual;
-
-                break;
-            case "Vehiculo":
-                let valorEliminarVehiculo;
-                obj.Vehiculos.forEach(m =>{
-                    if(idelete == m.Modelo){
-                        valorEliminarVehiculo = m._id;
-                    }
-                });
-                if(obj.Marcas.length == 1){
-                    url_actual = url_actual.replace("armadora="+next_marca,"armadora="+obj.Marcas[0]._idMarca);
-                }
-                let tagsArregloVehiculo = obj.tagsFiltro.tagsVehiculo.split(",");
-                let tagsArregloFiltroVehiculo = tagsArregloVehiculo.filter(elemento => elemento !== valorEliminarVehiculo);
-                tagsArregloFiltroVehiculo = tagsArregloFiltroVehiculo.toString();
-                obj.tagsFiltro.tagsVehiculo = tagsArregloFiltroVehiculo;
-                url_actual = url_actual.replace("mdl="+next_mdl,"mdl="+obj.tagsFiltro.tagsVehiculo);
-                url_actual = url_actual.replace("pag="+next_url,"pag=1");
-                window.location.href = url_actual;
-
-                break;
-            case "Categoria":
-               let valorEliminarCatego;
-                obj.categorias.forEach(m =>{
-                    if(idelete == m.Categoria){
-                        valorEliminarCatego = m._id;
-                    }
-                });
-                let tagsArregloCatego = obj.tagsFiltro.tagsCatego.split(",");
-                let tagsArregloFiltroCatego = tagsArregloCatego.filter(elemento => elemento !== valorEliminarCatego);
-                tagsArregloFiltroCatego = tagsArregloFiltroCatego.toString();
-                obj.tagsFiltro.tagsCatego = tagsArregloFiltroCatego;
-                url_actual = url_actual.replace("cate="+next_cate,"cate="+obj.tagsFiltro.tagsCatego);
-                url_actual = url_actual.replace("pag="+next_url,"pag=1");
-                window.location.href = url_actual;
-                break;
-            case "Proveedor":
-                let valorEliminarProvee;
-                obj.Proveedores.forEach(m =>{
-                    if(idelete == m.Proveedor){
-                        valorEliminarProvee = m.id_proveedor;
-                    }
-                });
-                let tagsArregloProvee = obj.tagsFiltro.tagsProvee.split(",");
-                let tagsArregloFiltroProvee = tagsArregloProvee.filter(elemento => elemento !== valorEliminarProvee);
-                tagsArregloFiltroProvee = tagsArregloFiltroProvee.toString();
-                obj.tagsFiltro.tagsProvee = tagsArregloFiltroProvee;
-                if(obj.tagsFiltro.tagsProvee == ""){
-                    url_actual = url_actual.replace("&proveedor="+next_provee,"");
-                    url_actual = url_actual.replace("pag="+next_url,"pag=1");
-                    window.location.href = url_actual;
-                }else{
-                    url_actual = url_actual.replace("proveedor="+next_provee,"proveedor="+obj.tagsFiltro.tagsProvee);
-                    url_actual = url_actual.replace("pag="+next_url,"pag=1");
-                    window.location.href = url_actual;
-                }
-                break;
-        }
-        divdelete.remove();
-        checkdelete.checked = false;
-
-        if (miDiv.childElementCount > 0) {
-            aplicarbutton.classList.remove("dis-none");
-            borrarbutton.classList.remove("dis-none");
-            if(document.getElementById("BodyDark").classList.contains("desktop")){
-                seleccionDiv.classList.remove("dis-none")
-            }
-        } else {
-            aplicarbutton.classList.add("dis-none");
-            borrarbutton.classList.add("dis-none");
-            if(document.getElementById("BodyDark").classList.contains("desktop")){
-                seleccionDiv.classList.add("dis-none")
-            }
-        }
-    }
+        applyFilter({name,value,checked: false});
+    };
 
     obj.viewMore = () => {
         const viewbtn = document.getElementById("viewbtn");
@@ -459,17 +405,21 @@ function catalogosCtrl($scope, $http) {
         })
     }
 
+    function syncRefaccionFromTags() {
+        obj.refaccion.marca          = obj.tagsFiltro.tagsMarca.join(",");
+        obj.refaccion.categoria      = obj.tagsFiltro.tagsCatego.join(",") || "T";
+        obj.refaccion.vehiculo       = obj.tagsFiltro.tagsVehiculo.join(",");
+        obj.refaccion.proveedor      = obj.tagsFiltro.tagsProvee.join(",");
+        obj.refaccion.disponibilidad = obj.tagsFiltro.tagsDispo.join(",");
+    }
+
     obj.getCategorias = async () => {
         obj.refaccion.tipo = "Categorias";
         obj.refaccion.x = 0;
         obj.refaccion.y = obj.pageSize;
         obj.refaccion.producto = next_prod;
-        obj.refaccion.proveedor = next_provee;
-        obj.refaccion.vehiculo = next_mdl;
-        obj.refaccion.disponibilidad = next_dispo;
-        if(obj.refaccion.categoria == ""){
-            obj.refaccion.categoria = "T";
-        }
+        syncRefaccionFromTags();
+
         if (obj.refaccion.producto.includes("%C3%B1")) {
             obj.refaccion.producto = obj.refaccion.producto.replaceAll("%C3%B1", "ñ");
         }
@@ -503,7 +453,7 @@ function catalogosCtrl($scope, $http) {
                 obj.Nuevos = res.data.Data.Nuevos;
                 obj.Refacciones = res.data.Data.Refacciones;
                 obj.Trefacciones = res.data.Data.Trefacciones;
-
+                hydrateFiltersFromURL();
                 obj.currentPage = next_url - 1;
                 obj.configPages();
                 obj.eachRefacciones(obj.Refacciones);
@@ -513,28 +463,6 @@ function catalogosCtrl($scope, $http) {
             obj.configPages();
             obj.getPaginador(obj.currentPage * obj.pageSize, obj.pageSize);
 
-            let steprovee;
-            mylink.forEach(letprove =>{
-                if(letprove.includes("proveedor")){
-                   steprovee = letprove.split("=")[1];
-                }
-            })
-            if(steprovee){
-                if(steprovee.includes(",")){
-                    let moverProvee = steprovee.split(",");
-                    moverProvee.forEach(elprovee =>{
-                        let index = obj.Proveedores.findIndex(x => x.id_proveedor === elprovee);
-                        let valor;
-                        valor = obj.Proveedores.splice(index,1);
-                        obj.Proveedores.unshift(valor[0]);
-                    });
-                }else{
-                     let index = obj.Proveedores.findIndex(x => x.id_proveedor === steprovee);
-                    let valor;
-                    valor = obj.Proveedores.splice(index,1);
-                    obj.Proveedores.unshift(valor[0]);
-                }
-            }
         }, function errorCallback(res) {
             toastr.error("Error: no se realizo la conexion con el servidor");
         });
@@ -580,9 +508,9 @@ function catalogosCtrl($scope, $http) {
     var catalogo_buscador = document.querySelector("#prod_input");
     catalogo_buscador.addEventListener("keydown", e => {
         if (catalogo_buscador.value != "" && e.keyCode === 13) {
-            window.location.href = "?mod=catalogo&pag=" + 1 + "&prod=" + catalogo_buscador.value + "&cate=" + next_cate + "&armadora=" + obj.refaccion.marca + "&mdl=" + obj.refaccion.vehiculo + "&[a]=" + obj.refaccion.anio;
+            window.location.href = "?mod=catalogo&pag=1" + "&prod=" + encodeURIComponent(catalogo_buscador.value) + "&cate=" + encodeURIComponent(next_cate || "") + "&armadora=" + encodeURIComponent(obj.refaccion.marca || "") + "&mdl=" + encodeURIComponent(obj.refaccion.vehiculo || "");
         } else if (catalogo_buscador.value == "" && e.keyCode === 13) {
-            window.location.href = "?mod=catalogo&pag=1&prod=&cate=&armadora=&mdl=&[a]=";
+            window.location.href = "?mod=catalogo&pag=1";
         }
     });
 
@@ -617,121 +545,6 @@ function catalogosCtrl($scope, $http) {
 
     };
 
-    mylink.forEach(myurl =>{
-        switch(true){
-            case myurl.includes("prod"):
-                next_prod = myurl.split("=")[1];
-                if(next_prod.includes("%20")){
-                   next_prod = next_prod.replaceAll("%20"," ");
-                } else if(next_prod.includes("%2520")){
-                    next_prod = next_prod.replaceAll("%2520"," ");
-                }
-                obj.refaccion.producto = next_prod;
-            break;
-            case myurl.includes("cate"):
-                next_cate = myurl.split("=")[1];
-            break;
-            case myurl.includes("armadora"):
-                next_marca = myurl.split("=")[1];
-                if (next_marca.includes("?%20string:")) {
-                    obj.refaccion.marca = "";
-                } else {
-                    obj.refaccion.marca = next_marca;
-                }
-            break;
-            case myurl.includes("mdl"):
-                next_mdl = myurl.split("=")[1];
-                if(next_mdl.includes("?%20string:")){
-                    next_mdl = next_mdl.replaceAll("?","");
-                    next_mdl = next_mdl.replaceAll("%20","");
-                    next_mdl = next_mdl.replaceAll("string:","");
-                }
-            break;
-            case myurl.includes("[a]"):
-                next_vehi = myurl.split("=")[1];
-            break;
-            case myurl.includes("Disponibilidad"):
-                next_dispo = myurl.split("=")[1];
-                if(next_dispo.includes("%20")){
-                    next_dispo = next_dispo.replace("%20","_");
-                }
-                console.log("DISPONIBILIDAD: ",next_dispo);
-            break;
-            case myurl.includes("proveedor"):
-                next_provee = myurl.split("=")[1];
-            break;
-        }
-    });
-
-    setTimeout(() => {
-        if(next_marca != ""){
-            const individualMarca = next_marca.split(",");
-            individualMarca.forEach(ind =>{
-                obj.Marcas.forEach(m =>{
-                    if(ind == m._idMarca){
-                        const truebox = document.querySelector('input[id="' + m.Marca + '"]');
-                        truebox.checked = true;
-                        checkmark(m._idMarca,m.Marca);
-                    }
-                });
-            });
-
-        }
-        if(next_cate != "" || next_cate != "T"){
-            const individualCatego = next_cate.split(",");
-            individualCatego.forEach(ind =>{
-                obj.categorias.forEach(m =>{
-                    if(ind == m._id){
-                        const truebox = document.querySelector('input[id="' + m.Categoria + '"]');
-                        truebox.checked = true;
-                        checkmark(m._id,m.Categoria);
-                    }
-                });
-            });
-        }
-        if(next_mdl != ""){
-            const individualMdl = next_mdl.split(",");
-            individualMdl.forEach(ind =>{
-                obj.Vehiculos.forEach(m =>{
-                    if(ind == m._id){
-                        const truebox = document.querySelector('input[id="' + m.Modelo + '"]');
-                        truebox.checked = true;
-                        checkmark(m._id,m.Modelo);
-                    }
-                });
-            });
-        }
-        if(next_provee != ""){
-            const individualProvee = next_provee.split(",");
-            individualProvee.forEach(ind =>{
-                obj.Proveedores.forEach(m =>{
-                    if(ind == m.id_proveedor){
-                        const truebox = document.querySelector('input[id="' + m.Proveedor + '"]');
-                        truebox.checked = true;
-                        checkmark(m.id_proveedor,m.Proveedor);
-                    }
-                });
-            });
-        }
-
-        if(next_dispo != ""){
-            var dispo = "Ofertas,En_Existencia,Articulos_Nuevos,switch__existencia,switch__oferta,switch__Articulos_Nuevos";
-            dispo = dispo.split(",");
-            console.log("Objeto Creado:",dispo);
-            const individualDispo = next_dispo.split(",");
-            individualDispo.forEach(ind =>{
-                dispo.forEach(m =>{
-                    if(ind == m){
-                        const truebox = document.querySelector('input[id="' + m + '"]');
-                        truebox.checked = true;
-                        checkmark(m,ind);
-                    }
-                });
-            });
-        }
-
-    }, "500");
-
     obj.configPages = function () {
         obj.pages.length = 0;
         var ini = obj.currentPage - 4;
@@ -759,18 +572,32 @@ function catalogosCtrl($scope, $http) {
     };
 
     obj.setPage = function (index) {
-        obj.currentPage = next_url - 1;
-        obj.configPages();
-        obj.getPaginador(obj.currentPage * obj.pageSize, obj.pageSize);
-        url_actual = url_actual.replace("pag="+next_url,"pag="+index);
-        window.location.href = url_actual;
-    }
+        const query = new URLSearchParams(window.location.search);
+        if (obj.refaccion && typeof obj.refaccion.producto === "string") {
+            query.set("prod", encodeURIComponent(obj.refaccion.producto));
+        }
+        query.set("pag", index);
+        window.location.href = "?" + query.toString();
+    };
+
 
     obj.RefaccionDetalles = (_id) => {
         window.open("?mod=catalogo&opc=detalles&_id=" + _id, "_self");
     }
 
     angular.element(document).ready(function () {
+
+        obj.refaccion = obj.refaccion || {};
+
+        obj.refaccion.producto       = next_prod;
+        obj.refaccion.categoria      = next_cate || "T";
+        obj.refaccion.marca          = next_marca;
+        obj.refaccion.vehiculo       = next_mdl;
+        obj.refaccion.proveedor      = next_provee;
+        obj.refaccion.disponibilidad = next_dispo;
+
+        obj.currentPage = next_url - 1;
+
         obj.getCategorias();
         document.querySelector('title').textContent = "Refacciones | MacromAutopartes";
     });
@@ -841,6 +668,41 @@ function catalogosDetallesCtrl($scope, $http) {
             if (obj.Refaccion.galeria.length > 4) {
                 document.querySelector(".detalles__visual--opciones").style.display = "grid";
             }
+            $scope.$evalAsync(() => {
+                setTimeout(() => {
+                
+                    if ($('.slick2').hasClass('slick-initialized')) {
+                        $('.slick2').slick('unslick');
+                    }
+                
+                    $('.slick2').slick({
+                        slidesToShow: 4,
+                        slidesToScroll: 4,
+                        infinite: true,
+                        dots: true,
+                        arrows: true,
+                        responsive: [
+                            {
+                                breakpoint: 1200,
+                                settings: { slidesToShow: 4, slidesToScroll: 4 }
+                            },
+                            {
+                                breakpoint: 992,
+                                settings: { slidesToShow: 3, slidesToScroll: 3 }
+                            },
+                            {
+                                breakpoint: 768,
+                                settings: { slidesToShow: 2, slidesToScroll: 2 }
+                            },
+                            {
+                                breakpoint: 576,
+                                settings: { slidesToShow: 2, slidesToScroll: 2, arrows: false }
+                            }
+                        ]
+                    });
+                
+                }, 0);
+            });
         }, function errorCallback(res) {
             toastr.error("Error: no se realizo la conexion con el servidor");
         });
@@ -894,47 +756,6 @@ function catalogosDetallesCtrl($scope, $http) {
 
     angular.element(document).ready(function () {
         obj.getRefaccion();
-        setTimeout(() => {
-            $('.slick2').slick({
-                slidesToShow: 4,
-                slidesToScroll: 4,
-                infinite: true,
-                dots: true,
-                arrows: true,
-                responsive: [
-                    {
-                        breakpoint: 1200,
-                        settings: {
-                            slidesToShow: 4,
-                            slidesToScroll: 4
-                        }
-                    },
-                    {
-                        breakpoint: 992,
-                        settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 3
-                        }
-                    },
-                    {
-                        breakpoint: 768,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 2
-                        }
-                    },
-                    {
-                        breakpoint: 576,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 2,
-                            arrows: false,
-                            cssEase: 'linear'
-                        }
-                    }
-                ]
-            });
-        }, 1000);
     });
 
 }

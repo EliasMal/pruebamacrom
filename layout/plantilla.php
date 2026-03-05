@@ -114,7 +114,7 @@
         <script type="text/javascript" src="js/Cabecera.js"></script>
         <script type="text/javascript">$_SESSION = <?php print json_encode($_SESSION)?>;</script>
         <!--===============================================================================================-->
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/@popperjs/core@2"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
         <script type="text/javascript" src="vendor/JsZip/dist/jszip.min.js"></script>
         <!--===============================================================================================-->

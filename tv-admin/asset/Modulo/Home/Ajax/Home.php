@@ -127,7 +127,7 @@
 
         private function getNuevosClientes($week_start){
             $row = [];
-            $sql  = "select count(_id) as nuevos from clientes where FechaCreacion >= '$week_start'";
+            $sql  = "select count(_id) as nuevos from clientes where Estatus = 1 and FechaCreacion >= '$week_start'";
             $row = $this->conn->fetch($this->conn->query($sql));
             return $row["nuevos"];
         }

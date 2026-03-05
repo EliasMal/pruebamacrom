@@ -1,13 +1,8 @@
 <?php
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 error_reporting(E_ALL);
 ini_set('display_errors', '0');
+require_once $_SERVER['DOCUMENT_ROOT'] . "/core/bootstrap.php";
+
 require_once "../../../tv-admin/asset/Clases/dbconectar.php";
 require_once "../../../tv-admin/asset/Clases/ConexionMySQL.php";
 require_once '../../../vendor/autoload.php';
@@ -19,7 +14,6 @@ class Login{
     private $formulario = array();
     private $jsonData = array("mensaje"=>"", "Bandera" => 0, "Olvidado" => 0);
     private $dataLogin = array();
-    private $dataLoginolv = array();
     public function __construct($array) {
         $this->conn = new HelperMySql($array["server"], $array["user"], $array["pass"], $array["db"]);
     }
@@ -27,59 +21,101 @@ class Login{
     public function __destruct() {
         unset($this->conn);
     }
+
+    private function getIP(){
+        return $_SERVER['REMOTE_ADDR'];
+    }
     
     public function main(){
         $this->formulario = json_decode(file_get_contents('php://input'));
         switch($this->formulario->Login->opc){
             case 'in':
-                if($this->setSession($this->getUser())){
-                    $this->jsonData["Bandera"] = 1;
-                    $this->jsonData["mensaje"] = "Bienvenido '{$this->dataLogin["nombres"]}'";
-                    $this->jsonData["session"] = $_SESSION;
-                }else{
+                $userInput = $this->formulario->Login->user;
+                            
+                if($this->estaBloqueado($userInput)){
+
+                    $info = $this->getIntentosInfo($userInput);
+
                     $this->jsonData["Bandera"] = 0;
-                    $this->jsonData["mensaje"] = "Error: el usuario no existe";
+                    $this->jsonData["mensaje"] = "Cuenta bloqueada temporalmente.";
+                    $this->jsonData["bloqueado"] = 1;
+                    $this->jsonData["intentos_restantes"] = 0;
+                    $this->jsonData["tiempo_restante"] = $info["tiempo_restante"];
+
+                    break;
+                }
+                            
+                if($this->getUser()){
+                    $this->limpiarIntentos($userInput);
+                            
+                    if($this->setSession(true)){
+                        $this->jsonData["Bandera"] = 1;
+                        $this->jsonData["mensaje"] = "Bienvenido '{$this->dataLogin["nombres"]}'";
+                        $this->jsonData["session"] = $_SESSION;
+                    }
+                            
+                } else {
+                    $this->registrarIntentoFallido($userInput);
+                            
+                    $info = $this->getIntentosInfo($userInput);
+                            
+                    $this->jsonData["Bandera"] = 0;
+                    $this->jsonData["mensaje"] = "Usuario o contraseña incorrectos";
+                    $this->jsonData["bloqueado"] = $info["bloqueado"];
+                    $this->jsonData["intentos_restantes"] = $info["intentos_restantes"];
+                    $this->jsonData["tiempo_restante"] = $info["tiempo_restante"];
                 }
                 break;
             case 'out':
                 if($this->outSession()){
                     $this->jsonData["Bandera"] = 1;
-                    $this->jsonData["mansaje"] = "La session se cerro";
+                    $this->jsonData["mensaje"] = "La session se cerro";
                     
                 }else{
                     $this->jsonData["Bandera"] = 0;
-                    $this->jsonData["mansaje"] = "Error: No se pudo eliminar la session";
+                    $this->jsonData["mensaje"] = "Error: No se pudo eliminar la session";
                 }
                 break;
             case 'forgot':
-                $this->getUserOlvidado();
-                if(strlen($this->dataLoginolv["username"]) > 6){
-
-                    if($this->set_Password($this->getUserOlvidado())){
-                        $this->jsonData["Olvidado"] = 1;
-                        $this->jsonData["mensaje"] = "Correo de recuperación enviado, revisa tu correo electronico";
-                    } else{
-                        $this->jsonData["Olvidado"] = 0;
-                        $this->jsonData["mensaje"] = $this->dataLogin["username"];
-                    }
-
-                }else{
+            
+                if(empty($this->formulario->Login->user)){
                     $this->jsonData["Olvidado"] = 0;
-                    $this->jsonData["mensaje"] = "Error: el usuario no existe";
-                }  
+                    $this->jsonData["mensaje"] = "Ingresa tu correo";
+                    break;
+                }
+            
+                $user = addslashes($this->formulario->Login->user);
+            
+                $sql = "SELECT _id FROM Cseguridad WHERE username = '$user' LIMIT 1";
+                $result = $this->conn->query($sql);
+                $userData = $this->conn->fetch($result);
+            
+                // Siempre respondemos lo mismo (anti enumeración)
+                $this->jsonData["Olvidado"] = 1;
+                $this->jsonData["mensaje"] = "Si el correo existe, recibirás instrucciones para restablecer tu contraseña.";
+            
+                if(!$userData){
+                    break;
+                }
+            
+                $token = bin2hex(random_bytes(32));
+                $expira = date("Y-m-d H:i:s", strtotime("+15 minutes"));
+            
+                $insert = "INSERT INTO password_resets (user_id, token, expires_at)
+                           VALUES ('{$userData["_id"]}', '$token', '$expira')";
+                $this->conn->query($insert);
+            
+                $link = "https://macromautopartes.com/reset-password.php?token=".$token;
+            
+                $this->enviarCorreoReset($user, $link);
+            
                 break;
         }
+        header('Content-Type: application/json');
         print json_encode($this->jsonData);
     }
 
-    private function set_Password(){
-        $palabras = array("macrom3647", "refaccion2573", "colima2457","manzanillo2457","autopartes2457","webdesign19256");
-        $random = rand(0, 5);
-        $contra = str_shuffle($palabras[$random]);
-        $contrasenanueva = sha1($contra);
-        //Envio de registro satisfactorio al Correo del usuario.
-        $destinatario =$this->formulario->Login->user;
-        $newpass = $contra;
+    private function enviarCorreoReset($destinatario, $link){
         $mail = new PHPMailer;
         $mail->isSMTP();
         $mail->SMTPDebug = 0;
@@ -87,72 +123,182 @@ class Login{
         $mail->Port = 587;
         $mail->SMTPAuth = true;
         $mail->Username = 'soporte@macromautopartes.com';
-        $mail->Password = '.Pm{d6+GxjZb';
+        $mail->Password = SMTP_PASS;
         $mail->setFrom('soporte@macromautopartes.com', 'Soporte Macrom');
-        $mail->addAddress($destinatario, $nombre);
-        $mail->Subject = 'Cambio de contraseña en Macromautopartes';
+        $mail->addAddress($destinatario);
+        $mail->Subject = 'Restablecer contraseña - Macromautopartes';
         $mail->IsHTML(true);
         $mail->CharSet = 'utf-8';
-        $mail->Body ='
-        <html lang="es">
-            <body>
-                <style>.pofam{font-family: Poppins;}</style>
-                <div>
-                    <section style="padding-bottom:60px;">
-                        <div style="width:1000px;">
-                            <div>
-                                <div style="padding-bottom:30px;">
-                                    <section>
-                                        <h4><img src="https://macromautopartes.com/images/icons/CRcabecera.png" style="width:100%;"></h4>
-                                            <div style="color:#de0007;text-align:center;">
-                                                <h4 class="pofam" style="font-size:25px;line-height:32px;margin-bottom:0px;">Tu Contraseña ha sido</h4>
-                                                <h4 class="pofam" style="font-size:25px;margin-top:0px">restablecida</h4>
-                                            </div>
-                                            <h4 style="text-align:center;"><img src="https://macromautopartes.com/images/usuarios/Avatar%20Lobo%20Macrom%20Grande.png" style="height: 250px;"></h4>
-                                            <div>
-                                                <h4 class="pofam" style="color:#757575;text-align:center;font-size:22px;margin-bottom:0px;">¿Olvidaste tu contraseña?</h4>
-                                                <h4 class="pofam" style="color:#9e9e9e;text-align:justify;font-size:20px;margin-top:0px; line-height:1.7;">Se genero una contraseña aleatoria, ingresa a tu cuenta en Macromautopartes.com con esta nueva contraseña, dirígete a la sección SESSION Y SEGURIDAD, y cambia la contraseña autogenerada por una personal.</h4>
-                                                <h4 class="pofam" style="color:#757575;text-align:center;font-size:22px;margin-bottom:0px;">Contraseña Autogenerada: '.$newpass.'</h4>
-                                            </div>
-                                        <h4 style="padding-bottom:42px;"><img src="https://macromautopartes.com/images/icons/CRPie-pagina.png" style="width:100%;"></h4>
-                                    </section>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </body>
-        </html>';
-        if (!$mail->send()) {
-            echo 'Mailer Error: ' . $mail->ErrorInfo;
-        }
-        //Fin Envio de registro satisfactorio al Correo del usuario.
-        
-        $sql = "UPDATE Cseguridad SET password = '$contrasenanueva' WHERE _id = '{$this->dataLoginolv["_id"]}' and username = '{$this->formulario->Login->user}'";
-        return $this->conn->query($sql)? true:false;
-        
-    }
-    
-    private function getUser(){
-        $sql = "SELECT C.nombres, C.apellidos, C.Codigo_postal, CS._id_cliente, CS.cuponacre, CS._id FROM Cseguridad as CS inner join clientes as C on (CS._id_cliente = C._id)
-            where username='{$this->formulario->Login->user}' and password='". sha1($this->formulario->Login->password)."'";
-        $this->dataLogin = $this->conn->fetch($this->conn->query($sql));
-        
-        return count($this->dataLogin)!=0? true:false;
+
+        $mail->Body = "
+            <h2>Restablecer contraseña</h2>
+            <p>Haz clic en el siguiente enlace:</p>
+            <a href='$link'>$link</a>
+            <p>Este enlace expira en 15 minutos.</p>
+        ";
+
+        $mail->send();
     }
 
-    private function getUserOlvidado(){
-        $sql = "SELECT * FROM Cseguridad where username='{$this->formulario->Login->user}'";
-        $this->dataLoginolv = $this->conn->fetch($this->conn->query($sql));
-        
-        return count($this->dataLoginolv)!=0? true:false;
+    private function estaBloqueado($user){
+
+        $ip = $this->getIP();
+        $user = addslashes($user);
+
+        $sql = "SELECT intentos, bloqueado_hasta FROM login_intentos WHERE username='$user' LIMIT 1";
+
+        $result = $this->conn->query($sql);
+        $data = $this->conn->fetch($result);
+
+        if($data && $data["bloqueado_hasta"] != NULL){
+            if(strtotime($data["bloqueado_hasta"]) > time()){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function getIntentosInfo($user){
+
+        $ip = $this->getIP();
+        $user = addslashes($user);
+
+        $sql = "SELECT intentos, bloqueado_hasta FROM login_intentos WHERE username='$user' LIMIT 1";
+        $result = $this->conn->query($sql);
+        $data = $this->conn->fetch($result);
+
+        $maxIntentos = 5;
+
+        if(!$data){
+            return [
+                "intentos_restantes" => $maxIntentos,
+                "bloqueado" => 0,
+                "tiempo_restante" => 0
+            ];
+        }
+
+        $intentos = intval($data["intentos"]);
+        $restantes = max(0, $maxIntentos - $intentos);
+
+        if($data["bloqueado_hasta"] && strtotime($data["bloqueado_hasta"]) > time()){
+            $segundos = strtotime($data["bloqueado_hasta"]) - time();
+
+            return [
+                "intentos_restantes" => 0,
+                "bloqueado" => 1,
+                "tiempo_restante" => $segundos
+            ];
+        }
+
+        return [
+            "intentos_restantes" => $restantes,
+            "bloqueado" => 0,
+            "tiempo_restante" => 0
+        ];
+    }
+
+    private function registrarIntentoFallido($user){
+
+        $ip = $this->getIP();
+        $user = addslashes($user);
+        $ahora = date("Y-m-d H:i:s");
+
+        $sql = "SELECT * FROM login_intentos WHERE username='$user' LIMIT 1";
+
+        $result = $this->conn->query($sql);
+        $data = $this->conn->fetch($result);
+
+        if($data){
+
+            $intentos = $data["intentos"] + 1;
+
+            if($intentos >= 5){
+                $bloqueado = date("Y-m-d H:i:s", strtotime("+10 minutes"));
+                $update = "UPDATE login_intentos SET intentos=$intentos, ultimo_intento='$ahora', bloqueado_hasta='$bloqueado' WHERE id=".$data["id"];
+            } else {
+                $update = "UPDATE login_intentos SET intentos=$intentos, ultimo_intento='$ahora' WHERE id=".$data["id"];
+            }
+
+            $this->conn->query($update);
+
+        } else {
+
+            $insert = "INSERT INTO login_intentos (username, intentos, ultimo_intento) VALUES ('$user',1,'$ahora')";
+            $this->conn->query($insert);
+        }
+    }
+
+    private function limpiarIntentos($user){
+
+        $ip = $this->getIP();
+        $user = addslashes($user);
+
+        $sql = "DELETE FROM login_intentos WHERE username='$user'";
+        $this->conn->query($sql);
+    }
+                
+    private function getUser(){
+
+        if(empty($this->formulario->Login->user) || empty($this->formulario->Login->password)){
+            return false;
+        }
+
+        $user = addslashes($this->formulario->Login->user);
+        $pass = $this->formulario->Login->password;
+
+        $sql = "SELECT CS.password, CS._id, CS._id_cliente, CS.password_changed_at,
+                       C.nombres, C.apellidos, C.Codigo_postal
+                FROM Cseguridad CS
+                INNER JOIN clientes C ON CS._id_cliente = C._id
+                WHERE CS.username = '$user'
+                LIMIT 1";
+
+        $result = $this->conn->query($sql);
+
+        if(!$result){
+            return false;
+        }
+
+        $userData = $this->conn->fetch($result);
+
+        if(!$userData){
+            return false;
+        }
+
+        $passwordGuardado = $userData["password"];
+
+        // 🔐 Password moderno
+        if(password_verify($pass, $passwordGuardado)){
+            $this->dataLogin = $userData;
+            return true;
+        }
+
+        // 🔄 SHA1 viejo
+        if($passwordGuardado === sha1($pass)){
+
+            $nuevoHash = password_hash($pass, PASSWORD_DEFAULT);
+
+            $update = "UPDATE Cseguridad 
+                       SET password = '$nuevoHash'
+                       WHERE _id = '".$userData["_id"]."'";
+
+            $this->conn->query($update);
+
+            $this->dataLogin = $userData;
+            return true;
+        }
+
+        return false;
     }
     
     private function setSession($flag = false){
         if($flag){
-            session_name("loginCliente");
-            session_start();
+
+            session_regenerate_id(true);
+
             $_SESSION["padlock"] = "lock";
+            $_SESSION["password_changed_at"] = $this->dataLogin["password_changed_at"];
             $_SESSION["autentificacion"]=1;
             $_SESSION["ultimoAcceso"]= date("Y-n-j H:i:s");
             $_SESSION["nombrecorto"] = $this->dataLogin["nombres"];
@@ -160,13 +306,20 @@ class Login{
             $_SESSION["iduser"] = $this->dataLogin["_id_cliente"];
             $_SESSION["CarritoPrueba"] = $this->get_Carrito();
             $_SESSION["Cenvio"] = $this->getCenvio();
+            $this->jsonData["Productos"]= $this->productos();
+
             if($this->DomIn() == NULL){
                 $_SESSION["id_domicilio"] = 0;
             }else{
                 $_SESSION["id_domicilio"] = $this->DomIn();
             }
+
             $_SESSION["usr"] = $this->formulario->Login->user;
-            $sql ="UPDATE clientes SET ultimoacceso = '{$_SESSION["ultimoAcceso"]}' where _id = '{$this->dataLogin["_id_cliente"]}' and correo = '{$this->formulario->Login->user}'";
+
+            $sql ="UPDATE clientes 
+                   SET ultimoacceso = '{$_SESSION["ultimoAcceso"]}' 
+                   WHERE _id = '{$this->dataLogin["_id_cliente"]}'";
+
             return $this->conn->query($sql);
         }else{
             return false;
@@ -190,6 +343,11 @@ class Login{
         return $this->conn->fetch($this->conn->query($sql));
     }
 
+    private function productos(){ /* reparar*/
+        $sql = "SELECT * FROM Producto where Clave = '{$this->formulario->Login->clave}'";
+        return $this->conn->fetch_all($this->conn->query($sql));
+    }
+
     private function getCenvio(){
         $array = array("Envio"=>"","costo"=>0, "Servicio"=>"") ;
         $sql = "select CE.precio from Cenvios as CE 
@@ -209,8 +367,7 @@ class Login{
     }
 
     private function outSession(){
-        session_name("loginCliente");
-        session_start();
+        $_SESSION = [];
         session_destroy();
         return true;
     }

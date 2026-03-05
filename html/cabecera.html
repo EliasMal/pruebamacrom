@@ -4,13 +4,6 @@
 	<header class="header2">
 
 		<div class="contenedor__header pd-1">
-			<!-- <div class="header__topbar" style="position: relative; display: block;padding: 0 1rem;text-align: justify;background-color: var(--gris-light);">
-				<h5>Les informamos que esta es una página no oficial de 
-					<a href="https://macromautopartes.com/">Macromautopartes</a>. Cualquier actividad aquí podría causar errores. 
-					Recomendamos al público evitar su uso y, para realizar cualquier operación, por favor acceda a la página oficial de 
-					<a href="https://macromautopartes.com/">Macromautopartes</a>.
-				</h5>
-			</div> -->
 			<div class="header__topbar">
 				<div class="contenedor__navegacion--mobile">
 					<i id="abrirModal6" class="fas fa-bars click filwhite"></i>
@@ -27,60 +20,6 @@
 						<input class="buscador__general__txt" type="text" autocomplete="off" placeholder="Busca tu refacción">
 						<button class="buscador__general__boton" ng-click="general_search()">Buscar</button>
 					</i>
-
-					<!-- <div class="contenedor__menu__header header-dropdown header-cart">
-
-						<div class="menu__categoria__contenedor">
-							<div class="menu__categoria">
-								<div class="menu__header--buscador">
-
-									<a href="?mod=catalogo&pag=1&prod=&cate=T&armadora=&mdl=&[a]=">
-										<img ng-src="https://macromautopartes.com/images/Categorias/7.png" alt="IMG-BENNER" class="menucatego">
-									</a>
-
-									<div class="menu__header--categorias">
-										<a href="?mod=catalogo&pag=1&prod=&cate=T&armadora=&mdl=&[a]=">
-											Refacciones
-										</a>
-									</div>
-									
-									<div class="menu__opciones__contenedor">
-										<div class="menu__categoria--sub" ng-repeat="menus in Menu.Accesorios">
-											<div class="menu__header--buscador">
-												<div class="menu__header--categoriasopc">
-													<a href="?mod=catalogo&pag=1&prod=&cate={{categoria._id}}&armadora=&mdl=&[a]=">
-														{{menus}}
-													</a>
-												</div>
-											</div>
-										</div>
-									</div>
-
-								</div>
-							</div>
-
-							<div class="menu__categoria" ng-repeat="categoria in Data.Categorias">
-								
-								<div class="menu__header--buscador">
-									<a href="?mod=catalogo&pag=1&prod=&cate={{categoria._id}}&armadora=&mdl=&[a]=">
-										<img ng-src="{{getImagenCate(categoria)}}" alt="IMG-BENNER" class="menucatego">
-									</a>
-									<div class="menu__header--categorias">
-										<a href="?mod=catalogo&pag=1&prod=&cate={{categoria._id}}&armadora=&mdl=&[a]=">
-											{{categoria.Categoria}}
-										</a>
-									</div>
-								</div>
-								
-							</div>
-
-						</div>
-
-						<div class="menu__promocion__contenedor">
-							<img src="https://prueba.macromautopartes.com/images/filapref.png" alt="">
-						</div>
-						
-					</div> -->
 
 				</div>
 
@@ -218,7 +157,7 @@
 								</a>
                             </li>
                             <li>
-                            	<a href="?mod=catalogo&pag=1&prod=&cate=&armadora=&mdl=&[a]=">Refacciones
+                            	<a href="?mod=catalogo&pag=1">Refacciones
 									<span class="border border-top"></span>
 									<span class="border border-right"></span>
 									<span class="border border-bottom"></span>
@@ -302,7 +241,7 @@
 									<i class="fa fa-home" name="home-outline"></i>
 									Inicio
 								</span>
-								<span id="sidebar1" class="sidebar__click" onclick="location.href ='?mod=catalogo&pag=1&prod=&cate=&armadora=&mdl=&[a]='">
+								<span id="sidebar1" class="sidebar__click" onclick="location.href ='?mod=catalogo&pag=1'">
 									<i class="fa fa-wrench" name="wrench-outline"></i>
 									Refacciones
 								</span>
