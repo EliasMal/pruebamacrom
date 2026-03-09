@@ -55,6 +55,7 @@ function catalogosCtrl($scope, $http) {
     obj.Existencias = [];
     obj.Ofertas = [];
     obj.Nuevos = [];
+    obj.etiquetasActivas = [];
     /*variables del paginador*/
     obj.currentPage = 0;
     obj.pages = [];
@@ -76,6 +77,15 @@ function catalogosCtrl($scope, $http) {
         if (resetPage) query.set("pag", 1);
 
         window.location.search = query.toString();
+    };
+
+    obj.quitarEtiqueta = (tag) => {
+        // Desmarcamos el checkbox en el HTML
+        const checkbox = document.querySelector(`input[type="checkbox"][name="${tag.name}"][value="${tag.value}"]`);
+        if (checkbox) checkbox.checked = false;
+
+        // Llamamos a tu filtro para que actualice la búsqueda
+        applyFilter({ name: tag.name, value: tag.value, checked: false });
     };
 
     obj.tagsFiltro = {
@@ -103,32 +113,6 @@ function catalogosCtrl($scope, $http) {
 
     function toggleApplyIfNeeded() {
         if (hasAnyFilter()) toggleActionButtons();
-    }
-
-    function renderTag({ name, value, label }) {
-
-        // evitar duplicados
-        const tagId = `tags__${name}_${value}`;
-        if (document.getElementById(tagId)) return;
-
-        const contenedorTags = document.createElement("div");
-        const nuevoDiv = document.createElement("div");
-        const nuevoI = document.createElement("i");
-
-        contenedorTags.className = "tags__contenedor";
-        contenedorTags.id = tagId;
-        contenedorTags.setAttribute("name", name + "__tags");
-        contenedorTags.setAttribute("onclick", `desmark('${tagId}')`);
-
-        nuevoI.className = "fas fa-times cursorpnt";
-        nuevoDiv.className = "Filtro_Seleccion " + value;
-        nuevoDiv.id = value + "_" + name;
-        nuevoDiv.innerHTML = label;
-
-        contenedorTags.appendChild(nuevoI);
-        contenedorTags.appendChild(nuevoDiv);
-
-        miDiv.appendChild(contenedorTags);
     }
 
     function checkByValue(name, value) {
@@ -163,7 +147,7 @@ function catalogosCtrl($scope, $http) {
                     const marca = obj.Marcas.find(m => m._idMarca == id);
                     if (!marca) return;
 
-                    renderTag({name: "Marca",value: id,label: marca.Marca});
+                    obj.etiquetasActivas.push({name: "Marca",value: id,label: marca.Marca});
                 });
             }
             // CATEGORIA
@@ -174,7 +158,7 @@ function catalogosCtrl($scope, $http) {
                     const cat = obj.categorias.find(c => c._id == id);
                     if (!cat) return;
 
-                    renderTag({name: "Categoria",value: id,label: cat.Categoria});
+                    obj.etiquetasActivas.push({name: "Categoria",value: id,label: cat.Categoria});
                 });
             }
             // VEHICULO
@@ -185,7 +169,7 @@ function catalogosCtrl($scope, $http) {
                     const veh = obj.Vehiculos.find(v => v._id == id);
                     if (!veh) return;
 
-                    renderTag({name: "Vehiculo",value: id,label: veh.Modelo});
+                    obj.etiquetasActivas.push({name: "Vehiculo",value: id,label: veh.Modelo});
                 });
             }
             // PROVEEDOR
@@ -196,7 +180,7 @@ function catalogosCtrl($scope, $http) {
                     const prov = obj.Proveedores.find(p => p.id_proveedor == id);
                     if (!prov) return;
 
-                    renderTag({name: "Proveedor",value: id,label: prov.Proveedor});
+                    obj.etiquetasActivas.push({name: "Proveedor",value: id,label: prov.Proveedor});
                 });
             }
             // DISPONIBILIDAD
@@ -206,11 +190,12 @@ function catalogosCtrl($scope, $http) {
                     const value = getDisponibilidadValue(label);
 
                     checkByValue("Disponibilidad", value);
-                    renderTag({name: "Disponibilidad",value: value,label: label});
+                    obj.etiquetasActivas.push({name: "Disponibilidad",value: value,label: label});
                 });
             }
 
             toggleApplyIfNeeded();
+            $scope.$applyAsync();
         }, 0);
     }
 
@@ -318,12 +303,16 @@ function catalogosCtrl($scope, $http) {
         }
 
         if (checked) {
-            renderTag({ name, value, label: value });
+            const existe = obj.etiquetasActivas.find(t => t.name === name && t.value === value);
+            if (!existe) {
+                obj.etiquetasActivas.push({ name: name, value: value, label: value });
+            }
         } else {
-            const tagId = `tags__${name}_${value}`;
-            const tag = document.getElementById(tagId);
-            if (tag) tag.remove();
+            obj.etiquetasActivas = obj.etiquetasActivas.filter(t => !(t.name === name && t.value === value));
         }
+        
+        // Le avisamos a Angular que repinte la vista.
+        $scope.$applyAsync();
 
         refreshURL();
         toggleApplyIfNeeded();
@@ -363,23 +352,6 @@ function catalogosCtrl($scope, $http) {
         open__filtro.classList.add("dis-none");
     });
 
-    desmark = (tagId) => {
-
-        const tag = document.getElementById(tagId);
-        if (!tag) return;
-
-        const label = tag.querySelector(".Filtro_Seleccion");
-        if (!label) return;
-
-        const lastUnderscore = label.id.lastIndexOf("_");
-        const value = label.id.slice(0, lastUnderscore);
-        const name  = label.id.slice(lastUnderscore + 1);
-        const checkbox = document.querySelector(`input[type="checkbox"][name="${name}"][value="${value}"]`);
-        if (checkbox) checkbox.checked = false;
-
-        applyFilter({name,value,checked: false});
-    };
-
     obj.viewMore = () => {
         const viewbtn = document.getElementById("viewbtn");
         if (obj.view < obj.Proveedores.length) {
@@ -415,7 +387,7 @@ function catalogosCtrl($scope, $http) {
 
     obj.getCategorias = async () => {
         obj.refaccion.tipo = "Categorias";
-        obj.refaccion.x = 0;
+        obj.refaccion.x = (next_url - 1) * obj.pageSize;
         obj.refaccion.y = obj.pageSize;
         obj.refaccion.producto = next_prod;
         syncRefaccionFromTags();
@@ -434,7 +406,6 @@ function catalogosCtrl($scope, $http) {
             obj.refaccion.orden = "dateCreated";
             obj.refaccion.tipodeorden = "DESC";
         }
-        console.log(obj.refaccion);
 
         $http({
             method: 'GET',
@@ -442,7 +413,6 @@ function catalogosCtrl($scope, $http) {
             params: obj.refaccion
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
-                console.log(res);
                 obj.categorias = res.data.Data.Categorias;
                 obj.Marcas = res.data.Data.Marcas;
                 obj.Proveedores = res.data.Data.Proveedores;
@@ -454,17 +424,17 @@ function catalogosCtrl($scope, $http) {
                 obj.Refacciones = res.data.Data.Refacciones;
                 obj.Trefacciones = res.data.Data.Trefacciones;
                 hydrateFiltersFromURL();
-                obj.currentPage = next_url - 1;
-                obj.configPages();
-                obj.eachRefacciones(obj.Refacciones);
             }
-
+            
             obj.currentPage = next_url - 1;
             obj.configPages();
             obj.getPaginador(obj.currentPage * obj.pageSize, obj.pageSize);
 
         }, function errorCallback(res) {
             toastr.error("Error: no se realizo la conexion con el servidor");
+        }).finally(function() {
+            // 2. Apagamos el estado de carga sin importar si la petición fue exitosa o falló
+            obj.cargando = false; 
         });
     }
 
@@ -585,10 +555,10 @@ function catalogosCtrl($scope, $http) {
         window.open("?mod=catalogo&opc=detalles&_id=" + _id, "_self");
     }
 
-    angular.element(document).ready(function () {
+    obj.init = function() {
+        obj.cargando = true; 
 
         obj.refaccion = obj.refaccion || {};
-
         obj.refaccion.producto       = next_prod;
         obj.refaccion.categoria      = next_cate || "T";
         obj.refaccion.marca          = next_marca;
@@ -598,14 +568,21 @@ function catalogosCtrl($scope, $http) {
 
         obj.currentPage = next_url - 1;
 
-        obj.getCategorias();
+        // Actualizar el title del documento
         document.querySelector('title').textContent = "Refacciones | MacromAutopartes";
-    });
+
+        // Llamamos a los datos inmediatamente
+        obj.getCategorias();
+    };
+
+    // Ejecutamos la función en cuanto el controlador se carga
+    obj.init();
 }
 
 function catalogosDetallesCtrl($scope, $http) {
 
     var obj = $scope;
+    obj.cargando = true;
     obj.session = $_SESSION;
     obj.btnEnabled = obj.session.autentificacion == undefined ? true : false;
     obj.Refaccion = {
@@ -659,10 +636,16 @@ function catalogosDetallesCtrl($scope, $http) {
                 obj.Refaccion.datos.NewUrlName = obj.Refaccion.datos.NewUrlName.replaceAll(",", "");
                 document.querySelector('title').textContent = newPageTitle;
                 obj.Refaccion.datos.NewUrlName = obj.Refaccion.datos.NewUrlName.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-                if (window.location.href.includes(obj.Refaccion.datos.NewUrlName)) {
-                } else {
-                    window.location.href = window.location.href + "-" + obj.Refaccion.datos.NewUrlName;
+
+                const expectedIdParam = obj.Refaccion.id + "-" + obj.Refaccion.datos.NewUrlName;
+                const currentParams = new URLSearchParams(window.location.search);
+
+                if (currentParams.get('_id') !== expectedIdParam) {
+                    currentParams.set('_id', expectedIdParam);
+                    const newUrl = window.location.pathname + '?' + currentParams.toString();
+                    window.history.replaceState(null, '', newUrl);
                 }
+
                 obj.Activa = obj.Refaccion.datos.stock != 0 ? true : false;
             }
             if (obj.Refaccion.galeria.length > 4) {
@@ -705,6 +688,8 @@ function catalogosDetallesCtrl($scope, $http) {
             });
         }, function errorCallback(res) {
             toastr.error("Error: no se realizo la conexion con el servidor");
+        }).finally(function() {
+            obj.cargando = false;
         });
     }
 
@@ -753,9 +738,15 @@ function catalogosDetallesCtrl($scope, $http) {
         })
 
     }
+    // 1. Extraemos el ID directamente de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const rawId = urlParams.get('_id'); // Esto lee: "12637-Terminal-Dir-..."
 
-    angular.element(document).ready(function () {
-        obj.getRefaccion();
-    });
+    // 2. Si existe un ID en la URL, lo separamos para quedarnos solo con el número
+    if (rawId) {
+        obj.Refaccion.id = rawId.split('-')[0]; 
+    }
 
+    // 3. Disparamos la petición a la base de datos de inmediato
+    obj.getRefaccion();
 }

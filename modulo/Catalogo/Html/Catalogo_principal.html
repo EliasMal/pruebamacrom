@@ -17,7 +17,17 @@
 					<div class="filtros dis-none">
 						<div class="filtros__contenedor name__seleccionados dis-none">
 							<span class="filtros__header">Tu Selección</span>
-							<div id="tags__filtros"></div>
+							<div id="tags__filtros">
+							    <div class="tags__contenedor" ng-repeat="tag in etiquetasActivas">
+								
+							        <i class="fas fa-times cursorpnt" ng-click="quitarEtiqueta(tag)"></i>
+								
+							        <div class="Filtro_Seleccion {{tag.value}}">
+							            {{tag.label}}
+							        </div>
+								
+							    </div>
+							</div>
 
 							<div class="filtro__quitar">
 								<button class="filtro__quitar--button dis-none">Borrar filtros</button>
@@ -154,11 +164,16 @@
 
 							<div class="Trefacciones__cont">
 								<span class="s-text8">
-									{{Trefacciones}} Refacciones encontradas.
+									{{ cargando ? 'Buscando refacciones...' : Trefacciones + ' Refacciones encontradas.' }}
 								</span>
 							</div>
 
 						</div>
+						
+						<div class="loader-container" ng-show="cargando" style="text-align: center; padding: 50px 0;">
+    					    <i class="fas fa-spinner fa-spin fa-3x" style="color: #666; margin-bottom: 15px;"></i>
+    					    <h3 style="color: #666; font-size: 18px;">Cargando refacciones...</h3>
+    					</div>
 
 						<div class="nuestrosproductos__masvendidos">
 							<div class="home__pr" ng-repeat="producto in Refacciones">
@@ -211,10 +226,10 @@
 
 						<script type="text/javascript">function toTop() { window.scrollTo(0, 0) } </script>
 						<!-- Pagination -->
-						<div class="pagination">
-							<a class="item-pagination flex-c-m trans-0-4 {{currentPage == (pag.no - 1)? 'active-pagination':''}}"
-								ng-repeat='pag in pages' ng-click='setPage(pag.no)'>{{pag.no}}</a>
-						</div>
+						<div class="pagination" ng-hide="cargando" ng-cloak>
+    					    <a class="item-pagination flex-c-m trans-0-4 {{currentPage == (pag.no - 1)? 'active-pagination':''}}"
+    					        ng-repeat='pag in pages' ng-click='setPage(pag.no)'>{{pag.no}}</a>
+    					</div>
 					</div>
 
 				</div>
