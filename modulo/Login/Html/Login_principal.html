@@ -1,97 +1,88 @@
 <link rel="stylesheet" href="/css/login.css">
 
 <div ng-controller="LoginCtrl" ng-init="mod='{mod}'">
-<section>
-<div class="container1">
-<div class="login">
+    <section>
+        <div class="container1">
+            <div class="login">
 
-    <!-- PANEL IZQUIERDO -->
-    <div class="login__contenedor__uno">
-        <h4 class="contenedor__uno--texto">Calidad, Precio, Servicio</h4>
-    </div>
-    
-    <!-- PANEL DERECHO -->
-    <div class="login__contenedor__dos">
+                <div class="login__contenedor__uno">
+                    <h4 class="contenedor__uno--texto">Calidad, Precio, Servicio</h4>
+                </div>
 
-        <a href="?mod=home" class="fa fa-window-close closeinsregform"></a>
+                <div class="login__contenedor__dos">
 
-        <!-- FORM ÚNICO -->
-        <form name="frmlogin" id="frmlogin" novalidate class="form__login">
+                    <a href="?mod=home" class="fa fa-window-close closeinsregform"></a>
 
-            <div class="contenedor__dos--logo">
-                <img src="../../../images/icons/logo original.svg" alt="">
-            </div>
+                    <form name="frmlogin" id="frmlogin" novalidate class="form__login" ng-submit="btnLogin()">
 
-            <h4 class="contenedor__dos--titulo">Iniciar Sesión</h4>
-            <!-- MENSAJE DE ERROR GENERAL -->
-            <div class="mensaje-login error-general" ng-show="loginError && !cuentaBloqueada">
-              <i class="fa fa-exclamation-circle"></i>
-              Usuario o contraseña incorrectos
-            </div>
-            
-            <!-- INTENTOS RESTANTES -->
-            <div class="mensaje-login advertencia" 
-                 ng-show="loginError && !cuentaBloqueada && intentosRestantes !== null">
-            
-              <i class="fa fa-info-circle"></i>
-              Intentos restantes: <b>{{intentosRestantes}}</b>
-            </div>
-            
-            <!-- CUENTA BLOQUEADA -->
-            <div class="mensaje-login bloqueo" ng-show="cuentaBloqueada">
-              <i class="fa fa-lock"></i>
-              Tu cuenta está bloqueada temporalmente.
-              <div ng-if="tiempoRestante > 0">
-                Intenta nuevamente en <b>{{tiempoRestante}}</b> seg.
-              </div>
-            </div>
+                        <div class="contenedor__dos--logo">
+                            <img src="../../../images/icons/logo original.svg" alt="">
+                        </div>
 
-            <!-- EMAIL -->
-            <div class="form-group main__login">
-                <input type="email" name="login" id="login" placeholder="Correo electrónico" ng-model="login.user" required>
-            </div>
+                        <h4 class="contenedor__dos--titulo">Iniciar Sesión</h4>
+                        
+                        <div class="mensaje-login error-general" ng-show="loginError && !cuentaBloqueada">
+                            <i class="fa fa-exclamation-circle"></i>
+                            {{mensajeError}}
+                        </div>
 
-            <!-- PASSWORD -->
-            <div class="form-group main__login" id="divcpass">
-                <input type="password" name="cpass" id="inprcpass" placeholder="Contraseña" ng-model="login.password" required>
-                <button type="button" class="password__ver" onclick="togglePassword('inprcpass', this)">
-                    <i class="fa fa-eye"></i>
-                </button>
-            </div>
+                        <div class="mensaje-login advertencia"
+                            ng-show="loginError && !cuentaBloqueada && intentosRestantes !== null">
+                            <i class="fa fa-info-circle"></i>
+                            Intentos restantes: <b>{{intentosRestantes}}</b>
+                        </div>
 
-            <!-- BOTÓN -->
-            <div class="login__contenedor--secondary">
-                <div class="secondary__contenedor">
+                        <div class="mensaje-login bloqueo" ng-show="cuentaBloqueada">
+                            <i class="fa fa-lock"></i>
+                            Tu cuenta está bloqueada temporalmente.
+                            <div ng-if="tiempoRestante > 0">
+                                Intenta nuevamente en <b>{{tiempoRestante}}</b> seg.
+                            </div>
+                        </div>
 
-                    <div class="secondary__contenedor--boton">
-                        <span  ng-disabled="frmlogin.$invalid" ng-click="btnLogin()">Iniciar Sesión</span>
-                    </div>
+                        <div class="form-group main__login">
+                            <input type="email" name="login" id="login" placeholder="Correo electrónico"
+                                ng-model="login.user" required>
+                        </div>
 
-                    <div class="secondary__contenedor--forgot">
-                        <p>
-                            <b ng-show="!dataflag">
-                                <i class="fa fa-sync-alt fa-spin"></i>
-                            </b>
-                        </p>
+                        <div class="form-group main__login" id="divcpass">
+                            <input type="password" name="cpass" id="inprcpass" placeholder="Contraseña"
+                                ng-model="login.password" required>
+                            <button type="button" class="password__ver" onclick="togglePassword('inprcpass', this)">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                        </div>
 
-                        <a href="" ng-click="btnolvide()" class="btnolvide">
-                            <p>¿Olvidaste tu contraseña?</p>
-                        </a>
-                    </div>
+                        <div class="login__contenedor--secondary">
+                            <div class="secondary__contenedor">
 
-                    <div class="secondary__contenedor--register">
-                        <a href="?mod=register">
-                            <p>Regístrate para crear una cuenta nueva</p>
-                        </a>
-                    </div>
+                                <div class="secondary__contenedor--boton">
+                                    <button type="submit" ng-disabled="!dataflag" style="width: 100%; display: block; cursor: pointer;">
+                                        <span ng-show="dataflag">Iniciar Sesión</span>
+                                        <span ng-show="!dataflag"><i class="fa fa-spinner fa-spin"></i> Cargando...</span>
+                                    </button>
+                                </div>
+
+                                <div class="secondary__contenedor--forgot" style="margin-top: 1rem;">
+                                    <button type="button" ng-click="btnolvide()" class="btnolvide" ng-disabled="!dataflag || !login.user" style="cursor: pointer; width: 100%; text-align: center; background: transparent; border: none;">
+                                        <p ng-show="dataflag">¿Olvidaste tu contraseña?</p>
+                                        <p ng-show="!dataflag" style="color: var(--primario);"><i class="fa fa-sync-alt fa-spin"></i> Procesando...</p>
+                                    </button>
+                                </div>
+
+                                <div class="secondary__contenedor--register" style="text-align: center; margin-top: 1.5rem;">
+                                    <a href="?mod=register" style="display: block;">
+                                        <p>Regístrate para crear una cuenta nueva</p>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </form>
 
                 </div>
             </div>
-
-        </form>
-
-    </div>
-</div>
-</div>
-</section>
+        </div>
+    </section>
 </div>

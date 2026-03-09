@@ -15,12 +15,11 @@
 				</a>
 
 				<div class="buscador__general">
-					<!-- <i class="fas fa-search js-show-header-dropdown" id="btn-search"> -->
-					<i class="fas fa-search" id="btn-search">
-						<input class="buscador__general__txt" type="text" autocomplete="off" placeholder="Busca tu refacción">
-						<button class="buscador__general__boton" ng-click="general_search()">Buscar</button>
-					</i>
-
+				    <i class="fas fa-search" id="btn-search">
+				        <input class="buscador__general__txt" type="text" autocomplete="off" placeholder="Busca tu refacción" ng-model="textoBusqueda" ng-keypress="buscarConEnter($event)">
+					
+				        <button class="buscador__general__boton" ng-click="general_search()">Buscar</button>
+				    </i>
 				</div>
 
 				<div class="contenedor__usuario">
@@ -215,93 +214,89 @@
 		<div class="sidebar__mobil__contenido" id="CabeceraDark">
 
 			<article class="sidebar__mobil__menu">
-					<span class="cerrar6 closem">&times;</span>
-					<div class="menu__cliente__informacion">
-						<!-- <img src="https://macromautopartes.com/images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="menu__cliente__informacion--img" alt="ICON"> -->
-						<img src="../images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="menu__cliente__informacion--img" alt="ICON">
-						<div class="cliente__informacion--datos">
-							<p class="txtred">¡Hola!</p>
-							<p class="text-dark">{{session.nombre}}</p>
-						</div>
-					</div>
-					<div class="sidebar__mobil__menu--enlaces">
-
-						<div class="modo__oscuro">
-							<i class="fa fa-sun" aria-hidden="true"></i>
-							<label class="switch btn-color-mode-switch" for="switch__darkmode">
-								<input type="checkbox" name="switch__darkmode" class="switch__darkmode">
-								<label for="switch__darkmode" data-on="Oscuro" data-off="Claro" class="btn-color-mode-switch-inner"></label>
-							</label>
-							  <i class="fa fa-moon" aria-hidden="true"></i>
-						</div>
-
-						<div class="menu__enlaces__contenedor">
-							<div class="menu__enlaces">
-								<span id="sidebar0" class="sidebar__click" onclick="location.href ='?mod=home'">
-									<i class="fa fa-home" name="home-outline"></i>
-									Inicio
-								</span>
-								<span id="sidebar1" class="sidebar__click" onclick="location.href ='?mod=catalogo&pag=1'">
-									<i class="fa fa-wrench" name="wrench-outline"></i>
-									Refacciones
-								</span>
-								<span id="sidebar2" class="sidebar__click" ng-show="user" onclick="location.href ='?mod=Compras'">
-									<i class="fa fa-shopping-cart" name="shopping-cart-outline"></i>
-									Carrito
-								</span>
-								<span id="sidebar3" class="sidebar__click" ng-show="!user" onclick="location.href ='?mod=login'"><!--Puede asignarse su id a otro modulo, no es necesario en este(Redirecciona a Login, por lo que jamas marcara este modulo)-->
-									<i class="fa fa-shopping-cart" name="shopping-cart-outline"></i>
-									<a class="menu__enlaces--links txtgris">Carrito</a>
-								</span>
-								<span id="sidebar4" class="sidebar__click" onclick="location.href ='?mod=nosotros'">
-									<i class="fa fa-question-circle" name="info-outline"></i>
-									Nosotros
-								</span>
-								<span id="sidebar9" class="sidebar__click" onclick="location.href ='?mod=Blog'">
-									<i class="fas fa-book"></i>
-									Blog
-								</span>
-							</div>
-							<hr>
-							<div class="menu__enlaces" ng-show="user">
-
-								<span id="sidebar5" class="sidebar__click" onclick="location.href ='?mod=Profile&opc=Session'">
-									<i loading="lazy" alt="icono seguridad" class="fa fa-shield-alt"></i>
-									Sesión y Seguridad
-								</span>
-								<span id="sidebar6" class="sidebar__click" onclick="location.href ='?mod=Profile&opc=Mispedidos'">
-									<i loading="lazy" alt="icono pedidos" class="fa fa-shopping-cart"></i>
-									Mis Pedidos
-								</span>
-								<span id="sidebar7" class="sidebar__click" onclick="location.href ='?mod=Profile&opc=Direcciones'">
-									<i loading="lazy" alt="icono direcciones" class="fa fa-map-marked-alt"></i>
-									Mis Direcciones
-								</span>
-								<span id="sidebar8" class="sidebar__click" onclick="location.href ='?mod=Profile&opc=Facturacion'">
-									<i loading="lazy" alt="icono facturación" class="fa fa-file-invoice-dollar"></i>
-									Datos Facturación
-								</span>
-								<span class="sidebar__logout center--text" ng-click="btnLogout()">
-									<i loading="lazy" alt="icono cerrar_sesión" class="fas fa-sign-out-alt"></i>
-									<a class="menu__enlaces--links text-white">Cerrar Sesión</a>
-								</span>
-
-							</div>
-						</div>
-
-						<div class="menu__sesion" ng-show="!user">
-							<div class="menu__sesion__inicio">
-								<p>¿Ya tienes cuenta?</p>
-								<span onclick="location.href ='?mod=login'">Iniciar Sesión</span>
-							</div>
-							<div class="menu__sesion__registrar">
-								<p>¿Aún no tienes cuenta?</p>
-								<span onclick="location.href ='?mod=register'">Registrarse</span>
-							</div>
-						</div>
-
-					</div>
-
+			    <span class="cerrar6 closem" style="cursor: pointer;">&times;</span>
+			    <div class="menu__cliente__informacion">
+			        <img src="../images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="menu__cliente__informacion--img" alt="ICON">
+			        <div class="cliente__informacion--datos">
+			            <p class="txtred">¡Hola!</p>
+			            <p class="text-dark">{{session.nombre}}</p>
+			        </div>
+			    </div>
+			    <div class="sidebar__mobil__menu--enlaces">
+				
+			        <div class="modo__oscuro">
+			            <i class="fa fa-sun" aria-hidden="true"></i>
+			            <label class="switch btn-color-mode-switch" for="switch__darkmode">
+			                <input type="checkbox" name="switch__darkmode" class="switch__darkmode">
+			                <label for="switch__darkmode" data-on="Oscuro" data-off="Claro" class="btn-color-mode-switch-inner"></label>
+			            </label>
+			            <i class="fa fa-moon" aria-hidden="true"></i>
+			        </div>
+				
+			        <div class="menu__enlaces__contenedor">
+			            <div class="menu__enlaces">
+			                <a href="?mod=home" id="sidebar0" class="sidebar__click">
+			                    <i class="fa fa-home" name="home-outline"></i>
+			                    Inicio
+			                </a>
+			                <a href="?mod=catalogo&pag=1" id="sidebar1" class="sidebar__click">
+			                    <i class="fa fa-wrench" name="wrench-outline"></i>
+			                    Refacciones
+			                </a>
+			                <a href="?mod=Compras" id="sidebar2" class="sidebar__click" ng-show="user">
+			                    <i class="fa fa-shopping-cart" name="shopping-cart-outline"></i>
+			                    Carrito
+			                </a>
+			                <a href="?mod=login" id="sidebar3" class="sidebar__click" ng-show="!user">
+			                    <i class="fa fa-shopping-cart" name="shopping-cart-outline"></i>
+			                    <span class="menu__enlaces--links txtgris">Carrito</span>
+			                </a>
+			                <a href="?mod=nosotros" id="sidebar4" class="sidebar__click">
+			                    <i class="fa fa-question-circle" name="info-outline"></i>
+			                    Nosotros
+			                </a>
+			                <a href="?mod=Blog" id="sidebar9" class="sidebar__click">
+			                    <i class="fas fa-book"></i>
+			                    Blog
+			                </a>
+			            </div>
+			            <hr>
+			            <div class="menu__enlaces" ng-show="user">
+			                <a href="?mod=Profile&opc=Session" id="sidebar5" class="sidebar__click">
+			                    <i loading="lazy" alt="icono seguridad" class="fa fa-shield-alt"></i>
+			                    Sesión y Seguridad
+			                </a>
+			                <a href="?mod=Profile&opc=Mispedidos" id="sidebar6" class="sidebar__click">
+			                    <i loading="lazy" alt="icono pedidos" class="fa fa-shopping-cart"></i>
+			                    Mis Pedidos
+			                </a>
+			                <a href="?mod=Profile&opc=Direcciones" id="sidebar7" class="sidebar__click">
+			                    <i loading="lazy" alt="icono direcciones" class="fa fa-map-marked-alt"></i>
+			                    Mis Direcciones
+			                </a>
+			                <a href="?mod=Profile&opc=Facturacion" id="sidebar8" class="sidebar__click">
+			                    <i loading="lazy" alt="icono facturación" class="fa fa-file-invoice-dollar"></i>
+			                    Datos Facturación
+			                </a>
+			                <span class="sidebar__logout center--text" ng-click="btnLogout()" style="cursor: pointer;">
+			                    <i loading="lazy" alt="icono cerrar_sesión" class="fas fa-sign-out-alt"></i>
+			                    <span class="menu__enlaces--links text-white">Cerrar Sesión</span>
+			                </span>
+			            </div>
+			        </div>
+				
+			        <div class="menu__sesion" ng-show="!user">
+			            <div class="menu__sesion__inicio">
+			                <p>¿Ya tienes cuenta?</p>
+			                <a href="?mod=login">Iniciar Sesión</a>
+			            </div>
+			            <div class="menu__sesion__registrar">
+			                <p>¿Aún no tienes cuenta?</p>
+			                <a href="?mod=register">Registrarse</a>
+			            </div>
+			        </div>
+				
+			    </div>
 			</article>
 		</div>
 	</div>

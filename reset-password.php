@@ -46,10 +46,21 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                         SET used = 1 
                         WHERE id = '{$data["id"]}'";
         $conn->query($updateToken);
+        
+        $sqlUsername = "SELECT username FROM Cseguridad WHERE _id = '{$data["user_id"]}' LIMIT 1";
+        $resUser = $conn->query($sqlUsername);
+        $userData = $conn->fetch($resUser);
 
+        if ($userData && !empty($userData['username'])) {
+            $username = addslashes($userData['username']);
+            // Borramos el historial de intentos fallidos, eliminando el bloqueo al instante
+            $deleteIntentos = "DELETE FROM login_intentos WHERE username = '$username'";
+            $conn->query($deleteIntentos);
+        }
+        
         echo "<script>
                 alert('Contraseña actualizada correctamente');
-                window.location.href = 'https://macromautopartes.com';
+                window.location.href = 'https://macromautopartes.com/?mod=login';
               </script>";
         exit;
     }

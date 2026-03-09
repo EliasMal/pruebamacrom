@@ -335,7 +335,7 @@ function catalogosCtrl($scope, $http) {
     };
 
     aplicarbutton.addEventListener("click", () => {
-        applyCurrentFilters();
+        window.location.href = "?mod=catalogo&pag=1";
     });
     borrarbutton.addEventListener("click", clearfilter =>{
         window.location.href = "?mod=catalogo&pag=1";

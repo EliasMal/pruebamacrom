@@ -1,9 +1,6 @@
-
 var url_session = "./modulo/home/Ajax/session.php";
 var url = "./modulo/home/Ajax/home.php";
 var urlLogin = "./modulo/Login/Ajax/Login.php";
-
-var urlcotizar = "./modulo/Compras/Ajax/Compras.php";
 
 tsuruVolks.controller('CabeceraCtrl', ["$scope", "$http", "$sce", "vcRecaptchaService", CabeceraCtrl])
     .controller('FooterCtrl', ["$scope", "$http", FooterCtrl])
@@ -20,7 +17,7 @@ tsuruVolks.controller('CabeceraCtrl', ["$scope", "$http", "$sce", "vcRecaptchaSe
             }
         };
     });
-// var dataBanners = {};
+
 function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
     var obj = $scope;
     obj.session = $_SESSION;
@@ -42,20 +39,20 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
     obj.Data = {};
     obj.dataBanners;
     obj.dataCarrousel;
+    
     toastr.options = {
         "progressBar": true,
         "closeButton": true
-    }
+    };
 
     obj.getImagen = (id) => {
-        //var url = "https://macromautopartes.com/images/refacciones/";
         var url = "images/refacciones/";
         return url + id + ".webp";
-    }
+    };
+    
     obj.getImagenCate = (e) => {
-        //return "https://macromautopartes.com/images/Categorias/" + e._id + ".png";
         return "images/Categorias/" + e._id + ".png";
-    }
+    };
 
     obj.recapchatKey = "6Le-C64UAAAAAMlSQyH3lu6aXLIkzgewZlVRgEam";
     obj.Contacto = {};
@@ -66,40 +63,31 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
             e.NewUrlName = e.NewUrlName.replaceAll(",","");
             e.NewUrlName = e.NewUrlName.normalize('NFD').replace(/[\u0300-\u036f]/g,"");
             e.NewAltName = e["_producto"].replaceAll(",","");
-        })
-    }
+        });
+    };
 
     obj.subtotal = () => {
         obj.Costumer.Subtotal = 0;
-        for (let e in obj.Data.Carrito) {
-            if (obj.Data.Carrito[e].RefaccionOferta == '1') {
-                obj.Costumer.Subtotal += (obj.Data.Carrito[e].Cantidad * obj.Data.Carrito[e].Precio2);
-            } else {
-                obj.Costumer.Subtotal += (obj.Data.Carrito[e].Cantidad * obj.Data.Carrito[e].Precio);
+        
+        // OPTIMIZACIÓN: for...of y validación de seguridad
+        if (obj.Data && obj.Data.Carrito) {
+            for (const producto of obj.Data.Carrito) {
+                if (producto.RefaccionOferta == '1') {
+                    obj.Costumer.Subtotal += (producto.Cantidad * producto.Precio2);
+                } else {
+                    obj.Costumer.Subtotal += (producto.Cantidad * producto.Precio);
+                }
             }
-
         }
+
+        // OPTIMIZACIÓN: URL dinámica en lugar de hardcodeada
         setTimeout(function () {
-            if(window.location.href == "https://macromautopartes.com/?mod=Compras" && obj.Data.Carrito["length"] == 0 && $_SESSION["CarritoPrueba"]["length"] >0){
+            if(window.location.search.includes("?mod=Compras") && obj.Data.Carrito && obj.Data.Carrito.length == 0 && $_SESSION["CarritoPrueba"] && Object.keys($_SESSION["CarritoPrueba"]).length > 0){
                 location.reload();
             }
         }, 400);
+        
         return obj.Costumer.Subtotal;
-    }
-
-    //eliminar refaccion.
-    var txt = document.querySelector(".buscador__general__txt");
-    txt.addEventListener("keydown", e => {
-        if (txt.value != "" && e.keyCode === 13) {
-            txt = txt.value.split(/\s+/).join("%20");
-            window.location.href = "https://prueba.macromautopartes.com/?mod=catalogo&pag=1&prod=" + txt;
-        }
-    });
-    obj.general_search = () => {
-        const value = txt.value.trim();
-        if (!value) return;
-        const query = encodeURIComponent(value);
-        window.location.href =`https://prueba.macromautopartes.com/?mod=catalogo&pag=1&prod=${query}`;
     };
 
     obj.actualizarSession = (Refaccion, opc) => {
@@ -108,20 +96,19 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
             method: 'POST',
             url: url_session,
             data: { modelo: Refaccion }
-
         }).then(function successCallback(res) {
             if (opc) {
                 location.reload();
             }
         }, function errorCallback(res) {
-            console.log(res);
-            toastr.error("Error: no se realizo la conexion con el servidor");
+            console.error(res);
+            toastr.error("Error: no se realizó la conexión con el servidor");
         });
-    }
+    };
 
     obj.btnEliminarRefaccion = (Refaccion) => {
         Swal.fire({
-            title: "¿Deseas Eliminar la Refaccion del carrito?",
+            title: "¿Deseas Eliminar la Refacción del carrito?",
             showCancelButton: true,
             confirmButtonText: "Eliminar"
         }).then((result) => {
@@ -129,51 +116,54 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
                 Swal.fire({
                     showConfirmButton: false,
                     title: "¡Eliminado!",
-                    text: "El articulo fue eliminado",
+                    text: "El artículo fue eliminado",
                     icon: "success"
                 });
                 Refaccion.erase = 1;
                 Refaccion.borrar = Refaccion.Clave;
-                Refaccion.n = $_SESSION["CarritoPrueba"]["length"];
+                Refaccion.n = Object.keys($_SESSION["CarritoPrueba"]).length;
                 obj.actualizarSession(Refaccion, true);
-
             }
         });
-    }
-    //eliminar refaccion
+    };
+
+    obj.textoBusqueda = "";
+
+    obj.buscarConEnter = (evento) => {
+        if (evento.keyCode === 13) {
+            obj.general_search();
+        }
+    };
+
+    obj.general_search = () => {
+        const value = obj.textoBusqueda.trim();
+        if (!value) return;
+        
+        const query = encodeURIComponent(value);
+        window.location.href = `/?mod=catalogo&pag=1&prod=${query}`;
+    };
 
     obj.getCategorias = async () => {
         try {
-            const result = await $http({
+            const res = await $http({
                 method: 'POST',
                 url: url,
-                data: { modelo: { opc: "buscar", tipo: "Categorias", home: true } },
-            }).then(function successCallback(res) {
-                return res
-            }, function errorCallback(res) {
-                toastr.error("Error: no se realizo la conexion con el servidor");
-                location.reload();
+                data: { modelo: { opc: "buscar", tipo: "Categorias", home: true } }
             });
-            if (result) {
-                if (result.data.Bandera == 1) {
-                    obj.Data = result.data.Data;
-                    obj.eachRefacciones(obj.Data.Carrito);
-                    // console.log(obj.Data.Categorias);
-                    // for (var i = 0; i <= obj.Data.Categorias.length; i++) {
-                    //     if (obj.Data.Categorias[i] != undefined) {
-                    //         obj.Menu[obj.Data.Categorias[i].Categoria] = obj.Data.Categorias[i].MenuOPC.split(",");
-                    //     }
-                    // }
-                    // console.log(obj.Menu);
-                    // console.log(obj.Menu.Accesorios);
-                }
-            }
-            $scope.$apply();
-        } catch (error) {
-            toastr.error(error)
-        }
 
-    }
+            if (res && res.data && res.data.Bandera == 1) {
+                $scope.$evalAsync(() => {
+                    obj.Data = res.data.Data;
+                    if(obj.Data && obj.Data.Carrito) {
+                        obj.eachRefacciones(obj.Data.Carrito);
+                    }
+                });
+            }
+        } catch (error) {
+            toastr.error("Error: no se realizó la conexión con el servidor");
+            console.error(error);
+        }
+    };
 
     obj.getBanners = (data) => {
         $http({
@@ -188,41 +178,28 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
                 for (var m in data.imagen) {
                     formData.append(m, data.imagen[m]);
                 }
-                //formData.append("file",data.file);
-
                 return formData;
             }
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
-                switch (res.data.categoria) {
-                    case 'Principal':
-                        obj.dataBanners = res.data.Data;
-                        break;
-                    case 'Catalogos':
-                        obj.dataBanners = res.data.Data;
-                        break;
-                    case 'Compras':
-                        obj.dataBanners = res.data.Data;
-                        break;
-                    case 'Nosotros':
-                        obj.dataBanners = res.data.Data;
-                        break;
-                    case 'Carrousel':
-                        obj.dataCarrousel = res.data.Data;
-                        break;
+                // OPTIMIZACIÓN: Evitar el switch repetitivo
+                const categoria = res.data.categoria;
+                if (['Principal', 'Catalogos', 'Compras', 'Nosotros'].includes(categoria)) {
+                    obj.dataBanners = res.data.Data;
+                } else if (categoria === 'Carrousel') {
+                    obj.dataCarrousel = res.data.Data;
                 }
-
             } else {
                 toastr.error(res.data.mensaje);
             }
         }, function errorCallback(res) {
-            toastr.error("Error: no se realizo la conexion con el servidor");
+            toastr.error("Error: no se realizó la conexión con el servidor");
         });
-    }
+    };
 
-    obj.RefaccionDetalles = (_id,newurl) => {
-        window.open("?mod=catalogo&opc=detalles&_id=" + _id + "-" + newurl, "_self");
-    }
+    obj.RefaccionDetalles = (_id, newurl) => {
+        window.open(`?mod=catalogo&opc=detalles&_id=${_id}-${newurl}`, "_self");
+    };
 
     obj.btnLogout = () => {
         obj.login.opc = "out";
@@ -231,30 +208,34 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
             method: 'POST',
             url: urlLogin,
             data: { Login: obj.login }
-
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
-                if (window.location.href.includes("?mod=Compras") || window.location.href.includes("?mod=Profile")) {
+                // OPTIMIZACIÓN: Rutas relativas y dinámicas
+                if (window.location.search.includes("?mod=Compras") || window.location.search.includes("?mod=Profile")) {
                     location.href = "?mod=home";
                 } else {
                     location.reload();
                 }
 
+                // OPTIMIZACIÓN: Respetar la preferencia del modo oscuro
+                const modoOscuroGuardado = localStorage.getItem('darkmode');
                 localStorage.clear();
+                if (modoOscuroGuardado) {
+                    localStorage.setItem('darkmode', modoOscuroGuardado);
+                }
             } else {
                 toastr.error(res.data.mensaje);
             }
         }, function errorCallback(res) {
-            toastr.error("Error: no se realizo la conexion con el servidor");
+            toastr.error("Error: no se realizó la conexión con el servidor");
         });
-    }
+    };
 
     obj.btnPerfil = () => {
         location.href = "?mod=Profile&opc=Direcciones";
-    }
+    };
 
     obj.enviarContacto = () => {
-
         if (vcRecaptchaService.getResponse() === "") {
             alert("Verifica que eres humano");
         } else {
@@ -268,32 +249,27 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
                 if (res.data.Bandera == 1) {
                     obj.msgContacto = true;
                 }
-
             }, function errorCallback(res) {
-                toastr.error("Error: no se realizo la conexion con el servidor");
+                toastr.error("Error: no se realizó la conexión con el servidor");
             });
         }
-    }
+    };
 
     angular.element(document).ready(function () {
         obj.getCategorias();
-        switch(window.location.href){
-            case "https://prueba.macromautopartes.com/":
-                obj.getBanners({ opc: "get", Categoria: "Principal", Estatus: 1 });
-                obj.getBanners({ opc: "get", Categoria: "Carrousel", Estatus: 1 });
-            break;
-            case "https://prueba.macromautopartes.com/?mod=home":
-                obj.getBanners({ opc: "get", Categoria: "Principal", Estatus: 1 });
-                obj.getBanners({ opc: "get", Categoria: "Carrousel", Estatus: 1 });
-            break;
-        }
-        if (window.location.href.includes("?mod=catalogo")) {
+        
+        // OPTIMIZACIÓN: Manejo de URLs dinámicas para evitar hardcodeo de dominio
+        const urlParams = new URLSearchParams(window.location.search);
+        const moduloActual = urlParams.get('mod');
+
+        if (!moduloActual || moduloActual === 'home') {
+            obj.getBanners({ opc: "get", Categoria: "Principal", Estatus: 1 });
+            obj.getBanners({ opc: "get", Categoria: "Carrousel", Estatus: 1 });
+        } else if (moduloActual === 'catalogo') {
             obj.getBanners({ opc: "get", Categoria: "Catalogos", Estatus: 1 });
-        }
-        if (window.location.href.includes("?mod=ProcesoCompra")) {
+        } else if (moduloActual === 'ProcesoCompra') { 
             obj.getBanners({ opc: "get", Categoria: "Compras", Estatus: 1 });
-        }
-        if (window.location.href.includes("?mod=nosotros")) {
+        } else if (moduloActual === 'nosotros') {
             obj.getBanners({ opc: "get", Categoria: "Nosotros", Estatus: 1 });
         }
     });
@@ -316,23 +292,18 @@ function FooterCtrl($scope, $http) {
                 for (var m in data.modelo) {
                     formData.append(m, data.modelo[m]);
                 }
-                //formData.append("file",data.file);
                 return formData;
             }
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
                 obj.categorias = res.data.Data.Categorias;
             }
-
-
         }, function errorCallback(res) {
-            toastr.error("Error: no se realizo la conexion con el servidor");
+            toastr.error("Error: no se realizó la conexión con el servidor");
         });
-    }
-
+    };
 
     angular.element(document).ready(function () {
         obj.getCategorias();
-
     });
 }
