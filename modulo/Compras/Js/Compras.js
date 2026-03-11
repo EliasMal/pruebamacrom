@@ -138,14 +138,23 @@ function ComprasCtrl($scope, $http, $sce) {
     }
 
     obj.eachRefacciones = (array) => {
+        if (!array) return; 
+
         array.forEach(e => {
-            e.NewUrlName = e["_producto"].replaceAll(" ","-");
+            let nombreProd = e["_producto"] || e["Producto"] || "";
+            
+            e.NewUrlName = nombreProd.replaceAll(" ","-");
             e.NewUrlName = e.NewUrlName.replaceAll(",","");
             e.NewUrlName = e.NewUrlName.normalize('NFD').replace(/[\u0300-\u036f]/g,"");
-            e.NewAltName = e["_producto"].replaceAll(",","");
+            e.NewAltName = nombreProd.replaceAll(",","");
+            
+            // Forzamos números para que no haya inputs en blanco ni errores de Angular
+            e.Cantidad = parseInt(e.Cantidad, 10) || 1;
+            e.Existencias = parseInt(e.Existencias, 10) || 1;
         });
-    }
-
+    };
+    if(obj.session && obj.session.CarritoPrueba) {obj.eachRefacciones(obj.session.CarritoPrueba);}
+    
     obj.getImagen = (id) => {
         //var url = "https://macromautopartes.com/images/refacciones/";
         var url = "images/refacciones/";
@@ -316,9 +325,7 @@ function ComprasCtrl($scope, $http, $sce) {
     }
 
     obj.btnAgregar = (Refaccion) => {
-
         if ($_SESSION.ProdInsufStock == 1) {
-
             Swal.fire({
                 title: "Piezas Insuficientes",
                 html: `¡Oops!, Parece que hay más piezas de las que tenemos en existencia,
@@ -336,14 +343,16 @@ function ComprasCtrl($scope, $http, $sce) {
                     actualizarCarrito(Refaccion);
                 }
             });
-
             return;
         }
 
+        //si puede aumentar, aumenta. Si no, avisa.
         if (parseInt(Refaccion.Cantidad) < parseInt(Refaccion.Existencias)) {
             Refaccion.Cantidad++;
             obj.Ttotal();
             actualizarCarrito(Refaccion);
+        } else {
+            toastr.warning("Solo tenemos " + Refaccion.Existencias + " piezas en existencia de este producto.");
         }
     };
 
@@ -359,6 +368,34 @@ function ComprasCtrl($scope, $http, $sce) {
 
         obj.Ttotal();
         actualizarCarrito(Refaccion);
+    };
+
+    obj.validarCantidadCart = (Refaccion) => {
+        if (Refaccion.Cantidad === undefined || Refaccion.Cantidad === null) return;
+
+        let cantidadActual = parseInt(Refaccion.Cantidad);
+        let stockMaximo = parseInt(Refaccion.Existencias);
+
+        if (cantidadActual > stockMaximo) {
+            Refaccion.Cantidad = stockMaximo; // Lo bajamos al máximo
+            toastr.warning("Solo tenemos " + stockMaximo + " piezas en existencia.");
+        }
+        
+        // Si el número es válido y mayor a 0, actualizamos el carrito en tiempo real
+        if (Refaccion.Cantidad > 0) {
+            obj.Ttotal();
+            actualizarCarrito(Refaccion);
+        }
+    };
+
+    //cuando el usuario da clic fuera del input (pierde el foco)
+    obj.formatearCantidadCart = (Refaccion) => {
+        // Si el usuario dejó el campo vacío o intentó poner 0 o menos
+        if (!Refaccion.Cantidad || Refaccion.Cantidad < 1) {
+            Refaccion.Cantidad = 1; // Lo regresamos a 1
+            obj.Ttotal();
+            actualizarCarrito(Refaccion);
+        }
     };
 
     obj.btnEliminarRefaccion = (Refaccion) => {
@@ -444,12 +481,13 @@ function ComprasCtrl($scope, $http, $sce) {
             data: { modelo: Refaccion }
         }).then(function successCallback(res) {
             if (opc) {
-                obj.getDataUser({ opc: "get", username: obj.session.usr });
+                // Lanzamos el aviso global para que Cabecera y Compras se actualicen
+                $scope.$root.$broadcast('carritoActualizado');
             }
         }, function errorCallback(res) {
             toastr.error("Error: no se realizo la conexion con el servidor");
         });
-    }
+    };
     
     /*=== TOOLTIP ===*/
     $scope.tooltipSucursal = {
@@ -495,7 +533,6 @@ function ComprasCtrl($scope, $http, $sce) {
 
     obj.getSeicom = async (clave) => {
         try {
-        
             const response = await $http({
                 method: 'GET',
                 url: url_seicom,
@@ -503,15 +540,12 @@ function ComprasCtrl($scope, $http, $sce) {
                 headers: { 'Content-Type': "application/x-www-form-urlencoded" },
                 transformResponse: data => $.parseXML(data)
             });
-        
             const xml = $(response.data).find("string");
             const json = JSON.parse(xml.text());
-        
             obj.SeiData = json;
             return json;
-        
         } catch (error) {
-            toastr.error(error);
+            console.error(error); 
             return null;
         }
     };
@@ -652,16 +686,15 @@ function ComprasCtrl($scope, $http, $sce) {
                 localStorage.setItem("id_rfc", obj.Costumer.dataFacturacion._id)
                 obj.Ttotal();
                 obj.dataflag = true;
-                prodCarrito(); //funcion en preparacion, Estado: En espera.
+                prodCarrito(); 
                 $scope.ProductosPorSucursal = $_SESSION.ProductosPorSucursal;
             } else {
-                toastr.error(res.data.mensaje)
+                toastr.error(res.data.Mensaje || res.data.mensaje || "Error al cargar datos del usuario");
             }
         }, function errorCallback(res) {
-            res.data.Data.Cenvio;
             toastr.error("Error: no se realizo la conexion con el servidor");
         });
-    }
+    };
 
     obj.btndireccionguardadas = (pag) => {
         localStorage.setItem("pag", pag);
@@ -856,7 +889,29 @@ function ComprasCtrl($scope, $http, $sce) {
 
     var butccompra = document.querySelector(".clip");
     var butcompra = document.querySelector(".confirmar--pago");
-
+    // 4. El Escuchador de Compras (Súper seguro y rápido)
+    $scope.$on('carritoActualizado', function() {
+        $http({
+            method: 'POST',
+            url: url_session,
+            data: { opc: "obtener_carrito_actualizado" }
+        }).then(function(res) {
+            if (res && res.data && res.data.Bandera == 1) {
+                obj.session.CarritoPrueba = res.data.Data.Carrito;
+                
+                if(obj.session.CarritoPrueba) {
+                    obj.eachRefacciones(obj.session.CarritoPrueba);
+                }
+                
+                obj.Numproducts = obj.session.CarritoPrueba ? obj.session.CarritoPrueba.length : 0;
+                obj.subtotal();
+                obj.Ttotal();
+                
+                // CRÍTICO: Volvemos a calcular las sucursales y envíos
+                prodCarrito(); 
+            }
+        });
+    });
     angular.element(document).ready(function () {
         if (obj.session.autentificacion == undefined && obj.session.autentificacion != 1) {
             location.href = "?mod=login";
@@ -864,7 +919,6 @@ function ComprasCtrl($scope, $http, $sce) {
             obj.getDataUser({ opc: "get", username: obj.session.usr })
             obj.empaquetar();
         }
-        obj.eachRefacciones(obj.session.CarritoPrueba);
     });
 }
 

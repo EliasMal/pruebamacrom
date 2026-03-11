@@ -58,11 +58,19 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
     obj.Contacto = {};
 
     obj.eachRefacciones = (array) => {
+        if (!array) return; 
+
         array.forEach(e => {
-            e.NewUrlName = e["_producto"].replaceAll(" ","-");
+            let nombreProd = e["_producto"] || e["Producto"] || "";
+            
+            e.NewUrlName = nombreProd.replaceAll(" ","-");
             e.NewUrlName = e.NewUrlName.replaceAll(",","");
             e.NewUrlName = e.NewUrlName.normalize('NFD').replace(/[\u0300-\u036f]/g,"");
-            e.NewAltName = e["_producto"].replaceAll(",","");
+            e.NewAltName = nombreProd.replaceAll(",","");
+            
+            // Forzamos números para el mini carrito también
+            e.Cantidad = parseInt(e.Cantidad, 10) || 1;
+            e.Existencias = parseInt(e.Existencias, 10) || 1;
         });
     };
 
@@ -91,14 +99,14 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
     };
 
     obj.actualizarSession = (Refaccion, opc) => {
-        /*opc? true = elimina la variable de la session, false= no aplica nada*/
         $http({
             method: 'POST',
             url: url_session,
             data: { modelo: Refaccion }
         }).then(function successCallback(res) {
             if (opc) {
-                location.reload();
+                // Dejamos SOLO el grito global. El $on se encarga del resto.
+                $scope.$root.$broadcast('carritoActualizado');
             }
         }, function errorCallback(res) {
             console.error(res);
@@ -170,19 +178,14 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
             method: 'POST',
             url: "./tv-admin/asset/Modulo/Secciones/webprincipal/Ajax/webprincipal.php",
             data: { imagen: data },
-            headers: {
-                'Content-Type': undefined
-            },
+            headers: { 'Content-Type': undefined },
             transformRequest: function (data) {
                 var formData = new FormData();
-                for (var m in data.imagen) {
-                    formData.append(m, data.imagen[m]);
-                }
+                for (var m in data.imagen) { formData.append(m, data.imagen[m]); }
                 return formData;
             }
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
-                // OPTIMIZACIÓN: Evitar el switch repetitivo
                 const categoria = res.data.categoria;
                 if (['Principal', 'Catalogos', 'Compras', 'Nosotros'].includes(categoria)) {
                     obj.dataBanners = res.data.Data;
@@ -190,7 +193,7 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
                     obj.dataCarrousel = res.data.Data;
                 }
             } else {
-                toastr.error(res.data.mensaje);
+                toastr.error(res.data.Mensaje || res.data.mensaje || "Error al cargar los banners");
             }
         }, function errorCallback(res) {
             toastr.error("Error: no se realizó la conexión con el servidor");
@@ -203,28 +206,22 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
 
     obj.btnLogout = () => {
         obj.login.opc = "out";
-
         $http({
             method: 'POST',
             url: urlLogin,
             data: { Login: obj.login }
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
-                // OPTIMIZACIÓN: Rutas relativas y dinámicas
                 if (window.location.search.includes("?mod=Compras") || window.location.search.includes("?mod=Profile")) {
                     location.href = "?mod=home";
                 } else {
                     location.reload();
                 }
-
-                // OPTIMIZACIÓN: Respetar la preferencia del modo oscuro
                 const modoOscuroGuardado = localStorage.getItem('darkmode');
                 localStorage.clear();
-                if (modoOscuroGuardado) {
-                    localStorage.setItem('darkmode', modoOscuroGuardado);
-                }
+                if (modoOscuroGuardado) { localStorage.setItem('darkmode', modoOscuroGuardado); }
             } else {
-                toastr.error(res.data.mensaje);
+                toastr.error(res.data.Mensaje || res.data.mensaje || "Error al cerrar sesión");
             }
         }, function errorCallback(res) {
             toastr.error("Error: no se realizó la conexión con el servidor");
@@ -254,6 +251,42 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
             });
         }
     };
+
+    // Función optimizada para traer solo el carrito
+    obj.getSoloCarrito = async () => {
+        try {
+            const res = await $http({
+                method: 'POST',
+                url: url_session,
+                data: { opc: "obtener_carrito_actualizado" }
+            });
+
+            if (res && res.data && res.data.Bandera == 1) {
+                $scope.$evalAsync(() => {
+                    // Asegurarnos de que obj.Data existe
+                    if (!obj.Data) obj.Data = {};
+                    
+                    // Actualizamos únicamente el arreglo del carrito
+                    obj.Data.Carrito = res.data.Data.Carrito;
+                    
+                    // Volvemos a formatear las URLs y nombres de los productos del carrito
+                    if(obj.Data.Carrito) {
+                        obj.eachRefacciones(obj.Data.Carrito);
+                    }
+                    
+                    // Actualizamos el contador visual de la burbuja
+                    obj.Numproducts = obj.Data.Carrito.length;
+                });
+            }
+        } catch (error) {
+            console.error("Error al actualizar el mini carrito:", error);
+        }
+    };
+
+    $scope.$on('carritoActualizado', function() {
+        // Ejecutamos la función ligera
+        obj.getSoloCarrito(); 
+    });
 
     angular.element(document).ready(function () {
         obj.getCategorias();

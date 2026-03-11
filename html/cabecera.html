@@ -84,7 +84,7 @@
 						<div id="divcarri">
 							<div class="header-wrapicon2">
 								<i class="fas fa-shopping-cart header-icon1 js-show-header-dropdown filwhite" id="carrisvg"></i>
-								<span class="header-icons-noti">{{Data.Carrito.length}}</span>
+								<span id="contador-carrito" class="header-icons-noti">{{Data.Carrito.length || Numproducts}}</span>
 
 								<div class="header-cart header-dropdown carrito__contenedor">
 									<p class="carrito__articulos__length txtred" ng-show="user">Tienes {{Data.Carrito.length}} articulos en tu carrito</p>

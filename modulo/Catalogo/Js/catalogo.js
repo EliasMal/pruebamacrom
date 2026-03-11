@@ -3,7 +3,7 @@ var url_session = "./modulo/home/Ajax/session.php";
 
 tsuruVolks
     .controller('catalogosCtrl', ["$scope", "$http", catalogosCtrl])
-    .controller("catalogosDetallesCtrl", ["$scope", "$http", catalogosDetallesCtrl])
+    .controller("catalogosDetallesCtrl", ["$scope", "$http" ,"$rootScope", catalogosDetallesCtrl])
     .filter('startFromGrid', function () {
         return function (input, start) {
             start = +start;
@@ -318,9 +318,12 @@ function catalogosCtrl($scope, $http) {
         toggleApplyIfNeeded();
     }
 
-    checkmark = (el) => {
+    obj.checkmark = ($event) => {
+        // Extraemos el checkbox físico desde el evento del clic
+        const el = $event.target; 
+        
         if (!el || !el.name) return;
-        applyFilter({name: el.name.trim(),value: el.value,checked: el.checked});
+        applyFilter({name: el.name.trim(), value: el.value, checked: el.checked});
     };
 
     aplicarbutton.addEventListener("click", () => {
@@ -579,7 +582,7 @@ function catalogosCtrl($scope, $http) {
     obj.init();
 }
 
-function catalogosDetallesCtrl($scope, $http) {
+function catalogosDetallesCtrl($scope, $http, $rootScope) {
 
     var obj = $scope;
     obj.cargando = true;
@@ -607,13 +610,37 @@ function catalogosDetallesCtrl($scope, $http) {
         return Number(numStr)
     }
 
+    // cada vez que el usuario teclea un número
+    obj.validarCantidad = () => {
+        if (obj.Refaccion.cantidad === undefined || obj.Refaccion.cantidad === null) return;
+
+        let cantidadActual = parseInt(obj.Refaccion.cantidad);
+        let stockMaximo = parseInt(obj.Refaccion.datos.stock);
+        //si teclea un número mayor, JavaScript lo atrapa
+        if (cantidadActual > stockMaximo) {
+            obj.Refaccion.cantidad = stockMaximo; // Lo bajamos al máximo
+            toastr.warning("Solo tenemos " + stockMaximo + " piezas en existencia.");
+        }
+    };
+
+    //cuando el usuario da clic fuera del input
+    obj.formatearCantidad = () => {
+        // Si el usuario borró el número o intentó poner 0 o negativos
+        if (!obj.Refaccion.cantidad || obj.Refaccion.cantidad < 1) {
+            obj.Refaccion.cantidad = 1;
+        }
+    };
+
     obj.btndisminuir = () => {
         obj.Refaccion.cantidad = obj.Refaccion.cantidad != 1 ? obj.Refaccion.cantidad - 1 : 1
     }
 
     obj.btnaumentar = () => {
         if (obj.Refaccion.cantidad < obj.Refaccion.datos.stock) {
-            obj.Refaccion.cantidad++
+            obj.Refaccion.cantidad++;
+        } else {
+            // Si intenta dar clic en "+" y ya está en el límite, le avisamos
+            toastr.warning("Solo tenemos " + obj.Refaccion.datos.stock + " piezas en existencia.");
         }
     }
 
@@ -694,30 +721,43 @@ function catalogosDetallesCtrl($scope, $http) {
     }
 
     obj.Agregarcarrito = () => {
+        // 1. Prevenir doble clic: Si ya se está agregando, no hacer nada.
+        if (obj.agregando) return; 
+        
+        obj.agregando = true;
         $http({
             method: 'POST',
             url: url_session,
             data: { modelo: obj.Refaccion }
 
         }).then(function successCallback(res) {
+            
+            // Evaluamos la Bandera limpia que nos manda PHP
+            if (res.data.Bandera == 1) {
+                toastr.success(res.data.Mensaje); 
+            } else {
+                toastr.warning(res.data.Mensaje || "No se pudo agregar al carrito");
+            }
 
-            location.reload();
         }, function errorCallback(res) {
             toastr.error("Error: no se realizo la conexion con el servidor");
+        }).finally(function() {
+            obj.agregando = false;
+            
+            $rootScope.$broadcast('carritoActualizado'); 
         });
-
     }
 
     obj.getImagen = (status, id) => {
-        var url = "https://macromautopartes.com/images/refacciones/";
-        //var url = "images/refacciones/";
+        //let url = "images/refacciones/";
+        let url = "https://macromautopartes.com/images/refacciones/";
         return status ? url + id + ".webp" : url + id + ".webp";
     }
 
     obj.getGaleria = (id) => {
         if (id != undefined) {
-            url = "https://macromautopartes.com/images/galeria/" + id;
-            //url = "images/galeria/" + id;
+            //let url = "images/galeria/" + id;
+            let url = "https://macromautopartes.com/images/galeria/" + id; 
             return url;
         }
     }

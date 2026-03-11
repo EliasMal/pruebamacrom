@@ -64,7 +64,7 @@
 													<i class="fa fa-minus" aria-hidden="true"></i>
 												</button>
 												<div class="agregarmas__contador--compras num-product center--text">
-													<span>{{product.Cantidad}}</span>
+												    <input type="number" style="width: 100%; border: none; background: transparent; height: 100%; outline: none; text-align: center;" ng-model="product.Cantidad" ng-change="validarCantidadCart(product)" ng-blur="formatearCantidadCart(product)" min="1">
 												</div>
 												<button class="agregarmas__botones" ng-click="btnAgregar(product)">
 													<i class="fa fa-plus" aria-hidden="true"></i>
@@ -221,7 +221,7 @@
 					</div> <!--Fin Modal Metodo De Pago-->
 				</main>
 
-				<section ng-controller="ComprasCtrl">
+				<section>
 					<form name="frmcompra" id="frmcompra" novalidate>
 						<!-- Ventana modal Editar Dirección, por defecto no visiblel -->
 						<div id="ventanaModal0" class="modal" ng-controller="ProfileCtrl" ng-init="pag='Direcciones_edit'">
@@ -448,7 +448,7 @@
 									</div>
 								</div>
 								<!-- <span id="alertvalid" class="ventanaModal__contenido--alerta"><img src="https://macromautopartes.com/images/icono notificacion.svg" alt="icon-user" style="width:3.2rem; padding-right: 2px;">Completa todos los datos para poder continuar</span> -->
-								<span id="alertvalid" class="ventanaModal__contenido--alerta"><img src="images/icono notificacion.svg" alt="icon-user" style="width:3.2rem; padding-right: 2px;">Completa todos los datos para poder continuar</span>
+								<span id="alertvalid" class="ventanaModal__contenido--alerta"><img src="images/icono%20notificacion.svg" alt="icon-user" style="width:3.2rem; padding-right: 2px;">Completa todos los datos para poder continuar</span>
 								<button class="btn btn-danger ventanaModal__contenido--botonguardar" ng-click="inputvalidireccion()">Guardar</button>
 							</div>
 						</div> <!--Fin Modal Agregar Nueva-->
@@ -592,7 +592,7 @@
 									</div>
 
 									<!-- <span id="alertvalid1" class="ventanaModal__contenido--alerta"><img src="https://macromautopartes.com/images/icono notificacion.svg" alt="icon-user" style="width: 3.2rem; padding-right: 2px;">Completa todos los datos para poder continuar</span> -->
-									<span id="alertvalid1" class="ventanaModal__contenido--alerta"><img src="images/icono notificacion.svg" alt="icon-user" style="width: 3.2rem; padding-right: 2px;">Completa todos los datos para poder continuar</span>
+									<span id="alertvalid1" class="ventanaModal__contenido--alerta"><img src="images/icono%20notificacion.svg" alt="icon-user" style="width: 3.2rem; padding-right: 2px;">Completa todos los datos para poder continuar</span>
 									<button class="btn btn-danger ventanaModal__contenido--botonguardar" ng-click="inputvalidfactura()" id="btngfact">Guardar</button>
 								</div>
 							</form>

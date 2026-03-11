@@ -193,8 +193,6 @@
             ];
         }
 
-
-
         private function clientePuedeUsarCupon($idCliente, $idCupon, $esGlobal){
             if($esGlobal == 1){
                 return true;

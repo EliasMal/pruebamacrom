@@ -41,18 +41,16 @@
 							</div>
 							<div class="contenido__opciones opciones__disponibilidad dis-none">
 								<label ng-show="Existencias[0].cantidad_repetida > 0" class="container">En Existencia ({{Existencias[0].cantidad_repetida}})
-									<input type="checkbox" name="Disponibilidad" id="En_Existencia"
-										value="En Existencia" onclick="checkmark(this)">
+									<input type="checkbox" name="Disponibilidad" id="En_Existencia" value="En Existencia" ng-click="checkmark($event)">
 									<span class="checkmark"></span>
 								</label>
 								<label ng-show="Ofertas[0].cantidad_repetida > 0" class="container">Ofertas ({{Ofertas[0].cantidad_repetida}})
-									<input type="checkbox" name="Disponibilidad" id="Ofertas" value="Ofertas"
-										onclick="checkmark(this)">
+									<input type="checkbox" name="Disponibilidad" id="Ofertas" value="Ofertas" ng-click="checkmark($event)">
 									<span class="checkmark"></span>
 								</label>
 								<label ng-show="Nuevos[0].cantidad_repetida > 0" class="container">Articulos Nuevos ({{Nuevos[0].cantidad_repetida}})
 									<input type="checkbox" name="Disponibilidad" id="Articulos_Nuevos"
-										value="Articulos Nuevos" onclick="checkmark(this)">
+										value="Articulos Nuevos" ng-click="checkmark($event)">
 									<span class="checkmark"></span>
 								</label>
 							</div>
@@ -66,8 +64,7 @@
 							<div class="contenido__opciones opciones__marcas dis-none">
 								<div ng-repeat="marca in Marcas">
 									<label class="container">{{marca.Marca}} ({{marca.cantidad_repetida}})
-										<input type="checkbox" name="Marca" id="{{marca.Marca}}"
-											onclick="checkmark(this)" value="{{marca._idMarca}}">
+										<input type="checkbox" name="Marca" id="{{marca.Marca}}" ng-click="checkmark($event)" value="{{marca._idMarca}}">
 										<span class="checkmark"></span>
 									</label>
 								</div>
@@ -82,8 +79,7 @@
 							<div class="contenido__opciones opciones__vehiculos dis-none">
 								<div ng-repeat="vehiculo in Vehiculos">
 									<label class="container">{{vehiculo.Modelo}} ({{vehiculo.cantidad_repetida}})
-										<input type="checkbox" name="Vehiculo" id="{{vehiculo.Modelo}}"
-											onclick="checkmark(this)" value="{{vehiculo._id}}">
+										<input type="checkbox" name="Vehiculo" id="{{vehiculo.Modelo}}" ng-click="checkmark($event)" value="{{vehiculo._id}}">
 										<span class="checkmark"></span>
 									</label>
 								</div>
@@ -98,8 +94,7 @@
 							<div class="contenido__opciones opciones__categorias dis-none">
 								<div ng-repeat="categoria in categorias">
 									<label class="container">{{categoria.Categoria}} ({{categoria.cantidad_repetida}})
-										<input type="checkbox" name="Categoria" id="{{categoria.Categoria}}"
-											onclick="checkmark(this)" value="{{categoria._id}}">
+										<input type="checkbox" name="Categoria" id="{{categoria.Categoria}}" ng-click="checkmark($event)" value="{{categoria._id}}">
 										<span class="checkmark"></span>
 									</label>
 								</div>
@@ -114,8 +109,7 @@
 							<div class="contenido__opciones opciones__proveedores dis-none">
 								<div ng-repeat="proveedor in Proveedores | limitTo: view">
 									<label class="container">{{proveedor.Proveedor}} ({{proveedor.cantidad_repetida}})
-										<input type="checkbox" name="Proveedor" id="{{proveedor.Proveedor}}"
-											onclick="checkmark(this)" value="{{proveedor.id_proveedor}}">
+										<input type="checkbox" name="Proveedor" id="{{proveedor.Proveedor}}" ng-click="checkmark($event)" value="{{proveedor.id_proveedor}}">
 										<span class="checkmark"></span>
 									</label>
 								</div>
@@ -126,24 +120,16 @@
 					<div class="filtros__orden dis-none">
 						<div class="contenedor__orden" ng-show="Existencias[0].cantidad_repetida > 0">
 							<div class="orden__subtitle"><label for="switch__existencia">En existencia ({{Existencias[0].cantidad_repetida}})</label></div>
-							<div class="orden__subswitch"><input type="checkbox" name="Disponibilidad" class="switch__orden" id="switch__existencia" value="En Existencia" onclick="checkmark(this)"/><label for="switch__existencia" class="switch__orden--label">Toggle</label></div>
+							<div class="orden__subswitch"><input type="checkbox" name="Disponibilidad" class="switch__orden" id="switch__existencia" value="En Existencia" ng-click="checkmark($event)"/><label for="switch__existencia" class="switch__orden--label">Toggle</label></div>
 						</div>
 						<div class="contenedor__orden" ng-show="Ofertas[0].cantidad_repetida > 0">
 							<div class="orden__subtitle"><label for="switch__oferta">En oferta ({{Ofertas[0].cantidad_repetida}})</label></div>
-							<div class="orden__subswitch"><input type="checkbox" name="Disponibilidad" class="switch__orden" id="switch__oferta" value="Ofertas" onclick="checkmark(this)"/><label for="switch__oferta" class="switch__orden--label">Toggle</label></div>
+							<div class="orden__subswitch"><input type="checkbox" name="Disponibilidad" class="switch__orden" id="switch__oferta" value="Ofertas" ng-click="checkmark($event)"/><label for="switch__oferta" class="switch__orden--label">Toggle</label></div>
 						</div>
 						<div class="contenedor__orden" ng-show="Nuevos[0].cantidad_repetida > 0">
 							<div class="orden__subtitle"><label for="switch__Articulos_Nuevos">Articulos Nuevos ({{Nuevos[0].cantidad_repetida}})</label></div>
-							<div class="orden__subswitch"><input type="checkbox" name="Disponibilidad" class="switch__orden" id="switch__Articulos_Nuevos" onclick="checkmark(this)"/><label for="switch__Articulos_Nuevos" class="switch__orden--label">Toggle</label></div>
+							<div class="orden__subswitch"><input type="checkbox" name="Disponibilidad" class="switch__orden" id="switch__Articulos_Nuevos" ng-click="checkmark($event)"/><label for="switch__Articulos_Nuevos" class="switch__orden--label">Toggle</label></div>
 						</div>
-						<!-- <div class="contenedor__orden">
-							<div class="orden__subtitle"><span>Precio</span></div>
-							<div class="orden__rango">
-								<input type="number" name="desde" id="orden__desde" class="orden__input--precio" placeholder="Desde">
-								<span class="guion__separador">-</span>
-								<input type="number" name="hasta" id="orden__hasta" class="orden__input--precio" placeholder="Hasta">
-							</div>
-						</div> -->
 					</div>
 					<div class="filtro__aplicar">
 						<button class="filtro__aplicar--button dis-none">Borrar filtros</button>
