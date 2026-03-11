@@ -1,3 +1,102 @@
+:root {
+  --primario: #de0007;
+  --primario-oscuro: #bf040a;
+  --blanco: #fff;
+  --gris-iconos: #888;
+}
+
+/* Botón Principal (Rojo Macrom) */
+.login-box .btn-primary {
+  background-color: var(--primario);
+  border-color: var(--primario);
+  color: var(--blanco);
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+}
+
+.login-box .btn-primary:hover,
+.login-box .btn-primary:focus {
+  background-color: var(--primario-oscuro) !important;
+  border-color: var(--primario-oscuro) !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.login-box .btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.form-group.has-feedback {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.form-group.has-feedback .form-control {
+  height: 45px;
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+}
+
+.form-control-feedback {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gris-iconos);
+  z-index: 5;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.form-group.has-feedback .form-control {
+  padding-left: 45px !important;
+}
+
+#password {
+  padding-right: 45px !important;
+}
+
+.toggle-password-btn {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none; 
+  background: transparent;
+  color: var(--gris-iconos);
+  cursor: pointer;
+  z-index: 10;
+  padding: 0;
+  font-size: 16px;
+  transition: color 0.2s;
+}
+
+.toggle-password-btn:hover {
+  outline: none;
+  color: var(--primario);
+}
+
+.alert {
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.alert-danger { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+.alert-warning { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+
+
+/* =========================================================
+   ESTILOS GENERALES DEL PROYECTO
+   ========================================================= */
+
 .tachado {
   text-decoration: line-through;
   font-size: 12px;

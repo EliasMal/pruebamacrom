@@ -609,37 +609,38 @@ function ComprasCtrl($scope, $http, $sce) {
         return data
     }
 
-    obj.btnCotizacion = async () => {
+    obj.btnCotizacion = () => {
+        // Validar peso mínimo
         if(obj.dataCotizador.parcel.weight < 1){
             obj.dataCotizador.parcel.weight = 1;
         }
-        try {
-            obj.dataCotizador.zip_to = obj.Costumer.dataDomicilio.data.Codigo_postal;
-            const result = await $http({
-                method: 'POST',
-                url: urlSkydropx,
-                data: obj.dataCotizador,
-                headers: {
-                    'Authorization': token,
-                    'Content-Type': "application/json"
-                }
-            }).then(function successCallback(res) {
-                return res
-
-            }, function errorCallback(res) {
-                console.error(res)
-                console.log("Error: no se realizo la conexion con el servidor");
-            });
-            obj.cotizador = obj.eliminarPaqueterias(result.data);
-            obj.cotizador.forEach(e => {
-                e.newtotal = (parseFloat(e.total_pricing)+4.64)+ parseFloat(e.total_pricing*(3.2/100));
-            });
+        
+        obj.dataCotizador.zip_to = obj.Costumer.dataDomicilio.data.Codigo_postal;
+        
+        $http({
+            method: 'POST',
+            url: urlSkydropx,
+            data: obj.dataCotizador,
+            headers: {
+                'Authorization': token,
+                'Content-Type': "application/json"
+            }
+        }).then(function successCallback(res) {
+            if (res.data) {
+                obj.cotizador = obj.eliminarPaqueterias(res.data);
+                obj.cotizador.forEach(e => {
+                    e.newtotal = (parseFloat(e.total_pricing) + 4.64) + parseFloat(e.total_pricing * (3.2/100));
+                });
+            }
             obj.flag = false;
 
-            // $scope.$apply();
-        } catch (error) {
-            return false;
-        }
+        }, function errorCallback(res) {
+            console.error("Error en la cotización de Skydropx: ", res);
+            toastr.error("Hubo un problema al cotizar el envío. Revisa tu código postal o intenta más tarde.");
+            
+            obj.flag = false; 
+            obj.cotizador = [];
+        });
     }
 
     obj.btncotizar = () => {
