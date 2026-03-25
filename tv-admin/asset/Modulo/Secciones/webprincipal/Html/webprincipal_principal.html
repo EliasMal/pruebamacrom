@@ -1,294 +1,281 @@
-<section ng-controller="WebCtrl">
+<style>
+    /* Estilos para la Galería de Banners */
+    .banner-card { transition: all 0.3s ease; border-radius: 10px; overflow: hidden; }
+    .banner-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.15) !important; }
+    .banner-img-active { width: 100%; max-height: 300px; object-fit: contain; background: #f8f9fa; }
+    .banner-img-thumb { width: 100%; height: 150px; object-fit: cover; background: #f8f9fa; cursor: pointer; transition: opacity 0.2s;}
+    .banner-img-thumb:hover { opacity: 0.8; }
+    .nav-tabs .nav-link.active { border-top: 3px solid #de0007; color: #de0007; font-weight: bold; }
+    .nav-tabs .nav-link { color: #495057; font-weight: 500; }
+    .wrap-slick2 {
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        min-height: 200px; 
+    }
+    .wrap-slick2.slick-cargado {
+        opacity: 1;
+    }
+    .btn-carrusel-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        background-color: rgba(222, 0, 7, 0.8) !important;
+        color: #ffffff !important;
+        border: none;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        transition: all 0.3s ease;
+    }
+    .btn-carrusel-nav:hover {
+        background-color: #bf040a !important;
+        transform: translateY(-50%) scale(1.1);
+    }
+    .btn-carrusel-nav:focus { outline: none; }
+    
+    .btn-carrusel-prev { left: 15px; }
+    .btn-carrusel-next { right: 15px; }
+</style>
+
+<section ng-controller="WebCtrl" ng-cloak>
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
+            <div class="row mb-2 align-items-center">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark"><i class="fa fa-columns mr-1"></i> Pagina Principal</h1>
-                </div><!-- /.col -->
+                    <h1 class="m-0 text-dark font-weight-bold">
+                        <i class="fa fa-images text-danger mr-2"></i> Diseño Web (Banners)
+                    </h1>
+                </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
-                        <li class="breadcrumb-item active">Principal</li>
+                        <li class="breadcrumb-item active">Banners Principal</li>
                     </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+                </div>
+            </div>
+        </div>
     </div>
 
     <section class="content">
         <div class="container-fluid">
-            <div class="row">
-                <section class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="card card-danger card-outline shadow-sm border-0" style="border-radius: 12px;">
+                
+                <div class="card-header p-0 border-bottom-0 bg-white">
+                    <ul class="nav nav-tabs" id="TabHeader" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link px-4 py-3" id="TabPrincipal" data-toggle="tab" href="#Principal" role="tab" ng-click="saveTab('Principal')"><i class="fa fa-home mr-1"></i> Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-4 py-3" id="TabCatalogos" data-toggle="tab" href="#Catalogos" role="tab" ng-click="saveTab('Catalogos')"><i class="fa fa-book mr-1"></i> Catálogo</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-4 py-3" id="TabCompras" data-toggle="tab" href="#Compras" role="tab" ng-click="saveTab('Compras')"><i class="fa fa-shopping-bag mr-1"></i> Compras</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-4 py-3" id="TabNosotros" data-toggle="tab" href="#Nosotros" role="tab" ng-click="saveTab('Nosotros')"><i class="fa fa-users mr-1"></i> Nosotros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-4 py-3" id="TabCarrousel" data-toggle="tab" href="#Carrousel" role="tab" ng-click="saveTab('Carrousel')"><i class="fa fa-layer-group mr-1"></i> Carrousel</a>
+                        </li>
+                    </ul>
+                </div>
 
-                    <div class="card card-danger">
-                        <div class="card-header d-flex p-0">
-                            <h3 class="card-title p-3">
-                                <i class="fa fa-image mr-1"></i>
-                                Banners Macromautopartes
-                            </h3>
-                            <div class="card-tools">
-                                <button class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <div class="card-body bg-light">
+                    <div class="tab-content" id="myTabContent">
+                        
+                        <div class="tab-pane fade" id="Principal" role="tabpanel">
+                            <h5 class="font-weight-bold text-dark mb-3"><i class="fa fa-broadcast-tower text-success mr-2"></i> Banner Actualmente en Vivo</h5>
+                            <div class="card shadow-sm border-success mb-4" ng-repeat="principal in databannerPrincipal.Escritorio">
+                                <div class="card-body p-0 text-center position-relative">
+                                    <span class="badge badge-success position-absolute mt-2 ml-2" style="top:0; left:0; font-size: 1rem;">ACTIVO</span>
+                                    <img ng-src="{{dominio}}/images/Banners/{{principal.imagen}}" class="banner-img-active p-2">
+                                </div>
+                                <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                                    <div class="text-muted small">
+                                        <span class="mr-3"><i class="fa fa-ruler-combined"></i> {{principal.width}}x{{principal.height}}px</span>
+                                        <span class="mr-3"><i class="fa fa-file-image"></i> {{principal.formato | uppercase}}</span>
+                                        <span><i class="fa fa-calendar-alt"></i> Subido: {{principal.FechaCreacion}}</span>
+                                    </div>
+                                    <button class="btn btn-sm btn-outline-danger" ng-click="btnDesactivar(principal._id, principal.Categoria)" title="Quitar este banner">
+                                        <i class="fa fa-trash mr-1"></i> Desactivar
+                                    </button>
+                                </div>
                             </div>
-                        </div><!-- /.card-header -->
-                        <div class="card-body">
+
+                            <hr>
+                            
+                            <h6 class="font-weight-bold text-muted mb-3"><i class="fa fa-archive mr-2"></i> Historial de Banners (Inactivos)</h6>
                             <div class="row">
-                                <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
-
-                                    <ul class="nav nav-tabs" id="TabHeader" role="tablist">
-                                        <li class="nav-item" role="presentation">
-                                            <a class="nav-link" id="TabPrincipal" data-toggle="tab" href="#Principal" 
-                                                role="tab" aria-controls="Escritorio" aria-selected="true" onclick="localStorage.setItem('TabActive','Principal')">Home</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="TabCatalogos" data-toggle="tab" href="#Catalogos"
-                                                role="tab" aria-controls="Movil" aria-selected="true" onclick="localStorage.setItem('TabActive','Catalogos')">Catalogo</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="TabCompras" data-toggle="tab" href="#Compras"
-                                                role="tab" aria-controls="Movil" aria-selected="true" onclick="localStorage.setItem('TabActive','Compras')">Compras</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="TabNosotros" data-toggle="tab" href="#Nosotros"
-                                                role="tab" aria-controls="Movil" aria-selected="true" onclick="localStorage.setItem('TabActive','Nosotros')">Nosotros</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="TabCarrousel" data-toggle="tab" href="#Carrousel"
-                                                role="tab" aria-controls="Movil" aria-selected="true" onclick="localStorage.setItem('TabActive','Carrousel')">Carrousel</a>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content" id="myTabContent">
-                                        <div class="tab-pane fade" id="Principal" role="tabpanel"
-                                            aria-labelledby="desktop-tab">
-                                            <br>
-                                            <div class="row card card-danger card-outline b-shadow">
-                                                <div class="card-body col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12"
-                                                    ng-repeat="principal in databannerPrincipal.Escritorio">
-                                                    <img ng-src="{{dominio}}/images/Banners/{{principal.imagen}}"
-                                                        alt="Imagen principal" class="presentation__img"
-                                                        style="margin-bottom: 10px;" ng-dblclick="btnDesimgcarrousel(principal._id, principal.Categoria)">
-                                                        <address>
-                                                            <small><b>Dimensiones de la imagen:</b> {{principal.width}} x {{principal.height}}</small><br>
-                                                            <small><b>Fecha de subida:</b> {{principal.FechaCreacion}}</small><br>
-                                                            <small><b>Formato:</b> {{principal.formato}}</small><br>
-                                                            <small><b>Estado:</b><b style="color: #28a745;"> Activa</b></small>
-                                                        </address>
-                                                    <button class="btn btn-sm btn-outline-danger pull-right"
-                                                        ng-click="btnDesactivar(principal._id, principal.Categoria)">Eliminar</button>
-                                                </div>
-                                            </div>
-
-                                            <div class="available__images__cont">
-                                                <div class="cont__datos"
-                                                    ng-repeat="principal in databannerPrincipal.disabled.Escritorio">
-                                                    <img ng-src="{{dominio}}/images/Banners/{{principal.imagen}}"
-                                                        alt="Imagen principal" class="img-fluid enlace"
-                                                        style="margin-bottom: 10px;"
-                                                        ng-click="changePred(principal._id, principal.Categoria)">
-                                                    <div class="info__imagen">
-                                                        <small>Fecha de subida: {{principal.FechaCreacion}}</small><br>
-                                                        <small><b>Estado:</b><b style="color: #de0007;"> Inactiva</b></small>
-                                                        <button class="btn btn-sm btn-outline-danger pull-right"
-                                                            ng-click="btnDesactivar(principal._id, principal.Categoria)">Eliminar</button>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                <div class="col-md-4 col-lg-3 mb-4" ng-repeat="principal in databannerPrincipal.disabled.Escritorio">
+                                    <div class="card shadow-sm banner-card h-100 border-0">
+                                        <img ng-src="{{dominio}}/images/Banners/{{principal.imagen}}" class="banner-img-thumb" ng-click="changePred(principal._id, principal.Categoria)" title="Clic para activar">
+                                        <div class="card-body p-2 bg-white text-center">
+                                            <small class="text-muted d-block mb-2">{{principal.FechaCreacion}}</small>
+                                            <button class="btn btn-xs btn-success shadow-sm" ng-click="changePred(principal._id, principal.Categoria)"><i class="fa fa-check"></i> Activar</button>
+                                            <button class="btn btn-xs btn-outline-danger shadow-sm" ng-click="btnDesactivar(principal._id, principal.Categoria)"><i class="fa fa-trash"></i> Eliminar</button>
                                         </div>
-                                        <div class="tab-pane fade" id="Catalogos" role="tabpanel"
-                                            aria-labelledby="movil-tab">
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-12 col-xl-12 col-md-12 col-lg-12"
-                                                    ng-repeat="promo in catalogos.Escritorio">
-                                                    <div class="card card-danger card-outline b-shadow">
-                                                        <div class="card-body">
-                                                            <img ng-src="{{dominio}}/images/Banners/{{promo.imagen}}"
-                                                                alt="Imagen Catalogos" class="presentation__img">
-                                                            <address>
-                                                                <small><b>Dimensiones de la imagen:</b> {{promo.width}} x {{promo.height}}</small><br>
-                                                                <small><b>Fecha de subida:</b> {{promo.FechaCreacion}}</small><br>
-                                                                <small><b>Formato:</b> {{promo.formato}}</small><br>
-                                                                <small><b>Estado:</b><b style="color: #28a745;"> Activa</b></small>
-                                                            </address>
-                                                            <button class="btn btn-sm btn-outline-danger pull-right"
-                                                                type="button"
-                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Eliminar</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="available__images__cont">
-                                                <div class="cont__datos"
-                                                    ng-repeat="catalogo in catalogos.disabled.Escritorio">
-                                                    <img ng-src="{{dominio}}/images/Banners/{{catalogo.imagen}}"
-                                                        alt="Imagen Catalogos" class="img-fluid enlace"
-                                                        style="margin-bottom: 10px;"
-                                                        ng-click="changePred(catalogo._id, catalogo.Categoria)">
-                                                    <div class="info__imagen">
-                                                        <small>Fecha de subida: {{catalogo.FechaCreacion}}</small><br>
-                                                        <small><b>Estado:</b><b style="color: #de0007;"> Inactiva</b></small>
-                                                        <button class="btn btn-sm btn-outline-danger pull-right"
-                                                            ng-click="btnDesactivar(catalogo._id, catalogo.Categoria)">Eliminar</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="tab-pane fade" id="Compras" role="tabpanel"
-                                            aria-labelledby="movil-tab">
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-12 col-xl-12 col-md-12 col-lg-12"
-                                                    ng-repeat="promo in compras.Escritorio">
-                                                    <div class="card card-danger card-outline b-shadow">
-                                                        <div class="card-body">
-                                                            <img ng-src="{{dominio}}/images/Banners/{{promo.imagen}}"
-                                                                alt="Imagen compras" class="presentation__img">
-                                                            <address>
-                                                                <small><b>Dimensiones de la imagen:</b> {{promo.width}} x {{promo.height}}</small><br>
-                                                                <small><b>Fecha de subida:</b> {{promo.FechaCreacion}}</small><br>
-                                                                <small><b>Formato:</b> {{promo.formato}}</small><br>
-                                                                <small><b>Estado:</b><b style="color: #28a745;"> Activa</b></small>
-                                                            </address>
-                                                            <button class="btn btn-sm btn-outline-danger pull-right"
-                                                                type="button"
-                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Eliminar</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="available__images__cont">
-                                                <div class="cont__datos"
-                                                    ng-repeat="compras in compras.disabled.Escritorio">
-                                                    <img ng-src="{{dominio}}/images/Banners/{{compras.imagen}}"
-                                                        alt="Imagen compras" class="img-fluid enlace"
-                                                        style="margin-bottom: 10px;"
-                                                        ng-click="changePred(compras._id, compras.Categoria)">
-                                                    <div class="info__imagen">
-                                                        <small>Fecha de subida: {{compras.FechaCreacion}}</small><br>
-                                                        <small><b>Estado:</b><b style="color: #de0007;"> Inactiva</b></small>
-                                                        <button class="btn btn-sm btn-outline-danger pull-right"
-                                                            ng-click="btnDesactivar(compras._id, compras.Categoria)">Eliminar</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="Nosotros" role="tabpanel"
-                                            aria-labelledby="desktop-tab">
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-12 col-xl-12 col-md-12 col-lg-12"
-                                                    ng-repeat="promo in nosotros.Escritorio">
-                                                    <div class="card card-danger card-outline b-shadow">
-                                                        <div class="card-body">
-                                                            <img ng-src="{{dominio}}/images/Banners/{{promo.imagen}}"
-                                                                alt="Imagen nosotros" class="presentation__img">
-                                                            <address>
-                                                                <small><b>Dimensiones de la imagen:</b> {{promo.width}} x {{promo.height}}</small><br>
-                                                                <small><b>Fecha de subida:</b> {{promo.FechaCreacion}}</small><br>
-                                                                <small><b>Formato:</b> {{promo.formato}}</small><br>
-                                                                <small><b>Estado:</b><b style="color: #28a745;"> Activa</b></small>
-                                                            </address>
-                                                            <button class="btn btn-sm btn-outline-danger pull-right"
-                                                                type="button"
-                                                                ng-click="btnDesactivar(promo._id, promo.Categoria)">Eliminar</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="available__images__cont">
-                                                <div class="cont__datos"
-                                                    ng-repeat="nosotros in nosotros.disabled.Escritorio">
-                                                    <img ng-src="{{dominio}}/images/Banners/{{nosotros.imagen}}"
-                                                        alt="Imagen nosotros" class="img-fluid enlace"
-                                                        style="margin-bottom: 10px;"
-                                                        ng-click="changePred(nosotros._id, nosotros.Categoria)">
-                                                    <div class="info__imagen">
-                                                        <small>Fecha de subida: {{nosotros.FechaCreacion}}</small><br>
-                                                        <small><b>Estado:</b><b style="color: #de0007;"> Inactiva</b></small>
-                                                        <button class="btn btn-sm btn-outline-danger pull-right"
-                                                            ng-click="btnDesactivar(nosotros._id, nosotros.Categoria)">Eliminar</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="tab-pane fade" id="Carrousel" role="tabpanel"
-                                            aria-labelledby="desktop-tab">
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-12 col-xl-12 col-md-12 col-lg-12">
-                                                    <div class="card card-danger card-outline b-shadow">
-                                                        <div class="card-body">
-                                                            <div class="wrap-slick2">
-                                                                <div class="slick2">
-                                                                    <div ng-repeat="carrousel in carrousel.Escritorio">
-                                                                        <div class="contenedor__slick2"><img ng-src="{{dominio}}/images/Banners/{{carrousel.imagen}}" ng-dblclick="btnDesimgcarrousel(carrousel._id, carrousel.Categoria)"></div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="available__images__cont">
-
-                                                <div class="cont__datos" ng-repeat="carrousel in carrousel.disabled.Escritorio">
-                                                    <img ng-src="{{dominio}}/images/Banners/{{carrousel.imagen}}"
-                                                        alt="Imagen carrousel" class="img-fluid enlace"
-                                                        style="margin-bottom: 10px;"
-                                                        ng-click="CarrouselPred(carrousel._id, carrousel.Categoria)">
-                                                    <div class="info__imagen">
-                                                        <small>Fecha de subida: {{carrousel.FechaCreacion}}</small><br>
-                                                        <small><b>Estado:</b><b style="color: #de0007;"> Inactiva</b></small>
-                                                        <button class="btn btn-sm btn-outline-danger pull-right"
-                                                            ng-click="btnDesactivar(carrousel._id, carrousel.Categoria)">Eliminar</button>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="card-footer">
-                            <div class="input-group">
-                                <label for="imagenprincipal">Subir Imagen</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <select name="slcDiseño" id="slcDisenioheader" ng-model="imagen.Disenio">
-                                            <optgroup label="Selecciona el tipo de diseño">
-                                                <option value="Escritorio">Escritorio</option>
-                                                <option value="Movil">Movil</option>
-                                            </optgroup>
-                                        </select>
+                        <div class="tab-pane fade" id="Catalogos" role="tabpanel">
+                            <h5 class="font-weight-bold text-dark mb-3"><i class="fa fa-broadcast-tower text-success mr-2"></i> Banner Actualmente en Vivo</h5>
+                            <div class="card shadow-sm border-success mb-4" ng-repeat="promo in catalogos.Escritorio">
+                                <div class="card-body p-0 text-center position-relative">
+                                    <span class="badge badge-success position-absolute mt-2 ml-2" style="top:0; left:0; font-size: 1rem;">ACTIVO</span>
+                                    <img ng-src="{{dominio}}/images/Banners/{{promo.imagen}}" class="banner-img-active p-2">
+                                </div>
+                                <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                                    <div class="text-muted small">
+                                        <span class="mr-3"><i class="fa fa-ruler-combined"></i> {{promo.width}}x{{promo.height}}px</span>
+                                        <span class="mr-3"><i class="fa fa-file-image"></i> {{promo.formato | uppercase}}</span>
+                                        <span><i class="fa fa-calendar-alt"></i> Subido: {{promo.FechaCreacion}}</span>
                                     </div>
-                                    <div class="custom-file">
-                                        <input class="custom-file-input archivos" type="file"
-                                            uploader-model="imagen.file">
-                                        <label for="imagenprincipal"
-                                            class="custom-file-label">{{imagen.name}}</label>
-                                    </div>
-                                    <div class="input-group-apped">
-                                        <button class="btn btn-primary pull-right" ng-click="btnsubirimagen()"><i
-                                                class="fa fa-upload"> Subir imagen</i></button>
+                                    <button class="btn btn-sm btn-outline-danger" ng-click="btnDesactivar(promo._id, promo.Categoria)"><i class="fa fa-trash mr-1"></i> Desactivar</button>
+                                </div>
+                            </div>
+                            <hr>
+                            <h6 class="font-weight-bold text-muted mb-3"><i class="fa fa-archive mr-2"></i> Historial (Inactivos)</h6>
+                            <div class="row">
+                                <div class="col-md-4 col-lg-3 mb-4" ng-repeat="catalogo in catalogos.disabled.Escritorio">
+                                    <div class="card shadow-sm banner-card h-100 border-0">
+                                        <img ng-src="{{dominio}}/images/Banners/{{catalogo.imagen}}" class="banner-img-thumb" ng-click="changePred(catalogo._id, catalogo.Categoria)">
+                                        <div class="card-body p-2 bg-white text-center">
+                                            <small class="text-muted d-block mb-2">{{catalogo.FechaCreacion}}</small>
+                                            <button class="btn btn-xs btn-success" ng-click="changePred(catalogo._id, catalogo.Categoria)"><i class="fa fa-check"></i></button>
+                                            <button class="btn btn-xs btn-outline-danger" ng-click="btnDesactivar(catalogo._id, catalogo.Categoria)"><i class="fa fa-trash"></i></button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="Compras" role="tabpanel">
+                            <h5 class="font-weight-bold text-dark mb-3"><i class="fa fa-broadcast-tower text-success mr-2"></i> Banner Actualmente en Vivo</h5>
+                            <div class="card shadow-sm border-success mb-4" ng-repeat="promo in compras.Escritorio">
+                                <div class="card-body p-0 text-center position-relative">
+                                    <span class="badge badge-success position-absolute mt-2 ml-2" style="top:0; left:0; font-size: 1rem;">ACTIVO</span>
+                                    <img ng-src="{{dominio}}/images/Banners/{{promo.imagen}}" class="banner-img-active p-2">
+                                </div>
+                                <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                                    <div class="text-muted small">
+                                        <span class="mr-3"><i class="fa fa-ruler-combined"></i> {{promo.width}}x{{promo.height}}px</span>
+                                        <span><i class="fa fa-calendar-alt"></i> Subido: {{promo.FechaCreacion}}</span>
+                                    </div>
+                                    <button class="btn btn-sm btn-outline-danger" ng-click="btnDesactivar(promo._id, promo.Categoria)"><i class="fa fa-trash mr-1"></i> Desactivar</button>
+                                </div>
+                            </div>
+                            <hr>
+                            <h6 class="font-weight-bold text-muted mb-3"><i class="fa fa-archive mr-2"></i> Historial (Inactivos)</h6>
+                            <div class="row">
+                                <div class="col-md-4 col-lg-3 mb-4" ng-repeat="compra in compras.disabled.Escritorio">
+                                    <div class="card shadow-sm banner-card h-100 border-0">
+                                        <img ng-src="{{dominio}}/images/Banners/{{compra.imagen}}" class="banner-img-thumb" ng-click="changePred(compra._id, compra.Categoria)">
+                                        <div class="card-body p-2 bg-white text-center">
+                                            <button class="btn btn-xs btn-success" ng-click="changePred(compra._id, compra.Categoria)"><i class="fa fa-check"></i></button>
+                                            <button class="btn btn-xs btn-outline-danger" ng-click="btnDesactivar(compra._id, compra.Categoria)"><i class="fa fa-trash"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="Nosotros" role="tabpanel">
+                             <h5 class="font-weight-bold text-dark mb-3"><i class="fa fa-broadcast-tower text-success mr-2"></i> Banner Actualmente en Vivo</h5>
+                            <div class="card shadow-sm border-success mb-4" ng-repeat="promo in nosotros.Escritorio">
+                                <div class="card-body p-0 text-center position-relative">
+                                    <span class="badge badge-success position-absolute mt-2 ml-2" style="top:0; left:0; font-size: 1rem;">ACTIVO</span>
+                                    <img ng-src="{{dominio}}/images/Banners/{{promo.imagen}}" class="banner-img-active p-2">
+                                </div>
+                                <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                                    <div class="text-muted small">
+                                        <span class="mr-3"><i class="fa fa-ruler-combined"></i> {{promo.width}}x{{promo.height}}px</span>
+                                        <span><i class="fa fa-calendar-alt"></i> Subido: {{promo.FechaCreacion}}</span>
+                                    </div>
+                                    <button class="btn btn-sm btn-outline-danger" ng-click="btnDesactivar(promo._id, promo.Categoria)"><i class="fa fa-trash mr-1"></i> Desactivar</button>
+                                </div>
+                            </div>
+                            <hr>
+                            <h6 class="font-weight-bold text-muted mb-3"><i class="fa fa-archive mr-2"></i> Historial (Inactivos)</h6>
+                            <div class="row">
+                                <div class="col-md-4 col-lg-3 mb-4" ng-repeat="nos in nosotros.disabled.Escritorio">
+                                    <div class="card shadow-sm banner-card h-100 border-0">
+                                        <img ng-src="{{dominio}}/images/Banners/{{nos.imagen}}" class="banner-img-thumb" ng-click="changePred(nos._id, nos.Categoria)">
+                                        <div class="card-body p-2 bg-white text-center">
+                                            <button class="btn btn-xs btn-success" ng-click="changePred(nos._id, nos.Categoria)"><i class="fa fa-check"></i></button>
+                                            <button class="btn btn-xs btn-outline-danger" ng-click="btnDesactivar(nos._id, nos.Categoria)"><i class="fa fa-trash"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="Carrousel" role="tabpanel">
+                            <h5 class="font-weight-bold text-dark mb-3"><i class="fa fa-images text-success mr-2"></i> Carrousel Activo (Vista Previa)</h5>
+                            <div class="card shadow-sm border-success mb-4">
+                                <div class="card-body p-3 bg-dark rounded">
+                                    <div class="wrap-slick2 mx-auto" style="max-width: 800px;">
+                                        <div class="slick2">
+                                            <div ng-repeat="carr in carrousel.Escritorio">
+                                                <div class="position-relative">
+                                                    <img ng-src="{{dominio}}/images/Banners/{{carr.imagen}}" class="w-100 rounded">
+                                                    <button class="btn btn-danger btn-sm position-absolute shadow" style="top:10px; right:10px;" ng-click="btnDesimgcarrousel(carr._id, carr.Categoria)" title="Quitar del carrousel"><i class="fa fa-times"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <h6 class="font-weight-bold text-muted mb-3"><i class="fa fa-plus-circle mr-2"></i> Banners Disponibles para agregar al Carrousel</h6>
+                            <div class="row">
+                                <div class="col-md-4 col-lg-3 mb-4" ng-repeat="carr in carrousel.disabled.Escritorio">
+                                    <div class="card shadow-sm banner-card h-100 border-0">
+                                        <img ng-src="{{dominio}}/images/Banners/{{carr.imagen}}" class="banner-img-thumb" ng-click="CarrouselPred(carr._id, carr.Categoria)">
+                                        <div class="card-body p-2 bg-white text-center">
+                                            <button class="btn btn-xs btn-success" ng-click="CarrouselPred(carr._id, carr.Categoria)"><i class="fa fa-plus"></i> Agregar</button>
+                                            <button class="btn btn-xs btn-outline-danger" ng-click="btnDesactivar(carr._id, carr.Categoria)"><i class="fa fa-trash"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card-footer bg-white border-top-0 pt-4 pb-4">
+                    <h5 class="font-weight-bold text-dark mb-3"><i class="fa fa-cloud-upload-alt text-danger mr-2"></i> Subir Nuevo Banner</h5>
+                    <div class="row align-items-center bg-light p-3 rounded border">
+                        <div class="col-md-4 mb-2 mb-md-0">
+                            <select class="form-control border-danger" ng-model="imagen.Disenio">
+                                <option value="" disabled selected>Selecciona el dispositivo...</option>
+                                <option value="Escritorio">🖥️ Versión Escritorio</option>
+                                <option value="Movil">📱 Versión Móvil</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-2 mb-md-0">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input archivos" id="customFileLang" uploader-model="imagen.file">
+                                <label class="custom-file-label border-danger" for="customFileLang">{{imagen.name || 'Seleccionar archivo de imagen...'}}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <button class="btn btn-danger btn-block font-weight-bold shadow-sm" ng-click="btnsubirimagen()">
+                                <i class="fa fa-upload mr-1"></i> Subir
+                            </button>
                         </div>
                     </div>
+                </div>
 
-                </section>
             </div>
-
         </div>
     </section>
 </section>

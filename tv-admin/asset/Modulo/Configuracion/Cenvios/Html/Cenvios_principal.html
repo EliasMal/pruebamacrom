@@ -1,111 +1,117 @@
-<section ng-controller="CenviosCtrl">
+<section ng-controller="CenviosCtrl" ng-cloak>
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
+            <div class="row mb-2 align-items-center">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Costos de Envios</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark font-weight-bold">Costos de Envíos</h1>
+                </div><div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item ">Configurarcion</li>
-                        <li class="breadcrumb-item active">Codigos Postales</li>
+                        <li class="breadcrumb-item"><a href="?mod=home">Home</a></li>
+                        <li class="breadcrumb-item">Configuración</li>
+                        <li class="breadcrumb-item active">Códigos Postales</li>
                     </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
+                </div></div></div></div>
+
     <section class="content">
         <div class="container-fluid">
-            <div class="row">
+            <div class="row mb-3">
                 <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="callout callout-info">
-                        <h5>Informacion</h5>
-                        <p>Este modulo permite ingresar el costo de envio de paqueteria a distintas partes de méxico
-                        </p>
+                    <div class="callout callout-info shadow-sm">
+                        <h5 class="font-weight-bold"><i class="fas fa-info-circle text-info"></i> Información</h5>
+                        <p>Este módulo permite ingresar y administrar el costo de envío de paquetería a distintas partes de México.</p>
                     </div>
                 </div>
-                <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
-                    <button class="btn btn-danger float-right" ng-click='btnNuevoEnvio()'>Nuevo Costo</button>
+                <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                    <button class="btn btn-danger font-weight-bold shadow-sm" ng-click='btnNuevoEnvio()'>
+                        <i class="fas fa-plus"></i> Nuevo Costo
+                    </button>
                 </div>
             </div>
-            <hr>
-            <div class="row">
-                <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
+            
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-0">
                     <div class="table-responsive">
-                        
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                                <th>#</th>
-                                <th>Municipio</th>
-                                <th>Estado</th>
-                                <th>Costo</th>
-                                <th>Acciones</th>
+                        <table class="table table-hover table-striped mb-0">
+                            <thead class="bg-dark text-white">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Municipio</th>
+                                    <th>Estado</th>
+                                    <th>Costo</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="costo in envios">
-                                    <td>{{$index+1}}</td>
-                                    <td>{{costo.Municipio}}</td>
-                                    <td>{{costo.Estado}}</td>
-                                    <td>{{costo.precio | currency}}</td>
-                                    <td>
-                                        <button type ="button" class="btn btn-danger" ng-click="btnDesactivar(costo.id)">
-                                            <i class="fa fa-close"></i>
+                                    <td class="align-middle">{{$index+1}}</td>
+                                    <td class="align-middle">{{costo.Municipio}}</td>
+                                    <td class="align-middle">{{costo.Estado}}</td>
+                                    <td class="align-middle font-weight-bold text-success">{{costo.precio | currency}}</td>
+                                    <td class="text-center align-middle">
+                                        <button type="button" class="btn btn-primary btn-sm mx-1 shadow-sm" ng-click="btnEditar(costo)" title="Editar Costo">
+                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button type= "button" class="btn btn-primary" ng-click="btnEditar(costo)">
-                                             <i class="fa fa-edit"></i>
+                                        <button type="button" class="btn btn-danger btn-sm mx-1 shadow-sm" ng-click="btnDesactivar(costo.id)" title="Desactivar">
+                                            <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </td>
                                 </tr>
-                                
                             </tbody>
-                            
                         </table>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- Modal -->
-    <div class="modal fade" id="Cenvios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Crear nuevo costo de envio</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-xs-12  col-xl-12 col-sm-6 col-md-6 col-lg-6">
-                        <label for="">Estado:</label>
-                        <select name="estados" id="estados" class="form-control" ng-model="send.Estado" ng-change="getMunicipios()" ng-show="!editar">
-                            <optgroup label="Selecciona el estado de la republica">
+
+    <div class="modal fade" id="Cenvios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title font-weight-bold" id="exampleModalLabel">
+                        <i class="fas {{editar ? 'fa-edit' : 'fa-truck'}}"></i> {{editar ? 'Editar costo de envío' : 'Crear nuevo costo de envío'}}
+                    </h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body bg-light">
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <label class="font-weight-bold text-secondary">Estado:</label>
+                            <select name="estados" id="estados" class="form-control border-secondary shadow-sm" ng-model="send.Estado" ng-change="getMunicipios()" ng-show="!editar">
+                                <option value="" disabled selected>Selecciona el estado...</option>
                                 <option ng-repeat="Edo in estados" value="{{Edo.Estado}}">{{Edo.Estado}}</option>
-                            </optgroup>
-                        </select>
-                        <span class="form-control" ng-show="editar">{{send.Estado}}</span>
-                    </div>
-                    <div class="col-xs-12  col-xl-12 col-sm-6 col-md-6 col-lg-6">
-                        <label for="">Municipio:</label>
-                        <select name="" id="" class="form-control" ng-model="send.Municipio" ng-show = "!editar">
-                            <optgroup label="Selecciona el municipio del estado">
+                            </select>
+                            <div class="form-control bg-white font-weight-bold" ng-show="editar" readonly>{{send.Estado}}</div>
+                        </div>
+                        
+                        <div class="col-12 mb-3">
+                            <label class="font-weight-bold text-secondary">Municipio:</label>
+                            <select name="municipios" id="municipios" class="form-control border-secondary shadow-sm" ng-model="send.Municipio" ng-show="!editar" ng-disabled="!send.Estado">
+                                <option value="" disabled selected>Selecciona el municipio...</option>
                                 <option ng-repeat="muni in municipios" value="{{muni.Municipio}}">{{muni.Municipio}}</option>
-                            </optgroup>
-                        </select>
-                        <span class="form-control" ng-show="editar">{{send.Municipio}}</span>
-                    </div>
-                    <div class="col-xs-12  col-xl-12 col-sm-6 col-md-6 col-lg-6">
-                        <label for="">Costo de Envio:</label>
-                        <input type="text" class="form-control" ng-model='send.Precio'>
+                            </select>
+                            <div class="form-control bg-white font-weight-bold" ng-show="editar" readonly>{{send.Municipio}}</div>
+                        </div>
+                        
+                        <div class="col-12 mb-2">
+                            <label class="font-weight-bold text-secondary">Costo de Envío ($):</label>
+                            <div class="input-group shadow-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-success text-white border-success"><i class="fas fa-dollar-sign"></i></span>
+                                </div>
+                                <input type="number" step="0.01" class="form-control border-success" ng-model='send.Precio' placeholder="Ej. 150.00">
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" ng-click="btnCrearEnvio()">Crear</button>
-            </div>
+                <div class="modal-footer bg-white">
+                    <button type="button" class="btn btn-outline-secondary font-weight-bold" data-dismiss="modal"><i class="fas fa-times"></i> Cancelar</button>
+                    <button type="button" class="btn btn-success font-weight-bold" ng-click="btnCrearEnvio()">
+                        <i class="fas fa-save"></i> {{editar ? 'Guardar Cambios' : 'Crear Costo'}}
+                    </button>
+                </div>
             </div>
         </div>
     </div>

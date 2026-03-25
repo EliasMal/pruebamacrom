@@ -1,227 +1,267 @@
-<section ng-controller="PedidosDetallesCtrl" ng-init="autorizacion={autorizacion}">
+<style>
+    .table-hover tbody tr:hover td,
+    .table-hover tbody tr:hover td.text-danger,
+    .table-hover tbody tr:hover td.text-muted,
+    .table-hover tbody tr:hover td.text-success {
+        color: #ffffff !important;
+    }
+    
+    .table-hover tbody tr:hover td .btn-outline-danger {
+        background-color: #ffffff !important;
+        color: #dc3545 !important;
+        border-color: #ffffff !important;
+    }
+
+    .table-hover tbody tr:hover td span.badge-danger {
+        background-color: #ffffff !important;
+        color: #dc3545 !important;
+        border: 1px solid #ffffff;
+    }
+</style>
+<section ng-controller="PedidosDetallesCtrl" ng-init="autorizacion={autorizacion}" ng-cloak>
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
+            <div class="row mb-2 align-items-center">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark"><i class="fa fa-user mr-1"></i> Pedidos </h1>
-                </div><!-- /.col -->
+                    <h1 class="m-0 text-dark font-weight-bold">
+                        <i class="fa fa-shopping-cart text-danger mr-2"></i> Detalles del Pedido
+                    </h1>
+                </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
                         <li class="breadcrumb-item"><a href="?mod=Pedidos">Pedidos</a></li>
-                        <li class="breadcrumb-item active">Detalles del pedido</li>
+                        <li class="breadcrumb-item active">Detalles</li>
                     </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+                </div>
+            </div>
+        </div>
     </div>
+
     <section class="content" ng-init="id={id}">
         <div class="container-fluid">
-            <div class="invoice p-3 mb-3">
-                <div class="row">
-                    <div class="col-12">
-                        <h4>Detalle del pedido
-                            <small class="float-right">Fecha: {{Pedido.Fecha}}</small>
-                        </h4>
-                    </div>
+            
+            <div class="card card-danger card-outline shadow-sm mb-4">
+                <div class="card-header bg-white p-3 d-flex justify-content-between align-items-center border-bottom-0">
+                    <h4 class="m-0 font-weight-bold text-dark">
+                        <i class="fas fa-file-invoice text-danger mr-1"></i> Orden #{{Pedido.noPedido}}
+                    </h4>
+                    <span class="text-muted"><i class="fa fa-calendar mr-1"></i> Fecha: {{Pedido.Fecha}}</span>
                 </div>
-                <div class="row invoice-info">
-                    <div class="col-sm-4 invoice-col">
-                        Pedido de:
-                        <address>
-                            <strong>{{Pedido.nombres}} {{Pedido.Apellidos}}</strong>
-                            <br>
-                            <i class="fa fa-phone"></i> TEL: {{Pedido.Telefono}}
-                            <br>
-                            EMAIL: {{Pedido.correo}}
-                        </address>
-                        Direccion de Envio:
-                        <address>
-                            <strong>{{Pedido.Domicilio}} # {{Pedido.numExt}}</strong>
-                            <br>
-                            Colonia: {{Pedido.Colonia}}
-                            <br>
-                            {{Pedido.Ciudad}}, {{Pedido.Estado}}, CP. {{Pedido.Codigo_postal}}
-                           
-                        </address>
-                        <div>
-                            <table class="table__medidas">
-                                <caption class="caption__medidas"><b>Detalles envio:</b></caption>
-                                <tbody class="tbody__medidas">
-                                    <tr class="tr__medidas" ng-show="Pedido.SD"><th class="th__medidas">Sin datos registrados, consultar BD</th></tr>
-                                    <tr class="tr__medidas" ng-show="!Pedido.SD">
-                                        <th class="th__medidas">Largo</th>
-                                        <th class="th__medidas">Alto</th>
-                                        <th class="th__medidas">Ancho</th>
-                                        <th class="th__medidas">Peso</th>
-                                        <th class="th__medidas" ng-show="Pedido.paqueteria">Paqueteria</th>
-                                    </tr>
-                                    <tr class="tr__medidas" ng-show="!Pedido.SD">
-                                        <td class="td__medidas" data-th="Largo">{{Pedido.Largo}}</td>
-                                        <td class="td__medidas" data-th="Alto">{{Pedido.Alto}}</td>
-                                        <td class="td__medidas" data-th="Ancho">{{Pedido.Ancho}}</td>
-                                        <td class="td__medidas" data-th="Peso">{{Pedido.Peso}}</td>
-                                        <td class="td__medidas" data-th="Paqueteria" ng-show="Pedido.paqueteria">{{Pedido.paqueteria}} ({{Pedido.Servicio}})</th>
-                                    </tr>
-                                </tbody>
-                                <tfoot ng-show="Pedido.FechaEstimadaEnvio">
-                                    <tr class="tr__medidas center--text"><th class="th__medidas" colspan="5">Fecha Estimada: {{Pedido.FechaEstimadaEnvio}}</th></tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 invoice-col">
-                        Datos de facturacion:
-                        <h2 class="text-danger" ng-show="Pedido.Facturacion==0">No requiere Factura</h2>
-                        <address ng-show="Pedido.Facturacion==1">
-                            <strong>Razon social:</strong><br>
-                            {{Pedido.Razonsocial}}
-                            <br>
-                            <b>RFC:</b><br>
-                            {{Pedido.Rfc}}
-                            <br>
-                            <strong>Uso de Cfdi:</strong>
-                            <br>
-                            {{Pedido.Descripcion}}
-                        </address>
-                        <section ng-show="Pedido.Facturacion==1">
-                                <div id="archivoxml" class="alert alert-dismissible" role="alert" ng-if="Pedido.archivoxml != ''">
-                                    <button ng-click="btnClose('#archivoxml','archivoxml',Pedido.archivoxml)" class="close" tyṕe="button"  aria-hide="true">x</button>
-                                    <h5> <i class="fa fa-file-code-o"></i> {{Pedido.archivoxml}}</h5>
-                                </div>
-                                <div id="archivopdf" class="alert alert-dismissible" role="alert" ng-if="Pedido.archivopdf != ''">
-                                    <button ng-click="btnClose('#archivopdf','archivopdf',Pedido.archivopdf)" class="close" tyṕe="button" aria-hide="true">x</button>
-                                    <h5> <i class="fa fa-file-pdf-o"></i> {{Pedido.archivopdf}}</h5>
-                                </div>
-                        </section>
-                        <section ng-show="Pedido.Facturacion==1">
-                                <div ng-hide="!Pedido.archivoxml == ''" >
-                                    <label for="imagenprincipal">XML:</label>
-                                    <div class="custom-file">
-                                        <input class="custom-file-input archivos" id="xml" name="xml" type="file" uploader-model="Pedido.xml" accept="application/xml" ng-disabled="Pedido.Acreditado == 6" >
-                                        <label for="imagenprincipal" class="custom-file-label">{{xml.Categoria==="xml"? xml.name:xml.placeholder}}</label>
-                                    </div>
-                                </div>
-                                <div ng-hide="!Pedido.archivopdf == ''">
-                                    <label for="imagenprincipal">PDF:</label>
-                                    <div class="custom-file">
-                                        <input class="custom-file-input archivos" id="pdf" name="pdf" type="file" uploader-model="Pedido.pdf" accept="application/pdf" ng-disabled="Pedido.Acreditado == 6">
-                                        <label for="imagenprincipal"
-                                            class="custom-file-label">{{pdf.Categoria==="pdf"? pdf.name:pdf.placeholder}}</label>
-                                    </div>
-                                </div>
-                        </section>
-                        
-                    </div>
-                    <div class="col-sm-4 invoice-col">
-                        <div style="display: flex;justify-content: space-between;">
-                            <h4><b>No. orden:</b></h4>
-                            <h4>#{{Pedido.noPedido}}</h4>
-                        </div><br>
+                
+                <div class="card-body p-4 bg-light">
+                    
+                    <div class="row invoice-info mb-4">
+                        <div class="col-md-4 invoice-col border-right pr-4">
+                            <h6 class="font-weight-bold text-danger text-uppercase mb-3">Información de Envío</h6>
+                            
+                            <address class="mb-3">
+                                <strong>{{Pedido.nombres}} {{Pedido.Apellidos}}</strong><br>
+                                <span class="text-muted"><i class="fa fa-phone mr-1"></i> {{Pedido.Telefono}}</span><br>
+                                <span class="text-muted"><i class="fa fa-envelope mr-1"></i> {{Pedido.correo}}</span>
+                            </address>
+                            
+                            <div class="alert alert-secondary p-2 small mb-3 shadow-sm border-0">
+                                <strong><i class="fa fa-map-marker mr-1 text-danger"></i> Domicilio de entrega:</strong><br>
+                                {{Pedido.Domicilio}} # {{Pedido.numExt}}<br>
+                                Colonia: {{Pedido.Colonia}}<br>
+                                {{Pedido.Ciudad}}, {{Pedido.Estado}}, CP. {{Pedido.Codigo_postal}}
+                            </div>
 
-                        <div>
-                            <b>Forma de pago:</b>
-                            {{Pedido.FormaPago}}
+                            <div class="table-responsive bg-white border rounded shadow-sm">
+                                <table class="table table-sm table-bordered text-center mb-0">
+                                    <thead class="thead-light">
+                                        <tr><th colspan="4" class="text-secondary"><i class="fa fa-box-open mr-1"></i> Dimensiones del Paquete</th></tr>
+                                        <tr class="text-xs text-muted" ng-show="!Pedido.SD">
+                                            <th>Largo</th><th>Alto</th><th>Ancho</th><th>Peso</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-show="Pedido.SD">
+                                            <td colspan="4" class="text-muted py-3">Sin dimensiones registradas</td>
+                                        </tr>
+                                        <tr class="font-weight-bold" ng-show="!Pedido.SD">
+                                            <td>{{Pedido.Largo}}</td>
+                                            <td>{{Pedido.Alto}}</td>
+                                            <td>{{Pedido.Ancho}}</td>
+                                            <td>{{Pedido.Peso}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot ng-show="Pedido.paqueteria">
+                                        <tr class="bg-light">
+                                            <td colspan="4" class="text-left small py-2">
+                                                <b>Paquetería:</b> <span class="text-primary">{{Pedido.paqueteria}} ({{Pedido.Servicio}})</span><br>
+                                                <span class="text-muted" ng-show="Pedido.FechaEstimadaEnvio">Entrega Est.: {{Pedido.FechaEstimadaEnvio}}</span>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
                         </div>
 
-                        <div ng-if="Pedido.FormaPago == 'Tarjeta'">
-                            <b>Tipo de Tarjeta:</b>
-                            {{Tarjeta.cc_type}}
+                        <div class="col-md-4 invoice-col border-right px-4">
+                            <h6 class="font-weight-bold text-danger text-uppercase mb-3">Datos de Facturación</h6>
+                            
+                            <div class="text-center py-4" ng-show="Pedido.Facturacion==0">
+                                <i class="fas fa-file-invoice-dollar fa-3x text-muted mb-2"></i>
+                                <h5 class="text-muted font-weight-light">No requiere Factura</h5>
+                            </div>
+
+                            <address ng-show="Pedido.Facturacion==1" class="small mb-4">
+                                <strong class="text-dark">Razón social:</strong><br>
+                                {{Pedido.Razonsocial}}<br><br>
+                                <strong class="text-dark">RFC:</strong><br>
+                                {{Pedido.Rfc}}<br><br>
+                                <strong class="text-dark">Uso de CFDI:</strong><br>
+                                {{Pedido.Descripcion}}
+                            </address>
+
+                            <div class="bg-white p-3 border rounded shadow-sm" ng-show="Pedido.Facturacion==1">
+                                <h6 class="small font-weight-bold text-secondary mb-3 border-bottom pb-2">Archivos CFDI</h6>
+                                
+                                <div class="alert alert-light border p-2 mb-2 d-flex justify-content-between align-items-center shadow-sm" ng-if="Pedido.archivoxml != ''">
+                                    <span class="small font-weight-bold text-primary text-truncate"><i class="fa fa-file-code-o mr-1"></i> {{Pedido.archivoxml}}</span>
+                                    <button class="btn btn-sm btn-outline-danger border-0" ng-click="btnClose('#archivoxml','archivoxml',Pedido.archivoxml)" title="Eliminar XML"><i class="fa fa-trash"></i></button>
+                                </div>
+                                <div class="custom-file mb-3 text-xs" ng-hide="!Pedido.archivoxml == ''">
+                                    <input class="custom-file-input archivos" id="xml" name="xml" type="file" uploader-model="Pedido.xml" accept="application/xml" ng-disabled="Pedido.Acreditado == 6">
+                                    <label class="custom-file-label">{{xml.Categoria==="xml"? xml.name : "Subir XML..."}}</label>
+                                </div>
+
+                                <div class="alert alert-light border p-2 mb-2 d-flex justify-content-between align-items-center shadow-sm" ng-if="Pedido.archivopdf != ''">
+                                    <span class="small font-weight-bold text-danger text-truncate"><i class="fa fa-file-pdf-o mr-1"></i> {{Pedido.archivopdf}}</span>
+                                    <button class="btn btn-sm btn-outline-danger border-0" ng-click="btnClose('#archivopdf','archivopdf',Pedido.archivopdf)" title="Eliminar PDF"><i class="fa fa-trash"></i></button>
+                                </div>
+                                <div class="custom-file text-xs" ng-hide="!Pedido.archivopdf == ''">
+                                    <input class="custom-file-input archivos" id="pdf" name="pdf" type="file" uploader-model="Pedido.pdf" accept="application/pdf" ng-disabled="Pedido.Acreditado == 6">
+                                    <label class="custom-file-label">{{pdf.Categoria==="pdf"? pdf.name : "Subir PDF..."}}</label>
+                                </div>
+                            </div>
                         </div>
 
-                        
-                        <div ng-if="Pedido.FormaPago == 'Tarjeta'">
-                            <b>Ultimos digitos:</b>
-                            {{Tarjeta.cc_number}}
-                        </div>
-                        
-                        <div ng-if="Pedido.FormaPago == 'Tarjeta'">
-                            <b>Folio:</b>
-                            {{Tarjeta.auth}}
-                        </div><br>
-                        
-                        <b>Estatus:</b>
-                        <span class="pull-right badge {{getcolorEstatus(Pedido.Acreditado)}}">{{estatus[Pedido.Acreditado]}}</span>
-                        <select name="slcEstatus" id="slcEstatus" class="form-control" ng-model="Pedido.Acreditado" ng-show = "flagCancelado">
-                            <option ng-repeat="(key, a) in estatus" value="{{key}}">{{a}}</option>
-                        </select>
-                        <br>
-                        <b>No. Guia</b>
-                        <input type="text" class="form-control" name="txtguiaenvio" id="txtguiaenvio" ng-model ="Pedido.GuiaEnvio" ng-disabled="Pedido.Acreditado == 6">
-                        <br>
-                        <div class="pull-right" ng-show="Pedido.isFileComprobante && Pedido.Acreditado==0">
-                            <i class="fas fa-receipt"></i>
-                            <a href="https://macromautopartes.com/Public/Comprobantes/{{Pedido.comprobante}}" download ><b> Ver Comprobante de pago</b></a>
+                        <div class="col-md-4 invoice-col pl-4">
+                            <h6 class="font-weight-bold text-danger text-uppercase mb-3">Gestión del Pedido</h6>
+                            
+                            <div class="bg-white p-3 border rounded shadow-sm mb-3">
+                                <div class="mb-2">
+                                    <strong class="small text-muted">Método de Pago:</strong><br>
+                                    <span class="font-weight-bold text-dark"><i class="fa fa-credit-card text-success mr-1"></i> {{Pedido.FormaPago}}</span>
+                                </div>
+
+                                <div class="small bg-light p-2 rounded mb-3 border" ng-if="Pedido.FormaPago == 'Tarjeta'">
+                                    <strong>Tarjeta:</strong> {{Tarjeta.cc_type}}<br>
+                                    <strong>Termina en:</strong> {{Tarjeta.cc_number}}<br>
+                                    <strong>Folio Autorización:</strong> <span class="text-primary">{{Tarjeta.auth}}</span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="small text-muted font-weight-bold d-block">Estatus del Pedido:</label>
+                                    <span class="badge {{getcolorEstatus(Pedido.Acreditado)}} px-2 py-1 mb-2 shadow-sm text-sm" ng-show="!flagCancelado">{{estatus[Pedido.Acreditado]}}</span>
+                                    
+                                    <select class="form-control border-primary text-primary font-weight-bold shadow-sm" ng-model="Pedido.Acreditado" ng-show="flagCancelado">
+                                        <option ng-repeat="(key, a) in estatus" value="{{key}}">{{a}}</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="small text-muted font-weight-bold">No. Guía de Envío:</label>
+                                    <input type="text" class="form-control text-center font-weight-bold" placeholder="Escribe la guía aquí..." ng-model="Pedido.GuiaEnvio" ng-disabled="Pedido.Acreditado == 6">
+                                </div>
+                            </div>
+
+                            <a href="https://macromautopartes.com/Public/Comprobantes/{{Pedido.comprobante}}" download class="btn btn-outline-info btn-block shadow-sm" ng-show="Pedido.isFileComprobante && Pedido.Acreditado==0">
+                                <i class="fas fa-receipt mr-1"></i> Ver Comprobante Subido
+                            </a>
                         </div>
                     </div>
                 </div>
-                <br>
-                <div class="row">
-                    <div class="col-12 table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <th>#</th>
-                                <th>Img</th>
-                                <th>Codigo</th>
-                                <th>Producto</th>
-                                <th>Cantidad</th>
-                                <th>Precio</th>
-                                <th>Importe</th>
-                                <th ng-show = "flagCancelado">Acciones</th>
+            </div>
+
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body p-0">
+                    <div class="table-responsive bg-white rounded">
+                        <table class="table table-hover table-striped mb-0">
+                            <thead class="bg-dark text-white">
+                                <tr>
+                                    <th class="text-center" width="5%">#</th>
+                                    <th class="text-center" width="10%">Imagen</th>
+                                    <th width="15%">Código</th>
+                                    <th width="30%">Producto</th>
+                                    <th class="text-center" width="10%">Cant.</th>
+                                    <th class="text-right" width="10%">Precio Unit.</th>
+                                    <th class="text-right" width="10%">Importe</th>
+                                    <th class="text-center" width="10%" ng-show="flagCancelado">Acción</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="detalle in Detalles">
-                                    <td>{{$index+1}}</td>
-                                    <td><img ng-src="{{detalle.imagen? '../../images/refacciones/'+detalle.parte+'.png': '../../images/refacciones/motor.png'}}" 
-                                        alt="" class="rounded" style="width: 80px; height: auto;"></td>
-                                    <td>{{detalle.Clave}}</td>
-                                    <td>{{detalle.Producto}}</td>
-                                    <td class="text-center">{{detalle.cantidad}}</td>
-                                    <td class="text-right">{{detalle.Importe | currency}}</td>
-                                    <td class="text-right">{{detalle.cantidad * detalle.Importe | currency}}</td>
-                                    <td class="text-center" ng-show = "flagCancelado"><button class="btn btn-danger" 
-                                        ng-click="btnCancelarArticulo(detalle._id, detalle.Importe * detalle.cantidad)"
-                                        ><i class="fa fa-trash"></i></button></td>
+                                    <td class="text-center align-middle">{{$index+1}}</td>
+                                    <td class="text-center align-middle">
+                                        <img ng-src="https://macromautopartes.com//images/refacciones/{{detalle.parte}}.webp" onerror="this.src='../../images/refacciones/motor.webp'" alt="Img" class="rounded shadow-sm border" style="width: 60px; height: 60px; object-fit: contain; background: white;">
+                                    </td>
+                                    <td class="align-middle">
+                                        <span class="badge badge-danger px-2 py-1 shadow-sm" style="font-size: 0.9rem; cursor: pointer; user-select: all;" title="Doble clic para ver refacción" ng-dblclick="abrirRefaccion(detalle.parte)">
+                                            {{detalle.Clave}} <i class="fas fa-external-link-alt ml-1" style="font-size: 0.7rem;"></i>
+                                        </span>
+                                    </td>
+                                    <td class="align-middle">{{detalle.Producto}}</td>
+                                    <td class="text-center align-middle font-weight-bold">{{detalle.cantidad}}</td>
+                                    <td class="text-right align-middle text-muted">{{detalle.Importe | currency}}</td>
+                                    <td class="text-right align-middle font-weight-bold text-success">{{detalle.cantidad * detalle.Importe | currency}}</td>
+                                    <td class="text-center align-middle" ng-show="flagCancelado">
+                                        <button class="btn btn-sm btn-outline-danger shadow-sm" title="Quitar Artículo" ng-click="btnCancelarArticulo(detalle._id, detalle.Importe * detalle.cantidad)">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </td>
                                 </tr>
-                                
+                                <tr ng-if="!Detalles || Detalles.length == 0">
+                                    <td colspan="8" class="text-center py-4 text-muted">
+                                        <i class="fa fa-shopping-cart fa-2x mb-2 text-light"></i><br>No hay artículos en este pedido.
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6"></div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3"></div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
-                        <div class="table-responsive">
-                            <table class="table table-striped">
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 offset-md-6 col-lg-4 offset-lg-8">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body p-0">
+                            <table class="table table-sm mb-0">
                                 <tbody>
                                     <tr>
-                                        <th>Subtotal:</th>
-                                        <td class="text-right">{{Pedido.Importe | currency}}</td>
+                                        <th class="pl-4 py-2 text-muted">Subtotal:</th>
+                                        <td class="text-right pr-4 py-2 font-weight-bold">{{Pedido.Importe | currency}}</td>
                                     </tr>
                                     <tr>
-                                        <th>Envio:</th>
-                                        <td class="text-right">{{Pedido.cenvio | currency}} ({{Pedido.Servicio}})</td>
+                                        <th class="pl-4 py-2 text-muted border-top-0">Costo de Envío:</th>
+                                        <td class="text-right pr-4 py-2 border-top-0">{{Pedido.cenvio | currency}} <br><small class="text-muted">({{Pedido.Servicio}})</small></td>
                                     </tr>
                                     <tr>
-                                        <th>Descuento:</th>
-                                        <td class="text-right">{{Pedido.descuento | currency}}</td>
+                                        <th class="pl-4 py-2 text-danger border-top-0">Descuento aplicado:</th>
+                                        <td class="text-right pr-4 py-2 text-danger border-top-0">- {{Pedido.descuento | currency}}</td>
                                     </tr>
-                                    <tr>
-                                        <th>Total:</th>
-                                        <td class="text-right"><h5><b> {{Pedido.Importe + Pedido.cenvio - Pedido.descuento| currency}}</b></h5></td>
+                                    <tr class="bg-light">
+                                        <th class="pl-4 py-3 text-dark text-uppercase" style="font-size: 1.1rem;">Total a Cobrar:</th>
+                                        <td class="text-right pr-4 py-3 text-success font-weight-bold" style="font-size: 1.3rem;">
+                                            {{Pedido.Importe + Pedido.cenvio - Pedido.descuento | currency}}
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <button class="btn btn-primary pull-right" ng-click="btnGuardarCambios()" ng-show = "flagCancelado"><i class="fa fa-save"></i> Guardar Cambios</button>
+                    
+                    <div class="mt-3 text-right" ng-show="flagCancelado">
+                        <button class="btn btn-lg btn-danger shadow px-5 font-weight-bold text-uppercase" ng-click="btnGuardarCambios()">
+                            <i class="fa fa-save mr-2"></i> Guardar Cambios
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
+            
+            <br><br> </div>
     </section>
 </section>

@@ -1,119 +1,157 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<link rel="stylesheet" href="/asset/Css/cupones.css">
-<div class="admin-cupones" ng-controller="ClientesCuponesCtrl">
 
-    <div class="header-cupones">
-        <h2> <i class="fas fa-ticket-alt"></i> Administración de Cupones</h2>
+<div ng-controller="ClientesCuponesCtrl" ng-cloak>
+    
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 align-items-center">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark font-weight-bold">
+                        <i class="fas fa-ticket-alt text-warning mr-2"></i> Administración de Cupones
+                    </h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="?mod=Clientes">Clientes</a></li>
+                        <li class="breadcrumb-item active">Cupones</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Crear Cupón -->
-    <div class="card card-form">
-        <h3>Crear nuevo cupón</h3>
+    <section class="content">
+        <div class="container-fluid">
+            
+            <div class="card card-warning shadow-sm">
+                <div class="card-header">
+                    <h3 class="card-title font-weight-bold"><i class="fa fa-plus-circle mr-1"></i> Crear Nuevo Cupón</h3>
+                </div>
+                <div class="card-body bg-light">
+                    <div class="row align-items-center">
+                        
+                        <div class="col-md-3 form-group mb-3">
+                            <label class="small font-weight-bold text-muted">Código promocional</label>
+                            <input type="text" class="form-control text-uppercase font-weight-bold border-warning" ng-model="nuevo.codigo" placeholder="Ej. PROMO10">
+                        </div>
+                        
+                        <div class="col-md-3 form-group mb-3">
+                            <label class="small font-weight-bold text-muted">Descuento</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control text-center font-weight-bold text-success" ng-model="nuevo.descuento" min="1" max="100" placeholder="Ej. 15">
+                                <div class="input-group-append"><span class="input-group-text bg-success text-white"><i class="fa fa-percent"></i></span></div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 form-group mb-3">
+                            <label class="small font-weight-bold text-muted">Fecha expiración <small>(Opcional)</small></label>
+                            <input type="date" class="form-control" ng-model="nuevo.fecha_expiracion">
+                        </div>
+                        
+                        <div class="col-md-3 mb-3 d-flex flex-column justify-content-center">
+                            <div class="custom-control custom-checkbox mb-2">
+                                <input type="checkbox" class="custom-control-input" id="checkUso" ng-model="nuevo.uso_unico">
+                                <label class="custom-control-label small font-weight-bold text-secondary" for="checkUso">De uso único por cliente</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="checkGlobal" ng-model="nuevo.es_global">
+                                <label class="custom-control-label small font-weight-bold text-secondary" for="checkGlobal">Cupón Global (Para todos)</label>
+                            </div>
+                        </div>
 
-        <div class="form-grid">
-
-            <div class="form-group">
-                <label>Código</label>
-                <input type="text" ng-model="nuevo.codigo" placeholder="Ej. PROMO10">
+                    </div>
+                </div>
+                <div class="card-footer text-right bg-white">
+                    <button class="btn btn-warning shadow-sm font-weight-bold px-4" ng-click="crearCupon()">
+                        <i class="fa fa-save mr-1"></i> Generar Cupón
+                    </button>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label>Descuento (%)</label>
-                <input type="number" ng-model="nuevo.descuento">
-            </div>
+            <div class="card card-dark shadow-sm mt-4">
+                <div class="card-header">
+                    <h3 class="card-title font-weight-bold"><i class="fa fa-list mr-1"></i> Cupones Registrados en el Sistema</h3>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive bg-white">
+                        <table class="table table-hover table-striped mb-0 text-center">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Descuento</th>
+                                    <th>Uso único</th>
+                                    <th>Alcance</th>
+                                    <th>Estatus</th>
+                                    <th>Expira</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="c in cupones">
+                                    <td class="align-middle font-weight-bold text-lg text-primary" style="letter-spacing: 1px;">
+                                        {{c.codigo}}
+                                    </td>
+                                    
+                                    <td class="align-middle">
+                                        <span class="badge badge-success" style="font-size: 14px;">{{c.descuento}}%</span>
+                                    </td>
+                                    
+                                    <td class="align-middle">
+                                        <span class="badge badge-{{c.uso_unico == 1 ? 'info' : 'secondary'}}">
+                                            {{c.uso_unico == 1 ? 'Sí' : 'No'}}
+                                        </span>
+                                    </td>
+                                    
+                                    <td class="align-middle text-left" style="width: 15%;">
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input" id="global_{{c.id}}" ng-checked="c.es_global == 1" ng-click="toggleGlobal(c.id)">
+                                            <label class="custom-control-label text-sm font-weight-normal cursor-pointer" for="global_{{c.id}}">
+                                                {{c.es_global == 1 ? 'Global' : 'Específico'}}
+                                            </label>
+                                        </div>
+                                    </td>
+                                    
+                                    <td class="align-middle text-left" style="width: 15%;">
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input" id="activo_{{c.id}}" ng-checked="c.activo == 1" ng-click="toggleActivo(c.id)">
+                                            <label class="custom-control-label text-sm font-weight-normal cursor-pointer" for="activo_{{c.id}}" ng-class="{'text-success font-weight-bold': c.activo == 1, 'text-muted': c.activo == 0}">
+                                                {{c.activo == 1 ? 'Activo' : 'Inactivo'}}
+                                            </label>
+                                        </div>
+                                    </td>
+                                    
+                                    <td class="align-middle text-muted small">
+                                        <i class="fa fa-calendar mr-1" ng-if="c.fecha_expiracion"></i>
+                                        {{c.fecha_expiracion || 'Sin límite'}}
+                                    </td>
+                                    
+                                    <td class="align-middle">
+                                        <button class="btn btn-sm btn-outline-danger shadow-sm" title="Eliminar Cupón" ng-click="eliminar(c.id)">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
 
-            <div class="form-group checkbox">
-                <label>
-                    <input type="checkbox" ng-model="nuevo.uso_unico">
-                    Uso único
-                </label>
-            </div>
-
-            <div class="form-group checkbox">
-                <label>
-                    <input type="checkbox" ng-model="nuevo.es_global">
-                    Cupón global
-                </label>
-            </div>
-
-            <div class="form-group">
-                <label>Fecha expiración</label>
-                <input type="date" ng-model="nuevo.fecha_expiracion">
+                                <tr ng-if="!cupones || cupones.length == 0">
+                                    <td colspan="7" class="text-center py-5 text-muted">
+                                        <i class="fa fa-ticket-alt fa-3x mb-3 text-light"></i><br>
+                                        <h5 class="font-weight-light">No hay cupones registrados aún.</h5>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
         </div>
-
-        <button class="btn-primary" ng-click="crearCupon()">
-            Crear Cupón
-        </button>
-    </div>
-
-
-    <!-- Tabla -->
-    <div class="card">
-
-        <h3>Cupones registrados</h3>
-
-        <div class="table-responsive">
-            <table class="tabla-cupones">
-                <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Descuento</th>
-                        <th>Uso único</th>
-                        <th>Global</th>
-                        <th>Estado</th>
-                        <th>Expira</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr ng-repeat="c in cupones">
-                        <td class="codigo">{{c.codigo}}</td>
-
-                        <td>
-                            <span class="badge-desc">{{c.descuento}}%</span>
-                        </td>
-
-                        <td>
-                            <span class="badge" 
-                                  ng-class="{'badge-yes': c.uso_unico == 1, 'badge-no': c.uso_unico == 0}">
-                                {{c.uso_unico == 1 ? 'Sí' : 'No'}}
-                            </span>
-                        </td>
-
-                        <td>
-                            <button class="btn-switch"
-                                    ng-class="{'active-switch': c.es_global == 1}"
-                                    ng-click="toggleGlobal(c.id)">
-                                {{c.es_global == 1 ? 'Global' : 'Específico'}}
-                            </button>
-                        </td>
-
-                        <td>
-                            <button class="btn-switch"
-                                    ng-class="{'active-switch': c.activo == 1}"
-                                    ng-click="toggleActivo(c.id)">
-                                {{c.activo == 1 ? 'Activo' : 'Inactivo'}}
-                            </button>
-                        </td>
-
-                        <td>
-                            {{c.fecha_expiracion || 'Sin fecha'}}
-                        </td>
-
-                        <td>
-                            <button class="btn-danger"
-                                    ng-click="eliminar(c.id)">
-                                Eliminar
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-    </div>
-
+    </section>
 </div>
+
+<style>
+    /* Efecto cursor en las etiquetas de los switches para mejor experiencia UX */
+    .cursor-pointer {
+        cursor: pointer;
+    }
+</style>

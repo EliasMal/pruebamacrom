@@ -3,12 +3,15 @@
     session_start();
     require_once "../../../../Clases/dbconectar.php";
     require_once "../../../../Clases/ConexionMySQL.php";
+    require_once "../../../../Clases/Funciones.php"; 
     date_default_timezone_set('America/Mexico_City');
     
     class Categorias {
         private $conn;
         private $jsonData = array("Bandera"=>0,"mensaje"=>"");
         private $formulario = array();
+        private $foto = array(); 
+
         public function __construct($array) {
             $this->conn = new HelperMySql($array["server"], $array["user"], $array["pass"], $array["db"]);
         }
@@ -19,115 +22,154 @@
         
         public function principal() {
             $this->formulario = array_map("htmlspecialchars", $_POST);
-            $this->foto =  isset($_FILES)? $_FILES:array();
+            $this->foto = isset($_FILES) ? $_FILES : array();
             
             switch ($this->formulario["opc"]) {
                 case 'buscar':
-                    $this->jsonData["data"] = $this->getCategorias();
+                    $find = isset($this->formulario["find"]) ? $this->formulario["find"] : "";
+                    $skip = isset($this->formulario["skip"]) ? intval($this->formulario["skip"]) : 0;
+                    $limit = isset($this->formulario["limit"]) ? intval($this->formulario["limit"]) : 10;
+
+                    $this->jsonData["Data"]["noRegistros"] = $this->getNoCategorias($find);
+                    $this->jsonData["Data"]["Registros"] = $this->getCategorias($find, $skip, $limit);
                     $this->jsonData["Bandera"] = 1;
-                        
-                    
                     break;
+                    
                 case 'edit':
                 case 'new':
                 case 'disabled':
                 case 'enabled':
+                case 'delete':
                     if($this->setCategorias()){
-                        $this->formulario["lastid"] = $this->formulario["opc"]=="edit"?$this->formulario["_id"]:$this->conn->last_id();
+                        $this->formulario["lastid"] = ($this->formulario["opc"]=="new") ? $this->conn->last_id() : $this->formulario["_id"];
                         
-                        if(count($this->foto)!=0){
+                        if($this->formulario["opc"] != 'delete' && count($this->foto)!=0){
                             $this->subirImagen();
                         }
+
+                        $nombreCat = isset($this->formulario["Categoria"]) ? $this->formulario["Categoria"] : "S/C";
+                        $id_afectado = $this->formulario["lastid"];
+                        
+                        if ($this->formulario["opc"] == "new") {
+                            $det = "Registró nueva categoría: $nombreCat (ID: $id_afectado)";
+                            Funciones::guardarBitacora($this->conn, 'Categorias', 'NUEVA_CATEGORIA', $det);
+                        } else {
+                            $accionLog = "";
+                            if($this->formulario["opc"] == "edit") $accionLog = "EDITAR_CATEGORIA";
+                            else if($this->formulario["opc"] == "disabled") $accionLog = "DESACTIVAR_CATEGORIA";
+                            else if($this->formulario["opc"] == "enabled") $accionLog = "ACTIVAR_CATEGORIA";
+                            else if($this->formulario["opc"] == "delete") $accionLog = "ELIMINAR_CATEGORIA";
+                            Funciones::guardarBitacora($this->conn, 'Categorias', $accionLog, "ID: $id_afectado - $nombreCat");
+                        }
+
                         $this->jsonData["Bandera"] = 1;
                         $this->jsonData["mensaje"] = $this->getMensajeSuccess();
                     }else{
-                        $this->jsonData["mensaje"] = $this->getMensajeError();
+                        $this->jsonData["Bandera"] = 0;
+                        if(empty($this->jsonData["mensaje"])){
+                            $this->jsonData["mensaje"] = $this->getMensajeError();
+                        }
                     }
                     break;
-                
             }
             print json_encode($this->jsonData);
         }
         
-        
         private function getMensajeSuccess(){
-            $mensaje = "";
-                 switch($this->formulario["opc"]){
-                    case 'new':
-                        $mensaje = "La Marca ha sido Creada";
-                        break;
-                    case 'edit':
-                        $mensaje = "La Marca ha sido Modificada";
-                        break;
-                    case 'disabled':
-                        $mensaje = "La Marca ha sido Desactivada";
-                        break;
-                    case 'enabled':
-                        $mensaje = "La Marca ha sido Activada";
-                        break;
-                 }
-            return $mensaje;
+            switch($this->formulario["opc"]){
+                case 'new': return "La Categoría ha sido Creada";
+                case 'edit': return "La Categoría ha sido Modificada";
+                case 'disabled': return "La Categoría ha sido Desactivada";
+                case 'enabled': return "La Categoría ha sido Activada";
+                case 'delete': return "La Categoría fue Eliminada Permanentemente";
+            }
+            return "";
         }
         
         private function getMensajeError(){
-            $mensaje = "";
-                 switch($this->formulario["opc"]){
-                    case 'new':
-                        $mensaje = "Error: La Marca no ha sido Creada";
-                        break;
-                    case 'edit':
-                        $mensaje = "Error: La Marca no ha sido Modificada";
-                        break;
-                    case 'disabled':
-                        $mensaje = "Error: La Marca no ha sido Desactivada";
-                        break;
-                    case 'enabled':
-                        $mensaje = "Error: La Marca no ha sido Activada";
-                        break;
-                 }
-            return $mensaje;
+            switch($this->formulario["opc"]){
+                case 'new': return "Error: La Categoría no ha sido Creada";
+                case 'edit': return "Error: La Categoría no ha sido Modificada";
+                case 'disabled': return "Error: La Categoría no ha sido Desactivada";
+                case 'enabled': return "Error: La Categoría no ha sido Activada";
+                case 'delete': return "Error al intentar eliminar la Categoría";
+            }
+            return "";
+        }
+
+        private function getNoCategorias($find=""){
+            $find_seguro = addslashes(trim($find));
+            $historico = isset($this->formulario["historico"]) ? intval($this->formulario["historico"]) : 1;
+            $sql = "SELECT count(*) as total FROM Categorias WHERE Status = $historico AND Categoria LIKE '%$find_seguro%'";
+            $row = $this->conn->fetch($this->conn->query($sql));
+            return $row["total"];
         }
         
-        private function getCategorias(){
+        private function getCategorias($find="", $skip=0, $limit=10){
             $array = array();
-            $sql = "SELECT * FROM Categorias where Status = ".$this->formulario["historico"];
+            $find_seguro = addslashes(trim($find));
+            $historico = isset($this->formulario["historico"]) ? intval($this->formulario["historico"]) : 1;
+            $sql = "SELECT * FROM Categorias WHERE Status = $historico AND Categoria LIKE '%$find_seguro%' ORDER BY Categoria ASC LIMIT $skip, $limit";
             $id = $this->conn->query($sql);
-            while($row= $this->conn->fetch($id)){
-                $row["foto"] = file_exists("../../../../../../images/Categorias/".$row["_id"].".png");
-                array_push($array, $row);
+            if($id){
+                while($row= $this->conn->fetch($id)){
+                    $row["foto"] = file_exists("../../../../../../images/Categorias/".$row["_id"].".png");
+                    array_push($array, $row);
+                }
             }
             return $array;
         }
         
         private function setCategorias (){
-            if($this->formulario["opc"]=="new"){
-                $sql = "INSERT INTO Categorias (Categoria, Status, USRCreacion,USREdicion, FechaCreacion, FechaModificacion ) values "
-                        . "('{$this->formulario["Categoria"]}','1','{$_SESSION["nombre"]}','{$_SESSION["nombre"]}','".date("Y-m-d H:i:s")."','".date("Y-m-d H:i:s")."')";
-            }else if($this->formulario["opc"]=="edit"){
-                $sql = "UPDATE Categorias SET Categoria='{$this->formulario["Categoria"]}', USREdicion='{$_SESSION["nombre"]}', FechaModificacion='".date("Y-m-d H:i:s")."' where _id= ".$this->formulario["_id"];
-            }else if($this->formulario["opc"]=="disabled"){
-                $sql = "UPDATE Categorias SET Status=0, USREdicion='{$_SESSION["nombre"]}', FechaModificacion='".date("Y-m-d H:i:s")."' where _id= ".$this->formulario["_id"];
-            }else if($this->formulario["opc"]=="enabled"){
-                $sql = "UPDATE Categorias SET Status=1, USREdicion='{$_SESSION["nombre"]}', FechaModificacion='".date("Y-m-d H:i:s")."' where _id= ".$this->formulario["_id"];
+            $fechaActual = date("Y-m-d H:i:s");
+            $usuario = $_SESSION["nombre"] ?? 'Sistema';
+
+            if($this->formulario["opc"] == 'new' || $this->formulario["opc"] == 'edit') {
+                $cat_segura = addslashes(trim($this->formulario["Categoria"]));
+                
+                $id_condicion = ($this->formulario["opc"] == 'edit') ? " AND _id != " . intval($this->formulario["_id"]) : "";
+
+                $checkSql = "SELECT _id FROM Categorias WHERE Categoria = '$cat_segura'" . $id_condicion;
+                $resCheck = $this->conn->query($checkSql);
+                
+                if ($this->conn->fetch($resCheck)) {
+                    $this->jsonData["mensaje"] = "Ya existe una categoría registrada con ese nombre.";
+                    return false;
+                }
             }
-        return $this->conn->query($sql) or $this->jsonData["error"] = $this->conn->error;
+
+            if($this->formulario["opc"]=="new"){
+                $cat_segura = addslashes(trim($this->formulario["Categoria"]));
+                $sql = "INSERT INTO Categorias (Categoria, Status, USRCreacion,USREdicion, FechaCreacion, FechaModificacion ) values "
+                        . "('$cat_segura','1','$usuario','$usuario','$fechaActual','$fechaActual')";
+            }else if($this->formulario["opc"]=="edit"){
+                $cat_segura = addslashes(trim($this->formulario["Categoria"]));
+                $sql = "UPDATE Categorias SET Categoria='$cat_segura', USREdicion='$usuario', FechaModificacion='$fechaActual' where _id= ".$this->formulario["_id"];
+            }else if($this->formulario["opc"]=="disabled"){
+                $sql = "UPDATE Categorias SET Status=0, USREdicion='$usuario', FechaModificacion='$fechaActual' where _id= ".$this->formulario["_id"];
+            }else if($this->formulario["opc"]=="enabled"){
+                $sql = "UPDATE Categorias SET Status=1, USREdicion='$usuario', FechaModificacion='$fechaActual' where _id= ".$this->formulario["_id"];
+            }else if($this->formulario["opc"]=="delete"){
+                $archivo = "../../../../../../images/Categorias/".$this->formulario["_id"].".png";
+                if(file_exists($archivo)){ unlink($archivo); }
+                $sql = "DELETE FROM Categorias WHERE _id= ".$this->formulario["_id"];
+            }
+            
+            return $this->conn->query($sql) or $this->jsonData["error"] = $this->conn->error;
         }
         
-        
         private function subirImagen(){
-            //print_r($this->foto);
-            if($this->foto["file"]["name"]!="" and $this->foto["file"]["size"]!=0){
+            if(isset($this->foto["file"]) && $this->foto["file"]["name"]!="" && $this->foto["file"]["size"]!=0){
                 $subdir ="../../../../../../"; 
                 $dir = "images/Categorias/";
                 $archivo = $this->formulario["lastid"].".png";
                 if(!is_dir($subdir.$dir)){
-                    mkdir($subdir.$dir,0755);
+                    mkdir($subdir.$dir,0755, true);
                 }
-                if($archivo && move_uploaded_file($this->foto["file"]["tmp_name"], $subdir.$dir.$archivo)){
-                    //$this->rutaimagen= $dir.$archivo;
+                if(move_uploaded_file($this->foto["file"]["tmp_name"], $subdir.$dir.$archivo)){
                     return true;
                 }else{
-                    echo "no se subio la imagen";
+                    return false;
                 }
             }else{
                 return false;
@@ -137,3 +179,4 @@
     
     $app = new Categorias($array_principal);
     $app->principal();
+?>

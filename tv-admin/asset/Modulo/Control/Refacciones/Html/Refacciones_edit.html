@@ -1,0 +1,486 @@
+<div ng-controller="RefaccionesEditCtrl" ng-cloak> <div class="content-header" ng-init="refaccion.id = {id}">
+        <div class="container-fluid">
+            <div class="row mb-2 align-items-center">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark font-weight-bold"><i class="fa fa-edit text-danger mr-2"></i> Editar Refacción</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="?mod=Refacciones">Refacciones</a></li>
+                        <li class="breadcrumb-item active">Edición</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-4 col-lg-4 col-md-12 mb-4">
+                    <div class="card card-outline card-danger shadow-sm h-100">
+                        <div class="card-body text-center">
+                            <div class="p-3 border rounded bg-light mb-3">
+                                <img ng-src="{{img}}" alt="Imagen refacción" class="img-fluid rounded" style="max-height: 220px;" ng-style="backgroudimg">
+                            </div>
+                            
+                            <div class="form-group text-left">
+                                <label class="small font-weight-bold">Cambiar Imagen:</label>
+                                <div class="custom-file text-xs">
+                                    <input type="file" class="custom-file-input" name="txtfile" id="txtfile" ng-disabled="habilitado">
+                                    <label class="custom-file-label" for="txtfile">Seleccionar archivo</label>
+                                </div>
+                            </div>
+                            <hr>
+                            
+                            <div class="text-left">
+                                <h6 class="font-weight-bold text-muted mb-3 text-sm text-uppercase">Información SEO</h6>
+                                <div class="form-group mb-2">
+                                    <label class="small">Tag Title:</label>
+                                    <input type="text" class="form-control form-control-sm" ng-model="refaccion.tag_title" ng-disabled="habilitado">
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label class="small">Tag Alt:</label>
+                                    <input type="text" class="form-control form-control-sm" ng-model="refaccion.tag_alt" ng-disabled="habilitado">
+                                </div>
+
+                                <h6 class="font-weight-bold text-muted mb-2 text-sm text-uppercase">Registro de Sistema</h6>
+                                <div class="alert alert-light border p-2 text-xs mb-2">
+                                    <strong>Creado por:</strong> {{refaccion.userCreated}}<br>
+                                    <span class="text-muted"><i class="fa fa-calendar-plus-o"></i> {{refaccion.dateCreated}}</span>
+                                </div>
+                                <div class="alert alert-light border p-2 text-xs mb-0">
+                                    <strong>Última mod:</strong> {{refaccion.userModify}}<br>
+                                    <span class="text-muted"><i class="fa fa-clock-o"></i> {{refaccion.dateModify}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-8 col-lg-8 col-md-12">
+                    <div class="card card-danger card-outline card-tabs shadow-sm">
+                        <div class="card-header p-0 pt-1 border-bottom-0">
+                            <ul class="nav nav-tabs" id="tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="Datosgenerales-tab" data-toggle="pill" href="#Datosgenerales" role="tab" aria-controls="Datosgenerales" aria-selected="true"><i class="fa fa-file-text-o mr-1"></i> Datos Generales</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="Galeria-tab" data-toggle="pill" href="#Galeria" role="tab" aria-controls="Galeria" aria-selected="false"><i class="fa fa-image mr-1"></i> Galería</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="Vehiculo-tab" data-toggle="pill" href="#Vehiculo" role="tab" aria-controls="Vehiculo" aria-selected="false"><i class="fa fa-car mr-1"></i> Compatibilidad</a>
+                                </li>
+                                <li class="nav-item" ng-show="isAdmin">
+                                    <a class="nav-link text-primary" id="Actividad-tab" data-toggle="pill" href="#Actividad" role="tab" aria-controls="Actividad" aria-selected="false"><i class="fas fa-history mr-1"></i> Actividad</a>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="card-body">
+                            <div class="tab-content" id="myTabContent">
+                                
+                                <div class="tab-pane fade show active" id="Datosgenerales" role="tabpanel" aria-labelledby="Datosgenerales-tab">
+                                    <form name="frmrefaccion" id="frmrefaccion" novalidate>
+                                        
+                                        <h5 class="text-danger font-weight-bold border-bottom pb-2 mb-3">Identificación del Producto</h5>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Clave: <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control font-weight-bold border-danger" ng-model="refaccion.Clave" ng-change="buscarClaveSeicom()" ng-disabled="habilitado" required/>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <label>Refacción (Nombre): <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" ng-model="refaccion.Producto" ng-disabled="habilitado" required/>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <div class="col-md-6">
+                                                <label>No. Parte: <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" ng-model="refaccion.No_parte" ng-disabled="habilitado" required/>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Categoría: <span class="text-danger">*</span></label>
+                                                <select class="form-control" name="slccategoria" ng-model="refaccion._idCategoria" ng-disabled="habilitado" required>
+                                                    <optgroup label="Selecciona categoría">
+                                                        <option ng-repeat="categoria in categorias" value="{{categoria._id}}">{{categoria.Categoria}}</option>
+                                                    </optgroup>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <div class="col-md-4">
+                                                <label>Marca: <span class="text-danger">*</span></label>
+                                                <select class="form-control" name="slcmarca" ng-model="refaccion._idMarca" ng-change="getVehiculos(refaccion._idMarca)" ng-disabled="habilitado" required>
+                                                    <optgroup label="Selecciona Marca">
+                                                        <option ng-repeat="m in Marcas" value="{{m._id}}">{{m.Marca}}</option>
+                                                    </optgroup>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label>Vehículo: <span class="text-danger">*</span></label>
+                                                <select class="form-control" name="slcvehiculo" ng-model="refaccion.Modelo" ng-change="getModelos(refaccion.Modelo)" ng-disabled="habilitado" required>
+                                                    <optgroup label="Selecciona Vehículo">
+                                                        <option ng-repeat="v in Vehiculos" value="{{v._id}}">{{v.Modelo}}</option>
+                                                    </optgroup>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label>Modelo (Año): <span class="text-danger">*</span></label>
+                                                <select class="form-control" name="slcanio" ng-model="refaccion.Anios" ng-disabled="habilitado" required>
+                                                    <optgroup label="Selecciona Año">
+                                                        <option ng-repeat="mo in Modelos" value="{{mo._id}}">{{mo.Anio}}</option>
+                                                    </optgroup>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-3">
+                                            <div class="col-md-6">
+                                                <label>Proveedor:</label>
+                                                <select class="form-control" name="slcproveedor" ng-model="refaccion.id_proveedor" ng-disabled="habilitado">
+                                                    <optgroup label="Selecciona el proveedor">
+                                                        <option ng-repeat="prov in Proveedor" value="{{prov._id}}">{{prov.Proveedor}}</option>
+                                                    </optgroup>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6" ng-show="refaccion.Kit">
+                                                <label>Stock (Kit): <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control border-primary numeric" ng-model="refaccion.stock" ng-disabled="habilitado"/>
+                                            </div>
+                                        </div>
+
+                                        <h5 class="text-danger font-weight-bold border-bottom pb-2 mt-4 mb-3">Precios y Promociones</h5>
+                                        <div class="row align-items-center">
+                                            <div class="col-md-4">
+                                                <label>Precio Público: <span class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend"><span class="input-group-text">$</span></div>
+                                                    <input type="text" class="form-control font-weight-bold text-success numeric" ng-model="refaccion.Precio1" ng-disabled="habilitado || (!refaccion.precio_manual && !refaccion.Kit)" required/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="custom-control custom-switch pt-3">
+                                                   <input type="checkbox" class="custom-control-input" id="swmanual_edit" ng-model="refaccion.precio_manual" ng-change="cambioPrecioManual()" ng-disabled="habilitado">
+                                                    <label class="custom-control-label font-weight-bold text-primary" for="swmanual_edit">Precio Manual (Fijar)</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4" ng-show="refaccion.RefaccionOferta">
+                                                <label>Precio Oferta:</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend"><span class="input-group-text">$</span></div>
+                                                    <input type="text" class="form-control text-danger font-weight-bold numeric" ng-model="refaccion.Precio2" ng-disabled="habilitado"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-4">
+                                            <div class="col-md-6 border-right">
+                                                <div class="custom-control custom-switch mb-2">
+                                                    <input type="checkbox" class="custom-control-input" id="sedit1" ng-model="refaccion.RefaccionNueva" ng-disabled="habilitado">
+                                                    <label class="custom-control-label" for="sedit1">Refacción Nueva</label>
+                                                </div>
+                                                <div class="custom-control custom-switch mb-2">
+                                                    <input type="checkbox" class="custom-control-input" id="sedit2" ng-model="refaccion.RefaccionOferta" ng-disabled="habilitado">
+                                                    <label class="custom-control-label" for="sedit2">Refacción en Oferta</label>
+                                                </div>
+                                                <div class="custom-control custom-switch mb-2">
+                                                    <input type="checkbox" class="custom-control-input" id="sedit3" ng-model="refaccion.RefaccionLiquidacion" ng-disabled="habilitado">
+                                                    <label class="custom-control-label" for="sedit3">En Liquidación</label>
+                                                </div>
+                                                <div class="custom-control custom-switch mb-2">
+                                                    <input type="checkbox" class="custom-control-input" id="sedit4" ng-model="refaccion.Estatus" ng-disabled="habilitado">
+                                                    <label class="custom-control-label" for="sedit4">Refacción Activa</label>
+                                                </div>
+                                                <div class="custom-control custom-switch mb-2">
+                                                    <input type="checkbox" class="custom-control-input" id="sedit5" ng-model="refaccion.Enviogratis" ng-disabled="habilitado">
+                                                    <label class="custom-control-label" for="sedit5">Envío Gratis</label>
+                                                </div>
+                                                <div class="custom-control custom-switch mb-2" ng-show="isAdmin">
+                                                    <input type="checkbox" class="custom-control-input" id="sedit7" ng-model="refaccion.Publicar" ng-disabled="habilitado">
+                                                    <label class="custom-control-label" for="sedit7">Publicar</label>
+                                                </div>
+                                                <div class="custom-control custom-switch">
+                                                    <input type="checkbox" class="custom-control-input" id="sedit6" ng-model="refaccion.Kit" ng-change="cambioPrecioManual()" ng-disabled="habilitado">
+                                                    <label class="custom-control-label" for="sedit6">Es un Kit</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="small">Vigencia Nuevo:</label>
+                                                <div class="input-group mb-2">
+                                                    <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div>
+                                                    <input type="text" class="form-control calendario" ng-model="refaccion.fechaNueva" placeholder="yyyy-mm-dd" ng-disabled="!refaccion.RefaccionNueva">
+                                                </div>
+                                                <label class="small">Vigencia Oferta:</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div>
+                                                    <input type="text" class="form-control calendario" ng-model="refaccion.fechaOferta" placeholder="yyyy-mm-dd" ng-disabled="!refaccion.RefaccionOferta">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h5 class="text-danger font-weight-bold border-bottom pb-2 mt-4 mb-3">Dimensiones Físicas</h5>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="input-group input-group-sm">
+                                                    <div class="input-group-prepend"><span class="input-group-text">Alto</span></div>
+                                                    <input type="text" class="form-control numeric" ng-model="refaccion.Alto" ng-disabled="habilitado">
+                                                    <div class="input-group-append"><span class="input-group-text">cm</span></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="input-group input-group-sm">
+                                                    <div class="input-group-prepend"><span class="input-group-text">Largo</span></div>
+                                                    <input type="text" class="form-control numeric" ng-model="refaccion.Largo" ng-disabled="habilitado">
+                                                    <div class="input-group-append"><span class="input-group-text">cm</span></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="input-group input-group-sm">
+                                                    <div class="input-group-prepend"><span class="input-group-text">Ancho</span></div>
+                                                    <input type="text" class="form-control numeric" ng-model="refaccion.Ancho" ng-disabled="habilitado">
+                                                    <div class="input-group-append"><span class="input-group-text">cm</span></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="input-group input-group-sm">
+                                                    <div class="input-group-prepend"><span class="input-group-text">Peso</span></div>
+                                                    <input type="text" class="form-control numeric" ng-model="refaccion.Peso" ng-disabled="habilitado">
+                                                    <div class="input-group-append"><span class="input-group-text">kg</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mt-3">
+                                            <label>Descripción detallada:</label>
+                                            <textarea rows="4" class="form-control" ng-model="refaccion.Descripcion" ng-disabled="habilitado"></textarea>
+                                        </div>
+
+                                        <div class="bg-light p-3 rounded mt-3 border">
+                                            <h6 class="font-weight-bold text-center mb-3">Existencia en Sucursales: <span class="badge badge-success text-lg">{{exisTotales}}</span></h6>
+                                            <table class="table table-sm table-bordered bg-white text-center mb-0">
+                                                <thead class="thead-light">
+                                                    <tr><th>Sucursal</th><th>Existencias</th></tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="exis in existencias.Table">
+                                                        <td class="text-left">{{exis.em_nombre}}</td>
+                                                        <td class="font-weight-bold">{{exis.existencia}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </form>
+                                    
+                                    <div class="row mt-4" ng-if="session.rol != 'user'">
+                                        <div class="col-12 d-flex justify-content-between align-items-center">
+                                            <div ng-show="isAdmin">
+                                                <button type="button" class="btn btn-outline-danger shadow-sm" ng-click="btnEliminarRefaccionCompleta()"><i class="fa fa-trash-alt mr-1"></i> Eliminar Pieza</button>
+                                            </div>
+
+                                            <div class="text-right">
+                                                <button type="button" class="btn btn-secondary mr-2" ng-click="btnRegresar()">Cancelar</button>
+                                                <button type="button" class="btn btn-danger px-4 shadow-sm" ng-disabled="frmrefaccion.$invalid && !habilitado" ng-click="habilitado ? btnEditarRefaccion() : btnSaveRefaccion()">
+                                                    <i class="fa fa-pencil mr-1" ng-show="habilitado"></i>
+                                                    <i class="fa fa-save mr-1" ng-show="!habilitado"></i>
+                                                    {{habilitado ? "Habilitar Edición" : "Guardar Cambios"}}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="Galeria" role="tabpanel" aria-labelledby="Galeria-tab">
+                                    <div class="row mt-3">
+                                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-3" ng-repeat="gal in dataGaleria">
+                                            <div class="card card-outline card-danger shadow-sm h-100">
+                                                <div class="card-body text-center p-2">
+                                                    <img ng-src="{{getImagen(gal)}}" alt="{{gal.tag_alt}}" title="{{gal.tag_title}}" class="img-fluid rounded" style="max-height: 150px; object-fit: contain;">
+                                                </div>
+                                                <div class="card-footer bg-white border-top-0 p-2 text-right" ng-if="session.rol != 'user'">
+                                                    <button class="btn btn-sm btn-outline-danger" ng-click="btnEliminarImagen(gal._id)"><i class="fa fa-trash"></i> Eliminar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3" ng-if="session.rol != 'user'">
+                                        <div class="col-12 text-center">
+                                            <button ng-click="btnNuevaCategoria()" class="btn btn-danger shadow-sm"><i class="fa fa-plus-circle"></i> Agregar Imagen a Galería</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="Vehiculo" role="tabpanel" aria-labelledby="Vehiculo-tab">
+                                    <div class="row mt-3">
+                                        <div class="col-12 text-right mb-3" ng-if="session.rol != 'user'">
+                                            <button class="btn btn-danger shadow-sm" ng-click="btnNuevoVehiculo()"><i class="fa fa-car mr-1"></i> Agregar Compatibilidad</button>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="table-responsive border rounded text-sm">
+                                                <table class="table table-striped table-hover mb-0 text-center">
+                                                    <thead class="bg-light">
+                                                        <tr>
+                                                            <th>Marca</th><th>Modelo</th><th>Desde</th><th>Hasta</th><th>Transmisión</th><th ng-if="session.rol != 'user'">Acción</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="RV in Compatibilidad">
+                                                            <td class="align-middle">{{RV.Marca}}</td>
+                                                            <td class="align-middle">{{RV.Modelo}}</td>
+                                                            <td class="align-middle">{{RV.ainicial}}</td>
+                                                            <td class="align-middle">{{RV.afinal}}</td>
+                                                            <td class="align-middle">{{RV.transmision}}</td>
+                                                            <td class="align-middle" ng-if="session.rol != 'user'">
+                                                                <button class="btn btn-sm btn-danger shadow-sm" ng-click="btnBorrarRvehiculo(RV)"><i class="fa fa-trash"></i></button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="Actividad" role="tabpanel" aria-labelledby="Actividad-tab" ng-show="isAdmin">
+                                    <div class="row mt-3">
+                                        <div class="col-12">
+                                            
+                                            <div class="timeline mt-3" ng-show="actividad.length > 0">
+                                                <div ng-repeat="act in actividad">
+                                                    <i class="fas fa-edit bg-primary"></i>
+                                                    <div class="timeline-item shadow-sm border-0">
+                                                        <span class="time"><i class="fas fa-clock"></i> {{act.fecha_modificacion}}</span>
+                                                        <h3 class="timeline-header font-weight-bold text-primary">{{act.usuario}}</h3>
+                                                        <div class="timeline-body text-sm">
+                                                            <div class="alert alert-light border mb-0 text-dark">
+                                                                <strong>Cambios:</strong> <span ng-bind-html="formatearDiferencias(act.datosdiff)"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div><i class="fas fa-clock bg-gray"></i></div>
+                                            </div>
+
+                                            <div class="text-center p-4" ng-show="!actividad || actividad.length === 0">
+                                                <i class="fa fa-history fa-3x text-muted mb-3"></i>
+                                                <h5 class="text-muted">No hay registro de actividad para esta refacción.</h5>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade" id="Mcategoria" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title"><i class="fa fa-image mr-2"></i> {{nuevo? "Nueva":"Editar"}} Imagen</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-3 p-2 border rounded bg-light">
+                        <img ng-src="{{imgGaleria}}" class="img-fluid rounded" style="max-height: 150px;"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="small">Archivo de Imagen:</label>
+                        <div class="custom-file">
+                            <input class="custom-file-input archivos" id="Principal" type="file" uploader-model="Galeria.file">
+                            <label class="custom-file-label">{{Galeria.Categoria==="Principal"? Galeria.name:Galeria.placeholder}}</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="small">Tag Title:</label>
+                        <input type="text" class="form-control form-control-sm" ng-model="Galeria.tag_title" />
+                    </div>
+                    <div class="form-group mb-0">
+                        <label class="small">Tag Alt:</label>
+                        <input type="text" class="form-control form-control-sm" ng-model="Galeria.tag_alt" />
+                    </div>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-danger btn-sm shadow-sm" ng-click="btnsubirimagen()" ng-disabled="btnsave">{{nuevo? "Subir":"Guardar"}} Imagen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mdlVehiculo" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title"><i class="fa fa-car mr-2"></i> Agregar Vehículo Compatible</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body bg-light">
+                    <form name="frmVehiculo" class="row">
+                        <div class="col-md-6 mb-2">
+                            <label class="small">Clave Refacción:</label>
+                            <select name="clave" class="form-control form-control-sm" ng-disabled="true">
+                                <optgroup><option selected>{{refaccion.Clave}}</option></optgroup>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <label class="small">ID Refacción:</label>
+                            <select name="id_imagen" class="form-control form-control-sm" ng-disabled="true">
+                                <optgroup><option selected>{{refaccion._id}}</option></optgroup>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label class="small text-danger">Marca:</label>
+                            <select name="idmarca" ng-model="vehiculo.id_Marca_RefaccionVehiculo" ng-change="getVehiculos(vehiculo.id_Marca_RefaccionVehiculo)" class="form-control form-control-sm">
+                                <optgroup><option disabled selected>Selecciona</option><option ng-repeat="marca in Marcas" value="{{marca._id}}">{{marca.Marca}}</option></optgroup>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label class="small text-danger">Modelo:</label>
+                            <select name="idmodelo" ng-model="vehiculo.id_Modelo_RefaccionVehiculo" ng-change="getModelos(vehiculo.id_Modelo_RefaccionVehiculo); getAnios(vehiculo.id_Modelo_RefaccionVehiculo)" class="form-control form-control-sm">
+                                <optgroup><option disabled selected>Selecciona</option><option ng-repeat="vehiculo in Vehiculos" value="{{vehiculo._id}}">{{vehiculo.Modelo}}</option></optgroup>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label class="small">Generación:</label>
+                            <input type="text" name="generacion" placeholder="Ej. MK6" class="form-control form-control-sm" ng-model="vehiculo.generacion">
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <label class="small text-danger">Año Inicial:</label>
+                            <input type="text" name="ainicial" placeholder="Ej. 2010" class="form-control form-control-sm numeric" ng-model="vehiculo.ainicial" maxlength="4" required>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <label class="small text-danger">Año Final:</label>
+                            <input type="text" name="afinal" placeholder="Ej. 2015" class="form-control form-control-sm numeric" ng-model="vehiculo.afinal" maxlength="4" required>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <label class="small text-danger">Motor:</label>
+                            <input type="text" name="motor" placeholder="Ej. 2.0L" class="form-control form-control-sm" ng-model="vehiculo.motor" required>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <label class="small text-danger">Transmisión:</label>
+                            <input type="text" name="transmision" placeholder="Ej. Manual" class="form-control form-control-sm" ng-model="vehiculo.transmision" required>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="small">Especificaciones extra:</label>
+                            <input type="text" name="especificaciones" placeholder="Opcional..." class="form-control form-control-sm" ng-model="vehiculo.especificaciones">
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <hr>
+                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-danger btn-sm shadow-sm ml-2" ng-click="btnGuardarVehiculo()">Guardar Vehículo</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

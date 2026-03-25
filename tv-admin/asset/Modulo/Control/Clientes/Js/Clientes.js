@@ -1,8 +1,25 @@
-var url = "./Modulo/Control/Clientes/Ajax/Clientes.php";
+'use strict';
+
+var urlClientes = "./Modulo/Control/Clientes/Ajax/Clientes.php";
+if (typeof window.Toast === 'undefined') {
+    window.Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+}
+
 tsuruVolks
     .controller('ClientesCtrl', ["$scope", "$http", ClientesCtrl])
     .controller('ClientesCuponesCtrl', ["$scope", "$http", ClientesCuponesCtrl])
     .controller('ClientesPerfilCtrl', ["$scope", "$http", ClientesPerfilCtrl]);
+
 
 function ClientesCtrl($scope, $http) {
     var obj = $scope;
@@ -11,67 +28,92 @@ function ClientesCtrl($scope, $http) {
         opc: "",
         historico: false,
         new: false
-    }
+    };
 
-    obj.getClientes = () => {
-        obj.data.opc = "get";
+    obj.loadClientes = () => {
+        obj.data.opc = obj.data.new ? 'new' : 'get';
         obj.sendData();
-    }
+    };
 
-    obj.getnewClientes = () => {
-        setTimeout(()=>{
-            obj.data.opc = obj.data.new ? 'new' : 'get';
-            obj.sendData();
-        },200);
-    }
+    obj.getClientes = () => { obj.data.new = false; obj.loadClientes(); };
+    obj.getnewClientes = () => { obj.loadClientes(); };
 
-    obj.getEstatus = (id, estatus) => {
-        obj.data.opc = "set"
-        obj.data.estatus = estatus;
-        obj.data.id = id;
-        obj.sendData();
-    }
+    obj.getEstatus = (user, estatus) => {
+        let accion = estatus == 1 ? "REACTIVAR" : "DESACTIVAR";
+        let msjTexto = estatus == 1 ? `El cliente "${user.nombre}" volverá a tener acceso.` : `El cliente "${user.nombre}" no podrá iniciar sesión.`;
+        let icono = estatus == 1 ? 'question' : 'warning';
+        let colorBtn = estatus == 1 ? '#28a745' : '#dc3545';
 
-    obj.changepass = (id) => {
-        obj.data.opc = "pass";
-        obj.data.id = id;
-        obj.sendData();
-    }
+        Swal.fire({
+            title: `¿${accion} cliente?`,
+            text: msjTexto,
+            icon: icono,
+            showCancelButton: true,
+            confirmButtonColor: colorBtn,
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Sí, confirmar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                obj.data.opc = "set";
+                obj.data.estatus = estatus;
+                obj.data.id = user._id;
+                obj.sendData();
+            }
+        });
+    };
+
+    obj.changepass = (user) => {
+        Swal.fire({
+            title: '¿Generar nueva contraseña?',
+            text: `Se creará una contraseña aleatoria para el cliente: ${user.nombre}`,
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#007bff',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: '<i class="fas fa-key"></i> Sí, generar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                obj.data.opc = "pass";
+                obj.data.id = user._id;
+                obj.sendData();
+            }
+        });
+    };
 
     obj.btnPerfil = (id) => {
         location.href = "?mod=Clientes&opc=perfil&id=" + id;
-    }
+    };
 
     obj.sendData = () => {
-        setTimeout(() => {
-            $http({
-                method: 'POST',
-                url: url,
-                data: { cliente: obj.data }
-            }).then(function successCallback(res) {
-                if (res.data.Bandera == 1) {
-                    if (obj.data.opc == "pass") {
-                        $("#showpass").html(res.data.pass);
-                        $("#modalpass").modal("show");
-                    } else {
-                        obj.Clientes = res.data.Cliente;
+        $http({
+            method: 'POST',
+            url: urlClientes,
+            data: { cliente: obj.data }
+        }).then(function successCallback(res) {
+            if (res.data.Bandera == 1) {
+                if (obj.data.opc == "pass") {
+                    $("#showpass").html(res.data.pass);
+                    $("#modalpass").modal("show");
+                    Toast.fire({ icon: 'success', title: 'Contraseña generada exitosamente' });
+                } else {
+                    obj.Clientes = res.data.Cliente;
+                    if(obj.data.opc == "set") {
+                        Toast.fire({ icon: 'success', title: 'Estatus actualizado correctamente' });
                     }
-
                 }
-            }, function errorCallback(res) {
-                toastr.error("Error: no se realizo la conexion con el servidor");
-            });
-        }, 100);
-    }
+            } else {
+                Toast.fire({ icon: 'error', title: 'Error devuelto por el servidor.' });
+            }
+        }, function errorCallback(res) {
+            Toast.fire({ icon: 'error', title: 'Error de conexión con el servidor' });
+        });
+    };
 
     angular.element(document).ready(function () {
-        obj.data.new = obj.data.new == "1" ? true : false;
-        if (obj.data.new) {
-            obj.getnewClientes();
-        } else {
-            obj.getClientes();
-        }
-
+        obj.data.new = String(obj.data.new).includes("1") || String(obj.data.new).includes("true");
+        obj.loadClientes();
     });
 }
 
@@ -84,10 +126,9 @@ function ClientesPerfilCtrl($scope, $http) {
     obj.cuponesCliente = [];
 
     obj.getCliente = () => {
-
         $http({
             method: 'POST',
-            url: url,
+            url: urlClientes,
             data: { cliente: { opc: "perfil", id: obj.id } }
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
@@ -96,124 +137,113 @@ function ClientesPerfilCtrl($scope, $http) {
                 obj.getCuponesCliente();
             }
         }, function errorCallback(res) {
-            console.log("Entra a sendData error: ", res);
-            toastr.error("Error: no se realizo la conexion con el servidor");
+            Toast.fire({ icon: 'error', title: 'Error al cargar los datos del cliente' });
         });
     }
 
     obj.asignarCupon = (idCupon) => {
-        $http({
-            method: 'POST',
-            url: url,
-            data: {
-                cliente: {
-                    opc: "asignarCupon",
-                    id: obj.id,
-                    id_cupon: idCupon
-                }
-            }
-        }).then(() => {
-            toastr.success("Cupón asignado");
+        $http.post(urlClientes, { cliente: { opc: "asignarCupon", id: obj.id, id_cupon: idCupon } }).then(() => {
+            Toast.fire({ icon: 'success', title: 'Cupón asignado exitosamente' }); 
             obj.getCuponesCliente();
         });
     }
 
     obj.quitarCupon = (idCupon) => {
-        $http({
-            method: 'POST',
-            url: url,
-            data: {
-                cliente: {
-                    opc: "quitarCupon",
-                    id: obj.id,
-                    id_cupon: idCupon
-                }
-            }
-        }).then(() => {
-            toastr.success("Cupón eliminado");
+        $http.post(urlClientes, { cliente: { opc: "quitarCupon", id: obj.id, id_cupon: idCupon } }).then(() => {
+            Toast.fire({ icon: 'info', title: 'Cupón removido del cliente' }); 
             obj.getCuponesCliente();
         });
     }
 
     obj.getCuponesCliente = () => {
-
-        $http({
-            method: 'POST',
-            url: url,
-            data: {
-                cliente: {
-                    opc: "getCuponesCliente",
-                    id: obj.id
-                }
-            }
-        }).then(function (res) {
-
+        $http.post(urlClientes, { cliente: { opc: "getCuponesCliente", id: obj.id } }).then(function (res) {
             if (res.data.Bandera == 1) {
                 obj.cuponesDisponibles = res.data.disponibles;
                 obj.cuponesCliente = res.data.cliente;
             }
-
-        }, function () {
-            toastr.error("Error cargando cupones");
         });
     }
 
     obj.btnEditar = () => {
         if (obj.disabled) {
             obj.disabled = false;
-            $("#txtname").focus();
+            setTimeout(() => { $("#txtname").focus(); }, 100);
         } else {
-            obj.disabled = true;
+            obj.guardarPerfilCliente();
         }
     }
 
+    obj.guardarPerfilCliente = () => {
+        Swal.fire({
+            title: '¿Guardar cambios?',
+            text: "Se actualizará la información del perfil del cliente.",
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#dc3545',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: '<i class="fas fa-save"></i> Sí, guardar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let datosGuardar = angular.copy(obj.cliente);
+                datosGuardar.opc = "updatePerfil";
+                datosGuardar.avisoprivacidad = datosGuardar.avisoprivacidad ? 1 : 0; 
+
+                $http({
+                    method: 'POST',
+                    url: urlClientes,
+                    data: { cliente: datosGuardar }
+                }).then(function(res){
+                    if(res.data.Bandera == 1){
+                        Toast.fire({ icon: 'success', title: res.data.mensaje });
+                        obj.disabled = true;
+                    } else {
+                        Toast.fire({ icon: 'error', title: "Error: " + res.data.mensaje });
+                    }
+                }, function(){
+                    Toast.fire({ icon: 'error', title: 'Error de conexión al guardar' });
+                });
+            }
+        });
+    }
+
     angular.element(document).ready(function () {
-
         obj.getCliente();
-
     });
 }
 
+
 function ClientesCuponesCtrl($scope, $http) {
     var obj = $scope;
-
     obj.cupones = [];
     obj.nuevo = {
         es_global: true,
         uso_unico: false
     };
-    // 🔹 Listar cupones admin
-    obj.listar = () => {
 
+    obj.listar = () => {
         $http({
             method: 'POST',
-            url: url,
-            data: {
-                cliente: {
-                    opc: "listarCuponesAdmin"
-                }
-            }
+            url: urlClientes,
+            data: { cliente: { opc: "listarCuponesAdmin" } }
         }).then(function(res){
-
             if(res.data.Bandera == 1){
                 obj.cupones = res.data.cupones;
             }
-
         }, function(){
-            toastr.error("Error cargando cupones");
+            Toast.fire({ icon: 'error', title: 'Error cargando los cupones' });
         });
     };
-    // 🔹 Crear cupón
-    obj.crearCupon = () => {
 
+    obj.crearCupon = () => {
         if(!obj.nuevo.codigo || !obj.nuevo.descuento){
-            Swal.fire("Error","Completa los campos obligatorios","error");
+            Toast.fire({ icon: 'warning', title: 'Completa los campos obligatorios' });
             return;
         }
 
         $http({
             method: 'POST',
-            url: url,
+            url: urlClientes,
             data: {
                 cliente: {
                     opc: "crearCupon",
@@ -225,92 +255,67 @@ function ClientesCuponesCtrl($scope, $http) {
                 }
             }
         }).then(function(res){
-
             if(res.data.Bandera == 1){
-                Swal.fire("Éxito","Cupón creado correctamente","success");
+                Toast.fire({ icon: 'success', title: 'Cupón creado correctamente' });
                 obj.nuevo = { es_global: true, uso_unico: false };
                 obj.listar();
             }
-
         }, function(){
-            toastr.error("Error al crear cupón");
+            Toast.fire({ icon: 'error', title: 'Error al intentar crear el cupón' });
         });
     };
-    // 🔹 Activar / Desactivar
+
     obj.toggleActivo = (id) => {
-
         $http({
             method: 'POST',
-            url: url,
-            data: {
-                cliente: {
-                    opc: "toggleActivoCupon",
-                    id: id
-                }
-            }
+            url: urlClientes,
+            data: { cliente: { opc: "toggleActivoCupon", id: id } }
         }).then(function(res){
             if(res.data.Bandera == 1){
                 obj.listar();
             }
         });
-
     };
-    // 🔹 Global / No Global
+
     obj.toggleGlobal = (id) => {
-
         $http({
             method: 'POST',
-            url: url,
-            data: {
-                cliente: {
-                    opc: "toggleGlobalCupon",
-                    id: id
-                }
-            }
+            url: urlClientes,
+            data: { cliente: { opc: "toggleGlobalCupon", id: id } }
         }).then(function(res){
             if(res.data.Bandera == 1){
                 obj.listar();
             }
         });
-
     };
-    // 🔹 Eliminar cupón
-    obj.eliminar = (id) => {
 
+    obj.eliminar = (id) => {
         Swal.fire({
             title: "¿Eliminar cupón?",
-            icon: "warning",
+            html: "Esta acción borrará el cupón <b>definitivamente</b>.",
+            icon: "error",
             showCancelButton: true,
-            confirmButtonText: "Sí, eliminar"
+            confirmButtonColor: '#dc3545',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: '<i class="fas fa-trash-alt"></i> Sí, eliminar',
+            cancelButtonText: 'Cancelar'
         }).then((result)=>{
-
             if(result.isConfirmed){
-
                 $http({
                     method: 'POST',
-                    url: url,
-                    data: {
-                        cliente: {
-                            opc: "eliminarCupon",
-                            id: id
-                        }
-                    }
+                    url: urlClientes,
+                    data: { cliente: { opc: "eliminarCupon", id: id } }
                 }).then(function(res){
-
                     if(res.data.Bandera == 1){
-                        toastr.success("Cupón eliminado");
+                        Toast.fire({ icon: 'success', title: 'Cupón eliminado correctamente' });
                         obj.listar();
                     }
-
                 });
-
             }
         });
-
     };
-    // 🔹 Inicializar
+
     angular.element(document).ready(function () {
         obj.listar();
     });
-
 }

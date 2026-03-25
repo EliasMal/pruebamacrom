@@ -3,141 +3,141 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark"><i class="fa fa-user mr-1"></i> Perfil de Usuario</h1>
-                </div><!-- /.col -->
+                    <h1 class="m-0 text-dark"><i class="fa fa-user-circle text-danger mr-2"></i> Mi Perfil</h1>
+                </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
-                        <li class="breadcrumb-item active"><a href='?mod=Perfil'>Perfil</a></li>
-                       
+                        <li class="breadcrumb-item active">Perfil</li>
                     </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+                </div>
+            </div>
+        </div>
     </div>
+
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <section class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 connectedSortable">
-                    <div class="card card-danger card-outline">
-                        <div class="card-body box-profile">
-                            <div class="text-center">
-                                <img ng-src="{{img}}" alt="User profile" class="profile-user-img img-fluid img-circle" />
-                            </div>
-                            <h3 class="profile-username text-center">{{perfil.Nombre}} {{perfil.ApPaterno}}</h3>
-                            <p class="text-muted text-center">{{gettipousuario(perfil.Tipo_usuario)}}</p>
+                <section class="col-md-4 col-lg-3">
+                    <div class="card card-danger card-outline shadow-sm">
+                        <div class="card-body box-profile text-center p-4">
+                            <img ng-src="{{img}}" alt="User profile" class="profile-user-img img-fluid img-circle border-danger shadow-sm mb-3" style="width: 120px; height: 120px; object-fit: cover;" />
+                            <h4 class="profile-username text-center font-weight-bold mb-0">{{perfil.Nombre}} {{perfil.ApPaterno}}</h4>
+                            <p class="text-muted text-center mt-1"><span class="badge badge-secondary">{{gettipousuario(perfil.Tipo_usuario)}}</span></p>
                         </div>
-                        <div class="card-footer">
-                            <button class="btn btn-info pull-left form-control"  ng-click="btnChangepass()"><i class="fa fa-key"> Cambiar password </i></button>
+                        <div class="card-footer bg-white border-top-0 pt-0">
+                            <button class="btn btn-outline-danger btn-block shadow-sm" ng-click="btnChangepass()">
+                                <i class="fa fa-key mr-1"></i> Cambiar Contraseña
+                            </button>
                         </div>
                     </div>
-                    
                 </section>
-                <section class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 connectedSortable">
-                     <div class="card card-danger">
-                        <div class="card-header d-flex p-0">
-                            <h3 class="card-title p-3">
-                                <i class="fa fa-user-plus mr-1"></i>
-                                Perfil del Usuario
-                            </h3>
-                            <div class="card-tools">
-                                <button class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            </div>
-                            
-                        </div><!-- /.card-header -->
-                        <div class="card-body">
-                            <div class="well">
-                                <form name="frmUsuarios" id="frmUsuarios" novalidate>
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                            <label for="txtnombre">Nombre <span class="text-danger"> *</span></label>
-                                            <input type="text" class="form-control" name="txtnombre" id="txtnombre" ng-model="perfil.Nombre"  required/>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                            <label for="txtapPaterno">Apellido paterno  <span class="text-danger"> *</span></label> 
-                                            <input type="text" class="form-control" name="txtapPaterno" id="txtapPaterno" ng-model="perfil.ApPaterno"  required/>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                            <label for="txtapMaterno">Apellido materno  <span class="text-danger"> *</span></label>
-                                            <input type="text" class="form-control" name="txtapMaterno" id="txtapMaterno" ng-model="perfil.ApMaterno"  required/>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                                            <label for="txtdomicilio">Domicilio  <span class="text-danger"> *</span></label>
-                                            <input type="text" class="form-control" name="txtdomicilio" id="txtdomicilio" ng-model="perfil.Domicilio"  required/>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                            <label for="txtcolonia">Colonia  <span class="text-danger"> *</span></label>
-                                            <input type="text" class="form-control" name="txtcolonia" id="txtcolonia" ng-model = "perfil.Colonia"  required/>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                            <label for="txtciudad">Ciudad  <span class="text-danger"> *</span></label>
-                                            <input type="text" class="form-control" name="txtciudad" id="txtciudad" ng-model = "perfil.Ciudad"  required/>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                            <label for="txtestado">Estado  <span class="text-danger"> *</span></label>
-                                            <input type="text" class="form-control" name="txtestado" id="txtestado" ng-model = "perfil.Estado"  required/>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                            <label for="txttelefono">Telefono  <span class="text-danger"> *</span></label>
-                                            <input type="text" class="form-control" name="txttelefono" id="txttelefono" ng-model = "perfil.Telefono"  required/>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                            <label for="txtemail">email  <span class="text-danger"> *</span></label>
-                                            <input type="email" class="form-control" name="txtemail" id="txtemail" ng-model="perfil.email"  required/>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                                            <label for="txtemail">Foto</label>
-                                            <input type="file" class="form-control archivos" name="txtavatar" id="txtavatar" uploader-model="perfil.file" />
+
+                <section class="col-md-8 col-lg-9">
+                     <div class="card card-danger shadow-sm">
+                        <div class="card-header">
+                            <h3 class="card-title font-weight-bold"><i class="fa fa-id-card-o mr-1"></i> Datos Personales</h3>
+                        </div>
+                        <div class="card-body bg-light">
+                            <form name="frmUsuarios" id="frmUsuarios" novalidate>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="small">Nombre <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="txtnombre" ng-model="perfil.Nombre" required/>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="small">Apellido paterno <span class="text-danger">*</span></label> 
+                                        <input type="text" class="form-control" name="txtapPaterno" ng-model="perfil.ApPaterno" required/>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="small">Apellido materno <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="txtapMaterno" ng-model="perfil.ApMaterno" required/>
+                                    </div>
+
+                                    <div class="col-md-12 mb-3 mt-2 border-top pt-3">
+                                        <h6 class="text-danger font-weight-bold">Datos de Contacto</h6>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="small">Domicilio <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="txtdomicilio" ng-model="perfil.Domicilio" required/>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="small">Colonia <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="txtcolonia" ng-model="perfil.Colonia" required/>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="small">Ciudad <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="txtciudad" ng-model="perfil.Ciudad" required/>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="small">Estado <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="txtestado" ng-model="perfil.Estado" required/>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="small">Teléfono <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control numeric" name="txttelefono" ng-model="perfil.Telefono" required/>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="small">Correo Electrónico <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-envelope"></i></span></div>
+                                            <input type="email" class="form-control" name="txtemail" ng-model="perfil.email" required/>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
-                        </div><!-- /.card-body -->
-                         <div class="card-footer">
-                            <button class="btn btn-danger pull-right" ng-disabled="frmUsuarios.$invalid" ng-click="btnGuardarPerfil()"><i class="fa fa-user-plus"> Guardar cambios</i></button>
-                            <button class="btn btn-secondary pull-right" ng-click="btnRegresar()"><i class="fa "> Regresar </i></button>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="small">Cambiar Foto de Perfil</label>
+                                        <div class="custom-file mb-2">
+                                            <input type="file" class="custom-file-input archivos" name="txtavatar" id="txtavatar" uploader-model="perfil.file" accept="image/png, image/jpeg, image/webp" />
+                                            <label class="custom-file-label" for="txtavatar">Seleccionar imagen...</label>
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-danger shadow-sm" ng-show="tieneFotoCustom" ng-click="btnEliminarFoto()">
+                                            <i class="fa fa-trash mr-1"></i> Eliminar foto actual
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-footer text-right">
+                            <button class="btn btn-secondary mr-2" ng-click="btnRegresar()"> Cancelar</button>
+                            <button class="btn btn-danger shadow-sm" ng-disabled="frmUsuarios.$invalid" ng-click="btnGuardarPerfil()">
+                                <i class="fa fa-save mr-1"></i> Guardar Cambios
+                            </button>
                         </div>
                     </div>
                 </section>
-                
             </div>
         </div>
     </section>
     
-        <!-- Modal -->
-    <div class="modal fade" id="changapass" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="changapass" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Cambiar Contraseña</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title"><i class="fa fa-lock mr-2"></i> Seguridad</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text"><i class="fa fa-key"></i></div>
-                                </div>
-                                <input type="text" name='txtpasschange' id ='txtpasschange' class="form-control" placeholder="Ingresa una nueva contraseña" ng-model="newpass"/>
-                            </div>
-                            <button type="button" class="btn btn-success form-control" ng-click="getNewpass()"> Sugerir Contraseña</button>
+                <div class="modal-body bg-light">
+                    <div class="form-group mb-3">
+                        <label class="small">Nueva Contraseña:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-key"></i></span></div>
+                            <input type="text" class="form-control font-weight-bold text-center text-primary" placeholder="Escribe o genera" ng-model="newpass"/>
                         </div>
                     </div>
+                    <button type="button" class="btn btn-outline-secondary btn-block btn-sm" ng-click="getNewpass()">
+                        <i class="fa fa-magic mr-1"></i> Sugerir Contraseña Fuerte
+                    </button>
                 </div>
-                <div class="modal-footer">
-                    
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" ng-click="btnGuardarpass()"> Guarder</button>
-                    
+                <div class="modal-footer bg-white">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger btn-sm shadow-sm" ng-click="btnGuardarpass()" ng-disabled="!newpass"> 
+                        <i class="fa fa-save mr-1"></i> Guardar
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-    
-        
-    
-    </div>
-    
+</div>

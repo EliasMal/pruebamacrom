@@ -1,79 +1,100 @@
+'use strict';
 const url = "./Modulo/Mantenimiento/repRefacciones/Ajax/repRefacciones.php";
 
-tsuruVolks
-        .controller('repRefaccionesCtrl', ["$scope","$http",repRefaccionesCtrl]);
+if (typeof window.Toast === 'undefined') {
+    window.Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+}
+
+var confirmarMantenimiento = (titulo, texto, icono, btnText, btnColor, accion) => {
+    Swal.fire({
+        title: titulo,
+        text: texto,
+        icon: icono,
+        showCancelButton: true,
+        confirmButtonColor: btnColor,
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: btnText,
+        cancelButtonText: 'Cancelar',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) accion();
+    });
+};
+
+tsuruVolks.controller('repRefaccionesCtrl', ["$scope", "$http", repRefaccionesCtrl]);
 
 function repRefaccionesCtrl($scope, $http){
     const obj = $scope;
-    obj.mantenimiento= {};
+    obj.mantenimiento = {};
+    obj.estadoMantenimiento = 0;
 
-    obj.btnBloqUS = ()=>{
-        obj.mantenimiento.opc = "desactivarUS";
-        if(confirm("Esta acción desactivara a todo los usuarios, menos root, para poder modificar el codigo de la pagina")){
-            $http({
-                method: 'POST',
-                url: url,
-                data: { mantenimiento: obj.mantenimiento }
-    
-            }).then(function successCallback(res){
+    obj.getEstadoMantenimiento = () => {
+        $http.post(url, { mantenimiento: { opc: "getEstadoMantenimiento" } }).then(function(res){
+            if(res.data.Bandera == 1){
+                obj.estadoMantenimiento = res.data.estado;
+            }
+        });
+    };
+
+    obj.btnBloqUS = () => {
+        confirmarMantenimiento(
+            '¿Activar Modo Mantenimiento?',
+            'Esta acción expulsará y bloqueará a todos los usuarios del sistema (excepto a ti).',
+            'warning',
+            '<i class="fas fa-lock"></i> Sí, Bloquear Accesos',
+            '#dc3545',
+            () => {
+                obj.mantenimiento.opc = "desactivarUS";
+                
+                $http.post(url, { mantenimiento: obj.mantenimiento }).then(function(res){
                     if(res.data.Bandera == 1){
-                        toastr.success(res.data.Mensaje);
-                        localStorage.setItem('mantenimiento',1);
-                        
-                    }else{
-                        toastr.error(res.data.Mensaje);
+                        Swal.fire('¡Sistema Bloqueado!', res.data.Mensaje, 'warning');
+                        obj.estadoMantenimiento = 1;
+                    } else {
+                        Swal.fire('Error', res.data.Mensaje, 'error');
                     }
-                    obj.disabled = false;
-                }, function errorCallback(res){
-                        toastr.error("Error: no se realizo la conexion con el servidor");
-                        obj.disabled = false;
+                }, function(res){
+                    Toast.fire({ icon: 'error', title: 'Error de conexión al intentar bloquear el sistema.' });
                 });
-        }
-    }
+            }
+        );
+    };
 
-    obj.btnActUS = ()=>{
-        obj.mantenimiento.opc = "activarUS";
-        if(confirm("Esta acción activara a todo los usuarios, para trabajar de manera normal")){
-            $http({
-                method: 'POST',
-                url: url,
-                data: { mantenimiento: obj.mantenimiento }
-    
-            }).then(function successCallback(res){
+    obj.btnActUS = () => {
+        confirmarMantenimiento(
+            '¿Reactivar el sistema?',
+            'Todos los usuarios podrán volver a iniciar sesión normalmente.',
+            'question',
+            '<i class="fas fa-unlock"></i> Sí, Reactivar',
+            '#28a745',
+            () => {
+                obj.mantenimiento.opc = "activarUS";
+                
+                $http.post(url, { mantenimiento: obj.mantenimiento }).then(function(res){
                     if(res.data.Bandera == 1){
-                        toastr.success(res.data.Mensaje);
-                        localStorage.setItem('mantenimiento',0);
-                    }else{
-                        toastr.error(res.data.Mensaje);
+                        Swal.fire('¡Sistema Activo!', res.data.Mensaje, 'success');
+                        obj.estadoMantenimiento = 0;
+                    } else {
+                        Swal.fire('Error', res.data.Mensaje, 'error');
                     }
-                    obj.disabled = false;
-                }, function errorCallback(res){
-                        toastr.error("Error: no se realizo la conexion con el servidor");
-                        obj.disabled = false;
+                }, function(res){
+                    Toast.fire({ icon: 'error', title: 'Error de conexión al intentar reactivar el sistema.' });
                 });
-        }
-    }
+            }
+        );
+    };
 
-
-    // obj.btnrepRefacciones = ()=>{
-    //     if(confirm("¿Estas seguro de actuliar la tabla de refacciones?")){
-    //         $http({
-    //             method: 'POST',
-    //                 url: url,
-    //                 data: {},
-    //             }).then(function successCallback(res){
-    //                 if(res.data.Bandera == 1){
-    //                     toastr.success(res.data.Mensaje);
-                        
-    //                 }else{
-    //                     toastr.error(res.data.Mensaje);
-    //                 }
-    //                 obj.disabled = false;
-    //             }, function errorCallback(res){
-    //                     toastr.error("Error: no se realizo la conexion con el servidor");
-    //                     obj.disabled = false;
-    //             });
-    //     }
-    // }
-
+    angular.element(document).ready(function () {
+        obj.getEstadoMantenimiento();
+    });
 }

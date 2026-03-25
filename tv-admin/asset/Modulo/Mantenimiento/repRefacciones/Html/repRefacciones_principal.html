@@ -1,68 +1,69 @@
-<section ng-controller="repRefaccionesCtrl">
+<section ng-controller="repRefaccionesCtrl" ng-cloak>
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
+            <div class="row mb-2 align-items-center">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Reparar BD Refacciones </h1>
-                </div><!-- /.col -->
+                    <h1 class="m-0 text-dark font-weight-bold">
+                        <i class="fas fa-tools text-danger mr-2"></i> Mantenimiento del Sistema
+                    </h1>
+                </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item ">Mantenimiento</li>
-                        <li class="breadcrumb-item active">Reparar Refacciones</li>
+                        <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
+                        <li class="breadcrumb-item">Configuración</li>
+                        <li class="breadcrumb-item active">Mantenimiento</li>
                     </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
-    <!-- <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                    <div class="card card-derault">
-                        <div class="card-header">
-                            <h3 class="text-center">Reparacion de refacciones publicadas</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="callout callout-warning">
-                                <h5>Aviso</h5>
-                                <p>Este modulo solo se utilizado una vez para activar de manera masiva los productos 
-                                    no publicados por el administrador
-                                </p>
-                               
-                            </div>
-                            <button type="button" name="" id="" class="btn btn-primary btn-lg btn-block"
-                            ng-click="btnrepRefacciones()"
-                            >Reparar Refacciones</button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
-    </section> -->
+    </div>
+
     <section class="content">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                    <div class="card card-derault">
-                        <div class="card-header">
-                            <h3 class="text-center">Mantenimiento Admin Macrom autopartes</h3>
+            <div class="row justify-content-center mt-3">
+                <div class="col-12 col-md-8 col-lg-6">
+                    
+                    <div class="card card-outline card-danger shadow-sm" style="border-radius: 12px;">
+                        <div class="card-header bg-white text-center border-bottom-0 pt-4">
+                            <i class="fas fa-exclamation-triangle fa-3x text-danger mb-3"></i>
+                            <h3 class="card-title w-100 font-weight-bold text-dark" style="font-size: 1.5rem;">Zona de Mantenimiento</h3>
                         </div>
-                        <div class="card-body">
-                            <div class="callout callout-warning">
-                                <h5>Aviso</h5>
-                                <p>Este modulo desactiva todos los usuarios menos "Root", para poder modificar el codigo
-                                    de la pagina.</p>
+                        
+                        <div class="card-body px-4 pb-4">
+                            
+                            <div class="callout callout-danger shadow-sm mb-4" style="border-left-width: 5px;">
+                                <h5 class="font-weight-bold text-danger mb-2">
+                                    <i class="fas fa-info-circle mr-1"></i> ¿Para qué sirve esto?
+                                </h5>
+                                <p class="text-muted text-left mb-0" style="font-size: 1.05rem;">
+                                   Este módulo te permite "apagar" temporalmente el acceso para Admin. Al activar el modo mantenimiento, <b>todos los usuarios serán desconectados y bloqueados</b> a excepción de tu cuenta "Root". Úsalo únicamente cuando necesites actualizar código o hacer reparaciones críticas en la base de datos.
+                                </p>
                             </div>
-                            <button type="button" name="" id="" class="btn btn-primary btn-lg btn-block"
-                                ng-click="btnActUS()">Activar Usuarios</button>
-                                <button type="button" name="" id="" class="btn btn-primary btn-lg btn-block"
-                                ng-click="btnBloqUS()">Desactivar Usuarios</button>
+
+                            <div class="text-center mb-4 p-3 rounded" ng-class="estadoMantenimiento == 1 ? 'bg-danger' : 'bg-success'" style="opacity: 0.9;">
+                                <h5 class="m-0 text-white font-weight-bold">
+                                    ESTADO: {{estadoMantenimiento == 1 ? 'SISTEMA BLOQUEADO (EN MANTENIMIENTO)' : 'SISTEMA OPERATIVO (NORMAL)'}}
+                                </h5>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-2">
+                                    <button type="button" class="btn btn-danger btn-lg btn-block shadow-sm font-weight-bold" ng-click="btnBloqUS()" ng-disabled="estadoMantenimiento == 1">
+                                        <i class="fas fa-lock mr-1"></i> Bloquear Accesos
+                                    </button>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <button type="button" class="btn btn-success btn-lg btn-block shadow-sm font-weight-bold" ng-click="btnActUS()" ng-disabled="estadoMantenimiento == 0">
+                                        <i class="fas fa-unlock mr-1"></i> Reactivar Sistema
+                                    </button>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
     </section>
-
 </section>

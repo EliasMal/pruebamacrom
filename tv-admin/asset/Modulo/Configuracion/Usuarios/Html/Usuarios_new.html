@@ -1,155 +1,164 @@
-<div ng-controller="UsuariosNewCtrl">
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0 text-dark"><i class="fa fa-user mr-1"></i> Usuarios</h1>
-            </div><!-- /.col -->
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
-                    <li class="breadcrumb-item active">Usuarios</li>
-                </ol>
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-</div>
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <section class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 connectedSortable">
-                <div class="card card-danger card-outline shadow">
-                    <div class="card-body box-profile">
-                        <div class="text-center">
-                            <img ng-src="{{img}}" alt="User profile" class="profile-user-img img-fluid img-circle" />
-                        </div>
-                        <h3 class="profile-username text-center">{{usuario.nombre}} {{usuario.apPaterno}}</h3>
-                        <p class="text-muted text-center">{{gettipousuario(usuario.tipousuario)}}</p>
-                    </div>
+<div ng-controller="UsuariosNewCtrl" ng-cloak>
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 align-items-center">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark font-weight-bold"><i class="fa fa-user-plus text-danger mr-2"></i> Registrar Nuevo Usuario</h1>
                 </div>
-               
-            </section>
-            <section class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 connectedSortable">
-                 <div class="card card-danger shadow">
-                    <div class="card-header ">
-                        <h3 class="card-title">
-                            <i class="fa fa-user-plus mr-1"></i>
-                          Registrar nuevo Usuario
-                        </h3>
-                        <div class="card-tools">
-                            <button class="btn btn-tool" data-card-widget="collapse"><i class="fa fa-minus"></i></button>
-                        </div>
-<!--                        <ul class="nav nav-pills ml-auto p-2">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-                            </li>
-                        </ul>-->
-                    </div><!-- /.card-header -->
-                    <div class="card-body">
-                        <div class="well">
-                            <form name="frmUsuarios" id="frmUsuarios" novalidate>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                        <label for="txtnombre">Nombre <span class="text-danger"> *</span></label>
-                                        <input type="text" class="form-control" name="txtnombre" id="txtnombre" ng-model="usuario.nombre" ng-disabled="disabled" required/>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                        <label for="txtapPaterno">Apellido paterno  <span class="text-danger"> *</span></label> 
-                                        <input type="text" class="form-control" name="txtapPaterno" id="txtapPaterno" ng-model="usuario.apPaterno" ng-disabled="disabled" required/>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                        <label for="txtapMaterno">Apellido materno  <span class="text-danger"> *</span></label>
-                                        <input type="text" class="form-control" name="txtapMaterno" id="txtapMaterno" ng-model="usuario.apMaterno" ng-disabled="disabled" required/>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                                        <label for="txtdomicilio">Domicilio  <span class="text-danger"> *</span></label>
-                                        <input type="text" class="form-control" name="txtdomicilio" id="txtdomicilio" ng-model="usuario.domicilio" ng-disabled="disabled" required/>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                        <label for="txtcolonia">Colonia  <span class="text-danger"> *</span></label>
-                                        <input type="text" class="form-control" name="txtcolonia" id="txtcolonia" ng-model = "usuario.colonia" ng-disabled="disabled" required/>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                        <label for="txtciudad">Ciudad  <span class="text-danger"> *</span></label>
-                                        <input type="text" class="form-control" name="txtciudad" id="txtciudad" ng-model = "usuario.ciudad" ng-disabled="disabled" required/>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                        <label for="txtestado">Estado  <span class="text-danger"> *</span></label>
-                                        <input type="text" class="form-control" name="txtestado" id="txtestado" ng-model = "usuario.estado" ng-disabled="disabled" required/>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                        <label for="txttelefono">Telefono  <span class="text-danger"> *</span></label>
-                                        <input type="text" class="form-control" name="txttelefono" id="txttelefono" ng-model = "usuario.telefono" ng-disabled="disabled" required/>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                        <label for="txtemail">email  <span class="text-danger"> *</span></label>
-                                        <input type="email" class="form-control" name="txtemail" id="txtemail" ng-model="usuario.email" ng-disabled="disabled" required/>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                        <label for="txtpassword">Contraseña <span class="text-danger"> *</span></label>
-                                        <input type="text" class="form-control" name="txtpassword" id="txtpassword" ng-model = "usuario.password" ng-disabled="disabled" required autocomplete="off"/>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                                        <label for="txtemail">Foto</label>
-                                        <input type="file" class="form-control" name="txtavatar" id="txtavatar" uploader-model="usuario.file" ng-disabled="disabled"/>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                        <label for="slcrol">Rol de usuario <span class="text-danger"> *</span></label>
-                                        <select name="slcrol" id="slcrol" class="form-control" ng-model = "usuario.tipousuario" ng-disabled="disabled" required>
-                                            <optgroup label="Selecciona el tipo de rol para el usuario">
-                                                <option ng-repeat="tipo in tipoUsuario"value="{{tipo.value}}">{{tipo.descripcion}}</option>
-                                                
-                                            </optgroup>
-                                        </select>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div><!-- /.card-body -->
-                     <div class="card-footer">
-                        <button class="btn btn-danger pull-right" ng-disabled="disabled? '':frmUsuarios.$invalid" ng-click="disabled? btnNuevoUsuario() : btnCrearUsuario()"><i class="fa fa-user-plus"> {{disabled? "Nuevo Usuario":"Crear Usuario"}}</i></button>
-                        <button class="btn btn-secondary pull-right mr-15" ng-click="btnRegresar()"><i class="fa "> Regresar </i></button>
-                    </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right bg-transparent p-0 m-0">
+                        <li class="breadcrumb-item"><a href="?mod=home" class="text-danger">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href='?mod=usuarios' class="text-danger">Usuarios</a></li>
+                        <li class="breadcrumb-item active">Nuevo</li>
+                    </ol>
                 </div>
-            </section>
-            
+            </div>
         </div>
     </div>
-</section>
 
+    <section class="content">
+        <div class="container-fluid">
+            <form name="frmUsuarios" id="frmUsuarios" novalidate>
+                <div class="row">
+                    
+                    <section class="col-xs-12 col-sm-12 col-md-4 connectedSortable">
+                        <div class="card card-danger card-outline shadow-sm">
+                            <div class="card-body box-profile">
+                                <div class="text-center mb-3">
+                                    <img ng-src="{{img}}" alt="User profile" class="profile-user-img img-fluid img-circle elevation-2" style="width: 100px; height: 100px; object-fit: cover;"/>
+                                </div>
+                                <h3 class="profile-username text-center font-weight-bold">
+                                    {{usuario.nombre || 'Nuevo'}} {{usuario.apPaterno || 'Usuario'}}
+                                </h3>
+                                <p class="text-muted text-center">{{gettipousuario(usuario.tipousuario) || 'Sin Rol Asignado'}}</p>
+                            </div>
+                        </div>
+                    </section>
 
-</div>
+                    <section class="col-xs-12 col-sm-12 col-md-8 connectedSortable">
+                        <div class="card card-danger shadow-sm">
+                            <div class="card-header">
+                                <h3 class="card-title font-weight-bold">
+                                    <i class="fa fa-file-text-o mr-2"></i> Datos Personales y de Acceso
+                                </h3>
+                            </div>
+                            
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label for="txtnombre">Nombre <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="txtnombre" id="txtnombre" ng-model="usuario.nombre" ng-disabled="disabled" required/>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="txtapPaterno">Apellido Paterno <span class="text-danger">*</span></label> 
+                                        <input type="text" class="form-control" name="txtapPaterno" id="txtapPaterno" ng-model="usuario.apPaterno" ng-disabled="disabled" required/>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="txtapMaterno">Apellido Materno <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="txtapMaterno" id="txtapMaterno" ng-model="usuario.apMaterno" ng-disabled="disabled" required/>
+                                    </div>
 
-<!-- Modal -->
-<div class="modal fade" id="passuser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Usuario y Contraseña</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-striped">
-                    <thead>
-                        <th>Usuario</th>
-                        <th>Password</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td id="usuario" class="text-center"></td>
-                            <td id="password" class="text-center"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                
+                                    <div class="col-md-8 form-group">
+                                        <label for="txtdomicilio">Domicilio <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="txtdomicilio" id="txtdomicilio" ng-model="usuario.domicilio" ng-disabled="disabled" required/>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="txtcolonia">Colonia <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="txtcolonia" id="txtcolonia" ng-model="usuario.colonia" ng-disabled="disabled" required/>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="txtciudad">Ciudad <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="txtciudad" id="txtciudad" ng-model="usuario.ciudad" ng-disabled="disabled" required/>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="txtestado">Estado <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="txtestado" id="txtestado" ng-model="usuario.estado" ng-disabled="disabled" required/>
+                                    </div>
+
+                                    <div class="col-md-4 form-group">
+                                        <label for="txttelefono">Teléfono <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="txttelefono" id="txttelefono" ng-model="usuario.telefono" ng-disabled="disabled" required/>
+                                    </div>
+                                    <div class="col-md-8 form-group">
+                                        <label for="txtemail">Correo Electrónico <span class="text-danger">*</span></label>
+                                        <input type="email" class="form-control" name="txtemail" id="txtemail" ng-model="usuario.email" ng-disabled="disabled" required/>
+                                    </div>
+
+                                    <div class="col-12"><hr class="border-light"></div>
+
+                                    <div class="col-md-6 form-group">
+                                        <label for="txtpassword">Contraseña Temporal <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-lock text-muted"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control" name="txtpassword" id="txtpassword" ng-model="usuario.password" ng-disabled="disabled" required autocomplete="off"/>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6 form-group">
+                                        <label for="slcrol">Rol / Privilegio de Usuario <span class="text-danger">*</span></label>
+                                        <select name="slcrol" id="slcrol" class="form-control custom-select" 
+                                                ng-model="usuario.tipousuario" 
+                                                ng-disabled="disabled" required
+                                                ng-options="tipo.value as tipo.descripcion for tipo in tipoUsuario">
+                                            <option value="">-- Selecciona un Rol --</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-12 form-group m-0">
+                                        <label for="txtavatar">Foto de Perfil (Opcional)</label>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="txtavatar" id="txtavatar" uploader-model="usuario.file" ng-disabled="disabled"/>
+                                            <label class="custom-file-label text-muted" for="txtavatar">Elegir imagen...</label>
+                                        </div>
+                                        <small class="text-muted">Máx. 512 KB.</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card-footer d-flex justify-content-between bg-white border-top-0">
+                                <button type="button" class="btn btn-secondary shadow-sm" ng-click="btnRegresar()">
+                                    <i class="fa fa-arrow-left mr-1"></i> Regresar
+                                </button>
+                                <button type="submit" class="btn btn-danger shadow-sm" 
+                                        ng-disabled="disabled ? '' : frmUsuarios.$invalid" 
+                                        ng-click="disabled ? btnNuevoUsuario() : btnCrearUsuario()">
+                                    <i class="fa" ng-class="disabled ? 'fa-plus' : 'fa-save'"></i> 
+                                    {{disabled ? "Nuevo Usuario" : "Crear Usuario"}}
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                    
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <div class="modal fade" id="passuser" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content shadow-lg border-0">
+                <div class="modal-header bg-success text-white border-0">
+                    <h5 class="modal-title font-weight-bold"><i class="fa fa-check-circle mr-2"></i> ¡Usuario Creado Éxitosamente!</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center p-4">
+                    <p class="text-muted mb-4">Por favor, proporciona estas credenciales temporales al usuario:</p>
+                    <div class="bg-light p-3 rounded mb-3 border">
+                        <small class="text-uppercase text-muted font-weight-bold">Usuario (Login)</small>
+                        <h3 id="usuario" class="text-success font-weight-bold m-0"></h3>
+                    </div>
+                    <div class="bg-light p-3 rounded border">
+                        <small class="text-uppercase text-muted font-weight-bold">Contraseña Temporal</small>
+                        <h3 id="password" class="text-danger font-weight-bold m-0"></h3>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 bg-light justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Entendido, Cerrar</button>
+                </div>
             </div>
         </div>
     </div>

@@ -1,205 +1,232 @@
-<div ng-controller="ModelosCrtl">
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0 text-dark"><i class="ion-android-car mr-1"></i> Vehiculos</h1>
-            </div><!-- /.col -->
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
-                    <li class="breadcrumb-item active">Vehiculos</li>
-                </ol>
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-</div>
+<style>
+    .table-hover tbody tr:hover td, .table-hover tbody tr:hover td span { color: #ffffff !important; }
+    .table-hover tbody tr:hover td a { color: #ffffff !important; text-decoration: underline; }
+    .table-hover tbody tr:hover td .btn-danger { background-color: #ffffff !important; color: #dc3545 !important; border-color: #ffffff !important; }
+    .table-hover tbody tr:hover td .btn-primary { background-color: #ffffff !important; color: #007bff !important; border-color: #ffffff !important; }
+</style>
+<div ng-controller="ModelosCrtl" ng-cloak>
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 align-items-center">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark font-weight-bold">
+                        <i class="fas fa-car text-danger mr-2"></i> Vehículos
+                    </h1>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <ol class="breadcrumb float-sm-right bg-transparent p-0 m-0">
+                        <li class="breadcrumb-item"><a href="?mod=home" class="text-danger">Inicio</a></li>
+                        <li class="breadcrumb-item active">Gestión de Vehículos</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <section class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12 connectedSortable">
-                <div class="card card-danger">
-                    <div class="card-header ">
-                        <h3 class="card-title">
-                            <i class="ion-android-car mr-1"></i>
-                            Registro de Modelos
-                        </h3>
-                        <div class="card-tools">
-                            <button class="btn btn-tool" data-card-widget="collapse"><i class="fa fa-minus"></i></button>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <section class="col-12">
+                    <div class="card card-danger card-outline shadow-sm rounded">
+                        <div class="card-header bg-white d-flex align-items-center pt-3 pb-0 border-bottom-0">
+                            <h3 class="card-title font-weight-bold text-dark mb-0">
+                                <i class="fas fa-car-side text-muted mr-2"></i> Directorio de Modelos
+                            </h3>
+                            <div class="card-tools ml-auto">
+                                <button class="btn btn-danger btn-sm font-weight-bold px-3 shadow-sm" ng-click="btnNuevoModelo()">
+                                    <i class="fas fa-plus-circle mr-1"></i> Nuevo Vehículo
+                                </button>
+                            </div>
                         </div>
-
-                    </div><!-- /.card-header -->
-                    
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 mb-5">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Buscar un vehiculo ..." aria-label="Buscar un vehiculo ..." aria-describedby="basic-addon2"
-                                        ng-model="txtfind" ng-model-options="{debounce:500}" ng-change="getModelos()">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-outline-danger" type="button" ng-click="btnNuevoModelo()">Nuevo Vehiculo</button>
+                        
+                        <div class="card-body">
+                            <div class="row mb-4 bg-light p-3 rounded mx-0 align-items-center shadow-sm">
+                                <div class="col-md-4">
+                                    <label class="font-weight-normal text-muted small mb-0">Mostrar 
+                                        <select class="custom-select custom-select-sm form-control-sm w-auto mx-1 shadow-sm" 
+                                                ng-model="paginador.limit" 
+                                                ng-change="paginador.page = 0; getModelos()">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select> registros
+                                    </label>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <div class="input-group input-group-sm shadow-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-white border-right-0"><i class="fas fa-search text-muted"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control border-left-0" placeholder="Buscar vehículo..." ng-model="txtfind" ng-model-options="{debounce:500}" ng-change="paginador.page = 0; getModelos()">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 d-flex justify-content-end align-items-center">
+                                    <div class="custom-control custom-switch custom-switch-danger custom-control-inline mb-0">
+                                        <input type="checkbox" class="custom-control-input cursor-pointer" id="switch-historico" ng-model="historico" ng-change="paginador.page = 0; getModelos()">
+                                        <label class="custom-control-label font-weight-normal text-muted cursor-pointer" for="switch-historico">
+                                            <i class="fas fa-archive mr-1"></i> Ver Histórico
+                                        </label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-12 ">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-sm" ng-click="btnDisminuir()" ><i class="fa fa-chevron-left"></i></button>
-                                    <button type="button" class="btn btn-default btn-sm" ng-click="btnAumentar()" ng-disabled="noModelos-paginador.page<=paginador.limit"><i class="fa fa-chevron-right"></i></button>
-                                </div> {{paginador.page+1}}-{{(paginador.page + paginador.limit) > noModelos? noModelos: (paginador.page + paginador.limit)}}/{{noModelos}}
-                                    <span class="switch switch-sm float-right">
-                                        
-                                        <input type="checkbox" class="switch" id="switch-id" ng-model="historico" ng-click="getModelos()">
-                                        <label for="switch-id">Historico</label>
-                                    </span>
-                            </div>
-                            <div class="col-lg-12 mt-2">
-                                <div class="table-responsive">
-
-                                    <table class="table table-bordered">
-                                        <thead>
+                            
+                            <div class="table-responsive">
+                                <table class="table table-hover table-striped border-bottom w-100">
+                                    <thead class="thead-light">
+                                        <tr>
                                             <th class="text-center" width="5%">#</th>
                                             <th class="text-center" width="10%">Logo</th>
-                                            <th class="text-center" width="10%">Vehiculo</th>
-                                            <th class="text-center" width="20%">Fecha Modificación</th>
-                                            <th class="text-center" width="20%">Usuario Modificador</th>
-                                            <th class="text-center" width="15%">Marca</th>
+                                            <th class="text-left" width="25%">Modelo</th>
+                                            <th class="text-center" width="20%">Agencia</th>
+                                            <th class="text-center" width="15%">Modificado</th>
                                             <th class="text-center" width="10%">Estatus</th>
-                                            <th class="text-center" width="10%">Acciones</th>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="modelo in Modelos">
-                                                <td>{{$index +1}}</td>
-                                                <td class="text-center"><img ng-src="{{getImagen(modelo)}}" class="img img-responsive img-circle" alt="logoimagen" style="width: 40px;"/></td>
-                                                <td ><a ng-click="btnAnios(modelo)" style="cursor: pointer; ">{{modelo.Modelo}}</a></td>
-                                                <td class="text-center">{{modelo.FechaModificacion}}</td>
-                                                <td class="text-center">{{modelo.USRModificacion}}</td>
-                                                <td class="text-center">{{modelo.Marca}}</td>
-                                                <td class="text-center"><span class="badge {{modelo.Estatus == 1? 'badge-success':'badge-danger'}}">{{modelo.Estatus == 1? "Activo":"Baja"}}</span></td>
-                                                <td class="text-center">
-                                                    <div class="btn-group" role="group">
-                                                        <button id="btnGroupDrop1" type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                          <a class="dropdown-item enlace" ng-click="btnEditar(modelo)"><i class="fa fa-edit"></i> Editar</a>
-                                                          <a class="dropdown-item enlace" ng-click="modelo.Estatus == 1? opcDesactivar(modelo._id):opcActivar(modelo._id)"><i class="fa {{modelo.Estatus == 1? ' fa-times-circle-o':'fa-check-square-o'}}"></i> {{modelo.Estatus == 1? "Desactivar":"Activar"}}</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                            <th class="text-center" width="15%">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="modelo in Modelos">
+                                            <td class="text-center align-middle font-weight-bold text-muted">{{$index + 1 + (paginador.page * 1)}}</td>
+                                            <td class="text-center align-middle">
+                                                <img ng-src="{{getImagen(modelo)}}" class="img-thumbnail rounded-circle shadow-sm" style="width: 45px; height: 45px;">
+                                            </td>
+                                            <td class="text-left align-middle font-weight-bold">
+                                                <a ng-click="btnAnios(modelo)" href="javascript:void(0)" class="text-danger">{{modelo.Modelo}}</a>
+                                            </td>
+                                            <td class="text-center align-middle font-weight-bold text-muted">{{modelo.Marca}}</td>
+                                            <td class="text-center align-middle small text-muted">
+                                                {{modelo.FechaModificacion}} <br> <i class="fas fa-user"></i> {{modelo.USRModificacion}}
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <span class="badge {{modelo.Estatus == 1 ? 'badge-success' : 'badge-danger'}} px-3 py-2 rounded-pill shadow-sm cursor-pointer" ng-click="toggleEstatus(modelo)">
+                                                    {{modelo.Estatus == 1 ? "Activo" : "Baja"}}
+                                                </span>
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <div class="btn-group shadow-sm">
+                                                    <button type="button" class="btn btn-primary btn-sm mx-1 rounded shadow-sm" ng-click="btnEditar(modelo)" title="Editar Vehículo">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger btn-sm mx-1 rounded shadow-sm" ng-click="btnEliminar(modelo._id)" title="Eliminar permanentemente">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="Modelos.length == 0">
+                                            <td colspan="7" class="text-center text-muted py-4">No se encontraron registros</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card-footer bg-white border-top-0 pt-0 pb-3">
+                            <div class="row align-items-center">
+                                <div class="col-sm-6">
+                                    <div class="text-muted small font-weight-bold">
+                                        Mostrando {{Modelos.length > 0 ? (paginador.page * 1) + 1 : 0}} - 
+                                        {{((paginador.page * 1) + (paginador.limit * 1)) > noModelos ? noModelos : ((paginador.page * 1) + (paginador.limit * 1))}} 
+                                        de {{noModelos}} registros
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 text-right">
+                                    <div class="btn-group shadow-sm">
+                                        <button type="button" class="btn btn-light btn-sm border" ng-click="btnDisminuir()" ng-disabled="(paginador.page * 1) == 0">
+                                            <i class="fas fa-chevron-left mr-1"></i> Anterior
+                                        </button>
+                                        <button type="button" class="btn btn-light btn-sm border" ng-click="btnAumentar()" ng-disabled="((paginador.page * 1) + (paginador.limit * 1)) >= noModelos">
+                                            Siguiente <i class="fas fa-chevron-right ml-1"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div><!-- /.card-body -->
-                    <div class="card-footer">
-                        
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
-</section>
 
-<!-- Modal -->
-<div class="modal fade" id="mModelos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">{{nuevo? "Nueva":"Editar"}} Modelo</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                    </div>
+                </section>
             </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-4" >
-                        <div class="text-center">
-                            <img ng-src="{{img}}" alt="" class="img-responsive img-thumbnail"/>
+        </div>
+    </section>
+    <div class="modal fade" id="mModelos" data-backdrop="static" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <form class="modal-content border-0 shadow-lg" ng-submit="nuevo ? btnCrearModelo() : btnEditarModelo()">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title font-weight-bold"><i class="fas {{nuevo ? 'fa-plus-circle' : 'fa-edit'}} mr-2"></i> {{nuevo ? "Nuevo Vehículo" : "Modificar Vehículo"}}</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal"><span>&times;</span></button>
+                </div>
+                <div class="modal-body p-4 bg-light">
+                    <div class="row align-items-center bg-white p-3 rounded shadow-sm mx-0">
+                        <div class="col-lg-4 text-center border-right">
+                            <label class="text-muted mb-3 d-block">Logotipo Agencia</label>
+                            <img ng-src="{{img}}" class="img-fluid rounded shadow-sm" style="height: 100px; width: 100px; object-fit: contain;"/>
+                        </div>
+                        <div class="col-lg-8 pl-lg-4">
+                            <div class="form-group mb-4">
+                                <label class="font-weight-bold text-dark">Agencia / Marca <span class="text-danger">*</span></label>
+                                <select class="form-control form-control-lg shadow-sm border-secondary" ng-model="modelo._idMarca" ng-change="getImagenOne()">
+                                    <option value="" disabled selected>Selecciona la marca...</option>
+                                    <option ng-repeat="marca in Marcas" value="{{marca._id}}">{{marca.Marca}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-0">
+                                <label class="font-weight-bold text-dark">Nombre del Vehículo (Modelo) <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control form-control-lg shadow-sm border-danger" ng-model="modelo.Modelo" placeholder="Ej. JETTA A4"/>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-8">
-                        <label for="slcMarca">Marca</label>
-                        <select name="slcMarca" id="slcMarca" class="form-control" ng-model="modelo._idMarca" ng-change="getImagenOne()">
-                            <optgroup label="Selecciona la marca del automovil">
-                                <option ng-repeat="marca in Marcas" value="{{marca._id}}">{{marca.Marca}}</option>
-                            </optgroup>
-                        </select>
-                        <label for="txtcategoria">Vehiculo:</label>
-                        <input type="text" name="txtcategoria" id="txtcategoria" class="form-control" ng-model="modelo.Modelo"/>
-                        <!--<div class="row">
-                            <div class="col-6">
-                                <label class="text-center">Primer año de fabricacion</label>
-                                <input type="text" class="form-control numeric" ng-model="modelo.Primer_anio_fabricacion" maxlength="4">
-                            </div>
-                            <div class="col-6">
-                                <label class="text-center">Ultimo año de fabricacion</label>
-                                <input type="text" class="form-control numeric" ng-model="modelo.Ultimo_anio_fabricacion" maxlength="4">
-                            </div>
-                        </div>-->
-                    </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger" ng-click="nuevo? btnCrearModelo():btnEditarModelo()"> {{nuevo? "Crear":"Guardar"}} Modelo</button>
-            </div>
+                <div class="modal-footer bg-white border-top-0 pt-0 pr-4 pb-3">
+                    <button type="button" class="btn btn-outline-secondary font-weight-bold px-4 shadow-sm" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger font-weight-bold px-4 ml-2 shadow-sm" ng-disabled="!modelo.Modelo || !modelo._idMarca">
+                        <i class="fas fa-save mr-1"></i> Guardar
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
-</div>
 
-
-<!-- Modal -->
-<div class="modal fade" id="mAnios" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                
-                <h5 class="modal-title" id="exampleModalCenterTitle">Generaciones del {{modelo.Modelo}}</h5>
-                
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    
-                    <div class="col-lg-12">
-                        <table class='table table-striped table-bordered'>
-                            <thead>
-                                <th width="5%">#</th>
-                                <th width="65%">Modelo</th>
-                                <th width="30%">Acciones</th>
+    <div class="modal fade" id="mAnios" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title font-weight-bold"><i class="fas fa-calendar-alt text-warning mr-2"></i> Generaciones del <span class="text-warning">{{modelo.Modelo}}</span></h5>
+                    <button type="button" class="close text-white" data-dismiss="modal"><span>&times;</span></button>
+                </div>
+                <div class="modal-body bg-light p-0">
+                    <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                        <table class='table table-hover table-striped mb-0'>
+                            <thead class="bg-secondary text-white sticky-top text-xs">
+                                <tr>
+                                    <th class="text-center" width="15%">#</th>
+                                    <th width="55%">Año / Generación</th>
+                                    <th class="text-center" width="30%">Acciones</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="anios in modeloanios">
-                                    <td>{{$index +1}}</td>
-                                    <td>{{anios.Anio}}</td>
-                                    <td class="text-center">
-                                        <div class="btn-group" role="group">
-                                            <button id="btnGroupDrop1" type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                              <a class="dropdown-item" ng-click="btnEditarAnio(anios)"><i class="fa fa-edit"> Editar</i></a>
-                                              <a class="dropdown-item" ng-click="opcEliminar(anios)"><i class="fa fa-times-circle-o"></i> Eliminar</a>
-                                            </div>
+                                    <td class="text-center align-middle font-weight-bold">{{$index + 1}}</td>
+                                    <td class="align-middle font-weight-bold">{{anios.Anio}}</td>
+                                    <td class="text-center align-middle">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary btn-xs shadow-sm mx-1" ng-click="btnEditarAnio(anios)" title="Editar"><i class="fas fa-edit"></i></button>
+                                            <button type="button" class="btn btn-danger btn-xs shadow-sm mx-1" ng-click="btnEliminarAnio(anios)" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
                                         </div>
                                     </td>
+                                </tr>
+                                <tr ng-if="modeloanios.length == 0">
+                                    <td colspan="3" class="text-center text-muted py-3">No hay generaciones registradas.</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                 <button class="btn btn-danger" ng-click="btnAgregarAnio()"><i class="fa fa-plus-circle"></i> Agregar modelo</button>
+                <div class="modal-footer bg-white shadow-sm">
+                    <button type="button" class="btn btn-outline-secondary font-weight-bold shadow-sm" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-warning font-weight-bold text-dark shadow-sm" ng-click="btnAgregarAnio()"><i class="fas fa-plus-circle"></i> Agregar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 </div>

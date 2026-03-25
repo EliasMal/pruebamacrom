@@ -1,259 +1,223 @@
-<!-- Preloader -->
-<div class="preloader flex-column justify-content-center align-items-center">
-	<img class="animation__shake" src="Images/lobo_resenas.png" alt="MacromLogotipo" height="100" width="100">
-</div>
-<!-- Content Header (Page header) -->
-<section ng-controller="HomeCtrl">
+<section ng-controller="HomeCtrl" ng-cloak>
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 align-items-center">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark font-weight-bold">
+                        <i class="fas fa-tachometer-alt text-danger mr-2"></i> Dashboard <span class="text-muted" style="font-size: 0.5em; vertical-align: middle;">({{perfil.Tipo_usuario}})</span>
+                    </h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#" class="text-danger">Home</a></li>
+                        <li class="breadcrumb-item active">Dashboard</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <section class="content">
+        <div class="container-fluid">
+            
+            <div class="row mb-3">
+                <div class="col-lg col-md-6 col-12 mb-3" ng-if="permisos.Pedidos">
+                    <div class="small-box bg-success shadow-sm custom-box h-100 mb-0">
+                        <div class="inner">
+                            <h3>{{ kpis.ventasHoy | currency }}</h3>
+                            <p class="font-weight-bold">Ventas del Día</p>
+                        </div>
+                        <div class="icon"><i class="fas fa-cash-register"></i></div>
+                        <a href="?mod=Pedidos" class="small-box-footer">Ver facturación <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
 
-	<div class="content-header">
-		<div class="container-fluid">
-			<div class="row mb-2">
-				<div class="col-sm-6">
-					<h1 class="m-0 text-dark">Dashboard</h1>
-				</div><!-- /.col -->
-				<div class="col-sm-6">
-					<ol class="breadcrumb float-sm-right">
-						<li class="breadcrumb-item"><a href="#">Home</a></li>
-						<li class="breadcrumb-item active">Dashboard</li>
-					</ol>
-				</div><!-- /.col -->
-			</div><!-- /.row -->
-		</div><!-- /.container-fluid -->
-	</div>
-	<!-- /.content-header -->
-	<!-- Main content -->
-	<section class="content">
-		<div class="container-fluid">
-			<!-- Small boxes (Stat box) -->
-			<div class="row" ng-if="perfil.Tipo_usuario == 'Admin' || perfil.Tipo_usuario == 'root' ||  perfil.Tipo_usuario == 'venta' ">
-				<div class="col-lg-3 col-6">
-					<!-- small box -->
-					<div class="small-box bg-info">
-						<div class="inner">
-							<h3>{{datos.Pedidos}}</h3>
-							<p>Nuevas ordenes</p>
-						</div>
-						<div class="icon">
-							<i class="ion ion-bag"></i>
-						</div>
-						<a href="?mod=Pedidos" class="small-box-footer">Ir a pedidos <i
-								class="fa fa-arrow-circle-right"></i></a>
-					</div>
-				</div>
+                <div class="col-lg col-md-6 col-12 mb-3" ng-if="permisos.Pedidos">
+                    <div class="small-box bg-warning shadow-sm custom-box h-100 mb-0">
+                        <div class="inner text-white">
+                            <h3 class="text-white">{{ kpis.pedidosPendientes }}</h3>
+                            <p class="font-weight-bold text-white">Pedidos Pendientes</p>
+                        </div>
+                        <div class="icon"><i class="fas fa-boxes"></i></div>
+                        <a href="?mod=Pedidos" class="small-box-footer" style="color: rgba(255,255,255,0.8) !important;">Procesar envíos <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
 
-				<div class="col-lg-3 col-6">
-					<!-- small box -->
-					<div class="small-box bg-warning">
-						<div class="inner">
-							<h3>{{datos.Clientes}}</h3>
+                <div class="col-lg col-md-6 col-12 mb-3" ng-if="permisos.Reportes">
+                    <div class="small-box bg-info shadow-sm custom-box h-100 mb-0">
+                        <div class="inner">
+                            <h3>{{ kpis.ticketPromedio | currency }}</h3>
+                            <p class="font-weight-bold">Ticket Promedio (30d)</p>
+                        </div>
+                        <div class="icon"><i class="fas fa-chart-line"></i></div>
+                        <a href="?mod=RepProductos&view=ticket" class="small-box-footer">Ver estadísticas <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
 
-							<p>Usuarios Registrados</p>
-						</div>
-						<div class="icon">
-							<i class="ion ion-person-add"></i>
-						</div>
-						<a href="?mod=Clientes" class="small-box-footer">Mas info <i
-								class="fa fa-arrow-circle-right"></i></a>
-					</div>
-				</div>
-				<!-- ./col -->
-				<div class="col-lg-3 col-6">
-					<!-- small box -->
-					<div class="small-box bg-danger">
-						<div class="inner">
-							<h3>{{datos.Nuevosclientes}}</h3>
+                <div class="col-lg col-md-6 col-12 mb-3" ng-if="permisos.Clientes">
+                    <div class="small-box bg-danger shadow-sm custom-box h-100 mb-0">
+                        <div class="inner">
+                            <h3>{{ kpis.clientesNuevos }}</h3>
+                            <p class="font-weight-bold">Clientes Nuevos (Semana)</p>
+                        </div>
+                        <div class="icon"><i class="fas fa-user-plus"></i></div>
+                        <a href="?mod=Clientes&opc=new" class="small-box-footer">Gestionar clientes <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
 
-							<p>Nuevos Usuarios registrados</p>
-						</div>
-						<div class="icon">
-							<i class="ion ion-pie-graph"></i>
-						</div>
-						<a href="?mod=Clientes&opc=new" class="small-box-footer">Mas info <i
-								class="fa fa-arrow-circle-right"></i></a>
-					</div>
-				</div>
-				<!-- ./col -->
-				<!-- ./col -->
-				<div class="col-lg-3 col-6">
-					<!-- small box -->
-					<div class="small-box bg-success">
-						<div class="inner">
-							<h3>{{datos.Contacto}}</h3>
+                <div class="col-lg col-md-6 col-12 mb-3" ng-if="permisos.Contacto">
+                    <div class="small-box bg-primary shadow-sm custom-box h-100 mb-0">
+                        <div class="inner">
+                            <h3>{{ kpis.contactosNuevos }}</h3>
+                            <p class="font-weight-bold">Mensajes Nuevos</p>
+                        </div>
+                        <div class="icon"><i class="fas fa-comments"></i></div>
+                        <a href="?mod=Contacto" class="small-box-footer">Bandeja de entrada <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
 
-							<p>Nuevo(s) Contacto(s)</p>
-						</div>
-						<div class="icon">
-							<i class="ion ion-android-chat"></i>
-						</div>
-						<a href="?mod=Contacto" class="small-box-footer">Mas info <i
-								class="fa fa-arrow-circle-right"></i></a>
-					</div>
-				</div>
-			</div>
+            <div class="row mb-4" ng-if="permisos.Pedidos">
+                <div class="col-md-8 col-12 mb-3">
+                    <div class="card shadow-sm h-100" style="border-radius: 12px; border: none;">
+                        <div class="card-header bg-white pt-3 pb-2 border-bottom-0">
+                            <h3 class="card-title font-weight-bold text-dark">
+                                <i class="fas fa-chart-area text-danger mr-1"></i> Rendimiento Mensual
+                            </h3>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div id="graficaVentas" style="height: 300px; width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
 
-			<div class="row" ng-if="perfil.Tipo_usuario == 'Web' ">
-				<div class="col-lg-3 col-6">
-					<!-- small box -->
-					<div class="small-box bg-info">
-						<div class="inner">
-							<h3>Banners</h3>
-							<p>Sección Principal</p>
-						</div>
-						<div class="icon">
-							<i class="ion ion-bag"></i>
-						</div>
-						<a href="?mod=webprincipal" class="small-box-footer">Ir a Banners <i
-								class="fa fa-arrow-circle-right"></i></a>
-					</div>
-				</div>
+                <div class="col-md-4 col-12 mb-3">
+                    <div class="card shadow-sm h-100" style="border-radius: 12px; border: none;">
+                        <div class="card-header bg-white pt-3 pb-2 border-bottom-0">
+                            <h3 class="card-title font-weight-bold text-dark">
+                                <i class="fas fa-receipt text-danger mr-1"></i> Últimos Pedidos
+                            </h3>
+                        </div>
+                        <div class="card-body p-0">
+                            <ul class="products-list product-list-in-card pl-2 pr-2">
+                                <li class="item" ng-repeat="p in ultimosPedidos">
+                                    <div class="product-info ml-2">
+                                        <a href="?mod=Pedidos&opc=detalles&id={{p._idPedidos}}" class="product-title text-dark">
+                                            {{p.Cliente}}
+                                            <span class="badge badge-success float-right">{{p.Total | currency}}</span>
+                                        </a>
+                                        <span class="product-description text-muted small">
+                                            <i class="far fa-clock mr-1"></i> {{p.Fecha}} | 
+                                            <b class="{{p.Acreditado == 5 || p.Acreditado == 1 ? 'text-success' : 'text-warning'}}">{{p.estatusTxt}}</b>
+                                        </span>
+                                    </div>
+                                </li>
+                                <li class="item text-center text-muted py-3" ng-if="ultimosPedidos.length == 0">
+                                    <i class="fas fa-inbox fa-2x mb-2 opacity-50"></i><br>No hay pedidos recientes
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-footer text-center bg-white border-top-0 pb-3 mt-auto">
+                            <a href="?mod=Pedidos" class="uppercase text-danger font-weight-bold">Ver todos los pedidos</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-				<div class="col-lg-3 col-6">
-					<!-- small box -->
-					<div class="small-box bg-warning">
-						<div class="inner">
-							<h3>Blog</h3>
+            <div class="row mb-4 justify-content-center" ng-if="permisos.Actualizarpre || permisos.Refacciones">
+                <div class="col-lg-6 col-12 mb-3" ng-if="permisos.Actualizarpre">
+                    <div class="small-box bg-info shadow custom-box h-100 mb-0" style="border-radius: 15px !important; overflow: hidden;">
+                        <div class="inner p-4">
+                            <h3>Sincronización</h3>
+                            <p class="font-weight-bold" style="font-size: 1.1rem;">Actualizar Precios y Existencias (SEICOM)</p>
+                        </div>
+                        <div class="icon"><i class="fas fa-sync-alt" style="opacity: 0.2;"></i></div>
+                        <a href="?mod=Actualizarpre" class="small-box-footer py-2" style="font-size: 1.1rem;">Ir al módulo <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-6 mb-3" ng-if="permisos.Refacciones">
+                    <div class="small-box bg-white shadow-sm custom-box border h-100 mb-0">
+                        <div class="inner text-center py-4">
+                            <h3 class="text-danger" style="font-size: 2.5rem;">{{datosAntiguos.Publicados || 0}}</h3>
+                            <p class="font-weight-bold text-muted mb-0">Productos Activos</p>
+                        </div>
+                        <a href="?mod=Refacciones" class="small-box-footer bg-light text-muted">Ir a catálogo <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
 
-							<p>Sección Blog</p>
-						</div>
-						<div class="icon">
-							<i class="ion ion-person-add"></i>
-						</div>
-						<a href="?mod=Blog" class="small-box-footer">Ir a Blog <i
-								class="fa fa-arrow-circle-right"></i></a>
-					</div>
-				</div>
-			</div>
+                <div class="col-lg-3 col-6 mb-3" ng-if="permisos.Refacciones">
+                    <div class="small-box bg-white shadow-sm custom-box border h-100 mb-0">
+                        <div class="inner text-center py-4">
+                            <h3 class="text-secondary" style="font-size: 2.5rem;">{{datosAntiguos.NoPublicados || 0}}</h3>
+                            <p class="font-weight-bold text-muted mb-0">No Publicados</p>
+                        </div>
+                        <a href="?mod=Refacciones&pub" class="small-box-footer bg-light text-muted">Revisar inactivos <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
 
-			<div class="row" ng-if="perfil.Tipo_usuario == 'capturista'">
-				<div class="col-lg-3 col-6">
-					<!-- small box -->
-					<div class="small-box bg-info">
-						<div class="inner">
-							<h3>$$$</h3>
-							<p>Actualizar Precios</p>
-						</div>
-						<div class="icon">
-							<i class="ion ion-bag"></i>
-						</div>
-						<a href="?mod=Actualizarpre" class="small-box-footer">Ir Actualizar Precios <i
-								class="fa fa-arrow-circle-right"></i></a>
-					</div>
-				</div>
-				<div class="col-lg-3 col-6">
-					<!-- small box -->
-					<div class="small-box bg-warning">
-						<div class="inner">
-							<h3>Blog</h3>
+            <div class="row mb-4 justify-content-center" ng-if="permisos.Principal || permisos.Blog">
+                <div class="col-lg-5 col-md-6 mb-3" ng-if="permisos.Principal">
+                    <div class="small-box bg-danger shadow custom-box h-100 mb-0" style="border-radius: 15px !important;">
+                        <div class="inner p-4 text-center">
+                            <i class="fas fa-images fa-4x mb-3 text-white" style="opacity: 0.8;"></i>
+                            <h3>Banners Promocionales</h3>
+                            <p class="font-weight-bold">Gestionar carrusel de inicio</p>
+                        </div>
+                        <a href="?mod=Principal" class="small-box-footer py-2 text-white">Ir a Banners <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-5 col-md-6 mb-3" ng-if="permisos.Blog">
+                    <div class="small-box bg-dark shadow custom-box h-100 mb-0" style="border-radius: 15px !important;">
+                        <div class="inner p-4 text-center">
+                            <i class="fas fa-newspaper fa-4x mb-3 text-white" style="opacity: 0.8;"></i>
+                            <h3>Artículos del Blog</h3>
+                            <p class="font-weight-bold">Escribir y editar noticias</p>
+                        </div>
+                        <a href="?mod=Blog" class="small-box-footer py-2 text-white">Ir al Blog <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
 
-							<p>Sección</p>
-						</div>
-						<div class="icon">
-							<i class="ion ion-ios-bookmarks-outline"></i>
-						</div>
-						<a href="?mod=Blog" class="small-box-footer">Blog <i
-								class="fa fa-arrow-circle-right"></i></a>
-					</div>
-				</div>
-
-				<div class="col-lg-3 col-6">
-					<!-- small box -->
-					<div class="small-box bg-success">
-						<div class="inner">
-							<h3>Categorias</h3>
-
-							<p>Configuración</p>
-						</div>
-						<div class="icon">
-							<i class="ion ion-settings"></i>
-						</div>
-						<a href="?mod=Categorias" class="small-box-footer">Categorias <i
-								class="fa fa-arrow-circle-right"></i></a>
-					</div>
-				</div>
-
-				<div class="col-lg-3 col-6">
-					<!-- small box -->
-					<div class="small-box bg-info">
-						<div class="inner">
-							<h3>Agencias</h3>
-
-							<p>Configuración</p>
-						</div>
-						<div class="icon">
-							<i class="ion ion-key"></i>
-						</div>
-						<a href="?mod=Marcas" class="small-box-footer">Agencias <i
-								class="fa fa-arrow-circle-right"></i></a>
-					</div>
-				</div>
-
-				<div class="col-lg-3 col-6">
-					<!-- small box -->
-					<div class="small-box bg-danger">
-						<div class="inner">
-							<h3>Vehiculos</h3>
-
-							<p>Configuración</p>
-						</div>
-						<div class="icon">
-							<i class="ion ion-android-car"></i>
-						</div>
-						<a href="?mod=Modelos" class="small-box-footer">Vehiculos <i
-								class="fa fa-arrow-circle-right"></i></a>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-12 col-sm-12 col-md-6 col-lg-6">
-					<div class="card">
-						<div class="card-header">
-							<div class="card-title">
-								<i class="fa fa-th mr-1"></i>
-								Reportes de productos
-							</div>
-						</div>
-						<div class="card-body">
-							<div class="row">
-
-								<div class="col-lg-6 col-6">
-									<!-- small box -->
-									<div class="small-box bg-danger">
-										<div class="inner">
-											<h3>{{datos.Publicados}}</h3>
-
-											<p>Productos publicados</p>
-										</div>
-										<div class="icon">
-											<i class="fa fa-wrench"></i>
-										</div>
-										<a href="?mod=Refacciones" class="small-box-footer">Mas info <i
-												class="fa fa-arrow-circle-right"></i></a>
-									</div>
-								</div>
-								<div class="col-lg-6 col-6">
-									<!-- small box -->
-									<div class="small-box bg-danger">
-										<div class="inner">
-											<h3>{{datos.NoPublicados}}</h3>
-
-											<p>Productos no publicados</p>
-										</div>
-										<div class="icon">
-											<i class="fa fa-briefcase"></i>
-										</div>
-										<a href="?mod=Refacciones&pub" class="small-box-footer">Mas info <i
-												class="fa fa-arrow-circle-right"></i></a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-			</div>
-
-		</div><!-- /.container-fluid -->
-	</section>
+        </div>
+    </section>
 </section>
+
+<style>
+    .custom-box {
+        border-radius: 12px !important;
+        transition: all 0.3s ease-in-out;
+        border: none;
+    }
+    .custom-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.15) !important;
+    }
+    .small-box .inner h3 {
+        font-weight: 800 !important;
+        font-family: 'Poppins', sans-serif;
+    }
+    .small-box .icon i {
+        transition: all 0.3s ease-in-out;
+        opacity: 0.3; 
+    }
+    .small-box:hover .icon i {
+        transform: scale(1.15) rotate(-5deg);
+        opacity: 0.5;
+    }
+    .small-box-footer {
+        border-bottom-left-radius: 12px !important;
+        border-bottom-right-radius: 12px !important;
+        background-color: rgba(0,0,0,0.1) !important;
+        padding: 5px 0;
+    }
+    .product-list-in-card .item {
+        border-bottom: 1px solid rgba(0,0,0,.05);
+        padding: 10px 0;
+    }
+    .product-list-in-card .item:last-child {
+        border-bottom: none;
+    }
+</style>

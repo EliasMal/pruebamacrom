@@ -71,6 +71,20 @@
                         $this->jsonData["mensaje"] = "Error al intentar cambiar el password";
                     }
                     break;
+                    case 'get_roles':
+                        $sql = "SELECT DISTINCT rol_nombre FROM Permisos_Roles ORDER BY rol_nombre ASC";
+                        $roles = $this->conn->fetch_all($this->conn->query($sql));
+                        $array_roles = array();
+
+                        foreach($roles as $r){
+                            $array_roles[] = array(
+                                "value" => $r['rol_nombre'], 
+                                "descripcion" => ucfirst($r['rol_nombre'])
+                            );
+                        }
+                        $this->jsonData["Roles"] = $array_roles;
+                        $this->jsonData["Bandera"] = 1;
+                        break;
                 default:
                     break;
             }

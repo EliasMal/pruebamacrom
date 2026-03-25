@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Refaccionaria TsuruVolks | Log in</title>
+        <title>Refaccionaria Macrom | Log in</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="./../asset/Css/style.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -48,24 +48,66 @@
             }
             .alert-danger { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
             .alert-warning { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+
+            .login-card-wrapper {
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .mantenimiento-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(255, 255, 255, 0.85);
+                backdrop-filter: blur(4px);
+                z-index: 100;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                padding: 25px;
+            }
         </style>
     </head>
-    <body class="hold-transition login-page" ng-app="tsuruVolks">
+    
+    <body class="hold-transition login-page" ng-app="tsuruVolks" ng-controller="loginCtrl">
 
-        <div class="alerta-mantenimiento ng-scope" ng-controller="loginCtrl" style="width: 100%;background-color: #de0007;color: white;display: none;font-family: Poppins;align-items: center;flex-wrap: wrap;justify-content: center;position: absolute;top: 0; z-index: 1050;">
-            <div class="alerta">
-                <h2 style="max-width: 600px;text-align: center;">Actualizando Admin Macrom autopartes. Podrá iniciar sesión cuando la Actualización termine.</h2>
-            </div>
+        <div class="bg-danger text-center text-white p-3 shadow-lg" 
+             style="position: fixed; top: 0; left: 0; width: 100%; z-index: 2000; display: flex; align-items: center; justify-content: center; flex-direction: column;"
+             ng-show="modoMantenimientoActivo" ng-cloak>
+            <h1 style="font-size: 1.8rem; font-weight: bold; margin: 0;">
+                <i class="fa fa-cogs fa-spin mr-2"></i> Actualizando Admin Macrom autopartes.
+            </h1>
+            <p style="font-size: 1.2rem; margin: 5px 0 0 0;">
+                Podrá iniciar sesión cuando la actualización termine.
+            </p>
         </div>
 
-        <div class="login-box" ng-controller="loginCtrl">
-            <div class="login-logo">
-                <img src="./../asset/Images/logomacrom.png" alt="LOGO IMAGE" />
+        <div class="login-box">
+            <div class="login-logo mb-4">
+                <img src="./../asset/Images/logomacrom.png" alt="LOGO IMAGE" style="max-width: 250px;" />
             </div>
             
-            <div class="card">
-                <div class="card-body login-card-body">
-                    <p class="login-box-msg">Inicio de sesión admin</p>
+            <div class="card shadow-lg login-card-wrapper border-0" style="border-radius: 8px;">
+                
+                <div class="mantenimiento-overlay" ng-show="modoMantenimientoActivo && !forzarLogin"> 
+    
+                    <div class="mb-3" ng-dblclick="forzarLogin = true" style="cursor: pointer;" title="Acceso Root">
+                        <i class="fa fa-cogs fa-4x text-danger fa-spin"></i>
+                    </div>
+                    
+                    <h5 class="font-weight-bold text-dark mb-2" style="font-size: 1.2rem;">Sistema en Actualización</h5>
+                    <p class="text-muted small mb-0" style="line-height: 1.5;">
+                        Estamos implementando mejoras en el Panel Admin de <strong>Macrom Autopartes</strong>. <br><br>
+                        Podrá iniciar sesión en cuanto termine.
+                    </p>
+                </div>
+                
+                <div class="card-body login-card-body rounded">
+                    <p class="login-box-msg font-weight-bold text-muted">Inicio de sesión admin</p>
 
                     <div class="alert alert-danger" ng-show="loginError && !cuentaBloqueada">
                         <i class="fa fa-exclamation-circle"></i> {{mensajeError}}
@@ -81,27 +123,26 @@
                     </div>
 
                     <form method="post" name="frmlogin" id="frmlogin" novalidate>
-                        <div class="form-group has-feedback">
-                            <span class="fa fa-envelope form-control-feedback"></span>
+                        <div class="form-group has-feedback mb-3">
+                            <span class="fa fa-envelope form-control-feedback text-muted"></span>
                             <input type="text" name="login" id="login" class="form-control" placeholder="Usuario" ng-model="login.user" required>
                         </div>
 
-                        <div class="form-group has-feedback">
-                            <span class="fa fa-lock form-control-feedback"></span>
+                        <div class="form-group has-feedback mb-4">
+                            <span class="fa fa-lock form-control-feedback text-muted"></span>
                             <input type="password" name="password" id="password" class="form-control" placeholder="Password" ng-model="login.password" required>
                             <button type="button" class="toggle-password-btn" onclick="togglePasswordAdmin('password', this)">
                                 <i class="fa fa-eye"></i>
                             </button>
                         </div>
 
-                        <div class="row mt-3">
-                            <div class="col-8">
-                                &nbsp;
+                        <div class="row mt-3 align-items-center">
+                            <div class="col-7">
                             </div>
-                            <div class="col-4">
-                                <button type="submit" class="btn btn-primary btn-block btn-flat" ng-disabled="frmlogin.$invalid || !dataflag" ng-click="btnlogin()">
-                                    <span ng-show="dataflag">Entrar</span>
-                                    <span ng-show="!dataflag"><i class="fa fa-spinner fa-spin"></i></span>
+                            <div class="col-5">
+                                <button type="submit" class="btn btn-primary btn-block shadow-sm font-weight-bold" ng-disabled="frmlogin.$invalid || !dataflag" ng-click="btnlogin()">
+                                    <span ng-show="dataflag">Entrar <i class="fa fa-sign-in ml-1"></i></span>
+                                    <span ng-show="!dataflag"><i class="fa fa-spinner fa-spin"></i> Cargando...</span>
                                 </button>
                             </div>
                         </div>

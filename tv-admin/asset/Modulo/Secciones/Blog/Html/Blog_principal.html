@@ -1,102 +1,124 @@
-<section ng-controller="BlogCtrl">
+<style>
+    /* Efecto Hover estilo Macrom para la tabla */
+    .table-hover tbody tr:hover td { color: #ffffff !important; }
+    .table-hover tbody tr:hover td .text-muted,
+    .table-hover tbody tr:hover td b { color: #ffffff !important; }
+    .table-hover tbody tr:hover { background-color: #de0007 !important; transition: background-color 0.2s ease; }
+    
+    .table-hover tbody tr:hover .btn-primary,
+    .table-hover tbody tr:hover .btn-danger {
+        background-color: transparent !important;
+        border-color: #ffffff !important;
+        color: #ffffff !important;
+        box-shadow: none !important;
+    }
+    .table-hover tbody tr:hover .btn-primary:hover,
+    .table-hover tbody tr:hover .btn-danger:hover {
+        background-color: #ffffff !important;
+        color: #de0007 !important;
+    }
+</style>
+
+<section ng-controller="BlogCtrl" ng-cloak>
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
+            <div class="row mb-2 align-items-center">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark"><i class="ion-ios-bookmarks-outline mr-1"></i> Blog</h1>
-                </div><!-- /.col -->
+                    <h1 class="m-0 text-dark font-weight-bold">
+                        <i class="ion-ios-bookmarks-outline text-danger mr-2"></i> Gestión del Blog
+                    </h1>
+                </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
                         <li class="breadcrumb-item active">Blog</li>
                     </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+                </div>
+            </div>
+        </div>
     </div>
+
     <section class="content">
         <div class="container-fluid">
-            <div class="row">
-                <section class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="card card-danger">
-                        <div class="card-header d-flex p-0">
-                            <h3 class="card-title p-3">
-                                <i class="fa fa-users mr-1"></i>
-                                Registrar entradas del blog
-                            </h3>
-                            <div class="card-tools">
-                                <button class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                
-                                <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">
-                                                <i class="fa fa-search"></i>
-                                            </span>
-                                            
-                                        </div>
-                                        <input type="text" class="form-control" ng-model="find" ng-model-options="{debounce:500}" 
-                                        ng-change="getPedidos()" placeholder="Nombre de la entrada a buscar">
-                                        <div class="input-group-prepend">
-                                           <button class="btn btn-danger" ng-click="btnNuevaEntrada()">Nueva Entrada</button>
-                                            
-                                        </div>
-                                    </div>
-                                    
-                                    <br>
+            <div class="card card-danger card-outline shadow-sm border-0" style="border-radius: 12px;">
+                <div class="card-header bg-white pt-4 pb-3 border-bottom-0 d-flex justify-content-between align-items-center">
+                    <h3 class="card-title font-weight-bold text-dark m-0">
+                        <i class="fa fa-list-alt mr-1 text-muted"></i> Entradas Publicadas
+                    </h3>
+                    <button class="btn btn-danger font-weight-bold shadow-sm" ng-click="btnNuevaEntrada()">
+                        <i class="fa fa-plus-circle mr-1"></i> Nueva Entrada
+                    </button>
+                </div>
+                
+                <div class="card-body bg-light">
+                    <div class="row mb-4 justify-content-center">
+                        <div class="col-md-8">
+                            <div class="input-group shadow-sm">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-white border-right-0"><i class="fa fa-search text-danger"></i></span>
                                 </div>
-                                <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
-                                    <button class="btn btn-default btn-sm" ng-click="btnDisminuir()"><i class="fa fa-chevron-left"></i></button>
-                                    <button class="btn btn-default btn-sm" ng-click="btnAumentar()" ng-disabled="Blog.Noentradas-paginador.page<10"><i class="fa fa-chevron-right"></i></button>
-                                    <b>{{paginador.page+1}}-{{(paginador.page + paginador.limit) > Blog.Noentradas? Blog.Noentradas: (paginador.page + paginador.limit)}}/{{Blog.Noentradas}}</b>
-                                </div>
-                                <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
-                                    <table class="table table-bordered table-striped table-hover">
-                                        <thead>
-                                            <th width="5%">#</th>
-                                            <th width="55%">Titulo de la Entrada</th>
-                                            <th width="10%">Estatus</th>
-                                            <th width="10%">Publicada</th>
-                                            <th width="10%">Fecha</th>
-                                            <th width="10%">Acciones</th>
-                                        </thead>
-                                        <tfoot>
-                                            <th>#</th>
-                                            <th>Titulo de la Entrada</th>
-                                            <th>Estatus</th>
-                                            <th>Publicada</th>
-                                            <th>Fecha</th>
-                                            <th>Acciones</th>
-                                        </tfoot>
-                                        <tbody>
-                                            <tr ng-repeat="dato in Blog.entradas">
-                                                <td >{{(paginador.page + $index)+1}}</td>
-                                                <td>{{dato.Title}}</td>
-                                                <td class="text-center">
-                                                    <span class="badge {{dato.ClassEstatus}}">{{dato.Estatus?'Activo':'Baja'}}</span></td>
-                                                <td class="text-center"><span class="badge {{dato.ClassPublicar}}"><i class="fa {{dato.faPublicar}}"></i></span></td>
-                                                <td class="text-center"><b>{{dato.FechaCorta === hoy? dato.HoraCorta:dato.FechaCorta}}</b> </td>
-                                                <td class="text-center">
-                                                    <button class="btn btn-primary" ng-click="btnEditarEntrada(dato._id)"><i class="fa fa-edit"></i></button>
-                                                    <button class="btn btn-danger" ng-click="btnEliminarEntrada(dato._id)"><i class="fa fa-trash"></i></button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
-                                    <button class="btn btn-default btn-sm" ng-click="btnDisminuir()"><i class="fa fa-chevron-left"></i></button>
-                                    <button class="btn btn-default btn-sm" ng-click="btnAumentar()" ng-disabled="Blog.Noentradas-paginador.page<10"><i class="fa fa-chevron-right"></i></button>
-                                    <b>{{paginador.page+1}}-{{(paginador.page + paginador.limit) > Blog.Noentradas? Blog.Noentradas: (paginador.page + paginador.limit)}}/{{Blog.Noentradas}}</b>
-                                </div>
+                                <input type="text" class="form-control border-left-0 pl-0" ng-model="find" ng-model-options="{debounce:500}" ng-change="getEntradas()" placeholder="Buscar entrada por título...">
                             </div>
                         </div>
                     </div>
-                </section>
+
+                    <div class="d-flex justify-content-between align-items-center mb-2" ng-if="Blog.Noentradas > 0">
+                        <span class="text-muted font-weight-bold small">
+                            Mostrando {{paginador.page+1}} al {{(paginador.page + paginador.limit) > Blog.Noentradas ? Blog.Noentradas : (paginador.page + paginador.limit)}} de {{Blog.Noentradas}} entradas
+                        </span>
+                        <div class="btn-group shadow-sm">
+                            <button class="btn btn-white border btn-sm" ng-click="btnDisminuir()" ng-disabled="paginador.page == 0"><i class="fa fa-chevron-left text-danger"></i></button>
+                            <button class="btn btn-white border btn-sm" ng-click="btnAumentar()" ng-disabled="(paginador.page + paginador.limit) >= Blog.Noentradas"><i class="fa fa-chevron-right text-danger"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive bg-white rounded border shadow-sm">
+                        <table class="table table-hover table-striped mb-0 text-sm">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th width="5%" class="text-center">#</th>
+                                    <th width="45%">Título de la Entrada</th>
+                                    <th width="12%" class="text-center">Estatus</th>
+                                    <th width="10%" class="text-center">Visible</th>
+                                    <th width="15%" class="text-center">Fecha</th>
+                                    <th width="13%" class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="dato in Blog.entradas">
+                                    <td class="text-center align-middle font-weight-bold text-muted">{{(paginador.page + $index)+1}}</td>
+                                    <td class="align-middle font-weight-bold">{{dato.Title}}</td>
+                                    <td class="text-center align-middle">
+                                        <span class="badge {{dato.ClassEstatus}} px-2 py-1 shadow-sm">{{dato.Estatus ? 'Activo' : 'Baja'}}</span>
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        <button class="btn btn-sm shadow-sm text-white {{dato.ClassPublicar}}" ng-click="toggleVisibilidad(dato)" title="{{dato.Publicar ? 'Clic para ocultar' : 'Clic para publicar'}}" style="border-radius: 20px; padding: 2px 10px; border: none; transition: transform 0.2s;">
+                                            <i class="fa {{dato.faPublicar}}"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-center align-middle text-muted">
+                                        <i class="fa fa-calendar-alt mr-1"></i> <b>{{dato.FechaCorta === hoy ? dato.HoraCorta : dato.FechaCorta}}</b>
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        <button class="btn btn-sm btn-primary shadow-sm mr-1" ng-click="btnEditarEntrada(dato._id)" title="Editar">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger shadow-sm" ng-click="btnEliminarEntrada(dato._id)" title="Eliminar">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr ng-if="Blog.entradas.length == 0">
+                                    <td colspan="6" class="text-center py-5 text-muted">
+                                        <i class="fa fa-folder-open fa-3x mb-3 text-light"></i><br>
+                                        <h5 class="font-weight-light">No hay entradas publicadas aún.</h5>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
             </div>
         </div>
     </section>

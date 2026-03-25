@@ -1,0 +1,78 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<section class="content-header" ng-controller="PermisosCtrl">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Control de Permisos</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="?mod=home">Home</a></li>
+                    <li class="breadcrumb-item active">Permisos</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content" ng-controller="PermisosCtrl">
+    <div class="container-fluid">
+        <div class="card card-danger card-outline">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa fa-lock mr-2"></i> Asignación de Accesos por Rol</h3>
+            </div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-5">
+                        <label>Selecciona el Rol a configurar:</label>
+                        <div class="input-group">
+                            <select class="form-control" ng-model="rolSeleccionado" ng-change="cargarPermisos()" ng-options="rol for rol in rolesDisponibles">
+                            </select>
+                            <div class="input-group-append" ng-if="rolSeleccionado !== 'root' && rolSeleccionado !== 'Admin'">
+                                <button class="btn btn-outline-danger" title="Eliminar este Rol" ng-click="eliminarRol()">
+                                    <i class="fa fa-trash"></i> Eliminar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5">
+                        <label>O crear un nuevo rol:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="nuevoRol" placeholder="Ej. marketing, becario, etc.">
+                            <div class="input-group-append">
+                                <button class="btn btn-danger" ng-click="crearRol()">Crear y Asignar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="bg-light">
+                            <tr>
+                                <th style="width: 25%;">Grupo (Menú Principal)</th>
+                                <th style="width: 30%;">Módulo (Submenú)</th>
+                                <th style="width: 25%;">URL</th>
+                                <th class="text-center" style="width: 20%;">Acceso</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="mod in listaModulos">
+                                <td class="align-middle"><b>{{mod.grupo}}</b></td>
+                                <td class="align-middle">{{mod.titulo}}</td>
+                                <td class="align-middle"><span class="badge badge-info">{{mod.opc}}</span></td>
+                                <td class="text-center align-middle">
+                                    <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                        <input type="checkbox" class="custom-control-input" id="switch_{{mod.id_modulo}}" ng-model="mod.tiene_permiso" ng-change="cambiarPermiso(mod)">
+                                        <label class="custom-control-label" for="switch_{{mod.id_modulo}}"></label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,122 @@
+<div ng-controller="RefaccionesCtrl" ng-cloak>
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 align-items-center">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark font-weight-bold"><i class="fa fa-truck text-danger mr-2"></i> Control de Inventario</h1>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <button type="button" class="btn btn-danger shadow-sm font-weight-bold" ng-click="btnAgregarRefaccion()">
+                        <i class="fa fa-plus-circle"></i> Nueva Refacción
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card card-outline card-danger shadow-sm">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-white"><i class="fa fa-search text-muted"></i></span>
+                                </div>
+                                <input type="text" class="form-control border-left-0" placeholder="Buscar por código, clave o nombre..." 
+                                       ng-model="buscar" ng-model-options="{debounce:500}" ng-change="getRefacciones()"/>
+                            </div>
+                        </div>
+                        <div class="col-md-4 d-flex justify-content-center">
+                            <div class="custom-control custom-switch custom-switch-danger mr-3">
+                                <input type="checkbox" class="custom-control-input" id="swpublicados" ng-model="publicados" ng-change="getRefacciones()">
+                                <label class="custom-control-label" for="swpublicados">Publicados</label>
+                            </div>
+                            <div class="custom-control custom-switch custom-switch-danger">
+                                <input type="checkbox" class="custom-control-input" id="swhistorico" ng-model="historico" ng-change="getRefacciones()">
+                                <label class="custom-control-label" for="swhistorico">Histórico</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3 text-right text-muted font-italic">
+                            <span>{{Numreg}} refacciones encontradas</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show="OneRefaccion.Clave || SinRefaccion" class="alert alert-light border border-danger animate__animated animate__fadeIn">
+                <div ng-show="OneRefaccion.Clave" class="d-flex align-items-center justify-content-between">
+                    <span><i class="fa fa-bullseye text-danger mr-2"></i> Coincidencia exacta encontrada: <b>{{OneRefaccion.Clave}}</b></span>
+                    <button ng-click="clickRefaccionUnica()" class="btn btn-danger btn-sm">Abrir Refacción</button>
+                </div>
+                <span ng-show="SinRefaccion"><i class="fa fa-exclamation-triangle text-warning mr-2"></i> No existe la clave: <b>{{SinRefaccion}}</b></span>
+            </div>
+
+            <div class="d-flex mb-3 overflow-auto pb-2">
+                <button class="btn btn-sm mr-2 shadow-sm" ng-class="propertyName == 'Producto' ? 'btn-danger' : 'btn-light text-muted'" ng-click="DefaultRefacciones()">Producto A-Z</button>
+                <button class="btn btn-sm mr-2 shadow-sm" ng-class="propertyName == 'dateCreated' ? 'btn-danger' : 'btn-light text-muted'" ng-click="sortby('dateCreated')">Recientes</button>
+                <button class="btn btn-sm shadow-sm" ng-class="propertyName == 'dateModify' ? 'btn-danger' : 'btn-light text-muted'" ng-click="sortby('dateModify')">Últimas Modificadas</button>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-3 col-lg-4 col-md-6 mb-4" ng-repeat="refaccion in refacciones">
+                    <div class="card h-100 shadow-sm hover-shadow border-0 transition-all" ng-click="btnEditarRefaccion(refaccion._id)" style="cursor: pointer;">
+                        
+                        <div class="ribbon-wrapper ribbon-lg" ng-show="refaccion.RefaccionNueva || refaccion.RefaccionOferta || refaccion.RefaccionLiquidacion || refaccion.agotado">
+                            <div class="ribbon font-weight-bold" ng-class="refaccion.agotado ? 'bg-dark' : 'bg-danger'">
+                                {{ refaccion.RefaccionNueva ? 'Nuevo' : refaccion.RefaccionOferta ? 'Oferta' : refaccion.RefaccionLiquidacion ? 'Liquidación' : 'Agotado' }}
+                            </div>
+                        </div>
+
+                        <div class="text-center p-3 bg-white border-bottom">
+                            <img ng-src="{{refaccion.imagen ? dominio+'/images/refacciones/'+refaccion._id+'.png' : dominio+'/images/refacciones/'+refaccion._id+'.webp'}}" 
+                                 class="img-fluid" style="height: 180px; object-fit: contain;" alt="{{refaccion.Producto}}">
+                        </div>
+
+                        <div class="card-body">
+                            <h6 class="font-weight-bold text-dark mb-2 text-truncate" title="{{refaccion.Producto}}">{{refaccion.Producto}}</h6>
+                            <div class="text-sm">
+                                <p class="mb-1 text-muted">Clave: <b class="text-dark">{{refaccion.Clave}}</b></p>
+                                <p class="mb-1 text-muted">Stock: 
+                                    <span class="badge" ng-class="refaccion.stock > 5 ? 'badge-success' : (refaccion.stock > 0 ? 'badge-warning' : 'badge-danger')">
+                                        {{refaccion.stock}} pz
+                                    </span>
+                                </p>
+                                <p class="mb-0 text-muted">Vehículo: <span class="text-dark font-weight-bold">{{refaccion.Modelo}}</span></p>
+                            </div>
+                        </div>
+
+                        <div class="card-footer bg-white border-top-0 pt-0 pb-3 text-center">
+                            <div ng-hide="refaccion.RefaccionOferta">
+                                <span class="h5 font-weight-bold text-danger">{{refaccion.Precio1 | currency}}</span>
+                            </div>
+                            <div ng-show="refaccion.RefaccionOferta">
+                                <small class="text-muted text-decoration-line-through">{{refaccion.Precio1 | currency}}</small>
+                                <br>
+                                <span class="h5 font-weight-bold text-danger">{{refaccion.Precio2 | currency}}</span>
+                            </div>
+                            <div ng-show="refaccion.Enviogratis" class="mt-2 text-success text-xs font-weight-bold">
+                                <i class="fa fa-truck"></i> ENVÍO GRATIS
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="mt-4">
+                <ul class="pagination pagination-sm justify-content-center shadow-sm">
+                    <li class="page-item" ng-class="currentPage==0 ? 'disabled' : ''">
+                        <button class="page-link" ng-click="lastPage()"><i class="fa fa-chevron-left"></i> Anterior</button>
+                    </li>
+                    <li class="page-item d-none d-md-inline-block" ng-repeat="page in pages" ng-class="currentPage == (page.no - 1) ? 'active' : ''">
+                        <button class="page-link" ng-click="setPage(page.no)">{{page.no}}</button>
+                    </li>
+                    <li class="page-item" ng-class="currentPage >= (Numreg/pageSize - 1) ? 'disabled' : ''">
+                        <button class="page-link" ng-click="nextPage()">Siguiente <i class="fa fa-chevron-right"></i></button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+</div>

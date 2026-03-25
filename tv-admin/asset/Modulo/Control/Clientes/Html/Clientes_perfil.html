@@ -1,249 +1,203 @@
-<div ng-controller="ClientesPerfilCtrl" ng-init="id={id}">
+<div ng-controller="ClientesPerfilCtrl" ng-init="id={id}" ng-cloak>
   <div class="content-header">
     <div class="container-fluid">
-      <div class="row mb-2">
+      <div class="row mb-2 align-items-center">
         <div class="col-sm-6">
-          <h1 class="m-0 text-dark"><i class="fa fa-user mr-1"></i> Clientes <small>Perfil</small></h1>
-        </div><!-- /.col -->
+          <h1 class="m-0 text-dark font-weight-bold"><i class="fa fa-user-circle text-danger mr-2"></i> Perfil del Cliente</h1>
+        </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
             <li class="breadcrumb-item"><a href="?mod=Clientes">Clientes</a></li>
             <li class="breadcrumb-item active">Perfil</li>
           </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
+        </div>
+      </div>
+    </div>
   </div>
+
   <section class="content">
     <div class="container-fluid">
       <div class="row">
-        <section class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
-          <div class="card card-danger card-outline">
-            <div class="card-body box-profile">
-              <div class="text-center">
-                <img class="profile-user-img img-fluid img-circle" src="Images/usuarios/root.png" alt="Avatar">
+        
+        <section class="col-12 col-md-4 col-lg-3">
+          
+          <div class="card card-danger card-outline shadow-sm mb-3">
+            <div class="card-body box-profile p-4">
+              <div class="text-center mb-3">
+                <img class="profile-user-img img-fluid img-circle border-danger shadow-sm" src="Images/usuarios/root.png" alt="Avatar" style="width: 100px; height: 100px; object-fit: cover;">
               </div>
-              <h4 class="profile-username text-center">{{cliente.nombres}} {{cliente.Apellidos}}</h4>
-              <p class="text-muted text-center"><small> {{cliente.username}}</small></p>
-              <ul class="list-group list-group-unbordered">
-                <li class="list-group-item">
-                  <small><b> Ultima sesión</b></small>
-                  <a class="float-right"><small> {{cliente.ultimoacceso}} </small></a>
+              <h5 class="profile-username text-center font-weight-bold mb-0">{{cliente.nombres}} {{cliente.Apellidos}}</h5>
+              <p class="text-muted text-center small mb-3">@{{cliente.username}}</p>
+              
+              <ul class="list-group list-group-unbordered mb-3">
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                  <span class="small font-weight-bold text-muted">Última sesión</span>
+                  <span class="badge badge-light border">{{cliente.ultimoacceso}}</span>
                 </li>
-                <li class="list-group-item">
-                  <small><b>Compras realizadas</b></small>
-                  <a class="float-right"><small> {{cliente.count.NPedidos}} </small></a>
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                  <span class="small font-weight-bold text-muted">Compras realizadas</span>
+                  <span class="badge badge-danger">{{cliente.count.NPedidos}}</span>
                 </li>
               </ul>
             </div>
           </div>
-          <div class="card card-danger">
-            <div class="card-header">
-              Acerca del Cliente
+
+          <div class="card card-danger shadow-sm">
+            <div class="card-header p-2">
+              <h6 class="card-title m-0 text-sm font-weight-bold"><i class="fa fa-info-circle mr-1"></i> Contacto Rápido</h6>
             </div>
-            <div class="card-body">
-              <b><i class="fa fa-map-marker mr-1"></i>Lugar de residencia</b>
-              <p class="text-muted">{{cliente.ciudad}}, {{cliente.estado}}</p>
-              <hr>
-              <b><i class="fa fa-phone"></i> Telefono</b>
-              <p class="text-muted">{{cliente.telefono}}</p>
-              <hr>
-              <b><i class="fa fa-envelope-o "></i> Correo</b>
-              <p class="text-muted">{{cliente.correo}}</p>
+            <div class="card-body p-3">
+              <strong class="small text-danger"><i class="fa fa-map-marker mr-1"></i> Ubicación</strong>
+              <p class="text-muted small mb-2">{{cliente.ciudad}}, {{cliente.estado}}</p>
+              <hr class="m-2">
+              <strong class="small text-danger"><i class="fa fa-phone mr-1"></i> Teléfono</strong>
+              <p class="text-muted small mb-2">{{cliente.telefono}}</p>
+              <hr class="m-2">
+              <strong class="small text-danger"><i class="fa fa-envelope mr-1"></i> Correo Electrónico</strong>
+              <p class="text-muted small mb-0">{{cliente.correo}}</p>
             </div>
           </div>
         </section>
-        <section class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9">
-          <div class="card card-danger card-outline">
-            <div class="card-header">
-              <ul class="nav nav-pills">
 
-                <li class="nav-item"><a class="nav-link active" href="#timeline" data-toggle="tab">Cupones</a></li>
-                <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Configuracion</a></li>
-
+        <section class="col-12 col-md-8 col-lg-9">
+          <div class="card card-danger card-tabs shadow-sm">
+            <div class="card-header p-0 pt-1 border-bottom-0">
+              <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" data-toggle="pill" href="#timeline" role="tab">
+                    <i class="fa fa-ticket mr-1"></i> Gestión de Cupones
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="pill" href="#settings" role="tab">
+                    <i class="fa fa-cogs mr-1"></i> Datos del Cliente
+                  </a>
+                </li>
               </ul>
             </div>
-            <div class="card-body">
+            
+            <div class="card-body bg-light">
               <div class="tab-content">
-                <div class="tab-pane active" id="timeline">
-
-                  <div class="card card-danger card-outline mb-3">
-                    <div class="card-header">
-                      <h5 class="mb-0">
-                        <i class="fa fa-ticket"></i> Cupones disponibles
-                      </h5>
-                    </div>
-                  
-                    <div class="card-body">
-                    
-                      <div
-                        class="d-flex justify-content-between align-items-center border-bottom py-2"
-                        ng-repeat="cupon in cuponesDisponibles">
-                    
-                        <div>
-                          <b>{{cupon.codigo}}</b>
-                          <span class="text-muted">
-                            — {{cupon.descuento}}%
-                          </span>
-                        
-                          <small
-                            class="badge badge-secondary ml-2"
-                            ng-if="cupon.uso_unico == 1">
-                            Uso único
-                          </small>
-                        
-                          <small
-                            class="badge badge-warning ml-1"
-                            ng-if="cupon.fecha_expiracion">
-                            Expira {{cupon.fecha_expiracion}}
-                          </small>
+                
+                <div class="tab-pane fade show active" id="timeline" role="tabpanel">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="card card-outline card-danger shadow-sm">
+                        <div class="card-header p-2 bg-white">
+                          <h6 class="m-0 font-weight-bold text-danger"><i class="fa fa-tags mr-1"></i> Disponibles para Asignar</h6>
                         </div>
-                      
-                        <button
-                          class="btn btn-sm btn-success"
-                          ng-click="asignarCupon(cupon.id)">
-                          <i class="fa fa-plus"></i> Asignar
-                        </button>
-                      
+                        <div class="card-body p-0">
+                          <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center py-2" ng-repeat="cupon in cuponesDisponibles">
+                              <div>
+                                <strong class="text-dark">{{cupon.codigo}}</strong>
+                                <span class="text-muted small ml-1">— {{cupon.descuento}}%</span><br>
+                                <span class="badge badge-secondary mr-1" ng-if="cupon.uso_unico == 1">Uso único</span>
+                                <span class="badge badge-warning" ng-if="cupon.fecha_expiracion">Exp: {{cupon.fecha_expiracion}}</span>
+                              </div>
+                              <button class="btn btn-sm btn-outline-success shadow-sm" ng-click="asignarCupon(cupon.id)">
+                                <i class="fa fa-plus"></i> Asignar
+                              </button>
+                            </li>
+                          </ul>
+                          <div class="text-muted text-center py-4 small" ng-if="!cuponesDisponibles || cuponesDisponibles.length == 0">
+                            <i class="fa fa-inbox fa-2x mb-2 text-light"></i><br>
+                            No hay cupones globales disponibles.
+                          </div>
+                        </div>
                       </div>
-                    
-                      <div
-                        class="text-muted text-center py-3"
-                        ng-if="!cuponesDisponibles || cuponesDisponibles.length == 0">
-                        No hay cupones disponibles
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="card card-outline card-success shadow-sm">
+                        <div class="card-header p-2 bg-white">
+                          <h6 class="m-0 font-weight-bold text-success"><i class="fa fa-user-check mr-1"></i> Asignados al Cliente</h6>
+                        </div>
+                        <div class="card-body p-0">
+                          <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center py-2 bg-light" ng-repeat="cupon in cuponesCliente">
+                              <div>
+                                <strong class="text-dark">{{cupon.codigo}}</strong>
+                                <span class="text-muted small ml-1">— {{cupon.descuento}}%</span>
+                              </div>
+                              <button class="btn btn-sm btn-danger shadow-sm" ng-click="quitarCupon(cupon.id)">
+                                <i class="fa fa-trash"></i> Quitar
+                              </button>
+                            </li>
+                          </ul>
+                          <div class="text-muted text-center py-4 small" ng-if="!cuponesCliente || cuponesCliente.length == 0">
+                            <i class="fa fa-folder-open-o fa-2x mb-2 text-light"></i><br>
+                            El cliente no tiene cupones guardados.
+                          </div>
+                        </div>
                       </div>
-                    
                     </div>
                   </div>
-                  <div class="card card-success card-outline">
-                    <div class="card-header">
-                      <h5 class="mb-0">
-                        <i class="fa fa-user"></i> Cupones del cliente
-                      </h5>
-                    </div>
-                  
-                    <div class="card-body">
-                    
-                      <div
-                        class="d-flex justify-content-between align-items-center border-bottom py-2"
-                        ng-repeat="cupon in cuponesCliente">
-                    
-                        <div>
-                          <b>{{cupon.codigo}}</b>
-                          <span class="text-muted">
-                            — {{cupon.descuento}}%
-                          </span>
-                        </div>
-                      
-                        <button
-                          class="btn btn-sm btn-danger"
-                          ng-click="quitarCupon(cupon.id)">
-                          <i class="fa fa-trash"></i> Quitar
-                        </button>
-                      
-                      </div>
-                    
-                      <div
-                        class="text-muted text-center py-3"
-                        ng-if="!cuponesCliente || cuponesCliente.length == 0">
-                        El cliente no tiene cupones asignados
-                      </div>
-                    
-                    </div>
-                  </div>
-
                 </div>
                 
-                <div class="tab-pane" id="settings">
-                  <form class="form-horizontal">
-
-                    <div class="form-group">
-                      <label for="txtname" class="col-sm-3 control-label">Nombres</label>
-                      <div class="col-sm-12 col-md-10">
-                        <input type="text" class="form-control" id="txtname" placeholder="Name"
-                          ng-model="cliente.nombres" ng-disabled="disabled">
+                <div class="tab-pane fade" id="settings" role="tabpanel">
+                  <form class="bg-white p-4 border rounded shadow-sm">
+                    <div class="row">
+                      <div class="col-md-6 form-group mb-3">
+                        <label class="small text-muted font-weight-bold">Nombres</label>
+                        <input type="text" class="form-control" id="txtname" placeholder="Nombres del cliente" ng-model="cliente.nombres" ng-disabled="disabled">
                       </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="txtApellidos" class="col-sm-3 control-label">Apellidos</label>
-
-                      <div class="col-sm-12 col-md-10">
-                        <input type="text" class="form-control" id="txtApellidos" placeholder="Apellidos"
-                          ng-model="cliente.Apellidos" ng-disabled="disabled">
+                      <div class="col-md-6 form-group mb-3">
+                        <label class="small text-muted font-weight-bold">Apellidos</label>
+                        <input type="text" class="form-control" id="txtApellidos" placeholder="Apellidos" ng-model="cliente.Apellidos" ng-disabled="disabled">
                       </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="txtemail" class="col-sm-3 control-label">E-mail</label>
-
-                      <div class="col-sm-12 col-md-10">
-                        <input type="email" class="form-control" id="txtemail" placeholder="email"
-                          ng-model="cliente.correo" ng-disabled="disabled">
+                      
+                      <div class="col-md-6 form-group mb-3">
+                        <label class="small text-muted font-weight-bold">E-mail</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-envelope"></i></span></div>
+                          <input type="email" class="form-control" id="txtemail" placeholder="Correo electrónico" ng-model="cliente.correo" ng-disabled="disabled">
+                        </div>
                       </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="txtemail" class="col-sm-2 control-label">Domicilio</label>
-
-                      <div class="col-sm-12 col-md-10">
-                        <input type="text" class="form-control" id="txtdomicilio" placeholder="Domicilio"
-                          ng-model="cliente.Domicilio" ng-disabled="disabled">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="txtcp" class="col-sm-4 control-label">Codigo Postal</label>
-
-                      <div class="col-sm-12 col-md-10">
-                        <input type="text" class="form-control" id="txtcp" placeholder="Codigo postal"
-                          ng-model="cliente.Codigo_postal" ng-disabled="disabled">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="txtciudad" class="col-sm-4 control-label">Ciudad</label>
-
-                      <div class="col-sm-12 col-md-10">
-                        <input type="text" class="form-control" id="txtciudad" placeholder="Ciudad"
-                          ng-model="cliente.ciudad" ng-disabled="disabled">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="txtestado" class="col-sm-4 control-label">Estado</label>
-
-                      <div class="col-sm-12 col-md-10">
-                        <input type="text" class="form-control" id="txtestado" placeholder="Estado"
-                          ng-model="cliente.estado" ng-disabled="disabled">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="txttelefono" class="col-sm-4 control-label">Estado</label>
-
-                      <div class="col-sm-12 col-md-10">
-                        <input type="text" class="form-control" id="txttelefono" placeholder="Estado"
-                          ng-model="cliente.telefono" ng-disabled="disabled">
-                      </div>
-                    </div>
-
-
-                    <div class="col-sm-12 col-md-offset-2 col-md-10">
-
-                      <span class="switch switch-sm">
-                        <input type="checkbox" class="switch" id="switch-id" ng-model="data.avisoprivacidad"
-                          ng-disabled="disabled">
-                        <label for="switch-id">Acepto el <a href="#">Aviso de privacidad</a></label>
-                      </span>
-
-                    </div>
-
-                    <div class="form-group">
-
-                      <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-danger" ng-click="btnEditar()"><i
-                            class="fa {{disabled? 'fa-edit':'fa-save'}}"></i> {{disabled? "Editar":"Guardar"}}</button>
+                      <div class="col-md-6 form-group mb-3">
+                        <label class="small text-muted font-weight-bold">Teléfono</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-phone"></i></span></div>
+                          <input type="text" class="form-control numeric" id="txttelefono" placeholder="Número telefónico" ng-model="cliente.telefono" ng-disabled="disabled">
+                        </div>
                       </div>
 
+                      <div class="col-md-12 form-group mb-3">
+                        <label class="small text-muted font-weight-bold">Domicilio Completo</label>
+                        <input type="text" class="form-control" id="txtdomicilio" placeholder="Calle, número, colonia..." ng-model="cliente.Domicilio" ng-disabled="disabled">
+                      </div>
+
+                      <div class="col-md-4 form-group mb-3">
+                        <label class="small text-muted font-weight-bold">Código Postal</label>
+                        <input type="text" class="form-control numeric" id="txtcp" placeholder="C.P." ng-model="cliente.Codigo_postal" ng-disabled="disabled">
+                      </div>
+                      <div class="col-md-4 form-group mb-3">
+                        <label class="small text-muted font-weight-bold">Ciudad</label>
+                        <input type="text" class="form-control" id="txtciudad" placeholder="Ciudad" ng-model="cliente.ciudad" ng-disabled="disabled">
+                      </div>
+                      <div class="col-md-4 form-group mb-3">
+                        <label class="small text-muted font-weight-bold">Estado</label>
+                        <input type="text" class="form-control" id="txtestado" placeholder="Estado" ng-model="cliente.estado" ng-disabled="disabled">
+                      </div>
+
+                      <div class="col-md-12 mt-3 pt-3 border-top d-flex justify-content-between align-items-center">
+                        <div class="custom-control custom-switch">
+                          <input type="checkbox" class="custom-control-input" id="switchAviso" ng-model="cliente.avisoprivacidad" ng-disabled="disabled">
+                          <label class="custom-control-label small font-weight-bold text-muted" for="switchAviso">
+                            Aceptó el <a href="#" class="text-danger">Aviso de Privacidad</a>
+                          </label>
+                        </div>
+
+                        <button type="button" class="btn shadow-sm px-4" ng-class="disabled ? 'btn-danger' : 'btn-success'" ng-click="btnEditar()">
+                          <i class="fa" ng-class="disabled ? 'fa-edit' : 'fa-save'"></i> 
+                          {{disabled ? "Editar Datos" : "Guardar Cambios"}}
+                        </button>
+                      </div>
                     </div>
-                    
                   </form>
                 </div>
+
               </div>
             </div>
             

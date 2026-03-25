@@ -1,0 +1,91 @@
+<style>
+    .table-hover tbody tr:hover {
+        background-color: #de0007 !important;
+    }
+
+    .table-hover tbody tr:hover td,
+    .table-hover tbody tr:hover td .text-muted,
+    .table-hover tbody tr:hover td small {
+        color: #ffffff !important;
+    }
+
+    .table-hover tbody tr:hover .badge-light {
+        background-color: #ffffff !important;
+        border: none !important;
+    }
+
+    .table-hover tbody tr:hover .badge-light b,
+    .table-hover tbody tr:hover .badge-light span {
+        color: #de0007 !important;
+    }
+</style>
+<div ng-controller="BitacoraCtrl" ng-cloak>
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 align-items-center">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark font-weight-bold"><i class="fa fa-user-secret text-danger mr-2"></i> Auditoría del Sistema</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card card-danger card-outline shadow-sm">
+                <div class="card-header d-flex align-items-center">
+                    <h3 class="card-title font-weight-bold">Historial de Movimientos</h3>
+                    
+                    <div class="card-tools ml-auto">
+                        <div class="input-group input-group-sm" style="width: 250px;">
+                            <input type="text" name="table_search" class="form-control float-right" placeholder="Buscar usuario, módulo, fecha..." ng-model="busqueda">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-body p-0">
+                    <div class="table-responsive" style="max-height: 600px;">
+                        <table class="table table-hover table-striped m-0 text-sm">
+                            <thead class="bg-light sticky-top">
+                                <tr>
+                                    <th width="15%"><i class="fa fa-calendar mr-1"></i> Fecha y Hora</th>
+                                    <th width="10%"><i class="fa fa-user mr-1"></i> Usuario</th>
+                                    <th width="10%"><i class="fa fa-puzzle-piece mr-1"></i> Módulo</th>
+                                    <th width="15%"><i class="fa fa-bolt mr-1"></i> Acción</th>
+                                    <th width="40%"><i class="fa fa-file-text-o mr-1"></i> Detalles</th>
+                                    <th width="10%"><i class="fa fa-globe mr-1"></i> IP</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="log in logs | filter:busqueda">
+                                    <td class="align-middle text-muted">{{log.fecha}}</td>
+                                    <td class="align-middle font-weight-bold text-danger">{{log.username}}</td>
+                                    <td class="align-middle"><span class="badge badge-secondary">{{log.modulo}}</span></td>
+                                    <td class="align-middle">
+                                        <span class="badge badge-info">{{log.accion}}</span>
+                                    </td>
+                                    <td class="align-middle" ng-bind-html="formatearDetalles(log.detalles, log.modulo, log.accion)"></td>
+                                    <td class="align-middle text-muted"><small>{{log.ip_usuario}}</small></td>
+                                </tr>
+                                <tr ng-if="(logs | filter:busqueda).length === 0">
+                                    <td colspan="6" class="text-center py-4 text-muted">
+                                        <i class="fa fa-search fa-2x mb-2"></i><br>
+                                        No se encontraron registros en la bitácora.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer bg-white border-top-0 text-right">
+                    <button class="btn btn-outline-secondary btn-sm shadow-sm" ng-click="cargarBitacora()">
+                        <i class="fa fa-refresh mr-1"></i> Actualizar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

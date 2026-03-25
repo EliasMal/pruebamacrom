@@ -4,12 +4,13 @@
     session_start();
     require_once "../../../../Clases/dbconectar.php";
     require_once "../../../../Clases/ConexionMySQL.php";
+    require_once "../../../../Clases/Funciones.php"; 
     date_default_timezone_set('America/Mexico_City');
 
     class Cenvios{
         private $conn;
         private $jsonData = array("Bandera"=>0,"mensaje"=>"");
-        private $formulario = array();
+        private $formulario;
 
         public function __construct($array) {
             $this->conn = new HelperMySql($array["server"], $array["user"], $array["pass"], $array["db"]);
@@ -35,14 +36,13 @@
                 case 'set':
                 case 'edit':
                     if($this->setCenvio()){
-                        $mensaje = $this->formulario->opc == "set" ? "El Costo de envio se inserto satisfactoriamente": "El costo de envio ha sido modificado";
+                        $mensaje = $this->formulario->opc == "set" ? "El costo de envío se insertó satisfactoriamente" : "El costo de envío ha sido modificado";
                         $this->jsonData["Bandera"] = 1;
                         $this->jsonData["mensaje"] = $mensaje; 
                     }else{
                         $this->jsonData["Bandera"] = 0;
-                        $this->jsonData["mensaje"] = "Error: al insertar el nuevo costo";
+                        $this->jsonData["mensaje"] = "Error al guardar el costo de envío";
                     }
-                    
                 break;
                 case 'getEnvios':
                     $this->jsonData["Bandera"] = 1;
@@ -51,10 +51,10 @@
                 case 'off':
                     if($this->setCenvio()){
                         $this->jsonData["Bandera"] = 1;
-                        $this->jsonData["mensaje"] = "El Costo de envio ha sido desactivado"; 
+                        $this->jsonData["mensaje"] = "El costo de envío ha sido desactivado"; 
                     }else{
                         $this->jsonData["Bandera"] = 0;
-                        $this->jsonData["mensaje"] = "Error: al desactivar el costo de envio";
+                        $this->jsonData["mensaje"] = "Error al desactivar el costo de envío";
                     }
                 break;
                 default:
@@ -68,19 +68,19 @@
 
         private function getEstados(){
             $array = array();
-            $sql = "select d_estado as Estado from CPmex group by d_estado";
+            $sql = "SELECT d_estado as Estado FROM CPmex GROUP BY d_estado";
             $id = $this->conn->query($sql);
             while ($row = $this->conn->fetch($id)){
                 array_push($array, $row);
             }
             return $array; 
-
         }
 
         private function getMunicipios(){
             $array = array();
-            $sql = "select D_mnpio as Municipio, d_estado as Estado from CPmex where d_estado like 
-            '%{$this->formulario->Estado}%' group by D_mnpio, D_estado";
+            $estado_seguro = addslashes($this->formulario->Estado);
+            $sql = "SELECT D_mnpio as Municipio, d_estado as Estado FROM CPmex WHERE d_estado LIKE '%$estado_seguro%' GROUP BY D_mnpio, d_estado";
+            
             $id = $this->conn->query($sql);
             while ($row = $this->conn->fetch($id)){
                 array_push($array, $row);
@@ -89,22 +89,47 @@
         }
 
         private function setCenvio(){
+            $accionLog = "";
+            $detallesLog = "";
+
+            $id_seguro = isset($this->formulario->id) ? intval($this->formulario->id) : 0;
+            $precio_seguro = isset($this->formulario->Precio) ? floatval($this->formulario->Precio) : 0.0;
+            $estado_seguro = isset($this->formulario->Estado) ? addslashes($this->formulario->Estado) : '';
+            $muni_seguro = isset($this->formulario->Municipio) ? addslashes($this->formulario->Municipio) : '';
+            $usr_seguro = addslashes($_SESSION["usr"]);
+            $fecha_actual = date("Y-m-d");
+
             if($this->formulario->opc == "set"){
                 $sql = "INSERT INTO Cenvios (Municipio, Estado, precio, USRCreacion, FechaCreacion, USRModificacion, FechaModificacion, Estatus) 
-                values ('{$this->formulario->Municipio}','{$this->formulario->Estado}','{$this->formulario->Precio}',"
-                . "'{$_SESSION["usr"]}','". date("Y-m-d") . "','{$_SESSION["usr"]}','" . date("Y-m-d") . "',1)";
-            }else if ($this->formulario->opc == "edit"){
-                $sql = "UPDATE Cenvios SET precio = '{$this->formulario->Precio}'  where _id = {$this->formulario->id}";
-            }else{
-                $sql = "UPDATE Cenvios SET Estatus = '0' where _id = {$this->formulario->id}";
+                        VALUES ('$muni_seguro', '$estado_seguro', '$precio_seguro', '$usr_seguro', '$fecha_actual', '$usr_seguro', '$fecha_actual', 1)";
+                
+                $accionLog = "CREAR_COSTO_ENVIO";
+                $detallesLog = "Estado: $estado_seguro, Municipio: $muni_seguro, Costo: $ $precio_seguro";
+
+            } else if ($this->formulario->opc == "edit"){
+                $sql = "UPDATE Cenvios SET precio = '$precio_seguro', USRModificacion = '$usr_seguro', FechaModificacion = '$fecha_actual' WHERE _id = $id_seguro";
+                
+                $accionLog = "EDITAR_COSTO_ENVIO";
+                $detallesLog = "ID Envío: $id_seguro, Nuevo Costo: $ $precio_seguro";
+
+            } else {
+                $sql = "UPDATE Cenvios SET Estatus = '0', USRModificacion = '$usr_seguro', FechaModificacion = '$fecha_actual' WHERE _id = $id_seguro";
+                
+                $accionLog = "DESACTIVAR_COSTO_ENVIO";
+                $detallesLog = "ID Envío: $id_seguro desactivado.";
             }
             
-            return $this->conn->query($sql)? true: false;
+            if($this->conn->query($sql)){
+                Funciones::guardarBitacora($this->conn, 'Cenvios', $accionLog, $detallesLog);
+                return true;
+            } else {
+                return false;
+            }
         }
 
         private function getEnvios(){
             $array = array();
-            $sql = "select _id as id, Municipio, Estado, precio, Estatus from Cenvios where Estatus = 1";
+            $sql = "SELECT _id as id, Municipio, Estado, precio, Estatus FROM Cenvios WHERE Estatus = 1";
             $id = $this->conn->query($sql);
             while ($row = $this->conn->fetch($id)){
                 array_push($array, $row);
@@ -115,3 +140,4 @@
     
     $app = new Cenvios($array_principal);
     $app->main();
+?>

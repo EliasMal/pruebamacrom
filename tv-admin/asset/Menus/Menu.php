@@ -4,154 +4,128 @@
 
 function get_templateMenu($form='principal'){
   $file = __DIR__.'/Menu_'.$form.'.html';
-  $template = file_get_contents($file);
-  return $template;
+  return file_exists($file) ? file_get_contents($file) : '';
 }
 
-function retorna_vistaMenu($vista,$data=array()){
-    switch($vista){
-        case 'principal':
-            $html = get_templateMenu($vista);
-            $html = str_replace('{usr}', $data["usr"], $html);  
-            $html = str_replace('{nombrecorto}', $data["nombrecorto"], $html); 
-            $html = str_replace('{imagen}', $data["imagen"], $html);  
-            $html = str_replace('{menus}', $data["html"], $html);  
-            break;
-
+function retorna_vistaMenu($vista, $data=array()){
+    if($vista == 'principal'){
+        $html = get_templateMenu($vista);
+        $html = str_replace('{usr}', $data["usr"], $html);  
+        $html = str_replace('{nombrecorto}', $data["nombrecorto"], $html); 
+        $html = str_replace('{imagen}', $data["imagen"], $html);  
+        $html = str_replace('{menus}', $data["html"], $html);  
+        print $html;
     }
-    print $html;
 }
 
 function menu(){
-    Global $mod;
-    $opc = "principal";
-    $opcMenu = array();
-    $sum = 0;
-    $seccion = "";
-    $icons = array("grupos"=>array("Control"=>"fa-fan", "Configuracion"=>"fa-cogs","Secciones"=>"fa-puzzle-piece", 
-    "Respaldo"=>"fa-refresh", "Importar"=>"fa-upload", "Mantenimiento"=>"fa-cog", "Reportes"=>"fa-book"),
-                   "titulo"=>array("Refacciones"=>"fa-toolbox","Pedidos"=>"fa-shopping-cart", "Clientes"=>"fa-address-book","Categorias"=>"ion-settings",
-                   "Agencias"=>"fa-warehouse", "Vehiculos" => "fa-car", "Usuarios"=>"fa-users", "Principal"=>"fa-columns", "Actualizar precios"=>"fa-dollar",
-                   "Contacto"=>"fa-id-badge", "Codigos Postales"=>"", "Costos Envios"=>"fa-comment-dollar", "Proveedores"=>"fa-truck", "Blog"=>"fa-cubes", 
-                   "Correo"=>"fa-envelope", "Pruebas"=>"fa-file", "Refacciones capturadas"=>"fa-list")
+    global $mod;
+    global $array_principal;
+    
+    require_once __DIR__ . "/../Clases/dbconectar.php"; 
+    require_once __DIR__ . "/../Clases/ConexionMySQL.php";
+    
+    $conn = new HelperMySql($array_principal["server"], $array_principal["user"], $array_principal["pass"], $array_principal["db"]);
+    
+    $icons = array(
+        "grupos" => array(
+            "Control"=>"fa-fan", "Configuracion"=>"fa-cogs", "Secciones"=>"fa-puzzle-piece", 
+            "Respaldo"=>"fa-refresh", "Importar"=>"fa-upload", "Mantenimiento"=>"fa-cog", "Reportes"=>"fa-book"
+        ),
+        "titulo" => array(
+            "Refacciones"=>"fa-toolbox", "Pedidos"=>"fa-shopping-cart", "Clientes"=>"fa-address-book",
+            "Categorias"=>"ion-settings", "Agencias"=>"fa-warehouse", "Vehiculos" => "fa-car", 
+            "Usuarios"=>"fa-users", "Principal"=>"fa-columns", "Actualizar precios"=>"fa-dollar-sign",
+            "Contacto"=>"fa-id-badge", "Codigos Postales"=>"fa-map-marker-alt", "Costos Envios"=>"fa-comment-dollar", 
+            "Proveedores"=>"fa-truck", "Blog"=>"fa-cubes", "Correo"=>"fa-envelope", 
+            "Pruebas"=>"fa-file", "Refacciones capturadas"=>"fa-list",
+            "Permisos"=>"fa-lock", "Bitacora"=>"fa fa-user-secret"
+        )
     );
-    $data["html"] = "";
-    $data["usr"] = $_SESSION["usr"];
-    $data["nombrecorto"] = $_SESSION["nombrecorto"];
-    $data["imagen"] = file_exists("Images/usuarios/{$_SESSION["usr"]}.png")? "Images/usuarios/{$_SESSION["usr"]}.png":"Images/Avatar Lobo Macrom Grande.png";
+
+    $rolActual = isset($_SESSION["rol"]) ? $_SESSION["rol"] : '';
+    $rol_seguro = addslashes($rolActual);
     
-    switch($_SESSION["rol"]){
-        case 'root':
-            $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Refacciones";            $opcMenu[$sum]["opc"]="?mod=Refacciones";       $sum++;
-            $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Pedidos";                $opcMenu[$sum]["opc"]="?mod=Pedidos";           $sum++;
-            $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Clientes";               $opcMenu[$sum]["opc"]="?mod=Clientes";          $sum++;
-            $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Contacto";               $opcMenu[$sum]["opc"]="?mod=Contacto";          $sum++;
-            $opcMenu[$sum]["grupo"]="Secciones";            $opcMenu[$sum]["titulo"]= "Principal";              $opcMenu[$sum]["opc"]="?mod=webprincipal";      $sum++;
-            $opcMenu[$sum]["grupo"]="Secciones";            $opcMenu[$sum]["titulo"]= "Blog";                   $opcMenu[$sum]["opc"]="?mod=Blog";              $sum++;
-            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Categorias";             $opcMenu[$sum]["opc"]="?mod=Categorias";        $sum++;
-            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Agencias";               $opcMenu[$sum]["opc"]="?mod=Marcas";            $sum++;
-            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Vehiculos";              $opcMenu[$sum]["opc"]="?mod=Modelos";           $sum++;
-            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Usuarios";               $opcMenu[$sum]["opc"]="?mod=usuarios";          $sum++;
-            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Costos Envios";          $opcMenu[$sum]["opc"]="?mod=Cenvios";           $sum++;
-            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Proveedores";            $opcMenu[$sum]["opc"]="?mod=Proveedores";       $sum++;
-            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Correo";                 $opcMenu[$sum]["opc"]="?mod=Correo";            $sum++;
-            $opcMenu[$sum]["grupo"]="Importar";             $opcMenu[$sum]["titulo"]= "Codigos Postales";       $opcMenu[$sum]["opc"]="?mod=CPostales";         $sum++;
-            $opcMenu[$sum]["grupo"]="Importar";             $opcMenu[$sum]["titulo"]= "Refacciones";            $opcMenu[$sum]["opc"]="?mod=IRefacciones";      $sum++;
-            $opcMenu[$sum]["grupo"]="Respaldo";             $opcMenu[$sum]["titulo"]= "Actualizar precios";     $opcMenu[$sum]["opc"]="?mod=Actualizarpre";     $sum++;
-            $opcMenu[$sum]["grupo"]="Respaldo";             $opcMenu[$sum]["titulo"]= "Pruebas";                $opcMenu[$sum]["opc"]="?mod=Pruebas";           $sum++;
-            $opcMenu[$sum]["grupo"]="Reportes";             $opcMenu[$sum]["titulo"]= "Refacciones capturadas"; $opcMenu[$sum]["opc"]="?mod=RepProductos";      $sum++;
-            $opcMenu[$sum]["grupo"]="Mantenimiento";        $opcMenu[$sum]["titulo"]= "Refacciones";            $opcMenu[$sum]["opc"]="?mod=repRefacciones";    $sum++;
-        break;
-        case 'Web':
-            $opcMenu[$sum]["grupo"]="Secciones";            $opcMenu[$sum]["titulo"]= "Principal";              $opcMenu[$sum]["opc"]="?mod=webprincipal";      $sum++;
-            $opcMenu[$sum]["grupo"]="Secciones";            $opcMenu[$sum]["titulo"]= "Blog";                   $opcMenu[$sum]["opc"]="?mod=Blog";              $sum++;
-        break;
-        case 'Admin':
-            $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Refacciones";            $opcMenu[$sum]["opc"]="?mod=Refacciones";       $sum++;
-            $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Pedidos";                $opcMenu[$sum]["opc"]="?mod=Pedidos";           $sum++;
-            $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Clientes";               $opcMenu[$sum]["opc"]="?mod=Clientes";          $sum++;
-            $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Contacto";               $opcMenu[$sum]["opc"]="?mod=Contacto";          $sum++;
-            $opcMenu[$sum]["grupo"]="Secciones";            $opcMenu[$sum]["titulo"]= "Principal";              $opcMenu[$sum]["opc"]="?mod=webprincipal";      $sum++;
-            $opcMenu[$sum]["grupo"]="Secciones";            $opcMenu[$sum]["titulo"]= "Blog";                   $opcMenu[$sum]["opc"]="?mod=Blog";              $sum++;
-            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Categorias";             $opcMenu[$sum]["opc"]="?mod=Categorias";        $sum++;
-            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Agencias";               $opcMenu[$sum]["opc"]="?mod=Marcas";            $sum++;
-            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Vehiculos";              $opcMenu[$sum]["opc"]="?mod=Modelos";           $sum++;
-            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Costos Envios";          $opcMenu[$sum]["opc"]="?mod=Cenvios";           $sum++;
-            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Proveedores";            $opcMenu[$sum]["opc"]="?mod=Proveedores";       $sum++;
-            $opcMenu[$sum]["grupo"]="Respaldo";             $opcMenu[$sum]["titulo"]= "Actualizar precios";     $opcMenu[$sum]["opc"]="?mod=Actualizarpre";     $sum++;
-            // $opcMenu[$sum]["grupo"]="Reportes";             $opcMenu[$sum]["titulo"]= "Refacciones capturadas"; $opcMenu[$sum]["opc"]="?mod=RepProductos";      $sum++;
-        break;
-        case 'venta':
-            $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Refacciones";            $opcMenu[$sum]["opc"]="?mod=Refacciones";       $sum++;
-            $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Pedidos";                $opcMenu[$sum]["opc"]="?mod=Pedidos";           $sum++;
-            $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Clientes";               $opcMenu[$sum]["opc"]="?mod=Clientes";          $sum++;
-            $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Contacto";               $opcMenu[$sum]["opc"]="?mod=Contacto";          $sum++;
-            $opcMenu[$sum]["grupo"]="Respaldo";             $opcMenu[$sum]["titulo"]= "Actualizar precios";     $opcMenu[$sum]["opc"]="?mod=Actualizarpre";     $sum++;
-            // $opcMenu[$sum]["grupo"]="Reportes";             $opcMenu[$sum]["titulo"]= "Refacciones capturadas"; $opcMenu[$sum]["opc"]="?mod=RepProductos";      $sum++;
-        break;
-        case 'user':
-            $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Refacciones";            $opcMenu[$sum]["opc"]="?mod=Refacciones";       $sum++;
-        break;
-        case 'capturista':
-            $opcMenu[$sum]["grupo"]="Control";              $opcMenu[$sum]["titulo"]= "Refacciones";            $opcMenu[$sum]["opc"]="?mod=Refacciones";       $sum++;
-            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Categorias";             $opcMenu[$sum]["opc"]="?mod=Categorias";        $sum++;
-            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Agencias";               $opcMenu[$sum]["opc"]="?mod=Marcas";            $sum++;
-            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Vehiculos";              $opcMenu[$sum]["opc"]="?mod=Modelos";           $sum++;
-            $opcMenu[$sum]["grupo"]="Configuracion";        $opcMenu[$sum]["titulo"]= "Proveedores";            $opcMenu[$sum]["opc"]="?mod=Proveedores";       $sum++;
-            $opcMenu[$sum]["grupo"]="Respaldo";             $opcMenu[$sum]["titulo"]= "Actualizar precios";     $opcMenu[$sum]["opc"]="?mod=Actualizarpre";     $sum++;
-            $opcMenu[$sum]["grupo"]="Secciones";            $opcMenu[$sum]["titulo"]= "Blog";                   $opcMenu[$sum]["opc"]="?mod=Blog";              $sum++;
-            $opcMenu[$sum]["grupo"]="Secciones";            $opcMenu[$sum]["titulo"]= "Principal";              $opcMenu[$sum]["opc"]="?mod=webprincipal";      $sum++;
-        break;
-            break;
-    }
-    $conM = count($opcMenu);
+    $sql = "SELECT DISTINCT m.grupo, m.titulo, m.opc 
+            FROM Modulos_Admin m 
+            INNER JOIN Permisos_Roles p ON m.id_modulo = p.id_modulo 
+            WHERE p.rol_nombre = '$rol_seguro'
+            ORDER BY FIELD(m.grupo, 'Control', 'Configuracion', 'Secciones', 'Respaldo', 'Importar', 'Mantenimiento', 'Reportes'), m.titulo ASC";
+            
+    $opcMenu = $conn->fetch_all($conn->query($sql));
+
     $tempMod = "?mod=$mod";
-    $grupo = "";
-    
-    /*Recorremos el arreglo para seber cual grupo debemos de activar*/
+    $grupoActivo = "";
+
     if($mod != "home" && $mod != "Perfil"){
-        for($i=0;$i<$conM;$i++){
-            if(strcmp($tempMod,$opcMenu[$i]["opc"])==0){
-                $grupo = $opcMenu[$i]["grupo"];
+        foreach ($opcMenu as $item) {
+            if ($tempMod == $item["opc"]) {
+                $grupoActivo = $item["grupo"];
                 break;
             }
         }
     }
 
-    for($x=0;$x<$conM;$x++){
-        if(isset($opcMenu[$x]["grupo"])){
-            if ($seccion != $opcMenu[$x]["grupo"]){
-                if($seccion != ""){
-                    $data["html"].= "</ul></li>";
-                }
-                $seccion =  $opcMenu[$x]["grupo"];
-                $active =  strcmp($grupo, $opcMenu[$x]["grupo"])==0? "active":"";
-                $menuopen  = strcmp($grupo, $opcMenu[$x]["grupo"])==0? "menu-open":"";
-                $data["html"] .= "
-                <li class='nav-item has-treeview $menuopen'>
-                    <a href='#' class='nav-link $active'>
-                        <i class='nav-icon fa {$icons["grupos"][$seccion]}'></i>
-                        <p>
-                            $seccion
-                            <i class='right fa fa-angle-left'></i>
-                        </p>
-                    </a>
-                    <ul class='nav nav-treeview'>";
-            }
-            $active = strcmp($tempMod,$opcMenu[$x]["opc"])==0? "active":"";
-            $titulo = $opcMenu[$x]["titulo"];
-            $data["html"] .= "
-                <li class='nav-item'>
-                    <a href='{$opcMenu[$x]["opc"]}' class='nav-link $active'>
-                        <i class='fa {$icons["titulo"][$titulo]} nav-icon'></i>
-                        <p>$titulo</p>
-                    </a>
-                </li>";
-        }
-    }
-    $data["html"].= "</ul></li>";
+    //Generación del HTML del Menú
+    $htmlMenu = "";
+    $seccionActual = "";
 
-    retorna_vistaMenu($opc,$data);
+    foreach ($opcMenu as $item) {
+        $grupo = $item["grupo"];
+        $titulo = $item["titulo"];
+        $url = $item["opc"];
+        
+        // Cambio de grupo
+        if ($seccionActual != $grupo) {
+            if ($seccionActual != "") {
+                $htmlMenu .= "</ul></li>";
+            }
+            $seccionActual = $grupo;
+            
+            $isActiveGroup = ($grupoActivo == $grupo) ? "active" : "";
+            $isMenuOpen = ($grupoActivo == $grupo) ? "menu-open" : "";
+            $iconoGrupo = isset($icons["grupos"][$grupo]) ? $icons["grupos"][$grupo] : "fa-folder"; 
+            
+            $htmlMenu .= "
+            <li class='nav-item has-treeview $isMenuOpen'>
+                <a href='#' class='nav-link $isActiveGroup'>
+                    <i class='nav-icon fa $iconoGrupo'></i>
+                    <p>
+                        $grupo
+                        <i class='right fa fa-angle-left'></i>
+                    </p>
+                </a>
+                <ul class='nav nav-treeview'>";
+        }
+        
+        $isActiveItem = ($tempMod == $url) ? "active" : "";
+        $iconoTitulo = isset($icons["titulo"][$titulo]) ? $icons["titulo"][$titulo] : "fa-circle-o"; 
+
+        $htmlMenu .= "
+            <li class='nav-item'>
+                <a href='$url' class='nav-link $isActiveItem' style='padding-left: 40px;'>
+                    <i class='fa $iconoTitulo nav-icon'></i>
+                    <p>$titulo</p>
+                </a>
+            </li>";
+    }
+    
+    if ($seccionActual != "") {
+        $htmlMenu .= "</ul></li>";
+    }
+
+    //Preparar los datos finales y mandarlos a la vista
+    $usr = isset($_SESSION["usr"]) ? $_SESSION["usr"] : '';
+    $imagenPath = "Images/usuarios/$usr.png";
+    
+    $data = array(
+        "html" => $htmlMenu,
+        "usr" => $usr,
+        "nombrecorto" => isset($_SESSION["nombrecorto"]) ? $_SESSION["nombrecorto"] : '',
+        "imagen" => file_exists($imagenPath) ? $imagenPath : "Images/Avatar Lobo Macrom Grande.png"
+    );
+
+    retorna_vistaMenu("principal", $data);
 }
 
 menu();

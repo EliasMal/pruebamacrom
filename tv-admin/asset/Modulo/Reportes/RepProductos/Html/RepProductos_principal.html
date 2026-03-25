@@ -1,95 +1,319 @@
-<div ng-controller="RepProductosCtrl">
+<div ng-controller="RepProductosCtrl" ng-cloak>
     <section class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
+            <div class="row mb-2 align-items-center">
                 <div class="col-sm-6">
-                <h1>Reportes de Refacciones capturados</h1>
+                    <h1 class="m-0 text-dark font-weight-bold">
+                        <i class="fa fa-chart-pie text-danger mr-2"></i> Inteligencia de Negocios
+                    </h1>
                 </div>
                 <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
-                    <li class="breadcrumb-item active"> Reporte de refacciones caputurados</li>
-                </ol>
-                </div>
-            </div>
-        </div><!-- /.container-fluid -->
-    </section>
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card card-danger">
-                        <div class="card-header">
-                            <h5 class="card-title">Listado de refacciones nuevas</h5>
-                        </div>
-                    </div>
-                    <div class="card-body">
-
-                        <div class="contenedor__calendario" style="width: 300px; margin: auto;">    
-                            <div class="input-group" >
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="fa fa-calendar"></i>
-                                    </span>
-                                  </div>
-                                <input type="text" name="dateNew" class="form-control calendario" id="CalendardateOld" placeholder="0000-00-00"> 
-                            </div>
-                            <div class="input-group" >
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="fa fa-calendar"></i>
-                                    </span>
-                                  </div>
-                                <input type="text" name="dateOld" class="form-control calendario" id="CalendardateNew" placeholder="0000-00-00"> 
-                            </div>
-                            <button class="form-control" id="calendarioGraph" ng-click="getNewCreated()">Visualizar Grafica</button>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <figure class="highcharts-figure">
-                                    <div id="grafica"></div>
-
-                                </figure>
-                            </div>
-                            <div class="col-12">
-                                <div class="float-right">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default btn-sm" ng-click="CalRestablecer()">Restablecer</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="table-responsive">
-                                    <table class="table table-hover table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th width="10%">Clave</th>
-                                                <th width="35%">Producto</th>
-                                                <th width="20%">Usuario</th>
-                                                <th width="20%">Fecha</th>
-                                                <th>Acciones</th>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="productos in reportes">
-                                                <td>{{$index+1}}</td>
-                                                <td>{{productos.Clave}}</td>
-                                                <td>{{productos.Producto}}</td>
-                                                <td>{{productos.userCreated}}</td>
-                                                <td>{{productos.dateCreated}}</td>
-                                                <td class="text-center"><button class="btn btn-danger"><i class="fa fa-eye"></i></button></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
+                        <li class="breadcrumb-item active">Reportes</li>
+                    </ol>
                 </div>
             </div>
         </div>
     </section>
 
+    <section class="content">
+        <div class="container-fluid">
+            
+            <div class="card card-danger card-outline shadow-sm mb-4">
+                <div class="card-header bg-white pt-3">
+                    <h5 class="card-title font-weight-bold text-dark">
+                        <i class="fa fa-filter mr-1 text-muted"></i> Filtro de Fechas Global
+                    </h5>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-outline-secondary btn-sm" ng-click="CalRestablecer()">
+                            <i class="fa fa-sync-alt mr-1"></i> Restablecer Filtros
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body bg-light">
+                    <div class="row justify-content-center">
+                        <div class="col-md-4">
+                            <label class="text-muted small text-uppercase font-weight-bold">Fecha de Inicio</label>
+                            <div class="input-group shadow-sm">
+                                <div class="input-group-prepend"><span class="input-group-text bg-white"><i class="fa fa-calendar text-danger"></i></span></div>
+                                <input type="text" class="form-control calendario bg-white" id="CalendardateOld" value="{{mantenimiento.dateOld}}" placeholder="YYYY-MM-DD" readonly> 
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="text-muted small text-uppercase font-weight-bold">Fecha de Fin</label>
+                            <div class="input-group shadow-sm">
+                                <div class="input-group-prepend"><span class="input-group-text bg-white"><i class="fa fa-calendar text-danger"></i></span></div>
+                                <input type="text" class="form-control calendario bg-white" id="CalendardateNew" value="{{mantenimiento.dateNew}}" placeholder="YYYY-MM-DD" readonly> 
+                            </div>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button class="btn btn-danger btn-block shadow-sm font-weight-bold" ng-click="generarReporte()">
+                                <i class="fa fa-search mr-1"></i> Consultar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-danger card-outline card-tabs shadow-sm border-0">
+                <div class="card-header p-0 pt-1 border-bottom-0">
+                    <ul class="nav nav-tabs" id="reportTabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active font-weight-bold text-dark" data-toggle="pill" href="#tab-captura" role="tab">
+                                <i class="fa fa-box-open text-danger mr-1"></i> Nuevas Refacciones
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link font-weight-bold text-dark" data-toggle="pill" href="#tab-ticket" role="tab">
+                                <i class="fa fa-money-bill-wave text-success mr-1"></i> Ticket Promedio
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link font-weight-bold text-dark" data-toggle="pill" href="#tab-top-productos" role="tab">
+                                <i class="fa fa-trophy text-warning mr-1"></i> Más Vendidos
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="card-body bg-light">
+                    <div class="tab-content">
+                        
+                        <div class="tab-pane fade show active" id="tab-captura" role="tabpanel">
+                            <div class="row bg-white p-3 border rounded shadow-sm mx-1 mb-4">
+                                <div class="col-12"><figure class="highcharts-figure mb-0"><div id="grafica"></div></figure></div>
+                            </div>
+                            
+                            <h5 class="font-weight-bold text-dark mt-4 mb-3"><i class="fa fa-list mr-1 text-muted"></i> Desglose de Productos</h5>
+                            <div class="table-responsive bg-white rounded shadow-sm">
+                                <table class="table table-hover table-striped mb-0 text-sm" datatable="ng" ng-if="reportes.length > 0">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th class="text-center" width="5%">#</th>
+                                            <th width="15%">Clave</th><th width="35%">Producto</th><th width="15%">Usuario</th>
+                                            <th width="20%" class="text-center">Fecha de Captura</th><th width="10%" class="text-center">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="producto in reportes">
+                                            <td class="text-center align-middle">{{$index+1}}</td>
+                                            <td class="align-middle font-weight-bold text-danger">{{producto.Clave}}</td>
+                                            <td class="align-middle">{{producto.Producto}}</td>
+                                            <td class="align-middle"><span class="badge badge-secondary px-2 py-1">{{producto.userCreated}}</span></td>
+                                            <td class="text-center align-middle text-muted"><i class="fa fa-clock mr-1"></i> {{producto.dateCreated}}</td>
+                                            <td class="text-center align-middle">
+                                                <button class="btn btn-sm btn-outline-danger shadow-sm" title="Ver Detalles del Producto" ng-click="verDetalles(producto)"><i class="fa fa-eye"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="text-center py-5 text-muted" ng-if="!reportes || reportes.length == 0">
+                                    <i class="fa fa-box-open fa-3x mb-3 text-light"></i><br><h5 class="font-weight-light">No hay refacciones capturadas en este rango de fechas.</h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="tab-ticket" role="tabpanel">
+                            <div class="row mb-4">
+                                <div class="col-md-4">
+                                    <div class="info-box shadow-sm">
+                                        <span class="info-box-icon bg-success"><i class="fa fa-shopping-cart"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Total de Pedidos</span>
+                                            <span class="info-box-number" style="font-size: 1.5rem;">{{resumenTicket.totalPedidos || 0}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="info-box shadow-sm">
+                                        <span class="info-box-icon bg-info"><i class="fa fa-dollar-sign"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Ingreso Total</span>
+                                            <span class="info-box-number" style="font-size: 1.5rem;">{{(resumenTicket.ingresoTotal || 0) | currency}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="info-box shadow-sm bg-danger text-white">
+                                        <span class="info-box-icon"><i class="fa fa-chart-line"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Ticket Promedio General</span>
+                                            <span class="info-box-number" style="font-size: 1.5rem;">{{(resumenTicket.ticketPromedio || 0) | currency}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row bg-white p-3 border rounded shadow-sm mx-1">
+                                <div class="col-12"><figure class="highcharts-figure mb-0"><div id="graficaTicket"></div></figure></div>
+                            </div>
+                            <h5 class="font-weight-bold text-dark mt-4 mb-3">
+                                <i class="fa fa-list mr-1 text-muted"></i> Desglose de Ventas Acreditadas
+                            </h5>
+                            <div class="table-responsive bg-white rounded shadow-sm">
+                                <table class="table table-hover table-striped mb-0 text-sm" datatable="ng" ng-if="detallesTicket.length > 0">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th class="text-center" width="5%">#</th>
+                                            <th width="10%">Folio</th>
+                                            <th width="20%">Cliente</th>
+                                            <th width="15%">Forma de Pago</th>
+                                            <th width="15%">Paquetería</th>
+                                            <th width="15%" class="text-center">Fecha y Hora</th>
+                                            <th width="10%" class="text-right">Total</th>
+                                            <th width="10%" class="text-center">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="venta in detallesTicket">
+                                            <td class="text-center align-middle">{{$index+1}}</td>
+                                            <td class="align-middle font-weight-bold text-success">#{{venta.Folio}}</td>
+                                            
+                                            <td class="align-middle text-dark font-weight-bold">
+                                                <i class="fa fa-user-circle text-muted mr-1"></i> {{venta.Cliente}}
+                                            </td>
+                                            
+                                            <td class="align-middle">
+                                                <span class="badge badge-info px-2 py-1">{{venta.FormaPago}}</span>
+                                            </td>
+                                            <td class="align-middle text-muted">{{venta.Paqueteria}}</td>
+                                            <td class="text-center align-middle"><i class="fa fa-clock mr-1 text-muted"></i> {{venta.Fecha}}</td>
+                                            <td class="text-right align-middle font-weight-bold text-dark">{{venta.TotalVenta | currency}}</td>
+                                            <td class="text-center align-middle">
+                                                <button class="btn btn-sm btn-outline-success shadow-sm" title="Ir al Pedido" ng-click="irAlPedido(venta.Folio)">
+                                                    Ver Pedido <i class="fa fa-external-link-alt ml-1"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="text-center py-5 text-muted" ng-if="!detallesTicket || detallesTicket.length == 0">
+                                    <i class="fa fa-receipt fa-3x mb-3 text-light"></i><br>
+                                    <h5 class="font-weight-light">No hay ventas registradas en este rango.</h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="tab-top-productos" role="tabpanel">
+                            <h5 class="font-weight-bold text-dark mb-3">
+                                <i class="fa fa-star mr-1 text-warning"></i> Ranking de Productos (Del {{mantenimiento.dateOld}} al {{mantenimiento.dateNew}})
+                            </h5>
+                            <div class="row bg-white p-3 border rounded shadow-sm mx-0 mb-4">
+                                <div class="col-12">
+                                    <figure class="highcharts-figure mb-0">
+                                        <div id="graficaTopProductos"></div>
+                                    </figure>
+                                </div>
+                            </div>
+                            <div class="table-responsive bg-white rounded shadow-sm">
+                                <table class="table table-hover table-striped mb-0 text-sm" datatable="ng" ng-if="topProductos.length > 0">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th class="text-center" width="5%">#</th>
+                                            <th width="15%">Clave</th>
+                                            <th width="40%">Producto</th>
+                                            <th width="20%" class="text-center">Unidades Vendidas</th>
+                                            <th width="20%" class="text-right">Ingreso Generado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in topProductos">
+                                            <td class="text-center align-middle font-weight-bold text-muted">{{$index + 1}}</td>
+                                            <td class="align-middle">
+                                                <a href="?mod=Refacciones&opc=edit&id={{item._id}}" class="badge badge-info px-2 py-1 shadow-sm" style="font-size: 0.9rem;" title="Ver Refacción">
+                                                    {{item.Clave}} <i class="fas fa-external-link-alt ml-1" style="font-size: 0.7rem;"></i>
+                                                </a>
+                                            </td>
+                                            <td class="align-middle">
+                                                <strong class="text-dark">{{item.NombreProducto}}</strong><br>
+                                                <small class="text-muted">Modelo: {{item.Modelo || 'N/A'}}</small>
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <span class="font-weight-bold text-success" style="font-size: 1.2rem;">{{item.UnidadesVendidas}}</span>
+                                            </td>
+                                            <td class="text-right align-middle font-weight-bold text-dark" style="font-size: 1.1rem;">
+                                                {{item.IngresoTotal | currency}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="text-center py-5 text-muted" ng-if="!topProductos || topProductos.length == 0">
+                                    <i class="fa fa-box-open fa-3x mb-3 text-light"></i><br>
+                                    <h5 class="font-weight-light">No hay ventas registradas en este rango de fechas.</h5>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="modal fade" id="modalDetalleProducto" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="card card-danger card-outline shadow-lg w-100 border-0" style="border-radius: 12px;">
+                <div class="card-header bg-white border-bottom-0 pt-4 pb-0">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="font-weight-bold text-dark m-0">
+                            <i class="fa fa-box-open text-danger mr-2"></i> Detalles de Captura
+                        </h4>
+                        <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="bg-light p-3 rounded border mb-3 text-center">
+                        <h5 class="font-weight-bold text-danger mb-1">{{productoActual.Clave}}</h5>
+                        <p class="text-dark font-weight-bold mb-0" style="font-size: 1.1rem;">{{productoActual.Producto}}</p>
+                    </div>
+                    
+                    <ul class="list-group list-group-unbordered mb-3">
+                        <li class="list-group-item bg-transparent border-light d-flex justify-content-between align-items-center">
+                            <span class="text-muted"><i class="fa fa-user-edit mr-2"></i>Capturado por</span>
+                            <span class="font-weight-bold">{{productoActual.userCreated}}</span>
+                        </li>
+                        <li class="list-group-item bg-transparent border-light d-flex justify-content-between align-items-center">
+                            <span class="text-muted"><i class="fa fa-calendar-alt mr-2"></i>Fecha exacta</span>
+                            <span class="font-weight-bold text-primary">{{productoActual.dateCreated}}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-white text-right border-top-0 pb-4">
+                    <button type="button" class="btn btn-outline-secondary font-weight-bold px-4 shadow-sm" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+    .table-hover tbody tr:hover { 
+        background-color: #de0007 !important; 
+        transition: all 0.2s ease; 
+        cursor: pointer;
+    }
+
+    .table-hover tbody tr:hover td,
+    .table-hover tbody tr:hover td strong,
+    .table-hover tbody tr:hover td small,
+    .table-hover tbody tr:hover td span.text-success,
+    .table-hover tbody tr:hover td span.text-dark,
+    .table-hover tbody tr:hover td .text-muted { 
+        color: #ffffff !important; 
+    }
+
+    .table-hover tbody tr:hover .btn-outline-danger {
+        background-color: transparent !important;
+        border-color: #ffffff !important;
+        color: #ffffff !important;
+    }
+    .table-hover tbody tr:hover .btn-outline-danger:hover {
+        background-color: #ffffff !important;
+        color: #de0007 !important;
+    }
+</style>

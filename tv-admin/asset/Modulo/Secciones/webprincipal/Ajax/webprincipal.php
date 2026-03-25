@@ -7,15 +7,16 @@ date_default_timezone_set('America/Mexico_City');
 
 class WebPrincipal{
     private $conn;
-    private $jsonData = array("Bandera"=>0,"mensaje"=>"");
+    private $jsonData = array("Bandera"=>0, "mensaje"=>"");
     private $formulario = array();
+    private $foto;
     private $fecha;
     private $url;
 
     public function __construct($array) {
         $this->conn = new HelperMySql($array["server"], $array["user"], $array["pass"], $array["db"]);
-        $this->fecha = date("Y-m-d");
-        $this->url = preg_replace("#(admin\.)?#i","", $_SERVER["HTTP_ORIGIN"]);
+        $this->fecha = date("Y-m-d H:i:s");
+        $this->url = preg_replace("#(admin\.)?#i","", $_SERVER["HTTP_ORIGIN"] ?? '');
     }
 
     public function __destruct() {
@@ -23,124 +24,189 @@ class WebPrincipal{
     }
 
     public function main(){
-        $this->formulario = array_map("htmlspecialchars", $_POST);
-        $this->foto =  isset($_FILES)? $_FILES:array();
+        // Soporte Híbrido: Acepta tanto JSON (Angular moderno) como FormData (subida de archivos)
+        $json = json_decode(file_get_contents('php://input'), true);
+        if (!empty($json) && isset($json['imagen'])) {
+            $this->formulario = $json['imagen'];
+        } else {
+            $this->formulario = $_POST;
+        }
         
+        if (is_array($this->formulario)) {
+            $this->formulario = array_map("addslashes", $this->formulario);
+            $this->formulario = array_map("htmlspecialchars", $this->formulario);
+        }
+        
+        $this->foto = isset($_FILES) ? $_FILES : array();
+        
+        $opc = $this->formulario["opc"] ?? '';
 
-        switch ($this->formulario["opc"]) {
+        switch ($opc) {
             case 'get':
                 $this->jsonData["Data"] = $this->getImagen();
-                $this->jsonData["Bandera"] = 1;
-                $this->jsonData["categoria"] = $this->formulario["Categoria"];
                 $this->jsonData["Disabled"] = $this->getDisabledImg();
+                $this->jsonData["categoria"] = $this->formulario["Categoria"] ?? '';
+                $this->jsonData["Bandera"] = 1;
             break;
+
             case 'set':
-                if(count($this->foto) !=0){
+                if(count($this->foto) != 0){
                     if($this->subirImagen()){
                         if($this->setImagen()){
                             $this->jsonData["Bandera"] = 1;
-                            $this->jsonData["mensaje"] = "La imagen se guardo satisfactoriamente";
-                            $this->jsonData["categoria"] = $this->formulario["Categoria"];
-                        }else{
+                            $this->jsonData["mensaje"] = "La imagen se subió y guardó satisfactoriamente.";
+                            $this->jsonData["categoria"] = $this->formulario["Categoria"] ?? '';
+                            
+                            // BITÁCORA
+                            $categoria = $this->formulario["Categoria"] ?? 'General';
+                            $disenio = $this->formulario["Disenio"] ?? 'Desconocido';
+                            $nombreImg = $this->foto["file"]["name"] ?? 'imagen';
+                            $this->setBitacora("SUBIR_BANNER", "Subió un nuevo banner ($nombreImg) para $categoria en formato $disenio");
+                        } else {
                             $this->jsonData["Bandera"] = 0;
-                            $this->jsonData["mensaje"] = "Error: al intentar guardar la imagen en la base de datos"; 
+                            $this->jsonData["mensaje"] = "Error al intentar guardar la imagen en la base de datos."; 
                         }
-                    }else{
+                    } else {
                         $this->jsonData["Bandera"] = 0;
-                        $this->jsonData["mensaje"] = "Error: Al intentar subir la imagen al servidor";
+                        $this->jsonData["mensaje"] = "Error al intentar subir el archivo físico al servidor.";
                     }
                 } 
             break;
+
             case 'off':
                 if($this->setImagen()){
                     $this->jsonData["Bandera"] = 1;
-                    $this->jsonData["mensaje"] = "Imagen Eliminada";
-                    $this->jsonData["categoria"] = $this->formulario["Categoria"];
-                }else{
+                    $this->jsonData["mensaje"] = "Imagen eliminada permanentemente.";
+                    $this->jsonData["categoria"] = $this->formulario["Categoria"] ?? '';
+                    
+                    // BITÁCORA
+                    $id_banner = $this->formulario["_id"] ?? '';
+                    $categoria = $this->formulario["Categoria"] ?? '';
+                    $this->setBitacora("ELIMINAR_BANNER", "Eliminó definitivamente el banner ID $id_banner de la sección $categoria");
+                } else {
                     $this->jsonData["Bandera"] = 0;
-                    $this->jsonData["mensaje"] = "Error al intentar eliminar la Imagen";
+                    $this->jsonData["mensaje"] = "Error al intentar eliminar la Imagen.";
                 }
             break;
+
             case 'offcarrousel':
-                if($this->offcarrousel()){
+                if($this->cambiarEstatus(0)){
                     $this->jsonData["Bandera"] = 1;
-                    $this->jsonData["mensaje"] = "Imagen Desactivada del carrousel";
-                    $this->jsonData["categoria"] = $this->formulario["Categoria"];
-                }else{
+                    $this->jsonData["mensaje"] = "Imagen desactivada del carrousel.";
+                    $this->jsonData["categoria"] = $this->formulario["Categoria"] ?? '';
+                    
+                    // BITÁCORA
+                    $id_banner = $this->formulario["_id"] ?? '';
+                    $this->setBitacora("QUITAR_CARROUSEL", "Desactivó el banner ID $id_banner del Carrousel principal");
+                } else {
                     $this->jsonData["Bandera"] = 0;
-                    $this->jsonData["mensaje"] = "Error al intentar desactivar la Imagen";
+                    $this->jsonData["mensaje"] = "Error al intentar desactivar la Imagen.";
                 }
             break;
+
             case 'act':
-                if($this->actimagen()){
+                if($this->reemplazarImagenActiva()){
                     $this->jsonData["Bandera"] = 1;
-                    $this->jsonData["mensaje"] = "Imagen Reemplazada";
-                    $this->jsonData["categoria"] = $this->formulario["Categoria"];
-                    $this->PredImagen();
-                }else{
+                    $this->jsonData["mensaje"] = "Banner reemplazado y puesto en vivo.";
+                    $this->jsonData["categoria"] = $this->formulario["Categoria"] ?? '';
+                    
+                    // BITÁCORA
+                    $id_banner = $this->formulario["_id"] ?? '';
+                    $categoria = $this->formulario["Categoria"] ?? '';
+                    $this->setBitacora("ACTIVAR_BANNER", "Puso en vivo el banner ID $id_banner en la sección $categoria");
+                } else {
                     $this->jsonData["Bandera"] = 0;
-                    $this->jsonData["mensaje"] = "Error al intentar reemplazar la Imagen";
+                    $this->jsonData["mensaje"] = "Error al intentar reemplazar el Banner.";
                 }
             break;
+
             case 'carrouselPred':
-                if($this->carrouselPred()){
+                if($this->cambiarEstatus(1)){
                     $this->jsonData["Bandera"] = 1;
-                    $this->jsonData["mensaje"] = "Imagen agregada";
-                    $this->jsonData["categoria"] = $this->formulario["Categoria"];
-                }else{
+                    $this->jsonData["mensaje"] = "Imagen agregada al carrousel activo.";
+                    $this->jsonData["categoria"] = $this->formulario["Categoria"] ?? '';
+                    
+                    // BITÁCORA
+                    $id_banner = $this->formulario["_id"] ?? '';
+                    $this->setBitacora("AGREGAR_CARROUSEL", "Agregó el banner ID $id_banner al Carrousel activo");
+                } else {
                     $this->jsonData["Bandera"] = 0;
-                    $this->jsonData["mensaje"] = "Error al intentar agregar la Imagen";
+                    $this->jsonData["mensaje"] = "Error al intentar agregar la Imagen.";
                 }
             break;
         }
-        $this->jsonData["dominio"]=$this->url;
+
+        $this->jsonData["dominio"] = $this->url;
+        header('Content-Type: application/json');
         print json_encode($this->jsonData);
     }
-    private function offcarrousel(){
-        $sql = "UPDATE Imagenes SET Estatus = 0 WHERE _id = '{$this->formulario["_id"]}'";
-        return $this->conn->query($sql)? true: false;
-    }
-    
-    private function carrouselPred(){
-        $sql = "UPDATE Imagenes SET Estatus = 1 WHERE _id = '{$this->formulario["_id"]}'";
-        return $this->conn->query($sql)? true: false;
-    }
-    private function actimagen(){
-        $sql = "UPDATE Imagenes SET Estatus = 0 WHERE Estatus = 1 and Categoria = '{$this->formulario["Categoria"]}'";
-        return $this->conn->query($sql)? true: false;
+
+    private function setBitacora($accion, $detalles) {
+        $id_usuario = $_SESSION["id_usuario"] ?? $_SESSION["id"] ?? 0; 
+        $username = $_SESSION["nombre_usuario"] ?? $_SESSION["usr"] ?? 'Desarrollador'; 
+        
+        $modulo = 'Banners_Web';
+        $ip_usuario = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0'; 
+        
+        $detalles_limpios = addslashes($detalles);
+
+        $sql = "INSERT INTO Bitacora_Auditoria 
+                (id_usuario, username, modulo, accion, detalles, fecha, ip_usuario) 
+                VALUES 
+                ($id_usuario, '$username', '$modulo', '$accion', '$detalles_limpios', '{$this->fecha}', '$ip_usuario')";
+        
+        $this->conn->query($sql);
     }
 
-    private function PredImagen(){
-        $sql = "UPDATE Imagenes SET Estatus = 1 WHERE _id = '{$this->formulario["_id"]}'";
-        return $this->conn->query($sql)? true: false;
+    private function cambiarEstatus($estatus){
+        $id = $this->formulario["_id"] ?? '';
+        $sql = "UPDATE Imagenes SET Estatus = $estatus WHERE _id = '$id'";
+        return $this->conn->query($sql);
+    }
+
+    private function reemplazarImagenActiva(){
+        $categoria = $this->formulario["Categoria"] ?? '';
+        $id = $this->formulario["_id"] ?? '';
+        
+        $sqlOff = "UPDATE Imagenes SET Estatus = 0 WHERE Estatus = 1 AND Categoria = '$categoria'";
+        $this->conn->query($sqlOff);
+        
+        $sqlOn = "UPDATE Imagenes SET Estatus = 1 WHERE _id = '$id'";
+        return $this->conn->query($sqlOn);
     }
 
     private function setImagen(){
-        switch($this->formulario["opc"]){
-            case 'set':
-                $sql = "INSERT INTO Imagenes(imagen,Categoria,Estatus, FechaCreacion, FechaModificacion, Diseño) values(
-                   '{$this->foto["file"]["name"]}','{$this->formulario["Categoria"]}','{$this->formulario["Estatus"]}','$this->fecha','$this->fecha',
-                   '{$this->formulario["Disenio"]}')";
-            break;
-            case 'off':
-                $sql = "DELETE FROM Imagenes Where _id='{$this->formulario["_id"]}'";
-                $this->BorrarImagen();
-            break;
+        $categoria = $this->formulario["Categoria"] ?? '';
+        $disenio = $this->formulario["Disenio"] ?? '';
+        $id = $this->formulario["_id"] ?? '';
+        $opc = $this->formulario["opc"] ?? '';
+
+        if($opc == 'set'){
+            $nombreFile = $this->foto["file"]["name"];
+            $estatus = (int)($this->formulario["Estatus"] ?? 0);
+            
+            $sql = "INSERT INTO Imagenes(imagen, Categoria, Estatus, FechaCreacion, FechaModificacion, Diseño) 
+                    VALUES('$nombreFile', '$categoria', $estatus, '{$this->fecha}', '{$this->fecha}', '$disenio')";
+            return $this->conn->query($sql);
+
+        } else if($opc == 'off'){
+            $this->BorrarImagenFisica($id); 
+            $sql = "DELETE FROM Imagenes WHERE _id = '$id'";
+            return $this->conn->query($sql);
         }
-        return $this->conn->query($sql)? true: false;
+        return false;
     }
 
     private function getDisabledImg(){
         $array = array("Escritorio"=>array(), "Movil"=>array());
-        $limit = "";
-        $diseño = array("Escritorio","Movil");
-        $categoria = array("Principal","Catalogos","Compras","Nosotros","Contacto","Session","Carrousel");
+        $categoria = $this->formulario["Categoria"] ?? '';
+        $disenos = array("Escritorio", "Movil");
 
-        foreach($diseño as $key => $value){
-            $sql = "Select * from Imagenes where Categoria='{$this->formulario["Categoria"]}' and Estatus = 0 and Diseño='$value' $limit";
-            $id = $this->conn->query($sql);
-            while($row = $this->conn->fetch($id)){
-                array_push($array[$value], $row);
+        foreach($disenos as $diseno){
+            $sql = "SELECT * FROM Imagenes WHERE Categoria = '$categoria' AND Estatus = 0 AND Diseño = '$diseno' ORDER BY _id DESC";
+            $res = $this->conn->query($sql);
+            while($row = $this->conn->fetch($res)){
+                array_push($array[$diseno], $row);
             }
         }
         return $array;
@@ -148,52 +214,45 @@ class WebPrincipal{
 
     private function getImagen(){
         $array = array("Escritorio"=>array(), "Movil"=>array());
-        $limit = "";
-        $diseño = array("Escritorio","Movil");
-        $categoria = array("Principal","Catalogos","Compras","Nosotros","Contacto","Session","Carrousel");
-        if(count(array_keys($categoria,$this->formulario["Categoria"]))!=0){
-            $limit = "limit 1";
-        }
-        foreach($diseño as $key => $value){
-            $sql = "Select * from Imagenes where Categoria='{$this->formulario["Categoria"]}' and Estatus = {$this->formulario["Estatus"]} and Diseño='$value'";
-            $id = $this->conn->query($sql);
-            while($row = $this->conn->fetch($id)){
-                array_push($array[$value], $row);
+        $categoria = $this->formulario["Categoria"] ?? '';
+        $estatus = (int)($this->formulario["Estatus"] ?? 0);
+        $disenos = array("Escritorio", "Movil");
+        
+        $limit = ($categoria != "Carrousel") ? "LIMIT 1" : "";
+
+        foreach($disenos as $diseno){
+            $sql = "SELECT * FROM Imagenes WHERE Categoria = '$categoria' AND Estatus = $estatus AND Diseño = '$diseno' ORDER BY _id DESC $limit";
+            $res = $this->conn->query($sql);
+            while($row = $this->conn->fetch($res)){
+                array_push($array[$diseno], $row);
             }
         }
-
-        
         return $array;
     }
 
     private function subirImagen(){
-        
-        if($this->foto["file"]["name"]!="" and $this->foto["file"]["size"]!=0){
-            $subdir ="../../../../../../"; 
+        if(isset($this->foto["file"]["name"]) && $this->foto["file"]["size"] > 0){
+            $subdir = "../../../../../../"; 
             $dir = "images/Banners/";
             $archivo = $this->foto["file"]["name"];
+            
             if(!is_dir($subdir.$dir)){
-                mkdir($subdir.$dir,0755);
+                mkdir($subdir.$dir, 0755, true);
             }
-            if($archivo && move_uploaded_file($this->foto["file"]["tmp_name"], $subdir.$dir.$archivo)){
-                //$this->rutaimagen= $dir.$archivo;
-                return true;
-            }else{
-                echo "no se subio la imagen";
-            }
-        }else{
-            return false;
+            return move_uploaded_file($this->foto["file"]["tmp_name"], $subdir.$dir.$archivo);
         }
+        return false;
     }
 
-    private function BorrarImagen(){
-        $sql = "SELECT imagen FROM Imagenes Where _id='{$this->formulario["_id"]}'";
+    private function BorrarImagenFisica($id){
+        $sql = "SELECT imagen FROM Imagenes WHERE _id = '$id'";
         $result = $this->conn->query($sql);
-        $imagen = $result->fetch_array()[0];
-        if(file_exists("../../../../../../images/Banners/{$imagen}")){
-            return unlink("../../../../../../images/Banners/{$imagen}");
-        }else{
-            return false;
+        if($row = $this->conn->fetch($result)){
+            $imagen = $row["imagen"];
+            $ruta = "../../../../../../images/Banners/{$imagen}";
+            if(file_exists($ruta)){
+                unlink($ruta);
+            }
         }
     }
 }

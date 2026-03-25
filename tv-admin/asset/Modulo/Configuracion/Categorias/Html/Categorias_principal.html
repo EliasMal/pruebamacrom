@@ -1,119 +1,197 @@
-<div ng-controller="CategoriasCrtl">
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0 text-dark"><i class="ion-settings mr-1"></i> Categorias</h1>
-            </div><!-- /.col -->
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
-                    <li class="breadcrumb-item active">Categorias</li>
-                </ol>
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-</div>
+<style>
+    .table-hover tbody tr:hover td, .table-hover tbody tr:hover td.text-danger, .table-hover tbody tr:hover td.text-muted, .table-hover tbody tr:hover td span { color: #ffffff !important; }
+    .table-hover tbody tr:hover td .btn-danger { background-color: #ffffff !important; color: #dc3545 !important; border-color: #ffffff !important; }
+    .table-hover tbody tr:hover td .btn-primary { background-color: #ffffff !important; color: #007bff !important; border-color: #ffffff !important; }
+</style>
+<div ng-controller="CategoriasCrtl" ng-cloak>
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 align-items-center">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark font-weight-bold">
+                        <i class="fas fa-tags text-danger mr-2"></i> Categorías
+                    </h1>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <ol class="breadcrumb float-sm-right bg-transparent p-0 m-0">
+                        <li class="breadcrumb-item"><a href="?mod=home" class="text-danger">Inicio</a></li>
+                        <li class="breadcrumb-item active">Gestión de Categorías</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <section class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12 connectedSortable">
-                <div class="card card-danger">
-                    <div class="card-header d-flex p-0">
-                        <h3 class="card-title p-3">
-                            <i class="fa fa-users mr-1"></i>
-                            Registro de Categorias
-                        </h3>
-                        <div class="card-tools">
-                            <button class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                        </div>
-
-                    </div><!-- /.card-header -->
-                    
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-12 ">
-                                    <span class="switch switch-sm pull-right">
-                                        <input type="checkbox" class="switch" id="switch-id" ng-model="historico" ng-click="getCategorias()">
-                                        <label for="switch-id">Historico</label>
-                                    </span>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <section class="col-12">
+                    <div class="card card-danger card-outline shadow-sm rounded">
+                        <div class="card-header bg-white d-flex align-items-center pt-3 pb-0 border-bottom-0">
+                            <h3 class="card-title font-weight-bold text-dark mb-0">
+                                <i class="fas fa-list-ul text-muted mr-2"></i> Directorio de Categorías
+                            </h3>
+                            <div class="card-tools ml-auto">
+                                <button class="btn btn-danger btn-sm font-weight-bold px-3 shadow-sm" ng-click="btnNuevaCategoria()">
+                                    <i class="fas fa-plus-circle mr-1"></i> Nueva Categoría
+                                </button>
                             </div>
-                            <div class="col-lg-12">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <th class="text-center" width="5%">#</th>
-                                        <th class="text-center" width="25%">Categoria</th>
-                                        <th class="text-center" width="15%">Fecha Modificación</th>
-                                        <th class="text-center" width="15%">Usuario Modificador</th>
-                                        <th class="text-center" width="10%">Estatus</th>
-                                        <th class="text-center" width="10%">Acciones</th>
+                        </div>
+                        
+                        <div class="card-body">
+                            <div class="row mb-4 bg-light p-3 rounded mx-0 align-items-center shadow-sm">
+                                <div class="col-md-4">
+                                    <label class="font-weight-normal text-muted small mb-0">Mostrar 
+                                        <select class="custom-select custom-select-sm form-control-sm w-auto mx-1 shadow-sm" 
+                                                ng-model="paginador.limit" 
+                                                ng-change="paginador.page = 0; getCategorias()">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select> registros
+                                    </label>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <div class="input-group input-group-sm shadow-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-white border-right-0"><i class="fas fa-search text-muted"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control border-left-0" placeholder="Buscar categoría..." ng-model="txtfind" ng-model-options="{debounce:500}" ng-change="paginador.page = 0; getCategorias()">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 d-flex justify-content-end align-items-center">
+                                    <div class="custom-control custom-switch custom-switch-danger custom-control-inline mb-0">
+                                        <input type="checkbox" class="custom-control-input cursor-pointer" id="switch-historico" ng-model="historico" ng-change="paginador.page = 0; getCategorias()">
+                                        <label class="custom-control-label font-weight-normal text-muted cursor-pointer" for="switch-historico">
+                                            <i class="fas fa-archive mr-1"></i> Ver Histórico
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="table-responsive">
+                                <table class="table table-hover table-striped border-bottom w-100">
+                                    <thead class="bg-light text-dark border-top border-bottom">
+                                        <tr>
+                                            <th class="text-center align-middle border-0" width="5%">#</th>
+                                            <th class="text-center align-middle border-0" width="10%">Portada</th>
+                                            <th class="text-left align-middle border-0" width="25%">Nombre de Categoría</th>
+                                            <th class="text-center align-middle border-0" width="20%">Última Modificación</th>
+                                            <th class="text-center align-middle border-0" width="15%">Usuario</th>
+                                            <th class="text-center align-middle border-0" width="10%">Estatus</th>
+                                            <th class="text-center align-middle border-0" width="15%">Acciones</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="categoria in categorias">
-                                            <td class="text-center">{{$index +1}}</td>
-                                            <td class="text-center">{{categoria.Categoria}}</td>
-                                            <td class="text-center">{{categoria.FechaModificacion}}</td>
-                                            <td class="text-center">{{categoria.USREdicion}}</td>
-                                            <td class="text-center"><span class="badge {{categoria.Status == 1? 'badge-success':'badge-danger'}}">{{categoria.Status == 1? "Activo":"Baja"}}</span>{{}}</td>
-                                            <td class="text-center">
-                                                <div class="btn-group" role="group">
-                                                    <button id="btnGroupDrop1" type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        
+                                            <td class="text-center align-middle font-weight-bold text-muted">{{$index + 1 + (paginador.page * 1)}}</td>
+                                            <td class="text-center align-middle">
+                                                <img ng-src="{{categoria.foto ? '../../images/Categorias/' + categoria._id + '.png' : 'Images/boxed-bg.jpg'}}" class="img-thumbnail rounded-circle shadow-sm" style="width: 45px; height: 45px; object-fit: cover; border: 2px solid #fff;">
+                                            </td>
+                                            <td class="text-left align-middle font-weight-bold text-dark">{{categoria.Categoria}}</td>
+                                            <td class="text-center align-middle text-muted small">
+                                                <i class="far fa-calendar-alt mr-1"></i> {{categoria.FechaModificacion}}
+                                            </td>
+                                            <td class="text-center align-middle text-muted small">
+                                                <i class="far fa-user mr-1"></i> {{categoria.USREdicion}}
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <span class="badge {{categoria.Status == 1 ? 'badge-success' : 'badge-danger'}} px-3 py-2 rounded-pill shadow-sm cursor-pointer" ng-click="toggleStatus(categoria)" title="Clic para cambiar estatus">
+                                                    <i class="fas {{categoria.Status == 1 ? 'fa-check' : 'fa-times'}} mr-1"></i>
+                                                    {{categoria.Status == 1 ? "Activa" : "Baja"}}
+                                                </span>
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <div class="btn-group shadow-sm">
+                                                    <button type="button" class="btn btn-primary btn-sm mx-1 rounded shadow-sm" ng-click="opcEditar(categoria)" title="Editar Categoría">
+                                                        <i class="fas fa-edit"></i>
                                                     </button>
-                                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                      <a class="dropdown-item" ng-click="opcEditar(categoria)"><i class="fa fa-edit"> Editar</i></a>
-                                                      <a class="dropdown-item" ng-click="categoria.Status == 1? opcDesactivar(categoria._id):opcActivar(categoria._id)"><i class="fa {{categoria.Status == 1? ' fa-times-circle-o':'fa-check-square-o'}}"></i> {{categoria.Status == 1? "Desactivar":"Activar"}}</a>
-                                                    </div>
+                                                    <button type="button" class="btn btn-danger btn-sm mx-1 rounded shadow-sm" ng-click="opcEliminar(categoria._id)" title="Eliminar permanentemente">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
                                                 </div>
                                             </td>
+                                        </tr>
+                                        <tr ng-if="categorias.length == 0">
+                                            <td colspan="7" class="text-center text-muted py-4">No se encontraron registros</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                    </div><!-- /.card-body -->
-                    <div class="card-footer">
-                        <button class="btn btn-danger pull-right" ng-click="btnNuevaCategoria()"><i class="fa fa-user-plus"> Nueva Categoria</i></button>
-<!--                        <button class="btn btn-dafult" ng-click="btnGetarticulo()"> Obtener prueba</button>-->
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
-</section>
 
-<!-- Modal -->
-<div class="modal fade" id="mcategoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">{{nuevo? "Nueva":"Editar"}} Categoria</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-4" >
-                        <center>
-                            <img ng-src="{{img}}" alt="" class="img-responsive img-thumbnail"/>
-                        </center>
+                        <div class="card-footer bg-white border-top-0 pt-0 pb-3">
+                            <div class="row align-items-center">
+                                <div class="col-sm-6">
+                                    <div class="text-muted small font-weight-bold">
+                                        Mostrando {{ categorias.length > 0 ? (paginador.page * 1) + 1 : 0 }} - 
+                                        {{ ((paginador.page * 1) + (paginador.limit * 1)) > noCategorias ? noCategorias : ((paginador.page * 1) + (paginador.limit * 1)) }} 
+                                        de {{noCategorias}} registros
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 text-right">
+                                    <div class="btn-group shadow-sm">
+                                        <button type="button" class="btn btn-light btn-sm border" ng-click="btnDisminuir()" ng-disabled="(paginador.page * 1) == 0">
+                                            <i class="fas fa-chevron-left mr-1"></i> Anterior
+                                        </button>
+                                        <button type="button" class="btn btn-light btn-sm border" ng-click="btnAumentar()" ng-disabled="((paginador.page * 1) + (paginador.limit * 1)) >= noCategorias">
+                                            Siguiente <i class="fas fa-chevron-right ml-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-8">
-                        <label for="txtcategoria">Nombre de la categoria:</label>
-                        <input type="text" name="txtcategoria" id="txtcategoria" class="form-control" ng-model="categoria.Categoria"/>
-                        <label for="txtfile"></label>
-                        <input type="file" name="txtfile" id="txtfile" class="form-control" uploader-model="categoria.file"/>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger" ng-click="nuevo? btnCrearCategoria():btnEditarCategoria()"> {{nuevo? "Crear":"Guardar"}} Categoria</button>
+                </section>
             </div>
         </div>
-    </div>
-</div>
+    </section>
 
+    <div class="modal fade" id="mcategoria" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <form class="modal-content border-0 shadow-lg" ng-submit="nuevo ? btnCrearCategoria() : btnEditarCategoria()">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title font-weight-bold">
+                        <i class="fas {{nuevo ? 'fa-plus-circle' : 'fa-edit'}} mr-2"></i> {{nuevo ? "Crear Nueva Categoría" : "Modificar Categoría"}}
+                    </h5>
+                    <button type="button" class="close text-white opacity-100" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-4 bg-light">
+                    <div class="row align-items-center bg-white p-3 rounded shadow-sm mx-0">
+                        <div class="col-lg-4 text-center mb-4 mb-lg-0 border-right">
+                            <label class="text-muted mb-3 d-block">Vista Previa</label>
+                            <div class="position-relative d-inline-block">
+                                <img ng-src="{{img}}" alt="Preview" class="img-fluid rounded shadow-sm" style="height: 160px; width: 160px; object-fit: cover; border: 3px solid #dee2e6;"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 pl-lg-4">
+                            <div class="form-group mb-4">
+                                <label for="txtcategoria" class="font-weight-bold text-dark">Nombre de la Categoría <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-white"><i class="fas fa-tag text-danger"></i></span>
+                                    </div>
+                                    <input type="text" id="txtcategoria" class="form-control form-control-lg text-uppercase border-danger shadow-sm" ng-model="categoria.Categoria" placeholder="Ej. ACCESORIOS EXTERIORES" autocomplete="off"/>
+                                </div>
+                            </div>
+                            <div class="form-group mb-0">
+                                <label for="txtfile" class="font-weight-bold text-dark">Imagen de Portada (Max 512KB)</label>
+                                <div class="custom-file shadow-sm">
+                                    <input type="file" class="custom-file-input cursor-pointer" id="txtfile" accept="image/png, image/jpeg">
+                                    <label class="custom-file-label text-muted" for="txtfile" data-browse="Explorar">Seleccionar archivo...</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-white border-top-0 pt-0 pb-3 pr-4">
+                    <button type="button" class="btn btn-outline-secondary font-weight-bold px-4 shadow-sm" data-dismiss="modal"><i class="fas fa-times mr-1"></i> Cancelar</button>
+                    <button type="submit" class="btn btn-danger shadow-sm font-weight-bold px-4 ml-2 shadow-sm"><i class="fas fa-save mr-1"></i> {{nuevo ? "Guardar Categoría" : "Actualizar Categoría"}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

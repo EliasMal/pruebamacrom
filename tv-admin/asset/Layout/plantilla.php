@@ -99,6 +99,9 @@
 <script src="./Js/angular/angular-recaptcha.min.js"></script>
 <script src="./Js/angular/angular-ui-select.min.js"></script>
 <script src="./Js/angular/first.js"></script>
+<script src="./Modulo/Configuracion/Permisos/Js/Permisos.js"></script>
+<script src="./Modulo/Configuracion/Bitacora/Js/Bitacora.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
   $.widget.bridge('uibutton', $.ui.button)

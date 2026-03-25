@@ -1,21 +1,9 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of Marcas
- *
- * @author francisco
- */
-
     session_name("loginUsuario");
     session_start();
     require_once "../../../../Clases/dbconectar.php";
     require_once "../../../../Clases/ConexionMySQL.php";
+    require_once "../../../../Clases/Funciones.php";
     date_default_timezone_set('America/Mexico_City');
     
     class Marcas {
@@ -23,6 +11,7 @@
         private $jsonData = array("Bandera"=>0,"mensaje"=>"");
         private $formulario = array();
         private $url;
+        private $foto;
         
         public function __construct($array) {
             $this->conn = new HelperMySql($array["server"], $array["user"], $array["pass"], $array["db"]);
@@ -35,86 +24,76 @@
         
         public function principal(){
             $this->formulario = array_map("htmlspecialchars", $_POST);
-            $this->foto =  isset($_FILES)? $_FILES:array();
+            $this->foto = isset($_FILES) ? $_FILES : array();
             
             switch ($this->formulario["opc"]) {
                 case 'buscar':
-                    $this->jsonData["Data"]["noRegistros"] = $this->getNoMarcas($this->formulario["find"]);
-                    $this->jsonData["Data"]["Registros"] = $this->getMarcas($this->formulario["find"],$this->formulario["skip"],$this->formulario["limit"]);
+                    $find = isset($this->formulario["find"]) ? $this->formulario["find"] : "";
+                    $skip = isset($this->formulario["skip"]) ? intval($this->formulario["skip"]) : 0;
+                    $limit = isset($this->formulario["limit"]) ? intval($this->formulario["limit"]) : 10;
+                    
+                    $this->jsonData["Data"]["noRegistros"] = $this->getNoMarcas($find);
+                    $this->jsonData["Data"]["Registros"] = $this->getMarcas($find, $skip, $limit);
                     $this->jsonData["Bandera"] = 1;
                     break;
                 case 'edit':
                 case 'new':
                 case 'disabled':
                 case 'enabled':
+                case 'delete':
                     if($this->setMarcas()){
-                        $this->formulario["lastid"] = $this->formulario["opc"]=="edit"? $this->formulario["_id"]:$this->conn->last_id();
-                        /*Actualizar los colores de los productos*/
-                        $this->setProductos();
-                        if(count($this->foto)!=0){
-                            $this->subirImagen();
-                        }
+                        $this->formulario["lastid"] = $this->formulario["opc"] == "edit" ? intval($this->formulario["_id"]) : $this->conn->last_id();
+                        if($this->formulario["opc"] == 'edit' || $this->formulario["opc"] == 'new') $this->setProductos();
+                        if(count($this->foto) != 0) $this->subirImagen();
+                        
                         $this->jsonData["Bandera"] = 1;
                         $this->jsonData["mensaje"] = $this->getMensajeSuccess();
-                    }else{
-                        $this->jsonData["mensaje"] = $this->getMensajeError();
+                    } else {
+                        if(empty($this->jsonData["mensaje"])) $this->jsonData["mensaje"] = $this->getMensajeError();
                     }
                     break;
-                
             }
-            $this->jsonData["dominio"]=$this->url;
+            $this->jsonData["dominio"] = $this->url;
             print json_encode($this->jsonData);
         }
         
         private function getMensajeSuccess(){
-            $mensaje = "";
-                 switch($this->formulario["opc"]){
-                    case 'new':
-                        $mensaje = "La Marca ha sido Creada";
-                        break;
-                    case 'edit':
-                        $mensaje = "La Marca ha sido Modificada";
-                        break;
-                    case 'disabled':
-                        $mensaje = "La Marca ha sido Desactivada";
-                        break;
-                    case 'enabled':
-                        $mensaje = "La Marca ha sido Activada";
-                        break;
-                 }
-            return $mensaje;
+            switch($this->formulario["opc"]){
+                case 'new': return "La Agencia ha sido Creada";
+                case 'edit': return "La Agencia ha sido Modificada";
+                case 'disabled': return "La Agencia ha sido Desactivada";
+                case 'enabled': return "La Agencia ha sido Activada";
+                case 'delete': return "La Agencia ha sido Eliminada permanentemente";
+            }
+            return "";
         }
         
         private function getMensajeError(){
-            $mensaje = "";
-                 switch($this->formulario["opc"]){
-                    case 'new':
-                        $mensaje = "Error: La Marca no ha sido Creada";
-                        break;
-                    case 'edit':
-                        $mensaje = "Error: La Marca no ha sido Modificada";
-                        break;
-                    case 'disabled':
-                        $mensaje = "Error: La Marca no ha sido Desactivada";
-                        break;
-                    case 'enabled':
-                        $mensaje = "Error: La Marca no ha sido Activada";
-                        break;
-                 }
-            return $mensaje;
+            switch($this->formulario["opc"]){
+                case 'new': return "Error: La Agencia no ha sido Creada";
+                case 'edit': return "Error: La Agencia no ha sido Modificada";
+                case 'disabled': return "Error: La Agencia no ha sido Desactivada";
+                case 'enabled': return "Error: La Agencia no ha sido Activada";
+                case 'delete': return "Error: No se pudo eliminar la Agencia";
+            }
+            return "";
         }
 
         private function getNoMarcas($find=""){
-            $sql = "SELECT count(*) as total FROM Marcas WHERE Estatus = {$this->formulario["historico"]} and Marca like '%$find%'";
+            $find_seguro = addslashes(trim($find));
+            $hist_seguro = intval($this->formulario["historico"]);
+            $sql = "SELECT count(*) as total FROM Marcas WHERE Estatus = $hist_seguro AND Marca LIKE '%$find_seguro%'";
             $row = $this->conn->fetch($this->conn->query($sql));
             return $row["total"];
         }
         
         private function getMarcas($find="", $skip=0, $limit=10){
             $array = array();
-            $sql = "SELECT * FROM Marcas where Estatus = {$this->formulario["historico"]} and Marca like '%$find%' Limit $skip, $limit";
+            $find_seguro = addslashes(trim($find));
+            $hist_seguro = intval($this->formulario["historico"]);
+            $sql = "SELECT * FROM Marcas WHERE Estatus = $hist_seguro AND Marca LIKE '%$find_seguro%' LIMIT $skip, $limit";
             $id = $this->conn->query($sql);
-            while($row= $this->conn->fetch($id)){
+            while($row = $this->conn->fetch($id)){
                 $row["foto"] = file_exists("../../../../../../images/Marcas/".$row["_id"].".png");
                 array_push($array, $row);
             }
@@ -123,59 +102,80 @@
         
         private function setMarcas(){
             $sql = "";
-            switch($this->formulario["opc"]){
-                case 'new':
-                    $sql = "INSERT INTO Marcas(Marca, Estatus, USRCreacion, USRModificacion, FechaCreacion, FechaModificacion, Color) values "
-                        . "('{$this->formulario["Marca"]}','1','{$_SESSION["nombre"]}','{$_SESSION["nombre"]}','".date("Y-m-d H:i:s")."','".date("Y-m-d H:i:s")."','{$this->formulario["Color"]}')";
-                    break;
-                case 'edit':
-                    $sql = "UPDATE Marcas SET Marca = '{$this->formulario["Marca"]}', USRModificacion='{$_SESSION["nombre"]}', FechaModificacion='".date("Y-m-d H:i:s")."', Color='{$this->formulario["Color"]}' "
-                            . "WHERE _id = ".$this->formulario["_id"];
-                    
-                    break;
-                case 'disabled':
-                    $sql = "UPDATE Marcas SET Estatus = 0 , USRModificacion='{$_SESSION["nombre"]}', FechaModificacion='".date("Y-m-d H:i:s")."' "
-                            . "WHERE _id = ".$this->formulario["_id"]; 
-                    break;
-                case 'enabled':
-                    $sql = "UPDATE Marcas SET Estatus = 1 , USRModificacion='{$_SESSION["nombre"]}', FechaModificacion='".date("Y-m-d H:i:s")."' "
-                            . "WHERE _id = ".$this->formulario["_id"]; 
-                    break;
-            }
-            return $this->conn->query($sql) or $this->jsonData["error"] = $this->conn->error;
-        }
-        
-        private function setProductos(){
-            $sql = "select * from Producto where _idMarca=".$this->formulario["lastid"];
-            $id = $this->conn->query($sql);
-            while($row = $this->conn->fetch($id)){
-                $sql = "Update Producto set Color = '{$this->formulario["Color"]}' where _id = '{$row["_id"]}'";
-                $this->conn->query($sql);
-            }
-            return;
-        }
-        
-        private function subirImagen(){
-            //print_r($this->foto);
-            if($this->foto["file"]["name"]!="" and $this->foto["file"]["size"]!=0){
-                $subdir ="../../../../../../"; 
-                $dir = "images/Marcas/";
-                $archivo = $this->formulario["lastid"].".png";
-                if(!is_dir($subdir.$dir)){
-                    mkdir($subdir.$dir,0755);
+            $usr_seguro = addslashes($_SESSION["nombre"]);
+            $fecha_actual = date("Y-m-d H:i:s");
+            $accionLog = "";
+            $detallesLog = "";
+
+            if($this->formulario["opc"] == 'new' || $this->formulario["opc"] == 'edit') {
+                $marca_segura = addslashes(trim($this->formulario["Marca"]));
+                $id_condicion = ($this->formulario["opc"] == 'edit') ? " AND _id != " . intval($this->formulario["_id"]) : "";
+                $checkSql = "SELECT _id FROM Marcas WHERE Marca = '$marca_segura'" . $id_condicion;
+                $resCheck = $this->conn->query($checkSql);
+                if ($this->conn->fetch($resCheck)) {
+                    $this->jsonData["mensaje"] = "Ya existe una agencia registrada con ese nombre.";
+                    return false;
                 }
-                if($archivo && move_uploaded_file($this->foto["file"]["tmp_name"], $subdir.$dir.$archivo)){
-                    //$this->rutaimagen= $dir.$archivo;
-                    return true;
-                }else{
-                    echo "no se subio la imagen";
+            }
+
+            if($this->formulario["opc"] == 'new') {
+                $marca_segura = addslashes(trim($this->formulario["Marca"]));
+                $color_seguro = addslashes($this->formulario["Color"]);
+                $sql = "INSERT INTO Marcas (Marca, Estatus, USRCreacion, USRModificacion, FechaCreacion, FechaModificacion, Color) 
+                        VALUES ('$marca_segura', 1, '$usr_seguro', '$usr_seguro', '$fecha_actual', '$fecha_actual', '$color_seguro')";
+                $accionLog = "CREAR_MARCA"; $detallesLog = "Agencia creada: $marca_segura";
+            } else {
+                $id_seguro = intval($this->formulario["_id"]);
+                if($this->formulario["opc"] == 'edit'){
+                    $marca_segura = addslashes(trim($this->formulario["Marca"]));
+                    $color_seguro = addslashes($this->formulario["Color"]);
+                    $sql = "UPDATE Marcas SET Marca = '$marca_segura', USRModificacion = '$usr_seguro', FechaModificacion = '$fecha_actual', Color = '$color_seguro' WHERE _id = $id_seguro";
+                    $accionLog = "EDITAR_MARCA"; $detallesLog = "Agencia editada. ID: $id_seguro";
+                } else if($this->formulario["opc"] == 'disabled'){
+                    $sql = "UPDATE Marcas SET Estatus = 0, USRModificacion = '$usr_seguro', FechaModificacion = '$fecha_actual' WHERE _id = $id_seguro"; 
+                    $accionLog = "DESACTIVAR_MARCA"; $detallesLog = "Agencia desactivada. ID: $id_seguro";
+                } else if($this->formulario["opc"] == 'enabled'){
+                    $sql = "UPDATE Marcas SET Estatus = 1, USRModificacion = '$usr_seguro', FechaModificacion = '$fecha_actual' WHERE _id = $id_seguro"; 
+                    $accionLog = "ACTIVAR_MARCA"; $detallesLog = "Agencia activada. ID: $id_seguro";
+                } else if($this->formulario["opc"] == 'delete'){ 
+                    $sql = "DELETE FROM Marcas WHERE _id = $id_seguro"; 
+                    $accionLog = "ELIMINAR_MARCA"; $detallesLog = "Agencia eliminada permanentemente. ID: $id_seguro";
                 }
-            }else{
+            }
+
+            if($this->conn->query($sql)){
+                Funciones::guardarBitacora($this->conn, 'Agencias', $accionLog, $detallesLog);
+                return true;
+            } else {
+                $this->jsonData["error"] = $this->conn->error;
                 return false;
             }
         }
         
+        private function setProductos(){
+            $id_seguro = intval($this->formulario["lastid"]);
+            $color_seguro = addslashes($this->formulario["Color"]);
+            $sql = "SELECT _id FROM Producto WHERE _idMarca = $id_seguro";
+            $id = $this->conn->query($sql);
+            while($row = $this->conn->fetch($id)){
+                $prod_id = intval($row["_id"]);
+                $sqlUpdate = "UPDATE Producto SET Color = '$color_seguro' WHERE _id = $prod_id";
+                $this->conn->query($sqlUpdate);
+            }
+        }
+        
+        private function subirImagen(){
+            if(isset($this->foto["file"]) && $this->foto["file"]["name"] != "" && $this->foto["file"]["size"] != 0){
+                $subdir = "../../../../../../"; $dir = "images/Marcas/";
+                $archivo = $this->formulario["lastid"].".png";
+                if(!is_dir($subdir.$dir)) mkdir($subdir.$dir, 0755, true);
+                move_uploaded_file($this->foto["file"]["tmp_name"], $subdir.$dir.$archivo);
+                return true;
+            }
+            return false;
+        }
     }
     
     $app = new Marcas($array_principal);
     $app->principal();
+?>

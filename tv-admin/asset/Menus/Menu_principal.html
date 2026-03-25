@@ -1,30 +1,21 @@
-<!-- Main Sidebar Container -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <div ng-controller="asideCtrl">
     <aside class="main-sidebar sidebar-dark-primary elevation-4" ng-init="username='{usr}'">
-    <!-- Brand Logo -->
     <a href="?mod=home" class="brand-link">
       <img src="Images/logomacrom.png" alt="Logo"  style="opacity: .8">
-<!--      <span class="brand-text font-weight-light text-center"><b>RZ</b>Education</span>-->
     </a>
-
-    <!-- Sidebar -->
     <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <!--<img ng-src="{{srcimagen}}" class="img-circle elevation-2" alt="User Image">-->
             <img src="{imagen}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-            <a href="#" ng-click="btnPrueba()" class="d-block">{nombrecorto}</a>
+            <a href="?mod=Perfil" class="d-block">{nombrecorto}</a>
         </div>
       </div>
 
-      <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
             <li class="nav-item">
                 <a href="?mod=home" class="nav-link">
                     <i class="nav-icon fa fa-dashboard"></i>
@@ -38,8 +29,6 @@
             {menus}
         </ul>
       </nav>
-      <!-- /.sidebar-menu -->
     </div>
-    <!-- /.sidebar -->
   </aside>
 </div>

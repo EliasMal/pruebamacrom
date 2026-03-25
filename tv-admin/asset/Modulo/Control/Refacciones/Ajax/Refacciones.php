@@ -1,9 +1,9 @@
 <?php
-
     session_name("loginUsuario");
     session_start();
     require_once "../../../../Clases/dbconectar.php";
     require_once "../../../../Clases/ConexionMySQL.php";
+    require_once "../../../../Clases/Funciones.php";
     date_default_timezone_set('America/Mexico_City');
     
     class Refacciones {
@@ -11,6 +11,7 @@
         private $jsonData = array("Bandera"=>0,"mensaje"=>"");
         private $formulario = array();
         private $url;
+
         public function __construct($array) {
             $this->conn = new HelperMySql($array["server"], $array["user"], $array["pass"], $array["db"]);
             $this->url = preg_replace("#(admin\.)?#i","", $_SERVER["HTTP_ORIGIN"]);
@@ -27,211 +28,289 @@
             switch ($this->formulario["opc"]) {
                 case 'buscar':
                     switch ($this->formulario["tipo"]) {
-                        case 'Categorias':
-                                $this->jsonData["data"] = $this->getCategorias();
-                                $this->jsonData["Bandera"] = 1;
-                            break;
-                        case 'Marcas':
-                                $this->jsonData["data"] = $this->getMarcas();
-                                $this->jsonData["Bandera"] = 1;
-                            break;
-                        case 'Compatibilidad':
-                            $this->jsonData["data"] = $this->getCompatibilidad();
-                            $this->jsonData["Bandera"] = 1;
-                            break;
-                        case 'Actividad':
-                            $this->jsonData["data"] = $this->getActividad();
-                            $this->jsonData["Bandera"] = 1;
-                            break;
-                        case 'Vehiculos':
-                                $this->jsonData["data"] = $this->getModelos();
-                                $this->jsonData["Bandera"] = 1;
-                            break;
-                        case 'Modelos':
-                                $this->jsonData["data"] = $this->getAnios();
-                                $this->jsonData["Bandera"] = 1;
-                            break;
+                        case 'Categorias': $this->jsonData["data"] = $this->getCategorias(); $this->jsonData["Bandera"] = 1; break;
+                        case 'Marcas': $this->jsonData["data"] = $this->getMarcas(); $this->jsonData["Bandera"] = 1; break;
+                        case 'Compatibilidad': $this->jsonData["data"] = $this->getCompatibilidad(); $this->jsonData["Bandera"] = 1; break;
+                        case 'Actividad': $this->jsonData["data"] = $this->getActividad(); $this->jsonData["Bandera"] = 1; break;
+                        case 'Vehiculos': $this->jsonData["data"] = $this->getModelos(); $this->jsonData["Bandera"] = 1; break;
+                        case 'Modelos': $this->jsonData["data"] = $this->getAnios(); $this->jsonData["Bandera"] = 1; break;
                         case 'Refacciones':
                                 $arrayLikes = $this->getexplode($this->formulario["buscar"]);
                                 $this->jsonData["data"]["refacciones"] = $this->getRefaccion($arrayLikes,$this->formulario["skip"],$this->formulario["limit"]);
                                 $this->jsonData["data"]["totalrefacciones"] = $this->getTotalRefacciones($arrayLikes);
-                                $this->jsonData["data"]["separado"] = $this->getexplode($this->formulario["buscar"]);
                                 $this->jsonData["Bandera"] = 1;
                             break;
                         case 'Refaccion':
                                 $this->jsonData["data"]["Refaccion"] = $this->getRefaccionOne();
-                                $this->jsonData["data"] ["ClaveUnica"]= $this->getRefaccionClave();
+                                $ref = $this->jsonData["data"]["Refaccion"];
+                                
+                                $this->jsonData["data"]["ClaveUnica"]= $this->getRefaccionClave();
                                 $this->jsonData["data"]["Categorias"] = $this->getCategorias();
-                                $this->jsonData["data"]["Compatibilidad"] = $this->getCompatibilidad();
                                 $this->jsonData["data"]["Marcas"] = $this->getMarcas();
                                 $this->jsonData["data"]["Proveedores"] = $this->getProveedores();
+                                $this->jsonData["data"]["Compatibilidad"] = $this->getCompatibilidad();
                                 $this->jsonData["data"]["Actividad"] = $this->getActividad();
-                                /*Especificar la funcion que ontendra los vehiculos que le quedan a la refaccion*/
 
-                                $this->jsonData["data"]["RVehiculo"] = array();
+                                $this->formulario["_idMarca"] = $ref["_idMarca"];
+                                $this->jsonData["data"]["ListaVehiculos"] = $this->getModelos(); 
+                                
+                                $this->formulario["_idVehiculo"] = $ref["Modelo"];
+                                $this->jsonData["data"]["ListaAnios"] = $this->getAnios();
+
                                 $this->jsonData["Bandera"] = 1;
                             break;
+
                         case 'proveedores':
                                 $this->jsonData["data"] = $this->getProveedores();
                                 $this->jsonData["Bandera"] = 1;
                             break;
 
                         case 'EliminarVehiculo':
-                                $this->EliminarComp();
-                                $this->setActividad();
+                                if($this->EliminarComp()){
+                                    $detalle = "Eliminó compatibilidad para la refacción ID: {$this->formulario['id_imagen']}";
+                                    Funciones::guardarBitacora($this->conn, 'Refacciones', 'ELIMINAR_COMPATIBILIDAD', $detalle);
+                                    
+                                    $usr = $_SESSION["nombre"] ?? 'Usuario';
+                                    $sqlAct = "INSERT INTO actividad (clavepr, usuario, datosdiff, fecha_modificacion) 
+                                               VALUES ('{$this->formulario['id_imagen']}', '$usr', 'Eliminó un vehículo de las compatibilidades.', '".date("Y-m-d H:i:s")."')";
+                                    $this->conn->query($sqlAct);
+
+                                    $this->jsonData["Bandera"] = 1;
+                                    $this->jsonData["mensaje"] = "Vehículo eliminado";
+                                }
+                            break;
+                        case 'AgregarVehiculo':
+                                $resultadoSQL = $this->AgregarVehiculo();
+                                if($resultadoSQL === "OK"){
+                                    $this->jsonData["Bandera"] = 1;
+                                    $this->jsonData["mensaje"] = "Vehículo agregado correctamente";
+                                } else {
+                                    $this->jsonData["Bandera"] = 0;
+                                    $this->jsonData["mensaje"] = $resultadoSQL;
+                                }
                             break;
                     }
                     break;
+                    
+                case 'delete':
+                    if($this->deleteRefaccionCompleta()){
+                        $usr = $_SESSION["nombre"] ?? 'Usuario';
+                        $clave = $this->formulario["Clave"] ?? "S/C";
+                        $idBorrado = $this->formulario["id"];
+                        
+                        Funciones::guardarBitacora($this->conn, 'Refacciones', 'ELIMINAR_REFACCION', "Eliminó permanentemente la refacción ID: $idBorrado - Clave: $clave");
+                        
+                        $this->jsonData["Bandera"] = 1;
+                        $this->jsonData["mensaje"] = "Refacción eliminada correctamente";
+                    } else {
+                        $this->jsonData["Bandera"] = 0;
+                        $this->jsonData["mensaje"] = "No se pudo eliminar la refacción de la BD. Verifica dependencias.";
+                    }
+                    break;
+
                 case 'new':
                 case 'edit':
-                    
-                    
                     $id = $this->setRefaccion();
                     if($id){
-                        $this->formulario["lastid"] = $this->formulario["opc"]=="edit"? $this->formulario["_id"]:$this->conn->last_id();
-                        if(count($this->foto)!=0){
-                            $this->subirImagen();
+                        $this->formulario["lastid"] = $this->formulario["opc"]=="edit" ? $this->formulario["_id"] : $this->conn->last_id();
+                        if(count($this->foto)!=0){ $this->subirImagen(); }
+                        
+                        $clave = $this->formulario["Clave"] ?? "S/C";
+                        $usr = $_SESSION["nombre"] ?? 'Usuario';
+
+                        if($this->formulario["opc"] == "new"){
+                            $det = "Registró nueva refacción: $clave. Manual: {$this->formulario['precio_manual']}";
+                            Funciones::guardarBitacora($this->conn, 'Refacciones', 'NUEVA_REFACCION', $det);
+                            $sqlAct = "INSERT INTO actividad (clavepr, usuario, datosdiff, fecha_modificacion) 
+                                       VALUES ('{$this->formulario["lastid"]}', '$usr', 'Registro inicial de la pieza.', '".date("Y-m-d H:i:s")."')";
+                            $this->conn->query($sqlAct);
+
+                        } else {
+                            $diffs = ($this->formulario["diferencias"] != "{}" && !empty($this->formulario["diferencias"])) ? $this->formulario["diferencias"] : "Cambios en la ficha técnica";
+                            Funciones::guardarBitacora($this->conn, 'Refacciones', 'EDITAR_REFACCION', "ID: {$this->formulario['_id']} - $diffs");
+
+                            $sqlAct = "INSERT INTO actividad (clavepr, usuario, datosdiff, fecha_modificacion) 
+                                       VALUES ('{$this->formulario['_id']}', '$usr', '$diffs', '".date("Y-m-d H:i:s")."')";
+                            $this->conn->query($sqlAct);
                         }
+
                         $this->jsonData["Bandera"] = 1;
-                        $this->jsonData["mensaje"] = "La refaccion se ha almacenado de manera satisfactoria";
-                    }else{
+                        $this->jsonData["mensaje"] = "Guardado con éxito";
+                    } else {
                          $this->jsonData["Bandera"] = 0;
-                         $this->jsonData["mensaje"] = $id;
+                         $this->jsonData["mensaje"] = "Error al guardar";
                     }
                     break;
             }
-
             $this->jsonData["dominio"]=$this->url;
             print json_encode($this->jsonData);
         }
-        
-        private function EliminarComp(){
-            $sql = "DELETE FROM compatibilidad where idcompatibilidad =".$this->formulario["idcompatibilidad"]." and clave =".$this->formulario["clave"];
+
+        private function AgregarVehiculo() {
+            $f = $this->formulario;
+            $clave = $f['clave'] ?? '';
+            $idmarca = $f['idmarca'] ?? '';
+            $idmodelo = $f['idmodelo'] ?? '';
+            $generacion = $f['generacion'] ?? '';
+            $ainicial = $f['ainicial'] ?? '';
+            $afinal = $f['afinal'] ?? '';
+            $motor = $f['motor'] ?? '';
+            $transmision = $f['transmision'] ?? '';
+            $especificaciones = $f['especificaciones'] ?? '';
+            $id_imagen = $f['id_imagen'] ?? '';
+
+            $sql = "INSERT INTO compatibilidad (clave, idmarca, idmodelo, generacion, ainicial, afinal, motor, transmision, especificaciones, id_imagen) 
+                    VALUES ('$clave', '$idmarca', '$idmodelo', '$generacion', '$ainicial', '$afinal', '$motor', '$transmision', '$especificaciones', '$id_imagen')";
+            
+            if ($this->conn->query($sql)) {
+                $detalle = "Agregó nuevo vehículo a compatibilidades para la pieza ID: $id_imagen";
+                Funciones::guardarBitacora($this->conn, 'Refacciones', 'NUEVA_COMPATIBILIDAD', $detalle);
+
+                $sqlAct = "INSERT INTO actividad (clavepr, usuario, datosdiff, fecha_modificacion) 
+                           VALUES ('$id_imagen', '{$_SESSION["nombre"]}', 'Agregó vehículo compatible: $generacion $ainicial-$afinal', '".date("Y-m-d H:i:s")."')";
+                $this->conn->query($sqlAct);
+
+                return "OK";
+            }
+            return "CONSULTA RECHAZADA: " . $sql; 
+        }
+
+        private function deleteRefaccionCompleta() {
+            $id = $this->formulario["id"];
+            $sqlGaleria = "SELECT _id FROM galeriarefacciones WHERE id_producto = '$id'";
+            $resGaleria = $this->conn->query($sqlGaleria);
+            
+            if($resGaleria) {
+                while($rowGal = $this->conn->fetch($resGaleria)){
+                    $idImagenSecundaria = $rowGal["_id"];
+                    $rutaGaleria = "../../../../../../images/galeria/$idImagenSecundaria.webp";
+                    if(file_exists($rutaGaleria)){ @unlink($rutaGaleria); }
+                }
+                $this->conn->query("DELETE FROM galeriarefacciones WHERE id_producto = '$id'");
+            }
+            
+            $this->conn->query("DELETE FROM compatibilidad WHERE id_imagen = '$id'");
+            $this->conn->query("DELETE FROM actividad WHERE clavepr = '$id'");
+            
+            $sql = "DELETE FROM Producto WHERE _id = '$id'";
+            $res = $this->conn->query($sql);
+            
+            if($res) {
+                $rutaImgPrincipal = "../../../../../../images/refacciones/$id.webp";
+                if(file_exists($rutaImgPrincipal)){ @unlink($rutaImgPrincipal); }
+                $rutaImgPrincipalPng = "../../../../../../images/refacciones/$id.png";
+                if(file_exists($rutaImgPrincipalPng)){ @unlink($rutaImgPrincipalPng); }
+            }
+            
+            return $res;
+        }
+
+        private function EliminarComp() {
+            $sql = "DELETE FROM compatibilidad WHERE idcompatibilidad = '{$this->formulario["idcompatibilidad"]}'";
             return $this->conn->query($sql);
         }
 
         private function getCategorias(){
             $array = array();
-            $sql = "SELECT * FROM Categorias where Status = 1 order by Categoria";
-            $id = $this->conn->query($sql);
-            while($row= $this->conn->fetch($id)){
-                array_push($array, $row);
-            }
+            $sql = "SELECT * FROM Categorias WHERE Status = 1 ORDER BY Categoria";
+            $res = $this->conn->query($sql);
+            while($row = $this->conn->fetch($res)){ array_push($array, $row); }
             return $array;
         }
-        
+
         private function getMarcas(){
             $array = array();
-            $sql = "SELECT * FROM Marcas where Estatus = 1 order by Marca";
-            $id = $this->conn->query($sql);
-            while($row= $this->conn->fetch($id)){
-                array_push($array, $row);
-            }
+            $sql = "SELECT * FROM Marcas WHERE Estatus = 1 ORDER BY Marca";
+            $res = $this->conn->query($sql);
+            while($row = $this->conn->fetch($res)){ array_push($array, $row); }
             return $array;
         }
 
         private function getCompatibilidad(){
             $array = array();
-            $sql = "SELECT * FROM compatibilidad as comp 
+            $sql = "SELECT comp.*, M.Marca, V.Modelo FROM compatibilidad as comp 
             inner join Marcas as M on (M._id = comp.idmarca)
             inner join Modelos as V on (V._id = comp.idmodelo) where id_imagen='{$this->formulario["id"]}' order by idcompatibilidad";
-            $id = $this->conn->query($sql);
-            while($row= $this->conn->fetch($id)){
-                array_push($array, $row);
-            }
+            $res = $this->conn->query($sql);
+            while($row= $this->conn->fetch($res)){ array_push($array, $row); }
             return $array;
         }
 
         private function getActividad(){
             $array = array();
             $sql = "SELECT * FROM actividad where clavepr='{$this->formulario["id"]}' order by fecha_modificacion desc";
-            $id = $this->conn->query($sql);
-            while($row= $this->conn->fetch($id)){
-                array_push($array, $row);
-            }
+            $res = $this->conn->query($sql);
+            while($row= $this->conn->fetch($res)){ array_push($array, $row); }
             return $array;
         }
 
         private function getModelos(){
             $array = array();
-            $sql = "SELECT * FROM Modelos where Estatus = 1 and _idMarca= ".$this->formulario["_idMarca"]. " order by Modelo";
-            $id = $this->conn->query($sql);
-            while($row= $this->conn->fetch($id)){
-                array_push($array, $row);
-            }
+            $filtro = isset($this->formulario["_idMarca"]) ? "AND _idMarca = ".$this->formulario["_idMarca"] : "";
+
+            $sql = "SELECT * FROM Modelos WHERE Estatus = 1 $filtro ORDER BY Modelo";
+            $res = $this->conn->query($sql);
+            while($row = $this->conn->fetch($res)){ array_push($array, $row); }
             return $array;
         }
-        
+
         private function getAnios(){
             $array = array();
-            $sql = "Select _id,Anio from Anios where _idModelo= ".$this->formulario["_idVehiculo"];
-            $id = $this->conn->query($sql);
-            while($row= $this->conn->fetch($id)){
+            if(isset($this->formulario["_idVehiculo"]) && !empty($this->formulario["_idVehiculo"]) && $this->formulario["_idVehiculo"] != 'undefined') {
+                $filtro = "WHERE _idModelo = " . $this->formulario["_idVehiculo"];
+            } else {
+                $filtro = ""; 
+            }
+
+            $sql = "SELECT _id, Anio FROM Anios $filtro";
+            $res = $this->conn->query($sql);
+            
+            if($res) {
+                while($row = $this->conn->fetch($res)){ 
+                    array_push($array, $row); 
+                }
+            }
+            return $array;
+        }
+
+        private function getRefaccion($arrayLikes, $skip=0, $limit=20){
+            $this->formulario["historico"] = $this->formulario["historico"]=="false"? 1:0;
+            $this->formulario["publicados"] = $this->formulario["publicados"]=="true"? 1:0;
+            $array = array();
+            $sql = "SELECT P._id, P.Clave, P.Producto, C.Categoria, M.Marca, V.Modelo, A.Anio, P.Precio1, P.Precio2, P.No_parte, P.Estatus, P.RefaccionNueva, P.RefaccionOferta, P.Enviogratis, P.stock, P.precio_manual
+                    FROM Producto as P
+                    INNER JOIN Categorias as C ON (C._id = P._idCategoria)
+                    INNER JOIN Marcas as M ON (M._id = P._idMarca)
+                    INNER JOIN Modelos as V ON (V._id = P.Modelo)
+                    INNER JOIN Anios as A ON (A._id = P.Anios)
+                    WHERE ({$arrayLikes['Productos']} OR {$arrayLikes['Clave']})
+                    AND P.Estatus = {$this->formulario["historico"]} AND Publicar = {$this->formulario["publicados"]} 
+                    ORDER BY {$this->formulario["orden"]} {$this->formulario["ordentype"]} LIMIT $skip, $limit";
+            $res = $this->conn->query($sql);
+            while($row = $this->conn->fetch($res)){
+                $row["imagen"] = file_exists("../../../../../../images/refacciones/{$row["_id"]}.png");
+                $row["RefaccionNueva"] = $row["RefaccionNueva"]==1? true: false;
+                $row["RefaccionOferta"] = $row["RefaccionOferta"]==1? true:false;
+                $row["Enviogratis"] = $row["Enviogratis"]==1? true:false;
                 array_push($array, $row);
             }
             return $array;
         }
-        
-        private function setRefaccion(){
-            $sql = "";
-            
-            switch ($this->formulario["opc"]){
-                case 'new':
-                    $this->formulario["Nuevo"] = $this->formulario["Nuevo"]=="true"? 1:0;
-                    $this->formulario["Oferta"] = $this->formulario["Oferta"] == "true"? 1:0;
-                    $this->formulario["Estatus"] = $this->formulario["Estatus"] == "true"? 1:0;
-                    $this->formulario["Enviogratis"] = $this->formulario["Enviogratis"]=="true"? 1:0;
-                    $this->formulario["liquidacion"] = $this->formulario["liquidacion"]=="true"? 1:0;
-                    $this->formulario["Kit"] = $this->formulario["Kit"]=="true"? 1:0;
-                    
-                    $sql = "INSERT INTO Producto (Clave, Producto, No_parte, _idCategoria,_idMarca, Modelo, Anios, Precio1, Precio2, Descripcion, RefaccionNueva, RefaccionOferta, Color, Estatus, Alto,"
-                    . "Largo, Ancho, Peso, id_proveedor, tag_title, tag_alt,Enviogratis, RefaccionLiquidacion, Publicar, userCreated, userModify, Kit, stock) value "
-                    . "('{$this->formulario["Clave"]}','{$this->formulario["refaccion"]}','{$this->formulario["noParte"]}','{$this->formulario["Categoria"]}','{$this->formulario["Marca"]}',"
-                    . "'{$this->formulario["Vehiculo"]}','{$this->formulario["Modelo"]}',".bcdiv($this->formulario["Precio1"],'1',2).",".bcdiv($this->formulario["Precio2"],'2',1).",'{$this->formulario["Descripcion"]}',"
-                    . "'{$this->formulario["Nuevo"]}','{$this->formulario["Oferta"]}','{$this->formulario["Color"]}',{$this->formulario["Estatus"]},{$this->formulario["Alto"]},{$this->formulario["Largo"]},"
-                    . "{$this->formulario["Ancho"]},{$this->formulario["Peso"]},{$this->formulario["id_proveedor"]},'{$this->formulario["tag_title"]}','{$this->formulario["tag_alt"]}'
-                    ,'{$this->formulario["Enviogratis"]}','{$this->formulario["liquidacion"]}',0,'{$_SESSION["nombre"]}','{$_SESSION["nombre"]}','{$this->formulario["Kit"]}',{$this->formulario["Stock"]})";
-                break;
-                    
-                case 'edit':
-                    $this->formulario["RefaccionNueva"] = $this->formulario["RefaccionNueva"]=="true"? 1:0;
-                    $this->formulario["RefaccionOferta"] = $this->formulario["RefaccionOferta"] == "true"? 1:0;
-                    $this->formulario["RefaccionLiquidacion"] = $this->formulario["RefaccionLiquidacion"] == "true"? 1:0;
-                    $this->formulario["Enviogratis"] = $this->formulario["Enviogratis"]=="true"? 1:0;
-                    $this->formulario["Publicar"] = $this->formulario["Publicar"]=="true"? 1:0;
-                    $this->formulario["Kit"] = $this->formulario["Kit"]=="true"? 1:0;
 
-                    $sql = "UPDATE Producto SET Clave='{$this->formulario["Clave"]}', Producto = '{$this->formulario["Producto"]}', _idCategoria='{$this->formulario["_idCategoria"]}',"
-                    . " _idMarca='{$this->formulario["_idMarca"]}', Precio1 = " . bcdiv($this->formulario["Precio1"],'1',2) . ", Precio2 = ". bcdiv($this->formulario["Precio2"],'1',2) .", No_parte = '{$this->formulario["No_parte"]}', "
-                    . " Descripcion='{$this->formulario["Descripcion"]}', Modelo = '{$this->formulario["Modelo"]}', Anios = '{$this->formulario["Anios"]}', "
-                    . " RefaccionNueva = '{$this->formulario["RefaccionNueva"]}', RefaccionOferta ='{$this->formulario["RefaccionOferta"]}', Color = '{$this->formulario["color"]}', "
-                    . " Estatus = {$this->formulario["Estatus"]}, Alto = {$this->formulario["Alto"]}, Largo = {$this->formulario["Largo"]}, Ancho = {$this->formulario["Ancho"]}, "
-                    . " Peso = {$this->formulario["Peso"]}, id_proveedor = {$this->formulario["id_proveedor"]}, tag_title='{$this->formulario["tag_title"]}'," 
-                    . " tag_alt='{$this->formulario["tag_alt"]}', RefaccionLiquidacion = '{$this->formulario["RefaccionLiquidacion"]}', "
-                    . " Enviogratis = '{$this->formulario["Enviogratis"]}', Publicar={$this->formulario["Publicar"]},"
-                    . " userModify='{$_SESSION["nombre"]}', dateModify='".date("Y-m-d H:i:s")."',Kit = {$this->formulario["Kit"]}, stock = {$this->formulario["stock"]}" //, Kit = {$this->formulario["Kit"]}, stock = {$this->formulario["Stock"]}
-                    . " where _id = {$this->formulario["_id"]}";
-                    if($this->formulario["diferencias"] != "{}"){
-                        $this->setActividad();
-                    }
-                break;
-            }
-            return $this->conn->query($sql) or $this->jsonData["error"] = $this->conn->error;
-        }
-
-        private function setActividad(){
-            $sql = "INSERT INTO actividad (clavepr, usuario, datosdiff, fecha_modificacion) VALUES ('{$this->formulario["_id"]}', '{$_SESSION["nombre"]}', '{$this->formulario["diferencias"]}', '".date("Y-m-d H:i:s")."');";
-            return $this->conn->query($sql);
+        private function getTotalRefacciones($arrayLikes){
+            $sql = "SELECT count(*) as total FROM Producto as P WHERE ({$arrayLikes['Productos']} OR {$arrayLikes['Clave']}) AND P.Estatus = {$this->formulario["historico"]} AND Publicar = {$this->formulario["publicados"]}";
+            $row = $this->conn->fetch($this->conn->query($sql));
+            return $row["total"];
         }
 
         private function getexplode($string){
             $arrayLikes = array("Productos"=>"(", "Clave"=>"(");
-            $array = explode(" ", $this->formulario["buscar"]);
+            $array = explode(" ", $string);
             $limitarray = count($array);
             foreach ($array as $key => $value) {
                 if($key < ($limitarray-1)){
-                    $arrayLikes["Productos"] .= "P.Producto LIKE '%$value%' and ";
-                    $arrayLikes["Clave"] .= "P.Clave LIKE '%$value%' and ";
+                    $arrayLikes["Productos"] .= "P.Producto LIKE '%$value%' AND ";
+                    $arrayLikes["Clave"] .= "P.Clave LIKE '%$value%' AND ";
                 }else{
                     $arrayLikes["Productos"] .= "P.Producto LIKE '%$value%') ";
                     $arrayLikes["Clave"] .= "P.Clave LIKE '%$value%')";
@@ -240,118 +319,91 @@
             return $arrayLikes;
         }
 
-        private function getExistenciaSEICOM($clave){
-            $ch = curl_init();
-            //curl_setopt_array($ch,$defaults);
-            curl_setopt($ch, CURLOPT_URL,'https://volks.dyndns.info:444/service.asmx/consulta_art');
-            curl_setopt($ch, CURLOPT_HEADER, false);
-            curl_setopt($ch, CURLOPT_POST,TRUE);
-            curl_setopt($ch, CURLOPT_POSTFIELDS,json_encode(array("articulo"=>$clave)));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-            $data = curl_exec($ch);
-            if($errno = curl_errno($ch)) {
-                $error_message = curl_strerror($errno);
-                echo "cURL error ({$errno}):\n {$error_message}";
-            }
-            curl_close($ch);
-            return $data;
-        }
-
-        private function getTotalRefacciones($arrayLikes){
-            //$this->formulario["historico"] = $this->formulario["historico"]=="false"? 0:1;
-            //$this->formulario["publicados"] = $this->formulario["publicados"]=="true"? 0:1;
-            /**WHERE (P.Producto like '%{$this->formulario["buscar"]}%' OR P.clave like '%{$this->formulario["buscar"]}%')  */
-            $sql = "SELECT count(*) as total FROM Producto as P
-                    inner join Categorias as C on (C._id = P._idCategoria)
-                    inner join Marcas as M on (M._id = P._idMarca)
-                    inner join Modelos as V on (V._id = P.Modelo)
-                    inner join Anios as A on (A._id = P.Anios)
-                    WHERE ({$arrayLikes['Productos']} OR {$arrayLikes['Clave']}) 
-                    and P.Estatus = {$this->formulario["historico"]} and Publicar = {$this->formulario["publicados"]} order by {$this->formulario["orden"]}";
-            $row = $this->conn->fetch($this->conn->query($sql));
-            return $row["total"];
-        }
-        
-        private function getRefaccion($arrayLikes, $skip=0, $limit=20){
-            $this->formulario["historico"] = $this->formulario["historico"]=="false"? 1:0;
-            $this->formulario["publicados"] = $this->formulario["publicados"]=="true"? 1:0;
-            
-            $array = array();
-            $sql = "SELECT P._id, P.Clave, P.Producto, C.Categoria, M.Marca, V.Modelo,   
-                    A.Anio, P.Precio1, P.Precio2, P.No_parte, P.Estatus, P.RefaccionNueva, P.RefaccionOferta, P.RefaccionLiquidacion,
-                    P.Enviogratis, P.dateCreated, P.dateModify, P.Kit, P.stock
-                    FROM Producto as P
-                    inner join Categorias as C on (C._id = P._idCategoria)
-                    inner join Marcas as M on (M._id = P._idMarca)
-                    inner join Modelos as V on (V._id = P.Modelo)
-                    inner join Anios as A on (A._id = P.Anios)
-                    WHERE ({$arrayLikes['Productos']} OR {$arrayLikes['Clave']})
-                    and P.Estatus = {$this->formulario["historico"]} and Publicar = {$this->formulario["publicados"]} order by {$this->formulario["orden"]} {$this->formulario["ordentype"]} LIMIT $skip, $limit";
-            $id = $this->conn->query($sql);
-            while($row = $this->conn->fetch($id)){
-                $row["imagen"] = file_exists("../../../../../../images/refacciones/{$row["_id"]}.png");
-                $row["RefaccionNueva"] = $row["RefaccionNueva"]==1? true: false;
-                $row["RefaccionOferta"] = $row["RefaccionOferta"]==1? true:false;
-                $row["RefaccionLiquidacion"] = $row["RefaccionLiquidacion"]==1? true:false;
-                $row["Enviogratis"] = $row["Enviogratis"]==1? true:false;
-                $row["Kit"] = $row["Kit"]==1? true:false;
-                //$row["Stock"] = $this->getExistenciaSEICOM($row["Clave"]);
-                array_push($array, $row);
-            }
-            return $array;
-        }
-        
-        private function getRefaccionOne (){
+        private function getRefaccionOne(){
             $sql = "SELECT P.* FROM Producto as P WHERE P._id = '{$this->formulario["id"]}'";
             $row = $this->conn->fetch($this->conn->query($sql));
             $row["imagen"] = file_exists("../../../../../../images/refacciones/{$row["_id"]}.png");
+            $row["precio_manual"] = $row["precio_manual"]==1? TRUE:FALSE;
             $row["Estatus"] = $row["Estatus"]==1? TRUE:FALSE;
             $row["RefaccionNueva"] = $row["RefaccionNueva"]==1? TRUE:FALSE;
             $row["RefaccionOferta"] = $row["RefaccionOferta"]==1? TRUE:FALSE;
-            $row["RefaccionLiquidacion"] = $row["RefaccionLiquidacion"] == 1 ? true: false;
-            $row["Enviogratis"] = $row["Enviogratis"] == 1? true: false;
-            $row["Publicar"] = $row["Publicar"] == 1? true:false; 
-            $row["Kit"] = $row["Kit"] == 1? true:false;
+            $row["Enviogratis"] = $row["Enviogratis"]==1? TRUE:FALSE;
+            $row["Publicar"] = $row["Publicar"]==1? TRUE:FALSE;
+            $row["Kit"] = $row["Kit"]==1? TRUE:FALSE;
+            $row["RefaccionLiquidacion"] = (isset($row["RefaccionLiquidacion"]) && $row["RefaccionLiquidacion"] == 1) ? TRUE : FALSE;
+            
             return $row;
         }
-        private function getRefaccionClave (){
+
+        private function getRefaccionClave(){
             $sql = "SELECT P.* FROM Producto as P WHERE P.Clave = '{$this->formulario["id"]}'";
-            $row = $this->conn->fetch($this->conn->query($sql));
-            return $row;
+            return $this->conn->fetch($this->conn->query($sql));
         }
-        
+
         private function getProveedores(){
             $array = array();
-            $sql = "select _id, Proveedor from Proveedor where Estatus = 1";
-            $id = $this->conn->query($sql);
-            while($row = $this->conn->fetch($id)){
-                array_push($array,$row);
-            }
+            $sql = "SELECT _id, Proveedor FROM Proveedor WHERE Estatus = 1";
+            $res = $this->conn->query($sql);
+            while($row = $this->conn->fetch($res)){ array_push($array,$row); }
             return $array;
+        }
+        
+        private function setRefaccion() {
+            $f = $this->formulario;
+            $estatus = (isset($f["Estatus"]) && ($f["Estatus"] === "true" || $f["Estatus"] === "1")) ? 1 : 0;
+            $publicar = (isset($f["Publicar"]) && ($f["Publicar"] === "true" || $f["Publicar"] === "1")) ? 1 : 0;
+            $precio_manual = (isset($f["precio_manual"]) && ($f["precio_manual"] === "true" || $f["precio_manual"] === "1")) ? 1 : 0;
+            $liquidacion = (isset($f["RefaccionLiquidacion"]) && ($f["RefaccionLiquidacion"] === "true" || $f["RefaccionLiquidacion"] === "1")) ? 1 : 0;
+            $nueva = (isset($f["RefaccionNueva"]) && ($f["RefaccionNueva"] === "true" || $f["RefaccionNueva"] === "1")) ? 1 : 0;
+            $oferta = (isset($f["RefaccionOferta"]) && ($f["RefaccionOferta"] === "true" || $f["RefaccionOferta"] === "1")) ? 1 : 0;
+            $envio = (isset($f["Enviogratis"]) && ($f["Enviogratis"] === "true" || $f["Enviogratis"] === "1")) ? 1 : 0;
+            $kit = (isset($f["Kit"]) && ($f["Kit"] === "true" || $f["Kit"] === "1")) ? 1 : 0;
+                        
+            if ($f["opc"] == "new") {
+                $sql = "INSERT INTO Producto (Clave, Producto, No_parte, _idCategoria, _idMarca, Modelo, Anios, id_proveedor, Precio1, Precio2, Estatus, Publicar, precio_manual, Descripcion, stock, Alto, Largo, Ancho, Peso, RefaccionLiquidacion, RefaccionNueva, RefaccionOferta, Enviogratis, Kit) 
+                        VALUES ('{$f["Clave"]}', '{$f["Producto"]}', '{$f["No_parte"]}', '{$f["_idCategoria"]}', '{$f["_idMarca"]}', '{$f["Modelo"]}', '{$f["Anios"]}', '{$f["id_proveedor"]}', '{$f["Precio1"]}', '{$f["Precio2"]}', $estatus, $publicar, $precio_manual, '{$f["Descripcion"]}', '{$f["stock"]}', '{$f["Alto"]}', '{$f["Largo"]}', '{$f["Ancho"]}', '{$f["Peso"]}', $liquidacion, $nueva, $oferta, $envio, $kit)";
+            } else {
+                $sql = "UPDATE Producto SET 
+                        Clave = '{$f["Clave"]}', 
+                        Producto = '{$f["Producto"]}', 
+                        No_parte = '{$f["No_parte"]}', 
+                        _idCategoria = '{$f["_idCategoria"]}', 
+                        _idMarca = '{$f["_idMarca"]}', 
+                        Modelo = '{$f["Modelo"]}', 
+                        Anios = '{$f["Anios"]}', 
+                        id_proveedor = '{$f["id_proveedor"]}',
+                        Precio1 = '{$f["Precio1"]}', 
+                        Precio2 = '{$f["Precio2"]}', 
+                        Estatus = $estatus, 
+                        Publicar = $publicar, 
+                        precio_manual = $precio_manual, 
+                        RefaccionLiquidacion = $liquidacion, 
+                        RefaccionNueva = $nueva,
+                        RefaccionOferta = $oferta,
+                        Enviogratis = $envio,
+                        Kit = $kit,
+                        Descripcion = '{$f["Descripcion"]}', 
+                        stock = '{$f["stock"]}',
+                        Alto = '{$f["Alto"]}', 
+                        Largo = '{$f["Largo"]}', 
+                        Ancho = '{$f["Ancho"]}', 
+                        Peso = '{$f["Peso"]}' 
+                        WHERE _id = '{$f["_id"]}'";
+            }
+                        
+            return $this->conn->query($sql);
         }
 
         private function subirImagen(){
-            //print_r($this->foto);
-            if($this->foto["file"]["name"]!="" and $this->foto["file"]["size"]!=0){
-                $subdir ="../../../../../../"; 
-                $dir = "images/refacciones/";
+            if($this->foto["file"]["name"]!="" && $this->foto["file"]["size"]!=0){
+                $subdir ="../../../../../../"; $dir = "images/refacciones/";
                 $archivo = $this->formulario["lastid"].".webp";
-                if(!is_dir($subdir.$dir)){
-                    mkdir($subdir.$dir,0755);
-                }
-                //echo $this->url.$dir.$archivo;
-                if($archivo && move_uploaded_file($this->foto["file"]["tmp_name"], $subdir.$dir.$archivo)){
-                    //$this->rutaimagen= $dir.$archivo;
-                    return true;
-                }else{
-                    echo "no se subio la imagen";
-                }
-            }else{
-                return false;
+                if(!is_dir($subdir.$dir)){ mkdir($subdir.$dir,0755); }
+                move_uploaded_file($this->foto["file"]["tmp_name"], $subdir.$dir.$archivo);
             }
         }
     }
     
     $app = new Refacciones($array_principal);
     $app->principal();
-
+?>

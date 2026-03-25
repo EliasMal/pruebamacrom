@@ -1,9 +1,9 @@
 <?php
-
-session_name("loginUsuario");
+    session_name("loginUsuario");
     session_start();
     require_once "../../../../Clases/dbconectar.php";
     require_once "../../../../Clases/ConexionMySQL.php";
+    require_once "../../../../Clases/Funciones.php";
     date_default_timezone_set('America/Mexico_City');
     
     class Modelos {
@@ -23,14 +23,17 @@ session_name("loginUsuario");
         
         public function principal() {
             $this->formulario = array_map("htmlspecialchars", $_POST);
-            $this->foto =  isset($_FILES)? $_FILES:array();
             
             switch ($this->formulario["opc"]) {
                 case 'buscar':
                     switch($this->formulario["tipo"]){
                         case 'Modelos':
-                            $this->jsonData["Data"]["NoModelos"] = $this->getNoModelos($this->formulario["find"]);
-                            $this->jsonData["Data"]["Modelos"] = $this->getModelos($this->formulario["find"], $this->formulario["skip"], $this->formulario["limit"]);
+                            $find = isset($this->formulario["find"]) ? $this->formulario["find"] : "";
+                            $skip = isset($this->formulario["skip"]) ? intval($this->formulario["skip"]) : 0;
+                            $limit = isset($this->formulario["limit"]) ? intval($this->formulario["limit"]) : 10;
+
+                            $this->jsonData["Data"]["NoModelos"] = $this->getNoModelos($find);
+                            $this->jsonData["Data"]["Modelos"] = $this->getModelos($find, $skip, $limit);
                             $this->jsonData["Bandera"] = 1;
                             break;
                         case 'Marcas':
@@ -47,16 +50,13 @@ session_name("loginUsuario");
                 case 'new':
                 case 'disabled':
                 case 'enabled':
+                case 'delete':
                     if($this->setModelos()){
-                        $this->formulario["lastid"] = $this->conn->last_id();
-                        
-                        if(count($this->foto)!=0){
-                            $this->subirImagen();
-                        }
+                        $this->formulario["lastid"] = ($this->formulario["opc"] == "edit" || $this->formulario["opc"] == "delete") ? intval($this->formulario["_id"]) : $this->conn->last_id();
                         $this->jsonData["Bandera"] = 1;
                         $this->jsonData["mensaje"] = $this->getMensajeSuccess();
-                    }else{
-                        $this->jsonData["mensaje"] = $this->getMensajeError();
+                    } else {
+                        if(empty($this->jsonData["mensaje"])) $this->jsonData["mensaje"] = $this->getMensajeError();
                     }
                     break;
                 case 'newanios':
@@ -65,105 +65,70 @@ session_name("loginUsuario");
                     if($this->setAnios()){
                         $this->jsonData["Bandera"] = 1;
                         $this->jsonData["mensaje"] = $this->getMensajeSuccessAnios();
-                    }else{
-                        $this->jsonData["mensaje"] = $this->getMensajeErrorAnios();
+                    } else {
+                        if(empty($this->jsonData["mensaje"])) $this->jsonData["mensaje"] = $this->getMensajeErrorAnios();
                     }
-                    
                     break;
-                
             }
-            $this->jsonData["dominio"]=$this->url;
+            $this->jsonData["dominio"] = $this->url;
             print json_encode($this->jsonData);
         }
         
         private function getMensajeSuccess(){
-            $mensaje = "";
-                 switch($this->formulario["opc"]){
-                    case 'new':
-                        $mensaje = "El Vehiculo ha sido Creado";
-                        break;
-                    case 'edit':
-                        $mensaje = "El Vehiculo ha sido Modificado";
-                        break;
-                    case 'disabled':
-                        $mensaje = "El Vehiculo ha sido Desactivado";
-                        break;
-                    case 'enabled':
-                        $mensaje = "El Vehiculo ha sido Activado";
-                        break;
-                 }
-            return $mensaje;
+            switch($this->formulario["opc"]){
+                case 'new': return "El Vehículo ha sido Creado";
+                case 'edit': return "El Vehículo ha sido Modificado";
+                case 'disabled': return "El Vehículo ha sido Desactivado";
+                case 'enabled': return "El Vehículo ha sido Activado";
+                case 'delete': return "El Vehículo ha sido Eliminado permanentemente";
+            }
+            return "";
         }
         
         private function getMensajeSuccessAnios(){
-            $mensaje = "";
-                 switch($this->formulario["opc"]){
-                    case 'newanios':
-                        $mensaje = "El Modelo ha sido Creado";
-                        break;
-                    case 'editanio':
-                        $mensaje = "El Modelo ha sido Modificado";
-                        break;
-                    case 'deleteanio':
-                        $mensaje = "El Modelo ha sido Eliminado";
-                        break;
-                    
-                 }
-            return $mensaje;
+            switch($this->formulario["opc"]){
+                case 'newanios': return "La generación ha sido Creada";
+                case 'editanio': return "La generación ha sido Modificada";
+                case 'deleteanio': return "La generación ha sido Eliminada";
+            }
+            return "";
         }
         
         private function getMensajeError(){
-            $mensaje = "";
-                 switch($this->formulario["opc"]){
-                    case 'new':
-                        $mensaje = "Error: El Vehiculo no ha sido Creado";
-                        break;
-                    case 'edit':
-                        $mensaje = "Error: El Vehiculo no ha sido Modificado";
-                        break;
-                    case 'disabled':
-                        $mensaje = "Error: El Vehiculo no ha sido Desactivado";
-                        break;
-                    case 'enabled':
-                        $mensaje = "Error: La Vehiculo no ha sido Activado";
-                        break;
-                 }
-            return $mensaje;
+            switch($this->formulario["opc"]){
+                case 'new': return "Error: El Vehículo no ha sido Creado";
+                case 'edit': return "Error: El Vehículo no ha sido Modificado";
+                case 'disabled': return "Error: El Vehículo no ha sido Desactivado";
+                case 'enabled': return "Error: El Vehículo no ha sido Activado";
+                case 'delete': return "Error: No se pudo eliminar el Vehículo";
+            }
+            return "";
         }
         
         private function getMensajeErrorAnios(){
-            $mensaje = "";
-                 switch($this->formulario["opc"]){
-                    case 'newanios':
-                        $mensaje = "Error: El Modelo no ha sido Creado";
-                        break;
-                    case 'editanio':
-                        $mensaje = "Error: El Modelo no ha sido Modificado";
-                        break;
-                    case 'deleteanio':
-                        $mensaje = "Error: El Modelo no ha sido Eliminado";
-                        break;
-                    
-                 }
-            return $mensaje;
+            switch($this->formulario["opc"]){
+                case 'newanios': return "Error: La generación no ha sido Creada";
+                case 'editanio': return "Error: La generación no ha sido Modificada";
+                case 'deleteanio': return "Error: La generación no ha sido Eliminada";
+            }
+            return "";
         }
         
-
         private function getNoModelos($find=""){
-            $array = array();
-            $sql = "SELECT count(*) as total FROM Modelos as M inner join Marcas as MA on(M._idMarca = MA._id)"
-                    ." WHERE M.Estatus = {$this->formulario["historico"]} and M.Modelo like '%$find%'";
+            $find_seguro = addslashes(trim($find));
+            $hist_seguro = intval($this->formulario["historico"]);
+            $sql = "SELECT count(*) as total FROM Modelos as M INNER JOIN Marcas as MA ON (M._idMarca = MA._id) WHERE M.Estatus = $hist_seguro AND M.Modelo LIKE '%$find_seguro%'";
             $row = $this->conn->fetch($this->conn->query($sql));            
             return $row["total"];
         }
-
         
         private function getModelos($find="", $skip=0, $limit=10){
             $array = array();
-            $sql = "SELECT M.*, MA.Marca FROM Modelos as M inner join Marcas as MA on(M._idMarca = MA._id) "
-                    ."where M.Estatus = {$this->formulario["historico"]} and M.Modelo like '%$find%' Limit $skip, $limit";
+            $find_seguro = addslashes(trim($find));
+            $hist_seguro = intval($this->formulario["historico"]);
+            $sql = "SELECT M.*, MA.Marca FROM Modelos as M INNER JOIN Marcas as MA ON (M._idMarca = MA._id) WHERE M.Estatus = $hist_seguro AND M.Modelo LIKE '%$find_seguro%' LIMIT $skip, $limit";
             $id = $this->conn->query($sql);
-            while($row= $this->conn->fetch($id)){
+            while($row = $this->conn->fetch($id)){
                 $row["foto"] = file_exists("../../../../../../images/Marcas/".$row["_idMarca"].".png");
                 array_push($array, $row);
             }
@@ -172,9 +137,10 @@ session_name("loginUsuario");
         
         private function getMarcas(){
             $array = array();
-            $sql = "SELECT * FROM Marcas where Estatus = ".$this->formulario["historico"];
+            $hist_seguro = intval($this->formulario["historico"]);
+            $sql = "SELECT * FROM Marcas WHERE Estatus = $hist_seguro ORDER BY Marca ASC";
             $id = $this->conn->query($sql);
-            while($row= $this->conn->fetch($id)){
+            while($row = $this->conn->fetch($id)){
                 $row["foto"] = file_exists("../../../../../../images/Marcas/".$row["_id"].".png");
                 array_push($array, $row);
             }
@@ -183,9 +149,10 @@ session_name("loginUsuario");
         
         private function getAnios(){
             $array = array();
-            $sql = "SELECT * FROM Anios where _idModelo = ".$this->formulario["_idModelo"];
+            $id_seguro = intval($this->formulario["_idModelo"]);
+            $sql = "SELECT * FROM Anios WHERE _idModelo = $id_seguro ORDER BY Anio ASC";
             $id= $this->conn->query($sql);
-            while($row= $this->conn->fetch($id)){
+            while($row = $this->conn->fetch($id)){
                 array_push($array, $row);
             }
             return $array;
@@ -193,60 +160,93 @@ session_name("loginUsuario");
         
         private function setModelos (){
             $sql = "";
-            switch($this->formulario["opc"]){
-                case 'new':
-                $sql = "INSERT INTO Modelos(Modelo, Estatus, _idMarca, USRCreacion,USRModificacion, FechaCreacion, FechaModificacion) VALUES "
-                        . "('{$this->formulario["Modelo"]}','1','{$this->formulario["_idMarca"]}',"
-                        ."'{$_SESSION["nombre"]}','{$_SESSION["nombre"]}','".date("Y-m-d H:i:s")."','".date("Y-m-d H:i:s")."')";
-                        break;
-            case 'edit':
-                $sql = "UPDATE Modelos SET Modelo='{$this->formulario["Modelo"]}', _idMarca='{$this->formulario["_idMarca"]}', USRModificacion='{$_SESSION["nombre"]}', FechaModificacion='"
-                       .date("Y-m-d H:i:s")."', Primer_anio_fabricacion = {$this->formulario["Primer_anio_fabricacion"]}, Ultimo_anio_fabricacion = {$this->formulario["Ultimo_anio_fabricacion"]} where _id= ".$this->formulario["_id"];
-                       break;
-            case 'disabled':
-                $sql = "UPDATE Modelos SET Estatus=0, USRModificacion='{$_SESSION["nombre"]}', FechaModificacion='".date("Y-m-d H:i:s")."' where _id= ".$this->formulario["_id"];
-                break;
-            case 'enabled':
-                $sql = "UPDATE Modelos SET Estatus=1, USRModificacion='{$_SESSION["nombre"]}', FechaModificacion='".date("Y-m-d H:i:s")."' where _id= ".$this->formulario["_id"];
-            break;
-        }
-        return $this->conn->query($sql) or $this->jsonData["error"] = $this->conn->error;
+            $usr_seguro = addslashes($_SESSION["nombre"]);
+            $fecha_actual = date("Y-m-d H:i:s");
+            $accionLog = ""; $detallesLog = "";
+
+            if($this->formulario["opc"] == 'new' || $this->formulario["opc"] == 'edit'){
+                $mod_seguro = addslashes(trim($this->formulario["Modelo"]));
+                $marca_segura = intval($this->formulario["_idMarca"]);
+                $id_cond = ($this->formulario["opc"] == 'edit') ? " AND _id != " . intval($this->formulario["_id"]) : "";
+                $check = $this->conn->query("SELECT _id FROM Modelos WHERE Modelo = '$mod_seguro' AND _idMarca = $marca_segura" . $id_cond);
+                if($this->conn->fetch($check)){
+                    $this->jsonData["mensaje"] = "Este vehículo ya existe dentro de la marca seleccionada.";
+                    return false;
+                }
+            }
+
+            if($this->formulario["opc"] == 'new'){
+                $mod_seguro = addslashes(trim($this->formulario["Modelo"]));
+                $marca_segura = intval($this->formulario["_idMarca"]);
+                $sql = "INSERT INTO Modelos (Modelo, Estatus, _idMarca, USRCreacion, USRModificacion, FechaCreacion, FechaModificacion) VALUES ('$mod_seguro', 1, $marca_segura, '$usr_seguro', '$usr_seguro', '$fecha_actual', '$fecha_actual')";
+                $accionLog = "CREAR_MODELO"; $detallesLog = "Vehículo creado: $mod_seguro (Marca ID: $marca_segura)";
+            } else {
+                $id_seguro = intval($this->formulario["_id"]);
+                if($this->formulario["opc"] == 'edit'){
+                    $mod_seguro = addslashes(trim($this->formulario["Modelo"]));
+                    $marca_segura = intval($this->formulario["_idMarca"]);
+                    $sql = "UPDATE Modelos SET Modelo='$mod_seguro', _idMarca=$marca_segura, USRModificacion='$usr_seguro', FechaModificacion='$fecha_actual' WHERE _id= $id_seguro";
+                    $accionLog = "EDITAR_MODELO"; $detallesLog = "Vehículo editado. ID: $id_seguro";
+                } else if($this->formulario["opc"] == 'disabled'){
+                    $sql = "UPDATE Modelos SET Estatus=0, USRModificacion='$usr_seguro', FechaModificacion='$fecha_actual' WHERE _id= $id_seguro";
+                    $accionLog = "DESACTIVAR_MODELO"; $detallesLog = "Vehículo desactivado. ID: $id_seguro";
+                } else if($this->formulario["opc"] == 'enabled'){
+                    $sql = "UPDATE Modelos SET Estatus=1, USRModificacion='$usr_seguro', FechaModificacion='$fecha_actual' WHERE _id= $id_seguro";
+                    $accionLog = "ACTIVAR_MODELO"; $detallesLog = "Vehículo activado. ID: $id_seguro";
+                } else if($this->formulario["opc"] == 'delete'){
+                    $sql = "DELETE FROM Modelos WHERE _id= $id_seguro";
+                    $this->conn->query("DELETE FROM Anios WHERE _idModelo = $id_seguro");
+                    $accionLog = "ELIMINAR_MODELO"; $detallesLog = "Vehículo eliminado permanentemente. ID: $id_seguro";
+                }
+            }
+
+            if($this->conn->query($sql)){
+                Funciones::guardarBitacora($this->conn, 'Vehículos', $accionLog, $detallesLog);
+                return true;
+            } else {
+                $this->jsonData["error"] = $this->conn->error;
+                return false;
+            }
         }
         
         private function setAnios(){
-            switch ($this->formulario["opc"]){
-                case 'newanios':
-                    $sql = "INSERT INTO Anios (Anio,  _idModelo, USRCreacion,USREdicion, FechaCreacion, FechaModificacion ) values "
-                        . "('{$this->formulario["Anio"]}','{$this->formulario["_idModelo"]}','{$_SESSION["nombre"]}','{$_SESSION["nombre"]}','".date("Y-m-d H:i:s")."','".date("Y-m-d H:i:s")."')";
-                    break;
-                case 'editanio':
-                   $sql = "UPDATE Anios SET Anio = '{$this->formulario["Anio"]}', USREdicion='{$_SESSION["nombre"]}', FechaModificacion='".
-                        date("Y-m-d H:i:s")."' where _id=". $this->formulario["_id"];
-                    break;
-                case 'deleteanio':
-                    $sql = "DELETE FROM Anios where _id=". $this->formulario["_id"];
-                    break;
+            $usr_seguro = addslashes($_SESSION["nombre"]);
+            $fecha_actual = date("Y-m-d H:i:s");
+            $accionLog = ""; $detallesLog = "";
+
+            if($this->formulario["opc"] == 'newanios' || $this->formulario["opc"] == 'editanio'){
+                $anio_seguro = addslashes(trim($this->formulario["Anio"]));
+                $idmod_seguro = intval($this->formulario["_idModelo"]);
+                $id_cond = ($this->formulario["opc"] == 'editanio') ? " AND _id != " . intval($this->formulario["_id"]) : "";
+                $check = $this->conn->query("SELECT _id FROM Anios WHERE Anio = '$anio_seguro' AND _idModelo = $idmod_seguro" . $id_cond);
+                if($this->conn->fetch($check)){
+                    $this->jsonData["mensaje"] = "Esta generación/año ya existe para este vehículo.";
+                    return false;
+                }
+            }
+
+            if($this->formulario["opc"] == 'newanios'){
+                $anio_seguro = addslashes(trim($this->formulario["Anio"]));
+                $idmod_seguro = intval($this->formulario["_idModelo"]);
+                $sql = "INSERT INTO Anios (Anio, _idModelo, USRCreacion, USREdicion, FechaCreacion, FechaModificacion) VALUES ('$anio_seguro', $idmod_seguro, '$usr_seguro', '$usr_seguro', '$fecha_actual', '$fecha_actual')";
+                $accionLog = "CREAR_GENERACION"; $detallesLog = "Generación creada: $anio_seguro (Vehículo ID: $idmod_seguro)";
+            } else {
+                $id_seguro = intval($this->formulario["_id"]);
+                if($this->formulario["opc"] == 'editanio'){
+                    $anio_seguro = addslashes(trim($this->formulario["Anio"]));
+                    $sql = "UPDATE Anios SET Anio = '$anio_seguro', USREdicion='$usr_seguro', FechaModificacion='$fecha_actual' WHERE _id= $id_seguro";
+                    $accionLog = "EDITAR_GENERACION"; $detallesLog = "Generación editada. ID: $id_seguro";
+                } else if($this->formulario["opc"] == 'deleteanio'){
+                    $sql = "DELETE FROM Anios WHERE _id= $id_seguro";
+                    $accionLog = "ELIMINAR_GENERACION"; $detallesLog = "Generación eliminada. ID: $id_seguro";
+                }
             }
             
-            return $this->conn->query($sql) or $this->jsonData["error"] = $this->conn->error;
-        }
-        
-        private function subirImagen(){
-            //print_r($this->foto);
-            if($this->foto["file"]["name"]!="" and $this->foto["file"]["size"]!=0){
-                $subdir ="../../../../../../"; 
-                $dir = "images/Categorias/";
-                $archivo = $this->formulario["lastid"].".png";
-                if(!is_dir($subdir.$dir)){
-                    mkdir($subdir.$dir,0755);
-                }
-                if($archivo && move_uploaded_file($this->foto["file"]["tmp_name"], $subdir.$dir.$archivo)){
-                    //$this->rutaimagen= $dir.$archivo;
-                    return true;
-                }else{
-                    echo "no se subio la imagen";
-                }
-            }else{
+            if($this->conn->query($sql)){
+                Funciones::guardarBitacora($this->conn, 'Vehículos (Años)', $accionLog, $detallesLog);
+                return true;
+            } else {
+                $this->jsonData["error"] = $this->conn->error;
                 return false;
             }
         }
@@ -254,4 +254,4 @@ session_name("loginUsuario");
     
     $app = new Modelos($array_principal);
     $app->principal();
-
+?>

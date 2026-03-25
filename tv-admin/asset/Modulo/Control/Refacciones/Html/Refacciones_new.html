@@ -1,0 +1,245 @@
+<div ng-controller="RefaccionesNewCtrl" ng-cloak>
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 align-items-center">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark font-weight-bold"><i class="fa fa-plus-circle text-danger mr-2"></i> Alta de Refacción</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="?mod=Refacciones">Refacciones</a></li>
+                        <li class="breadcrumb-item active">Nueva</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="content">
+        <div class="container-fluid">
+            <form name="frmrefaccion" novalidate>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card card-outline card-danger shadow-sm">
+                            <div class="card-body text-center">
+                                <div class="p-2 border rounded bg-light mb-3">
+                                    <img ng-src="{{img}}" alt="Vista previa" class="img-fluid rounded" style="max-height: 200px;" ng-style="backgroudimg">
+                                </div>
+                                <div class="form-group">
+                                    <label class="small font-weight-bold">Imagen de la refacción</label>
+                                    <div class="custom-file text-left text-xs">
+                                        <input type="file" class="custom-file-input" id="txtfile" ng-disabled="habilitado">
+                                        <label class="custom-file-label" for="txtfile">Seleccionar archivo</label>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="text-left">
+                                    <div class="form-group">
+                                        <label class="small">Tag Title:</label>
+                                        <input type="text" class="form-control form-control-sm" ng-model="refaccion.tag_title" ng-disabled="habilitado">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="small">Tag Alt:</label>
+                                        <input type="text" class="form-control form-control-sm" ng-model="refaccion.tag_alt" ng-disabled="habilitado">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="card card-outline card-danger shadow-sm">
+                            <div class="card-header bg-white"><h3 class="card-title font-weight-bold">Datos Generales</h3></div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label>Clave: <span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control font-weight-bold border-danger" ng-model="refaccion.Clave" ng-change="buscarClaveSeicom()" ng-disabled="habilitado" required>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label>Nombre de Refacción: <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" ng-model="refaccion.Producto" ng-disabled="habilitado" required>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <label>No. Parte: <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" ng-model="refaccion.No_parte" ng-disabled="habilitado" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Categoría: <span class="text-danger">*</span></label>
+                                        <select class="form-control" name="slccategoria" ng-model="refaccion._idCategoria" ng-disabled="habilitado" required>
+                                            <optgroup label="Selecciona la categoria de la refaccion">
+                                                <option ng-repeat="c in categorias" value="{{c._id}}">{{c.Categoria}}</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-md-4">
+                                        <label>Marca Vehículo: <span class="text-danger">*</span></label>
+                                        <select class="form-control" name="slcmarcav" ng-model="refaccion._idMarca" ng-change="getVehiculos()" ng-disabled="habilitado" required>
+                                            <optgroup label="Selecciona la marca del vehiculo">
+                                                <option ng-repeat="m in Marcas" value="{{m._id}}">{{m.Marca}}</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Vehículo: <span class="text-danger">*</span></label>
+                                        <select class="form-control" name="slcvehiculo" ng-model="refaccion.Modelo" ng-change="getModelos()" ng-disabled="habilitado" required>
+                                            <optgroup label="Selecciona el vehiculo">
+                                                <option ng-repeat="v in Vehiculos" value="{{v._id}}">{{v.Modelo}}</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Modelo (Año): <span class="text-danger">*</span></label>
+                                        <select class="form-control" name="slcmodelo" ng-model="refaccion.Anios" ng-disabled="habilitado" required>
+                                            <optgroup label="Selecciona el año del Vehiculo">
+                                                <option ng-repeat="mo in Modelos" value="{{mo._id}}">{{mo.Anio}}</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <label>Proveedor:</label>
+                                        <select class="form-control" name="slcproveedor" ng-model="refaccion.id_proveedor" ng-disabled="habilitado">
+                                            <optgroup label="Selecciona el proveedor">
+                                                <option ng-repeat="p in Proveedor" value="{{p._id}}">{{p.Proveedor}}</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6" ng-show="refaccion.Kit">
+                                        <label>Stock (Manual para Kits): <span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control border-primary" ng-model="refaccion.stock" ng-disabled="habilitado">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-outline card-danger shadow-sm">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <label>Precio Público: <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend"><span class="input-group-text">$</span></div>
+                                            <input type="number" class="form-control font-weight-bold text-success" ng-model="refaccion.Precio1" ng-disabled="habilitado || (!refaccion.precio_manual && !refaccion.Kit)" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-switch pt-3">
+                                            <input type="checkbox" class="custom-control-input" id="swmanual" ng-model="refaccion.precio_manual" ng-change="cambioPrecioManual()">
+                                            <label class="custom-control-label font-weight-bold text-primary" for="swmanual">Precio Manual (Fijar)</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" ng-show="refaccion.RefaccionOferta">
+                                        <label>Precio Oferta:</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend"><span class="input-group-text">$</span></div>
+                                            <input type="number" class="form-control text-danger font-weight-bold" ng-model="refaccion.Precio2">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="row">
+                                    <div class="col-md-6 border-right">
+                                        <div class="custom-control custom-switch mb-2">
+                                            <input type="checkbox" class="custom-control-input" id="sw1" ng-model="refaccion.RefaccionNueva">
+                                            <label class="custom-control-label" for="sw1">Refacción Nueva</label>
+                                        </div>
+                                        <div class="custom-control custom-switch mb-2">
+                                            <input type="checkbox" class="custom-control-input" id="sw2" ng-model="refaccion.RefaccionOferta">
+                                            <label class="custom-control-label" for="sw2">Refacción en Oferta</label>
+                                        </div>
+                                        <div class="custom-control custom-switch mb-2">
+                                            <input type="checkbox" class="custom-control-input" id="sw3" ng-model="refaccion.RefaccionLiquidacion">
+                                            <label class="custom-control-label" for="sw3">En Liquidación</label>
+                                        </div>
+                                        <div class="custom-control custom-switch mb-2">
+                                            <input type="checkbox" class="custom-control-input" id="sw4" ng-model="refaccion.Estatus">
+                                            <label class="custom-control-label" for="sw4">Refacción Activa</label>
+                                        </div>
+                                        <div class="custom-control custom-switch mb-2">
+                                            <input type="checkbox" class="custom-control-input" id="sw5" ng-model="refaccion.Enviogratis">
+                                            <label class="custom-control-label" for="sw5">Envío Gratis</label>
+                                        </div>
+                                        <div class="custom-control custom-switch mb-2">
+                                            <input type="checkbox" class="custom-control-input" id="sw7" ng-model="refaccion.Publicar">
+                                            <label class="custom-control-label" for="sw7">Publicar en la Web</label>
+                                        </div>
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input" id="sw6" ng-model="refaccion.Kit" ng-change="cambioPrecioManual()">
+                                            <label class="custom-control-label" for="sw6">Es un Kit</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="small">Vigencia Nuevo:</label>
+                                        <div class="input-group mb-2">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div>
+                                            <input type="text" class="form-control calendario" ng-model="refaccion.fechaNueva" placeholder="yyyy-mm-dd" ng-disabled="!refaccion.RefaccionNueva">
+                                        </div>
+                                        <label class="small">Vigencia Oferta:</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div>
+                                            <input type="text" class="form-control calendario" ng-model="refaccion.fechaOferta" placeholder="yyyy-mm-dd" ng-disabled="!refaccion.RefaccionOferta">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-outline card-secondary shadow-sm">
+                            <div class="card-body">
+                                <h6 class="font-weight-bold border-bottom pb-2">Dimensiones y Peso</h6>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" placeholder="Alto" class="form-control numeric" ng-model="refaccion.Alto">
+                                            <div class="input-group-append"><span class="input-group-text">cm</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" placeholder="Largo" class="form-control numeric" ng-model="refaccion.Largo">
+                                            <div class="input-group-append"><span class="input-group-text">cm</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" placeholder="Ancho" class="form-control numeric" ng-model="refaccion.Ancho">
+                                            <div class="input-group-append"><span class="input-group-text">cm</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" placeholder="Peso" class="form-control numeric" ng-model="refaccion.Peso">
+                                            <div class="input-group-append"><span class="input-group-text">kg</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <label>Descripción de la Refacción:</label>
+                                    <textarea rows="4" class="form-control" ng-model="refaccion.Descripcion" ng-disabled="habilitado"></textarea>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white text-right">
+                                <button type="button" class="btn btn-secondary mr-2" ng-click="btnRegresar()">Cancelar</button>
+                                <button type="button" class="btn btn-danger px-4 shadow-sm" ng-disabled="frmrefaccion.$invalid" ng-click="habilitado ? btnNuevaRefaccion() : btnGuardarRefaccion()">
+                                    <i class="fa fa-save mr-1"></i> {{habilitado ? "Nueva Captura" : "Guardar Refacción"}}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>

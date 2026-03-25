@@ -1,74 +1,91 @@
-<div ng-controller="PreciosCrtl">
+<div ng-controller="PreciosCrtl" ng-cloak>
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
+            <div class="row mb-2 align-items-center">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark"><i class="fa fa-user mr-1"></i> Actualizar Precios</h1>
-                </div><!-- /.col -->
+                    <h1 class="m-0 text-dark font-weight-bold">
+                        <i class="fa fa-sync-alt text-danger mr-2"></i> Sincronizador SEICOM
+                    </h1>
+                </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="?mod=home">Inicio</a></li>
-                        <li class="breadcrumb-item">Respaldo</li>
+                        <li class="breadcrumb-item">Configuración</li>
                         <li class="breadcrumb-item active">Precios</li>
                     </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
-    <section class="content" ng-init="usr='{usr}'">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="callout callout-warning">
-                        <h5>Advertencia</h5>
-                        <p>La actualización de precios puede tardar varios minutos en realizarse, favor de no cerrar la ventana cuando se este ejecutando
-                            el proceso de actualización
-                        </p>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-xl-12 col-sm-4 col-md-4 col-lg-4" ng-if="!flag">
-                    <button type="button" class="btn btn-warning" ng-click="btnActualizar()">Actualizar precios</button>
-                </div>
-                <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12" ng-if="flag">
-                    <div class="card card-danger">
-                        <div class="card-header">
-                            <h3 class="card-title">Actualizando precios</h3>
-                        </div>
-                        <div class="card-body">
-                            Por favor espere mientras actualizamos los precios....
-                        </div>
-                        <div class="overlay">
-                            <i class="fa fa-refresh fa-spin"></i>
-                        </div>
-                    </div>
-                    
                 </div>
             </div>
-            <hr>
-            <div class="row">
-                <div class="col-xs-12 col-xl-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered" datatable="ng">
-                            <thead>
-                                <th>#</th>
-                                <th>Fecha</th>
-                                <th>Descripcion</th>
-                                <th>Usuario</th>
-                                <th>Hora</th>
+        </div>
+    </div>
+
+    <section class="content" ng-init="usr='{usr}'">
+        <div class="container-fluid">
+            
+            <div class="card card-outline card-danger shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="alert alert-warning shadow-sm border-warning text-dark d-flex align-items-start">
+                        <i class="icon fas fa-exclamation-triangle fa-2x mr-3 mt-1"></i>
+                        <div>
+                            <h5 class="font-weight-bold mb-1">Aviso Importante</h5>
+                            <p class="mb-1">
+                                La conexión con SEICOM y la descarga del catálogo puede demorar varios minutos. 
+                                <b>Por favor, no recargues ni cierres esta ventana</b> hasta que el proceso finalice.
+                            </p>
+                            <small class="text-muted"><i class="fa fa-info-circle mr-1"></i> Los productos marcados con "Precio Manual" solo actualizarán su stock, no su costo.</small>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4" ng-if="!flag">
+                        <button type="button" class="btn btn-lg btn-danger shadow font-weight-bold px-5" ng-click="btnActualizar()">
+                            <i class="fa fa-cloud-download-alt mr-2"></i> Iniciar Sincronización
+                        </button>
+                    </div>
+
+                    <div class="text-center mt-4 p-4 rounded bg-light border" ng-if="flag">
+                        <h4 class="text-danger font-weight-bold mb-3">Conectando con SEICOM...</h4>
+                        <i class="fa fa-sync-alt fa-spin fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">Procesando miles de artículos. Esto puede tomar un momento.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white pt-3 pb-2 border-bottom-0">
+                    <h3 class="card-title font-weight-bold text-dark">
+                        <i class="fa fa-history mr-1 text-secondary"></i> Historial de Actualizaciones
+                    </h3>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive bg-white rounded">
+                        <table class="table table-hover table-striped mb-0 text-sm" datatable="ng" ng-if="logData && logData.length > 0">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th width="5%" class="text-center">#</th>
+                                    <th width="15%" class="text-center">Fecha</th>
+                                    <th width="15%" class="text-center">Hora</th>
+                                    <th width="45%">Detalles de Operación</th>
+                                    <th width="20%" class="text-center">Usuario</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="log in logData">
-                                    <td>{{$index+1}}</td>
-                                    <td>{{log.fecha}}</td>
-                                    <td>{{log.mensaje}}</td>
-                                    <td>{{log.usr}}</td>
-                                    <td>{{log.hora}}</td>
+                                    <td class="text-center align-middle font-weight-bold text-muted">{{$index+1}}</td>
+                                    <td class="text-center align-middle"><i class="fa fa-calendar-alt text-secondary mr-1"></i> {{log.fecha}}</td>
+                                    <td class="text-center align-middle"><i class="fa fa-clock text-secondary mr-1"></i> {{log.hora}}</td>
+                                    <td class="align-middle text-primary font-weight-bold">{{log.mensaje}}</td>
+                                    <td class="text-center align-middle"><span class="badge badge-dark">{{log.nombreCompleto}}</span></td>
                                 </tr>
                             </tbody>
                         </table>
+
+                        <div class="text-center py-5 text-muted" ng-if="!logData || logData.length == 0">
+                            <i class="fa fa-history fa-3x mb-3 text-light"></i><br>
+                            <h5 class="font-weight-light">No hay registros de actualizaciones recientes.</h5>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
 </div>
