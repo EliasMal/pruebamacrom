@@ -859,7 +859,7 @@ function RefaccionesEditCtrl($scope, $http, $sce) {
 
     /* Galería */
     obj.getImagen = (e) => {
-        return e.imagen ? obj.dominio + '/images/galeria/' + e._id + '.png' : obj.dominio + '/images/galeria/' + e._id + '.webp';
+        return e.imagen ? obj.dominio + '/images/galeria/' + e._id + '.webp' : obj.dominio + '/images/galeria/' + e._id + '.png';
     }
 
     obj.btnEliminarImagen = (_id) => {
