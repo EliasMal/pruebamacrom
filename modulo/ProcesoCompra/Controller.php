@@ -1,75 +1,47 @@
 <?php
-    /* 
-     * To change this license header, choose License Headers in Project Properties.
-     * To change this template file, choose Tools | Templates
-     * and open the template in the editor.
-     */
     (@__DIR__ == '__DIR__') && define('__DIR__',  realpath(dirname(__FILE__)));
     
-    
-    
-    function get_template($form='principal'){
+    function get_template($form){
         $file = __DIR__.'/Html/ProcesoCompra_'.$form.'.html';
-        $template = file_get_contents($file);
-        return $template;
+        if(file_exists($file)) {
+            return file_get_contents($file);
+        }
+        return "<h3>Error: Vista no encontrada ($form)</h3>";
     }
     
-    function retorna_vista($vista,$data=array()){
-        switch($vista){
-            case 'principal':
-                $html = get_template($vista);
-                
-            break;
-            case 'paso2':
-            
-                $html = get_template($vista);
-                break;
-            case 'paso3':
-            
-                $html = get_template($vista);
-                break;
-            case 'cc?':
-                
-                $html = get_template("cc");
-                $html = str_replace("{mensaje}", $data["mensaje"], $html);
-                $html = str_replace("{acreditada}", $data["acreditada"], $html);
-            break;
+    function retorna_vista($vista, $data=array()){
+        $archivo_vista = strpos($vista, 'cc?') !== false ? 'cc' : $vista;
+        
+        $html = get_template($archivo_vista);
+        
+        if($archivo_vista == 'cc') {
+            $html = str_replace("{mensaje}", isset($data["mensaje"]) ? $data["mensaje"] : "", $html);
+            $html = str_replace("{acreditada}", isset($data["acreditada"]) ? $data["acreditada"] : "", $html);
         }
-        $html = str_replace("{mod}", $data["mod"], $html);
+        
+        $html = str_replace("{mod}", isset($data["mod"]) ? $data["mod"] : "ProcesoCompra", $html);
         print $html;
     }
     
     function principal($array_principal){
-        $formulario = array_map("htmlspecialchars",$_GET);
-        $opc = isset($_GET['opc'])? htmlspecialchars($_GET['opc']):"principal";
+        $formulario = array_map("htmlspecialchars", $_GET);
+        $opc = isset($_GET['opc']) ? htmlspecialchars($_GET['opc']) : "principal";
         $data["mod"] = "ProcesoCompra";
-         switch($opc){
-            
-            case 'principal':
-                
-                retorna_vista($opc,$data);
-            break;
-            case 'paso2':
-                
-                retorna_vista($opc,$data);
-            break;
-            case 'paso3':
-                
-                retorna_vista($opc,$data);
-            break;
-        }
-        if(strpos($opc,'cc?') !==false){
-            if($formulario["nbResponse"]=="Aprobado"){
+        
+        if(strpos($opc, 'cc?') !== false){
+            if(isset($formulario["nbResponse"]) && $formulario["nbResponse"] == "Aprobado"){
                 unset($_SESSION["CarritoPrueba"]);
                 $data["acreditada"] = "¡Compra Acreditada!";
                 $data["mensaje"] = "Gracias por su preferencia.";
-            }else if ($formulario["nbResponse"]=="Rechazado"){
-                $data["mensaje"] = "¡{$formulario["cdResponse"]}!, {$formulario["nb_error"]}";
+            } else if (isset($formulario["nbResponse"]) && $formulario["nbResponse"] == "Rechazado"){
+                $nb_error = isset($formulario["nb_error"]) ? $formulario["nb_error"] : "Error desconocido";
+                $cd_resp = isset($formulario["cdResponse"]) ? $formulario["cdResponse"] : "Denegado";
+                $data["mensaje"] = "¡{$cd_resp}!, {$nb_error}";
             }
-
-            retorna_vista("cc?",$data);
         }
+        
+        retorna_vista($opc, $data);
     }
     
     principal($array_principal);
-    
+?>

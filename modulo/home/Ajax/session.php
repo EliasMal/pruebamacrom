@@ -102,7 +102,8 @@
               "Precio2" => $formulario->modelo->datos->Precio2,
               "imagenid" => $id,
               "Existencias" => $formulario->modelo->datos->stock,
-              "RefaccionOferta" => isset($formulario->modelo->datos->RefaccionOferta) ? $formulario->modelo->datos->RefaccionOferta : '0'
+              "RefaccionOferta" => isset($formulario->modelo->datos->RefaccionOferta) ? $formulario->modelo->datos->RefaccionOferta : '0',
+              "Kit" => isset($formulario->modelo->datos->Kit) ? $formulario->modelo->datos->Kit : 0 
           ];
         } else {
           $mensajeRespuesta = "Error insertando: " . mysqli_error($conn);

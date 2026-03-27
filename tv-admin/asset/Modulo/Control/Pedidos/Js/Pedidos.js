@@ -174,7 +174,7 @@ function PedidosDetallesCtrl($scope, $http) {
 
         let nombrePaqueteria = obj.Pedido.Servicio ? obj.Pedido.Servicio.toLowerCase() : "";
         let esEnvioLocal = nombrePaqueteria.includes('local') || nombrePaqueteria.includes('repartidor') || nombrePaqueteria.includes('tienda') || nombrePaqueteria.includes('metropolitano');
-        if (obj.Pedido.Acreditado == 3 && (!obj.Pedido.Guia || obj.Pedido.Guia.trim() === '') && !esEnvioLocal) {
+        if (obj.Pedido.Acreditado == 3 && (!obj.Pedido.GuiaEnvio || obj.Pedido.GuiaEnvio.trim() === '') && !esEnvioLocal) {
             Toast.fire({ icon: 'warning', title: 'Ingresa un número de guía de la paquetería antes de guardar' });
             return;
         }

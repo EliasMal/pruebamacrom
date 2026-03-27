@@ -4,54 +4,165 @@
         display: none;
     }
 
-    @media(min-width: 768px) {
-	    .p-res{
-	      margin-top: -6rem;
-	    }
-    }
-
     canvas {
         background-color: transparent;
         height: 100vh;
         pointer-events: none;
         position: fixed;
+        top: 0;
+        left: 0;
         width: 100%;
-        z-index: 3;
+        z-index: 9999;
+    }
+
+    /* --- ESTILOS DE LA TARJETA DE ÉXITO --- */
+    .tarjeta-exito {
+        background: var(--blanco);
+        border-radius: 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        padding: 4rem 3rem;
+        margin: -5rem auto 8rem auto;
+        position: relative;
+        max-width: 75rem;
+        border-top: 5px solid var(--primario);
+        text-align: center;
+        z-index: 2;
+    }
+
+    .tarjeta-exito__icono {
+        font-size: 5rem;
+        color: var(--primario); 
+        margin-bottom: 1.5rem;
+        animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .tarjeta-exito__titulo {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+        color: var(--negro);
+        font-size: 2.6rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .tarjeta-exito__texto {
+        font-family: 'Poppins', sans-serif;
+        color: var(--gris-mid-dark);
+        font-size: 1.6rem;
+        line-height: 1.7;
+        margin-bottom: 4rem;
+    }
+
+    .tarjeta-exito__botones {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+
+    /* Botones Modernos estilo Píldora */
+    .btn-moderno {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        background-color: var(--primario);
+        color: var(--blanco) !important;
+        padding: 1.2rem 2.5rem;
+        border-radius: 5rem; 
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: 2px solid var(--primario);
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(222, 0, 7, 0.3);
+        text-decoration: none;
+    }
+
+    .btn-moderno:hover {
+        background-color: var(--primario-oscuro);
+        border-color: var(--primario-oscuro);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(222, 0, 7, 0.4);
+    }
+
+    /* Botón Secundario (Blanco con borde rojo) */
+    .btn-moderno--secundario {
+        background-color: var(--blanco);
+        color: var(--primario) !important;
+        box-shadow: none;
+    }
+
+    .btn-moderno--secundario:hover {
+        background-color: var(--primario);
+        color: var(--blanco) !important;
+        box-shadow: 0 6px 20px rgba(222, 0, 7, 0.2);
+    }
+
+    /* Animación del Icono */
+    @keyframes popIn {
+        0% { transform: scale(0); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Ajustes para Celulares */
+    @media (max-width: 600px) {
+        .tarjeta-exito {
+            margin: -3rem 1.5rem 4rem 1.5rem;
+            padding: 3rem 2rem;
+        }
+        .btn-moderno {
+            width: 100%;
+        }
     }
 </style>
+
 <span id="button"></span>
 <canvas id="canvas"></canvas>
-<section ng-controller="ProcesoCompraCtrl" class="p-res">
 
+<section ng-controller="ProcesoCompraCtrl" class="p-res pb-5">
     <div ng-controller="CabeceraCtrl" ng-init="mod='{mod}'">
-        <section class="titular__banner">
-            <div ng-repeat="banner in dataBanners.Escritorio">
-                <img loading="lazy" ng-src="https://macromautopartes.com/images/Banners/{{banner.imagen}}"
-                    alt="banner compras">
+        
+        <section class="titular__banner" style="position: relative; z-index: 1;">
+            <div ng-repeat="banner in dataBanners.Escritorio" style="width: 100%;">
+                <img loading="lazy" ng-src="https://macromautopartes.com/images/Banners/{{banner.imagen}}" alt="banner compras" style="width: 100%; object-fit: cover;">
             </div>
-            <!-- <img src="images/Banners/Compras.png" alt="Banner compras"> Activar solo en la pagina bien -->
         </section>
 
         <section class="contenedor">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12 Proceso__Compra">
-                        <div class="row">
-                            <div class="col-md-12 m-text26 Proceso__Compra2">
-                                ¡Gracias por realizar su compra!, en cuanto se acredite tu depósito se te enviara vía
-                                correo tu código de envío de paquetería para que pueda ser rastreado.
+                    <div class="col-12">
+
+                        <div class="tarjeta-exito">
+                            
+                            <div class="tarjeta-exito__icono">
+                                <i class="fas fa-gift"></i>
                             </div>
+
+                            <h2 class="tarjeta-exito__titulo">¡Gracias por tu preferencia!</h2>
+
+                            <p class="tarjeta-exito__texto">
+                                Hemos registrado tu solicitud exitosamente.<br>
+                                En cuanto se acredite tu depósito, te enviaremos vía correo tu <strong>código de paquetería</strong> para que puedas rastrear tu envío paso a paso.
+                            </p>
+
+                            <div class="tarjeta-exito__botones">
+                                <button class="btn-moderno btn-moderno--secundario" onclick="location.href = '?mod=Profile&opc=Mispedidos'">
+                                    <i class="fas fa-box-open"></i> Ver Mis Pedidos
+                                </button>
+
+                                <a href="https://macromautopartes.com/Reportes/fichaDeposito/Controller.php" target="_blank" class="btn-moderno">
+                                    <i class="fas fa-file-invoice-dollar"></i> Referencia de Pago
+                                </a>
+                            </div>
+
                         </div>
-                        <div class="acreditar__contenedor--links">
-                            <button class="acreditar__boton" onclick="location.href = '?mod=Profile&opc=Mispedidos'">Ver
-                                Mis Pedidos</button>
-                            <a href="https://macromautopartes.com/Reportes/fichaDeposito/Controller.php"
-                                class="acreditar__boton">Ver Referencia de pago</a>
-                        </div>
+
                     </div>
                 </div>
             </div>
         </section>
+        
     </div>
-
 </section>

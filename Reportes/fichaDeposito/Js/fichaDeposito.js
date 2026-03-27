@@ -7,46 +7,22 @@ RptsuruVolks.controller('FichaDepositoCtrl', ["$scope","$http", FichaDepositoCtr
 
 function FichaDepositoCtrl($scope,$http){
     var obj = $scope;
-    obj.id_pedido;
     obj.fichaData = {};
-    obj.session = {};
 
-    obj.sendData = (data) =>{
-        $http({
-            method: 'POST',
-            url: urlfichadeposito,
-            data: {ficha: data}
-        }).then(function successCallback(res) {
-            console.log(res.data);
+    obj.sendData = () =>{
+        $http.post(urlfichadeposito, {}).then(function successCallback(res) {
             if(res.data.Bandera == 1){
                 obj.fichaData = res.data.Data;
             }else{
-                toastr.error(res.data.mensaje)
+                toastr.error(res.data.mensaje);
+                setTimeout(() => { location.href = "../../?mod=home"; }, 2500);
             }
         }, function errorCallback(res) {
-            toastr.error("Error: no se realizo la conexion con el servidor");
+            toastr.error("Error: no se conectó con el servidor");
         });
     }
 
     angular.element(document).ready(function () {
-        obj.session = JSON.parse(localStorage.getItem('session'));
-        
-        if(obj.session == "null" && obj.session.autentificacion==undefined && obj.session.autentificacion!=1){
-            localStorage.clear();
-            location.href = "../../";
-        }else{
-            
-            if(localStorage.getItem("id_pedido")){
-                obj.id_pedido = localStorage.getItem("id_pedido");
-                obj.sendData({id:obj.id_pedido});
-            }else{
-                localStorage.clear();
-                location.href = "../../";
-            }
-        }
-        
-        
+        obj.sendData();
     });
 }
-
-

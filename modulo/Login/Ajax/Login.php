@@ -328,12 +328,37 @@ class Login{
     
     private function get_Carrito(){
         $array = array();
+        
         $sql = "SELECT DISTINCT _clienteid, CR.Clave, CR.No_parte, CR.Cantidad, CR.Precio, CR.Precio2, P.RefaccionOferta, 
-        CR.Producto as _producto, CR.Alto, CR.Largo, CR.Ancho, CR.Peso, CR.imagenid, CR.Existencias 
+        CR.Producto as _producto, CR.Alto, CR.Largo, CR.Ancho, CR.Peso, CR.imagenid, CR.Existencias,
+        P.Kit, P.stock as StockBD, P.precio_manual, P.Precio1 as Precio1BD, P.Precio2 as Precio2BD 
         FROM Carrito CR left JOIN Producto as P on P.Clave = CR.Clave where _clienteid='{$this->dataLogin["_id_cliente"]}' and _clienteid != 0";
+        
         $id = $this->conn->query($sql);
-        while ($row = $this->conn->fetch($id)){
-            array_push($array, $row);
+        if($id){
+            while ($row = $this->conn->fetch($id)){
+                
+                if($row['Kit'] == 1 || $row['Kit'] == '1'){
+                    $stockReal = intval($row['StockBD']);
+                    $row['Existencias'] = $stockReal; 
+                    
+                    if(intval($row['Cantidad']) > $stockReal){
+                        $row['Cantidad'] = $stockReal > 0 ? $stockReal : 1; 
+                        $updateSql = "UPDATE Carrito SET Existencias = '$stockReal', Cantidad = '{$row['Cantidad']}' WHERE Clave = '{$row['Clave']}' AND _clienteid = '{$this->dataLogin["_id_cliente"]}'";
+                        $this->conn->query($updateSql);
+                    }
+                }
+
+                if($row['Kit'] == 1 || $row['Kit'] == '1' || $row['precio_manual'] == 1 || $row['precio_manual'] == '1'){
+                    $row['Precio'] = $row['Precio1BD'];
+                    $row['Precio2'] = $row['Precio2BD'];
+                    
+                    $updateSqlPrice = "UPDATE Carrito SET Precio = '{$row['Precio1BD']}', Precio2 = '{$row['Precio2BD']}' WHERE Clave = '{$row['Clave']}' AND _clienteid = '{$this->dataLogin["_id_cliente"]}'";
+                    $this->conn->query($updateSqlPrice);
+                }
+
+                array_push($array, $row);
+            }
         }
         return $array;
     }

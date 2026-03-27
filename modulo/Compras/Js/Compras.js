@@ -95,6 +95,18 @@ function ComprasCtrl($scope, $http, $sce) {
 
     /* DOM / EVENTOS PUROS */
 
+    /* UI: Control del Loader Global */
+    obj.ui = {
+        loader: {
+            mostrar: function(texto = "Procesando...") { 
+                $('#loading-text-compras').text(texto);
+                $('#loading-screen-compras').fadeIn(200); 
+            },
+            ocultar: function() { 
+                $('#loading-screen-compras').fadeOut(200); 
+            }
+        }
+    };
 
     /* UTILIDADES */
     $scope.tieneMultiplesSucursales = function(clave) {
@@ -200,7 +212,6 @@ function ComprasCtrl($scope, $http, $sce) {
             const usadas = [];
 
             for (const suc of ORDEN_SUCURSALES) {
-
                 const disponible = stockPorSucursal[suc.key] || 0;
                 if (disponible <= 0) continue;
 
@@ -233,7 +244,6 @@ function ComprasCtrl($scope, $http, $sce) {
             let maxDias = 0;
 
             for (const s of usadas) {
-
                 const diaCamion = DIAS_CAMION[s.sucursal];
                 if (!diaCamion) continue;
 
@@ -247,18 +257,38 @@ function ComprasCtrl($scope, $http, $sce) {
         /*===PROCESAMIENTO DEL CARRITO===*/
         for (const item of $_SESSION.CarritoPrueba) {
 
-            if (!item?.Clave) {
-                console.warn("Item sin clave:", item);
-                continue;
+            let stockPorSucursal = {};
+            let totalStock = 0;
+
+            if (item.Kit == 1 || item.Kit == '1') {
+                
+                const stockKit = parseInt(item.Existencias, 10) || 0;
+                
+                stockPorSucursal = {
+                    Colima: 0,
+                    VentasInternet: stockKit,
+                    Tecoman: 0,
+                    VillaDeAlvarez: 0,
+                    Manzanillo: 0,
+                    Bodega: 0 
+                };
+                
+                totalStock = stockKit;
+
+            } else {
+                
+                if (!item?.Clave) {
+                    console.warn("Item sin clave:", item);
+                    continue;
+                }
+
+                const seiData = await obj.getSeicom(item.Clave);
+                if (!seiData || !seiData.Table) continue;
+
+                stockPorSucursal = normalizarStock(seiData.Table);
+                totalStock = Object.values(stockPorSucursal).reduce((a, b) => a + b, 0);
             }
-
-            const seiData = await obj.getSeicom(item.Clave);
-            if (!seiData || !seiData.Table) continue;
-
-            const stockPorSucursal = normalizarStock(seiData.Table);
-
-            const totalStock = Object.values(stockPorSucursal)
-                .reduce((a, b) => a + b, 0);
+            // ==========================================
 
 
             /* ----- SIN STOCK ----- */
@@ -271,6 +301,9 @@ function ComprasCtrl($scope, $http, $sce) {
             /* ----- STOCK INSUFICIENTE ----- */
             if (totalStock < item.Cantidad) {
                 $_SESSION.ProdInsufStock = 1;
+                
+                // Actualizamos la existencia visible para que el usuario no pida más de lo que hay
+                item.Existencias = totalStock; 
                 obj.btnAgregar(item);
                 continue;
             }
@@ -278,15 +311,16 @@ function ComprasCtrl($scope, $http, $sce) {
             /* ----- COMBINACIÓN DE SUCURSALES ----- */
             const regla = combinarSucursales(stockPorSucursal, item.Cantidad);
             if (!regla) continue;
+            
             $_SESSION.ProductosPorSucursal[item.Clave] = {
                 descripcion: item.Descripcion || '',
                 cantidadTotal: item.Cantidad,
                 sucursales: regla.usadas
             };
             $scope.ProductosPorSucursal = $_SESSION.ProductosPorSucursal;
+            
             /* ----- CÁLCULO DE DÍAS EXTRA ----- */
             const diasExtra = calcularDiasEnvioReal(regla.usadas);
-
             const keyEnvio = "AUTO_" + item.Clave;
 
             if (diasExtra > 0) {
@@ -294,11 +328,9 @@ function ComprasCtrl($scope, $http, $sce) {
             } else {
                 obj.Costumer.DiaExtraEnvio = 0;
             }
-
         }
 
         /*===VALIDACIÓN DE ENVÍO MÚLTIPLE===*/
-
         const diasExtras = Object.values($_SESSION.DiasenvioEXT || {});
         const hayEnvioMultiple = diasExtras.some(d => d > 0);
 
@@ -644,7 +676,7 @@ function ComprasCtrl($scope, $http, $sce) {
     }
 
     obj.btncotizar = () => {
-        obj.flag = true
+        obj.flag = true;
         obj.btnCotizacion();
         $("#mdlcotizar").modal('show');
     }
@@ -708,14 +740,14 @@ function ComprasCtrl($scope, $http, $sce) {
 
     /* PAGO */
     obj.btnPagar = () => {
-        butcompra.disabled = true;
-        butccompra.classList.add("animationclip");
-        let aut = false;
         if (obj.Costumer.dataDomicilio.Bandera) {
             if ((obj.Costumer.facturacion == "1" && obj.Costumer.dataFacturacion.Bandera) || obj.Costumer.facturacion == "0") {
                 if (obj.requiredEnvio) {
+                    
+                    // Mostramos el Loader Premium
+                    obj.ui.loader.mostrar("Procesando pedido...");
+
                     obj.Costumer.opc = "buy2";
-                    //obj.Costumer.Cenvio.Servicio = obj.dataCotizador.parcel.weight == 0 ? "ENVIO GRATIS" : obj.Costumer.Cenvio.Servicio;
                     if (obj.Costumer.profile.cupon_nombre != null && obj.Costumer.profile.cupon_nombre != "") {
                         const cpn = obj.Costumer.profile.cupon_nombre.split(",");
                         obj.Costumer.usercpn = cpn.filter(Discpn => Discpn != obj.Costumer.usercpn);
@@ -725,39 +757,46 @@ function ComprasCtrl($scope, $http, $sce) {
                     obj.ProcesarCompra(obj.Costumer);
                 } else {
                     toastr.error("Error: Debes de seleccionar el costo del envio");
-                    butccompra.classList.remove("animationclip");
-                    butcompra.disabled = false;
                 }
             } else {
                 toastr.error("Error: no hay datos de facturacion predeterminados");
-                butccompra.classList.remove("animationclip");
-                butcompra.disabled = false;
             }
-
         } else {
             toastr.error("Error no tienes una direccion de envio predeterminada");
-            butccompra.classList.remove("animationclip");
-            butcompra.disabled = false;
         }
     }
 
     obj.metransfe = () => {
-        obj.Costumer.metodoPago = "Transferencia"
+        obj.Costumer.metodoPago = "Transferencia";
         btntransfe.style.borderColor = "var(--primario)";
-        btnefectivo.style.borderColor = "var(--gris-light)";
-        btncredito.style.borderColor = "var(--gris-light)";
+        btntransfe.style.backgroundColor = "#fff5f5";
+        
+        btnefectivo.style.borderColor = "#e6e6e6";
+        btnefectivo.style.backgroundColor = "#fff";
+        btncredito.style.borderColor = "#e6e6e6";
+        btncredito.style.backgroundColor = "#fff";
     }
+    
     obj.medeposito = () => {
-        obj.Costumer.metodoPago = "Deposito"
-        btntransfe.style.borderColor = "var(--gris-light)";
+        obj.Costumer.metodoPago = "Deposito";
         btnefectivo.style.borderColor = "var(--primario)";
-        btncredito.style.borderColor = "var(--gris-light)";
+        btnefectivo.style.backgroundColor = "#fff5f5";
+
+        btntransfe.style.borderColor = "#e6e6e6";
+        btntransfe.style.backgroundColor = "#fff";
+        btncredito.style.borderColor = "#e6e6e6";
+        btncredito.style.backgroundColor = "#fff";
     }
+    
     obj.metarjeta = () => {
-        obj.Costumer.metodoPago = "Tarjeta"
-        btntransfe.style.borderColor = "var(--gris-light)";
-        btnefectivo.style.borderColor = "var(--gris-light)";
+        obj.Costumer.metodoPago = "Tarjeta";
         btncredito.style.borderColor = "var(--primario)";
+        btncredito.style.backgroundColor = "#fff5f5";
+
+        btntransfe.style.borderColor = "#e6e6e6";
+        btntransfe.style.backgroundColor = "#fff";
+        btnefectivo.style.borderColor = "#e6e6e6";
+        btnefectivo.style.backgroundColor = "#fff";
     }
 
     obj.ProcesarCompra = (data) => {
@@ -766,36 +805,23 @@ function ComprasCtrl($scope, $http, $sce) {
             url: urlCostumer,
             data: { Costumer: data }
         }).then(function successCallback(res) {
+            
             if (res.data.Bandera == 1) {
-                butccompra.classList.remove("animationclip");
-                butcompra.disabled = false;
                 if (obj.total === 0) {
                     location.href = "?mod=ProcesoCompra&opc=paso3";
                 } else if (obj.Costumer.metodoPago === "Deposito" || obj.Costumer.metodoPago === "Transferencia") {
                     obj.openDeposito(res.data.Data);
-                    //location.href="?mod=ProcesoCompra&opc=paso3";
                 } else if (obj.Costumer.metodoPago === "Tarjeta") {
-                    obj.seturl(res.data.data[0]);
+                    obj.ui.loader.mostrar("Redirigiendo a pasarela segura..."); 
+                    obj.seturl(res.data.data);
                 }
             } else {
-                setTimeout(() => {
-                    butccompra.classList.remove("animationclip");
-                    butcompra.classList.remove("btn-danger");
-                    butcompra.classList.add("btn-warning");
-                    butcompra.innerHTML = '<i class="fas fa-exclamation-triangle">¡Elige metodo de pago!</i>';
-                    toastr["info"]("Recuerda seleccionar un metodo de pago.");
-                    setTimeout(() => {
-                        butcompra.disabled = false;
-                        butcompra.innerHTML = "Confirmar Pago";
-                        butcompra.classList.remove("btn-warning");
-                        butcompra.classList.add("btn-danger");
-                    }, 3000);
-                }, 2000);
+                obj.ui.loader.ocultar(); // Ocultamos si falló
+                toastr.warning(res.data.mensaje || "Ocurrió un problema, revisa tu método de pago.");
             }
         }, function errorCallback(res) {
+            obj.ui.loader.ocultar(); // Ocultamos si falló el servidor
             toastr.error("Error: no se realizo la conexion con el servidor");
-            butccompra.classList.remove("animationclip");
-            butcompra.disabled = false;
         });
     }
 
@@ -803,8 +829,9 @@ function ComprasCtrl($scope, $http, $sce) {
         localStorage.setItem("id_pedido", id)
         var popUp = window.open("./Reportes/fichaDeposito/Controller.php");
         if (popUp == null || typeof (popUp) == 'undefined') {
-            alert("Por favor Deshabilita el bloqueador de ventanas emergentes");
+            toastr.info("Aviso: Tienes bloqueadas las ventanas emergentes. Puedes ver tu ficha desde 'Mis Pedidos'.");
         }
+        
         location.href = "?mod=ProcesoCompra&opc=paso3";
     }
     
@@ -945,38 +972,37 @@ function ProfileCtrl($scope, $http) {
         obj.sendFacturacion('none', obj.dataFacturacion)
     }
 
-    obj.inputvalidireccion = () => { //Inicia Verificador de Agregar nueva Dirección.
-        let agregar = []; for (var j = 0; j <= 7; j++) {
-            agregar[j] = document.getElementById("agregar_" + (j + 1)).value;
-        }
-        let agregar_div = []; for (var j = 0; j <= 7; j++) {
+    obj.inputvalidireccion = () => { 
+        let agregar = []; 
+        let agregar_div = []; 
+        let agregar_lbl = []; 
+        for (var j = 0; j <= 7; j++) {
+            // Aseguramos que si el elemento no existe (ej. campos opcionales) no reviente el código
+            let elemento = document.getElementById("agregar_" + (j + 1));
+            agregar[j] = elemento ? elemento.value : "";
             agregar_div[j] = document.getElementById("agregar_div" + (j + 1));
-        }
-        let agregar_lbl = []; for (var j = 0; j <= 7; j++) {
             agregar_lbl[j] = document.getElementById("agregar_lbl" + (j + 1));
         }
-
         validateEmptyDire(agregar, agregar_div, agregar_lbl);
     }
 
     function validateEmptyDire(agregar, agregar_div, agregar_lbl) {
-        var contador = 0;
+        var hasError = false;
+        
         for (var i = 0; i <= 7; i++) {
-            if (agregar[i].length == 0) {
-                agregar_div[i].style.borderColor = "var(--primario)";
-                agregar_lbl[i].style.color = "var(--primario)";
-                alertvalid.style.display = "block";
-            } else if (agregar[i].length >= 1) {
-                agregar_lbl[i].style.color = "var(--negro)";
-                agregar_div[i].style.borderColor = "var(--gris-ligth)";
-
-                if (agregar[i].length >= 1) {
-                    contador++;
-                }
+            if (agregar[i].trim().length == 0) {
+                if(agregar_div[i]) agregar_div[i].style.borderColor = "var(--primario)";
+                if(agregar_lbl[i]) agregar_lbl[i].style.color = "var(--primario)";
+                hasError = true;
+            } else {
+                if(agregar_lbl[i]) agregar_lbl[i].style.color = "var(--negro)";
+                if(agregar_div[i]) agregar_div[i].style.borderColor = "#d1d5db"; // Gris moderno
             }
         }
-        if (contador == 7) {
-            alertvalid.style.display = "none";
+        
+        if (hasError) {
+            toastr.warning("Por favor, completa todos los datos marcados en rojo para continuar.");
+        } else {
             Swal.fire({
                 title: "¿Deseas Guardar Domicilio?",
                 showDenyButton: true,
@@ -991,39 +1017,37 @@ function ProfileCtrl($scope, $http) {
                 }
             });
         }
-    } //Termina Verificador de Agregar Nueva Dirección.
+    } 
 
-    obj.inputvalidfactura = () => { //Inicia Verificador de Agregar nueva factura.
-        let agregar = []; for (var j = 1; j <= 6; j++) {
-            agregar[j] = document.getElementById("Fagregar_" + j).value;
-        }
-        let agregar_div = []; for (var j = 1; j <= 6; j++) {
+    obj.inputvalidfactura = () => { 
+        let agregar = []; 
+        let agregar_div = []; 
+        let agregar_lbl = []; 
+        for (var j = 1; j <= 6; j++) {
+            let elemento = document.getElementById("Fagregar_" + j);
+            agregar[j] = elemento ? elemento.value : "";
             agregar_div[j] = document.getElementById("Fagregar_div" + j);
-        }
-        let agregar_lbl = []; for (var j = 1; j <= 6; j++) {
             agregar_lbl[j] = document.getElementById("Fagregar_lbl" + j);
         }
         validateEmptyFact(agregar, agregar_div, agregar_lbl);
     }
 
     function validateEmptyFact(agregar, agregar_div, agregar_lbl) {
-        var contador = 0;
+        var hasError = false;
         for (var i = 1; i <= 6; i++) {
-            if (agregar[i].length == 0 || agregar[i].value == "") {
-                agregar_div[i].style.borderColor = "var(--primario)";
-                agregar_lbl[i].style.color = "var(--primario)";
-                alertvalid1.style.display = "block";
-            } else if (agregar[i].length > 1) {
-                agregar_lbl[i].style.color = "var(--negro)";
-                agregar_div[i].style.borderColor = "var(--gris-ligth)";
-
-                if (agregar[i].length > 1) {
-                    contador++;
-                }
+            if (agregar[i].trim().length == 0) {
+                if(agregar_div[i]) agregar_div[i].style.borderColor = "var(--primario)";
+                if(agregar_lbl[i]) agregar_lbl[i].style.color = "var(--primario)";
+                hasError = true;
+            } else {
+                if(agregar_lbl[i]) agregar_lbl[i].style.color = "var(--negro)";
+                if(agregar_div[i]) agregar_div[i].style.borderColor = "#d1d5db";
             }
         }
-        if (contador == 6) {
-            alertvalid1.style.display = "none";
+        
+        if (hasError) {
+            toastr.warning("Por favor, completa todos los datos marcados en rojo para continuar.");
+        } else {
             Swal.fire({
                 title: "¿Deseas Guardar Estos Datos?",
                 showDenyButton: true,
@@ -1032,13 +1056,12 @@ function ProfileCtrl($scope, $http) {
             }).then((result) => {
                 if (result.isConfirmed) {
                     Swal.fire({ showConfirmButton: false, title: "¡Datos Guardados!", icon: "success" });
-                    obj.sendFacturacion('add', obj.dataFacturacion)
+                    obj.sendFacturacion('add', obj.dataFacturacion);
                 } else if (result.isDenied) {
                     Swal.fire("Los Datos No Fueron Guardados!", "", "error");
                 }
             });
         }
-
     }//Termina Verificador de Agregar nueva Factura.
 
     /* variables seccion direcciones */

@@ -68,7 +68,6 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
             e.NewUrlName = e.NewUrlName.normalize('NFD').replace(/[\u0300-\u036f]/g,"");
             e.NewAltName = nombreProd.replaceAll(",","");
             
-            // Forzamos números para el mini carrito también
             e.Cantidad = parseInt(e.Cantidad, 10) || 1;
             e.Existencias = parseInt(e.Existencias, 10) || 1;
         });
@@ -77,7 +76,6 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
     obj.subtotal = () => {
         obj.Costumer.Subtotal = 0;
         
-        // OPTIMIZACIÓN: for...of y validación de seguridad
         if (obj.Data && obj.Data.Carrito) {
             for (const producto of obj.Data.Carrito) {
                 if (producto.RefaccionOferta == '1') {
@@ -88,7 +86,6 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
             }
         }
 
-        // OPTIMIZACIÓN: URL dinámica en lugar de hardcodeada
         setTimeout(function () {
             if(window.location.search.includes("?mod=Compras") && obj.Data.Carrito && obj.Data.Carrito.length == 0 && $_SESSION["CarritoPrueba"] && Object.keys($_SESSION["CarritoPrueba"]).length > 0){
                 location.reload();
@@ -105,7 +102,6 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
             data: { modelo: Refaccion }
         }).then(function successCallback(res) {
             if (opc) {
-                // Dejamos SOLO el grito global. El $on se encarga del resto.
                 $scope.$root.$broadcast('carritoActualizado');
             }
         }, function errorCallback(res) {
@@ -252,7 +248,6 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
         }
     };
 
-    // Función optimizada para traer solo el carrito
     obj.getSoloCarrito = async () => {
         try {
             const res = await $http({
@@ -263,18 +258,15 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
 
             if (res && res.data && res.data.Bandera == 1) {
                 $scope.$evalAsync(() => {
-                    // Asegurarnos de que obj.Data existe
+
                     if (!obj.Data) obj.Data = {};
-                    
-                    // Actualizamos únicamente el arreglo del carrito
+
                     obj.Data.Carrito = res.data.Data.Carrito;
                     
-                    // Volvemos a formatear las URLs y nombres de los productos del carrito
                     if(obj.Data.Carrito) {
                         obj.eachRefacciones(obj.Data.Carrito);
                     }
                     
-                    // Actualizamos el contador visual de la burbuja
                     obj.Numproducts = obj.Data.Carrito.length;
                 });
             }
@@ -284,14 +276,12 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
     };
 
     $scope.$on('carritoActualizado', function() {
-        // Ejecutamos la función ligera
         obj.getSoloCarrito(); 
     });
 
     angular.element(document).ready(function () {
         obj.getCategorias();
         
-        // OPTIMIZACIÓN: Manejo de URLs dinámicas para evitar hardcodeo de dominio
         const urlParams = new URLSearchParams(window.location.search);
         const moduloActual = urlParams.get('mod');
 
@@ -311,6 +301,7 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
 function FooterCtrl($scope, $http) {
     var obj = $scope;
     obj.categorias = [];
+    obj.anioActual = new Date().getFullYear();
 
     obj.getCategorias = () => {
         $http({

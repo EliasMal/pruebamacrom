@@ -7,7 +7,6 @@
     class fichaDeposito{
         private $conn;
         private $jsonData = array("Bandera"=>0,"mensaje"=>"");
-        private $formulario;
 
         public function __construct($array) {
             $this->conn = new HelperMySql($array["server"], $array["user"], $array["pass"], $array["db"]);
@@ -18,18 +17,28 @@
         }
 
         public function main(){
-            $this->formulario = json_decode(file_get_contents('php://input'));
+            if(!isset($_SESSION["id_pedido"]) || empty($_SESSION["id_pedido"])){
+                $this->jsonData["Bandera"] = 0;
+                $this->jsonData["mensaje"] = "No se encontró ningún pedido activo.";
+                print json_encode($this->jsonData);
+                return;
+            }
+
+            $id_pedido = intval($_SESSION["id_pedido"]);
             $this->jsonData["Bandera"] = 1;    
-            $this->jsonData["Data"] = $this->getFichaDeposito($this->formulario->ficha->id);
+            $this->jsonData["Data"] = $this->getFichaDeposito($id_pedido);
+            $this->jsonData["Data"]["folio_real"] = $id_pedido; 
+            
             print json_encode($this->jsonData);
         }
 
         private function getFichaDeposito($id){
-            $sql = "Select (Importe + cenvio - descuento) as Total, FormaPago from Pedidos where _idPedidos = $id";
-            return $this->conn->fetch($this->conn->query($sql));
+            $sql = "Select (Importe + cenvio - descuento) as Total, FormaPago, noPedido from Pedidos where _idPedidos = $id LIMIT 1";
+            $this->conn->query($sql);
+            return $this->conn->fetch();
         }
-
     }
 
     $app = new fichaDeposito($array_principal);
     $app->main();
+?>

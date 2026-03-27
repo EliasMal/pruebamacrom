@@ -257,7 +257,9 @@ tsuruVolks.run(["$http", function ($http) {
         }
     }
 
-    // Mandar el primer latido al cargar e iniciar el intervalo
-    mandarLatido();
-    setInterval(mandarLatido, 60000); // Revisión cada 60 segundos
+    if (window.location.href.includes('admin')) {
+        mandarLatido();
+        setInterval(mandarLatido, 60000);
+    }
+
 }]);

@@ -1,30 +1,19 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of ProcesoCompra
- *
- * @author francisco
- */
 session_name("loginCliente");
 session_start();
 error_reporting(E_ALL);
-ini_set('display_errors', '1');
+ini_set('display_errors', '0');
+
 require_once "../../../tv-admin/asset/Clases/dbconectar.php";
 require_once "../../../tv-admin/asset/Clases/ConexionMySQL.php";
 require_once "../../../tv-admin/asset/Clases/AESCrypto.php";
 require_once '../../../vendor/autoload.php';
+
 use PHPMailer\PHPMailer\PHPMailer;
 
 date_default_timezone_set('America/Mexico_City');
 
 class ProcesoCompra {
-    //put your code here
     private $conn;
     private $AES;
     private $Http;
@@ -32,19 +21,13 @@ class ProcesoCompra {
     private $jsonData = array("Bandera"=>0,"mensaje"=>"");
     private $formulario = array();
     private $cadenaOriginal = "";
-    // private $key = "5DCC67393750523CD165F17E1EFADD21"; //semilla para pruebas
-    private $key = "DA6DAC61810C99C5017DE457560134C6"; //semilla para produccion
+    private $key = "DA6DAC61810C99C5017DE457560134C6"; // Semilla produccion
     private $encryptedString = "";
-    //Datos para desarrollo
-    // private $dataEmpresa = array("id_company"=>"SNBX", "id_branch"=>"01SNBXBRNCH", "user"=>"SNBXUSR0123", "pwd"=>"SECRETO");
-    //Datos para produccion
     private $dataEmpresa = array("id_company"=>"JGCA", "id_branch"=>"0001", "user"=>"JGCASIUS0", "pwd"=>"1S6VTAHKL");
-
 
     public function __construct($array) {
         $this->conn = new HelperMySql($array["server"], $array["user"], $array["pass"], $array["db"]);
         $this->AES = new AESCrypto();
-        //$this->Http = new HttpRequest();
     }
 
     public function __destruct() {
@@ -65,177 +48,123 @@ class ProcesoCompra {
                 $this->jsonData["mensaje"] = $this->setOneCostumer()? "Los datos del envío han sido cambiados":"Error al interntar cambiar los datos de envío";
                 $this->jsonData["Data"] = $this->formulario->Costumer;
             break;
+
             case 'buy2':
                 $this->formulario->Costumer->noPedido = $this->getnoPedido();
-                //INICIAR TRANSACCIÓN
+                
+                // INICIAR TRANSACCIÓN SEGURA
                 $this->conn->query("START TRANSACTION");
-                //Calcular subtotal REAL desde sesión
+                
                 $subtotalReal = 0;
                 foreach($_SESSION["CarritoPrueba"] as $value){
                     $subtotalReal += ($value["Cantidad"] * $value["Precio"]);
                 }
+                
                 $idCupon = isset($this->formulario->Costumer->id_cupon) ? intval($this->formulario->Costumer->id_cupon) : 0;
                 $descuentoReal = 0;
                 $idCliente = intval($this->formulario->Costumer->profile->id);
+                
                 if($idCupon > 0){
-
                     $sql = "SELECT id, descuento, uso_unico, fecha_expiracion FROM cupones WHERE id = $idCupon AND activo = 1 LIMIT 1";
-                    $result = $this->conn->query($sql);
+                    $this->conn->query($sql);
 
                     if($this->conn->count_rows() == 0){
-                        $this->conn->query("ROLLBACK");
-                        $this->jsonData["mensaje"] = "Cupón inválido";
-                        print json_encode($this->jsonData);
+                        $this->connRollback("Cupón inválido");
                         return;
                     }
-                    $cupon = $this->conn->fetch($result);
-                    // Validar expiración
-                    if(!empty($cupon["fecha_expiracion"]) &&
-                       strtotime($cupon["fecha_expiracion"]) < time()){
-                        $this->conn->query("ROLLBACK");
-                        $this->jsonData["mensaje"] = "Cupón expirado";
-                        print json_encode($this->jsonData);
+                    $cupon = $this->conn->fetch();
+                    
+                    if(!empty($cupon["fecha_expiracion"]) && strtotime($cupon["fecha_expiracion"]) < time()){
+                        $this->connRollback("Cupón expirado");
                         return;
                     }
-                    // Validar uso único por cliente
+                    
                     if($cupon["uso_unico"] == 1){
                         $sql = "SELECT id FROM cupones_usados WHERE id_cupon = $idCupon AND id_cliente = $idCliente LIMIT 1";
-                        $check = $this->conn->query($sql);
-
+                        $this->conn->query($sql);
                         if($this->conn->count_rows() > 0){
-                            $this->conn->query("ROLLBACK");
-                            $this->jsonData["mensaje"] = "Ya utilizaste este cupón";
-                            print json_encode($this->jsonData);
+                            $this->connRollback("Ya utilizaste este cupón");
                             return;
                         }
                     }
-                    //Recalcular descuento en backend
+                    
                     $porcentaje = floatval($cupon["descuento"]);
                     $descuentoReal = $subtotalReal * ($porcentaje / 100);
                 }
-                //obrescribir descuento enviado por frontend
+                
                 $this->formulario->Costumer->descuento = $descuentoReal;
-                $this->formulario->Costumer->Importe =($subtotalReal + $this->formulario->Costumer->Cenvio->Costo)- $descuentoReal;
+                $this->formulario->Costumer->Importe = ($subtotalReal + $this->formulario->Costumer->Cenvio->Costo) - $descuentoReal;
 
                 if($this->formulario->Costumer->Importe != 0){
                     switch($this->formulario->Costumer->metodoPago){
                         case 'Deposito':
                         case 'Transferencia':
-                            $id = $this->setPedido2($this->formulario->Costumer->profile->id, $this->formulario->Costumer->Subtotal, 
-                            $this->formulario->Costumer->metodoPago, $this->formulario->Costumer->noPedido["folio"],
-                            $this->formulario->Costumer->Cenvio->Costo, $this->formulario->Costumer->Cenvio->Servicio,
-                            intval($this->formulario->Costumer->facturacion), isset($this->formulario->Costumer->dataFacturacion->data->_id)? 
-                            $this->formulario->Costumer->dataFacturacion->data->_id:0,
-                            $this->formulario->Costumer->dataDomicilio->data->_id,0,
-                            $this->formulario->Costumer->descuento,
-                            $this->formulario->Costumer->Cenvio->paqueteria,
-                            $this->formulario->Costumer->Cenvio->enviodias,
-                            $this->formulario->Costumer->DiaEstimado,
-                            $this->formulario->Costumer->Medidas->height,
-                            $this->formulario->Costumer->Medidas->length,
-                            $this->formulario->Costumer->Medidas->width,
-                            $this->formulario->Costumer->Medidas->weight);
+                            $id = $this->setPedido2(
+                                $this->formulario->Costumer->profile->id, 
+                                $this->formulario->Costumer->Subtotal, 
+                                $this->formulario->Costumer->metodoPago, 
+                                $this->formulario->Costumer->noPedido["folio"],
+                                $this->formulario->Costumer->Cenvio->Costo, 
+                                $this->formulario->Costumer->Cenvio->Servicio,
+                                intval($this->formulario->Costumer->facturacion), 
+                                isset($this->formulario->Costumer->dataFacturacion->data->_id)? $this->formulario->Costumer->dataFacturacion->data->_id:0,
+                                $this->formulario->Costumer->dataDomicilio->data->_id,
+                                0,
+                                $this->formulario->Costumer->descuento,
+                                $this->formulario->Costumer->Cenvio->paqueteria,
+                                $this->formulario->Costumer->Cenvio->enviodias,
+                                $this->formulario->Costumer->DiaEstimado,
+                                $this->formulario->Costumer->Medidas->height,
+                                $this->formulario->Costumer->Medidas->length,
+                                $this->formulario->Costumer->Medidas->width,
+                                $this->formulario->Costumer->Medidas->weight
+                            );
+                            
                             if($id){
                                 if($this->setPedidosDetalles($id)){
-                                    $this->actEXcompra();
+                                    $this->actEXcompra(); // Resta stock súper segura
+                                    
                                     unset($_SESSION["CarritoPrueba"]);
                                     unset($_SESSION["padlock"]);
                                     $this->deleteCarrito();
                                     $_SESSION["id_pedido"] = $id;
+                                    
                                     if($idCupon > 0){
                                         $sql = "INSERT INTO cupones_usados (id_cupon, id_cliente, id_pedido) VALUES ($idCupon, $idCliente, $id)";
                                         $this->conn->query($sql);
                                     }
-                                    //Confirmar transacción
+                                    
+                                    // CONFIRMAR TRANSACCIÓN
                                     $this->conn->query("COMMIT");
                                     
+                                    // Incrementar folio solo si la compra fue un éxito
+                                    $this->incrementarFolio($this->formulario->Costumer->noPedido["folio"], $this->formulario->Costumer->noPedido["_id"]);
+                                    
                                     $this->jsonData["Bandera"] = 1;
-                                    $this->jsonData["mensaje"] = "Tu pedido se a generado satisfactoriamente";
+                                    $this->jsonData["mensaje"] = "Tu pedido se ha generado satisfactoriamente";
                                     $this->jsonData["Data"] = $id;       
-                                    //Envio de registro satisfactorio al Correo del usuario.e
-                                    $mail = new PHPMailer;
-                                    $mail->isSMTP();
-                                    $mail->SMTPDebug = 0;
-                                    $mail->Host = 'smtp.hostinger.com';
-                                    $mail->Port = 587;
-                                    $mail->SMTPAuth = true;
-                                    $mail->Username = 'ventasweb@macromautopartes.com';
-                                    $mail->Password = 'jSJLK6AqN%fwUOskf5@R';
-                                    $mail->setFrom('ventasweb@macromautopartes.com', 'Ventas Macrom');
-                                    $mail->addAddress('ventasweb@macromautopartes.com', 'Ventas');
-                                    $mail->addAddress('web.tsuruvolks@gmail.com', 'Ventas web');
-                                    $mail->Subject = 'Compra en Macromautopartes';
-                                    $mail->IsHTML(true);
-                                    $mail->CharSet = 'utf-8';
-                                    $mail->Body ='Nueva compra registrada en la pagina Macromautopartes, revisar el pedido para su envio. (Metodopago: Deposito/transferencia)';
-                                    if (!$mail->send()) {
-                                        echo 'Mailer Error: ' . $mail->ErrorInfo;
-                                    }
-                                    //Fin Envio de registro satisfactorio al Correo del usuario.
+                                    
+                                    // ENVÍO DE CORREOS
+                                    $this->enviarCorreoNotificacionAdmin($this->formulario->Costumer->metodoPago);
+                                    $this->enviarCorreoCompraAcreditadaCliente($_SESSION["usr"], $_SESSION["nombrecorto"], $id, $this->formulario->Costumer->noPedido["folio"], $this->formulario->Costumer->metodoPago);
 
-                                    //Envio de compra satisfactoria al Correo del usuario.
-                                    $destinatario = $_SESSION["usr"];
-                                    $nombre = $_SESSION["nombrecorto"];
-                                    $mail = new PHPMailer;
-                                    $mail->isSMTP();
-                                    $mail->SMTPDebug = 0;
-                                    $mail->Host = 'smtp.hostinger.com';
-                                    $mail->Port = 587;
-                                    $mail->SMTPAuth = true;
-                                    $mail->Username = 'ventasweb@macromautopartes.com';
-                                    $mail->Password = 'jSJLK6AqN%fwUOskf5@R';
-                                    $mail->setFrom('ventasweb@macromautopartes.com', 'Ventas Macrom');
-                                    $mail->addAddress($destinatario, $nombre);
-                                    $mail->Subject = 'Compra Macromautopartes';
-                                    $mail->IsHTML(true);
-                                    $mail->CharSet = 'utf-8';
-                                    $mail->Body ='
-                                    <html lang="es">
-                                        <body>
-                                            <div style="width:100%;">
-                                                <section>
-                                                    <div>
-                                                        <img style="width:100%;" src="https://macromautopartes.com/images/icons/CRcabecera.png">
-                                                        <div style="display: grid;text-align: center;">
-                                                            <h1 style="color:#de0007;font-size:30px;">¡Compra realizada exitosamente!</h1>
-                                                            <h4><img style="height:250px" src="https://macromautopartes.com/images/icons/CR-caja.png"></h4>
-                                                            <h3 style="color:#000;">¡Gracias por tu preferencia '.$nombre.'!<br>Tu pedido esta siendo revisado, para salir hacia tu destino.</h3>
-                                                        </div>
-                                                        <img style="width:100%;" src="https://macromautopartes.com/images/icons/CRPie-pagina.png">
-                                                    </div>
-                                                </section>
-                                            </div>
-                                        </body>
-                                    </html>';
-                                    if (!$mail->send()) {
-                                        echo 'Mailer Error: ' . $mail->ErrorInfo;
-                                    }
-                                    //Fin Envio de compra satisfactoria al Correo del usuario.
-                                }else{
-                                    $this->jsonData["Bandera"] = 0;
-                                    $this->jsonData["Mensaje"] = "Error no se genero el pedido";
-                                    $this->conn->query("ROLLBACK");
+                                } else {
+                                    $this->connRollback("Error al guardar los detalles");
                                 }
-                            }else{
-                                $this->jsonData["Bandera"] = 0;
-                                $this->jsonData["mensaje"] = "Error al generar tu pedido por favor contactarse con la refaccionaria";
-                                $this->conn->query("ROLLBACK");
+                            } else {
+                                $this->connRollback("Error al generar tu pedido");
                             }
                             $_SESSION["Cenvio"]["costo"] = 0;
                             $_SESSION["Cenvio"]["Servicio"]= "";
-                            //Aqui incrementamos el folio del numero de orden el no de pedido
-                            $this->setnoPedido();
                         break;
 
                         case 'Tarjeta':
-                        
                             $this->cadenaOriginal = $this->setXML();
                             $this->encryptedString = $this->AES->encriptar($this->cadenaOriginal, $this->key);
                             $this->response = $this->AES->desencriptar($this->sendPost(),$this->key);
                             $tempgetXml = $this->getXML();
                         
                             if($tempgetXml["res"]){
-                        
                                 $id = $this->setPedido2(
                                     $this->formulario->Costumer->profile->id, 
                                     $this->formulario->Costumer->Subtotal, 
@@ -244,8 +173,7 @@ class ProcesoCompra {
                                     $this->formulario->Costumer->Cenvio->Costo, 
                                     $this->formulario->Costumer->Cenvio->Servicio,
                                     intval($this->formulario->Costumer->facturacion), 
-                                    isset($this->formulario->Costumer->dataFacturacion->data->_id)? 
-                                    $this->formulario->Costumer->dataFacturacion->data->_id:0,
+                                    isset($this->formulario->Costumer->dataFacturacion->data->_id)? $this->formulario->Costumer->dataFacturacion->data->_id:0,
                                     $this->formulario->Costumer->dataDomicilio->data->_id,
                                     0,
                                     $this->formulario->Costumer->descuento,
@@ -259,122 +187,97 @@ class ProcesoCompra {
                                 );
                         
                                 if($id){
-                        
                                     if($this->setPedidosDetalles($id)){
-                        
-                                        // MISMA LÓGICA QUE DEPÓSITO
-                        
+                                        $this->actEXcompra(); // Resta stock súper segura
+                                        
                                         unset($_SESSION["CarritoPrueba"]);
                                         unset($_SESSION["padlock"]);
                                         $this->deleteCarrito();
                                         $_SESSION["id_pedido"] = $id;
                         
                                         if($idCupon > 0){
-                                            $sql = "INSERT INTO cupones_usados (id_cupon, id_cliente, id_pedido) 
-                                                    VALUES ($idCupon, $idCliente, $id)";
+                                            $sql = "INSERT INTO cupones_usados (id_cupon, id_cliente, id_pedido) VALUES ($idCupon, $idCliente, $id)";
                                             $this->conn->query($sql);
                                         }
                         
-                                        //MUY IMPORTANTE
                                         $this->conn->query("COMMIT");
+                                        $this->incrementarFolio($this->formulario->Costumer->noPedido["folio"], $this->formulario->Costumer->noPedido["_id"]);
                         
                                         $this->jsonData["Bandera"] = 1;
                                         $this->jsonData["mensaje"] = "Pedido generado, redirigiendo al pago con tarjeta";
                                         $this->jsonData["data"] = $tempgetXml["url"];
                         
                                     }else{
-                                        $this->conn->query("ROLLBACK");
-                                        $this->jsonData["Bandera"] = 0;
-                                        $this->jsonData["mensaje"] = "Error al generar detalles del pedido";
+                                        $this->connRollback("Error al generar detalles del pedido");
                                     }
-                        
                                 }else{
-                                    $this->conn->query("ROLLBACK");
-                                    $this->jsonData["Bandera"] = 0;
-                                    $this->jsonData["mensaje"] = "Error al generar el pedido";
+                                    $this->connRollback("Error al generar el pedido");
                                 }
-                        
                             }else{
-                                $this->conn->query("ROLLBACK");
-                                $this->jsonData["Bandera"] = 0;
-                                $this->jsonData["mensaje"] = "Error no se genero la liga para el cobro por tarjeta";
+                                $this->connRollback("Error: no se generó la liga para el cobro por tarjeta");
                             }
                         
                             $_SESSION["Cenvio"]["costo"] = 0;
                             $_SESSION["Cenvio"]["Servicio"]= "";
-                            $this->setnoPedido();
-                        
                         break;
                     }
                 }
-                
             break;
         }
         
         print json_encode($this->jsonData);
     }
     
+    // Función para manejar el Rollback en caso de error
+    private function connRollback($msj){
+        $this->conn->query("ROLLBACK");
+        $this->jsonData["Bandera"] = 0;
+        $this->jsonData["mensaje"] = $msj;
+        print json_encode($this->jsonData);
+    }
+
     private function actEXcompra(){
-
         foreach($_SESSION["CarritoPrueba"] as $value){
-
             $idProducto = intval($value["imagenid"]);
             $cantidad = intval($value["Cantidad"]);
-
-            $sql = "UPDATE Producto SET stock = stock - $cantidad WHERE _id = $idProducto AND stock >= $cantidad";
-
-            $this->conn->query($sql);
-            if($this->conn->affected_rows() == 0){
-
-                // Cancelamos todo
-                $this->conn->query("ROLLBACK");
-
-                $this->jsonData["Bandera"] = 0;
-                $this->jsonData["mensaje"] = "Uno de los productos ya no tiene suficiente inventario.";
-
-                print json_encode($this->jsonData);
-                exit; // detenemos ejecución inmediatamente
+            
+            $sqlCheck = "SELECT stock FROM Producto WHERE _id = $idProducto LIMIT 1";
+            $this->conn->query($sqlCheck);
+            
+            if($this->conn->count_rows() == 0){
+                $this->connRollback("Un producto ya no existe en el catálogo.");
+                exit;
             }
-        }
+            
+            $rowCheck = $this->conn->fetch();
+            if(intval($rowCheck['stock']) < $cantidad){
+                $this->connRollback("El producto: " . $value["Producto"] . " ya no tiene suficiente inventario.");
+                exit; 
+            }
 
+            // Si hay stock, lo restamos
+            $sqlUpdate = "UPDATE Producto SET stock = stock - $cantidad WHERE _id = $idProducto";
+            $this->conn->query($sqlUpdate);
+        }
         return true;
     }
 
     private function getOneCostumer (){
         $sql = "SELECT * FROM clientes where Estatus = 1 and correo='{$this->formulario->Costumer->usr}'";
-        return $this->conn->fetch($this->conn->query($sql));
-        
+        $this->conn->query($sql);
+        return $this->conn->fetch();
     }
     
     private function setOneCostumer(){
-    $sql = "UPDATE clientes SET Codigo_postal='{$this->formulario->Costumer->Codigo_postal}', Colonia= '{$this->formulario->Costumer->Colonia}',
+        $sql = "UPDATE clientes SET Codigo_postal='{$this->formulario->Costumer->Codigo_postal}', Colonia= '{$this->formulario->Costumer->Colonia}',
         Domicilio = '{$this->formulario->Costumer->Domicilio}', ciudad = '{$this->formulario->Costumer->ciudad}', estado='{$this->formulario->Costumer->estado}'
         WHERE _id = '{$this->formulario->Costumer->_id}'";
         return $this->conn->query($sql)? true: false;
     }
 
-    private function getImporte(){
-        $importe = 0.0;
-        foreach($_SESSION["CarritoPrueba"] as $key=> $value){
-            $importe += ($value["Cantidad"]*$value["Precio"]);
-        }
-        //Agregamos el costo de envio
-        $importe += $_SESSION["Cenvio"]["costo"];
-        return $importe;
-    }
-
     private function deleteCarrito(){
         $sql = "DELETE FROM Carrito WHERE _clienteid = '{$this->formulario->Costumer->profile->id}'";
         return $this->conn->query($sql)? true: false;
-    }
-
-    private function setPedido(){
-        $sql = "INSERT INTO Pedidos(_idCliente, Fecha, Importe, Acreditado, Enviado, GuiaEnvio, FormaPago, noPedido,cenvio,Servicio) values
-        ('{$this->formulario->Costumer->Data["_id"]}','".date("Y-m-d")."', {$this->formulario->Costumer->Importe}, 
-        0, 0,'','{$this->formulario->Costumer->value}','{$this->formulario->Costumer->noPedido["folio"]}',
-        {$this->formulario->Costumer->Cenvio},'{$this->formulario->Costumer->Servicio}')";
-        $this->conn->query($sql); 
-        return $this->conn->last_id();
     }
 
     private function setPedido2($id_cliente, $Importe, $formaPago, $noPedido, $cenvio, $servicio, $facturacion, $_id_facturacion,$_id_domicilio, $acreditado=0, $descuento = 0, $paqueteria, $enviodias, $envioestimado, $alto, $largo, $ancho, $peso){
@@ -399,64 +302,32 @@ class ProcesoCompra {
 
     private function setXML(){
         $objetoXML = new XMLWriter();
-        // Estructura básica del XML
-        //$objetoXML->openURI("../../../XML/certificado_prueba.xml");
         $objetoXML->openMemory();
-            $objetoXML->setIndent(true);
-            $objetoXML->setIndentString("\t");
-            $objetoXML->startDocument('1.0', 'utf-8','yes');
-            $objetoXML->startElement("P");
-
-                $objetoXML->startElement("business");
-                    $objetoXML->startElement("id_company");
-                        $objetoXML->text($this->dataEmpresa["id_company"]);
-                    $objetoXML->endElement(); // Final del nodo raíz, "id_company"        
-                    $objetoXML->startElement("id_branch");
-                        $objetoXML->text($this->dataEmpresa["id_branch"]);
-                    $objetoXML->endElement(); // Final del nodo raíz, "id_branch"        
-                    $objetoXML->startElement("user");
-                        $objetoXML->text($this->dataEmpresa["user"]);
-                    $objetoXML->endElement(); // Final del nodo raíz, "user"        
-                    $objetoXML->startElement("pwd");
-                        $objetoXML->text($this->dataEmpresa["pwd"]);
-                    $objetoXML->endElement(); // Final del nodo raíz, "id_company"        
-                $objetoXML->endElement(); // Final del nodo raíz, "business"
-
-                $objetoXML->startElement("url");
-                    $objetoXML->startElement("reference");
-                        $objetoXML->text($this->formulario->Costumer->noPedido["folio"]); //aqui va el numero de orden como referencia
-                    $objetoXML->endElement(); // Final del nodo raíz, "reference"        
-                    $objetoXML->startElement("amount");
-                        $objetoXML->text($this->formulario->Costumer->Importe); //ingresamos el pago con dos decimales
-                    $objetoXML->endElement(); // Final del nodo raíz, "amount"        
-                    $objetoXML->startElement("moneda");
-                        $objetoXML->text("MXN"); //se especifica el tipo de moneda sin son pesos (MXN) o dolares (USD)
-                    $objetoXML->endElement(); // Final del nodo raíz, "user"        
-                    $objetoXML->startElement("canal");
-                        $objetoXML->text("W"); //Este debe de ser siempre W
-                    $objetoXML->endElement(); // Final del nodo raíz, "canal"        
-                    $objetoXML->startElement("omitir_notif_default");
-                        $objetoXML->text("1"); //0: Envia notificacion de cobro, 1: no envia notificacion de cobro
-                    $objetoXML->endElement(); // Final del nodo raíz, "omitir_notif_default"
-                    $objetoXML->startElement("st_correo");
-                        $objetoXML->text("1"); //0: no se especifica el correo del cuenta habiente, 1: se especifica el correo del cuetna habiente
-                    $objetoXML->endElement(); // Final del nodo raíz, "st_correo"
-                    $objetoXML->startElement("mail_cliente");
-                        //$objetoXML->text($this->formulario->Costumer->Data["correo"]); //0: no se especifica el correo del cuenta habiente, 1: se especifica el correo del cuetna habiente
-                        $objetoXML->text($this->formulario->Costumer->profile->correo);
-                    $objetoXML->endElement(); // Final del nodo raíz, "st_correo"
-                $objetoXML->endElement(); // Final del nodo raíz, "url"
-
-            $objetoXML->endElement(); // Final del nodo raíz, "P"
-
-        $objetoXML->endDocument(); // Final del documento
+        $objetoXML->setIndent(true);
+        $objetoXML->setIndentString("\t");
+        $objetoXML->startDocument('1.0', 'utf-8','yes');
+        $objetoXML->startElement("P");
+            $objetoXML->startElement("business");
+                $objetoXML->startElement("id_company"); $objetoXML->text($this->dataEmpresa["id_company"]); $objetoXML->endElement();        
+                $objetoXML->startElement("id_branch"); $objetoXML->text($this->dataEmpresa["id_branch"]); $objetoXML->endElement();        
+                $objetoXML->startElement("user"); $objetoXML->text($this->dataEmpresa["user"]); $objetoXML->endElement();        
+                $objetoXML->startElement("pwd"); $objetoXML->text($this->dataEmpresa["pwd"]); $objetoXML->endElement();        
+            $objetoXML->endElement(); 
+            $objetoXML->startElement("url");
+                $objetoXML->startElement("reference"); $objetoXML->text($this->formulario->Costumer->noPedido["folio"]); $objetoXML->endElement();        
+                $objetoXML->startElement("amount"); $objetoXML->text($this->formulario->Costumer->Importe); $objetoXML->endElement();        
+                $objetoXML->startElement("moneda"); $objetoXML->text("MXN"); $objetoXML->endElement();        
+                $objetoXML->startElement("canal"); $objetoXML->text("W"); $objetoXML->endElement();        
+                $objetoXML->startElement("omitir_notif_default"); $objetoXML->text("1"); $objetoXML->endElement(); 
+                $objetoXML->startElement("st_correo"); $objetoXML->text("1"); $objetoXML->endElement(); 
+                $objetoXML->startElement("mail_cliente"); $objetoXML->text($this->formulario->Costumer->profile->correo); $objetoXML->endElement(); 
+            $objetoXML->endElement(); 
+        $objetoXML->endElement(); 
+        $objetoXML->endDocument(); 
         return $objetoXML->outputMemory(TRUE);
     }
 
     private function sendPost(){
-        /*$url = "https://sandboxpo.mit.com.mx/gen"; //esta es url es para pruebas
-        $Data0 = "SNDBX123";*/
-        
         $url = "https://bc.mitec.com.mx/p/gen";
         $Data0 = "9265655359";
         $curl = curl_init();
@@ -488,26 +359,148 @@ class ProcesoCompra {
         if($this->conn->count_rows()!=0){
             $row = $this->conn->fetch();   
         }else{
+            $sql = "INSERT INTO Folios(folio,tipo) values('1','PEDIDOS')";
+            $this->conn->query($sql);
             $row["folio"] = 1;
             $row["tipo"] = "PEDIDOS";
-            $row["_id"] = $this->setnoPedido("I");
+            $row["_id"] = $this->conn->last_id();
         }
         return $row;
     }
 
-    private function setnoPedido($opc="U"){
-        if($opc == "I"){
-            $sql = "INSERT INTO Folios(folio,tipo) values('1','PEDIDOS')";
-        }else{
-            $this->formulario->Costumer->noPedido["folio"]++;
-            $sql = "Update Folios SET folio = " .  $this->formulario->Costumer->noPedido["folio"]
-            . " where _id = ".$this->formulario->Costumer->noPedido["_id"];
-        }
+    private function incrementarFolio($folio_actual, $folio_id){
+        $nuevo_folio = intval($folio_actual) + 1;
+        $sql = "UPDATE Folios SET folio = $nuevo_folio where _id = $folio_id";
+        return $this->conn->query($sql);
+    }
+
+    private function enviarCorreoNotificacionAdmin($metodo_pago){
+        $mail = new PHPMailer; $mail->isSMTP(); $mail->SMTPDebug = 0; $mail->Host = 'smtp.hostinger.com'; $mail->Port = 587; $mail->SMTPAuth = true; $mail->Username = 'ventasweb@macromautopartes.com'; $mail->Password = 'jSJLK6AqN%fwUOskf5@R'; $mail->setFrom('ventasweb@macromautopartes.com', 'Macrom Autopartes');
+        $mail->addAddress('ventasweb@macromautopartes.com', 'Ventas'); $mail->addAddress('web.tsuruvolks@gmail.com', 'Ventas web');
+        $mail->Subject = 'Compra en Macromautopartes'; $mail->IsHTML(true); $mail->CharSet = 'utf-8';
+        $mail->Body ='Nueva compra registrada en la pagina Macromautopartes, revisar el pedido para su envio. (Metodopago: '.$metodo_pago.')';
+        $mail->send();
+    }
+
+    private function enviarCorreoCompraAcreditadaCliente($destinatario, $nombre, $id_pedido, $folio_pedido, $formaPago){
+        $mail = new PHPMailer; $mail->isSMTP(); $mail->SMTPDebug = 0; $mail->Host = 'smtp.hostinger.com'; $mail->Port = 587; $mail->SMTPAuth = true; $mail->Username = 'ventasweb@macromautopartes.com'; $mail->Password = 'jSJLK6AqN%fwUOskf5@R'; $mail->setFrom('ventasweb@macromautopartes.com', 'Macrom Autopartes');
+        $mail->addAddress($destinatario, $nombre);
+        $mail->Subject = 'Compra Macromautopartes - Folio: '.$folio_pedido; $mail->IsHTML(true); $mail->CharSet = 'utf-8';
+
+        $detalles_html = "";
+        $total_importe = 0;
         
+        $sql = "SELECT DP.cantidad, DP.Importe, P._id, P.Producto, P.Clave as SKU FROM DetallesPedidos DP INNER JOIN Producto P ON DP._idProducto = P._id WHERE DP._idPedidos = $id_pedido";
         $this->conn->query($sql);
-        return $opc = "I"? $this->conn->last_id():true;
+        
+        while($row = $this->conn->fetch()){
+            $subtotal_row = floatval($row["Importe"]) * intval($row["cantidad"]);
+            $total_importe += $subtotal_row;
+            
+            $precio_unitario = number_format(floatval($row["Importe"]), 2);
+            $subtotal_formato = number_format($subtotal_row, 2);
+            $img_url = "https://macromautopartes.com/images/refacciones/".$row["_id"].".webp";
+
+            $detalles_html .= '
+            <tr>
+                <td style="padding: 15px 5px; border-bottom: 1px solid #eee; text-align: left; vertical-align: top;">
+                    <img src="'.$img_url.'" style="width: 50px; height: 50px; object-fit: contain; float: left; margin-right: 10px; border-radius: 5px; border: 1px solid #ddd;" alt="Producto">
+                    <strong style="display: block; font-size: 13px; color: #333; margin-bottom: 3px;">'.$row["Producto"].'</strong>
+                    <span style="font-size: 11px; color: #888;">SKU: '.$row["SKU"].'</span>
+                </td>
+                <td style="padding: 15px 5px; border-bottom: 1px solid #eee; text-align: center; vertical-align: middle;">'.$row["cantidad"].'</td>
+                <td style="padding: 15px 5px; border-bottom: 1px solid #eee; text-align: right; vertical-align: middle; color:#555;">$'.$precio_unitario.'</td>
+                <td style="padding: 15px 5px; border-bottom: 1px solid #eee; text-align: right; vertical-align: middle; font-weight: bold; color:#000;">$'.$subtotal_formato.'</td>
+            </tr>';
+        }
+
+        $sql_header = "SELECT Importe, cenvio, descuento, Servicio FROM Pedidos WHERE _idPedidos = $id_pedido LIMIT 1";
+        $this->conn->query($sql_header);
+        $row_header = $this->conn->fetch();
+        
+        $importe_total = number_format(floatval($row_header["Importe"]), 2);
+        $costo_envio = number_format(floatval($row_header["cenvio"]), 2);
+        $descuento = number_format(floatval($row_header["descuento"]), 2);
+        $servicio_envio = $row_header["Servicio"];
+
+        $info_bancaria_html = "";
+        if($formaPago == 'Transferencia'){
+            $info_bancaria_html = '
+            <div style="background-color: #fff3f3; border-left: 5px solid #de0007; padding: 20px; margin: 25px 0; text-align: left; border-radius: 0 5px 5px 0;">
+                <h3 style="margin: 0 0 10px 0; color: #de0007; font-size: 18px;">Datos para Transferencia (SPEI)</h3>
+                <p style="margin: 5px 0; color: #333; font-size: 15px;"><strong>Banco:</strong> Santander</p>
+                <p style="margin: 5px 0; color: #333; font-size: 15px;"><strong>A nombre de:</strong> Néstor Omar Lara Galindo</p>
+                <p style="margin: 5px 0; color: #333; font-size: 15px;"><strong>No. Cuenta:</strong> 65-50611157-9</p>
+                <p style="margin: 5px 0; color: #333; font-size: 15px;"><strong>CLABE:</strong> 014090655061115796</p>
+                <p style="margin: 10px 0 0 0; color: #666; font-size: 13px;"><em>* Usa el folio <strong>'.$folio_pedido.'</strong> como concepto de pago.</em></p>
+            </div>';
+        } else if($formaPago == 'Deposito'){
+            $info_bancaria_html = '
+            <div style="background-color: #fff3f3; border-left: 5px solid #de0007; padding: 20px; margin: 25px 0; text-align: left; border-radius: 0 5px 5px 0;">
+                <h3 style="margin: 0 0 10px 0; color: #de0007; font-size: 18px;">Datos para Depósito (OXXO/Ventanilla)</h3>
+                <p style="margin: 5px 0; color: #333; font-size: 15px;"><strong>Banco:</strong> Santander</p>
+                <p style="margin: 5px 0; color: #333; font-size: 15px;"><strong>A nombre de:</strong> Néstor Omar Lara Galindo</p>
+                <p style="margin: 5px 0; color: #333; font-size: 15px;"><strong>No. Tarjeta:</strong> 5579-0700-7328-2744</p>
+            </div>';
+        }
+
+        $mail->Body ='
+        <html lang="es">
+        <body style="font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px;">
+            <div style="width:100%; max-width: 600px; margin: 0 auto; background-color: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                
+                <header style="background-color: #fff; padding: 0;">
+                    <img style="width:100%; display:block;" src="https://macromautopartes.com/images/icons/CRcabecera.png">
+                </header>
+                
+                <section style="padding: 30px; text-align: center;">
+                    <h1 style="color:#de0007; font-size:26px; margin: 0 0 15px 0;">¡Pedido Registrado!</h1>
+                    <p style="color:#444; font-size: 16px; line-height: 1.6; margin: 0;">
+                        Hola <strong>'.$nombre.'</strong>, hemos recibido tu solicitud de pedido.<br>
+                        Tu folio de seguimiento es el: <strong style="color:#de0007;">'.$folio_pedido.'</strong>.
+                    </p>
+
+                    '.$info_bancaria_html.'
+
+                </section>
+
+                <section style="padding: 0 30px 30px 30px;">
+                    <h3 style="color: #222; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 10px; font-size:18px;">Resumen de Compra</h3>
+                    
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 13px; min-width: 400px;">
+                            <thead>
+                                <tr style="background-color: #fafafa; color: #555;">
+                                    <th style="padding: 12px 5px; border-bottom: 2px solid #eee; text-align: left;">Artículo</th>
+                                    <th style="padding: 12px 5px; border-bottom: 2px solid #eee; text-align: center;">Cant.</th>
+                                    <th style="padding: 12px 5px; border-bottom: 2px solid #eee; text-align: right;">Precio</th>
+                                    <th style="padding: 12px 5px; border-bottom: 2px solid #eee; text-align: right;">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                '.$detalles_html.'
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div style="width: 100%; text-align: right; padding-top: 20px; font-size: 14px; color: #555;">
+                        <p style="margin: 5px 0;">Envío ('.$servicio_envio.'): <strong>$'.$costo_envio.'</strong></p>
+                        <p style="margin: 5px 0;">Descuento: <strong style="color:#de0007;">-$'.$descuento.'</strong></p>
+                        <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+                        <h2 style="color: #000; margin: 10px 0 0 0; font-size: 22px;">Total: <span style="color:#de0007;">$'.$importe_total.'</span></h2>
+                    </div>
+                </section>
+
+                <footer style="background-color: #fff; padding: 0;">
+                    <img style="width:100%; display:block;" src="https://macromautopartes.com/images/icons/CRPie-pagina.png">
+                </footer>
+            </div>
+        </body>
+        </html>';
+        $mail->send();
     }
 }
 
 $app = new ProcesoCompra($array_principal);
 $app->main();
+?>
