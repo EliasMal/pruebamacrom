@@ -358,10 +358,14 @@
             $oferta = (isset($f["RefaccionOferta"]) && ($f["RefaccionOferta"] === "true" || $f["RefaccionOferta"] === "1")) ? 1 : 0;
             $envio = (isset($f["Enviogratis"]) && ($f["Enviogratis"] === "true" || $f["Enviogratis"] === "1")) ? 1 : 0;
             $kit = (isset($f["Kit"]) && ($f["Kit"] === "true" || $f["Kit"] === "1")) ? 1 : 0;
+            
+            // Obtenemos la fecha y el usuario actual de la sesión
+            $fechaActual = date("Y-m-d H:i:s");
+            $usuarioActual = isset($_SESSION["nombre"]) ? $_SESSION["nombre"] : 'Usuario';
                         
             if ($f["opc"] == "new") {
-                $sql = "INSERT INTO Producto (Clave, Producto, No_parte, _idCategoria, _idMarca, Modelo, Anios, id_proveedor, Precio1, Precio2, Estatus, Publicar, precio_manual, Descripcion, stock, Alto, Largo, Ancho, Peso, RefaccionLiquidacion, RefaccionNueva, RefaccionOferta, Enviogratis, Kit) 
-                        VALUES ('{$f["Clave"]}', '{$f["Producto"]}', '{$f["No_parte"]}', '{$f["_idCategoria"]}', '{$f["_idMarca"]}', '{$f["Modelo"]}', '{$f["Anios"]}', '{$f["id_proveedor"]}', '{$f["Precio1"]}', '{$f["Precio2"]}', $estatus, $publicar, $precio_manual, '{$f["Descripcion"]}', '{$f["stock"]}', '{$f["Alto"]}', '{$f["Largo"]}', '{$f["Ancho"]}', '{$f["Peso"]}', $liquidacion, $nueva, $oferta, $envio, $kit)";
+                $sql = "INSERT INTO Producto (Clave, Producto, No_parte, _idCategoria, _idMarca, Modelo, Anios, id_proveedor, Precio1, Precio2, Estatus, Publicar, precio_manual, Descripcion, stock, Alto, Largo, Ancho, Peso, RefaccionLiquidacion, RefaccionNueva, RefaccionOferta, Enviogratis, Kit, userCreated, dateCreated, userModify, dateModify) 
+                        VALUES ('{$f["Clave"]}', '{$f["Producto"]}', '{$f["No_parte"]}', '{$f["_idCategoria"]}', '{$f["_idMarca"]}', '{$f["Modelo"]}', '{$f["Anios"]}', '{$f["id_proveedor"]}', '{$f["Precio1"]}', '{$f["Precio2"]}', $estatus, $publicar, $precio_manual, '{$f["Descripcion"]}', '{$f["stock"]}', '{$f["Alto"]}', '{$f["Largo"]}', '{$f["Ancho"]}', '{$f["Peso"]}', $liquidacion, $nueva, $oferta, $envio, $kit, '$usuarioActual', '$fechaActual', '$usuarioActual', '$fechaActual')";
             } else {
                 $sql = "UPDATE Producto SET 
                         Clave = '{$f["Clave"]}', 
@@ -387,7 +391,9 @@
                         Alto = '{$f["Alto"]}', 
                         Largo = '{$f["Largo"]}', 
                         Ancho = '{$f["Ancho"]}', 
-                        Peso = '{$f["Peso"]}' 
+                        Peso = '{$f["Peso"]}',
+                        userModify = '$usuarioActual',
+                        dateModify = '$fechaActual'
                         WHERE _id = '{$f["_id"]}'";
             }
                         

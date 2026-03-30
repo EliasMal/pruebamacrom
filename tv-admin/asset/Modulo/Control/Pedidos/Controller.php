@@ -1,11 +1,5 @@
 <?php
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 (@__DIR__ == '__DIR__') && define('__DIR__',  realpath(dirname(__FILE__)));
 
 function get_template($form='principal'){
@@ -35,10 +29,10 @@ function retorna_vista($vista,$data=array()){
 
 function principal($func){
     $data = array();
-    /**
-     * esta linea de codigo es solo para autorizar quien tiene acceso al modulo
-     */
-    $data["autorizacion"] = $func::siAcceso("root,Admin,venta");
+    
+    $rolActual = isset($_SESSION['rol']) ? $_SESSION['rol'] : '';
+    $data["autorizacion"] = $func::siAcceso($rolActual);
+    
     $opc = isset($_GET['opc'])? htmlspecialchars($_GET['opc']):"principal";
         switch($opc){
             case 'principal':
