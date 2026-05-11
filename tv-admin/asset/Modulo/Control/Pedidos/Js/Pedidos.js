@@ -162,6 +162,15 @@ function PedidosDetallesCtrl($scope, $http) {
                 if (!obj.Pedido.Largo && !obj.Pedido.Ancho) {
                     obj.Pedido.SD = "sin datos";
                 }
+
+                let nombrePaqueteria = obj.Pedido.paqueteria ? obj.Pedido.paqueteria.toLowerCase() : "";
+                obj.esEnvioAcordado = nombrePaqueteria.includes("acordar");
+
+                let costo = parseFloat(obj.Pedido.CostoEnvioAcordado);
+                obj.Pedido.CostoEnvioAcordado = isNaN(costo) ? 0 : costo;
+                
+                obj.Pedido.EstatusPagoEnvio = obj.Pedido.EstatusPagoEnvio ? obj.Pedido.EstatusPagoEnvio.toString() : "0";
+
             } else {
                 Toast.fire({ icon: 'error', title: res.data.mensaje || 'No se encontró el pedido' });
             }
@@ -169,6 +178,34 @@ function PedidosDetallesCtrl($scope, $http) {
             Toast.fire({ icon: 'error', title: 'Error al cargar detalles del pedido' });
         });
     }
+
+    obj.abrirModalArchivo = (archivo) => {
+        let ruta = "https://macromautopartes.com/Public/Comprobantes/" + archivo;
+        let extension = archivo.split('.').pop().toLowerCase();
+        
+        let imgVisor = document.getElementById('imgVisorAdmin');
+        let iframeVisor = document.getElementById('iframeVisorAdmin');
+        let btnDescargar = document.getElementById('btnDescargarAdmin');
+
+        btnDescargar.href = ruta;
+        if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(extension)) {
+            iframeVisor.style.display = 'none';
+            imgVisor.style.display = 'block';
+            imgVisor.src = ruta;
+        } else {
+            imgVisor.style.display = 'none';
+            iframeVisor.style.display = 'block';
+            iframeVisor.src = ruta;
+        }
+        
+        $("#ModalVerArchivoAdmin").modal('show');
+    };
+
+    obj.cerrarModalArchivo = () => {
+        $("#ModalVerArchivoAdmin").modal('hide');
+        document.getElementById('imgVisorAdmin').src = "";
+        document.getElementById('iframeVisorAdmin').src = "";
+    };
 
     obj.btnGuardarCambios = () => {
 

@@ -65,11 +65,14 @@ class Pedidos {
                 $acreditado = (int)($this->formulario["Acreditado"] ?? 0);
                 $guia = addslashes($this->formulario["GuiaEnvio"] ?? '');
                 
+                $costoEnvioAcordado = (float)($this->formulario["CostoEnvioAcordado"] ?? 0.00);
+                $estatusPagoEnvio = (int)($this->formulario["EstatusPagoEnvio"] ?? 0);
+                
                 $pedidoViejo = $this->getOnePedido($idPedido);
                 $estatusViejoTxt = $this->estatus[(int)($pedidoViejo['Acreditado'] ?? 0)] ?? 'Desconocido';
                 $estatusNuevoTxt = $this->estatus[$acreditado] ?? 'Desconocido';
 
-                if($this->setPedidosDetalles($acreditado, $guia, $idPedido)){
+                if($this->setPedidosDetalles($acreditado, $guia, $costoEnvioAcordado, $estatusPagoEnvio, $idPedido)){
                     
                     $datosReales = $this->getDatosPedido($idPedido);
                     $noPedidoStr = $datosReales['noPedido'];
@@ -80,8 +83,16 @@ class Pedidos {
                         $detallesAudit .= "Cambió estatus de '$estatusViejoTxt' a '$estatusNuevoTxt'. ";
                     }
                     if($guia != '' && $guia != ($pedidoViejo['GuiaEnvio'] ?? '')){
-                        $detallesAudit .= "Asignó/Actualizó guía de envío: $guia.";
+                        $detallesAudit .= "Asignó/Actualizó guía de envío: $guia. ";
                     }
+                    if($costoEnvioAcordado != (float)($pedidoViejo['CostoEnvioAcordado'] ?? 0)){
+                        $detallesAudit .= "Actualizó costo de envío acordado a $$costoEnvioAcordado. ";
+                    }
+                    if($estatusPagoEnvio != (int)($pedidoViejo['EstatusPagoEnvio'] ?? 0)){
+                        $txtPago = $estatusPagoEnvio == 1 ? 'PAGADO' : 'SIN PAGAR';
+                        $detallesAudit .= "Cambió estatus del envío a $txtPago. ";
+                    }
+
                     $this->setBitacora("ACTUALIZAR_PEDIDO", trim($detallesAudit));
 
                     if(count($this->archivos) != 0){
@@ -214,8 +225,10 @@ class Pedidos {
     }
 
     private function getOnePedido($id){
-        $sql = "SELECT P._idPedidos, P.Fecha, P.cenvio, P.Servicio, P.Importe, P.Acreditado,  if(P.Acreditado=1, 'Acreditado','Por Acreditar') as Acreditadotxt,
-                P.Enviado, P.GuiaEnvio, P.FormaPago, P.paqueteria, P.Alto, P.Ancho, P.Peso, P.Largo, P.FechaEstimadaEnvio, C.nombres, C.Apellidos, C.correo, P.Facturacion, P.archivoxml, P.archivopdf, P.noPedido, P.comprobante, 
+        $sql = "SELECT P._idPedidos, P.Fecha, P.cenvio, P.Servicio, P.Importe, P.Acreditado, if(P.Acreditado=1, 'Acreditado','Por Acreditar') as Acreditadotxt,
+                P.Enviado, P.GuiaEnvio, P.FormaPago, P.paqueteria, P.Alto, P.Ancho, P.Peso, P.Largo, P.FechaEstimadaEnvio, 
+                P.CostoEnvioAcordado, P.EstatusPagoEnvio, 
+                C.nombres, C.Apellidos, C.correo, P.Facturacion, P.archivoxml, P.archivopdf, P.noPedido, P.comprobante, 
                 CD.Domicilio, CD.Codigo_postal, CD.Telefono, CD.Colonia, CD.Ciudad, CD.Estado, CD.numExt, CD.numInt, CD.Referencia,
                 CF.UsoCFDI, CF.Descripción as Descripcion, F.Rfc, F.Razonsocial, F.Domicilio as FDomicilio, P.descuento 
                 from Pedidos as P 
@@ -279,8 +292,13 @@ class Pedidos {
        return $this->conn->query($sql);
     }
 
-    private function setPedidosDetalles($acreditado, $guiaenvio, $_id){
-        $sql = "UPDATE Pedidos SET Acreditado='$acreditado', GuiaEnvio='$guiaenvio' WHERE _idPedidos = $_id";
+    private function setPedidosDetalles($acreditado, $guiaenvio, $costoEnvioAcordado, $estatusPagoEnvio, $_id){
+        $sql = "UPDATE Pedidos SET 
+                Acreditado='$acreditado', 
+                GuiaEnvio='$guiaenvio',
+                CostoEnvioAcordado='$costoEnvioAcordado',
+                EstatusPagoEnvio='$estatusPagoEnvio'
+                WHERE _idPedidos = $_id";
         return $this->conn->query($sql);
     }
 

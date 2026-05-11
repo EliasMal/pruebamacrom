@@ -144,7 +144,7 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
         if (!value) return;
         
         const query = encodeURIComponent(value);
-        window.location.href = `/?mod=catalogo&pag=1&prod=${query}`;
+        window.location.href = `/?mod=catalogo&pag=1&busqueda_general=${query}`;
     };
 
     obj.getCategorias = async () => {
@@ -230,22 +230,31 @@ function CabeceraCtrl($scope, $http, $sce, vcRecaptchaService) {
 
     obj.enviarContacto = () => {
         if (vcRecaptchaService.getResponse() === "") {
-            alert("Verifica que eres humano");
-        } else {
-            obj.Contacto.recapRespond = vcRecaptchaService.getResponse();
+            toastr.warning("Por favor, marca la casilla de seguridad 'No soy un robot'.");
+            return;
+        } 
+        
+        obj.Contacto.recapRespond = vcRecaptchaService.getResponse();
 
-            $http({
-                method: 'POST',
-                url: "./modulo/Contacto/Ajax/Contacto.php",
-                data: obj.Contacto
-            }).then(function successCallback(res) {
-                if (res.data.Bandera == 1) {
-                    obj.msgContacto = true;
-                }
-            }, function errorCallback(res) {
-                toastr.error("Error: no se realizó la conexión con el servidor");
-            });
-        }
+        $http({
+            method: 'POST',
+            url: "./modulo/Contacto/Ajax/Contacto.php",
+            data: obj.Contacto
+        }).then(function successCallback(res) {
+            
+            if (res.data.Bandera == 1) {
+                obj.msgContacto = true;
+                obj.Contacto = {};
+                
+                vcRecaptchaService.reload();
+                
+            } else {
+                toastr.error(res.data.Mensaje || "Ocurrió un error al enviar tu mensaje.");
+            }
+            
+        }, function errorCallback(res) {
+            toastr.error("Error crítico: No se pudo establecer conexión con el servidor.");
+        });
     };
 
     obj.getSoloCarrito = async () => {

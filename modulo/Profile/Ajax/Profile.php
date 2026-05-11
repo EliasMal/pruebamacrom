@@ -112,10 +112,9 @@ class Profile{
         return $row["password"];
     }
 
-    private function set_Password(){
-        $sql = "UPDATE Cseguridad set password = SHA('{$this->formulario->profile->data->Nuevapass}') 
+    private function set_Password($nuevoHash){
+        $sql = "UPDATE Cseguridad set password = '$nuevoHash' 
                 WHERE _id= {$this->formulario->profile->data->_id_seguridad}";
-        // 
         return $this->conn->query($sql)? true:false;
     }
 
@@ -297,19 +296,31 @@ class Profile{
                         }
                     break;
                     case 'password':
-                        if($this->get_Password() === sha1($this->formulario->profile->data->passActual)){
-                            if($this->set_Password()){
+                        $passActual = $this->formulario->profile->data->passActual;
+                        $passNueva = $this->formulario->profile->data->Nuevapass;
+                        $hashGuardado = $this->get_Password();
+
+                        $esValida = false;
+                        if(password_verify($passActual, $hashGuardado)){
+                            $esValida = true;
+                        } else if ($hashGuardado === sha1($passActual)) {
+                            $esValida = true;
+                        }
+
+                        if($esValida){
+                            $nuevoHash = password_hash($passNueva, PASSWORD_DEFAULT);
+
+                            if($this->set_Password($nuevoHash)){
                                 $this->jsonData["Bandera"] = 1;
-                                $this->jsonData["mensaje"] =  "Password Actualizado";
+                                $this->jsonData["mensaje"] =  "Contraseña actualizada.";
                             }else{
                                 $this->jsonData["Bandera"] = 0;
-                                $this->jsonData["mensaje"] =  "Error al intentar Actualizar el password";
+                                $this->jsonData["mensaje"] =  "Error al intentar actualizar la contraseña.";
                             }
                         }else{
                             $this->jsonData["Bandera"] = 0;
-                            $this->jsonData["mensaje"] =  "Error la contraseña actual, no coincide con la base de datos";
+                            $this->jsonData["mensaje"] =  "Error: La contraseña actual no coincide con la base de datos.";
                         }
-                        /*  */
                     break;
                     default:
                         $this->jsonData["Bandera"] = 1;

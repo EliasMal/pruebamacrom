@@ -13,7 +13,12 @@ function HomeCtrl($scope, $http, $timeout) {
     obj.kpis = {};
     obj.ultimosPedidos = [];
     obj.datosAntiguos = {};
+    obj.toastCerrado = false;
 
+    obj.cerrarToast = function() {
+        obj.toastCerrado = true;
+    };
+    
     obj.getUsuario = () => {
         $http.post(url2, { usuarios: { opc: "get" } }).then(function (res) {
             if (res.data.Bandera == 1) {
@@ -52,7 +57,7 @@ function HomeCtrl($scope, $http, $timeout) {
     };
 
     obj.renderHighchart = (datosVentas) => {
-        let categorias = datosVentas.map(item => item.dia + " del mes");
+        let categorias = datosVentas.map(item => item.dia);
         let serieDeDatos = datosVentas.map(item => {
             return {
                 y: item.total,

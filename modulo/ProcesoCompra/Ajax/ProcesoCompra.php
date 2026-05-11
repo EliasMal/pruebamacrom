@@ -145,7 +145,7 @@ class ProcesoCompra {
                                     $this->jsonData["Data"] = $id;       
                                     
                                     // ENVÍO DE CORREOS
-                                    $this->enviarCorreoNotificacionAdmin($this->formulario->Costumer->metodoPago);
+                                    $this->enviarCorreoNotificacionAdmin($this->formulario->Costumer->metodoPago, $id, $this->formulario->Costumer->noPedido["folio"]);
                                     $this->enviarCorreoCompraAcreditadaCliente($_SESSION["usr"], $_SESSION["nombrecorto"], $id, $this->formulario->Costumer->noPedido["folio"], $this->formulario->Costumer->metodoPago);
 
                                 } else {
@@ -374,11 +374,47 @@ class ProcesoCompra {
         return $this->conn->query($sql);
     }
 
-    private function enviarCorreoNotificacionAdmin($metodo_pago){
+    private function enviarCorreoNotificacionAdmin($metodo_pago, $id_pedido, $folio_pedido){
         $mail = new PHPMailer; $mail->isSMTP(); $mail->SMTPDebug = 0; $mail->Host = 'smtp.hostinger.com'; $mail->Port = 587; $mail->SMTPAuth = true; $mail->Username = 'ventasweb@macromautopartes.com'; $mail->Password = 'jSJLK6AqN%fwUOskf5@R'; $mail->setFrom('ventasweb@macromautopartes.com', 'Macrom Autopartes');
         $mail->addAddress('ventasweb@macromautopartes.com', 'Ventas'); $mail->addAddress('web.tsuruvolks@gmail.com', 'Ventas web');
-        $mail->Subject = 'Compra en Macromautopartes'; $mail->IsHTML(true); $mail->CharSet = 'utf-8';
-        $mail->Body ='Nueva compra registrada en la pagina Macromautopartes, revisar el pedido para su envio. (Metodopago: '.$metodo_pago.')';
+        $mail->Subject = 'Nueva Compra ('.$metodo_pago.') - Folio: '.$folio_pedido; $mail->IsHTML(true); $mail->CharSet = 'utf-8';
+
+        $detalles_resumen = "";
+        $sql = "SELECT DP.cantidad, P.Producto, P.Clave as SKU FROM DetallesPedidos DP INNER JOIN Producto P ON DP._idProducto = P._id WHERE DP._idPedidos = $id_pedido";
+        $this->conn->query($sql);
+        while($row = $this->conn->fetch()){
+            $detalles_resumen .= "<li style='margin-bottom: 5px;'><b>{$row['cantidad']}x</b> {$row['Producto']} <span style='color:#777; font-size:12px;'>(SKU: {$row['SKU']})</span></li>";
+        }
+
+        $sql_header = "SELECT paqueteria, Servicio FROM Pedidos WHERE _idPedidos = $id_pedido LIMIT 1";
+        $this->conn->query($sql_header);
+        $row_header = $this->conn->fetch();
+
+        $aviso_admin = "";
+        if($row_header["paqueteria"] == "Acordar con el negocio" || $row_header["Servicio"] == "Envío por paqueteria(Por Cotizar)"){
+            $aviso_admin = "
+            <div style='background-color: #fff3cd; color: #856404; padding: 15px; border-left: 5px solid #ffeeba; margin: 20px 0; border-radius: 4px;'>
+                <h3 style='margin-top:0;'>⚠️ ATENCIÓN: PEDIDO VOLUMINOSO</h3>
+                <p style='margin-bottom:0;'>El cliente <strong>ACEPTÓ</strong> los términos de envío pendiente. Es necesario contactarlo para cotizar la paqueteria y cobrar el envío por separado.</p>
+            </div>";
+        }
+
+        $mail->Body ="
+        <div style='font-family: Arial, sans-serif; color: #333;'>
+            <h2 style='color: #de0007;'>Nueva compra registrada en la web</h2>
+            <p><strong>Folio de seguimiento:</strong> $folio_pedido</p>
+            <p><strong>Método de pago:</strong> $metodo_pago</p>
+            
+            $aviso_admin
+
+            <h3 style='border-bottom: 1px solid #ccc; padding-bottom: 5px;'>Resumen de Artículos:</h3>
+            <ul style='list-style-type: square;'>
+                $detalles_resumen
+            </ul>
+            
+            <p style='margin-top: 30px; font-size: 13px; color: #666;'><em>* Ingresa al panel de administración para ver los datos completos.</em></p>
+        </div>";
+
         $mail->send();
     }
 
@@ -414,14 +450,30 @@ class ProcesoCompra {
             </tr>';
         }
 
-        $sql_header = "SELECT Importe, cenvio, descuento, Servicio FROM Pedidos WHERE _idPedidos = $id_pedido LIMIT 1";
+        $sql_header = "SELECT Importe, cenvio, descuento, Servicio, paqueteria FROM Pedidos WHERE _idPedidos = $id_pedido LIMIT 1";
         $this->conn->query($sql_header);
         $row_header = $this->conn->fetch();
         
-        $importe_total = number_format(floatval($row_header["Importe"]), 2);
-        $costo_envio = number_format(floatval($row_header["cenvio"]), 2);
-        $descuento = number_format(floatval($row_header["descuento"]), 2);
+        $subtotal_bd = floatval($row_header["Importe"]);
+        $costo_envio_num = floatval($row_header["cenvio"]);
+        $descuento_num = floatval($row_header["descuento"]);
+        
+        $gran_total = $subtotal_bd + $costo_envio_num - $descuento_num;
+
+        $importe_total = number_format($gran_total, 2);
+        $costo_envio = number_format($costo_envio_num, 2);
+        $descuento = number_format($descuento_num, 2);
         $servicio_envio = $row_header["Servicio"];
+        $aviso_envio_html = "";
+
+        if($row_header["paqueteria"] == "Acordar con el negocio" || $servicio_envio == "Envío por paqueteria(Por Cotizar)"){
+            $aviso_envio_html = '
+            <div style="background-color: #fff3cd; border-left: 5px solid #ffeeba; padding: 15px; margin: 20px 0; text-align: left; border-radius: 5px;">
+                <h3 style="margin: 0 0 10px 0; color: #856404; font-size: 16px;">⚠️ AVISO IMPORTANTE: ENVÍO PENDIENTE DE PAGO</h3>
+                <p style="margin: 5px 0; color: #856404; font-size: 14px;">Tal como aceptaste durante tu compra, el pago realizado <strong>CUBRE ÚNICAMENTE EL COSTO DE LAS REFACCIONES</strong>.</p>
+                <p style="margin: 5px 0; color: #856404; font-size: 14px;">El costo de envío <strong>NO ESTÁ INCLUIDO</strong>. Nos pondremos en contacto contigo para cotizar la paqueteria ideal y acordar el pago del envío.</p>
+            </div>';
+        }
 
         $info_bancaria_html = "";
         if($formaPago == 'Transferencia'){
@@ -459,6 +511,8 @@ class ProcesoCompra {
                         Hola <strong>'.$nombre.'</strong>, hemos recibido tu solicitud de pedido.<br>
                         Tu folio de seguimiento es el: <strong style="color:#de0007;">'.$folio_pedido.'</strong>.
                     </p>
+
+                    '.$aviso_envio_html.'
 
                     '.$info_bancaria_html.'
 

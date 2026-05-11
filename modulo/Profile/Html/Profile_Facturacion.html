@@ -1,104 +1,168 @@
-<section  ng-controller="ProfileCtrl" ng-init="pag='{opc}'" class="global__content">
-    <div class="banner Direc__perfil" id="PerfilDark">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 perfil__navegador">
-                    <div class="list-group">
-                        <a id="sidebar6" class="list-group-item list-group-item-action sidebar__click" ng-click="btnMenulinks('Mispedidos')"> <i alt="logo-mispedidos" class="fa fa-shopping-cart"></i>Mis pedidos</a>
-                        <a id="sidebar5" class="list-group-item list-group-item-action sidebar__click" ng-click="btnMenulinks('Session')"><i alt="logo-sesion-seguridad" class="fa fa-shield-alt"></i>Sessi&oacute;n y Seg&uacute;ridad</a>
-                        <a id="sidebar7" class="list-group-item list-group-item-action sidebar__click" ng-click="btnMenulinks('Direcciones')"> <i alt="logo-direcciones" class="fa fa-map-marked-alt"></i>Direcciones</a>
-                        <a id="sidebar8" class="list-group-item list-group-item-action sidebar__click active" ng-click="btnMenulinks('Facturacion')"><i alt="logo-facturacion" class="fa fa-file-invoice-dollar"></i> Datos de Facturación</a>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb gris">
-                          <li class="breadcrumb-item"><a href="?mod=Profile&opc=Session"><strong>Mi Cuenta</strong> </a></li>
-                          <li class="breadcrumb-item active" aria-current="page">Datos de Facturación</li>
-                        </ol>
-                    </nav>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 perfil__titulo">
-                            <div class="title-header">
-                                <!-- <img src="https://macromautopartes.com/images/icons/icono_facturacion_rojo.png" alt="logo-direcciones" class="img icon-logos-grande"> -->
-                                <img src="images/icons/icono_facturacion_rojo.png" alt="logo-direcciones" class="img icon-logos-grande">
-                                <h2>Datos de facturación</h2>
-                            </div>
-                        </div> 
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <div class="bo4 of-hidden size15 m-b-20 input-group">
-                                <input type="text" name="buscar" class="form-control" placeholder="ej. PEPE SA DE CV" ng-model="buscar">
-                                <span class="input-group-btn">
-                                    <button class="btn flex-c-m size2 bg1 bo-rad-5 hov1 m-text3 trans-0-4" type="button"> Buscar</button>
-                                </span>
-                            </div>
-                        </div> 
+<style>
+    .perfil__navegador .list-group-item {
+        border: none; border-radius: 8px !important; margin-bottom: 5px;
+        color: #4b5563; font-weight: 500; transition: all 0.3s ease; cursor: pointer;
+    }
+    .perfil__navegador .list-group-item:hover { background-color: #f3f4f6; color: #de0007; transform: translateX(5px); }
+    .perfil__navegador .list-group-item.active {
+        background-color: #de0007 !important; color: #fff !important; box-shadow: 0 4px 10px rgba(222,0,7,0.2);
+    }
+    .perfil__navegador .list-group-item i { width: 25px; text-align: center; margin-right: 10px; }
 
+    /* Buscador Moderno */
+    .search-moderno { border-radius: 50px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #e5e7eb; background-color: #fff !important; }
+    .search-moderno input.form-control { border: none !important; box-shadow: none !important; padding-left: 20px; height: 45px; background: transparent !important; }
+    .search-moderno input.form-control:focus { outline: none !important; box-shadow: none !important; }
+    .search-moderno .input-group-append { margin: 0 !important; }
+    .search-moderno button.btn { background: #de0007 !important; color: white !important; border: none !important; padding: 0 25px; font-weight: 600; transition: 0.3s; cursor: pointer; border-radius: 0 !important; height: 100%; }
+    .search-moderno button.btn:hover { background: #bf040a !important; }
+
+    /* Tarjetas de Facturación */
+    .card-factura {
+        background: #fff; border: 1px solid #e5e7eb; border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: all 0.3s ease; height: 100%;
+        display: flex; flex-direction: column; overflow: hidden; position: relative;
+    }
+    .card-factura:hover { box-shadow: 0 8px 25px rgba(0,0,0,0.08); transform: translateY(-3px); border-color: #d1d5db; }
+    .card-factura.predeterminada { border: 2px solid #de0007; box-shadow: 0 6px 20px rgba(222,0,7,0.1); }
+    
+    .card-factura-header { padding: 10px 20px; background: #fff5f5; border-bottom: 1px solid #fecaca; }
+    .card-factura-body { padding: 20px; flex-grow: 1; }
+    .card-factura-footer { 
+        padding: 12px 20px; background: #f9fafb; border-top: 1px solid #e5e7eb; 
+        display: flex; justify-content: space-between; align-items: center;
+    }
+
+    .badge-predeterminada { color: #de0007; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.5px; text-transform: uppercase; }
+
+    /* Botón Agregar (Tarjeta Punteada) */
+    .btn-add-factura {
+        background: #f9fafb; border: 2px dashed #d1d5db; border-radius: 12px;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        height: 100%; min-height: 280px; cursor: pointer; transition: all 0.3s ease; color: #9ca3af;
+    }
+    .btn-add-factura:hover { border-color: #de0007; color: #de0007; background: #fff5f5; transform: translateY(-3px); }
+    .btn-add-factura i { font-size: 3.5rem; margin-bottom: 15px; transition: all 0.3s ease; }
+    .btn-add-factura:hover i { transform: scale(1.1); }
+
+    /* Textos internos */
+    .datos-label { font-size: 0.75rem; text-transform: uppercase; color: #9ca3af; font-weight: 700; margin-bottom: 2px; }
+    .datos-valor { font-size: 0.95rem; color: #1f2937; margin-bottom: 12px; font-weight: 500; line-height: 1.3; }
+    .rfc-badge { background-color: #f3f4f6; border: 1px solid #d1d5db; color: #374151; padding: 4px 10px; border-radius: 6px; font-family: monospace; font-size: 1.1rem; font-weight: bold; display: inline-block; letter-spacing: 1px; }
+
+    /* Enlaces de Acción */
+    .action-link { cursor: pointer; font-weight: 600; font-size: 0.9rem; color: #4b5563; transition: 0.2s; text-decoration: none !important; }
+    .action-link:hover { color: #de0007; }
+</style>
+
+<section ng-controller="ProfileCtrl" ng-init="pag='{opc}'" class="global__content mb-5">
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 perfil__navegador mb-4">
+                <div class="list-group shadow-sm p-3 bg-white" style="border-radius: 12px; border: 1px solid #e5e7eb;">
+                    <h5 class="text-center font-weight-bold text-dark mb-4 mt-2">Mi Cuenta</h5>
+                    <a class="list-group-item" ng-click="btnMenulinks('Mispedidos')"><i class="fa fa-shopping-cart"></i>Mis pedidos</a>
+                    <a class="list-group-item" ng-click="btnMenulinks('Session')"><i class="fa fa-shield-alt"></i>Sesión y Seguridad</a>
+                    <a class="list-group-item" ng-click="btnMenulinks('Direcciones')"><i class="fa fa-map-marked-alt"></i>Direcciones</a>
+                    <a class="list-group-item active" ng-click="btnMenulinks('Facturacion')"><i class="fa fa-file-invoice-dollar"></i>Datos de Facturación</a>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-white shadow-sm" style="border-radius: 8px; border: 1px solid #e5e7eb;">
+                      <li class="breadcrumb-item"><a href="?mod=Profile&opc=Session" style="color: #de0007;">Mi Cuenta</a></li>
+                      <li class="breadcrumb-item active" aria-current="page">Datos de Facturación</li>
+                    </ol>
+                </nav>
+
+                <div class="row align-items-center mb-4 mt-2">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        <div class="d-flex align-items-center">
+                            <img src="images/icons/icono_facturacion_rojo.png" alt="logo-facturacion" style="width: 45px; height: auto;" class="mr-3">
+                            <div>
+                                <h2 class="font-weight-bold m-0" style="color: #222;">Facturación</h2>
+                                <p class="text-muted mt-1 mb-0">Perfiles fiscales para tus comprobantes.</p>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="col-md-6">
+                        <div class="input-group search-moderno">
+                            <input type="text" name="buscar" class="form-control" placeholder="Buscar por RFC o Razón Social..." ng-model="buscar">
+                            <div class="input-group-append">
+                                <button class="btn" type="button"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+
+                <div class="row">
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="btn-add-factura" ng-click="addFacturacion()">
+                            <i class="fa fa-plus-circle"></i>
+                            <h5 class="font-weight-bold m-0">Agregar Datos Fiscales</h5>
+                        </div>
                     </div>
-                    <div class="row">
-                        <div>
+
+                    <div class="col-md-6 mb-4" ng-repeat="d in Facturacion.dataFacturacion | filter: buscar | orderBy:'Predeterminado':true">
+                        <div class="card-factura" ng-class="{'predeterminada': d.Predeterminado == '1'}">
                             
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 perfil__direcciones--cont" ng-click="addFacturacion()">
-                                     <div class="box-direcciones">
-                                        <div class="box-add">
-                                            <h3><i class="fa fa-plus"></i></h3> 
-                                            <p>Agregar datos de facturación</p>
-                                        </div>  
-                                     </div>   
-                                </div>
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 perfil__direcciones--cont" ng-repeat="d in Facturacion.dataFacturacion |filter: buscar | orderBy:'Predeterminado':true">
-                                    <div class="box-facturas">
-                                       <div class="box-head predeterminado" ng-if="d.Predeterminado === '1'">
-                                            <h5>Predeterminado</h5>
-                                       </div>
-                                       <div class="box-body">
-                                            <div class="Facturacion__contenedor--datos">
-                                                <div class="Facturacion__contenedor--info">
-                                                    <p class="datos__fact" >Rfc: </p>
-                                                    <p class="text-info-user">{{d.Rfc}}</p>
-                                                </div>
-                                                <div class="Facturacion__contenedor--info">
-                                                    <p class="datos__fact">Razon social: </p>
-                                                    <p class="text-info-user">{{d.Razonsocial}}</p>
-                                                </div>
-                                                <div class="Facturacion__contenedor--info">
-                                                    <p class="datos__fact">Domicilio: </p>
-                                                    <p class="text-info-user">{{d.Domicilio}}</p>
-                                                </div>
-                                                <div class="Facturacion__contenedor--info">
-                                                    <p class="datos__fact">Colonia: </p>
-                                                    <p class="text-info-user">{{d.Colonia}}</sppan>
-                                                </div>
-                                                <div class="Facturacion__contenedor--info">
-                                                    <p class="datos__fact">Ciudad: </p>
-                                                    <p class="text-info-user">{{d.Ciudad}}</p>
-                                                </div>
-                                                <div class="Facturacion__contenedor--info">
-                                                    <p class="datos__fact">Estado: </p>
-                                                    <p class="text-info-user">{{d.Estado}}</p>
-                                                </div>
-                                                <div class="Facturacion__contenedor--info">
-                                                    <p class="datos__fact">Uso de Cfdi: </p>
-                                                    <p class="text-info-user">{{d.Descripcion}}</p>
-                                                </div>
-                                                <div class="Facturacion__contenedor--info">
-                                                    <p class="datos__fact">Actividad empresarial: </p>
-                                                    <p class="text-info-user">{{d.Actividad}}</p>
-                                                </div>
+                            <div class="card-factura-header" ng-show="d.Predeterminado == '1'">
+                                <span class="badge-predeterminada"><i class="fa fa-star mr-1"></i> Facturación Predeterminada</span>
+                            </div>
+
+                            <div class="card-factura-body">
+                                <div class="row">
+                                    <div class="col-12 mb-3 border-bottom pb-3">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div>
+                                                <div class="datos-label">Razón Social</div>
+                                                <h5 class="font-weight-bold text-dark m-0" style="line-height: 1.2;">{{d.Razonsocial}}</h5>
                                             </div>
                                         </div>
-                                        <div class="box-footer">
-                                            <ul>
-                                                <li><a href="#" ng-click="btnEditadatosFacturacion(d._id)">Editar </a></li>
-                                                <li><a href="#" ng-click="btnEliminardatosfacturacion(d._id, 'del')">Descartar </a></li>
-                                                <li ng-if="d.Predeterminado === '0'"><a href="#" ng-click="btnFacpredetermiando(d._id, 'pre')">Predeterminar</a></li>
-                                            </ul>
-                                       </div>
-                                    </div>   
-                               </div>
-                               
+                                        <div class="mt-2">
+                                            <div class="datos-label">RFC</div>
+                                            <div class="rfc-badge">{{d.Rfc}}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="datos-label"><i class="fa fa-file-invoice mr-1"></i> Uso de CFDI</div>
+                                        <div class="datos-valor">{{d.Descripcion}}</div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="datos-label"><i class="fa fa-briefcase mr-1"></i> Régimen / Actividad</div>
+                                        <div class="datos-valor">{{d.Actividad}}</div>
+                                    </div>
+
+                                    <div class="col-12 mt-2">
+                                        <div class="datos-label"><i class="fa fa-map-marker-alt mr-1"></i> Domicilio Fiscal</div>
+                                        <div class="datos-valor small text-muted">
+                                            {{d.Domicilio}}, Col. {{d.Colonia}}<br>
+                                            {{d.Ciudad}}, {{d.Estado}}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
+                            <div class="card-factura-footer">
+                                <div>
+                                    <a class="action-link mr-3" ng-click="btnEditadatosFacturacion(d._id)" title="Editar">
+                                        <i class="fa fa-edit"></i> <span class="d-none d-sm-inline">Editar</span>
+                                    </a>
+                                    <a class="action-link text-danger" ng-click="btnEliminardatosfacturacion(d._id, 'del')" title="Eliminar">
+                                        <i class="fa fa-trash-alt"></i> <span class="d-none d-sm-inline">Borrar</span>
+                                    </a>
+                                </div>
+                                <div ng-show="d.Predeterminado == '0'">
+                                    <button class="btn btn-sm btn-outline-danger" ng-click="btnFacpredetermiando(d._id, 'pre')" style="border-radius: 50px; font-weight: 600;">
+                                        Elegir Default
+                                    </button>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                     
@@ -106,3 +170,4 @@
             </div>    
         </div>
     </div>
+</section>

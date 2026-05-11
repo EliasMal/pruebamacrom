@@ -10,8 +10,14 @@
     }
     
     function retorna_vista($vista, $data=array()){
-        $archivo_vista = strpos($vista, 'cc?') !== false ? 'cc' : $vista;
+        $archivo_vista = "principal";
         
+        if(strpos($vista, 'cc?') !== false){
+            $archivo_vista = "cc";
+        } else if (in_array($vista, ['principal', 'paso2', 'paso3'])) {
+            $archivo_vista = $vista;
+        }
+
         $html = get_template($archivo_vista);
         
         if($archivo_vista == 'cc') {
@@ -37,6 +43,8 @@
                 $nb_error = isset($formulario["nb_error"]) ? $formulario["nb_error"] : "Error desconocido";
                 $cd_resp = isset($formulario["cdResponse"]) ? $formulario["cdResponse"] : "Denegado";
                 $data["mensaje"] = "¡{$cd_resp}!, {$nb_error}";
+            } else {
+                 $data["mensaje"] = "Error desconocido en la transacción bancaria.";
             }
         }
         

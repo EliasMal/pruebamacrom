@@ -1,180 +1,237 @@
-<section ng-controller="ProfileCtrl" ng-init="pag='{opc}'" class="global__content">
-    <div class="banner Direc__perfil" id="PerfilDark">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 perfil__navegador">
-                    <div class="list-group">
-                        <a class="list-group-item list-group-item-action active" ng-click="btnMenulinks('Mispedidos')"> <i alt="logo-mispedidos" class="fa fa-shopping-cart"></i>Mis pedidos</a>
-                        <a class="list-group-item list-group-item-action" ng-click="btnMenulinks('Session')"><i alt="logo-sesion-seguridad" class="fa fa-shield-alt"></i>Sessi&oacute;n y Seg&uacute;ridad</a>
-                        <a class="list-group-item list-group-item-action" ng-click="btnMenulinks('Direcciones')"> <i alt="logo-direcciones" class="fa fa-map-marked-alt"></i>Direcciones</a>
-                        <a class="list-group-item list-group-item-action" ng-click="btnMenulinks('Facturacion')"><i alt="logo-facturacion" class="fa fa-file-invoice-dollar"></i> Datos de Facturación</a>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb gris">
-                          <li class="breadcrumb-item"><a href="?mod=Profile&opc=Session">Mi Cuenta</a></li>
-                          <li class="breadcrumb-item"><a href="#" ng-click="btnMenulinks('Mispedidos')">Mis pedidos</a> </li>
-                          <li class="breadcrumb-item active" aria-current="page">Detalles</li>
+<style>
+    .perfil__navegador .list-group-item {
+        border: none; border-radius: 8px !important; margin-bottom: 5px;
+        color: #4b5563; font-weight: 500; transition: all 0.3s ease; cursor: pointer;
+    }
+    .perfil__navegador .list-group-item:hover { background-color: #f3f4f6; color: #de0007; transform: translateX(5px); }
+    .perfil__navegador .list-group-item.active {
+        background-color: #de0007 !important; color: #fff !important; box-shadow: 0 4px 10px rgba(222,0,7,0.2);
+    }
+    .perfil__navegador .list-group-item i { width: 25px; text-align: center; margin-right: 10px; }
 
-                        </ol>
-                    </nav>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 perfil__titulo">
-                            <h1>Detalles del pedido</h1>
-                        </div>  
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <div class="row m-b-10">
-                                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                                    <div class="row orden">
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 m-b-10">
-                                            <h4>Pedido #{{Mispedidos.noPedido}}</h4>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                            <label>Enviado por:</label>
-                                            <p class="m-b-10">{{Mispedidos.GuiaEnvio}}</p>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                            <label>Metodo de pago:</label>
-                                            <p class="m-b-10">{{Mispedidos.FormaPago}}</p>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                            <label>Total:</label>
-                                            <p class="m-b-10">{{Mispedidos.Totalpedido | currency}}</p>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                            <!-- <img src="https://macromautopartes.com/images/icons/icono-impresion.png" alt="Impresora" class="img-50 enlace" ng-show="Mispedidos.Acreditado != 0" ng-click="btnComprobanteCompra(Mispedidos._idPedidos)"> -->
-                                            <img src="./images/icons/icono-impresion.png" alt="Impresora" class="img-50 enlace" ng-show="Mispedidos.Acreditado != 0" ng-click="btnComprobanteCompra(Mispedidos._idPedidos)">
-                                            <!-- <img src="./images/icons/icono-correo.png" alt="Impresora" class="img-50"> -->
-                                            <!-- <img src="https://macromautopartes.com/images/icons/icono-facturacion-2.png" alt="Impresora" class="img-150" ng-show="Mispedidos.Facturacion==1"> -->
-                                            <img src="./images/icons/icono-facturacion-2.png" alt="Impresora" class="img-150" ng-show="Mispedidos.Facturacion==1">
-                                            
-                                        </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                            
-                                            
-                                        </div>
-                                    </div>
+    /* WIZARD DE ENVÍO MODERNIZADO */
+    .wizard-moderno {
+        display: flex; justify-content: space-between; align-items: center; 
+        position: relative; padding: 20px 0 40px 0; margin-bottom: 20px;
+    }
+    .wizard-moderno::before {
+        content: ''; position: absolute; top: 40px; left: 10%; right: 10%; 
+        height: 4px; background: #e5e7eb; z-index: 1; border-radius: 10px;
+    }
+    .wizard-moderno-progress {
+        position: absolute; top: 40px; left: 10%; height: 4px; 
+        background: #de0007; z-index: 2; transition: all 0.5s ease; border-radius: 10px;
+    }
+    .wizard-step { position: relative; z-index: 3; text-align: center; flex: 1; }
+    
+    .wizard-icon {
+        width: 60px; height: 60px; background: #fff; border: 3px solid #e5e7eb; 
+        border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+        margin: 0 auto 10px auto; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .wizard-icon img { width: 30px; opacity: 0.4; transition: all 0.3s ease; }
+    .wizard-step p { font-size: 1.1rem; font-weight: 600; color: #9ca3af; margin: 0; }
+    
+    .wizard-step.active .wizard-icon { border-color: #de0007; background: #fff5f5; transform: scale(1.1); box-shadow: 0 6px 15px rgba(222,0,7,0.2); }
+    .wizard-step.active .wizard-icon img { opacity: 1; filter: brightness(0.8) sepia(1) hue-rotate(-50deg) saturate(5) contrast(2); }
+    .wizard-step.active p { color: #de0007; }
+
+    /* Componentes Generales */
+    .table-premium th { border-top: none; text-transform: uppercase; font-size: 1.1rem; letter-spacing: 1px; color: #6b7280; }
+    .table-premium td { vertical-align: middle; border-color: #f3f4f6; }
+    .resumen-card { background: #f9fafb; border-radius: 12px; padding: 20px; border: 1px solid #f3f4f6; }
+</style>
+
+<section ng-controller="ProfileCtrl" ng-init="pag='{opc}'" class="global__content mb-5">
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 perfil__navegador mb-4">
+                <div class="list-group shadow-sm p-3 bg-white" style="border-radius: 12px; border: 1px solid #e5e7eb;">
+                    <h5 class="text-center font-weight-bold text-dark mb-4 mt-2">Mi Cuenta</h5>
+                    <a class="list-group-item active" ng-click="btnMenulinks('Mispedidos')"><i class="fa fa-shopping-cart"></i>Mis pedidos</a>
+                    <a class="list-group-item" ng-click="btnMenulinks('Session')"><i class="fa fa-shield-alt"></i>Sesión y Seguridad</a>
+                    <a class="list-group-item" ng-click="btnMenulinks('Direcciones')"><i class="fa fa-map-marked-alt"></i>Direcciones</a>
+                    <a class="list-group-item" ng-click="btnMenulinks('Facturacion')"><i class="fa fa-file-invoice-dollar"></i>Datos de Facturación</a>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-white shadow-sm" style="border-radius: 8px; border: 1px solid #e5e7eb;">
+                      <li class="breadcrumb-item"><a href="?mod=Profile&opc=Session" style="color: #de0007;">Mi Cuenta</a></li>
+                      <li class="breadcrumb-item"><a href="#" ng-click="btnMenulinks('Mispedidos')" style="color: #de0007;">Mis pedidos</a> </li>
+                      <li class="breadcrumb-item active" aria-current="page">Detalles #{{Mispedidos.noPedido}}</li>
+                    </ol>
+                </nav>
+
+                <div class="card shadow-sm border-0 mb-4" style="border-radius: 12px;">
+                    <div class="card-body p-4">
+                        <div class="row border-bottom pb-4 mb-4">
+                            <div class="col-md-4 border-right">
+                                <h4 class="font-weight-bold mb-4" style="color: #222;">Detalles de Orden</h4>
+                                
+                                <div class="mb-3">
+                                    <small class="text-muted d-block">Enviado por / Guía:</small>
+                                    <span class="font-weight-bold text-dark">{{Mispedidos.GuiaEnvio || 'Pendiente de asignación'}}</span>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-                                    <section class="wizard">
-                                        <ul>
-                                            <li>
-                                                <div class="proceso {{wizard.preparacion? 'active':''}}">
-                                                    <!-- <img src="https://macromautopartes.com/images/icons/Preparacion.png" alt="Preparación"> -->
-                                                    <img src="./images/icons/Preparacion.png" alt="Preparación">
-                                                    <span>&nbsp;</span>
-                                                    <p>En preparación</p>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="proceso {{wizard.transito? 'active':''}}">
-                                                    <!-- <img src="https://macromautopartes.com/images/icons/Transito.png" alt="transito"> -->
-                                                    <img src="./images/icons/Transito.png" alt="transito">
-                                                    <span>&nbsp;</span>
-                                                    <p>En tránsito</p>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="proceso {{wizard.proceso? 'active':''}}">
-                                                    <!-- <img src="https://macromautopartes.com/images/icons/Reparto.png" alt="Reparto"> -->
-                                                    <img src="./images/icons/Reparto.png" alt="Reparto">
-                                                    <span>&nbsp;</span>
-                                                    <p>En proceso de Entrega</p>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="proceso {{wizard.entregado? 'active':''}}">
-                                                    <!-- <img src="https://macromautopartes.com/images/icons/Entrega.png" alt="Entrega"> -->
-                                                    <img src="./images/icons/Entrega.png" alt="Entrega">
-                                                    <span>&nbsp;</span>
-                                                    <p>Entregado</p>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </section>
-                                    <hr>
-                                    <section ng-show="Mispedidos.FormaPago!='Tarjeta' && Mispedidos.Acreditado==0 && Mispedidos.isFileComprobante">
-                                        <a href="#"class="pull-right" ng-click="btnDeleteComp($event)"> <i class="fa fa-close" ></i> Borrar comprobante  </a> 
-                                        <a href="./Public/Comprobantes/{{Mispedidos.comprobante}}" download class="pull-right m-r-10"><i class="fa fa-download"></i> Ver Comprobante </a>
-                                        
-                                    </section>
-                                    <section ng-show="Mispedidos.FormaPago!='Tarjeta' && Mispedidos.Acreditado==0 && !Mispedidos.isFileComprobante">
-                                        <label for="comprobante">Subir comprobante de pago</label>
-                                            <div class="input-group">
-                                                <input type="file" name="comprobante" id="comprobante" class="form-control" uploader-model="comprobantefile" accept="image/*" capture="camera">
-                                                <div class="input-group-append">
-                                                    <button class="btn btn-outline-secondary" type="button" ng-click="btnuploadComprobante()"><i class="fa fa-upload"></i> Subir</button>    
-                                                </div>
-                                            </div>
-                                    </section>  
+                                <div class="mb-3">
+                                    <small class="text-muted d-block">Método de pago:</small>
+                                    <span class="font-weight-bold text-dark"><i class="fa fa-credit-card mr-1 text-muted"></i> {{Mispedidos.FormaPago}}</span>
+                                </div>
+                                <div class="mb-4">
+                                    <small class="text-muted d-block">Total de la orden:</small>
+                                    <span class="font-weight-bold text-danger text-xl">{{Mispedidos.Totalpedido | currency}}</span>
+                                </div>
+
+                                <div class="d-flex align-items-center">
+                                    <button class="btn btn-outline-danger btn-sm mr-2" ng-show="Mispedidos.Acreditado != 0" ng-click="btnComprobanteCompra(Mispedidos._idPedidos)">
+                                        <i class="fa fa-print mr-1"></i> Imprimir
+                                    </button>
+                                    <button class="btn btn-outline-secondary btn-sm" ng-show="Mispedidos.Facturacion==1" ng-click="showModalFile(Mispedidos)">
+                                        <i class="fa fa-file-invoice mr-1"></i> Factura
+                                    </button>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="box-pedidos">
-                                        <div class="row">
-                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                <div class="table-responsive">
-                                                    <table class="table pedidos__datos">
-                                                        <thead>
-                                                            <th>#</th>
-                                                            <th></th>
-                                                            <th>Descripción</th>
-                                                            <th>Precio</th>
-                                                            <th>Importe</th>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr ng-repeat="a in Mispedidos.Detalles">
-                                                                <td>{{$index+1}}</td>
-                                                                <!-- <td><img ng-src="https://macromautopartes.com/images/refacciones/{{a._idProducto}}.webp" alt="{{a._idProducto}}.webp" class="rounded img-80"></td> -->
-                                                                <td><img ng-src="./images/refacciones/{{a._idProducto}}.webp" alt="{{a._idProducto}}.webp" class="rounded img-80"></td>
-                                                                <td><p class="s-text18"> {{a.cantidad}} x {{a.Producto}}</p>
-                                                                    <p class="s-text17">SKU: {{a.No_parte}}</p></td>
-                                                                <td>{{a.Importe | currency}}</td>
-                                                                <td>{{a.cantidad * a.Importe | currency}}</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>    
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 
+                            <div class="col-md-8 pl-md-4">
+                                <h5 class="font-weight-bold mb-3 text-center" style="color: #4b5563;">Estatus del Envío</h5>
+                                
+                                <div class="wizard-moderno">
+                                    <div class="wizard-moderno-progress" ng-style="{'width': wizard.entregado ? '80%' : (wizard.proceso ? '55%' : (wizard.transito ? '25%' : '0%'))}"></div>
+                                    
+                                    <div class="wizard-step" ng-class="{'active': wizard.preparacion}">
+                                        <div class="wizard-icon"><img src="./images/icons/Preparacion.png"></div>
+                                        <p>Preparación</p>
+                                    </div>
+                                    <div class="wizard-step" ng-class="{'active': wizard.transito}">
+                                        <div class="wizard-icon"><img src="./images/icons/Transito.png"></div>
+                                        <p>En tránsito</p>
+                                    </div>
+                                    <div class="wizard-step" ng-class="{'active': wizard.proceso}">
+                                        <div class="wizard-icon"><img src="./images/icons/Reparto.png"></div>
+                                        <p>En reparto</p>
+                                    </div>
+                                    <div class="wizard-step" ng-class="{'active': wizard.entregado}">
+                                        <div class="wizard-icon"><img src="./images/icons/Entrega.png"></div>
+                                        <p>Entregado</p>
+                                    </div>
+                                </div>
+
+                                <div class="bg-light p-3 rounded border mt-3" ng-show="Mispedidos.FormaPago!='Tarjeta' && Mispedidos.Acreditado==0">
+                                    <div ng-show="Mispedidos.isFileComprobante">
+                                        <h6 class="text-success font-weight-bold"><i class="fa fa-check-circle mr-1"></i> Comprobante recibido</h6>
+                                        <p class="text-sm text-muted mb-2">Estamos validando tu pago. Pronto actualizaremos el estatus.</p>
+                                        <button class="btn btn-sm btn-secondary mr-2" ng-click="abrirModalArchivo(Mispedidos.comprobante)">
+                                            <i class="fa fa-eye mr-1"></i> Ver archivo
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" ng-click="btnDeleteComp($event)"><i class="fa fa-trash"></i> Eliminar</button>
+                                    </div>
+                                    
+                                    <div ng-show="!Mispedidos.isFileComprobante">
+                                        <h6 class="text-danger font-weight-bold"><i class="fa fa-exclamation-circle mr-1"></i> Falta comprobante</h6>
+                                        <label class="small text-muted">Sube la foto o captura de tu pago para procesar la orden:</label>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="comprobante" uploader-model="comprobantefile" accept="image/*" capture="camera">
+                                                <label class="custom-file-label" for="comprobante">Elegir archivo...</label>
                                             </div>
-                                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                                                <table class="table pedidos__datos">
-                                                    <tbody>
-                                                        <tr>
-                                                            <th>Sub-total:</th>
-                                                            <td class="text-right">{{Mispedidos.Importe | currency}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Envio:</th>
-                                                            <td class="text-right">{{Mispedidos.cenvio | currency}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Descuento:</th>
-                                                            <td class="text-right">{{Mispedidos.descuento | currency}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Total (con IVA):</th>
-                                                            <td class="text-right"><h4>{{Mispedidos.Totalpedido | currency}}</h4></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <button class="btn btn-danger btn-block" ng-click="btnCancelarPedido()" ng-show="Mispedidos.Acreditado === 1 || Mispedidos.Acreditado === 2">Cancelar pedido</button>
-                                                <button class="btn btn-secondary btn-block" ng-click="btnRegresarviewPedidos()">Regresar</button>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-danger" type="button" ng-click="btnuploadComprobante()"><i class="fa fa-upload mr-1"></i> Subir</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        <h4 class="font-weight-bold mb-3" style="color: #222;">Artículos en tu orden</h4>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-premium">
+                                <thead>
+                                    <tr>
+                                        <th width="5%" class="text-center">#</th>
+                                        <th width="10%">Imagen</th>
+                                        <th width="45%">Descripción del Producto</th>
+                                        <th width="10%" class="text-center">Cant.</th>
+                                        <th width="15%" class="text-right">Precio</th>
+                                        <th width="15%" class="text-right">Importe</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="a in Mispedidos.Detalles">
+                                        <td class="text-center font-weight-bold text-muted">{{$index+1}}</td>
+                                        <td>
+                                            <img ng-src="./images/refacciones/{{a._idProducto}}.webp" onerror="this.src='./images/refacciones/motor.webp'" class="rounded border p-1" style="width: 60px; height: 60px; object-fit: cover;">
+                                        </td>
+                                        <td>
+                                            <h6 class="font-weight-bold text-dark mb-1">{{a.Producto}}</h6>
+                                            <span class="badge badge-light border text-muted">SKU: {{a.No_parte}}</span>
+                                        </td>
+                                        <td class="text-center font-weight-bold text-dark">{{a.cantidad}}</td>
+                                        <td class="text-right text-muted">{{a.Importe | currency}}</td>
+                                        <td class="text-right font-weight-bold text-dark">{{a.cantidad * a.Importe | currency}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="row justify-content-end mt-4">
+                            <div class="col-md-5 col-lg-4">
+                                <div class="resumen-card">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span class="text-muted">Subtotal:</span>
+                                        <span class="font-weight-bold">{{Mispedidos.Importe | currency}}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span class="text-muted">Envío:</span>
+                                        <span class="font-weight-bold">{{Mispedidos.cenvio | currency}}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-3 text-success" ng-show="Mispedidos.descuento > 0">
+                                        <span>Descuento:</span>
+                                        <span class="font-weight-bold">- {{Mispedidos.descuento | currency}}</span>
+                                    </div>
+                                    <hr>
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                        <span class="text-dark font-weight-bold text-uppercase">Total (IVA inc):</span>
+                                        <h3 class="text-danger font-weight-bold m-0">{{Mispedidos.Totalpedido | currency}}</h3>
+                                    </div>
+                                    
+                                    <button class="btn btn-outline-danger btn-block font-weight-bold mb-2" ng-click="btnCancelarPedido()" ng-show="Mispedidos.Acreditado === 1 || Mispedidos.Acreditado === 2">
+                                        <i class="fa fa-times-circle mr-1"></i> Cancelar pedido
+                                    </button>
+                                    <button class="btn btn-secondary btn-block font-weight-bold" ng-click="btnRegresarviewPedidos()">
+                                        <i class="fa fa-arrow-left mr-1"></i> Regresar a mis pedidos
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalVerArchivo" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content" style="border: none; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title font-weight-bold text-white"><i class="fa fa-file-alt mr-2"></i> Visualizador de Comprobante</h5>
+                    <button type="button" class="close text-white" aria-label="Close" ng-click="cerrarModalArchivo()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                
+                <div class="modal-body p-3 d-flex justify-content-center align-items-center" style="height: 65vh; background-color: #f3f4f6;">
+                    
+                    <img id="imgVisor" src="" style="display:none; max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                    
+                    <iframe id="iframeVisor" src="" style="display:none; width: 100%; height: 100%; border: none; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"></iframe>
+
+                </div>
+                
+                <div class="modal-footer bg-light py-2">
+                    <button type="button" class="btn btn-secondary" ng-click="cerrarModalArchivo()">Cerrar</button>
                 </div>
             </div>
         </div>

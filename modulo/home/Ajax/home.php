@@ -221,43 +221,43 @@
         }
 
         private function getmasVendidos (){
-            $sql = "select PROV._id as idProveedor, DP._idProducto as _id, P.Clave, P.Producto, P._idMarca, P.color, 
-            M.Marca, P.Precio1, P.Precio2, P.RefaccionOferta, P.Enviogratis, P.stock from DetallesPedidos as DP
+            $sql = "select PROV._id as idProveedor, P.No_parte, PROV.Proveedor as NombreProveedor, DP._idProducto as _id, P.Clave, P.Producto, P._idMarca, P.color, 
+            M.Marca, P.Precio1, P.Precio2, P.RefaccionOferta, P.Enviogratis, P.RefaccionNueva, P.stock from DetallesPedidos as DP
             inner join Producto as P on (P._id = DP._idProducto) 
             left join Proveedor as PROV on (P.id_proveedor = PROV._id)
             inner join Marcas as M on (P._idMarca = M._id)
             where P.Estatus = 1
-            group by _idProducto order by P._id DESC limit 8";
+            group by _idProducto order by rand() limit 8";
             return $this->conn->fetch_all($this->conn->query($sql));
         }
 
         private function getnuevosProductos (){
-            $sql = "SELECT PROV._id as idProveedor, P._id, P.Clave, P.Producto, P._idMarca, P.color, M.Marca, P.Precio1, 
-                    P.RefaccionNueva, P.Enviogratis, P.stock from Producto as P
-                    left join Proveedor as PROV on (P.id_proveedor = PROV._id)
-                    inner join Marcas as M on (P._idMarca = M._id)
-                    where P.RefaccionNueva=1 and P.Estatus = 1
-                    order by P._id DESC limit 8";
+            $sql = "SELECT PROV._id as idProveedor,P.No_parte, PROV.Proveedor as NombreProveedor, P._id, P.Clave, P.Producto, P._idMarca, P.color, M.Marca, P.Precio1,P.Precio2, 
+            P.RefaccionNueva, P.Enviogratis, P.RefaccionOferta, P.stock from Producto as P
+            left join Proveedor as PROV on (P.id_proveedor = PROV._id)
+            inner join Marcas as M on (P._idMarca = M._id)
+            where P.RefaccionNueva=1 and P.Estatus = 1
+            order by rand() limit 8";
             return $this->conn->fetch_all($this->conn->query($sql));
         }
 
         private function getProductosOferta(){
-            $sql = "SELECT PROV._id as idProveedor, P._id, P.Clave, P.Producto, P._idMarca, P.color, M.Marca, P.Precio2, 
-                    P.RefaccionOferta, P.Enviogratis, P.stock from Producto as P
-                    left join Proveedor as PROV on (P.id_proveedor = PROV._id)
-                    inner join Marcas as M on (P._idMarca = M._id)
-                    where P.RefaccionOferta=1 and P.Estatus = 1
-                    order by P._id DESC limit 8";
+            $sql = "SELECT PROV._id as idProveedor,P.No_parte, PROV.Proveedor as NombreProveedor, P._id, P.Clave, P.Producto, P._idMarca, P.color, M.Marca, P.Precio2, 
+            P.RefaccionOferta, P.Enviogratis, P.RefaccionNueva, P.stock from Producto as P
+            left join Proveedor as PROV on (P.id_proveedor = PROV._id)
+            inner join Marcas as M on (P._idMarca = M._id)
+            where P.RefaccionOferta=1 and P.Estatus = 1
+            order by rand() limit 8";
             return $this->conn->fetch_all($this->conn->query($sql));
         }
 
         private function getProductosliquidacion(){
-            $sql = "SELECT PROV._id as idProveedor, P._id, P.Clave, P.Producto, P._idMarca, P.color, M.Marca, P.Precio1,
-                P.RefaccionLiquidacion, P.Enviogratis, P.stock from Producto as P
-                left join Proveedor as PROV on (P.id_proveedor = PROV._id)
-                inner join Marcas as M on (P._idMarca = M._id)
-                where P.RefaccionLiquidacion=1 and P.Estatus = 1
-                order by P._id DESC limit 8";
+            $sql = "SELECT PROV._id as idProveedor,P.No_parte, PROV.Proveedor as NombreProveedor, P._id, P.Clave, P.Producto, P._idMarca, P.color, M.Marca, P.Precio1,
+            P.RefaccionLiquidacion, P.Enviogratis, P.RefaccionNueva, P.RefaccionOferta, P.stock from Producto as P
+            left join Proveedor as PROV on (P.id_proveedor = PROV._id)
+            inner join Marcas as M on (P._idMarca = M._id)
+            where P.RefaccionLiquidacion=1 and P.Estatus = 1
+            order by rand() limit 8";
             return $this->conn->fetch_all($this->conn->query($sql));
         }
 

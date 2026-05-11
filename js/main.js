@@ -63,7 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // Inicializar tema
     if (currentTheme) setTheme(currentTheme);
 
     darkmodeSwitches.forEach(sw => {
@@ -75,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // =======================================================
-    // 3. Detección de Móvil (Feature Detection)
+    // 3. Detección de Móvil
     // =======================================================
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
     const bodyDark = document.getElementById("BodyDark"); 
@@ -117,22 +116,27 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     document.addEventListener("click", (e) => {
-        // --- ABRIR MODAL ---
         if (e.target.matches('.click')) {
             const targetId = e.target.dataset.target || `ventanaModal${e.target.id.split('l')[1]}`;
             const modal = document.getElementById(targetId);
             if (modal) {
-                modal.style.display = "block";
+                if (modal.classList.contains('sidebar__mobil')) {
+                    modal.classList.add('sidebar-active');
+                } else {
+                    modal.style.display = "block";
+                }
                 toggleModalOverflow(true);
             }
         }
 
-        // --- CERRAR MODAL CON LA "X" ---
         if (e.target.matches('.closem') || e.target.matches('[class^="cerrar"]')) {
-            // Busca el contenedor padre del modal para cerrarlo
             const modal = e.target.closest('[id^="ventanaModal"]') || e.target.closest('.modal') || e.target.closest('.sidebar__mobil');
             if (modal) {
-                modal.style.display = 'none';
+                if (modal.classList.contains('sidebar__mobil')) {
+                    modal.classList.remove('sidebar-active');
+                } else {
+                    modal.style.display = 'none';
+                }
                 toggleModalOverflow(false);
                 if (sidebarMenu) {
                     sidebarMenu.classList.add("fa-bars");
@@ -141,10 +145,12 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        // --- CERRAR MODAL AL HACER CLIC AFUERA (Fondo Oscuro) ---
-        // Si el elemento que clickeamos ES directamente el fondo del modal
-        if (e.target.id && e.target.id.startsWith('ventanaModal') || e.target.classList.contains('sidebar__mobil')) {
-            e.target.style.display = 'none';
+        if ((e.target.id && e.target.id.startsWith('ventanaModal')) || e.target.classList.contains('sidebar__mobil')) {
+            if (e.target.classList.contains('sidebar__mobil')) {
+                e.target.classList.remove('sidebar-active');
+            } else {
+                e.target.style.display = 'none';
+            }
             toggleModalOverflow(false);
             if (sidebarMenu) {
                 sidebarMenu.classList.add("fa-bars");
@@ -201,7 +207,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const divcarri = document.getElementById('divcarri');
     const carrisvg = document.getElementById('carrisvg');
     
-    // Función para resetear los estilos de la cabecera al cerrar menús
     const resetHeaderStyles = () => {
         if (usercba) usercba.style.backgroundColor = "transparent";
         if (carrisvg) carrisvg.style.filter = "brightness(0) invert(1)";
@@ -214,36 +219,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
     dropdownTriggers.forEach(trigger => {
         trigger.addEventListener('click', (e) => {
-            e.stopPropagation(); // Evita que se cierre instantáneamente
+            e.stopPropagation(); 
             
             const parent = trigger.parentElement;
             const dropdown = parent.querySelector('.header-dropdown');
             const isAlreadyOpen = dropdown && dropdown.classList.contains('show-header-dropdown');
             const isDarkMode = localStorage.getItem('darkmode') === "dark";
             
-            // 1. Cerramos todos los menús para evitar que se empalmen
             document.querySelectorAll('.header-dropdown').forEach(menu => {
                 menu.classList.remove('show-header-dropdown');
             });
             resetHeaderStyles();
 
-            // 2. Si el que clickeamos estaba cerrado, lo abrimos y aplicamos sus colores
             if (!isAlreadyOpen && dropdown) {
                 dropdown.classList.add('show-header-dropdown');
                 
-                // Aplicamos colores oscuros para contraste visual
                 dropdownTriggers.forEach(el => el.style.color = "#000");
                 const btnSearch = document.getElementById('btn-search');
                 if (btnSearch) btnSearch.style.color = "#000";
 
-                // Estilos específicos dependiendo de qué menú se abrió
                 if (parent.matches(".header-wrapicon1")) { 
-                    // Se abrió "Mi Cuenta"
                     if (carrisvg) carrisvg.style.filter = "brightness(0) invert(1)";
                     if (divcarri) divcarri.style.backgroundColor = "transparent";
                     if (usercba) usercba.style.backgroundColor = isDarkMode ? "#7f7f7f" : "#fff";
                 } else if (parent.matches(".header-wrapicon2")) { 
-                    // Se abrió "Carrito"
                     if (usercba) usercba.style.backgroundColor = "transparent";
                     if (divcarri) divcarri.style.backgroundColor = isDarkMode ? "#7f7f7f" : "white";
                     if (carrisvg && !isDarkMode) carrisvg.style.filter = "brightness(2)";
@@ -252,14 +251,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Evitar que si haces clic adentro del cuadro blanco (el carrito), este se cierre
     document.querySelectorAll('.header-dropdown').forEach(dropdown => {
         dropdown.addEventListener('click', (e) => {
             e.stopPropagation();
         });
     });
 
-    // Si haces clic en cualquier otra parte de la página, cerramos los menús abiertos
     window.addEventListener('click', () => {
         document.querySelectorAll('.header-dropdown').forEach(menu => {
             menu.classList.remove('show-header-dropdown');

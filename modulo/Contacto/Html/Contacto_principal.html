@@ -1,71 +1,146 @@
+<link rel="stylesheet" href="/modulo/Contacto/Css/contacto.css">
+<script>
+    setTimeout(function() {
+        document.body.classList.remove('modal-open');
+        document.body.style.paddingRight = '0px';
+        var backdrops = document.querySelectorAll('.modal-backdrop');
+        backdrops.forEach(function(bd) { bd.remove(); });
+    }, 100);
+</script>
 <script src="https://www.google.com/recaptcha/api.js"></script>
-<section ng-controller="CabeceraCtrl" ng-init="mod='{mod}'" class="global__content">
-	<section class="header"  ng-repeat="contac in Banner.Escritorio">
-		<picture class="header__picture">
-			<!--<source srcset="https://macromautopartes.com/images/Banners/contactanos.webp" type="image/webp" class="header__picture--img">
-			<img loading="lazy" src="https://macromautopartes.com/images/Banners/{{contac.imagen}}" alt="Banner de contactanos">-->
-			<source srcset="images/Banners/contactanos.webp" type="image/webp" class="header__picture--img">
-			<img loading="lazy" src="images/Banners/{{contac.imagen}}" alt="Banner de contactanos">
-		</picture>
-	</section>
-	<!-- Title Page -->
+<section ng-controller="CabeceraCtrl" ng-init="mod='{mod}'" class="global__content mb-5">
+    
+    <section class="header" ng-repeat="contac in Banner.Escritorio">
+        <picture class="header__picture">
+            <source srcset="images/Banners/contactanos.webp" type="image/webp" class="header__picture--img">
+            <img loading="lazy" src="images/Banners/{{contac.imagen}}" alt="Banner de contáctanos" style="width: 100%; height: auto; object-fit: cover;">
+        </picture>
+    </section>
 
-	<!-- content page -->
-	<section class="contactanos">
-		<div class="contenedor contactanos__principal" id="MainDark">
-			<div class="contactanos__contenido">
-				<div class="contactanos__contenido--mapas">
-					<div class="contenedor__mapas">
-						<h2>Colima <br>Blvd. Camino Real 597, Diezmo.</h2>
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3766.712475121612!2d-103.70171749152664!3d19.25135870708902!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x84255a9768963441%3A0x3e7cfc0ab3f15bd5!2sRefaccionaria+Tsuruvolks!5e0!3m2!1ses-419!2smx!4v1557805747261!5m2!1ses-419!2smx" loading="lazy" allowfullscreen></iframe>
-						<h2>Villa de Alvarez <br>Av. Benito juarez 164, La Gloria.</h2>
-						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3766.47048153931!2d-103.74390078464462!3d19.26189585110726!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842545532493215f%3A0x229ec182b93e6fdc!2sMacrom%20Autopartes!5e0!3m2!1ses-419!2smx!4v1676935585190!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-						<h2>Manzanillo <br> Av. Elias Zamora Verduzco 2043, Salagua</h2>
-						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10359.652205862709!2d-104.33917834066347!3d19.10698784817063!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8424d7608379eb3d%3A0xea005accd2a70e3c!2sMacrom%20Autopartes!5e0!3m2!1ses-419!2smx!4v1676935648359!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-					</div>
+    <div class="container mt-5">
+        <div class="row">
+            
+            <div class="col-lg-5 mb-5">
+                <div class="card shadow-sm border-0" style="border-radius: 12px; border: 1px solid #e5e7eb !important;">
+                    <div class="card-body p-4 p-md-5">
+                        
+                        <div class="success-card" ng-show="msgContacto">
+                            <i class="fa fa-check-circle"></i>
+                            <h3>¡Mensaje Recibido!</h3>
+                            <p>Gracias por ponerte en contacto con nosotros.</p>
+                            <button class="btn btn-outline-success mt-4 font-weight-bold" ng-click="msgContacto = false; Contacto = {}" style="border-radius: 8px;">Enviar otro mensaje</button>
+                        </div>
+
+                        <form name="frmContacto" ng-submit="enviarContacto()" ng-hide="msgContacto" novalidate>
+                            <h3 class="font-weight-bold text-dark mb-2">Envíanos tu mensaje</h3>
+                            <p class="text-muted mb-4">Llena el formulario y resolveremos tus dudas lo antes posible.</p>
+
+                            <div class="mb-3">
+                                <label class="font-weight-bold text-muted small text-uppercase">Nombre Completo <span class="text-danger">*</span></label>
+                                <input class="form-control form-contacto" type="text" name="name" placeholder="Ej. Juan Pérez" ng-model="Contacto.nombre" required>
+                                <div class="msg-error" ng-show="frmContacto.name.$error.required && frmContacto.name.$touched">
+                                    <i class="fa fa-exclamation-circle"></i> El nombre es obligatorio.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="font-weight-bold text-muted small text-uppercase">Número de teléfono <span class="text-danger">*</span></label>
+                                <input class="form-control form-contacto" type="text" name="phone" placeholder="10 dígitos" ng-model="Contacto.telefono" required ng-pattern="/^[0-9]+$/">
+                                <div class="msg-error" ng-show="frmContacto.phone.$error.required && frmContacto.phone.$touched">
+                                    <i class="fa fa-exclamation-circle"></i> El número de teléfono es obligatorio.
+                                </div>
+                                <div class="msg-error" ng-show="frmContacto.phone.$error.pattern && frmContacto.phone.$touched">
+                                    <i class="fa fa-exclamation-circle"></i> Ingresa un teléfono válido (sólo números).
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="font-weight-bold text-muted small text-uppercase">Correo Electrónico <span class="text-danger">*</span></label>
+                                <input class="form-control form-contacto" type="email" name="email" placeholder="ejemplo@correo.com" ng-model="Contacto.email" required>
+                                <div class="msg-error" ng-show="frmContacto.email.$error.required && frmContacto.email.$touched">
+                                    <i class="fa fa-exclamation-circle"></i> El correo electrónico es obligatorio.
+                                </div>
+                                <div class="msg-error" ng-show="frmContacto.email.$error.email && frmContacto.email.$touched">
+                                    <i class="fa fa-exclamation-circle"></i> Ingresa un correo válido (ejemplo@correo.com).
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="font-weight-bold text-muted small text-uppercase">¿En qué te podemos ayudar? <span class="text-danger">*</span></label>
+                                <textarea class="form-control form-contacto" name="message" rows="4" placeholder="Escribe tu mensaje aquí..." ng-model="Contacto.mensaje" required></textarea>
+                                <div class="msg-error" ng-show="frmContacto.message.$error.required && frmContacto.message.$touched">
+                                    <i class="fa fa-exclamation-circle"></i> El mensaje no puede estar vacío.
+                                </div>
+                            </div>
+                                                    
+                            <div class="mb-4 d-flex justify-content-center">
+                                <div class="g-recaptcha" data-sitekey="6Lfp3qEkAAAAAA5HOaCui7LjBlJhF4YFM0vIRBpH" data-callback="correctCaptcha"></div>
+                            </div>
+
+                            <button type="submit" class="btn-enviar" ng-disabled="frmContacto.$invalid">
+                                <i class="fa fa-paper-plane mr-2"></i> Enviar Mensaje
+                            </button>
+                        </form>
+
+                    </div>
                 </div>
+            </div>
 
-				<div class="contactanos__contenido--contacto">
-					<div class="row" ng-show="msgContacto">
-						<div class="col-md-12">
-								<h4 class="m-text26">
-										Mensaje Recibido
-								</h4>
-							Gracias por ponerte en contacto con nosotros en breve un agente se comunicara contigo.
-						</div>
-					</div>
-					<form class="leave-comment" ng-submit="enviarContacto()" ng-hide="msgContacto">
-						<h4 class="m-text26">
-							Env&iacute;anos tu mensaje
-						</h4>
+            <div class="col-lg-7">
+                <h3 class="font-weight-bold text-dark mb-4 px-2">Visita nuestras sucursales</h3>
+                <div class="row">
+                    
+                    <div class="col-md-6 mb-3">
+                        <div class="map-card">
+                            <div class="map-header">
+                                <h5><i class="fa fa-map-marker-alt mr-2"></i> Colima</h5>
+                                <p>Blvd. Camino Real 597, Diezmo.</p>
+                            </div>
+                            <div class="map-body">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15066.758491623956!2d-103.699712!3d19.252354!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x84255a9768963441%3A0x3e7cfc0ab3f15bd5!2sMacrom%20Autopartes!5e0!3m2!1ses-419!2smx!4v1774898814056!5m2!1ses-419!2smx" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                        </div>
+                    </div>
 
-						<div class="bo4 of-hidden size15">
-							<input class="sizefull s-text7" type="text" name="name" placeholder="Nombre Completo" ng-model="Contacto.nombre">
-						</div>
+                    <div class="col-md-6 mb-3">
+                        <div class="map-card">
+                            <div class="map-header">
+                                <h5><i class="fa fa-map-marker-alt mr-2"></i> Villa de Álvarez</h5>
+                                <p>Av. Benito Juárez 164, La Gloria.</p>
+                            </div>
+                            <div class="map-body">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15065.88237191206!2d-103.741712!3d19.261891!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842545532493215f%3A0x229ec182b93e6fdc!2sMacrom%20Autopartes!5e0!3m2!1ses-419!2smx!4v1774898875230!5m2!1ses-419!2smx" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                        </div>
+                    </div>
 
-						<div class="bo4 of-hidden size15">
-							<input class="sizefull s-text7" type="text" name="phone-number" placeholder="Número de teléfono" ng-model="Contacto.telefono">
-						</div>
+                    <div class="col-md-6 mb-3">
+                        <div class="map-card">
+                            <div class="map-header">
+                                <h5><i class="fa fa-map-marker-alt mr-2"></i> Manzanillo</h5>
+                                <p>Av. Elias Zamora Verduzco 2043, Salagua.</p>
+                            </div>
+                            <div class="map-body">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d30158.616354758342!2d-104.32676!3d19.115242!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8424d7608379eb3d%3A0xea005accd2a70e3c!2sMacrom%20Autopartes!5e0!3m2!1ses-419!2smx!4v1774898909376!5m2!1ses-419!2smx" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                        </div>
+                    </div>
 
-						<div class="bo4 of-hidden size15">
-							<input class="sizefull s-text7" type="text" name="email" placeholder="Correo Electrónico" ng-model="Contacto.email">
-						</div>
+                    <div class="col-md-6 mb-3">
+                        <div class="map-card">
+                            <div class="map-header">
+                                <h5><i class="fa fa-map-marker-alt mr-2"></i> Tecomán</h5>
+                                <p>Revolución 340, Centro.</p>
+                            </div>
+                            <div class="map-body">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d471.81203108015376!2d-103.8687016!3d18.909416399999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x843ab7796e914151%3A0xa23dca445af972d9!2sMacrom%20Autopartes!5e0!3m2!1ses-419!2smx!4v1774899003184!5m2!1ses-419!2smx" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                        </div>
+                    </div>
 
-						<textarea class="dis-block s-text7 size20 bo4" name="message" placeholder="Escribe tu mensaje" ng-model="Contacto.mensaje"></textarea>
-                                                
-                        <div class="g-recaptcha" data-sitekey="6Lfp3qEkAAAAAA5HOaCui7LjBlJhF4YFM0vIRBpH" data-callback="correctCaptcha"></div>
+                </div>
+            </div>
 
-
-						<div class="w-size25">
-							<!-- Button -->
-							<button type="submit" class="btn btn-danger enviarcontatco--boton form-control">
-								Enviar
-							</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</section>
+        </div>
+    </div>
 </section>
-

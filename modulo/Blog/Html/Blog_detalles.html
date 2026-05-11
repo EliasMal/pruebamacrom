@@ -1,62 +1,63 @@
-<section ng-controller="BlogDetallesCtrl" ng-init="id='{id}'">
-    <section class="bgwhite contenedor detalles__blog" id="MainDark">
-        <section class="contenedor" ng-show="entrada.Estatus && entrada.Publicar">
-            <!-- <img ng-src="https://macromautopartes.com/images/Blog/{{entrada.Imagen}}" alt="Banner Blog"> -->
-            <img ng-src="./images/Blog/{{entrada.Imagen}}" alt="Banner Blog">
-        </section>
+<link rel="stylesheet" href="/modulo/Blog/Css/blog_detalles.css">
+<section ng-controller="BlogDetallesCtrl" ng-init="id='{id}'" class="global__content mb-5">
+    
+    <div ng-show="entrada.Estatus && entrada.Publicar">
+        <img class="blog-hero-banner" loading="lazy" ng-src="./images/Blog/{{entrada.Imagen}}" alt="{{entrada.Title}}" onerror="this.src='images/refacciones/motor.webp'">
+        
         <div class="container">
-            <div class="row" ng-show="entrada.Estatus && entrada.Publicar">
-                <div class="col-md-12">
-                    <section class="BD-title">
-                        <h3 class="text-center">{{entrada.Title}}</h3>
-                    </section>
-                    <section class="BDbody">
-                        <div ng-bind-html="entrada.Contenido | bypass"></div>
-                    </section>
-                    <section class="BDfooter">
-                        <div>
-                            <!-- <img src="https://macromautopartes.com/images/icons/lobo_resenas.png" alt="avatar" class="img-responsive"> -->
-                            <img src="./images/icons/lobo_resenas.png" alt="avatar" class="img-responsive">
-                        </div>
-                        <div>
-                            <p>Por <b>Macrom Autopartes</b></p>
-                            <p>Publicado en {{entrada.FechaCorta | date:'longDate'}}</p>
-                        </div>
-                    </section>
-
+            <div class="blog-reading-container">
+                
+                <h1 class="blog-detail-title">{{entrada.Title}}</h1>
+                
+                <div class="blog-content-html" ng-bind-html="entrada.Contenido | bypass"></div>
+                
+                <div class="blog-author-box">
+                    <img src="./images/icons/lobo_resenas.png" alt="Macrom Autopartes" class="blog-author-img" onerror="this.src='images/usuarios/Avatar-Lobo-Macrom-Grande.webp'">
+                    <div class="blog-author-info">
+                        <p class="author-name">Escrito por <b>Macrom Autopartes</b></p>
+                        <p><i class="far fa-calendar-alt mr-1"></i> Publicado el {{entrada.FechaCorta | date:'longDate'}}</p>
+                    </div>
                 </div>
 
-            </div>
-            <div class="row" ng-show="!entrada.Estatus && !entrada.Publicar">
-                <div class="col-md-12">
-                    <h1 class="text-center text-red"><i class="fa fa-warning"></i> !UPSS, Los sentimos¡</h1>
-                    <p class="text-center ">La entrada solicitada de este blog no esta disponible </p>
-                </div>
             </div>
         </div>
-    </section>
-    <section>
-        <div class="container">
-            <hr>
+    </div>
 
-            <div class="row contenedor__entradas">
-                <div class="col-md-4 blog__entradas" ng-click="btnBlodDetalles(post._id)" ng-repeat="post in posts">
-                    <section class="blog-main">
-                        <div class="hov-img-zoom blog-head">
-                            <!-- <img ng-src="https://macromautopartes.com/images/Blog/{{post.imagendestacada}}" alt="IMG-ABOUT"> -->
-                            <img ng-src="./images/Blog/{{post.imagendestacada}}" alt="IMG-ABOUT">
+    <div class="container" ng-hide="entrada.Estatus && entrada.Publicar">
+        <div class="blog-error-card">
+            <i class="fa fa-exclamation-triangle"></i>
+            <h2 class="font-weight-bold text-dark mb-3">¡Ups! Lo sentimos</h2>
+            <p class="text-muted" style="font-size: 1.1rem;">La entrada que estás buscando no está disponible o ha sido eliminada.</p>
+            <button class="btn btn-danger mt-3" onclick="location.href='?mod=Blog'" style="border-radius: 8px; font-weight: 600;">Volver al Blog</button>
+        </div>
+    </div>
+
+    <section class="mt-5" ng-show="posts.length > 0">
+        <div class="container">
+            <h3 class="font-weight-bold text-dark mb-4 border-bottom pb-2">Sigue leyendo...</h3>
+            
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4" ng-repeat="post in posts">
+                    
+                    <div class="blog-card-detalles" ng-click="btnBlodDetalles(post._id)">
+                        <div class="blog-img-wrapper">
+                            <img loading="lazy" ng-src="./images/Blog/{{post.imagendestacada}}" alt="{{post.Title}}" onerror="this.src='images/refacciones/motor.webp'">
                         </div>
-                        <div class="blog-body">
-                            <h4 class="text-center"><b> {{post.Title}}</b></h4>
-                            <hr class="Bseparator">
-                            <p class="text-center user-dataShop">
+                        
+                        <div class="blog-body-detalles">
+                            <h4 class="blog-title-detalles">{{post.Title}}</h4>
+                            <p class="blog-excerpt-detalles">
                                 {{post.Contenido}}
                             </p>
+                            <div class="blog-read-more">
+                                Leer artículo <i class="fas fa-arrow-right"></i>
+                            </div>
                         </div>
-                    </section>
+                    </div>
+
                 </div>
             </div>
         </div>
-
     </section>
+
 </section>

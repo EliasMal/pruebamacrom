@@ -232,13 +232,25 @@
                 $accionLog = "CREAR_GENERACION"; $detallesLog = "Generación creada: $anio_seguro (Vehículo ID: $idmod_seguro)";
             } else {
                 $id_seguro = intval($this->formulario["_id"]);
+                $nombreModelo = isset($this->formulario["NombreModelo"]) ? addslashes($this->formulario["NombreModelo"]) : "Vehículo ID: " . intval($this->formulario["_idModelo"]);
+
                 if($this->formulario["opc"] == 'editanio'){
                     $anio_seguro = addslashes(trim($this->formulario["Anio"]));
+                    $sqlOld = "SELECT Anio FROM Anios WHERE _id = $id_seguro";
+                    $rowOld = $this->conn->fetch($this->conn->query($sqlOld));
+                    $anioViejo = $rowOld ? $rowOld['Anio'] : 'Desconocido';
+
                     $sql = "UPDATE Anios SET Anio = '$anio_seguro', USREdicion='$usr_seguro', FechaModificacion='$fecha_actual' WHERE _id= $id_seguro";
-                    $accionLog = "EDITAR_GENERACION"; $detallesLog = "Generación editada. ID: $id_seguro";
+                    $accionLog = "EDITAR_GENERACION"; 
+                    $detallesLog = "<b>$nombreModelo</b> <br> <small class='text-muted'>Cambió de: $anioViejo ➔ <b>$anio_seguro</b></small>";
                 } else if($this->formulario["opc"] == 'deleteanio'){
+                    $sqlOld = "SELECT Anio FROM Anios WHERE _id = $id_seguro";
+                    $rowOld = $this->conn->fetch($this->conn->query($sqlOld));
+                    $anioViejo = $rowOld ? $rowOld['Anio'] : 'Desconocido';
+
                     $sql = "DELETE FROM Anios WHERE _id= $id_seguro";
-                    $accionLog = "ELIMINAR_GENERACION"; $detallesLog = "Generación eliminada. ID: $id_seguro";
+                    $accionLog = "ELIMINAR_GENERACION"; 
+                    $detallesLog = "<b>$nombreModelo</b> <br> <small class='text-danger'>Se eliminó la generación: $anioViejo</small>";
                 }
             }
             

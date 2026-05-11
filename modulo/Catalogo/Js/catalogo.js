@@ -32,6 +32,17 @@ function catalogosCtrl($scope, $http) {
     let next_mdl    = decodeURIComponent(URL_PARAMS.mdl || "");
     let next_provee = decodeURIComponent(URL_PARAMS.proveedor || "");
     let next_dispo  = decodeURIComponent(URL_PARAMS.Disponibilidad || "");
+    let next_orden = decodeURIComponent(URL_PARAMS.orden || "");
+    let next_tipodeorden = decodeURIComponent(URL_PARAMS.tipodeorden || "");
+
+    obj.menuFiltrosAbierto = false;
+    obj.menuOrdenAbierto = false;
+    
+    obj.showDispo = true;
+    obj.showMarcas = true;
+    obj.showVehiculos = true;
+    obj.showCategorias = true;
+    obj.showProveedores = true;
 
     obj.refaccion = {
         opc: "Buscar",
@@ -56,16 +67,41 @@ function catalogosCtrl($scope, $http) {
     obj.Ofertas = [];
     obj.Nuevos = [];
     obj.etiquetasActivas = [];
-    /*variables del paginador*/
+    
     obj.currentPage = 0;
     obj.pages = [];
     obj.pageSize = 20;
     obj.Trefacciones = 0;
     obj.view = 20;
 
+    if (next_orden && next_tipodeorden) {
+        obj.ordenSeleccionado = next_orden + '-' + next_tipodeorden;
+    } else {
+        obj.ordenSeleccionado = 'relevancia';
+    }
+
+    obj.cambiarOrden = (orden, tipo) => {
+        const query = new URLSearchParams(window.location.search);
+        if (orden && tipo) {
+            query.set("orden", orden);
+            query.set("tipodeorden", tipo);
+        } else {
+            query.delete("orden");
+            query.delete("tipodeorden");
+        }
+        query.set("pag", 1);
+        window.location.search = query.toString();
+    };
+
+    obj.getFiltrosCount = () => {
+        return obj.etiquetasActivas.filter(t => t.name !== 'Disponibilidad').length;
+    };
+    obj.getCountPorCategoria = (categoriaName) => {
+        return obj.etiquetasActivas.filter(t => t.name === categoriaName).length;
+    };
+    
     const updateURL = (params = {}, resetPage = true) => {
         const query = new URLSearchParams(window.location.search);
-
         Object.keys(params).forEach(k => {
             if (!params[k]) {
                 query.delete(k);
@@ -73,19 +109,32 @@ function catalogosCtrl($scope, $http) {
                 query.set(k, params[k]);
             }
         });
-
         if (resetPage) query.set("pag", 1);
-
         window.location.search = query.toString();
     };
 
-    obj.quitarEtiqueta = (tag) => {
-        // Desmarcamos el checkbox en el HTML
-        const checkbox = document.querySelector(`input[type="checkbox"][name="${tag.name}"][value="${tag.value}"]`);
-        if (checkbox) checkbox.checked = false;
+    obj.toggleMenu = (menu) => {
+        if (menu === 'filtros') {
+            obj.menuFiltrosAbierto = !obj.menuFiltrosAbierto;
+            obj.menuOrdenAbierto = false;
+        } else if (menu === 'orden') {
+            obj.menuOrdenAbierto = !obj.menuOrdenAbierto;
+            obj.menuFiltrosAbierto = false;
+        } else {
+            obj.menuFiltrosAbierto = false;
+            obj.menuOrdenAbierto = false;
+        }
+        let menuAbierto = obj.menuFiltrosAbierto || obj.menuOrdenAbierto;
+        document.body.style.overflow = menuAbierto ? 'hidden' : '';
+        document.documentElement.style.overflow = menuAbierto ? 'hidden' : '';
+    };
 
-        // Llamamos a tu filtro para que actualice la búsqueda
-        applyFilter({ name: tag.name, value: tag.value, checked: false });
+    obj.quitarEtiqueta = (tag) => {
+        const rawValue = tag.value.replace(/\+/g, " "); 
+        const checkbox = document.querySelector(`input[type="checkbox"][name="${tag.name}"][value="${rawValue}"]`);
+        if (checkbox) checkbox.checked = false;
+        
+        applyFilter({ name: tag.name, value: rawValue, checked: false });
     };
 
     obj.tagsFiltro = {
@@ -101,127 +150,83 @@ function catalogosCtrl($scope, $http) {
     const seleccionDiv = document.querySelector(".name__seleccionados");
     const miDiv = document.getElementById("tags__filtros");
     
-    /* HELPERS DE FILTROS */
-    
-    function getDisponibilidadValue(label) {
-        return label.replace(/\s+/g, "+");
-    }
-
-    function hasAnyFilter() {
-        return Object.values(obj.tagsFiltro).some(v => v);
-    }
+    function getDisponibilidadValue(label) { return label.replace(/\s+/g, "+"); }
+    function hasAnyFilter() { return Object.values(obj.tagsFiltro).some(v => v); }
 
     function toggleApplyIfNeeded() {
         if (hasAnyFilter()) toggleActionButtons();
     }
 
     function checkByValue(name, value) {
-
-        const inputs = document.querySelectorAll(
-            `input[type="checkbox"][name="${name}"]`
-        );
-
+        const inputs = document.querySelectorAll(`input[type="checkbox"][name="${name}"]`);
         inputs.forEach(input => {
             const domValue = input.value.replace(/\+/g, " ");
             const tagValue = value.replace(/\+/g, " ");
-
-            if (domValue === tagValue) {
-                input.checked = true;
-            }
+            if (domValue === tagValue) { input.checked = true; }
         });
     }
     
-    function normalizeDisponibilidad(val = "") {
-        return val
-            .replace(/\+/g, " ")
-            .trim();
-    }
+    function normalizeDisponibilidad(val = "") { return val.replace(/\+/g, " ").trim(); }
 
     function hydrateFiltersFromURL() {
         setTimeout(() => {
-            // MARCA
             if (next_marca) {
                 next_marca.split(",").forEach(id => {
                     checkByValue("Marca", id);
-
                     const marca = obj.Marcas.find(m => m._idMarca == id);
                     if (!marca) return;
-
                     obj.etiquetasActivas.push({name: "Marca",value: id,label: marca.Marca});
                 });
             }
-            // CATEGORIA
             if (next_cate) {
                 next_cate.split(",").forEach(id => {
                     checkByValue("Categoria", id);
-
                     const cat = obj.categorias.find(c => c._id == id);
                     if (!cat) return;
-
                     obj.etiquetasActivas.push({name: "Categoria",value: id,label: cat.Categoria});
                 });
             }
-            // VEHICULO
             if (next_mdl) {
                 next_mdl.split(",").forEach(id => {
                     checkByValue("Vehiculo", id);
-
                     const veh = obj.Vehiculos.find(v => v._id == id);
                     if (!veh) return;
-
                     obj.etiquetasActivas.push({name: "Vehiculo",value: id,label: veh.Modelo});
                 });
             }
-            // PROVEEDOR
             if (next_provee) {
                 next_provee.split(",").forEach(id => {
                     checkByValue("Proveedor", id);
-
                     const prov = obj.Proveedores.find(p => p.id_proveedor == id);
                     if (!prov) return;
-
                     obj.etiquetasActivas.push({name: "Proveedor",value: id,label: prov.Proveedor});
                 });
             }
-            // DISPONIBILIDAD
             if (next_dispo) {
                 next_dispo.split(",").forEach(raw => {
                     const label = normalizeDisponibilidad(raw);
                     const value = getDisponibilidadValue(label);
-
                     checkByValue("Disponibilidad", value);
                     obj.etiquetasActivas.push({name: "Disponibilidad",value: value,label: label});
                 });
             }
-
             toggleApplyIfNeeded();
             $scope.$applyAsync();
         }, 0);
     }
 
     function filterVehiculosByMarca() {
-
         if (!Array.isArray(obj.Vehiculos)) return;
-
         const marcasActivas = obj.tagsFiltro.tagsMarca;
-
-        // vehículos que sí siguen siendo válidos
         const vehiculosValidos = obj.tagsFiltro.tagsVehiculo.filter(idVehiculo => {
             const veh = obj.Vehiculos.find(v => v._id == idVehiculo);
             return veh && marcasActivas.includes(String(veh._idMarca));
         });
-
-        // detectar los que se van a eliminar
         const eliminados = obj.tagsFiltro.tagsVehiculo.filter(v => !vehiculosValidos.includes(v));
-
-        // actualizar estado interno
         obj.tagsFiltro.tagsVehiculo = vehiculosValidos;
-
-        // desmarcar checkboxes y eliminar tags
         eliminados.forEach(id => {
             const cb = document.querySelector(`input[name="Vehiculo"][value="${id}"]`);
             if (cb) cb.checked = false;
-
             const tag = document.getElementById(`tags__Vehiculo_${id}`);
             if (tag) tag.remove();
         });
@@ -251,12 +256,11 @@ function catalogosCtrl($scope, $http) {
     const hasFilters = Object.values(obj.tagsFiltro).some(v => v);
     function toggleActionButtons() {
         const visible = miDiv.childElementCount > 0 || hasAnyFilter();
+        if(aplicarbutton) aplicarbutton.classList.toggle("dis-none", !visible);
+        if(borrarbutton) borrarbutton.classList.toggle("dis-none", !visible);
 
-        aplicarbutton.classList.toggle("dis-none", !visible);
-        borrarbutton.classList.toggle("dis-none", !visible);
-
-        if (document.getElementById("BodyDark").classList.contains("desktop")) {
-            seleccionDiv.classList.toggle("dis-none", !visible);
+        if (document.getElementById("BodyDark") && document.getElementById("BodyDark").classList.contains("desktop")) {
+            if(seleccionDiv) seleccionDiv.classList.toggle("dis-none", !visible);
         }
     }
     if (hasFilters) toggleActionButtons();
@@ -277,16 +281,11 @@ function catalogosCtrl($scope, $http) {
             "Marca": "tagsMarca",
             "Vehiculo": "tagsVehiculo"
         };
-
         const prop = map[name];
         if (!prop) return;
 
         if (MULTISELECT.includes(name)) {
-        
-            const finalValue = name === "Disponibilidad"
-                ? getDisponibilidadValue(value)
-                : value;
-
+            const finalValue = name === "Disponibilidad" ? getDisponibilidadValue(value) : value;
             if (checked) {
                 if (!obj.tagsFiltro[prop].includes(finalValue)) {
                     obj.tagsFiltro[prop].push(finalValue);
@@ -294,14 +293,11 @@ function catalogosCtrl($scope, $http) {
             } else {
                 obj.tagsFiltro[prop] = obj.tagsFiltro[prop].filter(v => v !== finalValue);
             }
-        
         }
-        // dependencia crítica Marca → Vehiculo
         if (name === "Marca") {
             filterVehiculosByMarca();
             lockMarcas(obj.tagsFiltro.tagsMarca.length > 0);
         }
-
         if (checked) {
             const existe = obj.etiquetasActivas.find(t => t.name === name && t.value === value);
             if (!existe) {
@@ -311,49 +307,23 @@ function catalogosCtrl($scope, $http) {
             obj.etiquetasActivas = obj.etiquetasActivas.filter(t => !(t.name === name && t.value === value));
         }
         
-        // Le avisamos a Angular que repinte la vista.
         $scope.$applyAsync();
-
         refreshURL();
         toggleApplyIfNeeded();
     }
 
     obj.checkmark = ($event) => {
-        // Extraemos el checkbox físico desde el evento del clic
         const el = $event.target; 
-        
         if (!el || !el.name) return;
         applyFilter({name: el.name.trim(), value: el.value, checked: el.checked});
     };
 
-    aplicarbutton.addEventListener("click", () => {
-        window.location.href = "?mod=catalogo&pag=1";
-    });
-    borrarbutton.addEventListener("click", clearfilter =>{
-        window.location.href = "?mod=catalogo&pag=1";
-    });
-
-    document.querySelector(".open__opciones--Filtros").addEventListener("click", openF => {
-        const open__filtro = document.querySelector(".filtros");
-        const open__orden = document.querySelector(".filtros__orden");
-        const open__opcionesF = document.querySelector(".open__opciones--Filtros");
-        const open__opcionesO = document.querySelector(".open__opciones--Orden");
-        open__filtro.classList.toggle("dis-none");
-        open__opcionesF.classList.toggle("gris");
-        open__opcionesO.classList.remove("gris");
-        open__orden.classList.add("dis-none");
-    });
-
-    document.querySelector(".open__opciones--Orden").addEventListener("click", openO => {
-        const open__orden = document.querySelector(".filtros__orden");
-        const open__filtro = document.querySelector(".filtros");
-        const open__opcionesF = document.querySelector(".open__opciones--Filtros");
-        const open__opcionesO = document.querySelector(".open__opciones--Orden");
-        open__orden.classList.toggle("dis-none");
-        open__opcionesO.classList.toggle("gris");
-        open__opcionesF.classList.remove("gris");
-        open__filtro.classList.add("dis-none");
-    });
+    if(aplicarbutton){
+        aplicarbutton.addEventListener("click", () => { window.location.href = "?mod=catalogo&pag=1"; });
+    }
+    if(borrarbutton){
+        borrarbutton.addEventListener("click", clearfilter =>{ window.location.href = "?mod=catalogo&pag=1"; });
+    }
 
     obj.viewMore = () => {
         const viewbtn = document.getElementById("viewbtn");
@@ -374,9 +344,7 @@ function catalogosCtrl($scope, $http) {
             e.NewUrlName = e.NewUrlName.replaceAll(",", "");
             e.NewUrlName = e.NewUrlName.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
             e.NewAltName = e["Producto"].replaceAll(",", "");
-            if (e.stock == 0) {
-                e.agotado = true;
-            }
+            if (e.stock == 0) { e.agotado = true; }
         })
     }
 
@@ -395,14 +363,13 @@ function catalogosCtrl($scope, $http) {
         obj.refaccion.producto = next_prod;
         syncRefaccionFromTags();
 
-        if (obj.refaccion.producto.includes("%C3%B1")) {
-            obj.refaccion.producto = obj.refaccion.producto.replaceAll("%C3%B1", "ñ");
-        }
-        if (obj.refaccion.producto.includes("%C3%BC")) {
-            obj.refaccion.producto = obj.refaccion.producto.replaceAll("%C3%BC", "ü");
-        }
+        if (obj.refaccion.producto.includes("%C3%B1")) { obj.refaccion.producto = obj.refaccion.producto.replaceAll("%C3%B1", "ñ"); }
+        if (obj.refaccion.producto.includes("%C3%BC")) { obj.refaccion.producto = obj.refaccion.producto.replaceAll("%C3%BC", "ü"); }
 
-        if (obj.refaccion.producto != "" || obj.refaccion.marca != "") {
+        if (next_orden && next_tipodeorden) {
+            obj.refaccion.orden = next_orden;
+            obj.refaccion.tipodeorden = next_tipodeorden;
+        } else if (obj.refaccion.producto != "" || obj.refaccion.marca != "") {
             obj.refaccion.orden = "Producto";
             obj.refaccion.tipodeorden = "ASC";
         } else {
@@ -416,27 +383,28 @@ function catalogosCtrl($scope, $http) {
             params: obj.refaccion
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
-                obj.categorias = res.data.Data.Categorias;
-                obj.Marcas = res.data.Data.Marcas;
-                obj.Proveedores = res.data.Data.Proveedores;
-                obj.Vehiculos = res.data.Data.Vehiculos;
-                obj.Proveedores.sort((a, b) => a._id - b._id);
-                obj.Existencias = res.data.Data.Existencias;
-                obj.Ofertas = res.data.Data.Ofertas;
-                obj.Nuevos = res.data.Data.Nuevos;
-                obj.Refacciones = res.data.Data.Refacciones;
-                obj.Trefacciones = res.data.Data.Trefacciones;
+                obj.categorias = res.data.Data.Categorias || [];
+                obj.Marcas = res.data.Data.Marcas || [];
+                obj.Proveedores = res.data.Data.Proveedores || [];
+                obj.Vehiculos = res.data.Data.Vehiculos || [];
+
+                if (obj.Proveedores.length > 0) {
+                    obj.Proveedores.sort((a, b) => a._id - b._id);
+                }
+
+                obj.Existencias = res.data.Data.Existencias || [];
+                obj.Ofertas = res.data.Data.Ofertas || [];
+                obj.Nuevos = res.data.Data.Nuevos || [];
+                obj.Refacciones = res.data.Data.Refacciones || [];
+                obj.Trefacciones = res.data.Data.Trefacciones || 0;
                 hydrateFiltersFromURL();
             }
-            
             obj.currentPage = next_url - 1;
             obj.configPages();
             obj.getPaginador(obj.currentPage * obj.pageSize, obj.pageSize);
-
         }, function errorCallback(res) {
             toastr.error("Error: no se realizo la conexion con el servidor");
         }).finally(function() {
-            // 2. Apagamos el estado de carga sin importar si la petición fue exitosa o falló
             obj.cargando = false; 
         });
     }
@@ -456,7 +424,6 @@ function catalogosCtrl($scope, $http) {
                 toastr.error("Error: no se realizo la conexion con el servidor");
             });
             if (result) {
-                console.log(result);
                 if (result.data.Bandera == 1) {
                     obj.Modelos = result.data.Data.Modelos;
                     obj.Refacciones = result.data.Data.Refacciones;
@@ -472,20 +439,69 @@ function catalogosCtrl($scope, $http) {
             obj.currentPage = next_url - 1;
             obj.configPages();
             obj.getPaginador(obj.currentPage * obj.pageSize, obj.pageSize);
-
-        } catch (error) {
-
-        }
+        } catch (error) {}
     }
 
-    var catalogo_buscador = document.querySelector("#prod_input");
-    catalogo_buscador.addEventListener("keydown", e => {
-        if (catalogo_buscador.value != "" && e.keyCode === 13) {
-            window.location.href = "?mod=catalogo&pag=1" + "&prod=" + encodeURIComponent(catalogo_buscador.value) + "&cate=" + encodeURIComponent(next_cate || "") + "&armadora=" + encodeURIComponent(obj.refaccion.marca || "") + "&mdl=" + encodeURIComponent(obj.refaccion.vehiculo || "");
-        } else if (catalogo_buscador.value == "" && e.keyCode === 13) {
+    obj.ejecutarBusquedaInteligente = (texto) => {
+        if(!texto || texto.trim() === ""){
             window.location.href = "?mod=catalogo&pag=1";
+            return;
         }
-    });
+        obj.cargando = true;
+        $http({
+            method: 'GET',
+            url: url_catalogo,
+            params: { opc: "AnalizarBusqueda", producto: texto }
+        }).then(function succesCallback(res) {
+            if (res.data.Bandera == 1) {
+                let data = res.data.Data;
+                let textoLimpio = data.texto_limpio;
+                let f = data.filtros;
+                const query = new URLSearchParams();
+                query.set("mod", "catalogo");
+                query.set("pag",1);
+                if(textoLimpio) query.set("prod", encodeURIComponent(textoLimpio));
+
+                let catFinal = f.cate || next_cate || "";
+                if (catFinal) query.set("cate", catFinal);
+
+                let marcaFinal = f.armadora || next_marca || "";
+                if (marcaFinal) query.set("armadora", marcaFinal);
+                
+                let mdlFinal = f.mdl || next_mdl || "";
+                if (mdlFinal) query.set("mdl", mdlFinal);
+                
+                let provFinal = f.proveedor || next_provee || "";
+                if (provFinal) query.set("proveedor", provFinal);
+
+                if (next_dispo) query.set("Disponibilidad", next_dispo);
+                if (next_orden) query.set("orden", next_orden);
+                if (next_tipodeorden) query.set("tipodeorden", next_tipodeorden);
+
+                window.location.search = query.toString();
+            } else {
+                window.location.href = "?mod=catalogo&pag=1&prod=" + encodeURIComponent(texto);
+            }
+        }, function errorCallback(res) {
+            window.location.href = "?mod=catalogo&pag=1&prod=" + encodeURIComponent(texto);
+        });
+    };
+
+    var catalogo_buscador = document.querySelector("#prod_input");
+    if(catalogo_buscador){
+        catalogo_buscador.addEventListener("keydown", e => {
+            if (e.keyCode === 13) {
+                obj.ejecutarBusquedaInteligente(catalogo_buscador.value);
+            }
+        });
+    }
+
+    obj.getRefaccion = () => {
+        var buscador = document.querySelector("#prod_input");
+        if (buscador) {
+            obj.ejecutarBusquedaInteligente(buscador.value);
+        }
+    }
 
     obj.getPaginador = async (x = 0, y = obj.pageSize) => {
         obj.refaccion.tipo = "Paginacion";
@@ -515,14 +531,12 @@ function catalogosCtrl($scope, $http) {
         } catch (error) {
             toastr.error(error);
         }
-
     };
 
     obj.configPages = function () {
         obj.pages.length = 0;
         var ini = obj.currentPage - 4;
         var fin = obj.currentPage + 5;
-
         if (ini < 1) {
             ini = 1;
             if (Math.ceil(obj.Trefacciones / obj.pageSize) > 10)
@@ -530,7 +544,6 @@ function catalogosCtrl($scope, $http) {
             else
                 fin = Math.ceil(obj.Trefacciones / obj.pageSize);
         } else {
-
             if (ini >= Math.ceil(obj.Trefacciones / obj.pageSize) - 10) {
                 ini = Math.ceil(obj.Trefacciones / obj.pageSize) - 10;
                 fin = Math.ceil(obj.Trefacciones / obj.pageSize);
@@ -538,9 +551,7 @@ function catalogosCtrl($scope, $http) {
         }
         if (ini < 1) ini = 1;
         for (var i = ini; i <= fin; i++) {
-            obj.pages.push({
-                no: i
-            });
+            obj.pages.push({ no: i });
         }
     };
 
@@ -553,14 +564,17 @@ function catalogosCtrl($scope, $http) {
         window.location.href = "?" + query.toString();
     };
 
-
     obj.RefaccionDetalles = (_id) => {
         window.open("?mod=catalogo&opc=detalles&_id=" + _id, "_self");
     }
 
     obj.init = function() {
+        let busqueda_general = decodeURIComponent(URL_PARAMS.busqueda_general || "");
+        if (busqueda_general) {
+            obj.ejecutarBusquedaInteligente(busqueda_general);
+            return;
+        }
         obj.cargando = true; 
-
         obj.refaccion = obj.refaccion || {};
         obj.refaccion.producto       = next_prod;
         obj.refaccion.categoria      = next_cate || "T";
@@ -568,38 +582,44 @@ function catalogosCtrl($scope, $http) {
         obj.refaccion.vehiculo       = next_mdl;
         obj.refaccion.proveedor      = next_provee;
         obj.refaccion.disponibilidad = next_dispo;
-
         obj.currentPage = next_url - 1;
-
-        // Actualizar el title del documento
         document.querySelector('title').textContent = "Refacciones | MacromAutopartes";
-
-        // Llamamos a los datos inmediatamente
         obj.getCategorias();
+        setTimeout(() => {
+            const overlay = document.querySelector('.overlay-modal');
+            const menuFiltros = document.querySelector('.filtros');
+            const menuOrden = document.querySelector('.filtros__orden');
+            const contenedorOriginal = document.querySelector('.menurefacciones__completo');
+
+            const reubicarModales = () => {
+                if (window.innerWidth <= 991) {
+                    if(overlay) document.body.appendChild(overlay);
+                    if(menuFiltros) document.body.appendChild(menuFiltros);
+                    if(menuOrden) document.body.appendChild(menuOrden);
+                } else {
+                    if(contenedorOriginal) {
+                        if(menuFiltros) contenedorOriginal.insertBefore(menuFiltros, contenedorOriginal.firstChild);
+                        if(menuOrden) contenedorOriginal.insertBefore(menuOrden, contenedorOriginal.children[1]);
+                    }
+                }
+            };
+
+            reubicarModales();
+            window.addEventListener('resize', reubicarModales);
+        }, 500);
     };
 
-    // Ejecutamos la función en cuanto el controlador se carga
     obj.init();
 }
 
 function catalogosDetallesCtrl($scope, $http, $rootScope) {
-
     var obj = $scope;
     obj.cargando = true;
     obj.session = $_SESSION;
     obj.btnEnabled = obj.session.autentificacion == undefined ? true : false;
-    obj.Refaccion = {
-        id: 0,
-        opc: "OneRefaccion",
-        datos: {},
-        galeria: [],
-        Existencias: 0,
-        cantidad: 1,
-        precio: 0
-    };
-    obj.RefaccionDetalles = (_id) => {
-        window.open("?mod=catalogo&opc=detalles&_id=" + _id, "_self");
-    }
+    obj.Refaccion = { id: 0, opc: "OneRefaccion", datos: {}, galeria: [], Existencias: 0, cantidad: 1, precio: 0 };
+    
+    obj.RefaccionDetalles = (_id) => { window.open("?mod=catalogo&opc=detalles&_id=" + _id, "_self"); }
 
     obj.Activa = false;
     obj.trunc = (x, posiciones = 0) => {
@@ -610,42 +630,30 @@ function catalogosDetallesCtrl($scope, $http, $rootScope) {
         return Number(numStr)
     }
 
-    // cada vez que el usuario teclea un número
     obj.validarCantidad = () => {
         if (obj.Refaccion.cantidad === undefined || obj.Refaccion.cantidad === null) return;
-
         let cantidadActual = parseInt(obj.Refaccion.cantidad);
         let stockMaximo = parseInt(obj.Refaccion.datos.stock);
-        //si teclea un número mayor, JavaScript lo atrapa
         if (cantidadActual > stockMaximo) {
-            obj.Refaccion.cantidad = stockMaximo; // Lo bajamos al máximo
+            obj.Refaccion.cantidad = stockMaximo; 
             toastr.warning("Solo tenemos " + stockMaximo + " piezas en existencia.");
         }
     };
 
-    //cuando el usuario da clic fuera del input
     obj.formatearCantidad = () => {
-        // Si el usuario borró el número o intentó poner 0 o negativos
-        if (!obj.Refaccion.cantidad || obj.Refaccion.cantidad < 1) {
-            obj.Refaccion.cantidad = 1;
-        }
+        if (!obj.Refaccion.cantidad || obj.Refaccion.cantidad < 1) { obj.Refaccion.cantidad = 1; }
     };
 
-    obj.btndisminuir = () => {
-        obj.Refaccion.cantidad = obj.Refaccion.cantidad != 1 ? obj.Refaccion.cantidad - 1 : 1
-    }
-
+    obj.btndisminuir = () => { obj.Refaccion.cantidad = obj.Refaccion.cantidad != 1 ? obj.Refaccion.cantidad - 1 : 1 }
     obj.btnaumentar = () => {
         if (obj.Refaccion.cantidad < obj.Refaccion.datos.stock) {
             obj.Refaccion.cantidad++;
         } else {
-            // Si intenta dar clic en "+" y ya está en el límite, le avisamos
             toastr.warning("Solo tenemos " + obj.Refaccion.datos.stock + " piezas en existencia.");
         }
     }
 
     obj.getRefaccion = () => {
-
         $http({
             method: 'GET',
             url: url_catalogo,
@@ -680,91 +688,54 @@ function catalogosDetallesCtrl($scope, $http, $rootScope) {
             }
             $scope.$evalAsync(() => {
                 setTimeout(() => {
-                
-                    if ($('.slick2').hasClass('slick-initialized')) {
-                        $('.slick2').slick('unslick');
-                    }
-                
+                    if ($('.slick2').hasClass('slick-initialized')) { $('.slick2').slick('unslick'); }
                     $('.slick2').slick({
-                        slidesToShow: 4,
-                        slidesToScroll: 4,
-                        infinite: true,
-                        dots: true,
-                        arrows: true,
+                        slidesToShow: 4, slidesToScroll: 4, infinite: true, dots: true, arrows: true,
                         responsive: [
-                            {
-                                breakpoint: 1200,
-                                settings: { slidesToShow: 4, slidesToScroll: 4 }
-                            },
-                            {
-                                breakpoint: 992,
-                                settings: { slidesToShow: 3, slidesToScroll: 3 }
-                            },
-                            {
-                                breakpoint: 768,
-                                settings: { slidesToShow: 2, slidesToScroll: 2 }
-                            },
-                            {
-                                breakpoint: 576,
-                                settings: { slidesToShow: 2, slidesToScroll: 2, arrows: false }
-                            }
+                            { breakpoint: 1200, settings: { slidesToShow: 4, slidesToScroll: 4 } },
+                            { breakpoint: 992, settings: { slidesToShow: 3, slidesToScroll: 3 } },
+                            { breakpoint: 768, settings: { slidesToShow: 2, slidesToScroll: 2 } },
+                            { breakpoint: 576, settings: { slidesToShow: 2, slidesToScroll: 2, arrows: false } }
                         ]
                     });
-                
                 }, 0);
             });
         }, function errorCallback(res) {
             toastr.error("Error: no se realizo la conexion con el servidor");
-        }).finally(function() {
-            obj.cargando = false;
-        });
+        }).finally(function() { obj.cargando = false; });
     }
 
     obj.Agregarcarrito = () => {
-        // 1. Prevenir doble clic: Si ya se está agregando, no hacer nada.
         if (obj.agregando) return; 
-        
         obj.agregando = true;
         $http({
             method: 'POST',
             url: url_session,
             data: { modelo: obj.Refaccion }
-
         }).then(function successCallback(res) {
-            
-            // Evaluamos la Bandera limpia que nos manda PHP
-            if (res.data.Bandera == 1) {
-                toastr.success(res.data.Mensaje); 
-            } else {
-                toastr.warning(res.data.Mensaje || "No se pudo agregar al carrito");
-            }
-
+            if (res.data.Bandera == 1) { toastr.success(res.data.Mensaje); } 
+            else { toastr.warning(res.data.Mensaje || "No se pudo agregar al carrito"); }
         }, function errorCallback(res) {
             toastr.error("Error: no se realizo la conexion con el servidor");
         }).finally(function() {
             obj.agregando = false;
-            
             $rootScope.$broadcast('carritoActualizado'); 
         });
     }
 
     obj.getImagen = (status, id) => {
-        //let url = "images/refacciones/";
         let url = "https://macromautopartes.com/images/refacciones/";
         return status ? url + id + ".webp" : url + id + ".webp";
     }
 
     obj.getGaleria = (id) => {
         if (id != undefined) {
-            //let url = "images/galeria/" + id;
             let url = "https://macromautopartes.com/images/galeria/" + id; 
             return url;
         }
     }
 
-    obj.btnDetallesRelacionados = (id) => {
-        window.open("?mod=catalogo&opc=detalles&_id=" + id, "_self");
-    }
+    obj.btnDetallesRelacionados = (id) => { window.open("?mod=catalogo&opc=detalles&_id=" + id, "_self"); }
 
     obj.eachRefacciones = (array) => {
         array.forEach(e => {
@@ -772,21 +743,12 @@ function catalogosDetallesCtrl($scope, $http, $rootScope) {
             e.NewUrlName = e.NewUrlName.replaceAll(",", "");
             e.NewUrlName = e.NewUrlName.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
             e.NewAltName = e["Producto"].replaceAll(",", "");
-            if (e.stock == 0) {
-                e.agotado = true;
-            }
+            if (e.stock == 0) { e.agotado = true; }
         })
-
     }
-    // 1. Extraemos el ID directamente de la URL
+    
     const urlParams = new URLSearchParams(window.location.search);
-    const rawId = urlParams.get('_id'); // Esto lee: "12637-Terminal-Dir-..."
-
-    // 2. Si existe un ID en la URL, lo separamos para quedarnos solo con el número
-    if (rawId) {
-        obj.Refaccion.id = rawId.split('-')[0]; 
-    }
-
-    // 3. Disparamos la petición a la base de datos de inmediato
+    const rawId = urlParams.get('_id'); 
+    if (rawId) { obj.Refaccion.id = rawId.split('-')[0]; }
     obj.getRefaccion();
 }

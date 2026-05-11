@@ -114,7 +114,7 @@
                 }
                 $parts = explode(',', $this->formulario[$key]);
                 $parts = array_filter($parts, 'strlen');
-                sort($parts, SORT_NUMERIC);
+                sort($parts, SORT_STRING);
 
                 $data[$key] = implode(',', $parts);
             }
@@ -253,7 +253,7 @@
                 if (strpos($f['disponibilidad'], 'ferta') !== false) {
                     $sql .= " AND P.RefaccionOferta = 1";
                 }
-                if (strpos($f['disponibilidad'], 'Articulos_Nuevos') !== false) {
+                if (strpos($f['disponibilidad'], 'Nuevos') !== false) {
                     $sql .= " AND P.RefaccionNueva = 1";
                 }
                 if (strpos($f['disponibilidad'], 'gratis') !== false) {
@@ -265,6 +265,68 @@
             return $sql;
         }
 
+        private function analizarBusquedaInteligente() {
+            $busquedaOriginal = $this->formulario["producto"] ?? "";
+            if (empty(trim($busquedaOriginal))) {
+                return ["texto_limpio" => "", "filtros" => []];
+            }
+
+            $textoLimpio = " " . mb_strtolower(trim($busquedaOriginal), 'UTF-8') . " ";
+            
+            $filtrosDetectados = [
+                'marca' => [], 'vehiculo' => [], 'proveedor' => [], 'categoria' => []
+            ];
+            $sqlMarcas = "SELECT _id, LOWER(Marca) as nombre FROM u619477378_macromau.Marcas WHERE Estatus = 1";
+            foreach($this->conn->fetch_all($this->conn->query($sqlMarcas)) as $m) {
+                $nom = trim(mb_strtolower($m['nombre'], 'UTF-8'));
+                if (empty($nom)) continue;
+                if (preg_match('/(?<=\s)'.preg_quote($nom, '/').'(?=\s)/iu', $textoLimpio)) {
+                    $filtrosDetectados['marca'][] = $m['_id'];
+                    $textoLimpio = preg_replace('/(?<=\s)'.preg_quote($nom, '/').'(?=\s)/iu', ' ', $textoLimpio);
+                }
+            }
+            $sqlModelos = "SELECT _id, LOWER(Modelo) as nombre, _idMarca FROM u619477378_macromau.Modelos WHERE Estatus = 1";
+            foreach($this->conn->fetch_all($this->conn->query($sqlModelos)) as $mo) {
+                $nom = trim(mb_strtolower($mo['nombre'], 'UTF-8'));
+                if (empty($nom)) continue;
+                if (preg_match('/(?<=\s)'.preg_quote($nom, '/').'(?=\s)/iu', $textoLimpio)) {
+                    $filtrosDetectados['vehiculo'][] = $mo['_id'];
+
+                    if(!in_array($mo['_idMarca'], $filtrosDetectados['marca'])) {
+                        $filtrosDetectados['marca'][] = $mo['_idMarca'];
+                    }
+                    $textoLimpio = preg_replace('/(?<=\s)'.preg_quote($nom, '/').'(?=\s)/iu', ' ', $textoLimpio);
+                }
+            }
+            $sqlCat = "SELECT _id, LOWER(Categoria) as nombre FROM u619477378_macromau.Categorias WHERE Status = 1";
+            foreach($this->conn->fetch_all($this->conn->query($sqlCat)) as $c) {
+                $nom = trim(mb_strtolower($c['nombre'], 'UTF-8'));
+                if (empty($nom)) continue;
+                if (preg_match('/(?<=\s)'.preg_quote($nom, '/').'(?=\s)/iu', $textoLimpio)) {
+                    $filtrosDetectados['categoria'][] = $c['_id'];
+                    $textoLimpio = preg_replace('/(?<=\s)'.preg_quote($nom, '/').'(?=\s)/iu', ' ', $textoLimpio);
+                }
+            }
+            $sqlProv = "SELECT _id, LOWER(Proveedor) as nombre FROM u619477378_macromau.Proveedor WHERE Estatus = 1";
+            foreach($this->conn->fetch_all($this->conn->query($sqlProv)) as $p) {
+                $nom = trim(mb_strtolower($p['nombre'], 'UTF-8'));
+                if (empty($nom)) continue;
+                if (preg_match('/(?<=\s)'.preg_quote($nom, '/').'(?=\s)/iu', $textoLimpio)) {
+                    $filtrosDetectados['proveedor'][] = $p['_id'];
+                    $textoLimpio = preg_replace('/(?<=\s)'.preg_quote($nom, '/').'(?=\s)/iu', ' ', $textoLimpio);
+                }
+            }
+
+            return [
+                "texto_limpio" => trim(preg_replace('/\s+/', ' ', $textoLimpio)),
+                "filtros" => [
+                    "armadora" => implode(',', array_unique($filtrosDetectados['marca'])),
+                    "mdl" => implode(',', array_unique($filtrosDetectados['vehiculo'])),
+                    "proveedor" => implode(',', array_unique($filtrosDetectados['proveedor'])),
+                    "cate" => implode(',', array_unique($filtrosDetectados['categoria']))
+                ]
+            ];
+        }
 
         public function principal(){
             $this->methodo = $_SERVER['REQUEST_METHOD'];
@@ -311,6 +373,10 @@
                             $this->jsonData["Data"]["Galeria"] = $this->getGeleria($this->formulario["id"]);
                             $this->jsonData["Data"]["Productos"] = $this->getProductos($this->jsonData["Data"]["Refaccion"]);
                             $this->jsonData["Data"]["Compatibilidad"] = $this->getCompatibilidad($this->formulario["id"]);
+                            $this->jsonData["Bandera"] = true;
+                        break;
+                        case 'AnalizarBusqueda':
+                            $this->jsonData["Data"] = $this->analizarBusquedaInteligente();
                             $this->jsonData["Bandera"] = true;
                         break;
                     }

@@ -168,10 +168,33 @@
                                     <input type="text" class="form-control text-center font-weight-bold" placeholder="Escribe la guía aquí..." ng-model="Pedido.GuiaEnvio" ng-disabled="Pedido.Acreditado == 6">
                                 </div>
                             </div>
+                            <div class="bg-warning p-3 border rounded shadow-sm mb-3" style="background-color: #fff3cd !important; border-color: #ffeeba !important;" ng-show="esEnvioAcordado">
+                                <h6 class="font-weight-bold text-dark mb-3">
+                                    <i class="fas fa-truck-loading text-warning mr-1" style="color: #856404 !important;"></i> Envio por Acordar
+                                </h6>
+                                
+                                <div class="form-group mb-3">
+                                    <label class="small font-weight-bold" style="color: #856404;">Costo del envío acordado ($):</label>
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-white"><i class="fas fa-dollar-sign text-success"></i></span>
+                                        </div>
+                                        <input type="number" step="0.01" class="form-control font-weight-bold text-dark" placeholder="0.00" ng-model="Pedido.CostoEnvioAcordado" ng-disabled="Pedido.Acreditado == 6">
+                                    </div>
+                                </div>
 
-                            <a href="https://macromautopartes.com/Public/Comprobantes/{{Pedido.comprobante}}" download class="btn btn-outline-info btn-block shadow-sm" ng-show="Pedido.isFileComprobante && Pedido.Acreditado==0">
-                                <i class="fas fa-receipt mr-1"></i> Ver Comprobante Subido
-                            </a>
+                                <div class="form-group mb-1">
+                                    <label class="small font-weight-bold" style="color: #856404;">Estatus del pago del envío:</label>
+                                    <select class="form-control form-control-sm font-weight-bold shadow-sm" ng-model="Pedido.EstatusPagoEnvio" ng-class="{'text-danger': Pedido.EstatusPagoEnvio == '0', 'text-success': Pedido.EstatusPagoEnvio == '1'}" ng-disabled="Pedido.Acreditado == 6">
+                                        <option value="0">Envío SIN PAGAR</option>
+                                        <option value="1">Envío PAGADO</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-info btn-block shadow-sm font-weight-bold" ng-show="Pedido.comprobante && Pedido.comprobante != ''" ng-click="abrirModalArchivo(Pedido.comprobante)">
+                                <i class="fas fa-receipt mr-1"></i> Ver Comprobante del Cliente
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -264,4 +287,28 @@
             
             <br><br> </div>
     </section>
+
+    <div class="modal fade" id="ModalVerArchivoAdmin" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content" style="border: none; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title font-weight-bold text-white"><i class="fa fa-file-alt mr-2"></i> Comprobante de Pago</h5>
+                    <button type="button" class="close text-white" aria-label="Close" ng-click="cerrarModalArchivo()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                
+                <div class="modal-body p-3 d-flex justify-content-center align-items-center" style="height: 65vh; background-color: #f3f4f6;">
+                    <img id="imgVisorAdmin" src="" style="display:none; max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                    <iframe id="iframeVisorAdmin" src="" style="display:none; width: 100%; height: 100%; border: none; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"></iframe>
+                </div>
+                
+                <div class="modal-footer bg-light py-2 d-flex justify-content-between">
+                    <a id="btnDescargarAdmin" href="" download class="btn btn-outline-dark font-weight-bold"><i class="fa fa-download"></i> Descargar</a>
+                    <button type="button" class="btn btn-secondary" ng-click="cerrarModalArchivo()">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </section>

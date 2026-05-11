@@ -161,9 +161,11 @@ class Dashboard {
     }
 
     private function getVentasMensuales() {
-        $mesActual = date("Y-m");
-        $sql = "SELECT DAY(Fecha) as dia, COUNT(_idPedidos) as cantidad, SUM(Importe + cenvio) as total 
-        FROM Pedidos WHERE DATE_FORMAT(Fecha, '%Y-%m') = '$mesActual' AND Acreditado IN (1, 2, 3, 4, 5) GROUP BY DAY(Fecha) ORDER BY dia ASC";
+        $sql = "SELECT DATE_FORMAT(Fecha, '%d/%m') as dia_mes, COUNT(_idPedidos) as cantidad, SUM(Importe + cenvio) as total 
+        FROM Pedidos 
+        WHERE Acreditado IN (1, 2, 3, 4, 5) AND Fecha >= DATE_SUB(NOW(), INTERVAL 30 DAY) 
+        GROUP BY DATE(Fecha) 
+        ORDER BY DATE(Fecha) ASC";
         
         $res = $this->conn->query($sql);
         $ventasPorDia = array();
@@ -171,7 +173,7 @@ class Dashboard {
         if($res){
             while ($row = $this->conn->fetch($res)) {
                 $ventasPorDia[] = array(
-                    "dia" => (int)$row['dia'],
+                    "dia" => $row['dia_mes'],
                     "cantidad" => (int)$row['cantidad'],
                     "total" => (float)$row['total']
                 );

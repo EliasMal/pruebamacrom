@@ -1,11 +1,11 @@
 var url_Blog = "./modulo/Blog/Ajax/Blog.php";
+
 tsuruVolks
     .controller('BlogCtrl', ["$scope", "$http", BlogCtrl])
     .controller('BlogDetallesCtrl', ["$scope", "$http", BlogDetallesCtrl])
     .filter('bypass', ['$sce', ($sce) => {
-        /*Filtro para mostrar el html en el ng-bind-html */
         return function (html) {
-            return $sce.trustAsHtml(html);
+            return html ? $sce.trustAsHtml(html) : '';
         };
     }]);
 
@@ -27,10 +27,9 @@ function BlogCtrl($scope, $http) {
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
                 obj.entradas = res.data.Data;
-
             }
         }, function errorCallback(res) {
-            toastr.error("Error: no se realizo la conexion con el servidor");
+            toastr.error("Error: no se realizó la conexión con el servidor");
         });
     }
 
@@ -42,8 +41,8 @@ function BlogCtrl($scope, $http) {
 function BlogDetallesCtrl($scope, $http) {
     let obj = $scope;
     obj.id;
-    obj.entrada;
-    obj.posts;
+    obj.entrada = {};
+    obj.posts = [];
 
     obj.getOneEntradas = (opc = "getOne", id) => {
         $http({
@@ -55,7 +54,7 @@ function BlogDetallesCtrl($scope, $http) {
                 obj.entrada = res.data.Data;
             }
         }, function errorCallback(res) {
-            toastr.error("Error: no se realizo la conexion con el servidor");
+            toastr.error("Error: no se realizó la conexión con el servidor");
         });
     }
 
@@ -73,12 +72,14 @@ function BlogDetallesCtrl($scope, $http) {
                 obj.posts = res.data.Data;
             }
         }, function errorCallback(res) {
-            toastr.error("Error: no se realizo la conexion con el servidor");
+            toastr.error("Error: no se realizó la conexión con el servidor");
         });
     }
 
     angular.element(document).ready(function () {
-        obj.getOneEntradas("getOne", obj.id);
-        obj.getPost("getPost", obj.id, 0, 3);
+        if(obj.id) {
+            obj.getOneEntradas("getOne", obj.id);
+            obj.getPost("getPost", obj.id, 0, 3);
+        }
     });
 }

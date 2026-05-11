@@ -218,7 +218,7 @@ function RefaccionesNewCtrl($scope, $http) {
     obj.img = "/images/refacciones/motor.webp";
     obj.refaccion = {
         opc: "new", Color: "#FFFFFF", Estatus: true, RefaccionNueva: false, 
-        RefaccionOferta: false, RefaccionLiquidacion: false, Publicar: true, Enviogratis: false, 
+        RefaccionOferta: false, RefaccionLiquidacion: false, Publicar: false, Enviogratis: false, 
         Kit: false, Alto: 0, Largo: 0, Ancho: 0, 
         Peso: 0, stock: 0, Precio1: 0.0, Precio2: 0.0, precio_manual: false 
     };
@@ -944,6 +944,7 @@ function RefaccionesEditCtrl($scope, $http, $sce) {
                 var file = fileInput1.files[0];
                 if (file) {
                     if (file.size <= 512000) {
+                        obj.refaccion.file = file;
                         var reader = new FileReader();
                         reader.onload = function (e) { obj.img = reader.result; obj.$apply(); }
                         reader.readAsDataURL(file);

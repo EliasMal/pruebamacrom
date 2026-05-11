@@ -3,65 +3,59 @@
 var urlComprobantePago = "Ajax/ComprobantePago.php";
 var RptsuruVolks = angular.module('RptsuruVolks',[]);
 
-RptsuruVolks.controller('ComprobantePagoCtrl', ["$scope","$http", ComprobantePagoCtrl]);
-
-function ComprobantePagoCtrl($scope,$http){
+RptsuruVolks.controller('ComprobantePagoCtrl', ["$scope","$http", function($scope, $http){
     var obj = $scope;
     obj.session = {};
-   // var esta = new Array ("Por Acreditar", "Acreditado", "En preparacion", "En transito", "En proceso de Entrega", "Entregado", "Cancelado");
-    obj.wizard = {preparacion:false, transito: false, proceso: false, entregado: false}
+    obj.Comprobante = {};
+    obj.wizard = {preparacion:false, transito: false, proceso: false, entregado: false};
+    
+    obj.estadoTexto = "";
+    obj.estadoClase = "";
 
-    obj.sendData = (data)=>{
+    obj.sendData = (data) => {
         $http({
             method: 'POST',
             url: urlComprobantePago,
             data: {ficha: data}
         }).then(function successCallback(res) {
-            console.log(res.data);
-            if(res.data.Bandera == 1){
+            if(res.data.Bandera == 1 && res.data.Data){
                 obj.Comprobante = res.data.Data;
-                console.log(obj.Comprobante);
-                if(obj.Comprobante.Acreditado != 6){
-                    var pedidoEstado = document.getElementById('estadoPedido');
-                    pedidoEstado.innerHTML = "Pagado";
-                    pedidoEstado.style.color="green";
-                    pedidoEstado.classList.remove("text-danger");
-                } else if(obj.Comprobante.Acreditado == 6){
-                    var pedidoEstado = document.getElementById('estadoPedido');
-                    pedidoEstado.innerHTML = "Cancelado";
+
+                if(obj.Comprobante.Fecha){
+                    let fechaLimpia = obj.Comprobante.Fecha.replace(/-/g, '/');
+                    obj.Comprobante.fechaObj = new Date(fechaLimpia);
                 }
-            }else{
-                //toastr.error(res.data.mensaje)
+
+                if(obj.Comprobante.Acreditado != 6){
+                    obj.estadoTexto = "PAGADO";
+                    obj.estadoClase = "text-success";
+                } else {
+                    obj.estadoTexto = "CANCELADO";
+                    obj.estadoClase = "text-danger";
+                }
+            } else {
+                console.warn("No se encontraron datos del pedido");
             }
         }, function errorCallback(res) {
-            //toastr.error("Error: no se realizo la conexion con el servidor");
+            console.error("Error de conexión:", res);
         });
-    }
+    };
 
-    document.querySelectorAll('.printbutton').forEach(function(element) {
-        element.addEventListener('click', function() {
-            this.style.display="none";
-            print();
-            setTimeout(1000);
-            this.style.display="block";
-        });
-    });
-
-
+    obj.imprimirComprobante = () => {
+        window.print();
+    };
 
     angular.element(document).ready(function () {
-        obj.session = JSON.parse(localStorage.getItem('session'));
-        if(obj.session == "null" && obj.session.autentificacion==undefined && obj.session.autentificacion!=1){
+        let sessionRaw = localStorage.getItem('session');
+        obj.session = sessionRaw ? JSON.parse(sessionRaw) : null;
+        
+        let idPedido = localStorage.getItem("_idPedido");
+
+        if(!obj.session || obj.session.autentificacion != 1 || !idPedido){
             localStorage.clear();
             location.href = "../../";
-        }else{
-            if(localStorage.getItem("_idPedido")){
-                obj.sendData({id: localStorage.getItem("_idPedido")});
-            }else{
-                localStorage.clear();
-                location.href = "../../";
-            }
+        } else {
+            obj.sendData({id: idPedido});
         }
-        
     });
-}
+}]);

@@ -171,9 +171,9 @@
                                             <input type="checkbox" class="custom-control-input" id="sw5" ng-model="refaccion.Enviogratis">
                                             <label class="custom-control-label" for="sw5">Envío Gratis</label>
                                         </div>
-                                        <div class="custom-control custom-switch mb-2">
+                                        <div class="custom-control custom-switch mb-2" ng-show="isAdmin">
                                             <input type="checkbox" class="custom-control-input" id="sw7" ng-model="refaccion.Publicar">
-                                            <label class="custom-control-label" for="sw7">Publicar en la Web</label>
+                                            <label class="custom-control-label" for="sw7">Publicar</label>
                                         </div>
                                         <div class="custom-control custom-switch">
                                             <input type="checkbox" class="custom-control-input" id="sw6" ng-model="refaccion.Kit" ng-change="cambioPrecioManual()">

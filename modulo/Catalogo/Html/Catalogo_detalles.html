@@ -1,10 +1,5 @@
-<style>
-.slick-next, .slick-prev{
-  z-index: 3;
-  right: 0;
-}
-</style>
-<div ng-controller="catalogosDetallesCtrl" class="ctrlmain global__content contenedor">
+<link rel="stylesheet" href="/modulo/Catalogo/Css/catalogo_detalles.css">
+<div ng-controller="catalogosDetallesCtrl" class="ctrlmain global__content contenedor" ng-cloak>
 	<!-- breadcrumb -->
 	<div class="bread-crumb bgwhite flex-w categorias__link">
 		<a href="?mod=catalogo&pag=1&prod=&cate={{Refaccion.datos._idCategoria}}&armadora=&mdl=&[a]=" class="s-text16">
@@ -32,7 +27,7 @@
             <i class="fas fa-spinner fa-spin fa-3x" style="color: #666; margin-bottom: 15px;"></i>
             <h3 style="color: #666; font-size: 18px;">Cargando información de la pieza...</h3>
         </div>
-		<div ng-hide="cargando" ng-cloak>
+		<div ng-hide="cargando">
 			<div class="detalles">
 				<div class="detalles__visual">
 					<div class="detalles__visual--contenido">
@@ -237,34 +232,37 @@
 				<div class="wrap-slick2">
 					<div class="slick2">
 						<div class="enlace m-1-r" aria-hidden="true" ng-repeat="producto in productos">
-							<div class="block2 block2__contenedor">
-								<div class="block2-img wrap-pic-w of-hidden pos-relative cursorpnt">
-									<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}">
-										<img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/motor.webp':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}" alt="IMG-PRODUCT">
-										<!-- <img ng-src="{{producto.imagen? 'images/refacciones/motor.webp':'images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.NewAltName}}"> -->
-									</a>
-								</div>
-								<div class="block2-txt">
-									<div class="avisos__productos">
-										<span class="nuevo__aviso bg-new" ng-show="producto.RefaccionNueva != 0">Nuevo</span>
-										<span class="agotado__aviso bg-advertencia" ng-show="producto.agotado">Agotado</span>
-										<span class="promocion__aviso bg-promo" ng-show="producto.RefaccionOferta != 0">Promoción</span>
-										<span class="enviogratis__aviso bg-promo" ng-show="producto.Enviogratis">Envío gratis</span>
+							<div class="home__pr">
+								<div class="productos__informacion">
+									<div class="wrap-pic-w of-hidden cursorpnt">
+										<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}" class="enlace">
+											<div class="avisos__productos">
+												<span class="nuevo__aviso bg-new" ng-show="producto.RefaccionNueva != 0">Nuevo</span>
+												<span class="agotado__aviso bg-advertencia" ng-show="producto.agotado">Agotado</span>
+												<span class="promocion__aviso bg-promo" ng-show="producto.RefaccionOferta != 0">Promoción</span>
+												<span class="enviogratis__aviso bg-promo" ng-show="producto.Enviogratis">Envío gratis</span>
+											</div>
+											<img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/motor.webp':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}" alt="IMG-PRODUCT">
+										</a>
 									</div>
-									<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
-									<section class="descripcion-producto-refa">
-										<p class="precio__producto" ng-hide="producto.RefaccionOferta=='1'">{{producto.Precio1 | currency}}</p>	
-										<p class="precio__producto" ng-show="producto.RefaccionOferta=='1'"><small class="line_through-red">{{producto.Precio1 | currency}}</small>
-										{{producto.Precio2 | currency}}</p>
-										<!-- <img ng-src="{{producto.imagenproveedor? 'https://macromautopartes.com/images/Marcasrefacciones/boxed-bg.jpg':'https://macromautopartes.com/images/Marcasrefacciones/' + producto.id_proveedor + '.png'}}" 
-										alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}"> -->
-										<img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.id_proveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}" 
-										alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}">
-
-									</section>
-									
+									<div class="block2-txt">
+										<section class="descripcion-producto">
+											<p class="block2-brand">{{producto.NombreProveedor}}</p>
+											<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
+											<div class="sku_row">
+												<span class="sku_label dis-block">No. Parte:</span>
+												<span class="sku_value dis-block">{{ producto.No_parte }}</span>
+											</div>
+											<div class="precio__imgprove">
+												<p class="precio__producto price" ng-hide="producto.RefaccionOferta=='1'">{{producto.Precio1 | currency}}</p>	
+												<p class="precio__producto" ng-show="producto.RefaccionOferta=='1'">
+													<small class="line_through-red">{{producto.Precio1 | currency}}</small>
+													{{producto.Precio2 | currency}}
+												</p>
+											</div>
+										</section>
+									</div>
 								</div>
-								
 							</div>
 						</div>
 					</div>

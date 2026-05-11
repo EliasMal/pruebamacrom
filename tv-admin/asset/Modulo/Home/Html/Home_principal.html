@@ -82,7 +82,7 @@
                     <div class="card shadow-sm h-100" style="border-radius: 12px; border: none;">
                         <div class="card-header bg-white pt-3 pb-2 border-bottom-0">
                             <h3 class="card-title font-weight-bold text-dark">
-                                <i class="fas fa-chart-area text-danger mr-1"></i> Rendimiento Mensual
+                                <i class="fas fa-chart-area text-danger mr-1"></i> Rendimiento De Ventas (Últimos 30 días)
                             </h3>
                         </div>
                         <div class="card-body pt-0">
@@ -181,11 +181,118 @@
                 </div>
             </div>
 
+            <!-- ==========================================
+                 NOTIFICACIÓN FLOTANTE (MENSAJES NUEVOS)
+                 ========================================== -->
+            <div id="msg-notification" class="toast-notification" 
+                 ng-if="permisos.Contacto && kpis.contactosNuevos > 0 && !toastCerrado">
+                
+                <div class="toast-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <div class="toast-content">
+                    <h4>¡Contacto!</h4>
+                    <p>Tienes <strong>{{kpis.contactosNuevos}}</strong> mensaje(s) sin leer. Por favor, revísalos.</p>
+                    <div class="toast-actions">
+                        <a href="?mod=Contacto" class="btn-toast-primary">Revisar bandeja</a>
+                        <button ng-click="cerrarToast()" class="btn-toast-secondary">Entendido</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 </section>
 
 <style>
+    /* --- CONTENEDOR DE NOTIFICACIÓN --- */
+    .toast-notification {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background-color: #ffffff;
+        border-left: 6px solid #de0007;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        border-radius: 8px;
+        display: flex;
+        align-items: flex-start;
+        padding: 20px;
+        width: 360px;
+        z-index: 9999;
+        animation: slideInUp 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) 1s both;
+    }
+
+    /* --- ICONO ANIMADO --- */
+    .toast-icon {
+        font-size: 26px;
+        color: #de0007;
+        margin-right: 15px;
+        margin-top: 3px;
+        animation: campanada 2s infinite; 
+    }
+
+    /* --- TEXTOS --- */
+    .toast-content h4 {
+        margin: 0 0 8px 0;
+        font-size: 17px;
+        color: #111827;
+        font-weight: 700;
+        font-family: 'Poppins', sans-serif;
+    }
+    .toast-content p {
+        margin: 0 0 15px 0;
+        font-size: 14px;
+        color: #4b5563;
+        line-height: 1.4;
+    }
+
+    /* --- BOTONES --- */
+    .toast-actions {
+        display: flex;
+        gap: 12px;
+    }
+    .btn-toast-primary {
+        background-color: #de0007;
+        color: #ffffff !important;
+        text-decoration: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        font-size: 13px;
+        font-weight: 600;
+        transition: background 0.2s;
+    }
+    .btn-toast-primary:hover {
+        background-color: #b30006;
+    }
+    .btn-toast-secondary {
+        background-color: #f3f4f6;
+        color: #4b5563;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .btn-toast-secondary:hover {
+        background-color: #e5e7eb;
+    }
+
+    /* --- ANIMACIONES KEYFRAMES --- */
+    @keyframes slideInUp {
+        from { transform: translateY(150%); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes campanada {
+        0% { transform: rotate(0); }
+        10% { transform: rotate(15deg); }
+        20% { transform: rotate(-10deg); }
+        30% { transform: rotate(5deg); }
+        40% { transform: rotate(-5deg); }
+        50%, 100% { transform: rotate(0); }
+    }
+
     .custom-box {
         border-radius: 12px !important;
         transition: all 0.3s ease-in-out;

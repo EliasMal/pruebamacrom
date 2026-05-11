@@ -585,51 +585,66 @@ function ComprasCtrl($scope, $http, $sce) {
     /* EVÍO / COTIZADOR */
     obj.empaquetar = () => {
         const parcel = obj.dataCotizador.parcel;
-
-        let volumenTotal = 0;
         let pesoTotal = 0;
-
         let maxL = 0;
         let maxW = 0;
-        let maxH = 0;
+        let sumH = 0;
 
-        Object.values(obj.session.CarritoPrueba).forEach(e => {
-          const vol = e.Largo * e.Ancho * e.Alto * e.Cantidad;
-          volumenTotal += vol;
-        
-          maxL = Math.max(maxL, e.Largo);
-          maxW = Math.max(maxW, e.Ancho);
-          maxH = Math.max(maxH, e.Alto);
-        
-          if (!e.Enviogratis) {
-            pesoTotal += e.Peso * e.Cantidad;
-          }
-        });
-    
-        parcel.length = maxL + 2;
-        parcel.width  = maxW + 2;
-        parcel.height = maxH + 2;
-        parcel.weight = pesoTotal;
-    
-        let volumenCaja = parcel.length * parcel.width * parcel.height;
-    
-        if (volumenTotal >= 100000 && volumenTotal < 150000) {
-          parcel.length = 80;
-          parcel.width  = 40;
-          parcel.height = 45;
-        } 
+        const LADO_MAXIMO = 150;
+        const PESO_MAXIMO = 60;
+        const MARGEN_CAJA = 3;
 
-        else {
-          while (volumenCaja < volumenTotal) {
-            parcel.length += 2;
+        const items = Object.values(obj.session.CarritoPrueba || {});
 
-            if (parcel.width < 40) parcel.width += 2;
-            if (parcel.height < 45) parcel.height += 2;
-
-            volumenCaja = parcel.length * parcel.width * parcel.height;
-          }
+        if (items.length === 0) {
+            Object.assign(parcel, { weight: 0, length: 0, width: 0, height: 0 });
+            obj.requiereCotizacionManual = false;
+            return;
         }
-    
+
+        items.forEach(e => {
+            const l = parseFloat(e.Largo) || 0;
+            const w = parseFloat(e.Ancho) || 0;
+            const h = parseFloat(e.Alto) || 0;
+            const peso = parseFloat(e.Peso) || 0;
+            const cantidad = parseInt(e.Cantidad) || 1;
+
+            const dims = [l, w, h].sort((a, b) => b - a);
+            const itemL = dims[0];
+            const itemW = dims[1];
+            const itemH = dims[2];
+
+            maxL = Math.max(maxL, itemL);
+            maxW = Math.max(maxW, itemW);
+
+            let factorApilamiento = 1;
+            if (e._producto && e._producto.toUpperCase().includes("FASCIA")) {
+                factorApilamiento = 0.5;
+            }
+
+            if (cantidad > 1) {
+                sumH += itemH + (itemH * (cantidad - 1) * factorApilamiento);
+            } else {
+                sumH += itemH;
+            }
+
+            if (!e.Enviogratis) {
+                pesoTotal += (peso * cantidad);
+            }
+        });
+
+        parcel.length = Math.ceil(maxL + MARGEN_CAJA);
+        parcel.width  = Math.ceil(maxW + MARGEN_CAJA);
+        parcel.height = Math.ceil(sumH + MARGEN_CAJA);
+        parcel.weight = pesoTotal > 0 ? parseFloat(pesoTotal.toFixed(2)) : 1;
+
+        if (parcel.length > LADO_MAXIMO || parcel.width > LADO_MAXIMO || parcel.height > LADO_MAXIMO || parcel.weight > PESO_MAXIMO) {
+            obj.requiereCotizacionManual = true;
+            console.warn("Dimensiones excedidas. Se requiere cotización manual por paqueteria.");
+        } else {
+            obj.requiereCotizacionManual = false;
+        }
+
         obj.requiredEnvio = parcel.weight === 0;
     };
 
@@ -676,10 +691,100 @@ function ComprasCtrl($scope, $http, $sce) {
     }
 
     obj.btncotizar = () => {
+        if (obj.requiereCotizacionManual) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Envío Voluminoso - Acción Requerida',
+                width: '600px',
+                html: `
+                    <style>
+                        .swal2-confirm, .swal2-cancel {
+                            font-size: 16px !important;
+                            padding: 14px 28px !important;
+                            border-radius: 8px !important;
+                            font-weight: 600 !important;
+                        }
+                        @media (max-width: 500px) {
+                            .swal2-actions {
+                                flex-direction: column-reverse !important;
+                                gap: 12px !important;
+                                width: 100% !important;
+                            }
+                            .swal2-confirm, .swal2-cancel {
+                                width: 100% !important;
+                                margin: 0 !important;
+                            }
+                        }
+                    </style>
+
+                    <div style="text-align: left; font-size: 15px;">
+                        <p>Tu pedido incluye artículos de gran tamaño que exceden las dimensiones estándar de las paqueterías convencionales.</p>
+                        
+                        <!-- Caja de advertencia visual -->
+                        <div style="background-color: #fff3cd; color: #856404; padding: 15px; border-radius: 5px; border-left: 5px solid #ffeeba; margin: 15px 0;">
+                            <strong>⚠️ AVISO IMPORTANTE SOBRE TU PAGO:</strong><br><br>
+                            El pago que estás a punto de realizar en la página <strong>CUBRE ÚNICAMENTE EL COSTO DE LAS REFACCIONES</strong>.<br><br>
+                            El costo del envío <strong>NO ESTÁ INCLUIDO</strong> (por ello marca $0 temporalmente) y deberá ser cotizado y pagado por separado una vez que acordemos la paqueteria ideal para ti.
+                        </div>
+
+                        <p>Al continuar con la compra, confirmas que <strong>estás de acuerdo con estos términos</strong> y te comprometes a liquidar el costo del envio posteriormente.</p>
+                        
+                        <p>Para acordar el envío de inmediato, termina tu compra y contáctanos:</p>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px; margin-bottom: 5px;">
+                            <a href="https://wa.me/523122682028?text=Hola,%20acabo%20de%20hacer%20un%20pedido%20voluminoso%20y%20estoy%20de%20acuerdo%20en%20pagar%20el%20envío%20por%20separado." 
+                               target="_blank" 
+                               style="background-color: #25d366; color: white; text-decoration: none; padding: 12px; border-radius: 8px; font-weight: bold; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: 0.3s;">
+                                <i class="fab fa-whatsapp"></i> Acordar envío por WhatsApp
+                            </a>
+                            
+                            <a href="https://m.me/MacromAutopartes" 
+                               target="_blank" 
+                               style="background-color: #1877f2; color: white; text-decoration: none; padding: 12px; border-radius: 8px; font-weight: bold; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: 0.3s;">
+                                <i class="fab fa-facebook-messenger"></i> Acordar envío por Facebook
+                            </a>
+
+                            <a href="?mod=contacto" 
+                               target="_blank"
+                               style="background-color: #6c757d; color: white; text-decoration: none; padding: 12px; border-radius: 8px; font-weight: bold; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: 0.3s;">
+                                <i class="fas fa-envelope"></i> Formulario de Contacto
+                            </a>
+                        </div>
+                    </div>
+                `,
+                confirmButtonText: '<i class="fas fa-check-circle" style="margin-right: 5px;"></i> Sí, acepto pagar el envío por separado',
+                confirmButtonColor: '#de0007',
+                showCancelButton: true,
+                cancelButtonText: '<i class="fas fa-times-circle" style="margin-right: 5px;"></i> No, cancelar compra',
+                cancelButtonColor: '#343a40', 
+                reverseButtons: true, 
+                padding: '2em'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $scope.$apply(() => {
+                        obj.Costumer.Cenvio.paqueteria = "Acordar con el negocio";
+                        obj.Costumer.Cenvio.Costo = 0; 
+                        obj.Costumer.Cenvio.Servicio = "Envío por paqueteria(Por Cotizar)";
+                        obj.Costumer.Cenvio.enviodias = "Variable";
+                        obj.Costumer.DiaEstimado = "Por confirmar";
+                        obj.requiredEnvio = true; 
+                        
+                        obj.Costumer.aviso = true; 
+                        
+                        obj.Ttotal(); 
+                        
+                        toastr.success("Envío por acordar seleccionado. Ya puedes dar clic en PAGAR AHORA.");
+                    });
+                }
+            });
+            return; 
+        }
+
+        // Flujo normal para paquetes estándar
         obj.flag = true;
         obj.btnCotizacion();
         $("#mdlcotizar").modal('show');
-    }
+    };
 
     obj.selectenvio = (params) => {
         obj.Costumer.Cenvio.paqueteria = params.provider;
@@ -744,7 +849,7 @@ function ComprasCtrl($scope, $http, $sce) {
             if ((obj.Costumer.facturacion == "1" && obj.Costumer.dataFacturacion.Bandera) || obj.Costumer.facturacion == "0") {
                 if (obj.requiredEnvio) {
                     
-                    // Mostramos el Loader Premium
+                    // Mostramos el Loader
                     obj.ui.loader.mostrar("Procesando pedido...");
 
                     obj.Costumer.opc = "buy2";
@@ -766,37 +871,42 @@ function ComprasCtrl($scope, $http, $sce) {
         }
     }
 
+    const activarEstiloPago = (idElemento) => {
+        ["btntransfe", "btnefectivo", "btncredito"].forEach(id => {
+            let btn = document.getElementById(id);
+            if(btn) {
+                btn.style.borderColor = "#e5e7eb";
+                btn.style.backgroundColor = "#fff";
+                btn.style.boxShadow = "none";
+                btn.style.borderWidth = "1px";
+                btn.style.transform = "scale(1)";
+                btn.style.transition = "all 0.3s ease";
+            }
+        });
+        
+        let btnActivo = document.getElementById(idElemento);
+        if(btnActivo) {
+            btnActivo.style.borderColor = "#de0007";
+            btnActivo.style.backgroundColor = "#e58b8bb8";
+            btnActivo.style.boxShadow = "0 6px 15px rgba(222,0,7,0.15)";
+            btnActivo.style.borderWidth = "3px";
+            btnActivo.style.transform = "scale(1.03)";
+        }
+    }
+
     obj.metransfe = () => {
         obj.Costumer.metodoPago = "Transferencia";
-        btntransfe.style.borderColor = "var(--primario)";
-        btntransfe.style.backgroundColor = "#fff5f5";
-        
-        btnefectivo.style.borderColor = "#e6e6e6";
-        btnefectivo.style.backgroundColor = "#fff";
-        btncredito.style.borderColor = "#e6e6e6";
-        btncredito.style.backgroundColor = "#fff";
+        activarEstiloPago("btntransfe");
     }
     
     obj.medeposito = () => {
         obj.Costumer.metodoPago = "Deposito";
-        btnefectivo.style.borderColor = "var(--primario)";
-        btnefectivo.style.backgroundColor = "#fff5f5";
-
-        btntransfe.style.borderColor = "#e6e6e6";
-        btntransfe.style.backgroundColor = "#fff";
-        btncredito.style.borderColor = "#e6e6e6";
-        btncredito.style.backgroundColor = "#fff";
+        activarEstiloPago("btnefectivo");
     }
     
     obj.metarjeta = () => {
         obj.Costumer.metodoPago = "Tarjeta";
-        btncredito.style.borderColor = "var(--primario)";
-        btncredito.style.backgroundColor = "#fff5f5";
-
-        btntransfe.style.borderColor = "#e6e6e6";
-        btntransfe.style.backgroundColor = "#fff";
-        btnefectivo.style.borderColor = "#e6e6e6";
-        btnefectivo.style.backgroundColor = "#fff";
+        activarEstiloPago("btncredito");
     }
 
     obj.ProcesarCompra = (data) => {
@@ -812,15 +922,17 @@ function ComprasCtrl($scope, $http, $sce) {
                 } else if (obj.Costumer.metodoPago === "Deposito" || obj.Costumer.metodoPago === "Transferencia") {
                     obj.openDeposito(res.data.Data);
                 } else if (obj.Costumer.metodoPago === "Tarjeta") {
+                    
                     obj.ui.loader.mostrar("Redirigiendo a pasarela segura..."); 
-                    obj.seturl(res.data.data);
+                    let urlBanco = res.data.data || res.data.Data || res.data.url;
+                    obj.seturl(urlBanco);
                 }
             } else {
-                obj.ui.loader.ocultar(); // Ocultamos si falló
+                obj.ui.loader.ocultar();
                 toastr.warning(res.data.mensaje || "Ocurrió un problema, revisa tu método de pago.");
             }
         }, function errorCallback(res) {
-            obj.ui.loader.ocultar(); // Ocultamos si falló el servidor
+            obj.ui.loader.ocultar();
             toastr.error("Error: no se realizo la conexion con el servidor");
         });
     }
@@ -836,8 +948,18 @@ function ComprasCtrl($scope, $http, $sce) {
     }
     
     obj.seturl = (url) => {
-        obj.url = $sce.trustAsResourceUrl(url);
-        location.href = obj.url;
+        if (typeof url === 'object' && url !== null) {
+            url = url[0] || Object.values(url)[0]; 
+        }
+
+        if (!url || typeof url !== 'string') {
+            obj.ui.loader.ocultar(); 
+            toastr.error("Error crítico: El banco no devolvió la URL de pago.");
+            console.error("URL de pago inválida/vacía recibida del backend:", url);
+            return;
+        }
+
+        window.location.href = url;
     }
 
     obj.RefaccionDetalles = (_id, newurl) => {
@@ -880,7 +1002,7 @@ function ComprasCtrl($scope, $http, $sce) {
                 obj.Costumer.descuento = monto;
                 obj.Costumer.valor_cpn = porcentaje;
                 obj.Costumer.usercpn = res.data.codigo;
-                obj.Costumer.id_cupon = res.data.id_cupon; //CLAVE
+                obj.Costumer.id_cupon = res.data.id_cupon;
 
                 obj.Ttotal();
 
@@ -917,7 +1039,6 @@ function ComprasCtrl($scope, $http, $sce) {
 
     var butccompra = document.querySelector(".clip");
     var butcompra = document.querySelector(".confirmar--pago");
-    // 4. El Escuchador de Compras (Súper seguro y rápido)
     $scope.$on('carritoActualizado', function() {
         $http({
             method: 'POST',
@@ -933,9 +1054,9 @@ function ComprasCtrl($scope, $http, $sce) {
                 
                 obj.Numproducts = obj.session.CarritoPrueba ? obj.session.CarritoPrueba.length : 0;
                 obj.subtotal();
-                obj.Ttotal();
+                obj.empaquetar(); 
                 
-                // CRÍTICO: Volvemos a calcular las sucursales y envíos
+                obj.Ttotal();
                 prodCarrito(); 
             }
         });

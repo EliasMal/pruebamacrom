@@ -1,17 +1,168 @@
-<!-- <section class="bg-title-page flex-col-c-m" style="background-image: url(https://macromautopartes.com/images/Banners/Contactanos.png);"> -->
-<section class="bg-title-page flex-col-c-m" style="background-image: url(images/Banners/Contactanos.png);">
-		
-    <h2 class="l-text2 t-center">
-        AVISO DE PRIVACIDAD
-    </h2>
+<style>
+    .privacy-header {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('images/Banners/Contactanos.png');
+        background-size: cover;
+        background-position: center;
+        padding: 80px 0;
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    
+    .privacy-header h1 {
+        color: #ffffff;
+        font-weight: 800;
+        font-size: 2.8rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin: 0;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
 
-</section>
-<section class="contenedor bgwhite aviso__privacidad" id="MainDark">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12">
-                <ng-include src="'./modulo/Avisoprivacidad/Html/Avisoprivacidad.html'"></ng-include>
+    .privacy-container {
+        max-width: 900px; /* Ancho de lectura óptimo */
+        margin: 0 auto 60px auto;
+        background: #ffffff;
+        padding: 50px 60px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        border: 1px solid #f3f4f6;
+    }
+
+    /* Estilos de Tipografía Editorial */
+    .privacy-content p {
+        color: #4b5563;
+        font-size: 1.05rem;
+        line-height: 1.8;
+        margin-bottom: 20px;
+        text-align: justify;
+    }
+
+    .privacy-content h3 {
+        color: #1f2937;
+        font-weight: 800;
+        font-size: 1.4rem;
+        margin-top: 40px;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #fecaca;
+        padding-bottom: 8px;
+        display: inline-block;
+    }
+
+    .privacy-content strong, .privacy-content b {
+        color: #111827;
+        font-weight: 700;
+    }
+
+    /* Listas numeradas y viñetas */
+    .privacy-list {
+        padding-left: 20px;
+        margin-bottom: 25px;
+    }
+    
+    .privacy-list li {
+        color: #4b5563;
+        font-size: 1.05rem;
+        line-height: 1.8;
+        margin-bottom: 15px;
+        text-align: justify;
+    }
+
+    .privacy-list li::marker {
+        color: #de0007;
+        font-weight: bold;
+    }
+
+    /* Caja de Contacto Final */
+    .privacy-contact-box {
+        background-color: #fff5f5;
+        border-left: 5px solid #de0007;
+        padding: 25px;
+        border-radius: 8px;
+        margin-top: 40px;
+    }
+    
+    .privacy-contact-box p {
+        margin: 0 0 10px 0;
+        color: #1f2937;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .privacy-container {
+            padding: 30px 20px;
+            margin: 0 15px 40px 15px;
+        }
+        .privacy-header h1 {
+            font-size: 2rem;
+        }
+    }
+</style>
+
+<div class="global__content" id="MainDark">
+    
+    <header class="privacy-header">
+        <h1>Aviso de Privacidad</h1>
+    </header>
+
+    <section class="container">
+        <div class="privacy-container privacy-content">
+            
+            <p>El presente Aviso de Privacidad se emite en cumplimiento por lo dispuesto por el artículo 15 de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP), de los Lineamientos Generales previstos en el artículo 43, en su fracción III de esta Ley y del artículo 23 de su Reglamento.</p>
+            
+            <p><strong>Macrom Autopartes</strong> tiene el compromiso jurídico, legal y social de cumplir con las medidas legales y de seguridad para proteger sus datos personales, con el objetivo de que usted tenga el conocimiento, control y decisión sobre ellos y para las finalidades que en el presente Aviso de Privacidad serán descritas. Por ello, lo invitamos a que lea detenidamente la siguiente información.</p>
+
+            <h3>1. Datos del Responsable</h3>
+            <p>En su artículo 3, fracción XIV, de la LFPDPPP establece que el Responsable es la; "Persona física o moral de carácter privado que decide sobre el tratamiento de datos personales". <strong>Macrom Autopartes</strong> como Responsable del tratamiento de Datos Personales le comunica que es una Empresa debidamente constituida de conformidad con las leyes de los Estados Unidos Mexicanos con domicilio en <strong>Av. Benito Juárez No.164, Col. La Gloria C.P. 28980 en la Ciudad de Villa de Álvarez, Municipio de Colima</strong>, teléfono 312 690 4108.</p>
+
+            <h3>2. Datos Personales</h3>
+            <p>De conformidad con el artículo 3, fracción V, de la LFPDPPP son: "Datos personales: Cualquier información concerniente a una persona física identificada o identificable". <strong>Macrom Autopartes</strong> recabará de Usted los datos personales necesarios para la adecuada prestación de nuestros servicios. Este procedimiento puede ser de manera personal, directa o indirecta a través de nuestro Sitio WEB. Estos Datos Personales podrán incluir:</p>
+
+            <ul class="privacy-list">
+                <li><strong>3. Datos de identificación:</strong> Nombre completo, domicilio, correo electrónico, teléfonos de casa, de trabajo, número de celular, Registro Federal de Contribuyentes (RFC), Clave Única de Registro Poblacional (CURP), lugar y fecha de nacimiento, edad.</li>
+                <li><strong>4. Datos laborales:</strong> Ocupación, nombre de la empresa, institución o dependencia, puesto, área o departamento, domicilio, teléfono, correo electrónico de trabajo, referencias laborales y referencias personales, giro de la empresa, institución o dependencia.</li>
+                <li><strong>5. Datos Financieros:</strong> N° de cuenta bancaria, CLABE, domicilio fiscal, número de tarjeta de crédito, fecha de vencimiento, así como el número de seguridad de la misma y que Usted utilice para adquirir alguno de nuestros productos. Al proporcionar estos datos usted reconoce que está otorgándonos su consentimiento expreso para el tratamiento de estos datos.</li>
+                <li><strong>6. Datos Sensibles:</strong> Aquellos datos personales que afecten a la esfera más íntima de su titular, o cuya utilización indebida pueda dar origen a discriminación o conlleve un riesgo grave para éste.</li>
+                <li><strong>6.1. Datos por la aplicación de la NOM-035-STPS:</strong> Macrom Autopartes recabará datos personales como consecuencia de la aplicación de la Norma Oficial Mexicana 035 (NOM-035) expedida por la Secretaria de Trabajo y Previsión Social que podrían resultar datos personales sensibles.</li>
+            </ul>
+
+            <h3>7. Finalidades del Tratamiento de Datos</h3>
+            <p>Los Datos Personales obtenidos por <strong>Macrom Autopartes</strong> serán utilizados para el envío y notificación de promociones, consulta o estatus de compra-venta. En el caso de la obtención de datos personales relacionados con la aplicación de la NOM-035, esta información quedará al resguardo del responsable de Recursos humanos de la Dirección Administrativa de Macrom Autopartes.</p>
+
+            <h3>8. Finalidades Secundarias</h3>
+            <p>Además, si usted no manifiesta lo contrario, Macrom Autopartes tratará sus Datos Personales para las siguientes finalidades secundarias: Contactarlo para cualquier tema relacionado con nuestros servicios o con el presente Aviso. Efectuar promociones y publicidad. La atención y procesamiento de solicitudes, la administración en actividades de cobranza, aclaración, investigación y facturación. Llevar a cabo consultas para la prestación de nuestros servicios y cumplir las obligaciones derivadas de cualquier relación jurídica que se genere entre Macrom Autopartes y Usted.</p>
+
+            <h3>9. Transferencia de Datos Personales</h3>
+            <p>Macrom Autopartes requiere transferir sus Datos Personales en la medida que sea necesario para la prestación de nuestros servicios. Requerimos transferir dichos Datos a empresas de mensajería, así como a nuestros Aliados Regionales que operan bajo los mismos procesos y políticas de respeto a la privacidad.</p>
+
+            <h3>10. Limitación en el Uso o Divulgación</h3>
+            <p>Usted puede limitar el uso o divulgación de sus datos personales para dejar de recibir nuestros servicios, así como las promociones, ofertas y publicidad llamando al teléfono <strong>312 690 4108</strong>.</p>
+
+            <h3>11. Derechos ARCO</h3>
+            <p>Estos derechos consisten en lo siguiente:</p>
+            <ul class="privacy-list">
+                <li><strong>Acceso:</strong> Implica conocer en todo momento sus datos personales en posesión de Macrom Autopartes.</li>
+                <li><strong>Rectificación:</strong> Si alguno de sus datos es inexacto o incompleto, podrá solicitar su modificación adjuntando la documentación que acredite dicha corrección.</li>
+                <li><strong>Cancelación:</strong> Podrá requerir la cancelación de sus datos y su información personal entrará en un periodo de bloqueo para proceder posteriormente a su eliminación.</li>
+                <li><strong>Oposición:</strong> Podrá en todo momento y por causa legítima objetar el tratamiento de sus datos personales.</li>
+            </ul>
+
+            <h3>12. Procedimiento para ejercer sus Derechos ARCO</h3>
+            <p>El titular de los Datos Personales podrá ejercer sus derechos de Acceso, Rectificación, Cancelación y Oposición, así como revocar su consentimiento llamando a nuestra área jurídica o enviado un e-mail a <strong>soporte@macromautopartes.com</strong> describiendo de manera clara y precisa los datos personales respecto de los que se busca ejercer alguno de estos Derechos. Se le responderá en un plazo máximo de 08 (ocho) días hábiles.</p>
+
+            <h3>13. Cambios al Aviso de Privacidad</h3>
+            <p>Cualquier cambio significativo o total que se realice al presente Aviso de Privacidad podrá ser realizado por Macrom Autopartes y será comunicado a través de nuestra página, o mediante correo electrónico.</p>
+
+            <h3>15. Web Beacons</h3>
+            <p>Los sitios de Internet de Macrom Autopartes se basan en el manejo de Web Beacons e imágenes insertadas en páginas que entre otros pueden almacenar información de la dirección IP del usuario, tiempo de interacción, entre otros, que permiten recabar automáticamente datos personales. El uso de estas tecnologías es necesario por motivos de operación, técnicos y de seguridad.</p>
+
+            <div class="privacy-contact-box">
+                <p><strong>Departamento de Datos Personales</strong></p>
+                <p><i class="fa fa-phone-alt mr-2"></i> Teléfono: 312 690 4108</p>
+                <p><i class="fa fa-envelope mr-2"></i> Email: soporte@macromautopartes.com</p>
+                <p><i class="far fa-clock mr-2"></i> Horario: Lunes a Viernes de 9:00 A.M. a 6:00 P.M.</p>
             </div>
+
         </div>
-    </div>
-</section>
+    </section>
+
+</div>

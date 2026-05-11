@@ -202,17 +202,26 @@ function ProcesoCompraCtrl($scope, $http, $location) {
             obj.init();
         }
 
-        // Lógica de éxito Confeti
+        // Lógica de éxito Confeti (Efectivo/Transferencia)
         if (currentUrl.includes("?mod=ProcesoCompra&opc=paso3")) {
             if($_SESSION["padlock"] != "lock"){
-                console.log("Pago Efectivo Éxito");
                 setTimeout(() => { if(window.initBurst) window.initBurst(); }, 1500);
             }
         }
-        if (currentUrl.includes("?mod=ProcesoCompra&opc=cc?")) {
+        
+        // Corrección Definitiva Confeti (Tarjeta MIT)
+        if (currentUrl.includes("?mod=ProcesoCompra&opc=cc")) {
             if($_SESSION["padlock"] != "lock"){
-                console.log("Pago con tarjeta Respuesta MIT");
-                setTimeout(() => { if(window.initBurst) window.initBurst(); }, 1500);
+                setTimeout(() => { 
+                    let tarjetaExito = document.querySelector('.tarjeta-respuesta--exito');
+        
+                    if(tarjetaExito && window.initBurst) {
+                        console.log("Pago Aprobado - Lanzando Confeti");
+                        window.initBurst(); 
+                    } else {
+                        console.log("Pago Declinado - Sin Confeti");
+                    }
+                }, 800); 
             }
         }
     });

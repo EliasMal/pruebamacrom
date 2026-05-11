@@ -75,8 +75,6 @@ function ProfileCtrl($scope, $http) {
         } else {
             location.href = "?mod=Profile";
         }
-
-        //localStorage.setItem("pag",opc);
     }
 
     /*Seccion para el modulo de mis pedidos */
@@ -103,6 +101,7 @@ function ProfileCtrl($scope, $http) {
                 break;
         }
     }
+    
     obj.sendMispedidos = (opc = "buscar", data = null, x = 0, y = obj.paginador.pageSize) => {
         $http({
             method: 'POST',
@@ -157,6 +156,32 @@ function ProfileCtrl($scope, $http) {
         obj.btnMenulinks("Mispedidos_view");
     }
 
+    obj.abrirModalArchivo = (archivo) => {
+        let ruta = "./Public/Comprobantes/" + archivo;
+        
+        let extension = archivo.split('.').pop().toLowerCase();
+        let imgVisor = document.getElementById('imgVisor');
+        let iframeVisor = document.getElementById('iframeVisor');
+
+        if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(extension)) {
+            iframeVisor.style.display = 'none';
+            imgVisor.style.display = 'block';
+            imgVisor.src = ruta;
+        } else {
+            imgVisor.style.display = 'none';
+            iframeVisor.style.display = 'block';
+            iframeVisor.src = ruta;
+        }
+        
+        $("#ModalVerArchivo").modal('show');
+    };
+
+    obj.cerrarModalArchivo = () => {
+        $("#ModalVerArchivo").modal('hide');
+        document.getElementById('imgVisor').src = "";
+        document.getElementById('iframeVisor').src = "";
+    };
+
     obj.getcolorEstatus = (estatus) => {
         let classEstatus = "";
         switch (estatus) {
@@ -202,11 +227,6 @@ function ProfileCtrl($scope, $http) {
         console.log(promise);
         zip.file("obj.dataFactura.pdf", promise);
         console.log(zip);
-
-        // zip.generateAsync({ type: "blob" })
-        // .then(function (content) {
-        //     saveAs(content, "Factura.zip");
-        // });
     }
 
     obj.btnuploadComprobante = () => {
@@ -240,7 +260,6 @@ function ProfileCtrl($scope, $http) {
     obj.btnComprobanteCompra = (_idPedido) => {
         localStorage.setItem("_idPedido", _idPedido);
         window.open("./Reportes/ComprobantePago/Controller.php");
-        // window.open("./Reportes/ComprobantePago/Html/ComproPago.php");
     }
 
     obj.btnRegresarviewPedidos = () => {
@@ -602,7 +621,6 @@ function ProfileCtrl($scope, $http) {
         });
     }
     /* Finaliza modulo de Datos de Facturacion */
-
 
     obj.btnNext = () => {
         obj.paginador2.page += obj.paginador2.limit

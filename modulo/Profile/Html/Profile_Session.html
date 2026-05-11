@@ -1,122 +1,189 @@
-<section  ng-controller="ProfileCtrl" ng-init="pag='{opc}'" class="global__content">
-    <div class="banner Direc__perfil" id="PerfilDark">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 perfil__navegador">
-                    <div class="list-group">
-                        <a id="sidebar6" class="list-group-item list-group-item-action sidebar__click" ng-click="btnMenulinks('Mispedidos')"> <i alt="logo-mispedidos" class="fa fa-shopping-cart"></i>Mis pedidos</a>
-                        <a id="sidebar5" class="list-group-item list-group-item-action active sidebar__click" ng-click="btnMenulinks('Session')"><i alt="logo-sesion-seguridad" class="fa fa-shield-alt"></i>Sesi&oacute;n y Seg&uacute;ridad</a>
-                        <a id="sidebar7" class="list-group-item list-group-item-action sidebar__click" ng-click="btnMenulinks('Direcciones')"> <i alt="logo-direcciones" class="fa fa-map-marked-alt"></i>Direcciones</a>
-                        <a id="sidebar8" class="list-group-item list-group-item-action sidebar__click" ng-click="btnMenulinks('Facturacion')"><i alt="logo-facturacion" class="fa fa-file-invoice-dollar"></i> Datos de Facturación</a>
+<style>
+    .perfil__navegador .list-group-item {
+        border: none; border-radius: 8px !important; margin-bottom: 5px;
+        color: #4b5563; font-weight: 500; transition: all 0.3s ease; cursor: pointer;
+    }
+    .perfil__navegador .list-group-item:hover { background-color: #f3f4f6; color: #de0007; transform: translateX(5px); }
+    .perfil__navegador .list-group-item.active {
+        background-color: #de0007 !important; color: #fff !important; box-shadow: 0 4px 10px rgba(222,0,7,0.2);
+    }
+    .perfil__navegador .list-group-item i { width: 25px; text-align: center; margin-right: 10px; }
+
+    /* Inputs Premium */
+    .form-premium {
+        background-color: #f9fafb !important;
+        border: 1px solid #e5e7eb !important;
+        border-radius: 8px !important;
+        padding: 12px 15px;
+        font-size: 1rem;
+        color: #374151;
+        transition: all 0.3s ease;
+        box-shadow: none !important;
+    }
+    .form-premium:focus {
+        background-color: #fff !important;
+        border-color: #de0007 !important;
+        box-shadow: 0 0 0 4px rgba(222,0,7,0.1) !important;
+    }
+    
+    /* Contenedor de contraseña a prueba de balas */
+    .password-premium-box {
+        position: relative;
+        display: block;
+        width: 100%;
+    }
+    .password-premium-box .form-premium {
+        width: 100%;
+        padding-right: 45px !important; /* Espacio para que el texto no pise el ojito */
+        border-radius: 8px !important;
+    }
+    .password-premium-box .ojo-btn {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 5;
+    }
+    .password-premium-box .ojo-btn i {
+        color: #9ca3af;
+        cursor: pointer;
+        transition: 0.3s;
+        font-size: 1.1rem;
+    }
+    .password-premium-box .ojo-btn i:hover {
+        color: #de0007;
+    }
+    /* Efecto hover al icono de la contraseña */
+    .input-group-premium:focus-within .input-group-text {
+        background-color: #fff;
+        border-color: #de0007;
+    }
+    .input-group-premium .input-group-text i { color: #9ca3af; transition: 0.3s; }
+    .input-group-premium .input-group-text:hover i { color: #de0007; }
+
+    .btn-guardar {
+        border-radius: 8px; font-weight: 600; padding: 10px 25px; transition: all 0.3s ease;
+    }
+    .btn-guardar:hover:not(:disabled) {
+        transform: translateY(-2px); box-shadow: 0 4px 12px rgba(222,0,7,0.2);
+    }
+</style>
+
+<section ng-controller="ProfileCtrl" ng-init="pag='{opc}'" class="global__content mb-5">
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 perfil__navegador mb-4">
+                <div class="list-group shadow-sm p-3 bg-white" style="border-radius: 12px; border: 1px solid #e5e7eb;">
+                    <h5 class="text-center font-weight-bold text-dark mb-4 mt-2">Mi Cuenta</h5>
+                    <a class="list-group-item" ng-click="btnMenulinks('Mispedidos')"><i class="fa fa-shopping-cart"></i>Mis pedidos</a>
+                    <a class="list-group-item active" ng-click="btnMenulinks('Session')"><i class="fa fa-shield-alt"></i>Sesión y Seguridad</a>
+                    <a class="list-group-item" ng-click="btnMenulinks('Direcciones')"><i class="fa fa-map-marked-alt"></i>Direcciones</a>
+                    <a class="list-group-item" ng-click="btnMenulinks('Facturacion')"><i class="fa fa-file-invoice-dollar"></i>Datos de Facturación</a>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-white shadow-sm" style="border-radius: 8px; border: 1px solid #e5e7eb;">
+                      <li class="breadcrumb-item"><a href="?mod=Profile&opc=Session" style="color: #de0007;">Mi Cuenta</a></li>
+                      <li class="breadcrumb-item active" aria-current="page">Sesión y Seguridad</li>
+                    </ol>
+                </nav>
+
+                <div class="row mb-4 mt-2">
+                    <div class="col-12">
+                        <h2 class="font-weight-bold m-0" style="color: #222;">Configuración de Cuenta</h2>
+                        <p class="text-muted mt-1">Actualiza tus datos personales y cambia tu contraseña de acceso.</p>
+                    </div> 
+                </div>
+
+                <div class="card shadow-sm border-0 mb-4" style="border-radius: 12px; border: 1px solid #e5e7eb !important;">
+                    <div class="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
+                        <h4 class="font-weight-bold text-dark m-0"><i class="fa fa-user-circle text-danger mr-2"></i>Información Personal</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <form name="frmdatos" novalidate>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="font-weight-bold text-muted small text-uppercase">Nombre(s):</label>
+                                    <input class="form-control form-premium" name="nombre" type="text" placeholder="Tu nombre" ng-model="profile.nombres" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="font-weight-bold text-muted small text-uppercase">Apellidos:</label>
+                                    <input class="form-control form-premium" type="text" placeholder="Tus apellidos" ng-model="profile.Apellidos" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="font-weight-bold text-muted small text-uppercase">Correo Electrónico:</label>
+                                    <input class="form-control form-premium" type="email" placeholder="ejemplo@correo.com" ng-model="profile.correo" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="font-weight-bold text-muted small text-uppercase">Teléfono Celular:</label>
+                                    <input class="form-control form-premium" type="tel" placeholder="10 dígitos" ng-model="profile.telefono" required>
+                                </div>
+                            </div>
+                            <div class="text-right mt-3 border-top pt-3">
+                                <button type="button" class="btn btn-danger btn-guardar" ng-disabled="frmdatos.$invalid" ng-click="btnGuardarSession(1)">
+                                    <i class="fa fa-save mr-1"></i> Guardar Datos
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 perfil__sesion">
 
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb gris">
-                          <li class="breadcrumb-item"><a href="?mod=Profile&opc=Session">Mi Cuenta</a></li>
-                          <li class="breadcrumb-item active" aria-current="page">Sesi&oacute;n y Seg&uacute;ridad</li>
-                        </ol>
-                    </nav>
-
-                    <div class="SS__perfil--contenedor">
-                        <div class="SS__perfil">
-                            <div class="">
-    
-                                <div class="SS__perfil--vistas">
-
-                                    <div class="SS__perfil--dgenerales" id="DatosGenerales" role="tabpanel">
-                                        <div class="SS__perfil--contxt">
-                                            <h1 class="SS__perfil--txt">Información Personal</h1>
-                                        </div>
-                                        <div>
-                                            <label for="nombre">Nombre(s):</label>
-                                            <div class="">
-                                                <input class="" name="nombre" type="text" placeholder="Nombre(s)" ng-model="profile.nombres" required>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label for="example-text-input" >Apellidos:</label>
-                                            <div class="">
-                                                <input class="" type="text" placeholder="Apellidos" ng-model="profile.Apellidos" required>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label for="example-text-input" >Correo Electronico</label>
-                                            <div class="">
-                                                <input class="" type="text" placeholder="Correo electronico" ng-model="profile.correo" required>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label for="example-text-input" >Telefono</label>
-                                            <div class="">
-                                                <input class="" type="text" placeholder="Telefono celular" ng-model="profile.telefono" required>
-                                            </div>
-                                        </div>
-                                        <div class="SS__perfil--conbutton">
-                                            <button class="SS__perfil--button" ng-click="btnGuardarSession(1)">Guardar</button>
-                                        </div>
+                <div class="card shadow-sm border-0 mb-4" style="border-radius: 12px; border: 1px solid #e5e7eb !important;">
+                    <div class="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
+                        <h4 class="font-weight-bold text-dark m-0"><i class="fa fa-lock text-danger mr-2"></i>Seguridad y Contraseña</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <form name="frmpassword" novalidate>
+                            <div class="row">
+                                <div class="col-md-12 mb-4 pb-3 border-bottom">
+                                    <label class="font-weight-bold text-muted small text-uppercase">Contraseña Actual:</label>
+                                    <div class="password-premium-box" style="max-width: 50%;">
+                                        <input class="form-control form-premium" type="password" id="inprapass" placeholder="Ingresa tu contraseña actual" ng-model="profile.passActual" required>
+                                        <div class="ojo-btn"><i class="pass_ver apss fa fa-eye"></i></div>
                                     </div>
-
-                                    <div class="SS__perfil--ccontraseña" id="CambioContraseña" role="tabpanel">
-
-                                        <form class="SS__perfil--datos" name="frmpassword" novalidate>
-                                            <div class="SS__perfil--contxt">
-                                                <h1 class="SS__perfil--txt">Contraseña</h1>
-                                            </div>
-                                            <div>
-                                                <label for="example-text-input" >Nueva Contraseña</label>
-                                                <div class="password__cont">
-                                                    <input class="" type="password"  id="inprpass" placeholder="Nueva Contraseña" ng-model="profile.Nuevapass" required>
-                                                    <span class="password__ver">
-                                                        <i class="pass_ver pss fa fa-eye" aria-hidden="true"></i>
-                                                    </span>
-                                                </div>
-                                                <small class="text-danger" ng-show="msjprofiledisplay">Las contraseñas nos son iguales*</small>
-                                            </div>
-                                            <div>
-                                                <label for="example-text-input" >Confirma Contraseña</label>
-                                                <div class="password__cont">
-                                                    <input class="" type="password" id="inprcpass" placeholder="Confirmar contraseña" ng-model="profile.Confirmarpass" required>
-                                                    <span class="password__ver">
-                                                        <i class="pass_ver cpss fa fa-eye" aria-hidden="true"></i>
-                                                    </span>
-                                                </div>
-                                                <small class="text-danger" ng-show="msjprofiledisplay">Las contraseñas nos son iguales*</small>
-                                            </div>
-                                            <div>
-                                                <label for="example-text-input" >Contraseña Actual</label>
-                                                <div class="password__cont">
-                                                    <input class="" type="password" id="inprapass" placeholder="Contraseña Actual" ng-model="profile.passActual" required>
-                                                    <span class="password__ver">
-                                                        <i class="pass_ver apss fa fa-eye" aria-hidden="true"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-
-                                        </form>
-
-                                        <div class="SS__perfil--conbutton">
-                                            <button class="SS__perfil--button invalid" ng-show="frmpassword.$invalid">Guardar</button>
-                                            <button class="SS__perfil--button" ng-show="frmpassword.$valid" ng-click="btnGuardarSession(2)">Guardar</button>
-                                        </div>
-
-                                    </div>
+                                    <small class="text-muted mt-1">Necesitamos tu contraseña actual para autorizar el cambio.</small>
                                 </div>
 
-                            </div>
-                            
-                        </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="font-weight-bold text-danger small text-uppercase">Nueva Contraseña:</label>
+                                    <div class="password-premium-box">
+                                        <input class="form-control form-premium" type="password" id="inprpass" placeholder="Mínimo 8 caracteres" ng-model="profile.Nuevapass" required>
+                                        <div class="ojo-btn"><i class="pass_ver pss fa fa-eye"></i></div>
+                                    </div>
+                                    <small class="text-danger font-weight-bold mt-1 d-block" ng-show="msjprofiledisplay">
+                                        <i class="fa fa-exclamation-triangle"></i> Las contraseñas no coinciden.
+                                    </small>
+                                </div>
 
-                        <!-- <div class="SS__perfil--imagen">
-                            <div class="icon-center">
-                                <img src="https://macromautopartes.com/images/icons/icono_inicio_de_sesión.png" alt="logo-inicio_session" class="img icon-logos-grande">
-                                <img src="images/icons/icono_inicio_de_sesión.png" alt="logo-inicio_session" class="img icon-logos-grande">
+                                <div class="col-md-6 mb-3">
+                                    <label class="font-weight-bold text-danger small text-uppercase">Confirmar Contraseña:</label>
+                                    <div class="password-premium-box">
+                                        <input class="form-control form-premium" type="password" id="inprcpass" placeholder="Repite la nueva contraseña" ng-model="profile.Confirmarpass" required>
+                                        <div class="ojo-btn"><i class="pass_ver cpss fa fa-eye"></i></div>
+                                    </div>
+                                    <small class="text-danger font-weight-bold mt-1 d-block" ng-show="msjprofiledisplay">
+                                        <i class="fa fa-exclamation-triangle"></i> Las contraseñas no coinciden.
+                                    </small>
+                                </div>
                             </div>
-                        </div> -->
 
+                            <div class="text-right mt-3 border-top pt-3">
+                                <button type="button" class="btn btn-danger btn-guardar" ng-disabled="frmpassword.$invalid" ng-click="btnGuardarSession(2)">
+                                    <i class="fa fa-key mr-1"></i> Actualizar Contraseña
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </div>    
-        </div>
+
+            </div>
+        </div>    
     </div>
+</section>

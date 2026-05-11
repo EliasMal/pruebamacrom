@@ -19,8 +19,25 @@
 
         public function main(){
             $this->formulario = json_decode(file_get_contents('php://input'));
-            $this->jsonData["Bandera"] = 1;
-            $this->jsonData["Data"] = $this->get_Mipedido($this->formulario->ficha->id);
+            
+            if(!isset($this->formulario->ficha->id) || empty($this->formulario->ficha->id)){
+                $this->jsonData["Bandera"] = 0;
+                $this->jsonData["mensaje"] = "ID de pedido no proporcionado.";
+                print json_encode($this->jsonData);
+                return;
+            }
+
+            $idPedidoSeguro = intval($this->formulario->ficha->id);
+            $datosPedido = $this->get_Mipedido($idPedidoSeguro);
+
+            if($datosPedido){
+                $this->jsonData["Bandera"] = 1;
+                $this->jsonData["Data"] = $datosPedido;
+            } else {
+                $this->jsonData["Bandera"] = 0;
+                $this->jsonData["mensaje"] = "No se encontró el pedido o no pertenece al usuario.";
+            }
+
             print json_encode($this->jsonData);
         }
 
@@ -32,23 +49,36 @@
             inner join clientes as C on (C._id = P._idCliente) 
             left join Cdirecciones as Cd on (Cd._id = P._id_cdirecciones)
             left join Facturacion as F on (F._id = P._id_facturacion)
-            where _idPedidos = $_idpedido";
-            $row = $this->conn->fetch($this->conn->query($sql));
-            $row["Detalles"] = $this->get_DetallesMispedidos($_idpedido);
-            return $row;
+            where P._idPedidos = $_idpedido"; // Variable ya saneada
+            
+            $res = $this->conn->query($sql);
+
+            if($res && $this->conn->count_rows($res) > 0){
+                $row = $this->conn->fetch($res);
+                $row["Detalles"] = $this->get_DetallesMispedidos($_idpedido);
+                return $row;
+            }
+            return false;
         }
+
         private function get_DetallesMispedidos($_idPedido, $limit = false){
             $array = array();
             $sql = "select DP.* , P.Producto, P.Clave, P.No_parte from DetallesPedidos as DP 
                     inner join Producto as P on (DP._idProducto = P._id)
                     where DP._idPedidos = $_idPedido ";
             $sql .= $limit? " LIMIT 0, 2":"";        
-                    $id = $this->conn->query($sql);
+            
+            $id = $this->conn->query($sql);
+            
+            if($id){
+                while($row = $this->conn->fetch($id)){
+                    $rutaWebp = "../../../images/refacciones/{$row["Clave"]}.webp";
+                    $rutaPng = "../../../images/refacciones/{$row["Clave"]}.png";
                     
-                    while($row = $this->conn->fetch($id)){
-                        $row["imagen"] = file_exists("../../../images/refacciones/{$row["Clave"]}.png");
-                        array_push($array,$row);
-                    }
+                    $row["imagen"] = file_exists($rutaWebp) || file_exists($rutaPng);
+                    array_push($array, $row);
+                }
+            }
             return $array;
         }
     }

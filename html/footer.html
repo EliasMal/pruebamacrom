@@ -1,126 +1,326 @@
-<footer class="footer__contenedor" id="FooterDark" ng-controller="FooterCtrl">
-        <div class="footer__contacto">
-            <div class="footer__contacto__sucursales">
+<style>
+    .premium-footer {
+        background-color: #f8f9fa;
+        padding: 60px 0 20px 0;
+        border-top: 4px solid #de0007;
+        color: #374151;
+        font-family: inherit;
+        display: block !important;
+    }
 
-                <div class="footer__contacto__contenedor">
-                    <p class="footer__contacto--texto">
-                        <strong>¿Tienes preguntas?</strong>  Envia un correo a <a href="mailto:soporte@macromautopartes.com" class="contacto__mail">soporte@macromautopartes.com</a> o visita nuestras sucursales:
+    .footer-header-text {
+        font-size: 1.3rem;
+        margin-bottom: 40px;
+        color: #4b5563;
+    }
+    .footer-header-text a {
+        color: #de0007;
+        font-weight: 700;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    .footer-header-text a:hover {
+        color: #bf040a;
+        text-decoration: underline;
+    }
+
+    /* --- TARJETAS 3D FLIP --- */
+    .flip-card-container {
+        perspective: 1000px; 
+        width: 100%;
+        height: 220px;
+        margin-bottom: 30px;
+    }
+
+    .flip-card {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+        transform-style: preserve-3d;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        cursor: pointer;
+    }
+
+    .flip-card-container:hover .flip-card {
+        transform: rotateY(180deg);
+        box-shadow: 0 12px 25px rgba(222,0,7,0.2);
+    }
+
+    .flip-card-front, .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden; 
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    /* Cara Frontal */
+    .flip-card-front {
+        background-color: #fff;
+    }
+    .flip-card-front img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.65); 
+        transition: filter 0.3s ease;
+    }
+    .flip-card-front strong {
+        position: absolute;
+        bottom: 15px;
+        left: 20px;
+        color: #ffffff;
+        font-size: 1.5rem;
+        font-weight: 800;
+        letter-spacing: 1px;
+        text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+        z-index: 2;
+    }
+
+    /* Cara Trasera (Información) */
+    .flip-card-back {
+        background: linear-gradient(135deg, #de0007 0%, #a10005 100%);
+        color: white;
+        transform: rotateY(180deg); 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+    }
+    .flip-card-back strong {
+        font-size: 1.3rem;
+        border-bottom: 2px solid rgba(255,255,255,0.3);
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        font-weight: 800;
+    }
+    .flip-card-back p {
+        font-size: 1.05rem;
+        margin: 0;
+        line-height: 1.4;
+        color: #ffffff;
+        font-weight: 500;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+    .flip-card-back span {
+        display: block;
+        margin-top: 15px;
+        font-weight: 800;
+        font-size: 1.15rem;
+        color: #ffffff;
+    }
+
+    /* --- ENLACES Y SECCIONES INFERIORES --- */
+    .footer-info-section h3 {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: #1f2937;
+        margin-bottom: 18px;
+        text-transform: uppercase;
+    }
+    .footer-info-section ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        color: #4b5563;
+    }
+    .footer-info-section ul li {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+    }
+    .footer-info-section a {
+        color: #4b5563;
+        text-decoration: none;
+        transition: color 0.3s ease;
+        display: block;
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+    }
+    .footer-info-section a:hover {
+        color: #de0007;
+        padding-left: 5px;
+        font-weight: 600;
+    }
+
+    /* Redes Sociales */
+    .social-icons {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+    }
+    .social-icons a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 45px;
+        height: 45px;
+        background-color: #e5e7eb;
+        color: #4b5563;
+        border-radius: 50%;
+        text-decoration: none;
+        font-size: 1.3rem;
+        transition: all 0.3s ease;
+    }
+    .social-icons a:hover {
+        background-color: #de0007;
+        color: #ffffff;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(222,0,7,0.3);
+    }
+
+    /* Copyright Bar */
+    .copyright-bar {
+        background-color: #111827;
+        color: #9ca3af;
+        padding: 20px 0;
+        font-size: 1rem;
+        text-align: center;
+    }
+    
+    @media (max-width: 768px) {
+        .premium-footer {
+            display: none !important;
+        }
+    }
+</style>
+
+<div id="FooterDark" ng-controller="FooterCtrl">
+    <footer class="premium-footer">
+        <div class="container">
+            
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="footer-header-text">
+                        <strong>¿Tienes preguntas?</strong> Envía un correo a <a href="mailto:soporte@macromautopartes.com">soporte@macromautopartes.com</a> o visita nuestras sucursales:
                     </p>
-                    <hr/>
+                </div>
+            </div>
 
-                    <section class="contenedor__domicilios">
-
-                        <a href="https://g.page/Macrom?share" target="_blank">
-                            <div class="domicilios__macrom">
-                                <div class="domicilios__macrom__front">
+            <div class="row mb-4">
+                
+                <div class="col-12 col-md-6 col-lg-3 mb-4">
+                    <a href="https://g.page/Macrom?share" target="_blank" style="text-decoration: none;">
+                        <div class="flip-card-container">
+                            <div class="flip-card">
+                                <div class="flip-card-front">
+                                    <img src="images/fachadas/2.webp" loading="lazy" alt="macrom-colima">
                                     <strong>COLIMA</strong>
-                                    <img src="images/fachadas/2.webp" width="244px" height="150px" loading="lazy" alt="macrom-colima">
                                 </div>
-                                <div class="domicilios__macrom__back">
-                                    <address class="footer__contacto--texto">
-                                        <strong>COLIMA</strong><br> 
-                                        Blvd. Camino Real #597 <br> 
-                                        Col. El Diezmo cp. 28010<br>
-                                        Tel: 312 159 2291 y 312 161 1774
-                                    </address>
+                                <div class="flip-card-back">
+                                    <strong>COLIMA</strong>
+                                    <p>Blvd. Camino Real #597<br>Col. El Diezmo cp. 28010</p>
+                                    <span><i class="fa fa-phone-alt mr-2"></i> 312 159 2291<br>312 161 1774</span>
                                 </div>
                             </div>
-                        </a>
+                        </div>
+                    </a>
+                </div>
 
-                        <a href="https://goo.gl/maps/QN8ZYuCsVfZrbkeS9" target="_blank">
-                            <div class="domicilios__macrom">
-                                <div class="domicilios__macrom__front">
+                <div class="col-12 col-md-6 col-lg-3 mb-4">
+                    <a href="https://goo.gl/maps/QN8ZYuCsVfZrbkeS9" target="_blank" style="text-decoration: none;">
+                        <div class="flip-card-container">
+                            <div class="flip-card">
+                                <div class="flip-card-front">
+                                    <img src="images/fachadas/3.webp" loading="lazy" alt="macrom-manzanillo">
                                     <strong>MANZANILLO</strong>
-                                    <img src="images/fachadas/3.webp" width="244px" height="150px" loading="lazy" alt="macrom-manzanillo">
                                 </div>
-                                <div class="domicilios__macrom__back">
-                                
-                                    <address class="footer__contacto--texto">
-                                        <strong>MANZANILLO</strong><br> 
-                                        Av. Elías Zamora Verduzco #2043  <br> 
-                                        Col. Salagua c.p. 28867 <br/>
-                                        Tel: 314 688 4519 y 3143377267
-                                    </address>
+                                <div class="flip-card-back">
+                                    <strong>MANZANILLO</strong>
+                                    <p>Av. Elías Zamora V. #2043<br>Col. Salagua c.p. 28867</p>
+                                    <span><i class="fa fa-phone-alt mr-2"></i> 314 688 4519<br>314 337 7267</span>
                                 </div>
                             </div>
-                        </a>
+                        </div>
+                    </a>
+                </div>
 
-                        <a href="https://g.page/Tsuruvolks?share" target="_blank">
-                            <div class="domicilios__macrom">
-                                <div class="domicilios__macrom__front">
+                <div class="col-12 col-md-6 col-lg-3 mb-4">
+                    <a href="https://g.page/Tsuruvolks?share" target="_blank" style="text-decoration: none;">
+                        <div class="flip-card-container">
+                            <div class="flip-card">
+                                <div class="flip-card-front">
+                                    <img src="images/fachadas/1.webp" loading="lazy" alt="macrom-villadealvarez">
                                     <strong>VILLA DE ÁLVAREZ</strong>
-                                    <img src="images/fachadas/1.webp" width="244px" height="150px" loading="lazy" alt="macrom-villadealvarez">
                                 </div>
-                                <div class="domicilios__macrom__back">
-                                    <address class="footer__contacto--texto">
-                                        <strong>VILLA DE ÁLVAREZ</strong><br> 
-                                        Av. Benito Juárez #164 <br> 
-                                        Col. La Gloria c.p. 28980 <br>
-                                        Tel: 312 159 1040 y 312 311 6343
-                                    </address>
+                                <div class="flip-card-back">
+                                    <strong>VILLA DE ÁLVAREZ</strong>
+                                    <p>Av. Benito Juárez #164<br>Col. La Gloria c.p. 28980</p>
+                                    <span><i class="fa fa-phone-alt mr-2"></i> 312 159 1040<br>312 311 6343</span>
                                 </div>
                             </div>
-                        </a>
+                        </div>
+                    </a>
+                </div>
 
-                        <a href="https://maps.app.goo.gl/ggMYyhi2aXB5HSRE7" target="_blank">
-                            <div class="domicilios__macrom">
-                                <div class="domicilios__macrom__front">
+                <div class="col-12 col-md-6 col-lg-3 mb-4">
+                    <a href="https://maps.app.goo.gl/ggMYyhi2aXB5HSRE7" target="_blank" style="text-decoration: none;">
+                        <div class="flip-card-container">
+                            <div class="flip-card">
+                                <div class="flip-card-front">
+                                    <img src="images/fachadas/4.webp" loading="lazy" alt="macrom-tecoman">
                                     <strong>TECOMÁN</strong>
-                                    <img src="images/fachadas/4.webp" width="244px" height="150px" loading="lazy" alt="macrom-tecoman">
                                 </div>
-                                <div class="domicilios__macrom__back">
-                                    <address class="footer__contacto--texto">
-                                        <strong>TECOMÁN</strong><br> 
-                                        Revolución #340 <br> 
-                                        Col. Centro c.p. 28140 <br>
-                                        Tel: 313 143 30 80
-                                    </address>
+                                <div class="flip-card-back">
+                                    <strong>TECOMÁN</strong>
+                                    <p>Revolución #340<br>Col. Centro c.p. 28140</p>
+                                    <span><i class="fa fa-phone-alt mr-2"></i> 313 143 30 80</span>
                                 </div>
                             </div>
-                        </a>
+                        </div>
+                    </a>
+                </div>
 
-                    </section>
+            </div>
+            
+            <hr style="border-top: 1px solid #e5e7eb; margin-bottom: 40px;">
 
-                    <div class="footer__contacto__contenedor--social">      
-                        <a href="https://www.facebook.com/MacromAutopartes/" target="_blank" class="color1 fab fa-facebook" target="_blank"></a>
-                        <a href="https://www.instagram.com/macromautopartes/" class="color1 fab fa-instagram" target="_blank"></a>
-                        <a href="https://www.youtube.com/channel/UCbVJJH6AIZJ9lH7fE_2rtwA" class="color1 fab fa-youtube" target="_blank"></a>
-                        <a href="https://www.tiktok.com/@macromautopartes?lang=en" class="color1 fab fa-tiktok" target="_blank"></a>
+            <div class="row footer-info-section">
+                
+                <div class="col-12 col-md-4 mb-4">
+                    <h3><i class="far fa-clock mr-2 text-danger"></i> Horario de Atención</h3>
+                    <ul>
+                        <li><b>Lunes a viernes:</b> 9:00 am - 6:00 pm</li>
+                        <li><b>Sábados:</b> 9:00 am - 3:00 pm</li>
+                        <li><b>Domingos:</b> Cerrado</li>
+                    </ul>
+                </div>
+
+                <div class="col-12 col-md-4 mb-4">
+                    <h3><i class="fas fa-file-contract mr-2 text-danger"></i> Avisos Legales</h3>
+                    <a href="?mod=aviso-de-privacidad"><i class="fas fa-angle-right mr-1"></i> Aviso de Privacidad</a>
+                    <a href="?mod=Terminos-condiciones"><i class="fas fa-angle-right mr-1"></i> Términos y Condiciones</a>
+                </div>
+
+                <div class="col-12 col-md-4 mb-4">
+                    <h3><i class="fas fa-users mr-2 text-danger"></i> Síguenos</h3>
+                    <p class="text-muted mb-2" style="font-size: 1.1rem;">Únete a nuestra comunidad automotriz:</p>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/MacromAutopartes/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/macromautopartes/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/channel/UCbVJJH6AIZJ9lH7fE_2rtwA" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.tiktok.com/@macromautopartes?lang=en" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
                     </div>
                 </div>
 
             </div>
-            <section class="contenedor__masinfo">
-                <div class="masinfo__horario">
-                    <h3 class="masinfo__horario--atencion">Horario de Atención</h3>
-                    <div class="separador"></div>
-                    <ul style="padding: 0;">
-                        <li>Lunes a viernes</li>
-                        <li>9:00 am - 6:00 pm</li>
-                        <li>Sabado</li>
-                        <li>9:00 am - 3:00 pm</li>  
-                    </ul>
-                </div>
-                <div class="masinfo__legales">
-                    <h3 class="masinfo__horario--atencion">Avisos</h3>
-                    <div class="separador"></div>
-                    <a href="?mod=aviso-de-privacidad">Aviso de privacidad</a> <br>
-                    <a href="?mod=Terminos-condiciones">Terminos y condiciones</a>
-                </div>
-            </section>
         </div>
-
     </footer>
 
-        <div class="row ft0">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 bg0">
-                <div class="t-center s-text8 colorwhite ">
-                    Copyright © {{anioActual}}  by MacromAutopartes 
-                </div>
-            </div>
+    <div class="copyright-bar">
+        <div class="container">
+            Copyright © {{anioActual}} by Macrom Autopartes. Todos los derechos reservados.
         </div>
-    <div class="btn-back-to-top bg0-hov" id="myBtn">
-            <span class="symbol-btn-back-to-top">
-                <i class="fa fa-angle-double-up" aria-hidden="true"></i>
-            </span>
     </div>
+
+    <div class="btn-back-to-top bg0-hov" id="myBtn">
+        <span class="symbol-btn-back-to-top">
+            <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+        </span>
+    </div>
+</div>

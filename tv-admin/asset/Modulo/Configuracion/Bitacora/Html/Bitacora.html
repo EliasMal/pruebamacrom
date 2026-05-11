@@ -51,24 +51,24 @@
                         <table class="table table-hover table-striped m-0 text-sm">
                             <thead class="bg-light sticky-top">
                                 <tr>
-                                    <th width="15%"><i class="fa fa-calendar mr-1"></i> Fecha y Hora</th>
-                                    <th width="10%"><i class="fa fa-user mr-1"></i> Usuario</th>
-                                    <th width="10%"><i class="fa fa-puzzle-piece mr-1"></i> Módulo</th>
-                                    <th width="15%"><i class="fa fa-bolt mr-1"></i> Acción</th>
-                                    <th width="40%"><i class="fa fa-file-text-o mr-1"></i> Detalles</th>
-                                    <th width="10%"><i class="fa fa-globe mr-1"></i> IP</th>
+                                    <th class="text-nowrap" style="width: 15%;"><i class="fa fa-calendar mr-1"></i> Fecha y Hora</th>
+                                    <th class="text-nowrap" style="width: 10%;"><i class="fa fa-user mr-1"></i> Usuario</th>
+                                    <th class="text-nowrap" style="width: 10%;"><i class="fa fa-puzzle-piece mr-1"></i> Módulo</th>
+                                    <th class="text-nowrap" style="width: 25%;"><i class="fa fa-bolt mr-1"></i> Acción</th>
+                                    <th style="width: 30%; min-width: 200px;"><i class="fa fa-file-text-o mr-1"></i> Detalles</th>
+                                    <th class="text-nowrap" style="width: 10%;"><i class="fa fa-globe mr-1"></i> IP</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="log in logs | filter:busqueda">
-                                    <td class="align-middle text-muted">{{log.fecha}}</td>
-                                    <td class="align-middle font-weight-bold text-danger">{{log.username}}</td>
-                                    <td class="align-middle"><span class="badge badge-secondary">{{log.modulo}}</span></td>
-                                    <td class="align-middle">
+                                    <td class="align-middle text-muted text-nowrap">{{log.fecha}}</td>
+                                    <td class="align-middle font-weight-bold text-danger text-nowrap">{{log.username}}</td>
+                                    <td class="align-middle text-nowrap"><span class="badge badge-secondary">{{log.modulo}}</span></td>
+                                    <td class="align-middle text-nowrap">
                                         <span class="badge badge-info">{{log.accion}}</span>
                                     </td>
                                     <td class="align-middle" ng-bind-html="formatearDetalles(log.detalles, log.modulo, log.accion)"></td>
-                                    <td class="align-middle text-muted"><small>{{log.ip_usuario}}</small></td>
+                                    <td class="align-middle text-muted text-nowrap"><small>{{log.ip_usuario}}</small></td>
                                 </tr>
                                 <tr ng-if="(logs | filter:busqueda).length === 0">
                                     <td colspan="6" class="text-center py-4 text-muted">

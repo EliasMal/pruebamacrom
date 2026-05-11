@@ -1,159 +1,206 @@
-<div ng-controller="catalogosCtrl" ng-init="refaccion.categoria='{categoria}'" class="ctrlmain global__content" ng-cloak>
-	<!-- Title Page -->
-	<!-- Content page -->
+<link rel="stylesheet" href="/modulo/Catalogo/Css/catalogo_principal.css">
+<div ng-controller="catalogosCtrl" class="ctrlmain global__content" ng-cloak>
 	<main class="main__catalogo--principal">
 		<div class="container-fluid">
+			
 			<div class="open__opciones">
-        		<div class="open__opciones--Orden open__tipo">
+        		<div class="open__opciones--Orden open__tipo" ng-click="toggleMenu('orden')">
             		<label class="Orden__title">Ordenar por</label>
         		</div>
-        		<div class="open__opciones--Filtros open__tipo">
-            		<label class="Filtros__title">Filtros</label>
+        		<div class="open__opciones--Filtros open__tipo" ng-click="toggleMenu('filtros')">
+            		<label class="Filtros__title">
+						Filtros
+						<span class="badge-filtros" ng-show="getFiltrosCount() > 0">{{getFiltrosCount()}}</span>
+					</label>
         		</div>
 			</div>
 
+			<div class="overlay-modal" ng-class="{'activo': menuFiltrosAbierto || menuOrdenAbierto}" ng-click="toggleMenu('cerrar')"></div>
+
 			<div class="contenedor__catalogo">
 				<div class="menurefacciones__completo">
-					<div class="filtros dis-none">
-						<div class="filtros__contenedor name__seleccionados dis-none">
-							<span class="filtros__header">Tu Selección</span>
-							<div id="tags__filtros">
-							    <div class="tags__contenedor" ng-repeat="tag in etiquetasActivas">
-								
-							        <i class="fas fa-times cursorpnt" ng-click="quitarEtiqueta(tag)"></i>
-								
-							        <div class="Filtro_Seleccion {{tag.value}}">
-							            {{tag.label}}
-							        </div>
-								
-							    </div>
-							</div>
-
-							<div class="filtro__quitar">
-								<button class="filtro__quitar--button dis-none">Borrar filtros</button>
-							</div>
-
+					
+					<div class="filtros" ng-class="{'activo': menuFiltrosAbierto}">
+						<div class="sidebar-header mobile-only">
+							<h2>Filtros</h2>
+							<button class="btn-cerrar" ng-click="toggleMenu('cerrar')">&times;</button>
 						</div>
-						<div class="filtros__contenedor disponibilidad__orden">
-							<div class="filtros__subtitle name__disponibilidad">
-								<span class="filtros__header">Disponibilidad</span>
-								<i class="fas fa-angle-down"></i>
-							</div>
-							<div class="contenido__opciones opciones__disponibilidad dis-none">
-								<label ng-show="Existencias[0].cantidad_repetida > 0" class="container">En Existencia ({{Existencias[0].cantidad_repetida}})
-									<input type="checkbox" name="Disponibilidad" id="En_Existencia" value="En Existencia" ng-click="checkmark($event)">
-									<span class="checkmark"></span>
-								</label>
-								<label ng-show="Ofertas[0].cantidad_repetida > 0" class="container">Ofertas ({{Ofertas[0].cantidad_repetida}})
-									<input type="checkbox" name="Disponibilidad" id="Ofertas" value="Ofertas" ng-click="checkmark($event)">
-									<span class="checkmark"></span>
-								</label>
-								<label ng-show="Nuevos[0].cantidad_repetida > 0" class="container">Articulos Nuevos ({{Nuevos[0].cantidad_repetida}})
-									<input type="checkbox" name="Disponibilidad" id="Articulos_Nuevos"
-										value="Articulos Nuevos" ng-click="checkmark($event)">
-									<span class="checkmark"></span>
-								</label>
-							</div>
-						</div>
-						<div class="filtros__contenedor" ng-show="Marcas.length > 0">
-							<div class="filtros__subtitle name__marcas">
-								<span class="filtros__header">Marcas</span>
-								<i class="fas fa-angle-down"></i>
+
+						<div class="sidebar-content">
+							
+							<div class="filtros__contenedor name__seleccionados" ng-show="etiquetasActivas.length > 0">
+								<span class="filtros__header">Tu Selección</span>
+								<div id="tags__filtros">
+									<div class="tags__contenedor" ng-repeat="tag in etiquetasActivas">
+										<i class="fas fa-times cursorpnt" ng-click="quitarEtiqueta(tag)"></i>
+										<div class="Filtro_Seleccion {{tag.value}}">{{tag.label}}</div>
+									</div>
+								</div>
+								<div class="filtro__quitar">
+									<button class="filtro__quitar--button">Borrar filtros</button>
+								</div>
 							</div>
 
-							<div class="contenido__opciones opciones__marcas dis-none">
-								<div ng-repeat="marca in Marcas">
-									<label class="container">{{marca.Marca}} ({{marca.cantidad_repetida}})
-										<input type="checkbox" name="Marca" id="{{marca.Marca}}" ng-click="checkmark($event)" value="{{marca._idMarca}}">
+							<div class="filtros__contenedor">
+								<div class="filtros__subtitle name__disponibilidad" ng-click="showDispo = !showDispo">
+									<span class="filtros__header">Disponibilidad</span>
+									<i class="fas fa-angle-down" ng-class="{'rotar-180': showDispo}"></i>
+								</div>
+								<div class="contenido__opciones" ng-class="{'abierto': showDispo}">
+									<label ng-show="Existencias[0].cantidad_repetida > 0" class="container">En Existencia ({{Existencias[0].cantidad_repetida}})
+										<input type="checkbox" name="Disponibilidad" id="En_Existencia" value="En Existencia" ng-click="checkmark($event)">
+										<span class="checkmark"></span>
+									</label>
+									<label ng-show="Ofertas[0].cantidad_repetida > 0" class="container">Ofertas ({{Ofertas[0].cantidad_repetida}})
+										<input type="checkbox" name="Disponibilidad" id="Ofertas" value="Ofertas" ng-click="checkmark($event)">
+										<span class="checkmark"></span>
+									</label>
+									<label ng-show="Nuevos[0].cantidad_repetida > 0" class="container">Articulos Nuevos ({{Nuevos[0].cantidad_repetida}})
+										<input type="checkbox" name="Disponibilidad" id="Articulos_Nuevos" value="Articulos Nuevos" ng-click="checkmark($event)">
 										<span class="checkmark"></span>
 									</label>
 								</div>
 							</div>
-						</div>
-						<div class="filtros__contenedor" ng-show="Vehiculos.length != null && Vehiculos.length != 0">
-							<div class="filtros__subtitle name__vehiculos">
-								<span class="filtros__header">Vehiculos</span>
-								<i class="fas fa-angle-down"></i>
-							</div>
 
-							<div class="contenido__opciones opciones__vehiculos dis-none">
-								<div ng-repeat="vehiculo in Vehiculos">
-									<label class="container">{{vehiculo.Modelo}} ({{vehiculo.cantidad_repetida}})
-										<input type="checkbox" name="Vehiculo" id="{{vehiculo.Modelo}}" ng-click="checkmark($event)" value="{{vehiculo._id}}">
-										<span class="checkmark"></span>
-									</label>
+							<div class="filtros__contenedor" ng-show="Marcas.length > 0">
+								<div class="filtros__subtitle name__marcas" ng-click="showMarcas = !showMarcas">
+									<span class="filtros__header">Marcas
+										<span class="badge-filtros" style="font-size: 0.9rem; padding: 0.1rem 0.5rem; background: #9ca3af;" ng-show="getCountPorCategoria('Marca') > 0">
+    									    {{getCountPorCategoria('Marca')}}
+    									</span>
+									</span>
+									<i class="fas fa-angle-down" ng-class="{'rotar-180': showMarcas}"></i>
+								</div>
+								<div class="contenido__opciones" ng-class="{'abierto': showMarcas}">
+									<div ng-repeat="marca in Marcas">
+										<label class="container">{{marca.Marca}} ({{marca.cantidad_repetida}})
+											<input type="checkbox" name="Marca" id="{{marca.Marca}}" ng-click="checkmark($event)" value="{{marca._idMarca}}">
+											<span class="checkmark"></span>
+										</label>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="filtros__contenedor" ng-show="categorias.length > 0">
-							<div class="filtros__subtitle name__categorias">
-								<span class="filtros__header">Categorias</span>
-								<i class="fas fa-angle-down"></i>
-							</div>
 
-							<div class="contenido__opciones opciones__categorias dis-none">
-								<div ng-repeat="categoria in categorias">
-									<label class="container">{{categoria.Categoria}} ({{categoria.cantidad_repetida}})
-										<input type="checkbox" name="Categoria" id="{{categoria.Categoria}}" ng-click="checkmark($event)" value="{{categoria._id}}">
-										<span class="checkmark"></span>
-									</label>
+							<div class="filtros__contenedor" ng-show="Vehiculos.length > 0">
+								<div class="filtros__subtitle name__vehiculos" ng-click="showVehiculos = !showVehiculos">
+									<span class="filtros__header">Vehículos
+										<span class="badge-filtros" style="font-size: 0.9rem; padding: 0.1rem 0.5rem; background: #9ca3af;" ng-show="getCountPorCategoria('Vehiculo') > 0">
+    									    {{getCountPorCategoria('Vehiculo')}}
+    									</span>
+									</span>
+									<i class="fas fa-angle-down" ng-class="{'rotar-180': showVehiculos}"></i>
+								</div>
+								<div class="contenido__opciones" ng-class="{'abierto': showVehiculos}">
+									<div ng-repeat="vehiculo in Vehiculos">
+										<label class="container">{{vehiculo.Modelo}} ({{vehiculo.cantidad_repetida}})
+											<input type="checkbox" name="Vehiculo" id="{{vehiculo.Modelo}}" ng-click="checkmark($event)" value="{{vehiculo._id}}">
+											<span class="checkmark"></span>
+										</label>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="filtros__contenedor" ng-show="Proveedores.length > 0">
-							<div class="filtros__subtitle name__proveedores">
-								<span class="filtros__header">Proveedores</span>
-								<i class="fas fa-angle-down"></i>
+
+							<div class="filtros__contenedor" ng-show="categorias.length > 0">
+								<div class="filtros__subtitle name__categorias" ng-click="showCategorias = !showCategorias">
+									<span class="filtros__header">Categorías
+										<span class="badge-filtros" style="font-size: 0.9rem; padding: 0.1rem 0.5rem; background: #9ca3af;" ng-show="getCountPorCategoria('Categoria') > 0">
+    									    {{getCountPorCategoria('Categoria')}}
+    									</span>
+									</span>
+									<i class="fas fa-angle-down" ng-class="{'rotar-180': showCategorias}"></i>
+								</div>
+								<div class="contenido__opciones" ng-class="{'abierto': showCategorias}">
+									<div ng-repeat="categoria in categorias">
+										<label class="container">{{categoria.Categoria}} ({{categoria.cantidad_repetida}})
+											<input type="checkbox" name="Categoria" id="{{categoria.Categoria}}" ng-click="checkmark($event)" value="{{categoria._id}}">
+											<span class="checkmark"></span>
+										</label>
+									</div>
+								</div>
 							</div>
 
-							<div class="contenido__opciones opciones__proveedores dis-none">
-								<div ng-repeat="proveedor in Proveedores | limitTo: view">
-									<label class="container">{{proveedor.Proveedor}} ({{proveedor.cantidad_repetida}})
-										<input type="checkbox" name="Proveedor" id="{{proveedor.Proveedor}}" ng-click="checkmark($event)" value="{{proveedor.id_proveedor}}">
-										<span class="checkmark"></span>
-									</label>
+							<div class="filtros__contenedor" ng-show="Proveedores.length > 0">
+								<div class="filtros__subtitle name__proveedores" ng-click="showProveedores = !showProveedores">
+									<span class="filtros__header">Proveedores
+										<span class="badge-filtros" style="font-size: 0.9rem; padding: 0.1rem 0.5rem; background: #9ca3af;" ng-show="getCountPorCategoria('Proveedor') > 0">
+    									    {{getCountPorCategoria('Proveedor')}}
+    									</span>
+									</span>
+									<i class="fas fa-angle-down" ng-class="{'rotar-180': showProveedores}"></i>
 								</div>
-								<button ng-show="Proveedores.length > 20" ng-click="viewMore()" class="form-control viewmorebtn" id="viewbtn">Ver más</button>
+								<div class="contenido__opciones" ng-class="{'abierto': showProveedores}">
+									<div ng-repeat="proveedor in Proveedores | limitTo: view">
+										<label class="container">{{proveedor.Proveedor}} ({{proveedor.cantidad_repetida}})
+											<input type="checkbox" name="Proveedor" id="{{proveedor.Proveedor}}" ng-click="checkmark($event)" value="{{proveedor.id_proveedor}}">
+											<span class="checkmark"></span>
+										</label>
+									</div>
+									<button ng-show="Proveedores.length > 20" ng-click="viewMore()" class="form-control viewmorebtn" id="viewbtn">Ver más</button>
+								</div>
 							</div>
+
+						</div>
+
+						<div class="sidebar-footer mobile-only">
+							<button class="btn-ver-resultados" ng-click="toggleMenu('cerrar')">Ver {{Trefacciones}} resultados</button>
 						</div>
 					</div>
-					<div class="filtros__orden dis-none">
-						<div class="contenedor__orden" ng-show="Existencias[0].cantidad_repetida > 0">
-							<div class="orden__subtitle"><label for="switch__existencia">En existencia ({{Existencias[0].cantidad_repetida}})</label></div>
-							<div class="orden__subswitch"><input type="checkbox" name="Disponibilidad" class="switch__orden" id="switch__existencia" value="En Existencia" ng-click="checkmark($event)"/><label for="switch__existencia" class="switch__orden--label">Toggle</label></div>
+
+					<div class="filtros__orden" ng-class="{'activo': menuOrdenAbierto}">
+						<div class="sidebar-header mobile-only">
+							<h2>Ordenar por</h2>
+							<button class="btn-cerrar" ng-click="toggleMenu('cerrar')">&times;</button>
 						</div>
-						<div class="contenedor__orden" ng-show="Ofertas[0].cantidad_repetida > 0">
-							<div class="orden__subtitle"><label for="switch__oferta">En oferta ({{Ofertas[0].cantidad_repetida}})</label></div>
-							<div class="orden__subswitch"><input type="checkbox" name="Disponibilidad" class="switch__orden" id="switch__oferta" value="Ofertas" ng-click="checkmark($event)"/><label for="switch__oferta" class="switch__orden--label">Toggle</label></div>
+
+						<div class="sidebar-content">
+							<div class="opcion__ordenamiento">
+								<label class="container__radio">Más Relevantes
+									<input type="radio" name="orden_radio" ng-checked="ordenSeleccionado === 'relevancia'" ng-click="cambiarOrden('', '')">
+									<span class="radiomark"></span>
+								</label>
+							</div>
+							<div class="opcion__ordenamiento">
+								<label class="container__radio">Menor Precio
+									<input type="radio" name="orden_radio" ng-checked="ordenSeleccionado === 'Precio1-ASC'" ng-click="cambiarOrden('Precio1', 'ASC')">
+									<span class="radiomark"></span>
+								</label>
+							</div>
+							<div class="opcion__ordenamiento">
+								<label class="container__radio">Mayor Precio
+									<input type="radio" name="orden_radio" ng-checked="ordenSeleccionado === 'Precio1-DESC'" ng-click="cambiarOrden('Precio1', 'DESC')">
+									<span class="radiomark"></span>
+								</label>
+							</div>
+							<div class="opcion__ordenamiento">
+								<label class="container__radio">Alfabético (A - Z)
+									<input type="radio" name="orden_radio" ng-checked="ordenSeleccionado === 'Producto-ASC'" ng-click="cambiarOrden('Producto', 'ASC')">
+									<span class="radiomark"></span>
+								</label>
+							</div>
 						</div>
-						<div class="contenedor__orden" ng-show="Nuevos[0].cantidad_repetida > 0">
-							<div class="orden__subtitle"><label for="switch__Articulos_Nuevos">Articulos Nuevos ({{Nuevos[0].cantidad_repetida}})</label></div>
-							<div class="orden__subswitch"><input type="checkbox" name="Disponibilidad" class="switch__orden" id="switch__Articulos_Nuevos" ng-click="checkmark($event)"/><label for="switch__Articulos_Nuevos" class="switch__orden--label">Toggle</label></div>
+
+						<div class="sidebar-footer mobile-only">
+							<button class="btn-ver-resultados" ng-click="toggleMenu('cerrar')">Cerrar</button>
 						</div>
-					</div>
-					<div class="filtro__aplicar">
-						<button class="filtro__aplicar--button dis-none">Borrar filtros</button>
 					</div>
 
-					<!-- Product -->
+					<div class="filtro__aplicar mobile-only" ng-show="etiquetasActivas.length > 0">
+						<button class="filtro__aplicar--button">Borrar filtros</button>
+					</div>
+
 					<div class="productos__refacciones bgwhite">
 						<div class="contenedor__buscador__encontrados">
-
 							<div class="search-product pos-relative catalogo__filtrado--buscador form-control">
-								<input type="text" name="search-product" placeholder="Buscar Producto..."
-									ng-model="refaccion.producto" ng-model-options="{debounce:1500}" id="prod_input">
-
+								<input type="text" name="search-product" placeholder="Buscar Producto..." ng-model="refaccion.producto" ng-model-options="{debounce:1500}" id="prod_input">
 								<button class="ab-r-m" ng-click="getRefaccion()">
 									<i class="fa fa-search" aria-hidden="true"></i>
 								</button>
 							</div>
-
 							<div class="Trefacciones__cont">
 								<span class="s-text8">
 									{{ cargando ? 'Buscando refacciones...' : Trefacciones + ' Refacciones encontradas.' }}
 								</span>
 							</div>
-
 						</div>
 						
 						<div class="loader-container" ng-show="cargando" style="text-align: center; padding: 50px 0;">
@@ -161,57 +208,41 @@
     					    <h3 style="color: #666; font-size: 18px;">Cargando refacciones...</h3>
     					</div>
 
-						<div class="nuestrosproductos__masvendidos">
+						<div class="nuestrosproductos__masvendidos" ng-hide="cargando">
 							<div class="home__pr" ng-repeat="producto in Refacciones">
-								<!-- Block2 -->
 								<div class="productos__informacion">
-
 									<div class="wrap-pic-w of-hidden cursorpnt">
-										<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}"
-											class="enlace">
-											<img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/'+producto._id+'.png':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}"
-												alt="{{producto.NewAltName}}">
-											<!-- <img ng-src="{{producto.imagen? 'images/refacciones/'+producto._id+'.png':'images/refacciones/'+producto._id+'.webp'}}" width="190" height="250" alt="{{producto.NewAltName}}"> -->
+										<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}" class="enlace">
+											<div class="avisos__productos">
+												<span class="nuevo__aviso bg-new" ng-show="producto.RefaccionNueva != 0">Nuevo</span>
+												<span class="agotado__aviso bg-advertencia" ng-show="producto.agotado">Agotado</span>
+												<span class="promocion__aviso bg-promo" ng-show="producto.RefaccionOferta">Promoción</span>
+												<span class="enviogratis__aviso bg-promo" ng-show="producto.Enviogratis">Envío gratis</span>
+											</div>
+											<img ng-src="{{producto.imagen? 'https://macromautopartes.com/images/refacciones/'+producto._id+'.png':'https://macromautopartes.com/images/refacciones/'+producto._id+'.webp'}}" alt="{{producto.NewAltName}}">
 										</a>
 									</div>
-
 									<div class="block2-txt">
 										<section class="descripcion-producto">
-											<div class="avisos__productos">
-												<span class="nuevo__aviso bg-new"
-													ng-show="producto.RefaccionNueva != 0">Nuevo</span>
-												<span class="agotado__aviso bg-advertencia"
-													ng-show="producto.agotado">Agotado</span>
-												<span class="promocion__aviso bg-promo"
-													ng-show="producto.RefaccionOferta">Promoción</span>
-												<span class="enviogratis__aviso bg-promo"
-													ng-show="producto.Enviogratis">Envío gratis</span>
+											<p class="block2-brand">{{producto.NombreProveedor}}</p>
+											<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
+											<div class="sku_row">
+												<span class="sku_label dis-block">No. Parte:</span>
+												<span class="sku_value dis-block">{{ producto.No_parte }}</span>
 											</div>
-											<a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}"
-												class="block2-name dis-block s-text3">{{producto.Producto}}</a>
 											<div class="precio__imgprove">
-												<p class="precio__producto price" ng-hide="producto.RefaccionOferta">
-													{{producto.Precio1 | currency}} </p>
-												<p class="precio__producto" ng-show="producto.RefaccionOferta"> <small
-														class="line_through-red">{{producto.Precio1 | currency}}</small>
-												</p>
-												<!-- <img ng-src="{{producto.imagenproveedor? 'https://macromautopartes.com/images/Marcasrefacciones/boxed-bg.jpg':'https://macromautopartes.com/images/Marcasrefacciones/' + producto.idProveedor + '.png'}}" 
-												alt="{{producto.tag_altproveedor}}" title="{{producto.tag_titleproveedor}}" class="proovedor__img"> -->
-												<img ng-src="{{producto.imagenproveedor? 'images/Marcasrefacciones/' + producto.idProveedor + '.png':'images/Marcasrefacciones/boxed-bg.jpg'}}"
-													alt="{{producto.tag_altproveedor}}"
-													title="{{producto.tag_titleproveedor}}" class="proovedor__img"
-													width="88" height="88">
+												<p class="precio__producto price" ng-hide="producto.RefaccionOferta">{{producto.Precio1 | currency}} </p>
+												<p class="precio__producto" ng-show="producto.RefaccionOferta"><small class="line_through-red">{{producto.Precio1 | currency}}</small>
+                                                    {{producto.Precio2 | currency}}
+                                                </p>
 											</div>
-
 										</section>
-
 									</div>
 								</div>
 							</div>
 						</div>
 
 						<script type="text/javascript">function toTop() { window.scrollTo(0, 0) } </script>
-						<!-- Pagination -->
 						<div class="pagination" ng-hide="cargando" ng-cloak>
     					    <a class="item-pagination flex-c-m trans-0-4 {{currentPage == (pag.no - 1)? 'active-pagination':''}}"
     					        ng-repeat='pag in pages' ng-click='setPage(pag.no)'>{{pag.no}}</a>
@@ -222,5 +253,4 @@
 			</div>
 		</div>
 	</main>
-
 </div>

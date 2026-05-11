@@ -4,55 +4,174 @@
         display: none;
     }
 
-    @media(min-width: 768px) {
-        .p-res {
-            margin-top: -6rem;
-        }
-    }
-
     canvas {
         background-color: transparent;
         height: 100vh;
         pointer-events: none;
         position: fixed;
         width: 100%;
-        z-index: 3;
+        z-index: 9999;
         top: 0;
+        left: 0;
+    }
+
+    .tarjeta-respuesta {
+        background: #ffffff;
+        border-radius: 1.5rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        padding: 4rem 3rem;
+        margin: -5rem auto 8rem auto;
+        position: relative;
+        max-width: 75rem;
+        border-top: 5px solid #de0007;
+        text-align: center;
+        z-index: 2;
+    }
+
+    .tarjeta-respuesta--exito {
+        border-top-color: #10b981; 
+    }
+    .tarjeta-respuesta--error {
+        border-top-color: #de0007; 
+        margin: 6rem auto 6rem auto !important;
+        z-index: 0 !important; 
+    }
+
+    .icono-respuesta {
+        font-size: 5.5rem;
+        margin-bottom: 1.5rem;
+        animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    .icono-respuesta--exito {
+        color: #10b981; 
+    }
+    .icono-respuesta--error {
+        color: #de0007;
+    }
+
+    /* Textos */
+    .tarjeta-titulo {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 800;
+        color: #1f2937;
+        font-size: 2.8rem;
+        margin-bottom: 1rem;
+        letter-spacing: -0.5px;
+    }
+    .tarjeta-mensaje {
+        font-family: 'Poppins', sans-serif;
+        color: #4b5563;
+        font-size: 1.6rem;
+        line-height: 1.6;
+        margin-bottom: 3.5rem;
+        max-width: 60rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .tarjeta-mensaje strong {
+        color: #111827;
+    }
+
+    .btn-moderno {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        background-color: #1f2937;
+        color: #ffffff !important;
+        padding: 1.2rem 3rem;
+        border-radius: 5rem; 
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        text-decoration: none;
+    }
+    .btn-moderno:hover {
+        background-color: #000000;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Animación popIn */
+    @keyframes popIn {
+        0% { transform: scale(0); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    @media (max-width: 600px) {
+        .tarjeta-respuesta { margin: -3rem 1.5rem 4rem 1.5rem; padding: 3rem 2rem; }
+        .tarjeta-respuesta--error { margin: 4rem 1.5rem 4rem 1.5rem !important; }
+        
+        .tarjeta-titulo { font-size: 2.2rem; }
+        .btn-moderno { width: 100%; }
     }
 </style>
+
 <span id="button"></span>
 <canvas id="canvas"></canvas>
-<section ng-controller="ProcesoCompraCtrl" class="p-res">
 
-    <div ng-controller="CabeceraCtrl" ng-init="mod='{mod}'">
-        <section class="titular__banner">
-            <div ng-repeat="banner in dataBanners.Escritorio">
-                <img loading="lazy" ng-src="https://macromautopartes.com/images/Banners/{{banner.imagen}}"
-                    alt="banner compras">
+<section ng-controller="ProcesoCompraCtrl" ng-init="mensajePHP = '{mensaje}'; esError = (mensajePHP.toLowerCase().indexOf('error') !== -1 || mensajePHP.toLowerCase().indexOf('declinad') !== -1 || mensajePHP.toLowerCase().indexOf('rechazad') !== -1)" ng-class="{'p-res': !esError}" class="pb-5">
+    <div ng-controller="CabeceraCtrl">
+        
+        <section class="titular__banner" style="position: relative; z-index: 1;" ng-show="!esError">
+            <div ng-repeat="banner in dataBanners.Escritorio" style="width: 100%;">
+                <img loading="lazy" ng-src="https://macromautopartes.com/images/Banners/{{banner.imagen}}" alt="banner compras" style="width: 100%; object-fit: cover;">
             </div>
-            <!-- <img src="images/Banners/Compras.png" alt="Banner compras"> Activar solo en la pagina bien -->
         </section>
 
-        <section class="contenedor__CompraAcreditada">
+        <section class="contenedor">
             <div class="container">
-                <div class="">
-                    <div class="Proceso__Compra">
-                        <div class="d-grid">
-                            <img ng-src="https://macromautopartes.com/images/icons/CR-caja.png"
-                                class="Proceso__Compra--img" alt="">
-                            <div class="m-text26 Proceso__Compra2 center--text">
-                                {mensaje}
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="tarjeta-respuesta" ng-class="{'tarjeta-respuesta--error': esError, 'tarjeta-respuesta--exito': !esError}">
+                            
+                            <div ng-show="esError">
+                                <div class="icono-respuesta icono-respuesta--error">
+                                    <i class="fas fa-times-circle"></i>
+                                </div>
+                                <h2 class="tarjeta-titulo">¡Pago Declinado!</h2>
+                                <p class="tarjeta-mensaje">
+                                    Lo sentimos, no pudimos procesar el cobro a tu tarjeta.<br>
+                                    <span style="font-size: 1.4rem; color: #de0007; display: block; margin-top: 1rem;">
+                                        <strong>Motivo del banco:</strong> {{mensajePHP}}
+                                    </span>
+                                </p>
+                                
+                                <div>
+                                    <button class="btn-moderno" onclick="location.href = '?mod=home'">
+                                        <i class="fas fa-home"></i> Volver al Inicio
+                                    </button>
+                                </div>
                             </div>
+
+                            <div ng-show="!esError">
+                                <div class="icono-respuesta icono-respuesta--exito">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <h2 class="tarjeta-titulo">¡Compra Realizada con Éxito!</h2>
+                                <p class="tarjeta-mensaje">
+                                    Tu pago ha sido acreditado correctamente y tu pedido ya se encuentra en preparación.<br>
+                                    Te hemos enviado un correo con todos los detalles.
+                                </p>
+                                
+                                <div>
+                                    <button class="btn-moderno" onclick="location.href = '?mod=Profile&opc=Mispedidos'">
+                                        <i class="fas fa-box-open"></i> Rastrear mi pedido
+                                    </button>
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="acreditar__contenedor--links">
-                            <button class="acreditar__boton" onclick="location.href = '?mod=Profile&opc=Mispedidos'">Ver
-                                Mis
-                                Pedidos</button>
-                        </div>
+
                     </div>
                 </div>
             </div>
         </section>
+        
     </div>
-
 </section>

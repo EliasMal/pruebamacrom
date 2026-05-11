@@ -1,137 +1,232 @@
 <!DOCTYPE html>
 <html lang="es">
-  <script src="//code.angularjs.org/1.8.2/angular.min.js"></script>
-<script type="text/javascript" src="./Js/ComprobantePago.js"></script>
-<link rel="stylesheet" type="text/css" href="../../vendor/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="../../../css/main.css">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comprobante de Pago</title>
+    <title>Comprobante de Pago - Macrom Autopartes</title>
+    
+    <script src="//code.angularjs.org/1.8.2/angular.min.js"></script>
+    <script type="text/javascript" src="./Js/ComprobantePago.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../vendor/bootstrap/css/bootstrap.min.css">
+    
+    <style>
+        /* Estilos base */
+        body { background-color: #f3f4f6; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #374151; margin: 0; padding: 0; }
+        
+        .invoice-box {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 40px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        /* Encabezado */
+        .invoice-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #e5e7eb; padding-bottom: 20px; margin-bottom: 25px; }
+        .invoice-logo { width: 50%; }
+        .invoice-logo img { max-height: 55px; max-width: 100%; object-fit: contain; }
+        .invoice-title-box { width: 50%; text-align: right; }
+        .invoice-title { font-size: 1.8rem; font-weight: 800; color: #1f2937; margin: 0 0 5px 0; text-transform: uppercase; }
+        .invoice-number { font-size: 1.1rem; color: #6b7280; font-weight: 600; }
+        
+        /* Estatus */
+        #estadoPedido { font-size: 1.2rem; font-weight: 700; margin-top: 5px; text-transform: uppercase; }
+        
+        /* Info Boxes (Flexbox nativo) */
+        .info-grid { display: flex; width: 100%; background: #f9fafb; border-radius: 8px; margin-bottom: 25px; border: 1px solid #f3f4f6; }
+        .info-item { width: 50%; padding: 20px; }
+        .info-item-right { text-align: right; border-left: 1px solid #e5e7eb; }
+        .info-item h6 { font-size: 0.8rem; text-transform: uppercase; color: #9ca3af; font-weight: 700; margin: 0 0 5px 0; }
+        .info-item p { font-size: 1rem; color: #1f2937; font-weight: 600; margin: 0; }
+
+        /* Direcciones (Flexbox) */
+        .address-box { display: flex; width: 100%; margin-bottom: 30px; gap: 20px; }
+        .address-col { width: 50%; }
+        .address-title { font-size: 0.9rem; text-transform: uppercase; color: #de0007; font-weight: 700; margin: 0 0 10px 0; border-bottom: 1px solid #fecaca; padding-bottom: 5px; }
+        .address-text strong { display: block; font-size: 1.1rem; color: #1f2937; margin-bottom: 5px; }
+        .address-text { font-size: 0.95rem; color: #4b5563; line-height: 1.5; }
+
+        /* Tabla de Productos */
+        .table-invoice { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .table-invoice th { background-color: #f9fafb; color: #4b5563; font-weight: 700; text-transform: uppercase; font-size: 0.85rem; border-bottom: 2px solid #e5e7eb; padding: 12px; text-align: left; }
+        .table-invoice td { padding: 15px 12px; vertical-align: middle; border-bottom: 1px solid #f3f4f6; }
+        
+        .item-row { display: flex; align-items: center; }
+        .item-qty { background: #fee2e2; color: #de0007; padding: 3px 8px; border-radius: 6px; font-weight: 700; margin-right: 12px; font-size: 0.9rem; min-width: 35px; text-align: center; }
+        .item-name { font-weight: 600; color: #1f2937; font-size: 1.05rem; margin: 0 0 2px 0; line-height: 1.2; }
+        .item-sku { font-size: 0.85rem; color: #9ca3af; margin: 0; }
+        .item-price { font-weight: 700; color: #1f2937; font-size: 1.05rem; text-align: right; }
+
+        /* Totales */
+        .totals-wrapper { display: flex; justify-content: flex-end; width: 100%; margin-top: 20px; }
+        .totals-box { width: 350px; }
+        .totals-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f3f4f6; color: #4b5563; }
+        .totals-row.discount { color: #de0007; }
+        .totals-row.grand-total { font-size: 1.3rem; font-weight: 800; color: #1f2937; border-bottom: none; border-top: 2px solid #e5e7eb; padding-top: 15px; margin-top: 5px; }
+
+        /* Footer */
+        .invoice-footer { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #9ca3af; font-size: 0.9rem; }
+        .invoice-footer strong { color: #4b5563; }
+
+        /* Botón de Imprimir */
+        .print-btn-container { text-align: center; margin-top: 30px; margin-bottom: 10px; }
+        .printbutton { background: #1f2937; color: white; border: none; padding: 12px 30px; border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .printbutton:hover { background: #de0007; }
+        .printbutton img { width: 20px; margin-right: 8px; filter: brightness(0) invert(1); vertical-align: middle; }
+
+        @media (max-width: 768px) {
+            .invoice-box { padding: 20px; margin: 15px auto; }
+            
+            /* Cabecera: Apilada y centrada */
+            .invoice-header { flex-direction: column; align-items: center; text-align: center; border-bottom: 1px solid #e5e7eb; padding-bottom: 15px; }
+            .invoice-logo, .invoice-title-box { width: 100%; text-align: center; }
+            .invoice-logo { margin-bottom: 15px; }
+            .invoice-title { font-size: 1.5rem; margin-top: 10px; }
+            
+            /* Direcciones: Apiladas */
+            .address-box { flex-direction: column; gap: 25px; }
+            .address-col { width: 100%; }
+            
+            /* Totales: Al 100% de la pantalla */
+            .totals-wrapper { justify-content: center; }
+            .totals-box { width: 100%; }
+            
+            /* Tabla: Ajustes de padding para que quepa bien */
+            .table-invoice th, .table-invoice td { padding: 10px 5px; }
+            .item-name { font-size: 0.95rem; }
+            .item-price { font-size: 0.95rem; }
+        }
+
+        @media print {
+            body { background-color: #ffffff !important; }
+            .invoice-box { box-shadow: none !important; margin: 0 !important; padding: 0 !important; width: 100% !important; max-width: 100% !important; }
+            .print-btn-container, .no-print { display: none !important; }
+            * { -webkit-print-color-adjust: exact !important; color-adjust: exact !important; }
+            tr { page-break-inside: avoid; }
+        }
+    </style>
 </head>
-<body ng-app="RptsuruVolks" class="ComprobantePago__Body">
-    <div class="toolbar--comprobantepago"></div>
-    <div class="contenedor__ComprobantePago mt-3" ng-controller="ComprobantePagoCtrl">
-        <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                 <img class="rounded mx-auto d-block" src="https://macromautopartes.com/images/icons/logomacrom.png">
+
+<body ng-app="RptsuruVolks" ng-controller="ComprobantePagoCtrl">
+    
+    <div class="print-btn-container no-print">
+        <button class="printbutton" ng-click="imprimirComprobante()">
+            <img src="https://macromautopartes.com/images/icons/icono-impresion.png" alt="Imprimir"> Imprimir Comprobante
+        </button>
+    </div>
+
+    <div class="invoice-box">
+        
+        <div class="invoice-header">
+            <div class="invoice-logo">
+                <img src="https://macromautopartes.com/images/icons/logomacrom.png" alt="Macrom Autopartes">
             </div>
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <h1 class="text-center text-danger" id="estadoPedido"></h1>
+            <div class="invoice-title-box">
+                <h1 class="invoice-title">Comprobante</h1>
+                <div class="invoice-number">Pedido <span class="text-danger">#{{Comprobante.noPedido}}</span></div>
+                <div id="estadoPedido" ng-class="estadoClase">{{estadoTexto}}</div>
             </div>
         </div>
 
-        <div class="row mt-3">
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                <h3>Pedido: <span class="text-danger" id="nopedido">{{Comprobante.noPedido}}</span></h3>
-                <img src="https://macromautopartes.com/images/icons/icono-impresion.png" alt="Impresora" class="printbutton" value="Imprimir">
+        <div class="info-grid">
+            <div class="info-item">
+                <h6>Método de Pago</h6>
+                <p>{{Comprobante.FormaPago}}</p>
+            </div>
+            <div class="info-item info-item-right">
+                <h6>Fecha de Emisión</h6>
+                <p>{{Comprobante.fechaObj | date:'mediumDate'}}</p>
             </div>
         </div>
-        <hr>
-        <div class="row">
-            <div class="col col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <label>Metodo de pago</label>
-                <p><b>{{Comprobante.FormaPago}}</b></p>
-            </div>
 
-            <div class="col col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <div class="text-right">
-                    <label>Metodo de Pago</label>
-                    <p><b>{{Comprobante.fecha}}</b></p>
+        <div class="address-box">
+            <div class="address-col">
+                <h5 class="address-title">Enviado A:</h5>
+                <div class="address-text">
+                    <strong>{{Comprobante.nombreCliente}}</strong>
+                    {{Comprobante.Domicilio}} #{{Comprobante.numExt}}<span ng-show="Comprobante.numInt">-{{Comprobante.numInt}}</span><br>
+                    Col. {{Comprobante.Colonia}}<br>
+                    {{Comprobante.Ciudad}}, {{Comprobante.Estado}}, C.P. {{Comprobante.Codigo_postal}}<br>
+                    México
+                </div>
+            </div>
+            
+            <div class="address-col">
+                <h5 class="address-title">Datos de Facturación:</h5>
+                <div class="address-text" ng-show="Comprobante.Facturacion=='0'">
+                    <span style="color:#9ca3af; font-style:italic;">No se solicitaron datos fiscales.</span>
+                </div>
+                <div class="address-text" ng-show="Comprobante.Facturacion=='1'">
+                    <strong>{{Comprobante.Razonsocial}}</strong>
+                    RFC: {{Comprobante.Rfc}}<br>
+                    {{Comprobante.Fdomicilio}}<br>
+                    Col. {{Comprobante.Fcolonia}}, C.P. {{Comprobante.FCodigo_postal}}<br>
+                    {{Comprobante.FCiudad}}, {{Comprobante.FEstado}}
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <label>Enviado a:</label>
-                <address>
-                    <strong>{{Comprobante.nombreCliente}}</strong><br>
-                    <strong>{{Comprobante.Domicilio}} #{{Comprobante.numExt}}-{{Comprobante.numInt}}, Col. {{Comprobante.Colonia}}.</strong><br>
-                    <strong>{{Comprobante.Ciudad}}, {{Comprobante.Estado}}, {{Comprobante.Codigo_postal}}.</strong><br>
-                    <strong>México</strong>
-                </address>
-            </div>
-            <div class="col col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <div class="text-right">
-                    <label>Tu factura se emitira con los siguientes datos</label>
-                    <p ng-show="Comprobante.Facturacion=='0'"><b>No aplica</b></p>
-                    <address ng-show="Comprobante.Facturacion=='1'">
-                        <strong>{{Comprobante.Razonsocial}}</strong><br>
-                        <strong>RFC: {{Comprobante.Rfc}}</strong><br>
-                        <strong>{{Comprobante.Fdomicilio}}, Col. {{Comprobante.Fcolonia}}.</strong><br>
-                        <strong>{{Comprobante.FCiudad}}, {{Comprobante.FEstado}}, {{Comprobante.FCodigo_postal}}.</strong><br>
-                        <strong>México</strong>
-                    </address>
+
+        <table class="table-invoice">
+            <thead>
+                <tr>
+                    <th width="75%">Descripción del Artículo</th>
+                    <th width="25%" style="text-align: right;">Importe</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="r in Comprobante.Detalles">
+                    <td>
+                        <div class="item-row">
+                            <span class="item-qty">{{r.cantidad}}x</span>
+                            <div>
+                                <p class="item-name">{{r.Producto}}</p>
+                                <p class="item-sku">SKU: {{r.No_parte}}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="item-price">
+                        {{(r.Importe / 1.16)*r.cantidad | currency}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="totals-wrapper">
+            <div class="totals-box">
+                <div class="totals-row">
+                    <span>Sub-Total:</span>
+                    <strong>{{Comprobante.Importe / 1.16 | currency}}</strong>
+                </div>
+                <div class="totals-row">
+                    <span>Envío:</span>
+                    <strong>{{Comprobante.cenvio / 1.16 | currency}}</strong>
+                </div>
+                <div class="totals-row">
+                    <span>16% I.V.A.:</span>
+                    <strong>{{Comprobante.Totalpedido - (Comprobante.Totalpedido/1.16) | currency}}</strong>
+                </div>
+                
+                <div class="totals-row discount" ng-show="Comprobante.descuento > 0">
+                    <span>Descuento aplicado:</span>
+                    <strong>- {{Comprobante.descuento | currency}}</strong>
+                </div>
+                
+                <div class="totals-row grand-total">
+                    <span>Total (MXN):</span>
+                    <span ng-show="Comprobante.descuento > 0">{{Comprobante.Totalpedido - Comprobante.descuento | currency}}</span>
+                    <span ng-hide="Comprobante.descuento > 0">{{Comprobante.Totalpedido | currency}}</span>
                 </div>
             </div>
         </div>
-        <hr>
-        <div class="row">
-            <div class="ol col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <table class="table">
-                    <th width="80%">Producto(s)</th>
-                    <th width="20%">Importe</th>
-                    <tbody>
-                        <tr ng-repeat="r in Comprobante.Detalles">
-                            <td>
-                                <span class="text-danger">{{r.cantidad}}x</span><b>{{r.Producto}}</b>
-                                <p>SKU: {{r.No_parte}}</p>
-                            </td>
-                            <td class="text-right">
-                                <b>{{(r.Importe / 1.16)*r.cantidad | currency}}</b>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 
-            </div>
-            <div class="col col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <td width="80%" class="text-right">Sub-Total:</td>
-                            <td width="20%" class="text-right"><b>{{Comprobante.Importe / 1.16 | currency}}</b></td>
-                        </tr>
-                        <tr>
-                            <td width="80%" class="text-right">Envio:</td>
-                            <td width="20%" class="text-right"><b>{{Comprobante.cenvio/1.16 | currency}}</b></td>
-                        </tr>
-                        <tr>
-                            <td width="80%" class="text-right">16% IVA:</td>
-                            <td width="20%" class="text-right"><b>{{Comprobante.Totalpedido - (Comprobante.Totalpedido/1.16) | currency}}</b></td>
-                        </tr>
-                        <tr ng-show="Comprobante.descuento > 0">
-                            <td width="80%" class="text-right">SubTotal:</td>
-                            <td width="20%" class="text-right"><b>{{Comprobante.Totalpedido | currency}}</b></td>
-                        </tr>
-                        <tr ng-show="Comprobante.descuento > 0">
-                            <td width="80%" class="text-right txtred">Descuento:</td>
-                            <td width="20%" class="text-right txtred"><b>{{Comprobante.descuento | currency}}</b></td>
-                        </tr>
-                        <tr ng-show="Comprobante.descuento > 0">
-                            <td width="80%" class="text-right">Total:</td>
-                            <td width="20%" class="text-right"><b>{{Comprobante.Totalpedido - Comprobante.descuento | currency}}</b></td>
-                        </tr>
-                        <tr ng-hide="Comprobante.descuento > 0">
-                            <td width="80%" class="text-right">Total:</td>
-                            <td width="20%" class="text-right"><b>{{Comprobante.Totalpedido | currency}}</b></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <p class="text-center"><b>www.macromautopartes.com</b></p>
-            </div>
+        <div class="invoice-footer">
+            <p>Gracias por tu compra. Si tienes alguna duda sobre este comprobante, contáctanos.</p>
+            <strong>www.macromautopartes.com</strong>
         </div>
 
     </div>
+
 </body>
 </html>

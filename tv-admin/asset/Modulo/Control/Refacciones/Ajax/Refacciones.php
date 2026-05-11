@@ -67,12 +67,18 @@
 
                         case 'EliminarVehiculo':
                                 if($this->EliminarComp()){
-                                    $detalle = "Eliminó compatibilidad para la refacción ID: {$this->formulario['id_imagen']}";
+                                    $id_imagen = $this->formulario['id_imagen'];
+                                    $sqlProd = "SELECT Clave, Producto FROM Producto WHERE _id = '$id_imagen'";
+                                    $rowProd = $this->conn->fetch($this->conn->query($sqlProd));
+                                    $prodName = $rowProd ? addslashes($rowProd['Producto']) : 'Producto Desconocido';
+                                    $prodClave = $rowProd ? $rowProd['Clave'] : 'S/C';
+
+                                    $detalle = "<b>$prodName</b> (Clave: $prodClave) <br> <small class='text-danger'>Eliminó un vehículo de las compatibilidades.</small>";
                                     Funciones::guardarBitacora($this->conn, 'Refacciones', 'ELIMINAR_COMPATIBILIDAD', $detalle);
                                     
                                     $usr = $_SESSION["nombre"] ?? 'Usuario';
                                     $sqlAct = "INSERT INTO actividad (clavepr, usuario, datosdiff, fecha_modificacion) 
-                                               VALUES ('{$this->formulario['id_imagen']}', '$usr', 'Eliminó un vehículo de las compatibilidades.', '".date("Y-m-d H:i:s")."')";
+                                               VALUES ('$id_imagen', '$usr', 'Eliminó un vehículo de las compatibilidades.', '".date("Y-m-d H:i:s")."')";
                                     $this->conn->query($sqlAct);
 
                                     $this->jsonData["Bandera"] = 1;
@@ -93,12 +99,17 @@
                     break;
                     
                 case 'delete':
+                        $idBorrado = $this->formulario["id"];
+                        $sqlProd = "SELECT Clave, Producto FROM Producto WHERE _id = '$idBorrado'";
+                        $rowProd = $this->conn->fetch($this->conn->query($sqlProd));
+                        $prodName = $rowProd ? addslashes($rowProd['Producto']) : 'Producto Desconocido';
+                        $clave = $rowProd ? $rowProd['Clave'] : ($this->formulario["Clave"] ?? "S/C");
+
                     if($this->deleteRefaccionCompleta()){
                         $usr = $_SESSION["nombre"] ?? 'Usuario';
-                        $clave = $this->formulario["Clave"] ?? "S/C";
-                        $idBorrado = $this->formulario["id"];
                         
-                        Funciones::guardarBitacora($this->conn, 'Refacciones', 'ELIMINAR_REFACCION', "Eliminó permanentemente la refacción ID: $idBorrado - Clave: $clave");
+                        $det = "<b>$prodName</b> (Clave: $clave) <br> <small class='text-danger'>Refacción eliminada permanentemente del sistema.</small>";
+                        Funciones::guardarBitacora($this->conn, 'Refacciones', 'ELIMINAR_REFACCION', $det);
                         
                         $this->jsonData["Bandera"] = 1;
                         $this->jsonData["mensaje"] = "Refacción eliminada correctamente";
@@ -117,17 +128,20 @@
                         
                         $clave = $this->formulario["Clave"] ?? "S/C";
                         $usr = $_SESSION["nombre"] ?? 'Usuario';
+                        $nombreProducto = addslashes($this->formulario["Producto"] ?? 'Producto Desconocido');
 
                         if($this->formulario["opc"] == "new"){
-                            $det = "Registró nueva refacción: $clave. Manual: {$this->formulario['precio_manual']}";
-                            Funciones::guardarBitacora($this->conn, 'Refacciones', 'NUEVA_REFACCION', $det);
+                            $det = "<b>$nombreProducto</b> (Clave: $clave)";
+                            Funciones::guardarBitacora($this->conn, 'Refacciones', 'CREAR_REFACCION', $det);
                             $sqlAct = "INSERT INTO actividad (clavepr, usuario, datosdiff, fecha_modificacion) 
                                        VALUES ('{$this->formulario["lastid"]}', '$usr', 'Registro inicial de la pieza.', '".date("Y-m-d H:i:s")."')";
                             $this->conn->query($sqlAct);
 
                         } else {
-                            $diffs = ($this->formulario["diferencias"] != "{}" && !empty($this->formulario["diferencias"])) ? $this->formulario["diferencias"] : "Cambios en la ficha técnica";
-                            Funciones::guardarBitacora($this->conn, 'Refacciones', 'EDITAR_REFACCION', "ID: {$this->formulario['_id']} - $diffs");
+                            $diffs = ($this->formulario["diferencias"] != "{}" && !empty($this->formulario["diferencias"])) ? $this->formulario["diferencias"] : "Modificación general";
+                            $detBitacora = "<b>$nombreProducto</b> (Clave: $clave) <br> <small class='text-muted'>$diffs</small>";
+
+                            Funciones::guardarBitacora($this->conn, 'Refacciones', 'EDITAR_REFACCION', $detBitacora);
 
                             $sqlAct = "INSERT INTO actividad (clavepr, usuario, datosdiff, fecha_modificacion) 
                                        VALUES ('{$this->formulario['_id']}', '$usr', '$diffs', '".date("Y-m-d H:i:s")."')";
@@ -163,7 +177,12 @@
                     VALUES ('$clave', '$idmarca', '$idmodelo', '$generacion', '$ainicial', '$afinal', '$motor', '$transmision', '$especificaciones', '$id_imagen')";
             
             if ($this->conn->query($sql)) {
-                $detalle = "Agregó nuevo vehículo a compatibilidades para la pieza ID: $id_imagen";
+                $sqlProd = "SELECT Clave, Producto FROM Producto WHERE _id = '$id_imagen'";
+                $rowProd = $this->conn->fetch($this->conn->query($sqlProd));
+                $prodName = $rowProd ? addslashes($rowProd['Producto']) : 'Producto Desconocido';
+                $prodClave = $rowProd ? $rowProd['Clave'] : 'S/C';
+
+                $detalle = "<b>$prodName</b> (Clave: $prodClave) <br> <small class='text-muted'>Agregó vehículo compatible: $generacion $ainicial-$afinal</small>";
                 Funciones::guardarBitacora($this->conn, 'Refacciones', 'NUEVA_COMPATIBILIDAD', $detalle);
 
                 $sqlAct = "INSERT INTO actividad (clavepr, usuario, datosdiff, fecha_modificacion) 

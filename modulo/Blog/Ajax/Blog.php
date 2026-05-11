@@ -9,7 +9,6 @@
         private $jsonData = array("Bandera"=>0,"mensaje"=>"");
         private $formulario;
         
-
         public function __construct($array) {
             $this->conn = new HelperMySql($array["server"], $array["user"], $array["pass"], $array["db"]);
         }
@@ -31,8 +30,8 @@
                     break;
                     case 'getPost':
                         $this->jsonData["Bandera"] = 1;
-                        $this->jsonData["Data"] = $this->getPost($this->formulario->id,$this->formulario->skip, $this->formulario->limit);
-                        break;
+                        $this->jsonData["Data"] = $this->getPost($this->formulario->id, $this->formulario->skip, $this->formulario->limit);
+                    break;
                 }    
     
                 print json_encode($this->jsonData);
@@ -40,44 +39,57 @@
 
         private function getEntradas($skip, $limit){
             $array = array();
-            $sql = "SELECT * from Blog where Publicar = 1 and Estatus = 1 order by Fecha desc LIMIT $skip, $limit";
-            $id = $this->conn->query($sql);
-            while($row = $this->conn->fetch($id)){
+            $skip_s = intval($skip);
+            $limit_s = intval($limit);
+            
+            $sql = "SELECT _id, Title, Contenido, imagendestacada, Estatus, Publicar, Fecha FROM Blog WHERE Publicar = 1 AND Estatus = 1 ORDER BY Fecha DESC LIMIT $skip_s, $limit_s";
+            $res = $this->conn->query($sql);
+            
+            while($row = $this->conn->fetch($res)){
                 $row["Title"] = html_entity_decode($row["Title"]);
-                $row["Contenido"] = substr(strip_tags(html_entity_decode($row["Contenido"])),0,150);
-                $row["Estatus"]=$row["Estatus"]==1? true:false;
-                $row["Publicar"]=$row["Publicar"]==1? true:false;
+                $row["Contenido"] = substr(strip_tags(html_entity_decode($row["Contenido"])), 0, 150);
+                $row["Estatus"] = $row["Estatus"] == 1 ? true : false;
+                $row["Publicar"] = $row["Publicar"] == 1 ? true : false;
                 array_push($array, $row);
             }
             return $array;
         }
 
         private function getOneEntrada($id){
-            $sql = "SELECT _id, Title, Contenido, Estatus, Publicar, Imagen, DATE(Fecha) as FechaCorta FROM Blog WHERE _id = $id";
+            $id_s = intval($id);
+            
+            $sql = "SELECT _id, Title, Contenido, Estatus, Publicar, Imagen, DATE(Fecha) as FechaCorta FROM Blog WHERE _id = $id_s";
             $row = $this->conn->fetch($this->conn->query($sql));
-            $row["Title"] = html_entity_decode($row["Title"]);
-            $row["Contenido"] = html_entity_decode($row["Contenido"]);
-            $row["Estatus"]=$row["Estatus"]==1? true:false;
-            $row["Publicar"]=$row["Publicar"]==1? true:false;
-
+            
+            if($row) {
+                $row["Title"] = html_entity_decode($row["Title"]);
+                $row["Contenido"] = html_entity_decode($row["Contenido"]);
+                $row["Estatus"] = $row["Estatus"] == 1 ? true : false;
+                $row["Publicar"] = $row["Publicar"] == 1 ? true : false;
+            }
             return $row;
         }
 
         private function getPost($id, $skip=0, $limit=3){
             $array = array();
-            $sql = "SELECT * from Blog where Publicar = 1 and Estatus = 1 and  _id != $id order by Fecha desc LIMIT $skip, $limit";
-            $id = $this->conn->query($sql);
-            while($row = $this->conn->fetch($id)){
+            $id_s = intval($id);
+            $skip_s = intval($skip);
+            $limit_s = intval($limit);
+
+            $sql = "SELECT _id, Title, Contenido, imagendestacada, Estatus, Publicar, Fecha FROM Blog WHERE Publicar = 1 AND Estatus = 1 AND _id != $id_s ORDER BY Fecha DESC LIMIT $skip_s, $limit_s";
+            $res = $this->conn->query($sql);
+            
+            while($row = $this->conn->fetch($res)){
                 $row["Title"] = html_entity_decode($row["Title"]);
-                $row["Contenido"] = substr(strip_tags(html_entity_decode($row["Contenido"])),0,150);
-                $row["Estatus"]=$row["Estatus"]==1? true:false;
-                $row["Publicar"]=$row["Publicar"]==1? true:false;
+                $row["Contenido"] = substr(strip_tags(html_entity_decode($row["Contenido"])), 0, 150);
+                $row["Estatus"] = $row["Estatus"] == 1 ? true : false;
+                $row["Publicar"] = $row["Publicar"] == 1 ? true : false;
                 array_push($array, $row);
             }
             return $array;
         }
-        
     }
 
-    $app = new blog($array_principal);
+    $app = new Blog($array_principal);
     $app->main();
+?>

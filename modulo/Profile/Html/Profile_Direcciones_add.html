@@ -1,134 +1,145 @@
-<section  ng-controller="ProfileCtrl" ng-init="pag='{opc}'" class="global__content">
-    <div class="banner Direc__perfil" id="PerfilDark">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 perfil__navegador">
-                    <div class="list-group">
-                        <a class="list-group-item list-group-item-action" ng-click="btnMenulinks('Mispedidos')"> <i alt="logo-mispedidos" class="fa fa-shopping-cart"></i>Mis pedidos</a>
-                        <a class="list-group-item list-group-item-action" ng-click="btnMenulinks('Session')"><i alt="logo-sesion-seguridad" class="fa fa-shield-alt"></i>Sessi&oacute;n y Seg&uacute;ridad</a>
-                        <a class="list-group-item list-group-item-action active" ng-click="btnMenulinks('Direcciones')"> <i alt="logo-direcciones" class="fa fa-map-marked-alt"></i>Direcciones</a>
-                        <a class="list-group-item list-group-item-action" ng-click="btnMenulinks('Facturacion')"><i alt="logo-facturacion" class="fa fa-file-invoice-dollar"></i> Datos de Facturación</a>
-                    </div>
+<style>
+    .perfil__navegador .list-group-item {
+        border: none; border-radius: 8px !important; margin-bottom: 5px;
+        color: #4b5563; font-weight: 500; transition: all 0.3s ease; cursor: pointer;
+    }
+    .perfil__navegador .list-group-item:hover { background-color: #f3f4f6; color: #de0007; transform: translateX(5px); }
+    .perfil__navegador .list-group-item.active {
+        background-color: #de0007 !important; color: #fff !important; box-shadow: 0 4px 10px rgba(222,0,7,0.2);
+    }
+    .perfil__navegador .list-group-item i { width: 25px; text-align: center; margin-right: 10px; }
+
+    /* Formulario Premium */
+    .form-premium {
+        background-color: #f9fafb !important;
+        border: 1px solid #e5e7eb !important;
+        border-radius: 8px !important;
+        padding: 12px 15px;
+        font-size: 1rem;
+        color: #374151;
+        transition: all 0.3s ease;
+        box-shadow: none !important;
+    }
+    .form-premium:focus {
+        background-color: #fff !important;
+        border-color: #de0007 !important;
+        box-shadow: 0 0 0 4px rgba(222,0,7,0.1) !important;
+    }
+
+    /* Mensaje de Ayuda */
+    .alert-envio {
+        background-color: #fff5f5;
+        border: 1px dashed #fecaca;
+        border-radius: 8px;
+        padding: 15px 20px;
+        display: flex;
+        align-items: center;
+    }
+    .alert-envio img { width: 35px; height: auto; margin-right: 15px; }
+    .alert-envio p { margin: 0; color: #b91c1c; font-weight: 600; font-size: 0.95rem; }
+
+    /* Botones */
+    .btn-guardar { border-radius: 8px; font-weight: 600; padding: 10px 25px; transition: all 0.3s ease; }
+    .btn-guardar:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(222,0,7,0.2); }
+    .btn-cancelar { border-radius: 8px; font-weight: 600; padding: 10px 25px; transition: all 0.3s ease; background-color: #f3f4f6; color: #4b5563; border: 1px solid #d1d5db; }
+    .btn-cancelar:hover { background-color: #e5e7eb; color: #1f2937; }
+</style>
+
+<section ng-controller="ProfileCtrl" ng-init="pag='{opc}'" class="global__content mb-5">
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 perfil__navegador mb-4">
+                <div class="list-group shadow-sm p-3 bg-white" style="border-radius: 12px; border: 1px solid #e5e7eb;">
+                    <h5 class="text-center font-weight-bold text-dark mb-4 mt-2">Mi Cuenta</h5>
+                    <a class="list-group-item" ng-click="btnMenulinks('Mispedidos')"><i class="fa fa-shopping-cart"></i>Mis pedidos</a>
+                    <a class="list-group-item" ng-click="btnMenulinks('Session')"><i class="fa fa-shield-alt"></i>Sesión y Seguridad</a>
+                    <a class="list-group-item active" ng-click="btnMenulinks('Direcciones')"><i class="fa fa-map-marked-alt"></i>Direcciones</a>
+                    <a class="list-group-item" ng-click="btnMenulinks('Facturacion')"><i class="fa fa-file-invoice-dollar"></i>Datos de Facturación</a>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb gris">
-                          <li class="breadcrumb-item"><a href="?mod=Profile&opc=Session"><strong>Mi Cuenta</strong> </a></li>
-                          <li class="breadcrumb-item"><a href="#" ng-click="btnMenulinks('Direcciones')">Direcciones</a> </li>
-                          <li class="breadcrumb-item active" aria-current="page">Agregrar Domicilio</li>
-                        </ol>
-                    </nav>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                            <div class="title-header">
-                                <!-- <img src="https://macromautopartes.com/images/icons/icono_direcciones_rojo.png" alt="logo-direcciones" class="img icon-logos-grande"> -->
-                                <img src="images/icons/icono_direcciones_rojo.png" alt="logo-direcciones" class="img icon-logos-grande">
-                                <h2>Agregar direccion de entrega</h2>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-white shadow-sm" style="border-radius: 8px; border: 1px solid #e5e7eb;">
+                      <li class="breadcrumb-item"><a href="?mod=Profile&opc=Session" style="color: #de0007;">Mi Cuenta</a></li>
+                      <li class="breadcrumb-item"><a href="#" ng-click="btnMenulinks('Direcciones')" style="color: #de0007;">Direcciones</a> </li>
+                      <li class="breadcrumb-item active" aria-current="page">Agregar Domicilio</li>
+                    </ol>
+                </nav>
+
+                <div class="row align-items-center mb-4 mt-2">
+                    <div class="col-12">
+                        <div class="d-flex align-items-center">
+                            <img src="images/icons/icono_direcciones_rojo.png" alt="logo-direcciones" style="width: 45px; height: auto;" class="mr-3">
+                            <div>
+                                <h2 class="font-weight-bold m-0" style="color: #222;">Agregar Dirección</h2>
+                                <p class="text-muted mt-1 mb-0">Registra un nuevo lugar para recibir tus compras.</p>
                             </div>
-                        </div> 
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                        </div>
+                    </div> 
+                </div>
+
+                <div class="card shadow-sm border-0 mb-4" style="border-radius: 12px; border: 1px solid #e5e7eb !important;">
+                    <div class="card-body p-4">
+                        
+                        <div class="alert-envio mb-4">
+                            <img src="images/icons/Icono-camion.png" alt="Camión de envío">
+                            <p>¿A qué domicilio enviaremos tu próximo pedido? Llena los datos con cuidado.</p>
+                        </div>
+
+                        <form name="frmdireccionadd" novalidate>
                             <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 m-t-15">
-                                    <div class="title-header">
-                                        <!-- <img src="https://macromautopartes.com/images/icons/Icono-camion.png" alt="logo-direcciones" class="img icon-logos-grande"> -->
-                                        <img src="images/icons/Icono-camion.png" alt="logo-direcciones" class="img icon-logos-grande">
-                                        <h5>¿A que domicilio enviaremos tu proximo pedido?</h5>
-                                    </div>
-                                    
+                                <div class="col-md-6 mb-3">
+                                    <label class="font-weight-bold text-muted small text-uppercase">Calle / Avenida <span class="text-danger">*</span></label>
+                                    <input class="form-control form-premium" type="text" placeholder="Ej. Paseo de las Colinas" ng-model="dataDireccion.Domicilio" required>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 m-t-15">
-                                    <div>
-                                        <label for="example-text-input" >Domicilio:</label>
-                                        <div class="bo16 of-hidden size15 m-b-20">
-                                            <input class="sizefull s-text7 gris-light " type="text" placeholder="Ingresa tu Domicilio" ng-model="dataDireccion.Domicilio" required>
-                                        </div>
-                                    </div>
+                                <div class="col-md-3 mb-3">
+                                    <label class="font-weight-bold text-muted small text-uppercase">No. Exterior <span class="text-danger">*</span></label>
+                                    <input class="form-control form-premium" type="text" placeholder="Ej. 123" ng-model="dataDireccion.numExt" required>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 m-t-15">
-                                    <div>
-                                        <label for="example-text-input" >Numero Exterior:</label>
-                                        <div class="bo16 of-hidden size15 m-b-20">
-                                            <input class="sizefull s-text7 gris-light" type="text" placeholder="Ingresa tu Domicilio" ng-model="dataDireccion.numExt" required>
-                                        </div>
-                                    </div>
+                                <div class="col-md-3 mb-3">
+                                    <label class="font-weight-bold text-muted small text-uppercase">No. Interior</label>
+                                    <input class="form-control form-premium" type="text" placeholder="Ej. Depto 4B" ng-model="dataDireccion.numInt">
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 m-t-15">
-                                    <div>
-                                        <label for="example-text-input" >Numero Interior:</label>
-                                        <div class="bo16 of-hidden size15 m-b-20">
-                                            <input class="sizefull s-text7 gris-light" type="text" placeholder="Ingresa tu Domicilio" ng-model="dataDireccion.numInt" required>
-                                        </div>
-                                    </div>
+
+                                <div class="col-md-5 mb-3">
+                                    <label class="font-weight-bold text-muted small text-uppercase">Colonia / Fraccionamiento <span class="text-danger">*</span></label>
+                                    <input class="form-control form-premium" type="text" placeholder="Ej. Los Ángeles" ng-model="dataDireccion.Colonia" required>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                    <div>
-                                        <label for="example-text-input" >Colonia:</label>
-                                        <div class="bo16 of-hidden size15 m-b-20">
-                                            <input class="sizefull s-text7 gris-light" type="text" placeholder="Ingresa tu colonia" ng-model="dataDireccion.Colonia" required>
-                                        </div>
-                                    </div>
+                                <div class="col-md-3 mb-3">
+                                    <label class="font-weight-bold text-muted small text-uppercase">Código Postal <span class="text-danger">*</span></label>
+                                    <input class="form-control form-premium" type="text" placeholder="00000" maxlength="5" ng-model="dataDireccion.Codigo_postal" required>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                                    <div>
-                                        <label for="example-text-input" >Telefono:</label>
-                                        <div class="bo16 of-hidden size15 m-b-20">
-                                            <input class="sizefull s-text7 gris-light" type="text" placeholder="Ingresa tu numero telefonico" ng-model="dataDireccion.Telefono" required>
-                                        </div>
-                                    </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="font-weight-bold text-muted small text-uppercase">Teléfono de Contacto <span class="text-danger">*</span></label>
+                                    <input class="form-control form-premium" type="text" placeholder="10 dígitos" ng-model="dataDireccion.Telefono" required>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                                    <div>
-                                        <label for="example-text-input" >Codigo Postal:</label>
-                                        <div class="bo16 of-hidden size15 m-b-20">
-                                            <input class="sizefull s-text7 gris-light" type="number" placeholder="00000" maxlength="5" ng-model="dataDireccion.Codigo_postal" required>
-                                        </div>
-                                    </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="font-weight-bold text-muted small text-uppercase">Ciudad o Municipio <span class="text-danger">*</span></label>
+                                    <input class="form-control form-premium" type="text" placeholder="Ej. Villa de Álvarez" ng-model="dataDireccion.Ciudad" required>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                    <div>
-                                        <label for="example-text-input" >Ciudad:</label>
-                                        <div class="bo16 of-hidden size15 m-b-20">
-                                            <input class="sizefull s-text7 gris-light" type="text" placeholder="Ingresa tu ciudad" ng-model="dataDireccion.Ciudad" required>
-                                        </div>
-                                    </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="font-weight-bold text-muted small text-uppercase">Estado <span class="text-danger">*</span></label>
+                                    <input class="form-control form-premium" type="text" placeholder="Ej. Colima" ng-model="dataDireccion.Estado" required>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                    <div>
-                                        <label for="example-text-input" >Estado:</label>
-                                        <div class="bo16 of-hidden size15 m-b-20">
-                                            <input class="sizefull s-text7 gris-light" type="text" placeholder="Ingresa tu estado" ng-model="dataDireccion.Estado" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div>
-                                        <label for="example-text-input" >Referencia:</label>
-                                        <div class="bo16 of-hidden size15 m-b-20">
-                                            <input class="sizefull s-text7 gris-light" type="text" placeholder="Ingresa tu estado" ng-model="dataDireccion.Referencia" required>
-                                        </div>
-                                    </div>
+
+                                <div class="col-md-12 mb-4">
+                                    <label class="font-weight-bold text-muted small text-uppercase">Referencias de entrega (Opcional)</label>
+                                    <input class="form-control form-premium" type="text" placeholder="Ej. Casa blanca con portón negro, frente al parque..." ng-model="dataDireccion.Referencia">
                                 </div>
                             </div>
 
-                            <div class="botones__direccion--add">
-                                <button class="flex-c-m bg-red btn  bo-rad-10 hov7 m-text3 trans-0-4 float-right" ng-click="btnGuardarDireccion('add')">Guardar</button>
-                                <button class="flex-c-m bg-dark btn bo-rad-10 hov7 m-text3 trans-0-4 float-right m-r-10" ng-click="btnMenulinks('Direcciones')">Regresar</button>
-                            </div>   
-                            
-                        </div>
-
-                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                            <div class="icon-center">
-                                <!-- <img src="https://macromautopartes.com/images/icons/icono_direcciones.png" alt="logo-direcciones" class="img icon-logos-grande"> -->
-                                <img src="images/icons/icono_direcciones.png" alt="logo-direcciones" class="img icon-logos-grande">
+                            <div class="d-flex justify-content-end border-top pt-4">
+                                <button type="button" class="btn btn-cancelar mr-3" ng-click="btnMenulinks('Direcciones')">Cancelar</button>
+                                <button type="button" class="btn btn-danger btn-guardar" ng-disabled="frmdireccionadd.$invalid" ng-click="btnGuardarDireccion('add')">
+                                    <i class="fa fa-save mr-1"></i> Guardar Dirección
+                                </button>
                             </div>
-                        </div>
-
+                        </form>
                     </div>
-                    
                 </div>
+
             </div>    
         </div>
     </div>

@@ -2,10 +2,8 @@
   session_name("loginCliente");
   session_start();
 
-  // Connect to the database
   $conn = mysqli_connect('macromautopartes.com', 'u619477378_root','jSJLK6AqN%fwUOskf5@R','u619477378_macromau');
   
-  // Le decimos al navegador que vamos a responder con JSON puro
   header('Content-Type: application/json');
 
   if (!$conn) {
@@ -14,43 +12,61 @@
   }
 
   $formulario = json_decode(file_get_contents('php://input'));
+
+  function limpiarSesionDuplicada() {
+      if(isset($_SESSION["CarritoPrueba"])) {
+          $unicos = [];
+          $vistos = [];
+          foreach($_SESSION["CarritoPrueba"] as $item) {
+              $clv = is_object($item) ? $item->Clave : (isset($item["Clave"]) ? $item["Clave"] : null);
+              if($clv && !in_array($clv, $vistos)) {
+                  $vistos[] = $clv;
+                  $unicos[] = $item;
+              }
+          }
+          $_SESSION["CarritoPrueba"] = array_values($unicos);
+      }
+  }
   
-  //Atender la petición rápida del mini-carrito
   if (isset($formulario->opc) && $formulario->opc == "obtener_carrito_actualizado") {
+      limpiarSesionDuplicada();
       echo json_encode([
           "Bandera" => 1,
           "Data" => [
               "Carrito" => isset($_SESSION["CarritoPrueba"]) ? $_SESSION["CarritoPrueba"] : []
           ]
       ]);
-      exit; // Cortamos la ejecución aquí
+      exit; 
   }
   
-  // Variables para controlar la respuesta AJAX
   $banderaRespuesta = 0;
   $mensajeRespuesta = "";
 
-  // Evitar errores de PHP si CarritoPrueba aún no existe
   if(!isset($_SESSION["CarritoPrueba"])) {
       $_SESSION["CarritoPrueba"] = [];
   }
 
   $iguales = 1;
+  $posicion = null;
+  
   if(count($_SESSION["CarritoPrueba"]) == 0){
     $iguales = 1;
   }
 
-  // Validación para evitar errores cuando no viene un "modelo" completo
   if(isset($formulario->modelo->datos->Clave)) {
       foreach($_SESSION["CarritoPrueba"] as $key => $value){
-        if($value["Clave"] == $formulario->modelo->datos->Clave){
-          $ncantidad = intval($value["Cantidad"] + $formulario->modelo->cantidad);
+        $clave_item = is_object($value) ? $value->Clave : $value["Clave"];
+        
+        if((string)$clave_item === (string)$formulario->modelo->datos->Clave){
+          $cantidad_actual = is_object($value) ? $value->Cantidad : $value["Cantidad"];
+          $ncantidad = intval($cantidad_actual) + intval($formulario->modelo->cantidad);
 
           if ($ncantidad > $formulario->modelo->datos->stock){
             $ncantidad = $formulario->modelo->datos->stock;
           }
           $iguales = 0;
-          break; // Optimizamos saliendo del bucle
+          $posicion = $key;
+          break; 
         }
       }
   }
@@ -60,26 +76,24 @@
   }
 
   switch($iguales){
-    case 0: // Ya existe, actualizamos cantidad
-      $sql = "UPDATE Carrito SET Cantidad = $ncantidad, Existencias=".$formulario->modelo->datos->stock." WHERE Clave =".$formulario->modelo->datos->Clave." AND _clienteid =".$_SESSION["iduser"];
+    case 0:
+      $sql = "UPDATE Carrito SET Cantidad = $ncantidad, Existencias=".$formulario->modelo->datos->stock." WHERE Clave ='".$formulario->modelo->datos->Clave."' AND _clienteid =".$_SESSION["iduser"];
 
       if (mysqli_query($conn, $sql)) {
         $banderaRespuesta = 1;
         $mensajeRespuesta = "Cantidad actualizada en el carrito";
         
-        // Actualizar la cantidad en la sesión al instante
-        foreach($_SESSION["CarritoPrueba"] as $key => $value){
-            if($value["Clave"] == $formulario->modelo->datos->Clave){
-                $_SESSION["CarritoPrueba"][$key]["Cantidad"] = $ncantidad;
-                break;
-            }
+        if(is_object($_SESSION["CarritoPrueba"][$posicion])){
+            $_SESSION["CarritoPrueba"][$posicion]->Cantidad = $ncantidad;
+        }else{
+            $_SESSION["CarritoPrueba"][$posicion]["Cantidad"] = $ncantidad;
         }
       } else {
         $mensajeRespuesta = "Error actualizando: " . mysqli_error($conn);
       }
     break;
 
-    case 1: // Es nuevo, lo insertamos
+    case 1:
       if(isset($formulario->modelo->id)){
         $id = intval($formulario->modelo->id);
       
@@ -91,11 +105,10 @@
           $banderaRespuesta = 1;
           $mensajeRespuesta = "Producto agregado al carrito exitosamente";
           
-          // Agregar a la variable de sesión al instante para que getSoloCarrito() lo pueda ver
           $_SESSION["CarritoPrueba"][] = [
               "Clave" => $formulario->modelo->datos->Clave,
               "Producto" => $formulario->modelo->datos->Producto,
-              "_producto" => $formulario->modelo->datos->Producto, // JS usa este campo
+              "_producto" => $formulario->modelo->datos->Producto, 
               "No_parte" => $formulario->modelo->datos->No_parte,
               "Cantidad" => $formulario->modelo->cantidad,
               "Precio" => $formulario->modelo->datos->Precio1,
@@ -103,7 +116,12 @@
               "imagenid" => $id,
               "Existencias" => $formulario->modelo->datos->stock,
               "RefaccionOferta" => isset($formulario->modelo->datos->RefaccionOferta) ? $formulario->modelo->datos->RefaccionOferta : '0',
-              "Kit" => isset($formulario->modelo->datos->Kit) ? $formulario->modelo->datos->Kit : 0 
+              "Kit" => isset($formulario->modelo->datos->Kit) ? $formulario->modelo->datos->Kit : 0,
+              "Alto" => $formulario->modelo->datos->Alto,
+              "Largo" => $formulario->modelo->datos->Largo,
+              "Ancho" => $formulario->modelo->datos->Ancho,
+              "Peso" => $formulario->modelo->datos->Peso,
+              "Enviogratis" => isset($formulario->modelo->datos->Enviogratis) ? $formulario->modelo->datos->Enviogratis : 0
           ];
         } else {
           $mensajeRespuesta = "Error insertando: " . mysqli_error($conn);
@@ -114,43 +132,43 @@
   
   /*Eliminar una pieza del carrito*/
   if(isset($formulario->modelo->erase) && $formulario->modelo->erase == 1 ){
-    $id = intval($formulario->modelo->borrar);
+    $id = $formulario->modelo->borrar;
     
-    // Mejor usar un foreach seguro para eliminar de la sesión
     foreach($_SESSION["CarritoPrueba"] as $key => $value){
-      if(intval($value["Clave"]) == $id){
+      $clave_item = is_object($value) ? $value->Clave : $value["Clave"];
+      if((string)$clave_item === (string)$id){
         unset($_SESSION["CarritoPrueba"][$key]);
       }
     }
-    // Reindexamos el arreglo para que Angular no sufra con espacios vacíos
     $_SESSION["CarritoPrueba"] = array_values($_SESSION["CarritoPrueba"]);
     
-    $sql = "DELETE FROM Carrito WHERE Clave =".$id." AND _clienteid =".$_SESSION["iduser"];
+    $sql = "DELETE FROM Carrito WHERE Clave ='".$id."' AND _clienteid =".$_SESSION["iduser"];
     
     if (mysqli_query($conn, $sql)) {
       $banderaRespuesta = 1;
       $mensajeRespuesta = "Producto eliminado del carrito";
-    } else {
-      $mensajeRespuesta = "Error eliminando: " . mysqli_error($conn);
     }
   }
 
   /*Agregar o quitar 1 pieza del carrito desde el checkout*/
   if(isset($formulario->modelo->upd) && $formulario->modelo->upd == 1 ){
-    $id = intval($formulario->modelo->updCLV);
+    $id = $formulario->modelo->updCLV;
     
     foreach($_SESSION["CarritoPrueba"] as $key => $value){
-      if(intval($value["Clave"]) == $id){
-        $_SESSION["CarritoPrueba"][$key]["Cantidad"] = $formulario->modelo->Cantidad;
+      $clave_item = is_object($value) ? $value->Clave : $value["Clave"];
+      if((string)$clave_item === (string)$id){
+        if(is_object($_SESSION["CarritoPrueba"][$key])){
+            $_SESSION["CarritoPrueba"][$key]->Cantidad = $formulario->modelo->Cantidad;
+        }else{
+            $_SESSION["CarritoPrueba"][$key]["Cantidad"] = $formulario->modelo->Cantidad;
+        }
       }
     }
 
-    $sql = "UPDATE Carrito SET Cantidad =".$formulario->modelo->Cantidad." WHERE Clave =".$id." AND _clienteid =".$_SESSION["iduser"];
+    $sql = "UPDATE Carrito SET Cantidad =".$formulario->modelo->Cantidad." WHERE Clave ='".$id."' AND _clienteid =".$_SESSION["iduser"];
     if (mysqli_query($conn, $sql)) {
       $banderaRespuesta = 1;
       $mensajeRespuesta = "Cantidad actualizada correctamente";
-    } else {
-      $mensajeRespuesta = "Error actualizando: " . mysqli_error($conn);
     }
   }
 
@@ -159,13 +177,11 @@
     $_SESSION["Cenvio"]["Servicio"] = $formulario->modelo->Servicio;
   }
 
-  // Preparamos la respuesta final sumando la Sesión y nuestras Banderas
+  limpiarSesionDuplicada();
   $respuestaFinal = $_SESSION;
   $respuestaFinal["Bandera"] = $banderaRespuesta;
   $respuestaFinal["Mensaje"] = $mensajeRespuesta;
 
   echo json_encode($respuestaFinal);
-  
-  // Close the connection
   mysqli_close($conn);
 ?>

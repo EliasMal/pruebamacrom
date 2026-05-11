@@ -1,0 +1,1020 @@
+    /* =========================================================
+       1. LOADER PREMIUM A PANTALLA COMPLETA
+       ========================================================= */
+    #loading-screen-compras {
+        background-color: rgba(255, 255, 255, 0.90);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        display: none; 
+        height: 100vh; left: 0; position: fixed; top: 0; width: 100%;
+        z-index: 999999;
+    }
+    #loading-screen-compras .loader-content {
+        display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center;
+    }
+    .macrom-spinner {
+        width: 70px; height: 70px; 
+        border: 5px solid #f1f1f1; 
+        border-top: 5px solid #de0007; 
+        border-radius: 50%; 
+        animation: spin-macrom 0.8s linear infinite; 
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 10px rgba(222,0,7,0.1);
+    }
+    .loader-content p { 
+        font-family: 'Poppins', sans-serif; color: #222; font-size: 1.8rem; font-weight: 600; 
+        animation: pulse-macrom 1.5s ease-in-out infinite; 
+    }
+    @keyframes spin-macrom { 100% { transform: rotate(360deg); } }
+    @keyframes pulse-macrom { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+
+    /* =========================================================
+       2. OVERRIDE PREMIUM PARA LOS MODALES VIEJOS Y BOTONES
+       ========================================================= */
+    .ventanaModal__contenido {
+        border: none !important;
+        border-radius: 20px !important;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.15) !important;
+        padding: 30px 40px !important;
+        background-color: #fff !important;
+    }
+    
+    .ventanaModal__contenido h2, 
+    .ventanaModal__contenido--grid, 
+    .ventanaModal__contenido--agregar, 
+    .metodo__pago, 
+    .ventanaModal__contenido--botonguardar {
+        position: relative !important;
+        top: 0 !important;
+        margin-top: 0 !important;
+    }
+
+    .ventanaModal__contenido h2 {
+        background-color: transparent !important;
+        color: #de0007 !important;
+        height: auto !important;
+        padding: 0 !important;
+        font-weight: 700 !important;
+        font-size: 2.4rem !important;
+        margin-bottom: 30px !important;
+        border-bottom: 2px dashed #eee;
+        padding-bottom: 15px !important;
+        text-align: center !important;
+    }
+
+    .ventanaModal__contenido--usuario input, 
+    .ventanaModal__contenido--usuario select {
+        border: 1px solid #d1d5db !important;
+        border-radius: 10px !important;
+        padding: 12px 15px !important;
+        height: auto !important;
+        width: 100% !important;
+        font-family: 'Poppins', sans-serif !important;
+        font-size: 1.4rem !important;
+        transition: all 0.3s ease;
+        background-color: #f9fafb !important;
+    }
+    .ventanaModal__contenido--usuario input:focus, 
+    .ventanaModal__contenido--usuario select:focus {
+        border-color: #de0007 !important;
+        background-color: #fff !important;
+        box-shadow: 0 0 0 4px rgba(222,0,7,0.1) !important;
+        outline: none;
+    }
+
+    .ventanaModal__contenido--dato label {
+        font-weight: 600 !important;
+        color: #4b5563 !important;
+        margin-bottom: 5px !important;
+        font-size: 1.4rem !important;
+    }
+
+    /* Botones de Guardar / Confirmar / Pagar (Cuadrados elegantes) */
+    .ventanaModal__contenido--botonguardar, .confirmar--pago, .pagar--button {
+        border-radius: 8px !important; /* Bordes más limpios */
+        font-weight: 600 !important;
+        font-size: 1.6rem !important;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 10px rgba(222,0,7,0.2) !important;
+        margin-top: 30px !important;
+        transition: all 0.3s ease !important;
+        border: none !important;
+        background-color: var(--primario) !important;
+        color: #fff !important;
+    }
+    .ventanaModal__contenido--botonguardar:hover, .confirmar--pago:hover, .pagar--button:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 15px rgba(222,0,7,0.3) !important;
+        background-color: #bf040a !important;
+    }
+
+    .cerrar0, .cerrar1, .cerrar2, .cerrar3, .cerrar4, .cerrar5, .cerrar6 {
+        color: #9ca3af !important;
+        position: absolute !important;
+        top: 20px !important;
+        right: 25px !important;
+        font-size: 3.5rem !important;
+        line-height: 1 !important;
+        transition: color 0.2s ease;
+        background: transparent !important;
+        height: auto !important;
+    }
+    .cerrar0:hover, .cerrar1:hover, .cerrar2:hover, .cerrar3:hover, .cerrar4:hover, .cerrar5:hover, .cerrar6:hover {
+        color: #de0007 !important;
+    }
+
+    .metodo__pago--metodo button {
+        border-radius: 12px !important;
+        transition: all 0.3s ease !important;
+        background: #fff;
+    }
+    .metodo__pago--metodo button:hover {
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08) !important;
+        transform: translateY(-3px);
+    }
+
+    .mdl-env-ed {
+      min-height: 60rem;
+    }
+    .mdl-env-ed { border-radius: 20px !important; border: none !important; box-shadow: 0 20px 60px rgba(0,0,0,0.2) !important; }
+    .mdl-env-ed .modal-header { border-bottom: 2px dashed #eee; padding: 25px 30px; }
+    .mdl-env-ed .modal-title { font-weight: 700; color: #de0007; font-family: 'Poppins'; font-size: 2.2rem; }
+    .bdl-a-r:hover { background-color: #fff5f5 !important; border-left: 4px solid #de0007 !important; transition: all 0.2s ease; }
+
+    /* =========================================================
+       3. BOTONES MODERNOS (Elegir / Borrar)
+       ========================================================= */
+    .btn-elegir {
+        border-radius: 8px !important;
+        padding: 5px !important;
+        color: #333 !important;
+        background: #f3f4f6 !important;
+        border: 1px solid #d1d5db !important;
+        transition: all 0.3s ease !important;
+        font-weight: 600;
+    }
+    .btn-elegir:hover {
+        background: #de0007 !important;
+        color: #fff !important;
+        border-color: #de0007 !important;
+        box-shadow: 0 4px 10px rgba(222,0,7,0.2) !important;
+    }
+
+    .btn-borrar {
+        border-radius: 8px !important;
+        padding: 5px !important;
+        color: #de0007 !important;
+        background: #fff !important;
+        border: 1px solid #fca5a5 !important;
+        transition: all 0.3s ease !important;
+        font-weight: 600;
+    }
+    .btn-borrar:hover {
+        background: #de0007 !important;
+        color: #fff !important;
+        border-color: #de0007 !important;
+        box-shadow: 0 4px 10px rgba(222,0,7,0.2) !important;
+    }
+
+    /* =========================================================
+       4. MEJORAS DE MÉTODOS DE PAGO Y ALERTAS (TOASTR)
+       ========================================================= */
+    /* Suavizar cuadros de método de pago */
+    .metodopago {
+        border: 2px solid #e6e6e6 !important;
+        border-radius: 10px !important;
+        transition: all 0.3s ease-in-out !important; /* Transición suave */
+        background-color: #fff;
+    }
+    .metodopago:hover {
+        border-color: #ffb3b3 !important;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+    }
+
+    /* Alertas Toastr Premium (Estilo Admin) */
+    #toast-container > div {
+        box-shadow: 0 5px 20px rgba(0,0,0,0.15) !important;
+        border-radius: 8px !important;
+        opacity: 1 !important; /* Quita la transparencia */
+        font-family: 'Poppins', sans-serif !important;
+        font-size: 1.4rem !important;
+        padding: 15px 15px 15px 50px !important;
+        border: none !important;
+    }
+    #toast-container > .toast-error { background-color: #dc2626 !important; }
+    #toast-container > .toast-success { background-color: #10b981 !important; }
+    #toast-container > .toast-warning { background-color: #f59e0b !important; }
+    #toast-container > .toast-info { background-color: #3b82f6 !important; }
+
+    .compras {
+      display: grid;
+      column-gap: 10rem;
+      padding: 2rem;
+    }
+
+.productos__datos--img img {
+  width: 9rem;
+}
+
+.productos__datos--img {
+  display: grid;
+  justify-content: center;
+  height: 12rem;
+}
+
+.productos__datos--info--articulo {
+  color: var(--negro);
+  cursor: pointer;
+}
+
+.tooltip-sucursales-global {
+  position: fixed;
+  background: #2e2e2e;
+  color: #fff;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.4;
+  box-shadow: 0 8px 20px rgba(0,0,0,.25);
+  z-index: 9999;
+  pointer-events: none; /* 👈 evita glitches */
+}
+.tooltip-linea {
+  white-space: nowrap;
+}
+
+.envio-label {
+  cursor: pointer;
+  font-size: 13px;
+  color: #555;
+}
+
+.productos__contenedor {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  max-height: 30rem;
+  overflow: auto;
+  row-gap: 1rem;
+}
+
+.contenedor-principal {
+  background-color: var(--blanco);
+}
+
+.toast-info {
+  opacity: 1 !important;
+}
+
+.clip,
+.confirmar--pago {
+  position: absolute;
+  left: 0rem;
+  margin-top: 2rem;
+  height: 4rem;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.clip {
+  width: 0px;
+  overflow: hidden;
+}
+
+.animationclip {
+  animation: fill 4.5s linear;
+}
+
+.confirmando--pago {
+  text-align: center;
+  height: 4rem;
+  font-size: 2rem;
+  background: var(--checked);
+  color: var(--blanco);
+  width: 100%;
+}
+
+@keyframes fill {
+  100% {
+    width: 100%;
+  }
+}
+
+  .user-dataShop{
+    font-family: Poppins-Bold;
+    color: #7f7f7f;
+  }
+  .user-dataShop p{
+    font-family: Poppins-Light;
+    padding-left: 10px;
+  }
+  .user-dataShop .text-info-user, .text-info-user{
+    margin-bottom: 10px;
+    height: 25px;
+    font-family: Poppins;
+    
+  }
+
+  .title-header{
+    
+    display: flex;
+    align-items: center;
+    
+  }
+
+  .title-header img{
+    width: 32px;
+    margin: 10px;  
+  }
+
+  .title-header p{
+    font-size: 14px;
+  }
+
+
+  .sitio-seguro{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .metodopago{
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .opcion-facturacion{
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .radio2{
+    display: block;
+    position: relative;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+.checkbox {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.check {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+}
+
+.checkbox:hover input ~ .check {
+  border: 2px solid #de0007;
+}
+
+.checkbox input:checked ~ .check {
+  background-color: white;
+  border: 2px solid #de0007; 
+}
+
+.check:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox input:checked ~ .check:after {
+  display: block;
+}
+
+.checkbox .check:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid #de0007;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.cenvio select, .select select{
+  border: 0;
+  appearance: none;
+  -webkit-appearance: none;
+	-moz-appearance: none;
+}
+
+.cenvio select::-ms-expand, .select select::-ms-expand {
+  display: none;
+}
+
+.cenvio select:hover, .select select:hover{
+  background: #f3f3f3;
+}
+
+.select i{
+  position: absolute;
+  right: 20px;
+  top: calc(50% - 10px);
+  width: 16px;
+	height: 16px;
+  display: block;
+  border-left:4px solid #000;
+  border-bottom:4px solid #000;
+  transform: rotate(-45deg);
+  transition: all 0.25s ease;
+}
+
+.cenvio i{
+  position: absolute;
+  right: 30px;
+  top: calc(40% - 10px);
+  width: 16px;
+	height: 16px;
+  display: block;
+  border-left:4px solid #000;
+  border-bottom:4px solid #000;
+  transform: rotate(-45deg);
+  transition: all 0.25s ease;
+}
+
+.select:hover i, .cenvio:hover i{
+  margin-top: 3px;
+}
+
+.cliente__datos {
+  border: 1px solid var(--gris);
+  border-radius: 1rem;
+  padding: 10px;
+  max-width: 45rem;
+  max-height: 30rem;
+  grid-column: 1;
+}
+
+.cliente__datos p {
+  color: var(--negro);
+}
+
+.cliente__opciones {
+  display: grid;
+  height: 20rem;
+  position: relative;
+  top: 0;
+}
+
+.cliente__opciones--button img {
+  width: 1.5rem;
+  align-self: center;
+}
+
+.cliente__opciones--button {
+  font-size: 1.3rem;
+  margin-top: 1rem;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  height: 6rem;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 45rem;
+  border-radius: 0.5rem;
+  color: var(--negro);
+}
+
+.cliente__opciones--button i,
+.ventanaModal__contenido--boton button i {
+  padding-right: 1rem;
+  font-size: 1.5rem;
+}
+.productos {
+  max-height: 40rem;
+  display: grid;
+}
+.agregarmas {
+    display: flex;
+    justify-content: center;
+}
+.agregarmas__botones {
+  width: 4rem;
+  height: 4rem;
+  background-color: var(--primario);
+  color: var(--blanco);
+  font-size: 1.2rem;
+}
+
+.agregarmas__botones:active {
+  background-color: var(--primario-oscuro);
+  color: var(--verde-dinero);
+}
+.agregarmas__contador,
+.agregarmas__contador--compras {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--gris-light);
+  width: 6rem;
+  height: 4rem;
+}
+
+.agregarmas__contador input,
+.agregarmas__contador--compras input {
+  width: 4rem;
+  text-align: center;
+}
+
+input.num-product {
+  -moz-appearance: textfield;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+input.num-product::-webkit-outer-spin-button,
+input.num-product::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.productos__datos--divisor {
+  align-self: flex-end;
+}
+.pagos {
+  display: grid;
+  column-gap: 10rem;
+  padding: 2rem;
+}
+.pagos__facturacion--titulo {
+  text-align: center;
+}
+.cuponcont {
+  display: flex;
+  justify-content: center;
+}
+.inpcpn {
+  border: 1px solid var(--gris) !important;
+  border-right: 0px !important;
+  border-radius: 0.25rem;
+  width: 100%;
+  text-align: center;
+}
+
+#btncupon,
+.cotizar__button {
+  background-color: var(--primario);
+  border-radius: 0;
+  color: var(--blanco);
+  height: 4rem;
+  max-width: 14rem;
+}
+
+#btncupon:focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25) !important;
+}
+
+#btncupon:disabled {
+  color: var(--blanco);
+  pointer-events: none;
+  background-color: var(--primario);
+  border-color: var(--primario);
+  opacity: 0.65;
+}
+
+.cupon--alert {
+  display: none;
+  color: var(--primario);
+  font-weight: 700;
+}
+
+.cupon--alert-active {
+  display: flex;
+  justify-content: center;
+}
+.tablecompra {
+  width: 100%;
+}
+
+.tablecompra tbody tr {
+  height: 4rem;
+}
+.csmdesc {
+  color: var(--primario);
+}
+.flexcontent__end {
+  display: flex;
+  justify-content: flex-end;
+}
+.tbl-cms td {
+  padding: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.p-r-pz {
+  padding-right: 180px;
+
+}
+.pagar--button {
+  height: 4rem;
+  font-size: 2rem;
+}
+
+.cotizar__button:hover {
+  background-color: var(--primario-oscuro);
+}
+
+.metodo__pago--metodos {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  column-gap: 0.5rem;
+}
+
+.metodo__pago--titulo {
+  text-align: center;
+}
+
+.metodo__pago--metodo:hover {
+  border-radius: 0.5rem;
+  border: 2px solid var(--primario);
+}
+
+.ventanaModal__contenedor,
+.modal3 {
+  position: fixed;
+  z-index: 1;
+  padding-top: 10rem;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+}
+
+.ventanaModal__contenido {
+  margin-top: 3rem;
+  position: relative;
+  background-color: var(--blanco);
+  width: 100%;
+  padding: 20px;
+  height: 60rem;
+  overflow-y: visible;
+  overflow-x: hidden;
+  -webkit-animation-name: animarsuperior;
+  -webkit-animation-duration: 0.5s;
+  animation-name: animarsuperior;
+  animation-duration: 0.5s;
+  border: 1px solid var(--negro);
+  box-shadow: 5px 5px 15px var(--negro);
+  border-radius: 5px;
+}
+
+.pagometodo {
+  height: 60rem;
+}
+
+.ventanaModal__contenido h2 {
+  background-color: var(--primario);
+  height: 5rem;
+  padding: 1rem;
+  top: -5.7rem;
+  color: var(--blanco);
+}
+
+.ventanaModal__contenido--grid {
+  grid-template-columns: repeat(1, 1fr);
+  column-gap: 2rem;
+  top: -5rem;
+  position: relative;
+}
+
+.ventanaModal__contenido--datos {
+  min-height: 15rem;
+  margin-bottom: 2rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--negro);
+}
+
+.ventanaModal__contenido--seleccion {
+  background-color: var(--primario);
+  border-radius: 0.5rem;
+  height: 3.5rem;
+  font-size: 1.8rem;
+  padding-top: 0.5rem;
+  text-align: center;
+  color: var(--blanco);
+}
+
+.ventanaModal__contenido--info {
+  padding: 0.5rem;
+}
+
+.ventanaModal__contenido--info p {
+  font-size: 1.3rem;
+  line-height: 1.2;
+}
+
+.ventanaModal__contenido--opciones {
+  padding-top: 2rem;
+}
+
+.ventanaModal__contenido--boton {
+  padding-bottom: 2rem;
+}
+
+.ventanaModal__contenido--boton button {
+  height: 3.5rem;
+  border: 1px solid var(--negro);
+}
+
+.ventanaModal__contenido--boton button:hover {
+  background-color: var(--primario-oscuro);
+  color: var(--blanco);
+  box-shadow: 5px 4px 7px var(--negro);
+}
+
+.cerrar0,
+.cerrar1,
+.cerrar2,
+.cerrar3,
+.cerrar4,
+.cerrar5,
+.cerrar6 {
+  z-index: 1;
+  position: relative;
+  top: -2.8rem;
+  font-size: 3.8rem;
+  cursor: pointer;
+}
+
+.cerrar6 {
+  top: 0;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  height: 4rem;
+  width: 100%;
+  background-color: var(--gris-low);
+  padding-right: 1rem;
+}
+
+#abrirModal:hover img,
+#abrirModal1:hover img,
+#abrirModal2:hover img,
+#abrirModal3:hover img,
+#abrirModal4:hover img {
+  filter: invert(1);
+}
+
+.modal,
+.modal2,
+.modal4 {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.ventanaModal__contenido--agregar {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  column-gap: 2rem;
+  position: relative;
+  top: -5rem;
+  border-bottom: 1px solid var(--gris);
+}
+
+.ventanaModal__contenido--usuario select {
+  width: 320px;
+  border-radius: 5px;
+  border: 1px solid #666;
+}
+
+.ventanaModal__contenido--botonguardar {
+  width: 100%;
+  height: 5rem;
+  position: relative;
+  top: -2rem;
+  background-color: var(--primario);
+  border-color: var(--primario)
+}
+
+.ventanaModal__contenido--alerta {
+  border: 2px solid var(--primario);
+  border-radius: 0.25rem;
+  padding-right: 8px;
+  color: var(--negro);
+  margin-left: 10px;
+  display: none;
+  position: relative;
+  top: -4rem;
+}
+.ventanaModal__contenido h2 {
+  width: 60rem;
+  margin-top: 5px;
+  border-radius: 0.5rem;
+  font-size: 2.8rem;
+}
+.metodo__pago {
+  grid-row: 2;
+  margin-top: -5rem;
+}
+
+.acepto__tyc {
+  font-size: 1.5rem;
+}
+/* Mobile compras */
+.mobiledevice .cliente {
+  display: block;
+}
+
+.mobiledevice .cliente__titulo {
+  text-align: center;
+}
+
+.mobiledevice .productos {
+  grid-column: 1;
+  margin-top: 4rem;
+}
+
+.mobiledevice .pagos__productos {
+  grid-column: 1;
+  margin-top: 4rem;
+}
+
+/* Desktop compras */
+.desktop .pagos__productos {
+  grid-column: 2;
+  width: 50rem;
+}
+.desktop .cliente__opciones--button:hover,
+.desktop .cliente__opciones--button:hover {
+  color: var(--blanco);
+  background: var(--primario);
+}
+
+.desktop .cliente {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 1rem;
+  max-height: 45rem;
+  min-width: 52rem;
+}
+
+.desktop .cliente__titulo {
+  text-align: justify;
+  max-width: 45rem;
+}
+
+.desktop .cliente__opciones {
+  top: 4rem;
+}
+
+.desktop .cliente__opciones--button {
+  height: 3.5rem;
+  max-width: 20rem;
+  justify-content: left;
+  border-radius: 5px;
+  color: var(--negro);
+}
+
+.desktop .productos {
+  grid-column: 2;
+  width: 50rem;
+}
+
+.desktop .productos__datos {
+  display: grid;
+  column-gap: 2rem;
+}
+
+.desktop .productos__datos--info {
+  grid-column: 2;
+}
+
+.desktop .pagos__facturacion {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 1rem;
+}
+
+.desktop .pagos__facturacion--titulo {
+  text-align: justify;
+}
+
+.desktop .pagometodo {
+  height: 40rem;
+}
+
+.desktop .metodo__pago--metodos {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.desktop .metodo__pago--titulo {
+  max-width: 45rem;
+}
+
+.desktop .ventanaModal__contenido--grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.desktop .ventanaModal__contenido {
+  margin-left: 30%;
+  width: 60rem;
+}
+
+.desktop .ventanaModal__contenido--agregar {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.desktop .ventanaModal__contenido--dato {
+  border-right: 1px solid var(--gris);
+}
+
+.desktop .ventanaModal__contenido--botonguardar {
+  width: 48.6rem;
+  margin-left: 3rem;
+}
+
+.desktop .acepto__tyc {
+  font-size: 1.2rem;
+}
+@media (min-width: 800px) {
+  .agregarmas__contador--compras {
+    width: 5rem;
+  }
+  .productos__datos--img::after {
+    content: '\e870';
+    font-family: Linearicons;
+    font-size: 16px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: -12rem;
+    width: 9rem;
+    height: 12rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: var(--blanco);
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    opacity: 0;
+
+  }
+  .productos__datos--img:hover:after {
+    cursor: pointer;
+    opacity: 1;
+  }
+
+}
+
+@media (min-width: 768px){
+    .inpcpn {
+        padding-left: 1rem;
+        text-align: left;
+    }
+}

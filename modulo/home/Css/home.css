@@ -1,0 +1,523 @@
+/* --------------------------------------------------------------------------
+   01. GLOBALES Y TIPOGRAFÍA
+   -------------------------------------------------------------------------- */
+.macrom {
+    background-color: var(--blanco);
+}
+.contenedor__nuestrosproductos h3,
+.redes__sociales--titulo h3 {
+    line-height: 1.2;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--primario) !important;
+}
+
+/* --------------------------------------------------------------------------
+   02. CABECERA Y BANNERS
+   -------------------------------------------------------------------------- */
+.header {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.header__contenido--banner__responsive {
+    display: none;
+}
+.header__picture--img {
+    height: 100%;
+}
+.slick-next {
+    z-index: 3;
+    right: 9rem;
+}
+.slick-prev {
+    z-index: 3;
+    left: 6rem;
+}
+
+/* --------------------------------------------------------------------------
+   03. CATEGORÍAS
+   -------------------------------------------------------------------------- */
+.macrom__contenedor--categorias {
+    padding: 3rem 0 6rem 0; 
+    min-height: auto;
+}
+.rowrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3rem 4rem;
+}
+.categoria__cat {
+    width: 12rem;
+    background: transparent;
+    border: none;
+    transition: transform 0.3s ease;
+}
+.categoria__cat:hover {
+    transform: translateY(-5px);
+}
+.block1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+}
+.block1 a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+.filcatego {
+    max-height: 4rem !important; 
+    max-width: 4rem !important;
+    margin: 0 auto;
+    display: block;
+    filter: none !important; 
+    transform: scale(3) !important; 
+}
+
+.categoria__cat:hover .filcatego {
+    transform: scale(1.15);
+    filter: drop-shadow(0px 5px 8px rgba(222, 0, 7, 0.25)); 
+}
+.block1-wrapbtn {
+    margin-top: 1.5rem;
+    text-align: center;
+    width: 100%;
+}
+.categoria__enlace {
+    color: #4b5563;
+    font-weight: 600;
+    font-size: 1.4rem;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: block;
+    background: transparent !important;
+}
+.categoria__cat:hover .categoria__enlace {
+    color: var(--primario);
+}
+
+/* --------------------------------------------------------------------------
+   04. NUESTROS PRODUCTOS
+   -------------------------------------------------------------------------- */
+.seccion__nuestrosproductos {
+    min-height: auto;
+    border-top: 1px solid var(--gris-light);
+}
+.contenedor__nuestrosproductos--masvendidos,
+.contenedor__nuestrosproductos--liquidacion,
+.contenedor__nuestrosproductos--nuevos {
+    padding: 2rem;
+}
+
+/* Contenedor de Pestañas */
+.toolbar__vistaopciones {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    margin: 2rem 0 4rem 0;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.toolbar_click,
+.toolbar_click0,
+.toolbar_click1 {
+    display: inline-block;
+    padding: 1rem 0;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: -2px;
+    border-bottom: 3px solid transparent; 
+}
+.toolbar_click:hover,
+.toolbar_click0:hover,
+.toolbar_click1:hover {
+    color: var(--negro);
+}
+.toolbar__activada {
+    color: var(--primario) !important;
+    border-bottom: 3px solid var(--primario) !important;
+}
+
+#vistaliquidacion,
+.nuestrosproductos__opciones {
+    display: block;
+}
+.nuestrosproductos__opciones {
+    font-size: 2rem;
+}
+.opcion__activada {
+    color: var(--blanco);
+    background-color: var(--primario);
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    height: 4rem;
+}
+
+/* --------------------------------------------------------------------------
+   05. TARJETAS DE PRODUCTO
+   -------------------------------------------------------------------------- */
+.home__pr {
+    background-color: var(--blanco);
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    overflow: hidden; 
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.home__pr:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+}
+
+.home__pr:hover .promocion__aviso,
+.home__pr:hover .nuevo__aviso,
+.home__pr:hover .enviogratis__aviso {
+  transform: scale(1.05);
+}
+
+/* Contenedor de la Imagen */
+.productos__informacion .wrap-pic-w a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e5e7eb;
+    position: relative;
+    width: 100%;
+}
+
+.productos__informacion img {
+    max-height: 15rem;
+    width: auto;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    transition: transform 0.4s ease;
+}
+
+.productos__informacion:hover .wrap-pic-w img {
+  transform: scale(1.05);
+}
+
+/* --- ETIQUETAS Y AVISOS  --- */
+.avisos__productos {
+    position: absolute;
+    top: 0.8rem;
+    left: 0.8rem;
+    z-index: 10;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    align-items: flex-start;
+    width: 90%;
+}
+.promocion__aviso,
+.nuevo__aviso,
+.agotado__aviso,
+.enviogratis__aviso {
+    color: var(--blanco);
+    border-radius: 0.3rem;
+    padding: 0.2rem 0.6rem;
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    cursor: default;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Área de Textos */
+.block2-txt {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.descripcion-producto {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.block2-brand {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #6b7280 !important;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+}
+.block2-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.3;
+    margin-bottom: 1.5rem;
+    text-decoration: none;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 5.4rem;
+}
+.block2:hover .block2-name {
+    transition: 0.8s;
+    height: max-content;
+}
+
+/* SKU y Precios */
+.sku_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px dashed #e5e7eb; 
+    padding-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+.sku_label, .sku_value {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.1rem;
+    color: #4b5563;
+    padding: 0;
+}
+.sku_value {
+    font-weight: bold;
+    color: #111827;
+}
+.precio__imgprove {
+    margin-top: auto;
+}
+.precio__producto {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #de0007;
+    margin: 0;
+}
+
+::selection {
+  background-color: var(--primario);
+  color: var(--blanco);
+}
+a, button, .enlace, .sidebar__click, .cliente__opciones--button, .menu__enlaces span {
+  transition: all 0.25s ease;
+}
+
+/* --------------------------------------------------------------------------
+   06. REDES SOCIALES
+   -------------------------------------------------------------------------- */
+.redes__sociales { padding: 3rem 0; }
+.redes__sociales--titulo { padding: 2rem 0rem 4rem; }
+.redsocial__facebook { display: grid; justify-content: center; }
+
+.ss-icon {
+    display: flex;
+    min-height: 10rem;
+    font-size: 3.5rem;
+    text-align: center;
+    justify-content: center;
+}
+.ss-icon a { display: inline-block; position: relative; width: 8rem; height: 8rem; margin: 0.5rem; }
+.ss-icon article {
+    cursor: pointer; display: block; width: 100%; height: 100%;
+    background-color: #333; box-shadow: 0 0 6px -2px #000, 0 0 4.5rem -2rem #000;
+    color: #fff; line-height: 9rem; transform: perspective(30rem) rotateY(0deg);
+    transition: transform 0.4s linear, background-color 0s linear 0.2s, color 0s linear 0.2s;
+}
+.ss-icon a:hover article {
+    transform: perspective(30rem) rotateY(180deg); color: #eee;
+    transition: transform 0.2s linear, background-color 0s linear 0.1s, color 0s linear 0.1s;
+}
+.ss-icon a:nth-child(1):hover article { background-color: #3B5998; }
+.ss-icon a:nth-child(2):hover article { background: linear-gradient(to right, #833ab4, #fd1d1d, #fcb045); }
+.ss-icon a:nth-child(3):hover article { background-color: #CB2027; }
+.ss-icon a:nth-child(4):hover article { background-color: #2C4762; }
+.ss-icon a:nth-child(5):hover article { background-color: #25D366; }
+.ss-icon span { transition: transform 0s linear 0.2s, text-shadow 0s linear 0.2s; -webkit-font-smoothing: subpixel-antialiased; }
+.ss-icon a:hover span { transform: scale(-1, 1); text-shadow: 0 0 5rem rgba(255, 255, 255, 0.5); }
+
+/* --------------------------------------------------------------------------
+   07. INFORMACIÓN EXTRA
+   -------------------------------------------------------------------------- */
+.informacion__extra {
+    display: none; 
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    border-top: 1px solid var(--gris-light);
+}
+.contenido--envios, .contenido--garantias, .contenido--tiendabierta {
+    display: flex; flex-direction: column; align-items: center;
+}
+.contenido--garantias {
+    border-left: 1px solid var(--gris-mid);
+    border-right: 1px solid var(--gris-mid);
+}
+.contenido--envios h4, .contenido--garantias h4, .contenido--tiendabierta h4 {
+    font-family: Poppins; font-size: 1.8rem; color: var(--primario); line-height: 1.5;
+}
+.contenido--envios a, .contenido--garantias a, .contenido--tiendabierta span {
+    font-family: Poppins; font-size: 1.3rem; line-height: 1.8;
+}
+
+/* --------------------------------------------------------------------------
+   08. MEDIA QUERIES (Responsive Design)
+   -------------------------------------------------------------------------- */
+
+/* Dispositivos Móviles */
+@media (max-width: 800px) {
+    .mobiledevice .header__contenido {
+        min-height: 8.5rem;
+    }
+    .mobiledevice .productos__informacion {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .mobiledevice .productos__informacion .wrap-pic-w a {
+        min-height: 15rem; 
+    }
+    .mobiledevice .productos__informacion img {
+        max-height: 12rem;
+        padding: 1rem;
+    }
+    .m-b-20 {
+        margin-bottom: 0px;
+    }
+    .informacion__extra--contenido {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        padding: 0 2rem;
+    }
+    .contenido--garantias {
+        border-left: none;
+        border-right: none;
+        border-top: 1px solid var(--gris-light);
+        border-bottom: 1px solid var(--gris-light);
+        padding: 2rem 0;
+    }
+
+    /* =========================================================
+       CATEGORÍAS EN MÓVIL
+       ========================================================= */
+    .macrom__contenedor--categorias {
+        padding: 1.5rem 0 1rem 0 !important; 
+    }
+    
+    .macrom__contenedor--categorias .row.rowrap {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        gap: 0.8rem !important; 
+        margin: 0 !important;
+        padding: 0 1rem 1rem 1rem !important;
+        justify-content: flex-start !important;
+        scrollbar-width: none; 
+    }
+    
+    .macrom__contenedor--categorias .row.rowrap::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .categoria__cat {
+        flex: 0 0 auto !important;
+        width: 7.5rem !important; 
+        margin: 0 !important;
+    }
+
+    .macrom__contenedor--categorias .block1 > a:first-child {
+        background-color: #f7f7f7 !important;
+        border: 1px solid #e5e7eb !important; 
+        width: 6rem !important; 
+        height: 6rem !important;
+        border-radius: 50% !important; 
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        margin: 0 auto !important;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.04) !important; 
+    }
+
+    .filcatego {
+        max-height: 3.5rem !important;
+        max-width: 3.5rem !important;
+        margin: 0 auto;
+        display: block;
+        filter: none !important; 
+    }
+
+    .block1-wrapbtn {
+        margin-top: 0.8rem !important; 
+    }
+    
+    .categoria__enlace {
+        font-size: 0.95rem !important;
+        color: #4b5563 !important; 
+        font-weight: 600 !important;
+        margin-top: 0 !important;
+        line-height: 1.2;
+        word-break: normal;
+    }
+}
+
+/* Escritorio General */
+.desktop .header__contenido {
+    min-height: 20rem;
+}
+.desktop .productos__informacion {
+    grid-template-columns: none;
+}
+.desktop .productos__informacion .wrap-pic-w a {
+    min-height: 20rem; 
+}
+
+/* Breakpoints Específicos */
+@media(min-width: 768px) {
+    .nuestrosproductos__masvendidos,
+    .nuestrosproductos__liquidacion,
+    .contenedor__nuestrosproductos--nuevos .nuestrosproductos__masvendidos {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
+        gap: 2.5rem;
+    }
+    .header__picture--img {
+        height: 25rem;
+        justify-self: center;
+        max-width: 135rem;
+    }
+    .hov-img-zoom:hover img {
+        transform: scale(1.1);
+    }
+}
+
+@media(min-width: 800px) {
+    #vistaliquidacion,
+    .nuestrosproductos__opciones,
+    #vistanuevos {
+        display: none;
+    }
+    .precio__imgprove {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .home__pr:hover {
+        box-shadow: 0px 6px 23px #7e849763;
+    }
+    .body__theme--dark .home__pr:hover {
+        box-shadow: 5px 10px 20px var(--blanco);
+    }
+}
