@@ -43,6 +43,7 @@ function PedidosCtrl($scope, $http) {
     obj.historico = false;
     obj.paginador = { currentPage: 0, pages: [], pageSize: 10 };
     obj.autorizacion = false;
+    obj.Rol_Usuario = ""; // Variable para ocultar el botón
 
     obj.configPages = () => {
         obj.paginador.pages.length = 0;
@@ -90,6 +91,7 @@ function PedidosCtrl($scope, $http) {
             if (res.data.Bandera == 1) {
                 obj.No_Pedidos = res.data.No_pedidos;
                 obj.Pedidos = res.data.Pedidos;
+                obj.Rol_Usuario = res.data.Rol_Usuario;
                 obj.Pedidos.forEach((e) => {
                     e.class = obj.getcolorEstatus(e.Acreditado);
                 });
@@ -116,6 +118,28 @@ function PedidosCtrl($scope, $http) {
         location.href = "?mod=Pedidos&opc=detalles&id=" + id;
     }
 
+    obj.btnEliminarPedido = (id, noPedido) => {
+        confirmarPedidoAccion(
+            '¿ELIMINAR PEDIDO PERMANENTEMENTE?',
+            `Estás a punto de borrar el pedido #${noPedido} de toda la base de datos. Se borrarán sus artículos y archivos. ¡ESTA ACCIÓN NO SE PUEDE DESHACER!`,
+            'error',
+            '<i class="fas fa-trash-alt"></i> SÍ, ELIMINAR',
+            '#dc3545',
+            () => {
+                $http.post(urlPedidos, { 
+                    pedidos: { opc: "deleteOrder", _idPedidos: id } 
+                }).then(function (res) {
+                    if (res.data.Bandera == 1) {
+                        Toast.fire({ icon: 'success', title: res.data.mensaje });
+                        obj.getPedidos(obj.paginador.currentPage * obj.paginador.pageSize, obj.paginador.pageSize);
+                    } else {
+                        Toast.fire({ icon: 'error', title: res.data.mensaje });
+                    }
+                });
+            }
+        );
+    };
+
     angular.element(document).ready(function () {
         if (obj.autorizacion) {
             obj.getPedidos();
@@ -124,7 +148,6 @@ function PedidosCtrl($scope, $http) {
         }
     });
 }
-
 
 function PedidosDetallesCtrl($scope, $http) {
     var obj = $scope;
@@ -135,6 +158,7 @@ function PedidosDetallesCtrl($scope, $http) {
     obj.params = {};
     obj.flagCancelado = false;
     obj.autorizacion = false;
+    obj.Rol_Usuario = ""; // Variable de Rol
 
     obj.xml = { placeholder: "Agrega el archivo xml" };
     obj.pdf = { placeholder: "Agrega el archivo pdf" };
@@ -154,6 +178,7 @@ function PedidosDetallesCtrl($scope, $http) {
         $http.post(urlPedidos, { pedidos: { opc: "getOne", id: id } }).then(function (res) {
             if (res.data.Bandera == 1) {
                 obj.Pedido = res.data.Pedido;
+                obj.Rol_Usuario = res.data.Rol_Usuario;
                 obj.Pedido.Importe = parseFloat(obj.Pedido.Importe);
                 obj.Pedido.cenvio = parseFloat(obj.Pedido.cenvio);
                 obj.flagCancelado = obj.Pedido.Acreditado != 6;
@@ -285,6 +310,28 @@ function PedidosDetallesCtrl($scope, $http) {
             }
         );
     }
+
+    obj.btnEliminarPedidoDetalle = () => {
+        confirmarPedidoAccion(
+            '¿ELIMINAR PEDIDO PERMANENTEMENTE?',
+            `Estás a punto de borrar el pedido #${obj.Pedido.noPedido}. ¡ESTA ACCIÓN NO SE PUEDE DESHACER!`,
+            'error',
+            '<i class="fas fa-trash-alt"></i> SÍ, ELIMINAR',
+            '#dc3545',
+            () => {
+                $http.post(urlPedidos, { 
+                    pedidos: { opc: "deleteOrder", _idPedidos: obj.Pedido._idPedidos } 
+                }).then(function (res) {
+                    if (res.data.Bandera == 1) {
+                        Toast.fire({ icon: 'success', title: res.data.mensaje });
+                        setTimeout(() => { location.href = "?mod=Pedidos"; }, 1000);
+                    } else {
+                        Toast.fire({ icon: 'error', title: res.data.mensaje });
+                    }
+                });
+            }
+        );
+    };
 
     obj.btnClose = (element, tipo, file) => {
         confirmarPedidoAccion(

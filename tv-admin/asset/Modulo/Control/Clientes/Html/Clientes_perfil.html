@@ -40,6 +40,11 @@
                   <span class="badge badge-danger">{{cliente.count.NPedidos}}</span>
                 </li>
               </ul>
+              
+              <button class="btn btn-outline-danger btn-block font-weight-bold shadow-sm" ng-click="eliminarCliente()" ng-show="Rol_Usuario == 'root' || Rol_Usuario == 'Admin'">
+                  <i class="fa fa-trash-alt mr-1"></i> Eliminar Cliente
+              </button>
+
             </div>
           </div>
 

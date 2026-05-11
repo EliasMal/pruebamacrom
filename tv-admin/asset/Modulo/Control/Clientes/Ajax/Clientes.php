@@ -22,14 +22,18 @@ class Clientes {
     
     public function main(){
         $this->formulario = json_decode(file_get_contents('php://input'));
-         
+        
+        $rol_usuario = $_SESSION["Puesto"] ?? $_SESSION["perfil"] ?? $_SESSION["rol"] ?? $_SESSION["tipo_usuario"] ?? 'Admin';
+
         switch ($this->formulario->cliente->opc){
             case 'get':
                 $this->jsonData["Bandera"] = 1;
+                $this->jsonData["Rol_Usuario"] = $rol_usuario;
                 $this->jsonData["Cliente"] = $this->getClientes();
                 break;
             case 'new':
                 $this->jsonData["Bandera"] = 1;
+                $this->jsonData["Rol_Usuario"] = $rol_usuario;
                 $this->jsonData["Cliente"] = $this->getnewClientes($this->getFirstWeekDay());
                 break;
             case 'set':
@@ -57,6 +61,7 @@ class Clientes {
                 break;
             case 'perfil':
                 $this->jsonData["Bandera"] = 1;
+                $this->jsonData["Rol_Usuario"] = $rol_usuario;
                 $element = $this->getOneCliente();
                 $element["avisoprivacidad"] = $element["avisoprivacidad"]==0 ? false : true;
                 $this->jsonData["data"] = $element;
@@ -113,6 +118,40 @@ class Clientes {
             case 'listarCuponesAdmin':
                 $this->jsonData["Bandera"] = 1;
                 $this->jsonData["cupones"] = $this->listarCuponesAdmin();
+                break;
+
+            // ===============================================
+            // ELIMINAR CLIENTE PERMANENTEMENTE
+            // ===============================================
+            case 'deleteCliente':
+                if($rol_usuario != 'root' && $rol_usuario != 'Admin'){
+                    $this->jsonData["Bandera"] = 0;
+                    $this->jsonData["mensaje"] = "Permisos insuficientes para esta acción.";
+                    break;
+                }
+
+                $id_cli = (int)$this->formulario->cliente->id;
+                $nombreCliente = $this->getNombreCliente($id_cli);
+
+                if ($nombreCliente == "ID: $id_cli") {
+                    $this->jsonData["Bandera"] = 0;
+                    $this->jsonData["mensaje"] = "El cliente no existe o ya fue eliminado.";
+                    break;
+                }
+
+                $this->conn->query("DELETE FROM Cseguridad WHERE _id_cliente = $id_cli");
+                $this->conn->query("DELETE FROM clientes_cupones WHERE id_cliente = $id_cli");
+                $this->conn->query("DELETE FROM Cdirecciones WHERE _id_cliente = $id_cli");
+                $del = $this->conn->query("DELETE FROM clientes WHERE _id = $id_cli");
+
+                if($del){
+                    Funciones::guardarBitacora($this->conn, 'Clientes', 'ELIMINAR_CLIENTE', "ELIMINÓ PERMANENTEMENTE al cliente: '$nombreCliente'");
+                    $this->jsonData["Bandera"] = 1;
+                    $this->jsonData["mensaje"] = "Cliente eliminado permanentemente.";
+                } else {
+                    $this->jsonData["Bandera"] = 0;
+                    $this->jsonData["mensaje"] = "No se pudo eliminar al cliente. Es probable que tenga Pedidos o compras registradas en el historial.";
+                }
                 break;
         }
         print json_encode($this->jsonData);
@@ -340,3 +379,4 @@ class Clientes {
 
 $app = new Clientes($array_principal);
 $app->main();
+?>

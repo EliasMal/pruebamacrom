@@ -85,7 +85,7 @@
                                     <th class="text-center">Forma de Pago</th>
                                     <th class="text-right">Importe</th>
                                     <th class="text-center">Factura</th>
-                                    <th class="text-center" width="8%">Acciones</th>
+                                    <th class="text-center" width="12%">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -100,9 +100,12 @@
                                     <td class="text-center align-middle">
                                         <i class="fa {{pedido.Facturacion==1? 'fa-check-circle fa-lg text-success':'fa-minus-circle text-muted'}}"></i>
                                     </td>
-                                    <td class="text-center align-middle">
-                                        <button class="btn btn-sm btn-outline-danger shadow-sm" ng-click="btnView(pedido._idPedidos)" title="Ver Detalles">
+                                    <td class="text-center align-middle text-nowrap">
+                                        <button class="btn btn-sm btn-outline-info shadow-sm" ng-click="btnView(pedido._idPedidos)" title="Ver Detalles">
                                             <i class="fa fa-eye"></i> Abrir
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger shadow-sm ml-1" ng-click="btnEliminarPedido(pedido._idPedidos, pedido.noPedido)" title="Eliminar Permanentemente" ng-show="Rol_Usuario == 'root' || Rol_Usuario == 'Admin'">
+                                            <i class="fa fa-trash"></i>
                                         </button>
                                     </td>
                                 </tr>

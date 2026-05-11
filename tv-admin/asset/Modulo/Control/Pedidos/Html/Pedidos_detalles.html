@@ -249,7 +249,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6 offset-md-6 col-lg-4 offset-lg-8">
+                <div class="col-md-8 offset-md-4 col-lg-6 offset-lg-6">
                     <div class="card shadow-sm border-0">
                         <div class="card-body p-0">
                             <table class="table table-sm mb-0">
@@ -277,10 +277,16 @@
                         </div>
                     </div>
                     
-                    <div class="mt-3 text-right" ng-show="flagCancelado">
-                        <button class="btn btn-lg btn-danger shadow px-5 font-weight-bold text-uppercase" ng-click="btnGuardarCambios()">
+                    <div class="mt-4 d-flex justify-content-end align-items-center flex-wrap" ng-show="flagCancelado">
+                        
+                        <button class="btn btn-outline-danger shadow-sm px-4 font-weight-bold text-uppercase mr-3 mb-2" ng-click="btnEliminarPedidoDetalle()" ng-show="Rol_Usuario == 'root' || Rol_Usuario == 'Admin'">
+                            <i class="fa fa-trash-alt mr-2"></i> Eliminar
+                        </button>
+                        
+                        <button class="btn btn-lg btn-danger shadow px-5 font-weight-bold text-uppercase mb-2" ng-click="btnGuardarCambios()">
                             <i class="fa fa-save mr-2"></i> Guardar Cambios
                         </button>
+                        
                     </div>
                 </div>
             </div>

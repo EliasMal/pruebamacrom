@@ -24,6 +24,7 @@ tsuruVolks
 function ClientesCtrl($scope, $http) {
     var obj = $scope;
     obj.Clientes = [];
+    obj.Rol_Usuario = "";
     obj.data = {
         opc: "",
         historico: false,
@@ -86,6 +87,34 @@ function ClientesCtrl($scope, $http) {
         location.href = "?mod=Clientes&opc=perfil&id=" + id;
     };
 
+    obj.eliminarCliente = (user) => {
+        Swal.fire({
+            title: "¿ELIMINAR CLIENTE PERMANENTEMENTE?",
+            html: `Estás a punto de borrar a <b>${user.nombre}</b> de toda la base de datos.<br>Se borrarán sus direcciones, credenciales y cupones.<br>¡ESTA ACCIÓN NO SE PUEDE DESHACER!`,
+            icon: "error",
+            showCancelButton: true,
+            confirmButtonColor: '#dc3545',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: '<i class="fas fa-trash-alt"></i> SÍ, ELIMINAR',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $http({
+                    method: 'POST',
+                    url: urlClientes,
+                    data: { cliente: { opc: "deleteCliente", id: user._id } }
+                }).then(function(res){
+                    if(res.data.Bandera == 1){
+                        Toast.fire({ icon: 'success', title: res.data.mensaje });
+                        obj.loadClientes();
+                    } else {
+                        Toast.fire({ icon: 'error', title: res.data.mensaje });
+                    }
+                });
+            }
+        });
+    };
+
     obj.sendData = () => {
         $http({
             method: 'POST',
@@ -99,6 +128,7 @@ function ClientesCtrl($scope, $http) {
                     Toast.fire({ icon: 'success', title: 'Contraseña generada exitosamente' });
                 } else {
                     obj.Clientes = res.data.Cliente;
+                    obj.Rol_Usuario = res.data.Rol_Usuario; // Asignamos el rol para los permisos
                     if(obj.data.opc == "set") {
                         Toast.fire({ icon: 'success', title: 'Estatus actualizado correctamente' });
                     }
@@ -124,6 +154,7 @@ function ClientesPerfilCtrl($scope, $http) {
     obj.disabled = true;
     obj.cuponesDisponibles = [];
     obj.cuponesCliente = [];
+    obj.Rol_Usuario = "";
 
     obj.getCliente = () => {
         $http({
@@ -134,12 +165,41 @@ function ClientesPerfilCtrl($scope, $http) {
             if (res.data.Bandera == 1) {
                 obj.cliente = res.data.data;
                 obj.cliente.count = res.data.count;
+                obj.Rol_Usuario = res.data.Rol_Usuario;
                 obj.getCuponesCliente();
             }
         }, function errorCallback(res) {
             Toast.fire({ icon: 'error', title: 'Error al cargar los datos del cliente' });
         });
     }
+
+    obj.eliminarCliente = () => {
+        Swal.fire({
+            title: "¿ELIMINAR CLIENTE PERMANENTEMENTE?",
+            html: `Estás a punto de borrar a <b>${obj.cliente.nombres} ${obj.cliente.Apellidos}</b> de toda la base de datos.<br>Se borrarán sus direcciones, credenciales y cupones.<br>¡ESTA ACCIÓN NO SE PUEDE DESHACER!`,
+            icon: "error",
+            showCancelButton: true,
+            confirmButtonColor: '#dc3545',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: '<i class="fas fa-trash-alt"></i> SÍ, ELIMINAR',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $http({
+                    method: 'POST',
+                    url: urlClientes,
+                    data: { cliente: { opc: "deleteCliente", id: obj.id } }
+                }).then(function(res){
+                    if(res.data.Bandera == 1){
+                        Toast.fire({ icon: 'success', title: res.data.mensaje });
+                        setTimeout(() => { location.href = "?mod=Clientes"; }, 1500); 
+                    } else {
+                        Toast.fire({ icon: 'error', title: res.data.mensaje });
+                    }
+                });
+            }
+        });
+    };
 
     obj.asignarCupon = (idCupon) => {
         $http.post(urlClientes, { cliente: { opc: "asignarCupon", id: obj.id, id_cupon: idCupon } }).then(() => {

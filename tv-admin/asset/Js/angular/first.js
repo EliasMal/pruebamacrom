@@ -220,6 +220,10 @@ tsuruVolks.run(["$http", function ($http) {
     var urlPing = "./Modulo/Home/Ajax/Home.php";
 
     function mandarLatido() {
+        if (window.location.href.toLowerCase().includes('login')) {
+            return; 
+        }
+        
         if (localStorage.getItem("session") || localStorage.getItem("ultimoAcceso")) {
             $http({
                 method: 'POST',

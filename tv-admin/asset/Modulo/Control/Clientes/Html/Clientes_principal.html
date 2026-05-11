@@ -102,6 +102,11 @@
                                                     <i class="fas {{user.Estatus == 1 ? 'fa-user-slash text-danger' : 'fa-user-check text-success'}} mr-2"></i>
                                                     {{user.Estatus == 1 ? "Desactivar Cliente" : "Reactivar Cliente"}}
                                                 </a>
+
+                                                <div class="dropdown-divider" ng-show="Rol_Usuario == 'root' || Rol_Usuario == 'Admin'"></div>
+                                                <a class="dropdown-item text-danger" href="#" ng-click="eliminarCliente(user)" ng-show="Rol_Usuario == 'root' || Rol_Usuario == 'Admin'">
+                                                    <i class="fas fa-trash-alt mr-2"></i> Eliminar Cliente
+                                                </a>
                                             </div>
                                         </div>
                                     </td>

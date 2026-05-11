@@ -32,6 +32,7 @@ class Pedidos {
         $this->archivos = $_FILES ?? [];
          
         $opc = $this->formulario['opc'] ?? '';
+        $rol_usuario = $_SESSION["Puesto"] ?? $_SESSION["perfil"] ?? $_SESSION["rol"] ?? $_SESSION["tipo_usuario"] ?? 'Admin';
 
         switch ($opc) {
             case 'get':
@@ -42,12 +43,14 @@ class Pedidos {
                 $y = $this->formulario['y'] ?? 10;
 
                 $this->jsonData["Bandera"] = 1;
+                $this->jsonData["Rol_Usuario"] = $rol_usuario;
                 $this->jsonData["No_pedidos"] = $this->getNoPedidos($find, $historico);
                 $this->jsonData["Pedidos"] = $this->getPedidos($x, $y, $find, $historico);
                 break;
             
             case 'getOne':
                 $id = $this->formulario['id'] ?? 0;
+                $this->jsonData["Rol_Usuario"] = $rol_usuario;
                 $this->jsonData["Pedido"] = $this->getOnePedido($id);
                 $comp = $this->jsonData["Pedido"]["comprobante"] ?? '';
                 $this->jsonData["Pedido"]["isFileComprobante"] = (strlen($comp) > 0) ? file_exists("../../../../../../Public/Comprobantes/{$comp}") : false;
@@ -161,6 +164,51 @@ class Pedidos {
                     $this->jsonData["mensaje"] = "Error al cancelar el artículo";
                 }
                 break;
+
+            // ===============================================
+            //ELIMINAR PEDIDO PERMANENTEMENTE
+            // ===============================================
+            case 'deleteOrder':
+                if($rol_usuario != 'root' && $rol_usuario != 'Admin'){
+                    $this->jsonData["Bandera"] = 0;
+                    $this->jsonData["mensaje"] = "Permisos insuficientes para esta acción.";
+                    break;
+                }
+
+                $idPedido = (int)($this->formulario["_idPedidos"] ?? 0);
+                $pedidoInfo = $this->getOnePedido($idPedido);
+                
+                if (!$pedidoInfo) {
+                    $this->jsonData["Bandera"] = 0;
+                    $this->jsonData["mensaje"] = "El pedido no existe o ya fue eliminado.";
+                    break;
+                }
+
+                $noPedidoStr = $pedidoInfo['noPedido'];
+                $clienteStr = trim($pedidoInfo['nombres'] . ' ' . $pedidoInfo['Apellidos']);
+
+                if (!empty($pedidoInfo['comprobante'])) {
+                    $rutaComp = "../../../../../../Public/Comprobantes/" . $pedidoInfo['comprobante'];
+                    if (file_exists($rutaComp)) @unlink($rutaComp);
+                }
+                if (!empty($pedidoInfo['archivoxml'])) {
+                    $rutaXml = "../../../../../../Public/Facturas/" . $pedidoInfo['archivoxml'];
+                    if (file_exists($rutaXml)) @unlink($rutaXml);
+                }
+                if (!empty($pedidoInfo['archivopdf'])) {
+                    $rutaPdf = "../../../../../../Public/Facturas/" . $pedidoInfo['archivopdf'];
+                    if (file_exists($rutaPdf)) @unlink($rutaPdf);
+                }
+
+                $this->conn->query("DELETE FROM DetallesPedidos WHERE _idPedidos = $idPedido");
+                $this->conn->query("DELETE FROM cupones_usados WHERE id_pedido = $idPedido");
+                $this->conn->query("DELETE FROM Pedidos WHERE _idPedidos = $idPedido");
+
+                $this->setBitacora("ELIMINAR_PEDIDO", "ELIMINÓ PERMANENTEMENTE el Pedido #$noPedidoStr ($clienteStr) y sus detalles asociados.");
+
+                $this->jsonData["Bandera"] = 1;
+                $this->jsonData["mensaje"] = "Pedido eliminado permanentemente.";
+                break;
         }
         
         header('Content-Type: application/json');
@@ -185,7 +233,7 @@ class Pedidos {
 
     private function setBitacora($accion, $detalles) {
         $id_usuario = $_SESSION["id_usuario"] ?? $_SESSION["id"] ?? 0; 
-        $username = $_SESSION["nombre_usuario"] ?? $_SESSION["usr"] ?? 'Desarrollador'; 
+        $username = $_SESSION["nombre_usuario"] ?? $_SESSION["usr"] ?? 'Admin'; 
         
         $modulo = 'Pedidos';
         $ip_usuario = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0'; 
@@ -336,7 +384,6 @@ class Pedidos {
     // ==========================================
     private function autoCancelarPedidos() {
         $fecha_limite = date("Y-m-d H:i:s", strtotime("-5 days"));
-        
         $sql = "UPDATE Pedidos SET Acreditado = '6' WHERE Acreditado = '0' AND Fecha <= '$fecha_limite'";  
         $this->conn->query($sql);
     }
