@@ -41,6 +41,11 @@
                                 }
                                 $this->jsonData["Bandera"] = 1;
                                 $this->jsonData["mensaje"] = "La cuenta del usuario se generó de manera satisfactoria";
+                                
+                                // === REGISTRO EN BITÁCORA (NUEVO USUARIO) ===
+                                $detalleNuevo = "Se creó un nuevo usuario: {$this->formulario['nombre']} con el rol de {$this->formulario['tipousuario']}.";
+                                Funciones::guardarBitacora($this->conn, 'Usuarios', 'CREAR_USUARIO', $detalleNuevo);
+                                
                             }else{
                                 $this->jsonData["Bandera"] = 0;
                                 $this->jsonData["mensaje"] = "Error: No se guardó el password y usuario";
@@ -61,6 +66,10 @@
                         if($this->setSeguridad()){
                             $this->jsonData["Bandera"] = 1;
                             $this->jsonData["mensaje"] = "La cuenta del usuario se ha actualizado de manera satisfactoria";
+                            
+                            // === REGISTRO EN BITÁCORA (EDITAR USUARIO) ===
+                            $detalleEdit = "Se actualizaron los datos generales / perfil del usuario: {$this->formulario['Username']}.";
+                            Funciones::guardarBitacora($this->conn, 'Usuarios', 'EDITAR_USUARIO', $detalleEdit);
                         }
                     }
                     break;
@@ -115,8 +124,10 @@
         
         private function setSeguridad(){
             if($this->formulario["opc"]=="new"){
+                $nuevoHash = password_hash($this->formulario["password"], PASSWORD_DEFAULT);
+                
                 $sql = "INSERT INTO Seguridad (username, password, Tipo_usuario, FechaCreacion, FechaModificacion, USRCreacion, USRModificacion, _idUsuarios, Estatus) values "
-                    . "('{$this->formulario["nombre"]}',SHA('{$this->formulario["password"]}'),'{$this->formulario["tipousuario"]}','".date("Y-m-d H:i:s")."',"
+                    . "('{$this->formulario["nombre"]}','{$nuevoHash}','{$this->formulario["tipousuario"]}','".date("Y-m-d H:i:s")."',"
                             . "'".date("Y-m-d H:i:s")."','{$_SESSION["usr"]}','{$_SESSION["usr"]}','{$this->formulario["lastid"]}','1')";
             }else if($this->formulario["opc"]=="save"){
                 $sql = "UPDATE Seguridad SET Tipo_usuario = '{$this->formulario["Tipo_usuario"]}' where _id = ".$this->formulario["idseguridad"];

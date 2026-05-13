@@ -190,7 +190,9 @@
         }
         
         private function setPassword(){
-            $sql = "UPDATE Seguridad SET password=SHA('".$this->formulario->usuarios->pass."') where _id=".$this->formulario->usuarios->id;
+            $nuevoHash = password_hash($this->formulario->usuarios->pass, PASSWORD_DEFAULT);
+            
+            $sql = "UPDATE Seguridad SET password='{$nuevoHash}' where _id=".$this->formulario->usuarios->id;
             return $this->conn->query($sql);
         }
     }

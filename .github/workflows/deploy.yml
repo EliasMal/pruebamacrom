@@ -1,0 +1,31 @@
+name: Despliegue Automático Macrom
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  web-deploy:
+    name: Sincronizar por FTP
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Obtener código de GitHub
+      uses: actions/checkout@v4
+
+    - name: 🚀 Subir archivos al servidor
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USER }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          .github/**
+          README.md
+          **/dbconectar.php
+          **/conf.php
+          **/images/usuarios/**
+          **/images/refacciones/**
+          **/Public/Comprobantes/**
