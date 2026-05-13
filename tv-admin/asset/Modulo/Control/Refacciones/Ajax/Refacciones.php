@@ -156,6 +156,10 @@
                     }
                     break;
             }
+            $rolActual = $_SESSION["rol"] ?? '';
+            $misPermisosActuales = $_SESSION["permisos"] ?? [];
+            $this->jsonData["puede_publicar"] = ($rolActual === 'root' || $rolActual === 'Admin' || in_array('publicar_refacciones', $misPermisosActuales));
+            
             $this->jsonData["dominio"]=$this->url;
             print json_encode($this->jsonData);
         }
@@ -195,6 +199,11 @@
         }
 
         private function deleteRefaccionCompleta() {
+            $rol = $_SESSION["rol"] ?? '';
+            if ($rol !== 'root' && $rol !== 'Admin') {
+                return false;
+            }
+
             $id = $this->formulario["id"];
             $sqlGaleria = "SELECT _id FROM galeriarefacciones WHERE id_producto = '$id'";
             $resGaleria = $this->conn->query($sqlGaleria);
@@ -369,8 +378,11 @@
         
         private function setRefaccion() {
             $f = $this->formulario;
+            $rol = $_SESSION["rol"] ?? '';
+            $misPermisos = $_SESSION["permisos"] ?? [];
+            $puedePublicar = ($rol === 'root' || $rol === 'Admin' || in_array('publicar_refacciones', $misPermisos));
+
             $estatus = (isset($f["Estatus"]) && ($f["Estatus"] === "true" || $f["Estatus"] === "1")) ? 1 : 0;
-            $publicar = (isset($f["Publicar"]) && ($f["Publicar"] === "true" || $f["Publicar"] === "1")) ? 1 : 0;
             $precio_manual = (isset($f["precio_manual"]) && ($f["precio_manual"] === "true" || $f["precio_manual"] === "1")) ? 1 : 0;
             $liquidacion = (isset($f["RefaccionLiquidacion"]) && ($f["RefaccionLiquidacion"] === "true" || $f["RefaccionLiquidacion"] === "1")) ? 1 : 0;
             $nueva = (isset($f["RefaccionNueva"]) && ($f["RefaccionNueva"] === "true" || $f["RefaccionNueva"] === "1")) ? 1 : 0;
@@ -378,14 +390,23 @@
             $envio = (isset($f["Enviogratis"]) && ($f["Enviogratis"] === "true" || $f["Enviogratis"] === "1")) ? 1 : 0;
             $kit = (isset($f["Kit"]) && ($f["Kit"] === "true" || $f["Kit"] === "1")) ? 1 : 0;
             
-            // Obtenemos la fecha y el usuario actual de la sesión
             $fechaActual = date("Y-m-d H:i:s");
             $usuarioActual = isset($_SESSION["nombre"]) ? $_SESSION["nombre"] : 'Usuario';
                         
             if ($f["opc"] == "new") {
+                $publicar = $puedePublicar ? ((isset($f["Publicar"]) && ($f["Publicar"] === "true" || $f["Publicar"] === "1")) ? 1 : 0) : 0;
+
                 $sql = "INSERT INTO Producto (Clave, Producto, No_parte, _idCategoria, _idMarca, Modelo, Anios, id_proveedor, Precio1, Precio2, Estatus, Publicar, precio_manual, Descripcion, stock, Alto, Largo, Ancho, Peso, RefaccionLiquidacion, RefaccionNueva, RefaccionOferta, Enviogratis, Kit, userCreated, dateCreated, userModify, dateModify) 
                         VALUES ('{$f["Clave"]}', '{$f["Producto"]}', '{$f["No_parte"]}', '{$f["_idCategoria"]}', '{$f["_idMarca"]}', '{$f["Modelo"]}', '{$f["Anios"]}', '{$f["id_proveedor"]}', '{$f["Precio1"]}', '{$f["Precio2"]}', $estatus, $publicar, $precio_manual, '{$f["Descripcion"]}', '{$f["stock"]}', '{$f["Alto"]}', '{$f["Largo"]}', '{$f["Ancho"]}', '{$f["Peso"]}', $liquidacion, $nueva, $oferta, $envio, $kit, '$usuarioActual', '$fechaActual', '$usuarioActual', '$fechaActual')";
             } else {
+                
+                if ($puedePublicar) {
+                    $publicar = (isset($f["Publicar"]) && ($f["Publicar"] === "true" || $f["Publicar"] === "1")) ? 1 : 0;
+                    $fragmentoPublicar = "Publicar = $publicar,";
+                } else {
+                    $fragmentoPublicar = "";
+                }
+
                 $sql = "UPDATE Producto SET 
                         Clave = '{$f["Clave"]}', 
                         Producto = '{$f["Producto"]}', 
@@ -398,7 +419,7 @@
                         Precio1 = '{$f["Precio1"]}', 
                         Precio2 = '{$f["Precio2"]}', 
                         Estatus = $estatus, 
-                        Publicar = $publicar, 
+                        $fragmentoPublicar
                         precio_manual = $precio_manual, 
                         RefaccionLiquidacion = $liquidacion, 
                         RefaccionNueva = $nueva,

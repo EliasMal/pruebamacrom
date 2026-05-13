@@ -179,6 +179,23 @@ class login {
             $_SESSION["usr"] = $user["username"];
             $_SESSION["_id"] = $user["_id"];
 
+            $rol_seguro = addslashes($user["Tipo_usuario"]);
+            $sqlPermisos = "SELECT m.opc FROM Permisos_Roles p 
+                            INNER JOIN Modulos_Admin m ON p.id_modulo = m.id_modulo 
+                            WHERE p.rol_nombre = '$rol_seguro'";
+            
+            $resPermisos = $this->conn->query($sqlPermisos);
+            $permisosArray = [];
+            
+            if ($resPermisos) {
+                while($rowP = $this->conn->fetch($resPermisos)){
+                    if(!empty($rowP['opc'])) {
+                        $permisosArray[] = $rowP['opc'];
+                    }
+                }
+            }
+            $_SESSION["permisos"] = $permisosArray;
+
             $sql = "UPDATE Usuarios SET ultimoAcceso = '{$_SESSION["ultimoAcceso"]}', OnlineNow = 1 WHERE _id = '{$_SESSION["_id"]}' AND Username = '{$_SESSION["usr"]}'";
             return $this->conn->query($sql);
         } else {

@@ -46,10 +46,20 @@ function menu(){
     $rolActual = isset($_SESSION["rol"]) ? $_SESSION["rol"] : '';
     $rol_seguro = addslashes($rolActual);
     
+    $sqlPerm = "SELECT m.opc FROM Permisos_Roles p INNER JOIN Modulos_Admin m ON p.id_modulo = m.id_modulo WHERE p.rol_nombre = '$rol_seguro'";
+    $resPerm = $conn->query($sqlPerm);
+    $permisosArray = [];
+    if($resPerm){
+        while($rowP = $conn->fetch($resPerm)){
+            if(!empty($rowP['opc'])) $permisosArray[] = $rowP['opc'];
+        }
+    }
+    $_SESSION["permisos"] = $permisosArray;
+
     $sql = "SELECT DISTINCT m.grupo, m.titulo, m.opc 
             FROM Modulos_Admin m 
             INNER JOIN Permisos_Roles p ON m.id_modulo = p.id_modulo 
-            WHERE p.rol_nombre = '$rol_seguro'
+            WHERE p.rol_nombre = '$rol_seguro' AND m.opc LIKE '?mod=%'
             ORDER BY FIELD(m.grupo, 'Control', 'Configuracion', 'Secciones', 'Respaldo', 'Importar', 'Mantenimiento', 'Reportes'), m.titulo ASC";
             
     $opcMenu = $conn->fetch_all($conn->query($sql));

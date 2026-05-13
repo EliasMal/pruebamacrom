@@ -335,7 +335,12 @@ function RefaccionesNewCtrl($scope, $http) {
                 for (var m in data.modelo) { fd.append(m, data.modelo[m]); }
                 return fd;
             }
-        }).then(res => { if(res.data.Bandera == 1) obj.categorias = res.data.data; });
+        }).then(res => { 
+            if(res.data.Bandera == 1) {
+                obj.categorias = res.data.data; 
+                obj.canPublish = res.data.puede_publicar;
+            } 
+        });
     }
 
     obj.getMarcas = () => {
@@ -401,6 +406,9 @@ function RefaccionesNewCtrl($scope, $http) {
         obj.getCategorias(); obj.getMarcas(); obj.getProveedores();
         $(".numeric").numeric();
         $('.calendario').datepicker({ format: 'yyyy-mm-dd', startDate: '-3d' });
+
+        obj.session = JSON.parse(localStorage.getItem('session'));
+        obj.isAdmin = (obj.session.rol === "Admin" || obj.session.rol === "root");
     });
 }
 
@@ -641,6 +649,7 @@ function RefaccionesEditCtrl($scope, $http, $sce) {
             }
         }).then(function successCallback(res) {
             if (res.data.Bandera == 1) {
+                obj.canPublish = res.data.puede_publicar;
                 obj.dominio = res.data.dominio;
                 
                 obj.Vehiculos = res.data.data.ListaVehiculos;
@@ -976,6 +985,7 @@ function RefaccionesEditCtrl($scope, $http, $sce) {
         obj.getRefaccion();
         $(".numeric").numeric();
         $('.calendario').datepicker({ format: 'yyyy-mm-dd', startDate: '-3d' });
+
         obj.session = JSON.parse(localStorage.getItem('session'));
         obj.isAdmin = obj.session.rol === "Admin" || obj.session.rol === "root" ? true : false;
     });
