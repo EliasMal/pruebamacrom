@@ -1,10 +1,7 @@
 <?php
-session_name("loginCliente");
-session_start();
+require_once $_SERVER['DOCUMENT_ROOT'] . "/core/auth.php";
 require_once "../../../tv-admin/asset/Clases/dbconectar.php";
 require_once "../../../tv-admin/asset/Clases/ConexionMySQL.php";
-
-date_default_timezone_set('America/Mexico_City');
 
 class uploadfile{
     private $conn;
@@ -49,7 +46,6 @@ class uploadfile{
                 mkdir($subdir.$dir,0755);
             }
             if($archivo && move_uploaded_file($this->comprobante["file"]["tmp_name"], $subdir.$dir.$archivo)){
-                //$this->rutaimagen= $dir.$archivo;
                 return true;
             }else{
                 echo "no se subio la imagen". $subdir.$dir.$archivo;

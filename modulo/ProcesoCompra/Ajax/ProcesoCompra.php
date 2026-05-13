@@ -1,17 +1,11 @@
 <?php
-session_name("loginCliente");
-session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', '0');
-
+require_once $_SERVER['DOCUMENT_ROOT'] . "/core/auth.php";
 require_once "../../../tv-admin/asset/Clases/dbconectar.php";
 require_once "../../../tv-admin/asset/Clases/ConexionMySQL.php";
 require_once "../../../tv-admin/asset/Clases/AESCrypto.php";
 require_once '../../../vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
-
-date_default_timezone_set('America/Mexico_City');
 
 class ProcesoCompra {
     private $conn;

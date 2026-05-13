@@ -1,9 +1,9 @@
 <?php
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/core/bootstrap.php";
     require_once "../../../tv-admin/asset/Clases/dbconectar.php";
     require_once "../../../tv-admin/asset/Clases/ConexionMySQL.php";
     require_once '../../../vendor/autoload.php';
     use PHPMailer\PHPMailer\PHPMailer;
-    date_default_timezone_set('America/Mexico_City');
 
     Class Contacto{
         private $formulario;

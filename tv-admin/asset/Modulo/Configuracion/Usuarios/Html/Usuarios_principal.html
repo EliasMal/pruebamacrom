@@ -79,14 +79,21 @@
                                                 </span>
                                             </td>
                                             
-                                            <td class="text-center align-middle">
+                                            <td class="text-center align-middle text-nowrap">
                                                 <button class="btn btn-sm btn-info shadow-sm" title="Editar Perfil" ng-click="opcEditar(user._id)">
                                                     <i class="fa fa-edit"></i>
                                                 </button>
-                                                <button class="btn btn-sm shadow-sm" title="{{user.Estatus == 1 ? 'Desactivar Cuenta' : 'Activar Cuenta'}}" 
+                                                
+                                                <button class="btn btn-sm shadow-sm ml-1" title="{{user.Estatus == 1 ? 'Desactivar Cuenta' : 'Activar Cuenta'}}" 
                                                         ng-class="user.Estatus == 1 ? 'btn-danger' : 'btn-success'" 
                                                         ng-click="user.Estatus == 1 ? opcDesactivar(user._id) : opcActivar(user._id)">
                                                     <i class="fa" ng-class="user.Estatus == 1 ? 'fa-ban' : 'fa-check'"></i>
+                                                </button>
+
+                                                <button class="btn btn-sm btn-outline-danger shadow-sm ml-1" title="Eliminar Definitivamente"
+                                                        ng-show="(Rol_Usuario == 'root' || Rol_Usuario == 'Admin') && user.Estatus == 0" 
+                                                        ng-click="opcEliminar(user)">
+                                                    <i class="fa fa-trash-alt"></i>
                                                 </button>
                                             </td>
                                         </tr>

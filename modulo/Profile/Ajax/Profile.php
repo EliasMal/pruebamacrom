@@ -1,10 +1,7 @@
 <?php
-session_name("loginCliente");
-session_start();
-require_once "../../../tv-admin/asset/Clases/dbconectar.php";
-require_once "../../../tv-admin/asset/Clases/ConexionMySQL.php";
-
-date_default_timezone_set('America/Mexico_City');
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/core/auth.php";
+    require_once "../../../tv-admin/asset/Clases/dbconectar.php";
+    require_once "../../../tv-admin/asset/Clases/ConexionMySQL.php";
 
 class Profile{
     private $conn;

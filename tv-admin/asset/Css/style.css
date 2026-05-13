@@ -30,6 +30,10 @@
   cursor: not-allowed;
 }
 
+.cursor-pointer{
+  cursor: pointer;
+}
+
 .form-group.has-feedback {
   position: relative;
   margin-bottom: 1rem;

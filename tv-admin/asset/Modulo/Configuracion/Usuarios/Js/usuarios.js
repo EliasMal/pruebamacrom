@@ -43,6 +43,7 @@ function UsuariosCtrl($scope, $http) {
     obj.usuarios = {};
     obj.historico = false;
     obj.listaRoles = [];
+    obj.Rol_Usuario = "";
 
     obj.cargarRoles = function () {
         $http.post(urlBuscarUsuarios, { usuarios: { opc: "get_roles" } }).then(function (res) {
@@ -101,11 +102,51 @@ function UsuariosCtrl($scope, $http) {
         );
     }
 
+    obj.opcActivar = function (_id) {
+        $http({ method: 'POST', url: urlBuscarUsuarios, data: { usuarios: { opc: "activar", id: _id } } })
+        .then(function (res) {
+            if (res.data.Bandera == 1) {
+                Toast.fire({ icon: 'success', title: 'Usuario reactivado' });
+                obj.getUsuarios();
+            } else {
+                Toast.fire({ icon: 'error', title: 'No se pudo activar el usuario' });
+            }
+        });
+    }
+
+    obj.opcEliminar = function (user) {
+        Swal.fire({
+            title: "¿ELIMINAR DEFINITIVAMENTE?",
+            html: `Estás a punto de borrar al usuario <b>${user.Nombre}</b>.<br>Se borrará su cuenta, credenciales y fotografía.<br>¡ESTA ACCIÓN NO SE PUEDE DESHACER!`,
+            icon: "error",
+            showCancelButton: true,
+            confirmButtonColor: '#dc3545',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: '<i class="fas fa-trash-alt"></i> SÍ, ELIMINAR',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $http({ method: 'POST', url: urlBuscarUsuarios, data: { usuarios: { opc: "eliminar_permanente", id: user._id } } })
+                .then(function (res) {
+                    if (res.data.Bandera == 1) {
+                        Toast.fire({ icon: 'success', title: res.data.mensaje });
+                        obj.getUsuarios();
+                    } else {
+                        Toast.fire({ icon: 'error', title: res.data.mensaje });
+                    }
+                });
+            }
+        });
+    };
+
     obj.getUsuarios = function () {
         setTimeout(() => {
             $http({ method: 'POST', url: urlBuscarUsuarios, data: { usuarios: { opc: "buscar", historico: obj.historico ? 0 : 1 } } })
             .then(function (res) {
-                if (res.data.Bandera == 1) obj.usuarios = res.data.Data;
+                if (res.data.Bandera == 1) {
+                    obj.usuarios = res.data.Data;
+                    obj.Rol_Usuario = res.data.Rol_Usuario;
+                }
             });
         }, 100);
     }

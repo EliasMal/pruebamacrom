@@ -1,9 +1,6 @@
 <?php
-  session_name("loginCliente");
-  session_start();
-
+  require_once $_SERVER['DOCUMENT_ROOT'] . "/core/bootstrap.php";
   $conn = mysqli_connect('macromautopartes.com', 'u619477378_root','jSJLK6AqN%fwUOskf5@R','u619477378_macromau');
-  
   header('Content-Type: application/json');
 
   if (!$conn) {

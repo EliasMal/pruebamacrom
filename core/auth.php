@@ -1,37 +1,27 @@
 <?php
 /**
  * AUTH GLOBAL
- * Protege páginas privadas y valida cambios de contraseña
+ * Protege páginas privadas verificando la sesión del cliente
  */
 
 require_once $_SERVER['DOCUMENT_ROOT'] . "/core/bootstrap.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/conf.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/tv-admin/asset/Clases/ConexionMySQL.php";
 
-//Validar que exista sesión
-if (!isset($_SESSION["iduser"])) {
+if (!isset($_SESSION["iduser"]) || empty($_SESSION["iduser"])) {
+    
+    $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+    $isJson = isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false;
+
+    if ($isAjax || $isJson) {
+        header('Content-Type: application/json');
+        echo json_encode([
+            "Bandera" => 0, 
+            "mensaje" => "Tu sesión ha expirado o es inválida. Por favor, inicia sesión nuevamente.",
+            "logout_forzado" => true
+        ]);
+        exit;
+    }
+
     header("Location: /");
     exit;
 }
-
-//Crear conexión
-$conn = new HelperMySql(
-    $array_principal["server"],
-    $array_principal["user"],
-    $array_principal["pass"],
-    $array_principal["db"]
-);
-
-//Consultar password_changed_at actual
-$sql = "SELECT password_changed_at FROM Cseguridad WHERE _id_cliente = '{$_SESSION["iduser"]}' LIMIT 1";
-
-$result = $conn->query($sql);
-$user = $conn->fetch($result);
-
-//Si no existe usuario o cambió contraseña → cerrar sesión
-if (!$user || $_SESSION["password_changed_at"] !== $user["password_changed_at"]) {
-    session_unset();
-    session_destroy();
-    header("Location: /");
-    exit;
-}
+?>

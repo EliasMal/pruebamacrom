@@ -4,10 +4,10 @@
     require_once "../../../../Clases/dbconectar.php";
     require_once "../../../../Clases/ConexionMySQL.php";
     require_once "../../../../Clases/SendMail.php";
+    require_once "../../../../Clases/Funciones.php";
 
     date_default_timezone_set('America/Mexico_City');
     
-
     class Usuarios{
         private $conn;
         private $jsonData = array("Bandera"=>0,"mensaje"=>"");
@@ -30,29 +30,34 @@
             switch ($this->formulario->usuarios->opc) {
                 case 'buscar':
                     $datos = $this->getUsuarios();
-                    if(count($datos)){
-                        $this->jsonData["Bandera"] = 1;
-                        $this->jsonData["mensaje"] = "Entro a la funcion";
-                        $this->jsonData["Data"] = $datos;
-                    }
+                    $this->jsonData["Bandera"] = 1;
+                    $this->jsonData["mensaje"] = "Entro a la funcion";
+                    $this->jsonData["Data"] = $datos;
+                    $this->jsonData["Rol_Usuario"] = $_SESSION["rol"] ?? 'Usuario'; 
                     break;
+                    
                 case 'activar':
                 case 'borrar':
                         if($this->setUsuarios($this->formulario->usuarios->opc=="borrar"? 0:1)){
                             if($this->setSeguridad($this->formulario->usuarios->opc=="borrar"? 0:1)){
                                 $this->jsonData["Bandera"] = 1;
-                                $this->jsonData["mensaje"] = "El usuario se a desactivado";
+                                $this->jsonData["mensaje"] = "El usuario se ha actualizado";
+                                
+                                $accionBitacora = $this->formulario->usuarios->opc == "borrar" ? 'DESACTIVAR_USUARIO' : 'ACTIVAR_USUARIO';
+                                $textoBitacora = $this->formulario->usuarios->opc == "borrar" ? 'desactivó' : 'reactivó';
+                                Funciones::guardarBitacora($this->conn, 'Usuarios', $accionBitacora, "Se $textoBitacora la cuenta del usuario ID: {$this->formulario->usuarios->id}");
+                                
                             }else{
                                 $this->jsonData["Bandera"] = 0;
-                                $this->jsonData["mensaje"] = "Error: al desactivar la seguridad";
+                                $this->jsonData["mensaje"] = "Error: al actualizar la seguridad";
                             }
                         }else{
                             $this->jsonData["Bandera"] = 0;
-                            $this->jsonData["mensaje"] = "Error: al desactivar el usuario";
+                            $this->jsonData["mensaje"] = "Error: al actualizar el usuario";
                         }
                     break;
+                    
                 case 'edit':
-                    //var_dump($this->formulario);
                     $dato = $this->getUsuario();
                     if(count($dato)){
                         $this->jsonData["Bandera"] = 1;
@@ -60,31 +65,80 @@
                         $this->jsonData["img"] = file_exists("../../../../Images/usuarios/".$this->formulario->usuarios->id.".png");
                     }
                     break;
+                    
                 case 'pass':
                     if($this->setPassword()){
                         $this->Sendusernamexemail($this->formulario->usuarios->nombre, $this->formulario->usuarios->username, 
                         $this->formulario->usuarios->pass, $this->formulario->usuarios->email);
                         $this->jsonData["Bandera"] = 1;
                         $this->jsonData["mensaje"] = "El password ha sido cambiado";
+                        
+                        Funciones::guardarBitacora($this->conn, 'Usuarios', 'CAMBIO_PASSWORD', "Se generó una nueva contraseña para la cuenta del usuario ID: {$this->formulario->usuarios->id}");
+                        
                     }else{
                         $this->jsonData["Bandera"] = 0;
                         $this->jsonData["mensaje"] = "Error al intentar cambiar el password";
                     }
                     break;
-                    case 'get_roles':
-                        $sql = "SELECT DISTINCT rol_nombre FROM Permisos_Roles ORDER BY rol_nombre ASC";
-                        $roles = $this->conn->fetch_all($this->conn->query($sql));
-                        $array_roles = array();
+                    
+                case 'get_roles':
+                    $sql = "SELECT DISTINCT rol_nombre FROM Permisos_Roles ORDER BY rol_nombre ASC";
+                    $roles = $this->conn->fetch_all($this->conn->query($sql));
+                    $array_roles = array();
 
-                        foreach($roles as $r){
-                            $array_roles[] = array(
-                                "value" => $r['rol_nombre'], 
-                                "descripcion" => ucfirst($r['rol_nombre'])
-                            );
-                        }
-                        $this->jsonData["Roles"] = $array_roles;
-                        $this->jsonData["Bandera"] = 1;
+                    foreach($roles as $r){
+                        $array_roles[] = array(
+                            "value" => $r['rol_nombre'], 
+                            "descripcion" => ucfirst($r['rol_nombre'])
+                        );
+                    }
+                    $this->jsonData["Roles"] = $array_roles;
+                    $this->jsonData["Bandera"] = 1;
+                    break;
+
+                case 'eliminar_permanente':
+                    $rol_actual = $_SESSION["rol"] ?? '';
+                    
+                    if ($rol_actual != 'root' && $rol_actual != 'Admin') {
+                        $this->jsonData["Bandera"] = 0;
+                        $this->jsonData["mensaje"] = "Permisos insuficientes para esta acción.";
                         break;
+                    }
+                    
+                    $idUser = (int)$this->formulario->usuarios->id;
+                    
+                    if ($idUser == ($_SESSION["_id"] ?? 0) || $idUser == ($_SESSION["iduser"] ?? 0)) {
+                        $this->jsonData["Bandera"] = 0;
+                        $this->jsonData["mensaje"] = "Seguridad: No puedes eliminar tu propia cuenta.";
+                        break;
+                    }
+
+                    $sqlInfo = "SELECT Username FROM Usuarios WHERE _id = $idUser";
+                    $uInfo = $this->conn->fetch($this->conn->query($sqlInfo));
+                    if ($uInfo) {
+                        $rutaImg = "../../../../Images/usuarios/" . $uInfo["Username"] . ".png";
+                        if (file_exists($rutaImg)) {
+                            @unlink($rutaImg); 
+                        }
+                    }
+
+                    $this->conn->query("DELETE FROM Seguridad WHERE _idUsuarios = $idUser");
+                    $del = $this->conn->query("DELETE FROM Usuarios WHERE _id = $idUser");
+                    
+                    if ($del) {
+                        $this->jsonData["Bandera"] = 1;
+                        $this->jsonData["mensaje"] = "Usuario eliminado permanentemente.";
+                        
+                        if ($uInfo) {
+                            Funciones::guardarBitacora($this->conn, 'Usuarios', 'ELIMINAR_USUARIO', "Se eliminó de forma definitiva la cuenta de: {$uInfo['Username']} (ID: $idUser)");
+                        }
+                        
+                    } else {
+                        $this->jsonData["Bandera"] = 0;
+                        $this->jsonData["mensaje"] = "Error al intentar eliminar el usuario en la BD.";
+                    }
+                    break;
+
                 default:
                     break;
             }
@@ -109,17 +163,18 @@
             }else if($_SESSION["rol"]=="Admin"){
                 $sql = "select US.*,SG.Tipo_usuario from Usuarios as US inner join Seguridad as SG on (SG._idUsuarios = US._id) where US.Username not in ('Admin','root') and US.estatus = ". $this->formulario->usuarios->historico;
             }else{
-                
+                $sql = "select US.*,SG.Tipo_usuario from Usuarios as US inner join Seguridad as SG on (SG._idUsuarios = US._id) where US.Username not in ('Admin','root') and US.estatus = ". $this->formulario->usuarios->historico;
             }
             $id = $this->conn->query($sql);
-            while($row = $this->conn->fetch($id)){
-                array_push($array, $row);
+            if($id){
+                while($row = $this->conn->fetch($id)){
+                    array_push($array, $row);
+                }
             }
             return $array;
         }
         
         private function getUsuario(){
-            
             $sql = "Select *,SG._id as idseguridad from Usuarios as US inner join Seguridad as SG on (SG._idUsuarios = US._id) where US._id=".$this->formulario->usuarios->id;
             return $this->conn->fetch($this->conn->query($sql));
         }
@@ -138,11 +193,8 @@
             $sql = "UPDATE Seguridad SET password=SHA('".$this->formulario->usuarios->pass."') where _id=".$this->formulario->usuarios->id;
             return $this->conn->query($sql);
         }
-        
     }
     
     $app = new Usuarios($array_principal);
     $app->principal();
-    
-    
-
+?>

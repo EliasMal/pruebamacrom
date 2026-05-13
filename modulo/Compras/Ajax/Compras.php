@@ -1,6 +1,5 @@
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'] . "/core/bootstrap.php";
-
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/core/auth.php";
     require_once "../../../tv-admin/asset/Clases/dbconectar.php";
     require_once "../../../tv-admin/asset/Clases/ConexionMySQL.php";
     require_once "../../../tv-admin/asset/Clases/redpack.php";

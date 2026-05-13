@@ -1,6 +1,5 @@
 <?php
-    session_name("loginCliente");
-    session_start();
+    require_once $_SERVER['DOCUMENT_ROOT'] . "/core/bootstrap.php";
     require_once "../../../tv-admin/asset/Clases/dbconectar.php";
     require_once "../../../tv-admin/asset/Clases/ConexionMySQL.php";
 
