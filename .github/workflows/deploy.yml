@@ -18,6 +18,8 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USER }}
         password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: ./domains/macromautopartes.com/public_html/prueba/
+        
         exclude: |
           **/.git*
           **/.git*/**
@@ -26,6 +28,9 @@ jobs:
           README.md
           **/dbconectar.php
           **/conf.php
-          **/images/usuarios/**
-          **/images/refacciones/**
           **/Public/Comprobantes/**
+          **/images/**
+          **/Reportes/**
+          **/XML/**
+          **/fonts/**
+          **/vendor/**
