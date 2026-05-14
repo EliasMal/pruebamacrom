@@ -1,0 +1,36 @@
+name: Despliegue a PRODUCCION OFICIAL 🚀
+on:
+  push:
+    branches:
+      - produccion
+
+jobs:
+  web-deploy:
+    name: Sincronizar Producción
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Obtener código de GitHub
+      uses: actions/checkout@v4
+
+    - name: 🚀 Subir archivos a la página principal
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USER }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: ./domains/macromautopartes.com/public_html/
+        
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          .github/**
+          README.md
+          **/dbconectar.php
+          **/conf.php
+          **/Public/Comprobantes/**
+          **/images/**
+          **/Reportes/**
+          **/XML/**
+          **/fonts/**
+          **/vendor/**
