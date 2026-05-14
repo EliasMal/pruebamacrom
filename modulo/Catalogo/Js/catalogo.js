@@ -583,7 +583,6 @@ function catalogosCtrl($scope, $http) {
         obj.refaccion.proveedor      = next_provee;
         obj.refaccion.disponibilidad = next_dispo;
         obj.currentPage = next_url - 1;
-        document.querySelector('title').textContent = "Refacciones | MacromAutopartes";
         obj.getCategorias();
         setTimeout(() => {
             const overlay = document.querySelector('.overlay-modal');
