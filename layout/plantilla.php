@@ -14,7 +14,7 @@
         case 'register':
             $titulo_seo = "Crear Cuenta | Macrom Autopartes";
             break;
-        case 'ProcesoCompra':
+        case 'Compras':
             $titulo_seo = "Tu Carrito de Compras | Macrom Autopartes";
             break;
         case 'Profile':
