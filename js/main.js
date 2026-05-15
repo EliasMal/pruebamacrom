@@ -49,22 +49,21 @@ document.addEventListener("DOMContentLoaded", () => {
     // 2. Dark Mode (Lógica Centralizada)
     // =======================================================
     const darkmodeSwitches = document.querySelectorAll(".switch__darkmode");
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const currentTheme = localStorage.getItem('darkmode') || (systemPrefersDark ? 'dark' : 'light');
+    const currentTheme = localStorage.getItem('darkmode');
 
     const setTheme = (theme) => {
-        document.documentElement.setAttribute('data-theme', theme);
-        
         if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
             darkmodeSwitches.forEach(sw => sw.classList.replace('fa-sun', 'fa-moon'));
             darkmodeSwitches.forEach(sw => sw.checked = true);
         } else {
+            document.body.classList.remove('dark-theme');
             darkmodeSwitches.forEach(sw => sw.classList.replace('fa-moon', 'fa-sun'));
             darkmodeSwitches.forEach(sw => sw.checked = false);
         }
     };
 
-    setTheme(currentTheme);
+    if (currentTheme) setTheme(currentTheme);
 
     darkmodeSwitches.forEach(sw => {
         sw.addEventListener('click', (e) => {
@@ -242,7 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (parent.matches(".header-wrapicon1")) { 
                     if (carrisvg) carrisvg.style.filter = "brightness(0) invert(1)";
                     if (divcarri) divcarri.style.backgroundColor = "transparent";
-                    if (usercba) usercba.style.backgroundColor = isDarkMode ? "var(--bg-secundario)" : "#fff";
+                    if (usercba) usercba.style.backgroundColor = isDarkMode ? "#7f7f7f" : "#fff";
                 } else if (parent.matches(".header-wrapicon2")) { 
                     if (usercba) usercba.style.backgroundColor = "transparent";
                     if (divcarri) divcarri.style.backgroundColor = isDarkMode ? "#7f7f7f" : "white";

@@ -2,7 +2,7 @@
    01. GLOBALES Y TIPOGRAFÍA
    -------------------------------------------------------------------------- */
 .macrom {
-    background-color: var(--bg-body);
+    background-color: var(--blanco);
 }
 .contenedor__nuestrosproductos h3,
 .redes__sociales--titulo h3 {
@@ -91,7 +91,7 @@
     width: 100%;
 }
 .categoria__enlace {
-    color: var(--texto-secundario);
+    color: #4b5563;
     font-weight: 600;
     font-size: 1.4rem;
     line-height: 1.2;
@@ -109,7 +109,7 @@
    -------------------------------------------------------------------------- */
 .seccion__nuestrosproductos {
     min-height: auto;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid var(--gris-light);
 }
 .contenedor__nuestrosproductos--masvendidos,
 .contenedor__nuestrosproductos--liquidacion,
@@ -123,7 +123,7 @@
     justify-content: center;
     gap: 4rem;
     margin: 2rem 0 4rem 0;
-    border-bottom: 2px solid var(--border-color);
+    border-bottom: 2px solid #e5e7eb;
 }
 
 .toolbar_click,
@@ -133,7 +133,7 @@
     padding: 1rem 0;
     font-size: 1.6rem;
     font-weight: 600;
-    color: var(--texto-suave);
+    color: #6b7280;
     cursor: pointer;
     transition: all 0.3s ease;
     margin-bottom: -2px;
@@ -142,7 +142,7 @@
 .toolbar_click:hover,
 .toolbar_click0:hover,
 .toolbar_click1:hover {
-    color: var(--texto-principal);
+    color: var(--negro);
 }
 .toolbar__activada {
     color: var(--primario) !important;
@@ -157,7 +157,7 @@
     font-size: 2rem;
 }
 .opcion__activada {
-    color: #ffffff;
+    color: var(--blanco);
     background-color: var(--primario);
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
@@ -168,9 +168,9 @@
    05. TARJETAS DE PRODUCTO
    -------------------------------------------------------------------------- */
 .home__pr {
-    background-color: var(--bg-tarjeta);
+    background-color: var(--blanco);
     border-radius: 8px;
-    border: 1px solid var(--border-color);
+    border: 1px solid #e5e7eb;
     box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     overflow: hidden; 
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -180,7 +180,7 @@
 
 .home__pr:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.08);
 }
 
 .home__pr:hover .promocion__aviso,
@@ -194,8 +194,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--bg-body);
-    border-bottom: 1px solid var(--border-color);
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e5e7eb;
     position: relative;
     width: 100%;
 }
@@ -206,13 +206,6 @@
     object-fit: contain;
     mix-blend-mode: multiply;
     transition: transform 0.4s ease;
-}
-
-[data-theme="dark"] .productos__informacion img {
-    mix-blend-mode: normal; 
-    background-color: #fff;
-    padding: 10px;
-    border-radius: 8px;
 }
 
 .productos__informacion:hover .wrap-pic-w img {
@@ -236,7 +229,7 @@
 .nuevo__aviso,
 .agotado__aviso,
 .enviogratis__aviso {
-    color: #ffffff;
+    color: var(--blanco);
     border-radius: 0.3rem;
     padding: 0.2rem 0.6rem;
     text-transform: uppercase;
@@ -263,7 +256,7 @@
 .block2-brand {
     font-size: 1.1rem;
     font-weight: 600;
-    color: var(--texto-suave) !important;
+    color: #6b7280 !important;
     text-transform: uppercase;
     margin-bottom: 0.5rem;
     letter-spacing: 0.05em;
@@ -271,7 +264,7 @@
 .block2-name {
     font-size: 1.4rem;
     font-weight: 700;
-    color: var(--texto-principal);
+    color: #111827;
     line-height: 1.3;
     margin-bottom: 1.5rem;
     text-decoration: none;
@@ -291,19 +284,19 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px dashed var(--border-color);
+    border-top: 1px dashed #e5e7eb; 
     padding-top: 1rem;
     margin-bottom: 1.5rem;
 }
 .sku_label, .sku_value {
     font-family: 'Courier New', Courier, monospace;
     font-size: 1.1rem;
-    color: var(--texto-secundario);
+    color: #4b5563;
     padding: 0;
 }
 .sku_value {
     font-weight: bold;
-    color: var(--texto-principal);
+    color: #111827;
 }
 .precio__imgprove {
     margin-top: auto;
@@ -311,13 +304,13 @@
 .precio__producto {
     font-size: 2.2rem;
     font-weight: 800;
-    color: var(--primario);
+    color: #de0007;
     margin: 0;
 }
 
 ::selection {
   background-color: var(--primario);
-  color: #ffffff;
+  color: var(--blanco);
 }
 a, button, .enlace, .sidebar__click, .cliente__opciones--button, .menu__enlaces span {
   transition: all 0.25s ease;
@@ -340,22 +333,19 @@ a, button, .enlace, .sidebar__click, .cliente__opciones--button, .menu__enlaces 
 .ss-icon a { display: inline-block; position: relative; width: 8rem; height: 8rem; margin: 0.5rem; }
 .ss-icon article {
     cursor: pointer; display: block; width: 100%; height: 100%;
-    background-color: var(--bg-secundario);
-    box-shadow: 0 0 6px -2px rgba(0,0,0,0.5);
-    color: var(--texto-principal);
-    line-height: 9rem; transform: perspective(30rem) rotateY(0deg);
+    background-color: #333; box-shadow: 0 0 6px -2px #000, 0 0 4.5rem -2rem #000;
+    color: #fff; line-height: 9rem; transform: perspective(30rem) rotateY(0deg);
     transition: transform 0.4s linear, background-color 0s linear 0.2s, color 0s linear 0.2s;
 }
 .ss-icon a:hover article {
     transform: perspective(30rem) rotateY(180deg); color: #eee;
     transition: transform 0.2s linear, background-color 0s linear 0.1s, color 0s linear 0.1s;
 }
-
-.ss-icon a:nth-child(1):hover article { background-color: #3B5998; color: #fff;}
-.ss-icon a:nth-child(2):hover article { background: linear-gradient(to right, #833ab4, #fd1d1d, #fcb045); color: #fff;}
-.ss-icon a:nth-child(3):hover article { background-color: #CB2027; color: #fff;}
-.ss-icon a:nth-child(4):hover article { background-color: #2C4762; color: #fff;}
-.ss-icon a:nth-child(5):hover article { background-color: #25D366; color: #fff;}
+.ss-icon a:nth-child(1):hover article { background-color: #3B5998; }
+.ss-icon a:nth-child(2):hover article { background: linear-gradient(to right, #833ab4, #fd1d1d, #fcb045); }
+.ss-icon a:nth-child(3):hover article { background-color: #CB2027; }
+.ss-icon a:nth-child(4):hover article { background-color: #2C4762; }
+.ss-icon a:nth-child(5):hover article { background-color: #25D366; }
 .ss-icon span { transition: transform 0s linear 0.2s, text-shadow 0s linear 0.2s; -webkit-font-smoothing: subpixel-antialiased; }
 .ss-icon a:hover span { transform: scale(-1, 1); text-shadow: 0 0 5rem rgba(255, 255, 255, 0.5); }
 
@@ -366,20 +356,20 @@ a, button, .enlace, .sidebar__click, .cliente__opciones--button, .menu__enlaces 
     display: none; 
     padding-top: 5rem;
     padding-bottom: 5rem;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid var(--gris-light);
 }
 .contenido--envios, .contenido--garantias, .contenido--tiendabierta {
     display: flex; flex-direction: column; align-items: center;
 }
 .contenido--garantias {
-    border-left: 1px solid var(--border-color);
-    border-right: 1px solid var(--border-color);
+    border-left: 1px solid var(--gris-mid);
+    border-right: 1px solid var(--gris-mid);
 }
 .contenido--envios h4, .contenido--garantias h4, .contenido--tiendabierta h4 {
     font-family: Poppins; font-size: 1.8rem; color: var(--primario); line-height: 1.5;
 }
 .contenido--envios a, .contenido--garantias a, .contenido--tiendabierta span {
-    font-family: Poppins; font-size: 1.3rem; line-height: 1.8; color: var(--texto-secundario);
+    font-family: Poppins; font-size: 1.3rem; line-height: 1.8;
 }
 
 /* --------------------------------------------------------------------------
@@ -414,8 +404,8 @@ a, button, .enlace, .sidebar__click, .cliente__opciones--button, .menu__enlaces 
     .contenido--garantias {
         border-left: none;
         border-right: none;
-        border-top: 1px solid var(--border-color);
-        border-bottom: 1px solid var(--border-color);
+        border-top: 1px solid var(--gris-light);
+        border-bottom: 1px solid var(--gris-light);
         padding: 2rem 0;
     }
 
@@ -449,8 +439,8 @@ a, button, .enlace, .sidebar__click, .cliente__opciones--button, .menu__enlaces 
     }
 
     .macrom__contenedor--categorias .block1 > a:first-child {
-        background-color: var(--bg-secundario) !important;
-        border: 1px solid var(--border-color) !important;
+        background-color: #f7f7f7 !important;
+        border: 1px solid #e5e7eb !important; 
         width: 6rem !important; 
         height: 6rem !important;
         border-radius: 50% !important; 
@@ -475,7 +465,7 @@ a, button, .enlace, .sidebar__click, .cliente__opciones--button, .menu__enlaces 
     
     .categoria__enlace {
         font-size: 0.95rem !important;
-        color: var(--texto-secundario) !important;
+        color: #4b5563 !important; 
         font-weight: 600 !important;
         margin-top: 0 !important;
         line-height: 1.2;
@@ -525,6 +515,9 @@ a, button, .enlace, .sidebar__click, .cliente__opciones--button, .menu__enlaces 
         align-items: center;
     }
     .home__pr:hover {
-        box-shadow: 0px 6px 23px rgba(0,0,0,0.15);
+        box-shadow: 0px 6px 23px #7e849763;
+    }
+    .body__theme--dark .home__pr:hover {
+        box-shadow: 5px 10px 20px var(--blanco);
     }
 }

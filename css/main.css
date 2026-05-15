@@ -56,48 +56,26 @@
 :root {
   --fuenteHeading: 'PT Sans', sans-serif;
   --fuenteParrafos: 'Open Sans', sans-serif;
-  
-  /* Colores de Marca */
   --primario: #de0007;
   --primario-oscuro: #bf040a;
+  --gris-mid-dark: rgb(82, 86, 89);
+  --gris: #7f7f7f;
+  --gris-mid: #888888;
+  --gris-light: #e6e6e6;
+  --gris-low: #f1f1f1;
+  --blanco: #fff;
+  --negro: #000;
   --naranja: #e65540;
   --amarillo: #eaff00;
   --sun: #ffa500;
   --azul-rayo: #3fa5ff;
   --verde-dinero: #77a345;
-  
-  /* --- VARIABLES DINÁMICAS (Tema Claro por defecto) --- */
-  --bg-body: #ffffff;
-  --bg-secundario: #f1f1f1;
-  --bg-terciario: #e2e2e2;
-  
-  --bg-tarjeta: #ffffff;
-  --bg-cabecera: #de0007;
-  
-  --texto-principal: #000000;
-  --texto-secundario: #525659;
-  --texto-suave: #888888;
-  
-  --border-color: #cccccc;
-  
+  --dark-grey: #4e4e4e;
+  --dark: #1b1b1b;
+  --light-grey: #e2e2e2;
+  --mid-grey: #ccc;
   --transition-duration: 0.3s;
   --transition-delay: 0.2s;
-}
-
-/* --- VARIABLES DINÁMICAS (Tema Oscuro) --- */
-[data-theme="dark"] {
-  --bg-body: #19191b;
-  --bg-secundario: #222324;
-  --bg-terciario: #333333;
-  
-  --bg-tarjeta: #222324;
-  --bg-cabecera: #111111;
-  
-  --texto-principal: #ffffff;
-  --texto-secundario: #cccccc;
-  --texto-suave: #aaaaaa;
-  
-  --border-color: #4e4e4e;
 }
 
 [ng\:cloak], [ng-cloak], .ng-cloak { display: none !important; }
@@ -161,10 +139,6 @@ body {
   font-family: Poppins, Montserrat-Regular;
   font-weight: 400;
   overflow-x: hidden;
-  
-  background-color: var(--bg-body);
-  color: var(--texto-principal);
-  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 .separador {
@@ -223,10 +197,13 @@ li {
   text-decoration-color: #de0007;
 }
 
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   font-family: var(--fuenteHeading);
   line-height: 1.2;
-  color: var(--texto-principal);
 }
 
 h1 {
@@ -257,7 +234,7 @@ p {
   font-family: Poppins;
   font-size: 15px;
   line-height: 1.7;
-  color: var(--texto-secundario);
+  color: var(--gris-mid);
   margin: 0px;
 }
 
@@ -364,9 +341,141 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 .btn_CPrimarios {
-  background-color: var(--primario) !important;
+  background-color: var(--primario);
   border: var(--primario);
-  color: var(--blanco) !important;;
+  color: var(--blanco);
+}
+
+/** ============================================================================
+    03. TEMAS (DARK MODE / LIGHT MODE)
+============================================================================= **/
+.perfil__theme--dark,
+.perfil__theme--dark .box-pedidos,
+.perfil__theme--dark ul li .page-link,
+.perfil__theme--dark .SS__perfil--contenedor {
+  background-color: transparent;
+}
+
+.perfil__theme--dark .box-pedidos {
+  border: 2px dashed var(--gris-mid);
+}
+
+.main__theme--dark,
+.main__theme--dark #frmcompra .tablecompra h5 b {
+  background-color: var(--negro) !important;
+}
+
+.main__theme--dark a,
+.main__theme--dark p,
+.main__theme--dark h3,
+.main__theme--dark span,
+.main__theme--dark address,
+.main__theme--dark h4,
+.main__theme--dark #frmcompra .metodo__pago--metodo label,
+.main__theme--dark #frmcompra .tablecompra td,
+.main__theme--dark #frmcompra .tablecompra h5 b,
+.main__theme--dark #frmcompra .ventanaModal__contenido--opciones button,
+.main__theme--dark #frmcompra .ventanaModal__contenido .ventanaModal__contenido--dato label,
+.main__theme--dark #frmcompra .ventanaModal__contenido--boton button,
+.perfil__theme--dark a,
+.perfil__theme--dark h1,
+.perfil__theme--dark label,
+.perfil__theme--dark .title-header h2,
+.perfil__theme--dark .box-direcciones i,
+.perfil__theme--dark .title-header h5,
+.perfil__theme--dark .box-pedidos .estatus,
+.perfil__theme--dark .pedidos__datos td p,
+.perfil__theme--dark .pedidos__datos td,
+.perfil__theme--dark .pedidos__datos th,
+.main__theme--dark .pagos__sitio-seguro--info b,
+.main__theme--dark .p-l-40,
+.main__theme--dark small,
+.main__theme--dark .descripcion__texto h5,
+.body__theme--dark .contenedor__usuario .header-cart-total,
+.body__theme--dark .contenedor__usuario--carrito .header-cart-item-info,
+.body__theme--dark .contenedor__usuario--perfil .header-cart i,
+.body__theme--dark .contenedor__usuario--perfil .header-cart span,
+.body__theme--dark .contenedor__usuario--perfil .header-cart p,
+.body__theme--dark .contenedor__usuario--perfil .header-wrapicon1 p,
+.body__theme--dark .contenedor__menu__header a {
+  color: var(--blanco) !important;
+}
+
+.main__theme--dark #frmcompra .cliente__opciones img,
+.main__theme--dark #frmcompra .ventanaModal__contenido--opciones button img {
+  filter: invert(1);
+}
+
+.main__theme--light {
+  background-color: var(--blanco);
+}
+
+.body__theme--dark,
+.body__theme--dark .menu__cliente__informacion,
+.body__theme--dark .cerrar6,
+.body__theme--dark #preloader,
+.main__theme--dark .sidebar__mobil__menu--enlaces {
+  background: -webkit-linear-gradient(to bottom, #19191b, #222324);
+  background: linear-gradient(to bottom, #222324, #19191b);
+}
+
+.body__theme--light,
+.body__theme--light #preloader {
+  background-color: #f1f1f1;
+}
+
+.body__theme--dark .contenedor__usuario--carrito #divcarri,
+.body__theme--dark .contenedor__usuario--carrito .header-cart,
+.body__theme--dark .contenedor__usuario--perfil .header-cart,
+.body__theme--dark .menu__categoria__contenedor {
+  background-color: var(--gris);
+}
+
+.body__theme--dark .menu__categoria__contenedor a img {
+  filter: brightness(0) invert(1) !important;
+}
+
+.main__theme--dark #frmcompra .cliente__opciones span,
+.main__theme--dark #frmcompra .ventanaModal__contenido--opciones button,
+.main__theme--dark #frmcompra .ventanaModal__contenido--boton button {
+  background-color: var(--primario);
+}
+
+.main__theme--dark #frmcompra .cliente__datos,
+.main__theme--dark #frmcompra .ventanaModal__contenido--datos {
+  border: 1px solid var(--blanco);
+}
+
+.main__theme--dark .terminos h5,
+.main__theme--dark .p-l-40 a {
+  color: var(--primario) !important;
+}
+
+.perfil__theme--dark .list-group a,
+.perfil__theme--dark .pedidos__datos td,
+.perfil__theme--dark .pedidos__datos th,
+.perfil__theme--dark .perfil__navegador,
+.perfil__theme--dark .SS__perfil--dgenerales,
+.perfil__theme--dark .SS__perfil--ccontraseña,
+.main__theme--dark #frmcompra .ventanaModal__contenido,
+.body__theme--dark .contenedor__menu__header {
+  background-color: var(--dark-grey);
+}
+
+.perfil__theme--dark .list-group a {
+  border: none;
+}
+
+.body__theme--dark .modo__oscuro i.fa-moon,
+.body__theme--dark .modo__oscuro__pc i.fa-moon {
+  color: var(--blanco);
+  text-shadow: 0px 0px 12px var(--blanco);
+}
+
+.body__theme--light .modo__oscuro i.fa-sun,
+.body__theme--light .modo__oscuro__pc i.fa-sun {
+  color: var(--sun);
+  text-shadow: 0px 0px 16px var(--sun);
 }
 
 /** ============================================================================
@@ -492,7 +601,7 @@ input[type=number]::-webkit-inner-spin-button {
 
 .topbar {
   height: 45px;
-  background-color: var(--bg-secundario);
+  background-color: var(--negro);
   position: relative;
   display: flex;
   justify-content: center;
@@ -1138,10 +1247,10 @@ i.fa.fa-sun {
   border-radius: 0.5rem;
   height: 3rem;
   font-family: Poppins;
-  color: var(--blanco) !important;
+  color: var(--blanco);
   font-size: 1.4rem;
   text-transform: uppercase;
-  background-color: var(--primario) !important;
+  background-color: var(--primario);
   width: 100% !important;
   margin-left: 0 !important;
 }
@@ -1599,7 +1708,7 @@ i.fa.fa-sun {
   .contenedor__navegacion {
     display: flex;
     flex-wrap: wrap;
-    background-color: var(--primario);
+    background-color: var(--negro);
     justify-content: center;
     align-items: center;
     height: 6rem;
