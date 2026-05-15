@@ -49,21 +49,22 @@ document.addEventListener("DOMContentLoaded", () => {
     // 2. Dark Mode (Lógica Centralizada)
     // =======================================================
     const darkmodeSwitches = document.querySelectorAll(".switch__darkmode");
-    const currentTheme = localStorage.getItem('darkmode');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const currentTheme = localStorage.getItem('darkmode') || (systemPrefersDark ? 'dark' : 'light');
 
     const setTheme = (theme) => {
+        document.documentElement.setAttribute('data-theme', theme);
+        
         if (theme === 'dark') {
-            document.body.classList.add('dark-theme');
             darkmodeSwitches.forEach(sw => sw.classList.replace('fa-sun', 'fa-moon'));
             darkmodeSwitches.forEach(sw => sw.checked = true);
         } else {
-            document.body.classList.remove('dark-theme');
             darkmodeSwitches.forEach(sw => sw.classList.replace('fa-moon', 'fa-sun'));
             darkmodeSwitches.forEach(sw => sw.checked = false);
         }
     };
 
-    if (currentTheme) setTheme(currentTheme);
+    setTheme(currentTheme);
 
     darkmodeSwitches.forEach(sw => {
         sw.addEventListener('click', (e) => {
