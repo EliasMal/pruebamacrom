@@ -15,7 +15,7 @@
             $titulo_seo = "Crear Cuenta | Macrom Autopartes";
             break;
         case 'Compras':
-            $titulo_seo = "Tu Carrito de Compras | Macrom Autopartes";
+            $titulo_seo = "Carrito de Compras | Macrom Autopartes";
             break;
         case 'Profile':
             $titulo_seo = "Mi Perfil | Macrom Autopartes";
