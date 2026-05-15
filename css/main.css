@@ -364,9 +364,9 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 .btn_CPrimarios {
-  background-color: var(--primario);
+  background-color: var(--primario) !important;
   border: var(--primario);
-  color: var(--blanco);
+  color: var(--blanco) !important;;
 }
 
 /** ============================================================================
@@ -1138,10 +1138,10 @@ i.fa.fa-sun {
   border-radius: 0.5rem;
   height: 3rem;
   font-family: Poppins;
-  color: var(--blanco);
+  color: var(--blanco) !important;
   font-size: 1.4rem;
   text-transform: uppercase;
-  background-color: var(--primario);
+  background-color: var(--primario) !important;
   width: 100% !important;
   margin-left: 0 !important;
 }
@@ -1599,7 +1599,7 @@ i.fa.fa-sun {
   .contenedor__navegacion {
     display: flex;
     flex-wrap: wrap;
-    background-color: var(--bg-terciario);
+    background-color: var(--primario);
     justify-content: center;
     align-items: center;
     height: 6rem;

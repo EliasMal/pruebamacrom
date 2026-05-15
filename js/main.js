@@ -242,7 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (parent.matches(".header-wrapicon1")) { 
                     if (carrisvg) carrisvg.style.filter = "brightness(0) invert(1)";
                     if (divcarri) divcarri.style.backgroundColor = "transparent";
-                    if (usercba) usercba.style.backgroundColor = isDarkMode ? "#7f7f7f" : "#fff";
+                    if (usercba) usercba.style.backgroundColor = isDarkMode ? "var(--bg-secundario)" : "#fff";
                 } else if (parent.matches(".header-wrapicon2")) { 
                     if (usercba) usercba.style.backgroundColor = "transparent";
                     if (divcarri) divcarri.style.backgroundColor = isDarkMode ? "#7f7f7f" : "white";
