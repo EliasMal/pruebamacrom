@@ -5,9 +5,11 @@
         display: block;
         cursor: pointer;
     }
+
     .enlace-limpio:hover {
         opacity: 0.8;
     }
+
     /* =========================================================
        PRELOADER GLOBAL (Pantalla de transición)
        ========================================================= */
@@ -17,29 +19,40 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: #ffffff; /* Pantalla blanca limpia */
-        z-index: 9999999; /* Por encima de TODO */
+        background-color: #ffffff;
+        /* Pantalla blanca limpia */
+        z-index: 9999999;
+        /* Por encima de TODO */
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
     #status {
-        width: 80px; 
+        width: 80px;
         height: 80px;
-        /* Asegúrate de que esta ruta apunte a tu logo circular o icono */
-        background-image: url('images/usuarios/Avatar-Lobo-Macrom-Grande.webp'); 
+        background-image: url('images/usuarios/Avatar-Lobo-Macrom-Grande.webp');
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
-        /* Efecto de latido moderno */
         animation: latido-preloader 1.2s infinite ease-in-out;
     }
 
     @keyframes latido-preloader {
-        0% { transform: scale(0.85); opacity: 0.7; }
-        50% { transform: scale(1.05); opacity: 1; }
-        100% { transform: scale(0.85); opacity: 0.7; }
+        0% {
+            transform: scale(0.85);
+            opacity: 0.7;
+        }
+
+        50% {
+            transform: scale(1.05);
+            opacity: 1;
+        }
+
+        100% {
+            transform: scale(0.85);
+            opacity: 0.7;
+        }
     }
 
     .preloader-fade-out {
@@ -58,277 +71,247 @@
                 </div>
 
                 <a href="?mod=home" class="header__topbar--logo clicksidebar">
-                    <img src="images/icons/logomacromb.webp" alt="IMG-LOGO">
+                    <img src="images/icons/logomacromb.webp" alt="Logo Macrom">
                 </a>
 
                 <div class="buscador__general">
                     <i class="fas fa-search" id="btn-search">
-                        <input class="buscador__general__txt" type="text" autocomplete="off" placeholder="Busca tu refacción" ng-model="textoBusqueda" ng-keypress="buscarConEnter($event)">
-                    
+                        <input class="buscador__general__txt" type="text" autocomplete="off"
+                            placeholder="Busca tu refacción" ng-model="textoBusqueda"
+                            ng-keypress="buscarConEnter($event)">
                         <button class="buscador__general__boton" ng-click="general_search()">Buscar</button>
                     </i>
                 </div>
 
                 <div class="contenedor__usuario">
                     <div class="header-wrapicon1 login__text" ng-show="!user">
-                        <span class="topbar-email header-icon1" onclick="location.href='?mod=login'">Iniciar Sesion</span>
-                    </div> 
+                        <span class="topbar-email header-icon1" onclick="location.href='?mod=login'">Iniciar
+                            Sesion</span>
+                    </div>
                     <div class="contenedor__usuario--perfil" id="usercba" ng-show="user">
                         <div class="header-wrapicon1">
-                            <p class="text-dark t-center">¡Hola {{session.nombrecorto}}!</p>
-                            <p class="js-show-header-dropdown t-center" style="cursor:pointer; color:var(--blanco);">Mi Cuenta</p>
+                            <p class="text-dark t-center">¡Hola <span ng-bind="session.nombrecorto"></span>!</p>
+                            <p class="js-show-header-dropdown t-center" style="cursor:pointer; color:var(--blanco);">Mi
+                                Cuenta</p>
                             <div class="header-cart header-dropdown header__cart--usuario">
-                                <div class="sesion__vinculos">  
-                                    <img src="../images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="perfil__usuario--img" loading="lazy" alt="ICON">
-                                                        
+                                <div class="sesion__vinculos">
+                                    <img src="../images/usuarios/Avatar-Lobo-Macrom-Grande.webp"
+                                        class="perfil__usuario--img" loading="lazy" alt="Avatar Usuario">
+
                                     <div class="vinculos">
                                         <a href="?mod=Profile&opc=Session" class="vinculos--contenedor enlace-limpio">
-                                            <i loading="lazy" alt="icono seguridad" class="fa fa-shield-alt"> </i>
+                                            <i loading="lazy" class="fa fa-shield-alt"> </i>
                                             <span class="vinculos--opciones">Sesión y Seguridad</span>
                                         </a><br>
 
-                                        <a href="?mod=Profile&opc=Mispedidos" class="vinculos--contenedor enlace-limpio">
-                                            <i loading="lazy" alt="icono pedidos" class="fa fa-shopping-cart"></i>
+                                        <a href="?mod=Profile&opc=Mispedidos"
+                                            class="vinculos--contenedor enlace-limpio">
+                                            <i loading="lazy" class="fa fa-shopping-cart"></i>
                                             <span class="vinculos--opciones">Mis pedidos</span>
                                         </a><br>
-                                        
-                                        <a href="?mod=Profile&opc=Direcciones" class="vinculos--contenedor enlace-limpio">
-                                            <i loading="lazy" alt="icono direcciones" class="fa fa-map-marked-alt"></i>
+
+                                        <a href="?mod=Profile&opc=Direcciones"
+                                            class="vinculos--contenedor enlace-limpio">
+                                            <i loading="lazy" class="fa fa-map-marked-alt"></i>
                                             <span class="vinculos--opciones">Mis direcciones</span>
                                         </a><br>
 
-                                        <a href="?mod=Profile&opc=Facturacion" class="vinculos--contenedor enlace-limpio">
-                                            <i loading="lazy" alt="icono facturación" class="fa fa-file-invoice-dollar"></i>
+                                        <a href="?mod=Profile&opc=Facturacion"
+                                            class="vinculos--contenedor enlace-limpio">
+                                            <i loading="lazy" class="fa fa-file-invoice-dollar"></i>
                                             <span class="vinculos--opciones">Datos de facturación</span>
                                         </a>
-                                    </div> 
-                                </div>                          
-                                    <p class="sesionombre s-text3a">{{session.nombre}}</p>
-                                    <div class="sesion__opciones">
-                                        <div class="modo__oscuro__pc">
-                                            <i class="fa fa-sun" aria-hidden="true"></i>
-                                            <label class="switch btn-color-mode-switch">
-                                                <input type="checkbox" name="switch__darkmode" class="switch__darkmode">
-                                                <label for="switch__darkmode" data-on="Oscuro" data-off="Claro" class="btn-color-mode-switch-inner enlace"></label>
-                                            </label>
-                                              <i class="fa fa-moon" aria-hidden="true"></i>
-                                        </div>
-                                        <div>
-                                                <button class="usuario__cerrarsesion btn_CPrimarios" ng-click="btnLogout()">Cerrar Sesión</button>
-                                        </div>
                                     </div>
-                        
+                                </div>
+                                <p class="sesionombre s-text3a" ng-bind="session.nombre"></p>
+                                <div class="sesion__opciones">
+                                    <div class="modo__oscuro__pc">
+                                        <i class="fa fa-sun" aria-hidden="true"></i>
+                                        <label class="switch btn-color-mode-switch">
+                                            <input type="checkbox" name="switch__darkmode" class="switch__darkmode">
+                                            <label for="switch__darkmode" data-on="Oscuro" data-off="Claro"
+                                                class="btn-color-mode-switch-inner enlace"></label>
+                                        </label>
+                                        <i class="fa fa-moon" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <button class="usuario__cerrarsesion btn_CPrimarios"
+                                            ng-click="btnLogout()">Cerrar Sesión</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="contenedor__usuario--carrito">
-                        
                         <div id="divcarri">
                             <div class="header-wrapicon2">
-                                <i class="fas fa-shopping-cart header-icon1 js-show-header-dropdown filwhite" id="carrisvg"></i>
-                                <span id="contador-carrito" class="header-icons-noti">{{Data.Carrito.length || Numproducts}}</span>
+                                <i class="fas fa-shopping-cart header-icon1 js-show-header-dropdown filwhite"
+                                    id="carrisvg"></i>
+                                <span id="contador-carrito" class="header-icons-noti"
+                                    ng-bind="Data.Carrito.length || Numproducts"></span>
 
                                 <div class="header-cart header-dropdown carrito__contenedor">
-                                    <p class="carrito__articulos__length txtred" ng-show="user">Tienes {{Data.Carrito.length}} articulos en tu carrito</p>
-                                    <p class="carrito__articulos__length txtred" ng-show="!user">Inicia sesión para acceder a tu carrito</p>
+                                    <p class="carrito__articulos__length txtred" ng-show="user">Tienes <span
+                                            ng-bind="Data.Carrito.length"></span> articulos en tu carrito</p>
+                                    <p class="carrito__articulos__length txtred" ng-show="!user">Inicia sesión para
+                                        acceder a tu carrito</p>
                                     <ul class="header-cart-wrapitem">
                                         <li class="header-cart-item" ng-repeat="product in Data.Carrito" ng-show="user">
 
-                                            <div class="header-cart-item-times" ng-click="btnEliminarRefaccion(product, true)">
+                                            <div class="header-cart-item-times"
+                                                ng-click="btnEliminarRefaccion(product, true)">
                                                 <i class="fas fa-times cursorpnt"></i>
                                             </div>
 
                                             <div class="header-cart-item-img">
-                                                <img ng-src="{{getImagen(product.imagenid)}}" class="cursorpnt" ng-click="RefaccionDetalles(product.imagenid,product.NewUrlName)" alt="{{product.NewAltName}}" onerror="this.src='images/refacciones/motor.webp'">
+                                                <img ng-src="{{getImagen(product.imagenid)}}" class="cursorpnt"
+                                                    ng-click="RefaccionDetalles(product.imagenid,product.NewUrlName)"
+                                                    ng-attr-alt="{{product.NewAltName}}"
+                                                    onerror="this.src='images/refacciones/motor.webp'">
                                             </div>
 
                                             <div class="header-cart-item-txt">
-                                                <a ng-click="RefaccionDetalles(product.imagenid,product.NewUrlName)" class="header-cart-item-name enlace">
-                                                    {{product._producto}}
-                                                </a>
+                                                <a ng-click="RefaccionDetalles(product.imagenid,product.NewUrlName)"
+                                                    class="header-cart-item-name enlace"
+                                                    ng-bind="product._producto"></a>
 
                                                 <span class="header-cart-item-info">
-                                                    No.parte: {{product.No_parte}}
+                                                    No.parte: <span ng-bind="product.No_parte"></span>
                                                 </span>
 
-                                                <span class="header-cart-item-info" ng-hide="product.RefaccionOferta == '1'">
-                                                    {{product.Cantidad}} x {{product.Precio | currency}}
+                                                <span class="header-cart-item-info"
+                                                    ng-hide="product.RefaccionOferta == '1'">
+                                                    <span ng-bind="product.Cantidad"></span> x <span
+                                                        ng-bind="product.Precio | currency"></span>
                                                 </span>
-                                                <span class="header-cart-item-info" ng-show="product.RefaccionOferta == '1'">
-                                                    {{product.Cantidad}} x {{product.Precio2 | currency}}
+                                                <span class="header-cart-item-info"
+                                                    ng-show="product.RefaccionOferta == '1'">
+                                                    <span ng-bind="product.Cantidad"></span> x <span
+                                                        ng-bind="product.Precio2 | currency"></span>
                                                 </span>
-
                                             </div>
-
                                         </li>
-
                                     </ul>
 
                                     <div class="header-cart-total">
-                                        Total: {{subtotal() | currency}}
+                                        Total: <span ng-bind="subtotal() | currency"></span>
                                     </div>
-                
+
                                     <div class="header-cart-buttons">
                                         <div class="header-cart-wrapbtn">
-                                            <button class="form-control clicksidebarshop btn_CPrimarios" onclick="location.href='?mod=Compras'" ng-show="user">Pagar</button>
-                                            <button class="form-control clicksidebarshop btn_CPrimarios" onclick="location.href='?mod=login'" ng-show="!user">Iniciar Sesión</button>
+                                            <button class="form-control clicksidebarshop btn_CPrimarios"
+                                                onclick="location.href='?mod=Compras'" ng-show="user">Pagar</button>
+                                            <button class="form-control clicksidebarshop btn_CPrimarios"
+                                                onclick="location.href='?mod=login'" ng-show="!user">Iniciar
+                                                Sesión</button>
                                         </div>
                                     </div>
 
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
-            
+
             <div class="contenedor__navegacion">
                 <div class="contenedor__navegacion__menu">
                     <nav class="contenedor__navegacion__menu--principal">
                         <ul class="contenedor__navegacion__menu--opciones" data-animation="diagonal">
-                            <li>
-                                <a href="?mod=home">Inicio
-                                    <span class="border border-top"></span>
-                                    <span class="border border-right"></span>
-                                    <span class="border border-bottom"></span>
-                                    <span class="border border-left"></span>
-                                </a>
+                            <li><a href="?mod=home">Inicio<span class="border border-top"></span><span
+                                        class="border border-right"></span><span
+                                        class="border border-bottom"></span><span class="border border-left"></span></a>
+                            </li>
+                            <li><a href="?mod=catalogo&pag=1">Refacciones<span class="border border-top"></span><span
+                                        class="border border-right"></span><span
+                                        class="border border-bottom"></span><span class="border border-left"></span></a>
                             </li>
                             <li>
-                                <a href="?mod=catalogo&pag=1">Refacciones
-                                    <span class="border border-top"></span>
-                                    <span class="border border-right"></span>
-                                    <span class="border border-bottom"></span>
-                                    <span class="border border-left"></span>
-                                </a>
-                                
+                                <a href="?mod=Compras" ng-show="user">Mis compras<span
+                                        class="border border-top"></span><span class="border border-right"></span><span
+                                        class="border border-bottom"></span><span class="border border-left"></span></a>
+                                <a href="?mod=login" ng-show="!user">Mis compras<span
+                                        class="border border-top"></span><span class="border border-right"></span><span
+                                        class="border border-bottom"></span><span class="border border-left"></span></a>
                             </li>
-                            <li>
-                                <a href="?mod=Compras" ng-show="user">Mis compras
-                                    <span class="border border-top"></span>
-                                    <span class="border border-right"></span>
-                                    <span class="border border-bottom"></span>
-                                    <span class="border border-left"></span>
-                                </a>
-                                <a href="?mod=login" ng-show="!user">Mis compras
-                                    <span class="border border-top"></span>
-                                    <span class="border border-right"></span>
-                                    <span class="border border-bottom"></span>
-                                    <span class="border border-left"></span>
-                                </a>
+                            <li><a href="?mod=Blog">Blog<span class="border border-top"></span><span
+                                        class="border border-right"></span><span
+                                        class="border border-bottom"></span><span class="border border-left"></span></a>
                             </li>
-                            <li>
-                                <a href="?mod=Blog">Blog
-                                    <span class="border border-top"></span>
-                                    <span class="border border-right"></span>
-                                    <span class="border border-bottom"></span>
-                                    <span class="border border-left"></span>
-                                </a>
+                            <li><a href="?mod=nosotros">Nosotros<span class="border border-top"></span><span
+                                        class="border border-right"></span><span
+                                        class="border border-bottom"></span><span class="border border-left"></span></a>
                             </li>
-                            <li>
-                                <a href="?mod=nosotros">Nosotros
-                                    <span class="border border-top"></span>
-                                    <span class="border border-right"></span>
-                                    <span class="border border-bottom"></span>
-                                    <span class="border border-left"></span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="?mod=contacto">Contacto
-                                    <span class="border border-top"></span>
-                                    <span class="border border-right"></span>
-                                    <span class="border border-bottom"></span>
-                                    <span class="border border-left"></span>
-                                </a>
+                            <li><a href="?mod=contacto">Contacto<span class="border border-top"></span><span
+                                        class="border border-right"></span><span
+                                        class="border border-bottom"></span><span class="border border-left"></span></a>
                             </li>
                         </ul>
                     </nav>
                 </div>
             </div>
-              
         </div>
     </header>
-<div id="ventanaModal6" class="sidebar__mobil" >
-        <div class="sidebar__mobil__contenido" id="CabeceraDark">
 
+    <div id="ventanaModal6" class="sidebar__mobil">
+        <div class="sidebar__mobil__contenido" id="CabeceraDark">
             <article class="sidebar__mobil__menu">
                 <span class="cerrar6 closem" style="cursor: pointer;">×</span>
                 <div class="menu__cliente__informacion">
-                    <img src="../images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="menu__cliente__informacion--img" alt="ICON">
+                    <img src="../images/usuarios/Avatar-Lobo-Macrom-Grande.webp" class="menu__cliente__informacion--img"
+                        alt="Avatar Usuario">
                     <div class="cliente__informacion--datos">
                         <p class="txtred">¡Hola!</p>
-                        <p class="text-dark">{{session.nombre}}</p>
+                        <p class="text-dark" ng-bind="session.nombre"></p>
                     </div>
                 </div>
                 <div class="sidebar__mobil__menu--enlaces">
-                
                     <div class="modo__oscuro">
                         <i class="fa fa-sun" aria-hidden="true"></i>
                         <label class="switch btn-color-mode-switch" for="switch__darkmode">
                             <input type="checkbox" name="switch__darkmode" class="switch__darkmode">
-                            <label for="switch__darkmode" data-on="Oscuro" data-off="Claro" class="btn-color-mode-switch-inner"></label>
+                            <label for="switch__darkmode" data-on="Oscuro" data-off="Claro"
+                                class="btn-color-mode-switch-inner"></label>
                         </label>
                         <i class="fa fa-moon" aria-hidden="true"></i>
                     </div>
-                
+
                     <div class="menu__enlaces__contenedor">
                         <div class="menu__enlaces">
-                            <a href="?mod=home" id="sidebar0" class="sidebar__click">
-                                <i class="fa fa-home" name="home-outline"></i>
-                                Inicio
-                            </a>
-                            <a href="?mod=catalogo&pag=1" id="sidebar1" class="sidebar__click">
-                                <i class="fa fa-wrench" name="wrench-outline"></i>
-                                Refacciones
-                            </a>
-                            <a href="?mod=Compras" id="sidebar2" class="sidebar__click" ng-show="user">
-                                <i class="fa fa-shopping-cart" name="shopping-cart-outline"></i>
-                                Carrito
-                            </a>
-                            <a href="?mod=login" id="sidebar3" class="sidebar__click" ng-show="!user">
-                                <i class="fa fa-shopping-cart" name="shopping-cart-outline"></i>
-                                <span class="menu__enlaces--links txtgris">Carrito</span>
-                            </a>
-                            <a href="?mod=nosotros" id="sidebar4" class="sidebar__click">
-                                <i class="fa fa-question-circle" name="info-outline"></i>
-                                Nosotros
-                            </a>
-                            <a href="?mod=Blog" id="sidebar9" class="sidebar__click">
-                                <i class="fas fa-book"></i>
-                                Blog
-                            </a>
-                            <a href="?mod=contacto" id="sidebar10" class="sidebar__click">
-                                <i class="fas fa-envelope"></i>
-                                Contacto
-                            </a>
+                            <a href="?mod=home" id="sidebar0" class="sidebar__click"><i class="fa fa-home"></i>
+                                Inicio</a>
+                            <a href="?mod=catalogo&pag=1" id="sidebar1" class="sidebar__click"><i
+                                    class="fa fa-wrench"></i> Refacciones</a>
+                            <a href="?mod=Compras" id="sidebar2" class="sidebar__click" ng-show="user"><i
+                                    class="fa fa-shopping-cart"></i> Carrito</a>
+                            <a href="?mod=login" id="sidebar3" class="sidebar__click" ng-show="!user"><i
+                                    class="fa fa-shopping-cart"></i> <span
+                                    class="menu__enlaces--links txtgris">Carrito</span></a>
+                            <a href="?mod=nosotros" id="sidebar4" class="sidebar__click"><i
+                                    class="fa fa-question-circle"></i> Nosotros</a>
+                            <a href="?mod=Blog" id="sidebar9" class="sidebar__click"><i class="fas fa-book"></i>
+                                Blog</a>
+                            <a href="?mod=contacto" id="sidebar10" class="sidebar__click"><i
+                                    class="fas fa-envelope"></i> Contacto</a>
                         </div>
                         <hr>
                         <div class="menu__enlaces" ng-show="user">
-                            <a href="?mod=Profile&opc=Session" id="sidebar5" class="sidebar__click">
-                                <i loading="lazy" alt="icono seguridad" class="fa fa-shield-alt"></i>
-                                Sesión y Seguridad
-                            </a>
-                            <a href="?mod=Profile&opc=Mispedidos" id="sidebar6" class="sidebar__click">
-                                <i loading="lazy" alt="icono pedidos" class="fa fa-shopping-cart"></i>
-                                Mis Pedidos
-                            </a>
-                            <a href="?mod=Profile&opc=Direcciones" id="sidebar7" class="sidebar__click">
-                                <i loading="lazy" alt="icono direcciones" class="fa fa-map-marked-alt"></i>
-                                Mis Direcciones
-                            </a>
-                            <a href="?mod=Profile&opc=Facturacion" id="sidebar8" class="sidebar__click">
-                                <i loading="lazy" alt="icono facturación" class="fa fa-file-invoice-dollar"></i>
-                                Datos Facturación
-                            </a>
+                            <a href="?mod=Profile&opc=Session" id="sidebar5" class="sidebar__click"><i
+                                    class="fa fa-shield-alt"></i> Sesión y Seguridad</a>
+                            <a href="?mod=Profile&opc=Mispedidos" id="sidebar6" class="sidebar__click"><i
+                                    class="fa fa-shopping-cart"></i> Mis Pedidos</a>
+                            <a href="?mod=Profile&opc=Direcciones" id="sidebar7" class="sidebar__click"><i
+                                    class="fa fa-map-marked-alt"></i> Mis Direcciones</a>
+                            <a href="?mod=Profile&opc=Facturacion" id="sidebar8" class="sidebar__click"><i
+                                    class="fa fa-file-invoice-dollar"></i> Datos Facturación</a>
                             <span class="sidebar__logout center--text" ng-click="btnLogout()" style="cursor: pointer;">
-                                <i loading="lazy" alt="icono cerrar_sesión" class="fas fa-sign-out-alt"></i>
+                                <i class="fas fa-sign-out-alt"></i>
                                 <span class="menu__enlaces--links text-white">Cerrar Sesión</span>
                             </span>
                         </div>
                     </div>
-                
+
                     <div class="menu__sesion" ng-show="!user">
                         <div class="menu__sesion__inicio">
                             <p>¿Ya tienes cuenta?</p>
@@ -339,10 +322,8 @@
                             <a href="?mod=register">Registrarse</a>
                         </div>
                     </div>
-                
                 </div>
             </article>
         </div>
     </div>
-
 </div>

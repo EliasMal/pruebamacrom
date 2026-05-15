@@ -5,14 +5,14 @@
         <div class="header__contenido">
             <div class="header__contenido--banner" ng-repeat="banner in dataBanners.Escritorio" ng-show="dataBanners.Escritorio != 0">
                 <picture class="header__picture d-grid">
-                    <img decoding="sync" ng-src="images/Banners/{{banner.imagen}}" alt="banner" class="header__picture--img" width="100%" height="350px">
+                    <img decoding="sync" ng-src="images/Banners/{{banner.imagen}}" ng-attr-alt="Banner Macrom Autopartes Ofertas" class="header__picture--img" width="100%" height="350px">
                 </picture>
             </div>
             
             <div class="slick2" ng-show="dataBanners.Escritorio == 0">
                 <div class="header__contenido--banner" ng-repeat="banner in dataCarrousel.Escritorio">
                     <picture class="header__picture d-grid">
-                        <img decoding="sync" ng-src="images/Banners/{{banner.imagen}}" alt="banner" class="header__picture--img" width="100%" height="350px">
+                        <img decoding="sync" ng-src="images/Banners/{{banner.imagen}}" ng-attr-alt="Banner Macrom Autopartes" class="header__picture--img" width="100%" height="350px">
                     </picture>
                 </div>
             </div>
@@ -27,12 +27,10 @@
                         <div class="categoria__cat" ng-repeat="categoria in Data.Categorias">
                             <div class="block1 hov-img-zoom pos-relative m-b-20">
                                 <a href="?mod=catalogo&pag=1&cate={{categoria._id}}">
-                                    <img ng-src="{{getImagen(categoria)}}" alt="{{categoria.Categoria}}" class="filcatego" loading="lazy">
+                                    <img ng-src="{{getImagen(categoria)}}" ng-attr-alt="Categoría {{categoria.Categoria}}" class="filcatego" loading="lazy">
                                 </a>
                                 <div class="block1-wrapbtn">
-                                    <a href="?mod=catalogo&pag=1&cate={{categoria._id}}" class="categoria__enlace">
-                                        {{categoria.Categoria}}
-                                    </a>
+                                    <a href="?mod=catalogo&pag=1&cate={{categoria._id}}" class="categoria__enlace" ng-bind="categoria.Categoria"></a>
                                 </div>
                             </div>
                         </div>
@@ -69,22 +67,23 @@
                                                         <span class="promocion__aviso bg-promo" ng-show="producto.RefaccionOferta">Promoción</span>
                                                         <span class="enviogratis__aviso bg-promo" ng-show="producto.Enviogratis">Envío gratis</span>
                                                     </div>
-                                                    <img ng-src="{{producto.imagen ? 'images/refacciones/' + producto._id + '.' + producto.img_ext : 'images/refacciones/motor.webp'}}" width="190" height="250" alt="{{producto.NewAltName}}" loading="lazy">
+                                                    <img ng-src="{{producto.imagen ? 'images/refacciones/' + producto._id + '.' + producto.img_ext : 'images/refacciones/motor.webp'}}" width="190" height="250" ng-attr-alt="{{producto.NewAltName}}" loading="lazy">
                                                 </a>
                                             </div>
 
                                             <div class="block2-txt">
                                                 <section class="descripcion-producto">
-                                                    <p class="block2-brand">{{producto.NombreProveedor}}</p>
-                                                    <a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
+                                                    <p class="block2-brand" ng-bind="producto.NombreProveedor"></p>
+                                                    <a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}" class="block2-name dis-block s-text3" ng-bind="producto.Producto"></a>
                                                     <div class="sku_row">
 														<span class="sku_label dis-block">No. Parte:</span>
-														<span class="sku_value dis-block">{{ producto.No_parte }}</span>
+														<span class="sku_value dis-block" ng-bind="producto.No_parte"></span>
 													</div>
                                                     <div class="precio__imgprove">
-                                                        <p class="precio__producto" ng-hide="producto.RefaccionOferta">{{producto.Precio1 | currency}}</p>  
-                                                        <p class="precio__producto" ng-show="producto.RefaccionOferta"><small class="line_through-red">{{producto.Precio1 | currency}}</small>
-                                                            {{producto.Precio2 | currency}}
+                                                        <p class="precio__producto" ng-hide="producto.RefaccionOferta" ng-bind="producto.Precio1 | currency"></p>  
+                                                        <p class="precio__producto" ng-show="producto.RefaccionOferta">
+                                                            <small class="line_through-red" ng-bind="producto.Precio1 | currency"></small>
+                                                            <span ng-bind="producto.Precio2 | currency"></span>
                                                         </p>
                                                     </div>
                                                 </section>
@@ -109,22 +108,23 @@
                                                         <span class="promocion__aviso bg-promo" ng-show="producto.RefaccionOferta">Promoción</span>
                                                         <span class="enviogratis__aviso bg-promo" ng-show="producto.Enviogratis">Envío gratis</span>
                                                     </div>
-                                                	<img ng-src="{{producto.imagen ? 'images/refacciones/' + producto._id + '.' + producto.img_ext : 'images/refacciones/motor.webp'}}" width="190" height="250" alt="{{producto.NewAltName}}" loading="lazy">
+                                                	<img ng-src="{{producto.imagen ? 'images/refacciones/' + producto._id + '.' + producto.img_ext : 'images/refacciones/motor.webp'}}" width="190" height="250" ng-attr-alt="{{producto.NewAltName}}" loading="lazy">
                                                 </a>
                                             </div>
 
                                             <div class="block2-txt">
                                                 <section class="descripcion-producto">
-                                                    <p class="block2-brand">{{producto.NombreProveedor}}</p>
-                                                    <a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
+                                                    <p class="block2-brand" ng-bind="producto.NombreProveedor"></p>
+                                                    <a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}" class="block2-name dis-block s-text3" ng-bind="producto.Producto"></a>
                                                     <div class="sku_row">
 														<span class="sku_label dis-block">No. Parte:</span>
-														<span class="sku_value dis-block">{{ producto.No_parte }}</span>
+														<span class="sku_value dis-block" ng-bind="producto.No_parte"></span>
 													</div>
                                                     <div class="precio__imgprove">
-                                                        <p class="precio__producto" ng-hide="producto.RefaccionOferta">{{producto.Precio1 | currency}}</p>  
-                                                        <p class="precio__producto" ng-show="producto.RefaccionOferta"><small class="line_through-red">{{producto.Precio1 | currency}}</small>
-                                                            {{producto.Precio2 | currency}}
+                                                        <p class="precio__producto" ng-hide="producto.RefaccionOferta" ng-bind="producto.Precio1 | currency"></p>  
+                                                        <p class="precio__producto" ng-show="producto.RefaccionOferta">
+                                                            <small class="line_through-red" ng-bind="producto.Precio1 | currency"></small>
+                                                            <span ng-bind="producto.Precio2 | currency"></span>
                                                         </p>
                                                     </div>
                                                 </section>
@@ -149,21 +149,23 @@
                                                         <span class="promocion__aviso bg-promo" ng-show="producto.RefaccionOferta">Promoción</span>
                                                         <span class="enviogratis__aviso bg-promo" ng-show="producto.Enviogratis">Envío gratis</span>
                                                     </div>
-                                                   <img ng-src="{{producto.imagen ? 'images/refacciones/' + producto._id + '.' + producto.img_ext : 'images/refacciones/motor.webp'}}" width="190" height="250" alt="{{producto.NewAltName}}" loading="lazy">
+                                                   <img ng-src="{{producto.imagen ? 'images/refacciones/' + producto._id + '.' + producto.img_ext : 'images/refacciones/motor.webp'}}" width="190" height="250" ng-attr-alt="{{producto.NewAltName}}" loading="lazy">
                                                 </a>
                                             </div>
 
                                             <div class="block2-txt">
                                                 <section class="descripcion-producto">
-                                                    <p class="block2-brand">{{producto.NombreProveedor}}</p>
-                                                    <a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}" class="block2-name dis-block s-text3">{{producto.Producto}}</a>
+                                                    <p class="block2-brand" ng-bind="producto.NombreProveedor"></p>
+                                                    <a href="?mod=catalogo&opc=detalles&_id={{producto._id}}-{{producto.NewUrlName}}" class="block2-name dis-block s-text3" ng-bind="producto.Producto"></a>
                                                     <div class="sku_row">
 														<span class="sku_label dis-block">No. Parte:</span>
-														<span class="sku_value dis-block">{{ producto.No_parte }}</span>
+														<span class="sku_value dis-block" ng-bind="producto.No_parte"></span>
 													</div>
                                                     <div class="precio__imgprove">  
-                                                        <p class="precio__producto" ng-hide="producto.RefaccionOferta">{{producto.Precio1 | currency}}</p>  
-                                                        <p class="precio__producto" ng-show="producto.RefaccionOferta"><small class="line_through-red">{{producto.Precio1 | currency}}</small></p>
+                                                        <p class="precio__producto" ng-hide="producto.RefaccionOferta" ng-bind="producto.Precio1 | currency"></p>  
+                                                        <p class="precio__producto" ng-show="producto.RefaccionOferta">
+                                                            <small class="line_through-red" ng-bind="producto.Precio1 | currency"></small>
+                                                        </p>
                                                     </div>
                                                 </section>
                                             </div>

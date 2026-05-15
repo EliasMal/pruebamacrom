@@ -16,27 +16,27 @@
                     <form name="frmlogin" id="frmlogin" novalidate class="form__login" ng-submit="btnLogin()">
 
                         <div class="contenedor__dos--logo">
-                            <img src="../../../images/icons/logo original.svg" alt="">
+                            <img src="../../../images/icons/logo original.svg" alt="Logo Macrom Autopartes">
                         </div>
 
                         <h4 class="contenedor__dos--titulo">Iniciar Sesión</h4>
                         
                         <div class="mensaje-login error-general" ng-show="loginError && !cuentaBloqueada">
                             <i class="fa fa-exclamation-circle"></i>
-                            {{mensajeError}}
+                            <span ng-bind="mensajeError"></span>
                         </div>
 
                         <div class="mensaje-login advertencia"
                             ng-show="loginError && !cuentaBloqueada && intentosRestantes !== null">
                             <i class="fa fa-info-circle"></i>
-                            Intentos restantes: <b>{{intentosRestantes}}</b>
+                            Intentos restantes: <b ng-bind="intentosRestantes"></b>
                         </div>
 
                         <div class="mensaje-login bloqueo" ng-show="cuentaBloqueada">
                             <i class="fa fa-lock"></i>
                             Tu cuenta está bloqueada temporalmente.
                             <div ng-if="tiempoRestante > 0">
-                                Intenta nuevamente en <b>{{tiempoRestante}}</b> seg.
+                                Intenta nuevamente en <b ng-bind="tiempoRestante"></b> seg.
                             </div>
                         </div>
 

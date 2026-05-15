@@ -122,16 +122,42 @@ class Login{
         $mail->Password = SMTP_PASS;
         $mail->setFrom('soporte@macromautopartes.com', 'Soporte Macrom');
         $mail->addAddress($destinatario);
-        $mail->Subject = 'Restablecer contraseña - Macromautopartes';
+        $mail->Subject = 'Restablecer contraseña - Macrom Autopartes';
         $mail->IsHTML(true);
         $mail->CharSet = 'utf-8';
 
+        $anio = date("Y");
         $mail->Body = "
-            <h2>Restablecer contraseña</h2>
-            <p>Haz clic en el siguiente enlace:</p>
-            <a href='$link'>$link</a>
-            <p>Este enlace expira en 15 minutos.</p>
-        ";
+        <div style='font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; text-align: center;'>
+            <div style='max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 40px 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-top: 5px solid #de0007;'>
+                
+                <h2 style='color: #333333; margin-bottom: 20px; font-size: 24px;'>Restablecimiento de Contraseña</h2>
+                
+                <p style='color: #666666; font-size: 16px; line-height: 1.5; margin-bottom: 30px; text-align: left;'>
+                    Hola,<br><br>Hemos recibido una solicitud para restablecer la contraseña de tu cuenta en <b>Macrom Autopartes</b>. 
+                    Haz clic en el siguiente botón para crear una nueva contraseña:
+                </p>
+                
+                <a href='$link' style='background-color: #de0007; color: #ffffff; text-decoration: none; padding: 14px 30px; border-radius: 6px; font-weight: bold; font-size: 16px; display: inline-block; margin-bottom: 30px; box-shadow: 0 2px 5px rgba(222,0,7,0.3);'>
+                    Restablecer mi contraseña
+                </a>
+                
+                <p style='color: #999999; font-size: 13px; text-align: left; background: #f9f9f9; padding: 10px; border-radius: 5px;'>
+                    <b style='color: #de0007;'>Nota:</b> Este enlace expirará en 15 minutos por tu seguridad.<br><br>
+                    Si el botón no funciona, copia y pega el siguiente enlace en tu navegador:<br>
+                    <span style='color: #4a90e2; word-break: break-all;'>$link</span>
+                </p>
+                
+                <p style='color: #888888; font-size: 14px; margin-top: 30px; text-align: left;'>
+                    Si no solicitaste este cambio, puedes ignorar este correo con seguridad. Tu contraseña actual seguirá siendo la misma.
+                </p>
+            </div>
+            
+            <div style='margin-top: 20px; color: #999999; font-size: 12px;'>
+                © $anio Macrom Autopartes. Todos los derechos reservados.<br>
+                Colima, México.
+            </div>
+        </div>";
 
         $mail->send();
     }
